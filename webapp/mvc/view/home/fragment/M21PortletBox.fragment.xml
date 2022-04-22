@@ -25,18 +25,21 @@
       <VBox width="30%" binding="{/contents/0}">
         <custom:StatisticNumber path="Cnt01" large="true" press=".onPressCount" class="color-03">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="A" />
             <core:CustomData key="Discod" value="{Cod01}" />
           </custom:customData>
         </custom:StatisticNumber>
         <custom:StatisticNumber prefix="{i18n>LABEL_01213} : " path="Cnt02" press=".onPressCount" class="color-03">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="A" />
             <core:CustomData key="Discod" value="{Cod02}" />
           </custom:customData>
         </custom:StatisticNumber>
         <custom:StatisticNumber prefix="{i18n>LABEL_01212} : " path="Cnt03" press=".onPressCount" class="color-03">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="A" />
             <core:CustomData key="Discod" value="{Cod03}" />
           </custom:customData>
@@ -75,6 +78,7 @@
           <!-- 전년말 기준 : 전체 -->
           <custom:StatisticNumber path="Cnt01" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod01}" />
             </custom:customData>
@@ -85,6 +89,7 @@
           <!-- 전년말 기준 : 직원 -->
           <custom:StatisticNumber path="Cnt02" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod02}" />
             </custom:customData>
@@ -95,6 +100,7 @@
           <!-- 전년말 기준 : 임원 -->
           <custom:StatisticNumber path="Cnt03" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod03}" />
             </custom:customData>
@@ -115,6 +121,7 @@
           <!-- 입사자 인원 : 전체 -->
           <custom:StatisticNumber path="Cnt01" textAlign="Center" press=".onPressCount" class="color-03">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod01}" />
             </custom:customData>
@@ -125,6 +132,7 @@
           <!-- 입사자 인원 : 직원 -->
           <custom:StatisticNumber path="Cnt02" textAlign="Center" press=".onPressCount" class="color-03">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod02}" />
             </custom:customData>
@@ -135,6 +143,7 @@
           <!-- 입사자 인원 : 임원 -->
           <custom:StatisticNumber path="Cnt03" textAlign="Center" press=".onPressCount" class="color-03">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod03}" />
             </custom:customData>
@@ -155,6 +164,7 @@
           <!-- 퇴사자 인원 : 전체 -->
           <custom:StatisticNumber path="Cnt01" textAlign="Center" press=".onPressCount" class="color-04">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod01}" />
             </custom:customData>
@@ -165,6 +175,7 @@
           <!-- 퇴사자 인원 : 직원 -->
           <custom:StatisticNumber path="Cnt02" textAlign="Center" press=".onPressCount" class="color-04">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod02}" />
             </custom:customData>
@@ -175,6 +186,7 @@
           <!-- 퇴사자 인원 : 임원 -->
           <custom:StatisticNumber path="Cnt03" textAlign="Center" press=".onPressCount" class="color-04">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod03}" />
             </custom:customData>
@@ -195,6 +207,7 @@
           <!-- 휴직중 인원 : 전체 -->
           <custom:StatisticNumber path="Cnt01" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod01}" />
             </custom:customData>
@@ -205,6 +218,7 @@
           <!-- 휴직중 인원 : 직원 -->
           <custom:StatisticNumber path="Cnt02" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod02}" />
             </custom:customData>
@@ -215,6 +229,7 @@
           <!-- 휴직중 인원 : 임원 -->
           <custom:StatisticNumber path="Cnt03" textAlign="Center" press=".onPressCount" class="color-00">
             <custom:customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="A" />
               <core:CustomData key="Discod" value="{Cod03}" />
             </custom:customData>

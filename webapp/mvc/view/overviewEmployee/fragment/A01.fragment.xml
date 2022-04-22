@@ -23,18 +23,21 @@
       <VBox width="30%">
         <ObjectStatus text="{/contents/A01/data/Cnt01}" active="true" press=".onPressCount" class="mt-15-px font-40-px color-03 normal overflow-visible">
           <customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
           </customData>
         </ObjectStatus>
         <ObjectStatus text="{i18n>LABEL_01213} : {/contents/A01/data/Cnt02}" active="true" press=".onPressCount" class="mt-10-px statistic-text align-left color-03">
           <customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
           </customData>
         </ObjectStatus>
         <ObjectStatus text="{i18n>LABEL_01212} : {/contents/A01/data/Cnt03}" active="true" press=".onPressCount" class="mt-5-px statistic-text align-left color-03">
           <customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
           </customData>
@@ -75,6 +78,7 @@
               <FlexItemData baseSize="20%" styleClass="statistic-text" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt40C}" />
             </customData>
@@ -84,6 +88,7 @@
               <FlexItemData baseSize="20%" styleClass="statistic-text" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt41C}" />
             </customData>
@@ -93,6 +98,7 @@
               <FlexItemData baseSize="20%" styleClass="statistic-text" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt42C}" />
             </customData>
@@ -112,6 +118,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt50C}" />
             </customData>
@@ -121,6 +128,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt51C}" />
             </customData>
@@ -130,6 +138,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt52C}" />
             </customData>
@@ -149,6 +158,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt60C}" />
             </customData>
@@ -158,6 +168,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt61C}" />
             </customData>
@@ -167,6 +178,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt62C}" />
             </customData>
@@ -186,6 +198,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt70C}" />
             </customData>
@@ -195,6 +208,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt71C}" />
             </customData>
@@ -204,6 +218,7 @@
               <FlexItemData baseSize="20%" />
             </layoutData>
             <customData>
+              <core:CustomData key="OData" value="H" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt72C}" />
             </customData>

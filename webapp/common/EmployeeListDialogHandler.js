@@ -81,6 +81,8 @@ sap.ui.define(
             };
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
+            delete oParam.OData;
+
             mPayload = oParam;
           }
 

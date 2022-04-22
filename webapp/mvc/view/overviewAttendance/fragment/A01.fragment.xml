@@ -25,6 +25,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="1" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
             </customData>
@@ -35,6 +36,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="2" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
             </customData>
@@ -45,6 +47,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="3" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
             </customData>
@@ -55,6 +58,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="4" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
             </customData>
@@ -65,6 +69,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="5" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt05C}" />
             </customData>
@@ -75,6 +80,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="6" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt06C}" />
             </customData>
@@ -85,6 +91,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="7" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt07C}" />
             </customData>
@@ -95,6 +102,7 @@
           <ObjectStatus text="{ path: '/contents/A01/data/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="true" press=".onPressCount" class="team-member-count">
             <customData>
               <core:CustomData key="table-key" value="8" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
               <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
               <core:CustomData key="Discod" value="{/contents/A01/data/Cnt08C}" />
             </customData>

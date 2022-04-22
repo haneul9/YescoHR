@@ -49,6 +49,8 @@ sap.ui.define(
         if (!FusionCharts(this.sChartId)) {
           this.buildChart();
         }
+
+        this.oEmployeeListPopupHandler = oController.getEmployeeListPopupHandler();
       },
 
       buildChart() {
@@ -146,8 +148,13 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        const oEventSource = oEvent.getSource();
-        this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
+        if (this.bMobile) {
+          this.oEmployeeListPopupHandler.openPopover(oEvent);
+        } else {
+          // this.oEmployeeListPopupHandler.openDialog(oEvent);
+          const oEventSource = oEvent.getSource();
+          this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
+        }
       },
 
       async openPopover(oEventSource, sPopover, sTableKey) {

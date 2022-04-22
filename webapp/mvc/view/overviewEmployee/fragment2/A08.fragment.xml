@@ -39,6 +39,7 @@
           <HBox width="100%" items="{ path: '/contents/A08/data', templateShareable: false }" wrap="Wrap" justifyContent="SpaceBetween" alignContent="End" class="legend-wrap">
             <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount" width="40%">
               <custom:customData>
+                <core:CustomData key="OData" value="H" />
                 <core:CustomData key="Headty" value="{/contents/A08/Headty}" />
                 <core:CustomData key="Discod" value="{Cod01}" />
               </custom:customData>

@@ -25,6 +25,7 @@
       <HBox width="100%" justifyContent="SpaceBetween">
         <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A06/data/Cod01}" />
           </custom:customData>
@@ -36,6 +37,7 @@
         </custom:HBox>
         <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A06/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A06/data/Cod02}" />
           </custom:customData>

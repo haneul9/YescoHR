@@ -38,6 +38,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt01} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod01}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod01}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -47,6 +50,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt02} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod02}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod02}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -56,6 +62,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt03} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod03}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod03}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -65,6 +74,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt04} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod04}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod04}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -74,6 +86,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt05} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod05}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod05}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -83,6 +98,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt06} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod06}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod06}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -92,6 +110,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt07} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod07}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod07}" />
             </customData>
           </ObjectStatus>
         </VBox>
@@ -101,6 +122,9 @@
             <customData>
               <core:CustomData key="popover" value="{= ${counts/Cnt08} === '0' ? 'N' : 'Y' }" writeToDom="true" />
               <core:CustomData key="table-key" value="k{counts/Cod08}" writeToDom="true" />
+              <core:CustomData key="OData" value="T" />
+              <core:CustomData key="Headty" value="A" />
+              <core:CustomData key="Discod" value="{counts/Cod08}" />
             </customData>
           </ObjectStatus>
         </VBox>

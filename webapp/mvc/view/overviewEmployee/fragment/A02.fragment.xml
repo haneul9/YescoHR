@@ -24,6 +24,7 @@
       </layoutData>
       <custom:HBox width="100%" justifyContent="Center" class="active-link mobile-mt-15-px" press=".onPressCount">
         <custom:customData>
+          <core:CustomData key="OData" value="H" />
           <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
           <core:CustomData key="Discod" value="{/contents/A02/data/Cod01}" />
         </custom:customData>
@@ -32,6 +33,7 @@
       <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
         <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A02/data/Cod02}" />
           </custom:customData>
@@ -43,6 +45,7 @@
         </custom:HBox>
         <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A02/data/Cod01}" />
           </custom:customData>
@@ -50,6 +53,7 @@
         </custom:HBox>
         <custom:HBox class="active-link" press=".onPressCount">
           <custom:customData>
+            <core:CustomData key="OData" value="H" />
             <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
             <core:CustomData key="Discod" value="{/contents/A02/data/Cod03}" />
           </custom:customData>

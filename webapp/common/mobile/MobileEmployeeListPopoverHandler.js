@@ -24,6 +24,15 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler', {
+      mServiceName: {
+        H: 'PA',
+        T: 'WORKTIME',
+      },
+      mODataName: {
+        H: 'HeadCountDetail',
+        T: 'TimeOverviewDetail1',
+      },
+
       constructor: function (oController, sIconMode = 'Profile') {
         this.oController = oController;
         this.oPopoverModel = new JSONModel(this.getInitialData());
@@ -101,24 +110,21 @@ sap.ui.define(
             this.oPopover.openBy(AppUtils.getAppController().byId('mobile-basis-home'));
           });
 
-          let mPayload;
+          let mPayload, sServiceName, sODataName;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            const oSessionModel = this.oController.getSessionModel();
-            const oEventSourceData = oParam.getSource().data();
-            mPayload = {
-              Zyear: moment().year(),
-              Werks: oSessionModel.getProperty('/Werks'),
-              Orgeh: oSessionModel.getProperty('/Orgeh'),
-              Headty: oEventSourceData.Headty,
-              Discod: oEventSourceData.Discod,
-            };
+            const mEventSourceData = oParam.getSource().data();
+            mPayload = this.getPayload(mEventSourceData);
+            sServiceName = this.mServiceName[mEventSourceData.OData];
+            sODataName = this.mODataName[mEventSourceData.OData];
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
             mPayload = oParam;
+            sServiceName = this.mServiceName[oParam.OData];
+            sODataName = this.mODataName[oParam.OData];
           }
 
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sServiceName]), sODataName, mPayload);
           const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
           this.oPopoverModel.setProperty(
@@ -133,6 +139,27 @@ sap.ui.define(
           });
         } finally {
           this.setBusy(false);
+        }
+      },
+
+      getPayload(mEventSourceData) {
+        const mSessionProperty = this.oController.getSessionModel().getData();
+        if (mEventSourceData.OData === 'H') {
+          return {
+            Zyear: moment().year(),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
+        } else if (mEventSourceData.OData === 'T') {
+          return {
+            Datum: moment().startOf('date').add(9, 'hours'),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
         }
       },
 

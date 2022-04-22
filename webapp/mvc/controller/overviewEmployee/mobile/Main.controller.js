@@ -91,7 +91,7 @@ sap.ui.define(
           window.callEmployeeDetail = (sArgs) => {
             $('#fusioncharts-tooltip-element').css('z-index', 7);
 
-            const aProps = ['Headty', 'Discod', 'Zyear'];
+            const aProps = ['OData', 'Headty', 'Discod', 'Zyear'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
             const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
