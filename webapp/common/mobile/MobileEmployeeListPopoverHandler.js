@@ -24,11 +24,11 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler', {
-      mServiceName: {
+      mService: {
         H: 'PA',
         T: 'WORKTIME',
       },
-      mODataName: {
+      mEntitySet: {
         H: 'HeadCountDetail',
         T: 'TimeOverviewDetail1',
       },
@@ -110,24 +110,24 @@ sap.ui.define(
             this.oPopover.openBy(AppUtils.getAppController().byId('mobile-basis-home'));
           });
 
-          let mPayload, sServiceName, sODataName;
+          let mPayload, sService, sEntitySet;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            sServiceName = this.mServiceName[mEventSourceData.OData];
-            sODataName = this.mODataName[mEventSourceData.OData];
+            sService = this.mService[mEventSourceData.OData];
+            sEntitySet = this.mEntitySet[mEventSourceData.OData];
 
             const mEventSourceData = oParam.getSource().data();
             mPayload = this.getPayload(mEventSourceData);
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
-            sServiceName = this.mServiceName[oParam.OData];
-            sODataName = this.mODataName[oParam.OData];
+            sService = this.mService[oParam.OData];
+            sEntitySet = this.mEntitySet[oParam.OData];
 
             delete oParam.OData;
             mPayload = oParam;
           }
 
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sServiceName]), sODataName, mPayload);
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sService]), sEntitySet, mPayload);
           const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
           this.oPopoverModel.setProperty(
@@ -135,7 +135,7 @@ sap.ui.define(
             aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode }))
           );
         } catch (oError) {
-          AppUtils.debug('MobileEmployeeListPopover > openPopover Error', oError);
+          AppUtils.debug('MobileEmployeeListPopoverHandler > openPopover Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => this.closePopover(),
