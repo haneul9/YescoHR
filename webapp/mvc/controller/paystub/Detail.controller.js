@@ -77,7 +77,8 @@ sap.ui.define(
 
           // Paylist
           const aPayList = this.transformTreeData({ aTreeData: mDetail.Payslip1Nav.results });
-          const bShowHeader = !_.every(mDetail.Payslip1Nav.results, (o) => _.isEmpty(o.Anzhl) && _.chain(o.Betpe).toNumber().isEqual(0).value());
+          // const bShowHeader = !_.every(mDetail.Payslip1Nav.results, (o) => _.isEmpty(o.Anzhl) && _.chain(o.Betpe).toNumber().isEqual(0).value());
+          const bShowHeader = true;
           // Deductlist
           const aDeductlist = this.transformTreeData({ aTreeData: mDetail.Payslip2Nav.results });
           // TaxIncomeList

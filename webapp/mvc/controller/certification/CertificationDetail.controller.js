@@ -135,7 +135,7 @@ sap.ui.define(
         );
 
         if (sViewKey === 'N' || !sViewKey) {
-          const mSessionData = this.getAppointeeData();
+          const mSessionData = this.getSessionData();
 
           oDetailModel.setProperty('/FormData', {
             Reqnt: '1',
