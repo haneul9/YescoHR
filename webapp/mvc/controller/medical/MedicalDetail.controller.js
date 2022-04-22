@@ -126,11 +126,11 @@ sap.ui.define(
       // FormData Settings
       async setFormData() {
         const sWerks = this.getAppointeeProperty('Werks');
-        const sCommMsg = `<br/><span style='color: #006bd3; font-weight: bold'>※ </span>
-        <span style='font-weight: bold;'>${this.getBundleText('MSG_05017')}</span>
-        <span style='color: #006bd3; font-weight: bold; margin-left: -3px;'>${this.getBundleText('MSG_05018')}</span><br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #006bd3; font-weight: bold'>${this.getBundleText('MSG_05019')}</span><br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight: bold'>${this.getBundleText('MSG_05020')}</span>`;
+        const sCommMsg = `<br/><span style='color: #006bd3;'>※ </span>
+          <span'>${this.getBundleText('MSG_05017')}</span>
+          <span style='color: #006bd3; margin-left: -3px;'>${this.getBundleText('MSG_05018')}</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #006bd3;'>${this.getBundleText('MSG_05019')}</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span>${this.getBundleText('MSG_05020')}</span>`;
         let sMsg = '';
 
         if (sWerks === '2000') {
