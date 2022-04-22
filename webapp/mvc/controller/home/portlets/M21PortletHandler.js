@@ -2,21 +2,21 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
+    'sap/ui/yesco/common/EmployeeListDialogHandler',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/controller/home/portlets/popup/M21PortletDialogHandler',
     'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
     Fragment,
+    EmployeeListDialogHandler,
     MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
-    AbstractPortletHandler,
-    M21PortletDialogHandler
+    AbstractPortletHandler
   ) => {
     'use strict';
 
@@ -39,7 +39,7 @@ sap.ui.define(
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.oPopupHandler = this.bMobile ? new MobileEmployeeListPopoverHandler(oController) : new M21PortletDialogHandler(oController, oPortletModel);
+        this.oPopupHandler = this.bMobile ? new MobileEmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController);
       },
 
       async readContentData() {
