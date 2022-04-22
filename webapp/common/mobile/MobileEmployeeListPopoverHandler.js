@@ -165,6 +165,9 @@ sap.ui.define(
 
         const oContext = oEvent.getSource().getBindingContext();
         // if (oContext.getProperty('') === 'M') {
+        if (this.oController.reduceViewResource && typeof this.oController.reduceViewResource === 'function') {
+          this.oController.reduceViewResource();
+        }
         const sPernr = oContext.getProperty('Pernr');
         this.oController.getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
         // }

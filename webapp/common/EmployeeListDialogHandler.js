@@ -2,8 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
@@ -16,8 +14,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
     TableUtils,
