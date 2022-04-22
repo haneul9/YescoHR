@@ -113,10 +113,10 @@ sap.ui.define(
           let mPayload, sService, sEntitySet;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
+            const mEventSourceData = oParam.getSource().data();
+
             sService = this.mService[mEventSourceData.OData];
             sEntitySet = this.mEntitySet[mEventSourceData.OData];
-
-            const mEventSourceData = oParam.getSource().data();
             mPayload = this.getPayload(mEventSourceData);
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우

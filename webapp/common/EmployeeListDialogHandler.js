@@ -71,13 +71,13 @@ sap.ui.define(
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
             const oSessionProperty = this.oController.getSessionModel().getData();
-            const oEventSourceData = oParam.getSource().data();
+            const mEventSourceData = oParam.getSource().data();
             mPayload = {
               Zyear: moment().year(),
               Werks: oSessionProperty.Werks,
               Orgeh: oSessionProperty.Orgeh,
-              Headty: oEventSourceData.Headty,
-              Discod: oEventSourceData.Discod,
+              Headty: mEventSourceData.Headty,
+              Discod: mEventSourceData.Discod,
             };
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
