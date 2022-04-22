@@ -113,15 +113,18 @@ sap.ui.define(
           let mPayload, sServiceName, sODataName;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            const mEventSourceData = oParam.getSource().data();
-            mPayload = this.getPayload(mEventSourceData);
             sServiceName = this.mServiceName[mEventSourceData.OData];
             sODataName = this.mODataName[mEventSourceData.OData];
+
+            const mEventSourceData = oParam.getSource().data();
+            mPayload = this.getPayload(mEventSourceData);
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
-            mPayload = oParam;
             sServiceName = this.mServiceName[oParam.OData];
             sODataName = this.mODataName[oParam.OData];
+
+            delete oParam.OData;
+            mPayload = oParam;
           }
 
           const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sServiceName]), sODataName, mPayload);
