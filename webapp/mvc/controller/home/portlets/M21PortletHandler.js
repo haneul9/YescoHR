@@ -2,8 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/yesco/common/EmployeeListDialogHandler',
-    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
@@ -12,8 +10,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    EmployeeListDialogHandler,
-    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
     AbstractPortletHandler
@@ -39,7 +35,7 @@ sap.ui.define(
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.oPopupHandler = this.bMobile ? new MobileEmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController);
+        this.oEmployeeListPopupHandler = oController.getEmployeeListPopupHandler();
       },
 
       async readContentData() {
@@ -67,15 +63,15 @@ sap.ui.define(
 
       onPressCount(oEvent) {
         if (this.bMobile) {
-          this.oPopupHandler.openPopover(oEvent);
+          this.oEmployeeListPopupHandler.openPopover(oEvent);
         } else {
-          this.oPopupHandler.openDialog(oEvent);
+          this.oEmployeeListPopupHandler.openDialog(oEvent);
         }
       },
 
       destroy() {
-        if (this.oPopupHandler) {
-          this.oPopupHandler.destroy();
+        if (this.oEmployeeListPopupHandler) {
+          this.oEmployeeListPopupHandler.destroy();
         }
 
         AbstractPortletHandler.prototype.destroy.call(this);

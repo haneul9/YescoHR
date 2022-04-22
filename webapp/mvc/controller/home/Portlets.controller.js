@@ -7,7 +7,9 @@ sap.ui.define(
     'sap/ui/core/dnd/DropLayout',
     'sap/ui/core/dnd/DropPosition',
     'sap/ui/model/json/JSONModel',
+    'sap/ui/yesco/common/EmployeeListDialogHandler',
     'sap/ui/yesco/common/EmployeeSearch',
+    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -37,7 +39,9 @@ sap.ui.define(
     DropLayout,
     DropPosition,
     JSONModel,
+    EmployeeListDialogHandler,
     EmployeeSearch,
+    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
     BaseController,
@@ -228,6 +232,7 @@ sap.ui.define(
         this.setViewModel(oPortletsModel);
 
         this.oPortletsP13nDialogHandler = new PortletsP13nDialogHandler(this, oPortletsModel);
+        this.setEmployeeListPopupHandler();
 
         this.showPortlets(oPortletsModel);
       },
@@ -364,6 +369,14 @@ sap.ui.define(
 
       async onPressPortletsP13nSave(sClosingPortletId) {
         return this.oPortletsP13nDialogHandler.onPressPortletsP13nSave(sClosingPortletId);
+      },
+
+      setEmployeeListPopupHandler() {
+        this.oEmployeeListPopupHandler = this.bMobile ? new MobileEmployeeListPopoverHandler(this) : new EmployeeListDialogHandler(this);
+      },
+
+      getEmployeeListPopupHandler() {
+        return this.oEmployeeListPopupHandler;
       },
 
       reduceViewResource() {
