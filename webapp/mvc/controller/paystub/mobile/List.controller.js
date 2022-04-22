@@ -195,10 +195,6 @@ sap.ui.define(
         const sBegym = oViewModel.getProperty('/search/begym');
         const sEndym = oViewModel.getProperty('/search/endym');
 
-        if (dBegda.getFullYear() < 2022) {
-          MessageBox.alert(this.getBundleText('MSG_13003'));
-        }
-
         return await Client.getEntitySet(oModel, 'PayslipList', {
           Menid: this.getCurrentMenuId(),
           Begym: sBegym,
