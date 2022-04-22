@@ -9,11 +9,11 @@
   "devDependencies": {
     "@ui5/cli": "^2.14.7",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jsdoc": "^36.0.7",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsdoc": "^36.1.1",
     "eslint-plugin-ui5": "^0.1.0",
     "nwabap-ui5uploader": "^1.2.0",
-    "prettier": "^2.4.1",
+    "prettier": "^2.6.2",
     "ui5-middleware-simpleproxy": "^0.7.6"
   },
   "ui5": {
