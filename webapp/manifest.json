@@ -74,13 +74,11 @@
         { "uri": "asset/css/mobile-style.css", "id": "mobilestyle" },
         { "uri": "asset/css/placeholder.css" },
         { "uri": "asset/css/zample/zample.css" },
-        { "uri": "asset/css/util/font-size.css" },
-        { "uri": "asset/css/util/font-weight.css" },
-        { "uri": "asset/css/util/line-height.css" },
+        { "uri": "asset/css/util/font.css" },
         { "uri": "asset/css/util/margin.css" },
         { "uri": "asset/css/util/padding.css" },
         { "uri": "asset/css/util/border.css" },
-        { "uri": "asset/css/util/width-height.css" },
+        { "uri": "asset/css/util/size.css" },
         { "uri": "asset/css/util/align.css" }
       ]
     },

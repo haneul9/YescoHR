@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+.font-w100, .font-thin                  {font-weight:100 !important} 
+.font-w300, .font-light                 {font-weight:300 !important} 
+.font-w400, .font-regular, .font-normal {font-weight:400 !important}
+.font-w500, .font-medium                {font-weight:500 !important}
+.font-w700, .font-bold                  {font-weight:700 !important}
+.font-w900, .font-black                 {font-weight:900 !important}
+
 .font-0       {font-size:  0         !important}
 .font-0-rem   {font-size:  0rem      !important}
 .font-0a-rem  {font-size:  0.0625rem !important}
