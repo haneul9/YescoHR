@@ -26,8 +26,8 @@
     </layoutData>
     <CustomTreeItem>
       <HBox>
-        <Image visible="{= ${Otype} === '90' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png" />
-        <Image visible="{= ${Otype} === '91' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type02.png" />
+        <Image visible="{= ${Otype} === '90' }" press=".onUrlTree" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png" />
+        <Image visible="{= ${Otype} === '91' }" press=".onUrlTree" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type02.png" />
         <Image visible="{= ${Otype} === 'O' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type03.png" />
         <Text text="{Stext}"/>
       </HBox>

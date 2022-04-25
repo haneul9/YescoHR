@@ -324,6 +324,20 @@ sap.ui.define(
         });
       },
 
+      async onUrlTree(oEvent) {
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        const oRowData = oViewModel.getProperty(vPath);
+
+        if (!oRowData.Zfiledoc || !oRowData.Zfilekey) {
+          return;
+        }
+
+        const [oUrl] = await this.getUrl(oRowData);
+
+        window.open(oUrl.Url, '_blank');
+      },
+
       async onPressLink(oEvent) {
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
