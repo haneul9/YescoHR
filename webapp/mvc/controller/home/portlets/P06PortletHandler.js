@@ -60,7 +60,7 @@ sap.ui.define(
               id: this.sChartId,
               type: 'cylinder',
               renderAt: `${this.sChartId}-container`,
-              width: 110,
+              width: '110',
               height: '95%',
               dataFormat: 'json',
               dataSource: {
