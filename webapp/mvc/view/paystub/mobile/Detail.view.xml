@@ -24,31 +24,31 @@
               </HBox>
               <Label text="{i18n>LABEL_13044}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" class="font-16-px"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03"/>
               </HBox>
               <Label text="{i18n>LABEL_13045}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication02" class="font-16-px"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03"/>
               </HBox>
-              <Label text="{i18n>LABEL_13046}"/>
+              <Label text="{i18n>LABEL_13046}" class="font-bold" />
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-bold" />
               </HBox>
               <Label text="{i18n>LABEL_13047}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="font-18-px font-bold"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication02"/>
               </HBox>
               <Label text="{i18n>LABEL_13048}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
               </HBox>
               <Label text="{i18n>LABEL_13049}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
               </HBox>
               <Label text="{i18n>LABEL_13053}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }"/>
+                <ObjectStatus text="{ path: '/summary/list/0/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
               </HBox>
             </grid:CSSGrid>
           </VBox>

@@ -16,7 +16,7 @@
 								<ObjectStatus text="{Ocrtx}" state="{ path: 'Ocrsn', formatter: '.onChangeIndication' }"/>
 							</VBox>
 							<VBox alignItems="End" justifyContent="Center">
-								<Text text="{ path: 'Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" class="font-20-px font-bold"></Text>
+								<Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" class="font-20-px font-bold"></Text>
 							</VBox>
 						</grid:CSSGrid>
 					</CustomListItem>
