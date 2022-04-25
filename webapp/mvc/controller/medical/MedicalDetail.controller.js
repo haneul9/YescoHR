@@ -897,16 +897,16 @@ sap.ui.define(
 
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) {
-                // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             }
@@ -1090,16 +1090,16 @@ sap.ui.define(
 
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) {
-                // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             }
