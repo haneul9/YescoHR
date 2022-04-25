@@ -33,18 +33,18 @@
           </custom:customData>
           <Label text="{/contents/A04/data/total}" class="font-42-px color-03 normal letter-spacing-sm"/>
         </custom:HBox>
-        <VBox items="{ path: '/contents/A04/data/legends', templateShareable: false }" class="legend-wrap sapUiSmallMarginTop">
+        <VBox items="{ path: '/contents/A04/data/legends', templateShareable: false }" class="legend-wrap legend-wrap-old sapUiSmallMarginTop">
           <custom:HBox justifyContent="SpaceBetween" class="active-link" press=".onPressCount">
             <custom:customData>
               <core:CustomData key="Headty" value="{/contents/A04/Headty}" />
               <core:CustomData key="Discod" value="{code}" />
             </custom:customData>
-            <Label text="{label} :" class="legend">
+            <Label text="{label} :" class="statistic-text legend">
               <customData>
                 <core:CustomData key="legend" value="{type}" writeToDom="true" />
               </customData>
             </Label>
-            <Text text=" {count}" />
+            <Text text=" { path: 'count', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="statistic-text" />
           </custom:HBox>
         </VBox>
       </VBox>

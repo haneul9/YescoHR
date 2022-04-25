@@ -382,6 +382,7 @@ sap.ui.define(
       reduceViewResource() {
         this.byId('portlets-grid').destroyItems();
         this.getViewModel().destroy();
+        this.oEmployeeListPopupHandler.destroy();
         this.oPortletsP13nDialogHandler.destroy();
         return this;
       },

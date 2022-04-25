@@ -24,13 +24,13 @@
       </layoutData>
       <core:HTML content='&lt;div id="employee-a08-chart-container" class="doughnut-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
-          <FlexItemData minHeight="70%" />
+          <FlexItemData minHeight="calc(100% - 58px)" maxHeight="calc(100% - 58px)" />
         </core:layoutData>
       </core:HTML>
       <!-- 범례 항목의 갯수가 적은 경우 하단으로 붙고 항목이 많아지면 점점 높이가 증가하다가 30% 이상이되면 scroll이 생성되는 구조 : HBox > ScrollContainer > HBox -->
-      <HBox width="100%">
+      <HBox width="100%" class="border-box">
         <layoutData>
-          <FlexItemData maxHeight="30%" />
+          <FlexItemData maxHeight="58px" />
         </layoutData>
         <ScrollContainer horizontal="false" vertical="true" width="100%">
           <layoutData>

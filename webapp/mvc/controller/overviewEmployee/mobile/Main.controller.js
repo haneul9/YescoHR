@@ -23,7 +23,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.overviewEmployee.mobile.Main', {
       initializeModel() {
-        const iFullAgeCountingYear = moment().year() - 1;
+        const iFullAgeCountingYear = moment().year();
         const mData = {
           ageMGen: `${iFullAgeCountingYear - 1995}~${iFullAgeCountingYear - 1980}`,
           ageZGen: `${iFullAgeCountingYear - 2010}~${iFullAgeCountingYear - 1996}`,
