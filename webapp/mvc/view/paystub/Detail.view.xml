@@ -38,7 +38,7 @@
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.PayTable" type="XML" />
           </HBox>
         </VBox>
-        <VBox class="vCardBox" width="27%">
+        <VBox class="vCardBox sapUiTinyMarginBegin" width="27%">
           <HBox alignItems="Center" class="table-toolbar">
             <HBox class="title">
               <Title level="H2" text="{i18n>LABEL_13016}" />
@@ -48,7 +48,7 @@
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.paystub.fragment.DeductionTable" type="XML" />
           </HBox>
         </VBox>
-        <VBox class="vCardBox" width="27%">
+        <VBox class="vCardBox sapUiTinyMarginBegin" width="27%">
           <HBox alignItems="Center" class="table-toolbar">
             <HBox class="title">
               <Title level="H2" text="{i18n>LABEL_13017}" />
