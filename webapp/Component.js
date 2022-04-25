@@ -423,7 +423,7 @@ sap.ui.define(
           oBG.remove();
         }
 
-        const sCurrentMenuViewId = this.getMenuModel().getCurrentMenuViewId();
+        const sCurrentMenuViewId = this.getMenuModel().getCurrentMenuViewId().replace(/\//g, '_');
         const oView = this.byId(sCurrentMenuViewId);
         if (oView) {
           const oController = oView.getController();

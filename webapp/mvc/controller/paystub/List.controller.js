@@ -62,17 +62,12 @@ sap.ui.define(
               },
               data: [
                 {
-                  label: this.getBundleText('LABEL_13002'), // 급여
+                  label: this.getBundleText('LABEL_13051'), // 과세총액
                   value: '0',
                   isSliced: '1',
                 },
                 {
-                  label: this.getBundleText('LABEL_13003'), // 상여
-                  value: '0',
-                  isSliced: '0',
-                },
-                {
-                  label: this.getBundleText('LABEL_13004'), // 인정상여
+                  label: this.getBundleText('LABEL_13052'), // 비과세총액
                   value: '0',
                   isSliced: '0',
                 },
@@ -146,18 +141,16 @@ sap.ui.define(
           vCalcProps: /^Bet0/,
         });
 
-        oViewModel.setProperty('/summary/Bet01', _.get(mSumRow, 'Bet01', '0'));
-        oViewModel.setProperty('/summary/Bet02', _.get(mSumRow, 'Bet02', '0'));
-        oViewModel.setProperty('/summary/Bet03', _.get(mSumRow, 'Bet03', '0'));
-        oViewModel.setProperty('/summary/Bet04', _.get(mSumRow, 'Bet04', '0'));
-        oViewModel.setProperty('/summary/dataSources/data/0/value', _.get(mSumRow, 'Bet01', '0'));
-        oViewModel.setProperty('/summary/dataSources/data/1/value', _.get(mSumRow, 'Bet02', '0'));
-        oViewModel.setProperty('/summary/dataSources/data/2/value', _.get(mSumRow, 'Bet03', '0'));
+        oViewModel.setProperty('/summary/Bet05', _.get(mSumRow, 'Bet05', '0'));
+        oViewModel.setProperty('/summary/Bet06', _.get(mSumRow, 'Bet06', '0'));
+        oViewModel.setProperty('/summary/Bet07', _.get(mSumRow, 'Bet07', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/0/value', _.get(mSumRow, 'Bet05', '0'));
+        oViewModel.setProperty('/summary/dataSources/data/1/value', _.get(mSumRow, 'Bet06', '0'));
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
         oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
 
         setTimeout(() => {
-          TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 6: 'bgType01', 8: 'bgType02', 10: 'bgType03' } });
+          TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 3: 'bgType10', 4: 'bgType10', 5: 'bgType10', 6: 'bgType11', 7: 'bgType12', 8: 'bgType12', 9: 'bgType12' } });
         }, 100);
       },
 

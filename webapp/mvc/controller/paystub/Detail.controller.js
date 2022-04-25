@@ -107,7 +107,7 @@ sap.ui.define(
 
           setTimeout(() => {
             if (!bShowHeader) TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
-            TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 5: 'bgType01', 7: 'bgType02', 9: 'bgType03' } });
+            TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 2: 'bgType10', 3: 'bgType10', 4: 'bgType10', 5: 'bgType11', 6: 'bgType12', 7: 'bgType12', 8: 'bgType12' } });
             // TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
           }, 100);
         } catch (oError) {

@@ -307,7 +307,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:48px}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex; padding-top:0px; min-height:48px !important}
 .sapUiLayoutCSSGrid.form-grid [data-sum=A] {font-size:18px !important; font-weight:700 !important}
-.sapUiLayoutCSSGrid.form-grid .sapMLabel > bdi {padding-left:0px; padding-right:20px; font-size:16px; color:#000; font-weight:600}
+.sapUiLayoutCSSGrid.form-grid .sapMLabel > bdi {padding-left:0px; padding-right:20px; font-size:16px; color:#000}
+.sapUiLayoutCSSGrid.form-grid .sapMLabel:not(.font-black) > bdi { font-weight:600; }
 .sapUiLayoutCSSGrid.form-grid .sapMLabel, .sapUiLayoutCSSGrid.form-grid .sapMText, .sapUiLayoutCSSGrid.form-grid input  {font-size:16px}
 .sapUiLayoutCSSGrid.form-grid .sapMText, .sapUiLayoutCSSGrid.form-grid input  {font-weight:600}
 .sapUiLayoutCSSGrid.form-grid .sapMComboBoxBaseReadonly input  {padding-top:0 !important; padding-bottom:0 !important; font-weight:600}

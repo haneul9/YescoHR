@@ -344,7 +344,9 @@ sap.ui.define(
       },
 
       onPressExcept() {
-        this.oPopupHandler.openDialog({ Headty: 'L' });
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+
+        this.oPopupHandler.openDialog({ ...mSearchConditions, Headty: 'L' });
       },
 
       onPressCount(oEvent) {
@@ -352,6 +354,14 @@ sap.ui.define(
         const mPayload = oEvent.getSource().data();
 
         this.oPopupHandler.openDialog({ ...mSearchConditions, ...mPayload });
+      },
+
+      reduceViewResource() {
+        this.oPopupHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
+        return this;
       },
 
       /*****************************************************************
