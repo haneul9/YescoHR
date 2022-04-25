@@ -117,6 +117,14 @@ sap.ui.define(
         return sDate;
       },
 
+      forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
+        const sMob1 = this.TextUtils.toCurrency(cost1);
+        const sMob2 = this.TextUtils.toCurrency(cost2);
+        const sMobtot = this.TextUtils.toCurrency(costtot);
+
+        return `${sMobtot} (${sMob1} / ${sMob2})`;
+      },
+
       getCurrentLocationText(oArguments) {
         const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
 

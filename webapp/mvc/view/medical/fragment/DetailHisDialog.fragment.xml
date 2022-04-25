@@ -35,6 +35,17 @@
                     <FlexBox alignItems="Start" justifyContent="End">
                         <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
                     </FlexBox>
+                    <Label text="{i18n>LABEL_09031}" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
+                    <FlexBox alignItems="Start" visible="{= ${/DialogData/ZappStat} === 'P' }">
+                        <Text text="{/DialogData/ZmodResn}" />
+                    </FlexBox>
+                    <Label text="{i18n>LABEL_09032}" width="180px" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
+                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
+                        <Text text="{ 
+                            parts: [{path: '/DialogData/Mob01'}, {path: '/DialogData/Mob02'}, {path: '/DialogData/Mobtot'}],
+                            formatter: '.forMatCost' 
+                        }" />
+                    </FlexBox>
                     <Label text="{i18n>LABEL_09015}"/>
                     <VBox>
                         <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{/ReWriteStat}">
