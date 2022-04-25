@@ -619,19 +619,20 @@ sap.ui.define(
       },
 
       onPressDiagnosisButton() {
-        const oView = this.getView();
+        MessageBox.alert('Not ready yet.');
+        // const oView = this.getView();
 
-        if (!this.pExamDialog) {
-          this.pExamDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-            controller: this,
-          }).then((oDialog) => {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-        this.pExamDialog.then((oDialog) => oDialog.open());
+        // if (!this.pExamDialog) {
+        //   this.pExamDialog = Fragment.load({
+        //     id: oView.getId(),
+        //     name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //     controller: this,
+        //   }).then((oDialog) => {
+        //     oView.addDependent(oDialog);
+        //     return oDialog;
+        //   });
+        // }
+        // this.pExamDialog.then((oDialog) => oDialog.open());
       },
 
       onPressRejectViewButton() {
