@@ -70,9 +70,10 @@ sap.ui.define(
 
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getParent().getBindingContext().getPath();
+        const sScore = sValue || '0';
 
-        oViewModel.setProperty(`${sPath}/Prgrt`, sValue);
-        oEventSource.setValue(sValue);
+        oViewModel.setProperty(`${sPath}/Prgrt`, sScore);
+        oEventSource.setValue(sScore);
       },
 
       async onObjectMatched() {
