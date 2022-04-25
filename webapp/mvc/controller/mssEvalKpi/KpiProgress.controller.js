@@ -54,11 +54,14 @@ sap.ui.define(
       // 진척율 입력
       progressInput(oEvent) {
         const oViewModel = this.getViewModel();
-        let sValue = oEvent
-          .getParameter('value')
-          .trim()
-          .replace(/[^\d'.']/g, '');
-
+        let sValue = _.trimStart(
+          oEvent
+            .getParameter('value')
+            .trim()
+            .replace(/[^\d'.']/g, ''),
+          '0',
+          ''
+        );
         if (_.includes(sValue, '.')) {
           const sReVal = sValue.replace(/['.']{2}/g, '.');
           const iIndex = sReVal.indexOf('.');
