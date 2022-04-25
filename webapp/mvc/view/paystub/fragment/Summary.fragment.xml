@@ -12,14 +12,12 @@
         </layoutData>
         <core:HTML content="&lt;div id='chart-paystub-container'&gt;&lt;/div&gt;" />
       </FlexBox>
-      <Label text="{i18n>LABEL_13002}" />
-      <Text text="{ path: '/summary/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-      <Label text="{i18n>LABEL_13003}" />
-      <Text text="{ path: '/summary/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-      <Label text="{i18n>LABEL_13004}" />
-      <Text text="{ path: '/summary/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Label text="{i18n>LABEL_13051}" />
+      <Text text="{ path: '/summary/Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Label text="{i18n>LABEL_13052}" />
+      <Text text="{ path: '/summary/Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
       <Label text="{i18n>LABEL_13005}" />
-      <Text text="{ path: '/summary/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Text text="{ path: '/summary/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>
