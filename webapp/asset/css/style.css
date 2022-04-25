@@ -854,9 +854,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .bgType07 {background-color:#edfcff}
 .bgType08 {background-color:#f5fff0}
 .bgType09 {background-color:#fffcef}
-.bgType10 {background-color:#b8fba3}
-.bgType11 {background-color:#ffd2eb}
-.bgType12 {background-color:#fff8c8}
+.bgType10 {background-color:#d8ffc3}
+.bgType11 {background-color:#fffbcf}
+.bgType12 {background-color:#d0f2ff}
 
 .node-button-div {display:inline-block !important; margin-left:-4px}
 .org-chart-container > div {height:100%}
@@ -1556,8 +1556,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .pay-summary > span.sapMLabel:nth-child(3):before {background-color:#faca74}
 .pay-summary > span.sapMLabel:nth-child(4):before {background-color:transparent}
 
-.pay-summary > span.sapMLabel[aria-label=과세총액]:before {background-color: #7bb4eb; }
-.pay-summary > span.sapMLabel[aria-label=비과세총액]:before {background-color: #81daea; }
+.pay-summary > span.sapMLabel[aria-label=과세총액]:before {background-color:#7bb4eb}
+.pay-summary > span.sapMLabel[aria-label=비과세총액]:before {background-color:#81daea}
 .pay-summary > span.sapMLabel[aria-label=소득총액]:before {background-color:transparent}
 
 /* 연간휴가계획현황 */
