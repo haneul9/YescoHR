@@ -29,7 +29,9 @@ sap.ui.define(
     ServiceNames,
     Validator,
     BaseController,
-    Constants
+    Constants,
+    Date,
+    Percent
   ) => {
     'use strict';
 
@@ -329,6 +331,10 @@ sap.ui.define(
         this.getViewModel().setProperty('/tab/selectedKey', sTabKey);
       },
 
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
       renderStageClass() {
         const oStageHeader = this.byId('stageHeader');
         oStageHeader.addEventDelegate({
@@ -614,6 +620,19 @@ sap.ui.define(
 
       onPressDiagnosisButton() {
         MessageBox.alert('Not ready yet.');
+        // const oView = this.getView();
+
+        // if (!this.pExamDialog) {
+        //   this.pExamDialog = Fragment.load({
+        //     id: oView.getId(),
+        //     name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //     controller: this,
+        //   }).then((oDialog) => {
+        //     oView.addDependent(oDialog);
+        //     return oDialog;
+        //   });
+        // }
+        // this.pExamDialog.then((oDialog) => oDialog.open());
       },
 
       onPressRejectViewButton() {

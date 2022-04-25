@@ -1478,6 +1478,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .per-panel .sapUiLayoutCSSGrid.form-grid .sapMLabel {padding-left:20px}
 .per-panel .sapMInputBaseDisabled.goal-subject .sapMInputBaseContentWrapper {border-color:transparent !important}
 .per-panel .sapMInputBaseDisabled.goal-subject .sapMInputBaseContentWrapper .sapMInputBaseInner {color:var(--FontColorNormal) !important; background-color:transparent}
+.form-grid.type-job .sapMLabel {justify-content: center;}
+.form-grid.type-job .sapMComboBox {padding-bottom: 15px; padding-top: 15px; padding-left: 10px; padding-right: 10px;}
 
 .sapMPanel.type-b .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMPanel.type-b .sapMMessageDialog .sapMDialogScrollCont {padding:0.625rem 0px 0 0px}
 .sapMPanelExpandableIcon {top:2px; background:#e8e8e8; color:#222; border-radius:50%; width:40px; height:40px; margin:0; display:flex; justify-content:center; align-items:center; transform:translateY(0%) rotate(90deg)}

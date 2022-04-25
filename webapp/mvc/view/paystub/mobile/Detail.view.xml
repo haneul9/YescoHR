@@ -30,9 +30,9 @@
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <ObjectStatus text="{ path: '/summary/list/0/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03"/>
               </HBox>
-              <Label text="{i18n>LABEL_13046}" class="font-bold" />
+              <Label text="{i18n>LABEL_13046}" class="font-black" />
               <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-bold" />
+                <ObjectStatus text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-black" />
               </HBox>
               <Label text="{i18n>LABEL_13047}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
