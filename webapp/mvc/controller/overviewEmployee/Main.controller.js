@@ -344,7 +344,9 @@ sap.ui.define(
       },
 
       onPressExcept() {
-        this.oPopupHandler.openDialog({ Headty: 'L' });
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+
+        this.oPopupHandler.openDialog({ ...mSearchConditions, Headty: 'L' });
       },
 
       onPressCount(oEvent) {
