@@ -261,7 +261,7 @@ sap.ui.define(
             if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
               this.setTeamGridList(aGridList);
             } else {
-              aGridList.unshift({ Stext: this.getBundleText('MSG_15002') });
+              aGridList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
             }
 
             oViewModel.setProperty('/PartList', aGridList);
@@ -521,7 +521,7 @@ sap.ui.define(
           if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
             this.setTeamGridList(aPartList);
           } else {
-            aPartList.unshift({ Stext: this.getBundleText('MSG_15002') });
+            aPartList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
           }
 
           oViewModel.setProperty('/PartList', aPartList);
@@ -906,6 +906,10 @@ sap.ui.define(
                     aList.push(e);
                   }
                 });
+
+                if (_.isEmpty(aList)) {
+                  aList.push({ Orgeh: aGridData[0].Orgeh });
+                }
               } else {
                 aGridData = oViewModel.getProperty('/Tmp');
 
