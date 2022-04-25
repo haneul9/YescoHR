@@ -217,7 +217,7 @@ sap.ui.define(
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
               width: _.has(mChartInfo, 'ChartWidth') ? mChartInfo.ChartWidth : '100%',
-              height: '100%',
+              height: _.has(mChartInfo, 'ChartHeight') ? mChartInfo.ChartHeight : '100%',
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
