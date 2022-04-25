@@ -326,7 +326,7 @@ sap.ui.define(
 
       async onUrlTree(oEvent) {
         const oViewModel = this.getViewModel();
-        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        const vPath = oEvent.getParameter('listItem').getBindingContext().getPath();
         const oRowData = oViewModel.getProperty(vPath);
 
         if (!oRowData.Zfiledoc || !oRowData.Zfilekey) {
