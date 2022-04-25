@@ -356,6 +356,14 @@ sap.ui.define(
         this.oPopupHandler.openDialog({ ...mSearchConditions, ...mPayload });
       },
 
+      reduceViewResource() {
+        this.oPopupHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
+        return this;
+      },
+
       /*****************************************************************
        * ! Call oData
        *****************************************************************/

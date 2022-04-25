@@ -338,6 +338,10 @@ sap.ui.define(
       },
 
       reduceViewResource() {
+        this.oPopupHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
         return this;
       },
 
