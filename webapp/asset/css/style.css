@@ -664,7 +664,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
 /* GNB */
-.sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:243px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
+.sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:246px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .sapUiSizeCompact .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
 .sapUiSizeCompact .megadrop-menu-layer .sapMIBar.sapMTB {padding:0; height:3.5rem; line-height:3.5rem}
 .sapUiSizeCompact .megadrop-menu-layer .sapMIBar.sapMTB .sapMBarChild {font-size:17px; font-weight:800; color:#002866; letter-spacing:-0.2px}
