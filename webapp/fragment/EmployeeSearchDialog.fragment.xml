@@ -19,33 +19,33 @@
           <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d form-search">
             <Label text="{i18n>LABEL_00237}" />
             <VBox>
-              <ComboBox items="{/entry/persArea}" selectedKey="{/settings/searchConditions/Persa}" enabled="{/settings/fieldEnabled/Persa}" width="100%">
+              <ComboBox items="{/entry/persArea}" selectedKey="{/settings/searchConditions/Persa}" enabled="{/settings/fieldEnabled/Persa}" width="100%" class="conspicuous-disabled">
                 <core:Item text="{Pbtxt}" key="{Werks}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00211}" />
             <VBox>
-              <Input value="{/settings/searchConditions/Ename}" enabled="{/settings/fieldEnabled/Ename}" submit=".onSearch" />
+              <Input value="{/settings/searchConditions/Ename}" enabled="{/settings/fieldEnabled/Ename}" submit=".onSearch" class="conspicuous-disabled" />
             </VBox>
             <Label text="{i18n>LABEL_00226}" />
             <VBox>
-              <Input value="{/settings/searchConditions/Orgtx}" enabled="{/settings/fieldEnabled/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onGroupOpen" />
+              <Input value="{/settings/searchConditions/Orgtx}" enabled="{/settings/fieldEnabled/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onGroupOpen" class="conspicuous-disabled" />
             </VBox>
             <Label text="{i18n>LABEL_00240}" />
             <VBox>
-              <ComboBox items="{/entry/workType}" selectedKey="{/settings/searchConditions/Stat2}" width="100%" enabled="{/settings/fieldEnabled/Stat2}">
+              <ComboBox items="{/entry/workType}" selectedKey="{/settings/searchConditions/Stat2}" width="100%" enabled="{/settings/fieldEnabled/Stat2}" class="conspicuous-disabled">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00238}" />
             <VBox>
-              <ComboBox items="{/entry/empGroup}" selectedKey="{/settings/searchConditions/Persg}" enabled="{/settings/fieldEnabled/Persg}" change=".onChangeEmpGroup" width="100%">
+              <ComboBox items="{/entry/empGroup}" selectedKey="{/settings/searchConditions/Persg}" enabled="{/settings/fieldEnabled/Persg}" change=".onChangeEmpGroup" width="100%" class="conspicuous-disabled">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00327}" />
             <VBox>
-              <ComboBox items="{/entry/subEmpGroup}" selectedKey="{/settings/searchConditions/Persk}" enabled="{= ${/settings/fieldEnabled/Persk} &amp;&amp; ${/settings/searchConditions/Persg} !== 'ALL' }" busyIndicatorDelay="0" busy="{/settings/fieldBusy/Persk}" width="100%">
+              <ComboBox items="{/entry/subEmpGroup}" selectedKey="{/settings/searchConditions/Persk}" enabled="{= ${/settings/fieldEnabled/Persk} &amp;&amp; ${/settings/searchConditions/Persg} !== 'ALL' }" busyIndicatorDelay="0" busy="{/settings/fieldBusy/Persk}" width="100%" class="conspicuous-disabled">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
