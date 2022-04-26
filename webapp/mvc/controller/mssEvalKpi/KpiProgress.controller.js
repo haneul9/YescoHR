@@ -286,14 +286,15 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const mPayLoad = {
-          Objid: mSelectedRow.Objid9091,
+          Objid9091: mSelectedRow.Objid9091,
+          ObjidO: mSelectedRow.ObjidO,
           Otype: mSelectedRow.Otype,
-          Zyear: oViewModel.getProperty('/search/Syear'),
+          Syear: oViewModel.getProperty('/search/Syear'),
         };
 
         oViewModel.setProperty('/TeamList', []);
 
-        return Client.getEntitySet(oModel, 'KpiCascadingTeamList', mPayLoad);
+        return Client.getEntitySet(oModel, 'KpiProztTeamList', mPayLoad);
       },
 
       // List의 CommentBtn 클릭
