@@ -9,7 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/GroupDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석

@@ -9,9 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Year', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석

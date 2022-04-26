@@ -7,9 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Pernr',
-    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석

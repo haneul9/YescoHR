@@ -3,14 +3,12 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/ObjectNumber',
     'sap/ui/core/TextAlign',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     ObjectNumber,
     TextAlign,
-    TextUtils,
     Currency
   ) => {
     'use strict';

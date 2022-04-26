@@ -13,8 +13,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -29,9 +27,7 @@ sap.ui.define(
     ServiceNames,
     Validator,
     BaseController,
-    Constants,
-    Date,
-    Percent
+    Constants
   ) => {
     'use strict';
 

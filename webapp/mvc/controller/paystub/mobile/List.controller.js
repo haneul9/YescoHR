@@ -1,19 +1,15 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
-    MessageBox,
     AppUtils,
     ListStatusPopover,
     Client,
@@ -191,7 +187,7 @@ sap.ui.define(
       async getList() {
         const oModel = this.getModel(ServiceNames.PAY);
         const oViewModel = this.getViewModel();
-        const dBegda = oViewModel.getProperty('/search/date');
+        // const dBegda = oViewModel.getProperty('/search/date');
         const sBegym = oViewModel.getProperty('/search/begym');
         const sEndym = oViewModel.getProperty('/search/endym');
 

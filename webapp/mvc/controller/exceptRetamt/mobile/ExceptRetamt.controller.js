@@ -7,8 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석

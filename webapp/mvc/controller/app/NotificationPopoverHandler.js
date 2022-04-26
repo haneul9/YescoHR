@@ -9,8 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Time',
   ],
   (
     // prettier 방지용 주석
