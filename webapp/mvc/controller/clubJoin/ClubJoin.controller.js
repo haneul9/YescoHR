@@ -5,14 +5,13 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
@@ -20,7 +19,6 @@ sap.ui.define(
     FilterOperator,
     AppUtils,
     AttachFileAction,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     ServiceNames,
@@ -33,7 +31,6 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

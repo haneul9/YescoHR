@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -22,7 +21,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     AttachFileAction,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     Client,
@@ -35,7 +33,6 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

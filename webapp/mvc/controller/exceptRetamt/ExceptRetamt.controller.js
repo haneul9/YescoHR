@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/model/type/Date',
@@ -15,15 +14,12 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    FragmentEvent,
     BaseController,
     MessageBox
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.exceptRetamt.ExceptRetamt', {
-      FragmentEvent: FragmentEvent,
-
       initializeModel() {
         return {
           busy: false,

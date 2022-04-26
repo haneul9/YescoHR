@@ -340,6 +340,21 @@ sap.ui.define(
       },
 
       /**
+       * HELP Message Box handler
+       */
+      toggleHelpBox(oEvent) {
+        const oPanel = oEvent.getSource().getParent().getParent();
+        const oToolbar = oEvent.getSource().getParent();
+
+        oToolbar.getContent()[2].toggleStyleClass('expanded');
+        oPanel.setExpanded(!oPanel.getExpanded());
+      },
+
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
+      /**
        * Convenience method for logging.
        * @protected
        */

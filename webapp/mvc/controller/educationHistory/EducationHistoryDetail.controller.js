@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,7 +11,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     BaseController
@@ -22,7 +20,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistoryDetail', {
       TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

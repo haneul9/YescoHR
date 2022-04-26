@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/FileAttachmentBoxHandler',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -21,7 +20,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     FileAttachmentBoxHandler,
-    FragmentEvent,
     TextUtils,
     Client,
     ServiceNames,
@@ -32,7 +30,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.CongDetail', {
       FileAttachmentBoxHandler: null,
-      FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
 
       initializeModel() {
