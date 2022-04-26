@@ -17,7 +17,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09016}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData2" maxLength="16" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
+                        <Input id="DialogData2" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09020}"/>
                     <VBox>
@@ -25,7 +25,7 @@
                     </VBox>
                     <Label text="{i18n>LABEL_09017}"/>
                     <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData4" maxLength="16" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
+                        <Input id="DialogData4" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
                     </FlexBox>
                     <Label text="{i18n>LABEL_09014}"/>
                     <VBox>
