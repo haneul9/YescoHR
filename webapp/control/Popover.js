@@ -28,8 +28,9 @@ sap.ui.define(
           const iAvailHeight = screen.availHeight - 48 - 60; // (.sapMPopoverHeader height) - (.sapMPopoverFooter height)
           this.setContentHeight(`${iAvailHeight}px`).setContentWidth('100%').addStyleClass('full-popover');
         } else {
-          const iAvailHeight = screen.availHeight - 51 - 83 - 60 - 10; // (Popover offset top) - (.sapMPopoverHeader height) - (.sapMPopoverFooter height) - (bottom 10)
-          this.setContentHeight(`${iAvailHeight}px`).setContentWidth('490px');
+          // const iAvailHeight = screen.availHeight - 51 - 83 - 60 - 10; // (Popover offset top) - (.sapMPopoverHeader height) - (.sapMPopoverFooter height) - (bottom 10)
+          // this.setContentHeight(`${iAvailHeight}px`).setContentWidth('490px');
+          this.setContentHeight('auto').setContentWidth('490px');
         }
       },
 
