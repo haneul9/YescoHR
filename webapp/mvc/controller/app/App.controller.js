@@ -12,9 +12,17 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/app/NotificationPopoverHandler',
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/controller/app/control/MobileMenus',
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Time',
+    'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date',
+    'sap/ui/yesco/mvc/model/type/DateWeekday',
+    'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/Month',
+    'sap/ui/yesco/mvc/model/type/MonthDate',
+    'sap/ui/yesco/mvc/model/type/Percent',
     'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/ShortYearDate',
+    'sap/ui/yesco/mvc/model/type/Time',
+    'sap/ui/yesco/mvc/model/type/Year',
   ],
   (
     // prettier 방지용 주석

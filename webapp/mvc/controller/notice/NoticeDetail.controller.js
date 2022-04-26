@@ -11,7 +11,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/richtexteditor/RichTextEditor',
-    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석

@@ -6,10 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/model/type/Currency', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/DateWeekday', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Pernr', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
