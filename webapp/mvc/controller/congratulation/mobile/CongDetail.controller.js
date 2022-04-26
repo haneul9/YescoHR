@@ -9,7 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TextUtils',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -25,7 +24,6 @@ sap.ui.define(
     AttachFileAction,
     ComboEntry,
     TextUtils,
-    FragmentEvent,
     ServiceNames,
     MessageBox,
     BaseController
@@ -34,7 +32,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.CongDetail', {
       AttachFileAction: AttachFileAction,
-      FragmentEvent: FragmentEvent,
       TextUtils: TextUtils,
 
       initializeModel() {

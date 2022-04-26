@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/SummaryBoxHandler',
@@ -15,7 +14,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    EmployeeSearch,
     TableUtils,
     BaseController,
     SummaryBoxHandler,
@@ -25,7 +23,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.mobile.RequestList', {
       TableUtils: TableUtils,
-      EmployeeSearch: EmployeeSearch,
 
       sRequestListTableId: 'requestListTable',
       oSummaryBoxHandler: null,

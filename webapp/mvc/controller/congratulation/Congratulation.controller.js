@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FileListDialogHandler',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -14,7 +13,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    EmployeeSearch,
     FileListDialogHandler,
     TableUtils,
     Client,
@@ -25,7 +23,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.Congratulation', {
       FileListDialogHandler: null,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       AppUtils: AppUtils,
 
@@ -66,7 +63,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      onRefresh() {
+      callbackAppointeeChange() {
         this.onSearch();
         this.getTotalPay();
       },

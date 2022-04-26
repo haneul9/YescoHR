@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -24,7 +23,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     UI5Error,
-    FragmentEvent,
     TextUtils,
     ServiceNames,
     MessageBox,
@@ -66,7 +64,6 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

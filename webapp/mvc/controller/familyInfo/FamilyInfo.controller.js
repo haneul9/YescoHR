@@ -4,8 +4,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -18,8 +16,6 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     ServiceNames,
@@ -30,10 +26,8 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

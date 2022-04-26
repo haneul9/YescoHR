@@ -6,15 +6,14 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
@@ -23,7 +22,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     ComboEntry,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     Client,
@@ -37,7 +35,6 @@ sap.ui.define(
       PostcodeDialogHandler: null,
       TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

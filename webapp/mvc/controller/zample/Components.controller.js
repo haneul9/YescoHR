@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -23,7 +22,6 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     DateUtils,
-    EmployeeSearch,
     TableUtils,
     MessageBox,
     BaseController
@@ -31,7 +29,6 @@ sap.ui.define(
     'use strict';
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.Components', {
       DateUtils,
-      EmployeeSearch,
 
       /* =========================================================== */
       /* lifecycle methods                                           */
@@ -119,7 +116,13 @@ sap.ui.define(
       },
 
       openEmployeeDialog() {
-        this.EmployeeSearch.onSearchDialog.call(this);
+        this.getEmployeeSearchDialogHandler()
+          .activeMultiSelect()
+          .setOnLoadSearch(false)
+          .setChangeAppointee(false)
+          .setOptions({})
+          .setCallback((aSelectedEmp = []) => this.debug(aSelectedEmp))
+          .openDialog();
       },
 
       openTestDialog() {

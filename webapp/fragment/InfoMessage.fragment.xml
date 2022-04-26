@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
-        <Panel id="InfoMegBoxPanel" width="auto" expandable="true" expanded="true">
+    <HBox justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
+        <Panel width="auto" expandable="true" expanded="true">
             <layoutData>
                 <FlexItemData growFactor="1"/>
             </layoutData>
@@ -9,7 +9,7 @@
                 <OverflowToolbar height="3rem" style="Clear">
                     <Title text="HELP"/>
                     <ToolbarSpacer/>
-                    <Button press=".FragmentEvent.onTogglePanel" type="Transparent" class="icon-button close expanded"/>
+                    <Button press=".toggleHelpBox" type="Transparent" class="icon-button close expanded"/>
                 </OverflowToolbar>
             </headerToolbar>
             <content>

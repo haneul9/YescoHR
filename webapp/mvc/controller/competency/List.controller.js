@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -17,7 +16,6 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -27,8 +25,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.competency.List', {
-      EmployeeSearch: EmployeeSearch,
-
       initializeModel() {
         return {
           busy: false,

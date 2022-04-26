@@ -3,9 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -17,9 +15,7 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
     ComboEntry,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     Client,
@@ -30,10 +26,8 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistory', {
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -110,7 +104,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      async onRefresh() {
+      async callbackAppointeeChange() {
         const oListModel = this.getViewModel();
 
         try {

@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -17,7 +16,6 @@ sap.ui.define(
     Fragment,
     AppUtils,
     DateUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -26,7 +24,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.List', {
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
 
