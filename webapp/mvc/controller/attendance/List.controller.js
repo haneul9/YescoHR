@@ -34,11 +34,6 @@ sap.ui.define(
         return {
           busy: false,
           routeName: '',
-          employeeModelSettings: {
-            InitialSearch: false,
-            Enabled: { Persa: true, Orgeh: true },
-            Search: { Persa: 'ALL', Pbtxt: null, Orgeh: null },
-          },
           quota: {
             isSecondVisible: false,
             10: { Kotxt: this.getBundleText('LABEL_04015'), Crecnt: 0, Usecnt: 0 }, // 연차쿼터
@@ -74,6 +69,26 @@ sap.ui.define(
         };
       },
 
+      getEmployeeSearchDialogCustomOptions() {
+        const mSessionInfo = this.getSessionData();
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return {
+          fieldEnabled: { Persa: !bIsEss, Orgeh: !bIsEss },
+          searchConditions: {
+            Persa: bIsEss ? mSessionInfo.Werks : 'ALL',
+            Orgeh: bIsEss ? mSessionInfo.Orgeh : null,
+            Orgtx: bIsEss ? mSessionInfo.Orgtx : null,
+          },
+        };
+      },
+
+      getEmployeeSearchDialogOnLoadSearch() {
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return bIsEss;
+      },
+
       async onObjectMatched(oParameter, sRouteName) {
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oViewModel = this.getViewModel();
@@ -85,21 +100,6 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
           oViewModel.setProperty('/routeName', sRouteName);
           this.getAppointeeModel().setProperty('/showChangeButton', true);
-
-          if (!this.isHass() && !this.isMss()) {
-            const mSession = this.getSessionData();
-
-            oViewModel.setProperty('/employeeModelSettings/InitialSearch', true);
-            oViewModel.setProperty('/employeeModelSettings/Enabled', {
-              Persa: false,
-              Orgeh: false,
-            });
-            oViewModel.setProperty('/employeeModelSettings/Search', {
-              Persa: mSession.Werks,
-              Orgeh: mSession.Orgeh,
-              Pbtxt: mSession.Orgtx,
-            });
-          }
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aQuotaResultData, aRowData] = await Promise.all([

@@ -90,7 +90,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      async onRefresh() {
+      async callbackAppointeeChange() {
         const oListModel = this.getViewModel();
 
         try {

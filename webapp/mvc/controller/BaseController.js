@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/core/routing/History',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearchDialogHandler',
     'sap/ui/yesco/common/exceptions/UI5Error',
   ],
   (
@@ -17,6 +18,7 @@ sap.ui.define(
     History,
     JSONModel,
     AppUtils,
+    EmployeeSearchDialogHandler,
     UI5Error
   ) => {
     'use strict';
@@ -34,6 +36,8 @@ sap.ui.define(
         }
 
         this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+
+        this.oEmployeeSearchDialogHandler = new EmployeeSearchDialogHandler(this);
 
         // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(
@@ -256,15 +260,36 @@ sap.ui.define(
         throw new UI5Error({ message: this.getBundleText('MSG_00053', 'Controller', 'getApprovalType') }); // {Controller}에 {getApprovalType} function을 선언하세요.
       },
 
-      onRefresh() {
-        this.debug('BaseController.onRefresh');
-      },
-
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
           from: 'home',
         });
+      },
+
+      getEmployeeSearchDialogHandler() {
+        return this.oEmployeeSearchDialogHandler;
+      },
+
+      onEmployeeSearchOpen() {
+        this.getEmployeeSearchDialogHandler()
+          .setChangeAppointee(true) // 선택 후 대상자 변경 여부
+          .setOnLoadSearch(this.getEmployeeSearchDialogOnLoadSearch()) // Open 후 조회 여부 - 각 화면에서 구현
+          .setOptions(this.getEmployeeSearchDialogCustomOptions()) // Fields 활성화여부 및 초기 선택값 - 각 화면에서 구현
+          .setCallback(this.callbackAppointeeChange.bind(this)) // 선택 후 실행 할 Function - 각 화면에서 구현
+          .openDialog();
+      },
+
+      getEmployeeSearchDialogCustomOptions() {
+        return {};
+      },
+
+      getEmployeeSearchDialogOnLoadSearch() {
+        return false;
+      },
+
+      callbackAppointeeChange() {
+        return null;
       },
 
       /**

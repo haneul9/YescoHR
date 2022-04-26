@@ -2,19 +2,19 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:table="sap.ui.table">
-  <Dialog id="EmployeeSearch" title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="665px" busyIndicatorDelay="0" busy="{/busy}">
+  <Dialog title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="665px" busyIndicatorDelay="0" busy="{/busy}">
     <beginButton>
-      <Button text="{i18n>LABEL_00112}" press=".EmployeeSearch.onSelectClick" type="Emphasized" />
+      <Button text="{i18n>LABEL_00112}" press=".onConfirm" type="Emphasized" />
     </beginButton>
     <endButton>
-      <Button text="{i18n>LABEL_00115}" press=".EmployeeSearch.onCloseClick" />
+      <Button text="{i18n>LABEL_00115}" press=".onClose" />
     </endButton>
     <content>
       <HBox width="100%" class="dialog-content">
         <VBox width="20%" class="hCardBox sapUiSmallMarginEnd">
           <HBox justifyContent="SpaceBetween" alignItems="Center" class="search-head pb-10-px">
             <Label text="{i18n>LABEL_00203}" />
-            <Button press=".EmployeeSearch.onEmpSearch" class="icon-button search" />
+            <Button press=".onSearch" class="icon-button search" />
           </HBox>
           <grid:CSSGrid gridTemplateRows="1fr 2fr" gridGap="6px 0px" class="form-grid type-d form-search">
             <Label text="{i18n>LABEL_00237}" />
@@ -25,11 +25,11 @@
             </VBox>
             <Label text="{i18n>LABEL_00211}" />
             <VBox>
-              <Input value="{/settings/searchConditions/Ename}" enabled="{/settings/fieldEnabled/Ename}" submit=".EmployeeSearch.onEmpSearch" />
+              <Input value="{/settings/searchConditions/Ename}" enabled="{/settings/fieldEnabled/Ename}" submit=".onSearch" />
             </VBox>
             <Label text="{i18n>LABEL_00226}" />
             <VBox>
-              <Input value="{/settings/searchConditions/Orgtx}" enabled="{/settings/fieldEnabled/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".EmployeeSearch.onGroupDetail" />
+              <Input value="{/settings/searchConditions/Orgtx}" enabled="{/settings/fieldEnabled/Orgeh}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onGroupOpen" />
             </VBox>
             <Label text="{i18n>LABEL_00240}" />
             <VBox>
@@ -39,13 +39,13 @@
             </VBox>
             <Label text="{i18n>LABEL_00238}" />
             <VBox>
-              <ComboBox items="{/entry/empGroup}" selectedKey="{/settings/searchConditions/Persg}" enabled="{/settings/fieldEnabled/Persg}" change=".EmployeeSearch.onSubEmpCode" width="100%">
+              <ComboBox items="{/entry/empGroup}" selectedKey="{/settings/searchConditions/Persg}" enabled="{/settings/fieldEnabled/Persg}" change=".onChangeEmpGroup" width="100%">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
             <Label text="{i18n>LABEL_00327}" />
             <VBox>
-              <ComboBox items="{/entry/subEmpGroup}" selectedKey="{/settings/searchConditions/Persk}" enabled="{/settings/fieldEnabled/Persk}" width="100%">
+              <ComboBox items="{/entry/subEmpGroup}" selectedKey="{/settings/searchConditions/Persk}" enabled="{= ${/settings/fieldEnabled/Persk} &amp;&amp; ${/settings/searchConditions/Persg} !== 'ALL' }" busyIndicatorDelay="0" busy="{/settings/fieldBusy/Persk}" width="100%">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </ComboBox>
             </VBox>
@@ -55,7 +55,7 @@
           <HBox height="46px" justifyContent="SpaceBetween" class="table-toolbar">
             <Title level="H3" text="{i18n>LABEL_00204}" class="title pb-15-px" />
           </HBox>
-          <table:Table id="empTable" rows="{/results/list}" rowSelectionChange=".EmployeeSearch.onRowSelection" visibleRowCount="{/results/rowCount}" rowHeight="34" columnHeaderHeight="35">
+          <table:Table class="radio-selection-table" enableSelectAll="false" rows="{/results/list}" rowSelectionChange=".onRowSelection" visibleRowCount="{/results/rowCount}" rowHeight="34" columnHeaderHeight="35">
             <table:columns>
               <table:Column width="auto" sortProperty="Pernr" filterProperty="Pernr" visible="{/settings/fieldVisible/Pernr}">
                 <Label text="{i18n>LABEL_00209}" />

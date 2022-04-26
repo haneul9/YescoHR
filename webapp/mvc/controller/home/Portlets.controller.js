@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/core/dnd/DropPosition',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/EmployeeListDialogHandler',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -40,7 +39,6 @@ sap.ui.define(
     DropPosition,
     JSONModel,
     EmployeeListDialogHandler,
-    EmployeeSearch,
     MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
@@ -126,8 +124,6 @@ sap.ui.define(
         P11: P11PortletHandler,
         P12: P12PortletHandler,
       },
-
-      EmployeeSearch: EmployeeSearch,
 
       onInit() {
         BaseController.prototype.onInit.apply(this);

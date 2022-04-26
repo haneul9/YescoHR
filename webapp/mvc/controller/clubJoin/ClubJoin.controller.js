@@ -69,7 +69,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      onRefresh() {
+      callbackAppointeeChange() {
         this.totalCount();
         this.onSearch();
       },

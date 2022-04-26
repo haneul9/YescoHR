@@ -219,6 +219,8 @@ sap.ui.define(
         oFileUploader.clear();
         oFileUploader.setValue('');
 
+        if (_.isEmpty(vAttachFileDatas.Appno)) return [];
+
         return new Promise((resolve, reject) => {
           oModel.read('/FileListSet', {
             filters: [
