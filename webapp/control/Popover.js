@@ -23,7 +23,7 @@ sap.ui.define(
       init(...aArgs) {
         Popover.prototype.init.apply(this, aArgs);
 
-        this.oPopup.setAutoClose(false);
+        // this.oPopup.setAutoClose(false);
         if (AppUtils.isMobile()) {
           const iAvailHeight = screen.availHeight - 48 - 60; // (.sapMPopoverHeader height) - (.sapMPopoverFooter height)
           this.setContentHeight(`${iAvailHeight}px`).setContentWidth('100%').addStyleClass('full-popover');
