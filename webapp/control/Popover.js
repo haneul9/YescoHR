@@ -30,7 +30,7 @@ sap.ui.define(
         } else {
           // const iAvailHeight = screen.availHeight - 51 - 83 - 60 - 10; // (Popover offset top) - (.sapMPopoverHeader height) - (.sapMPopoverFooter height) - (bottom 10)
           // this.setContentHeight(`${iAvailHeight}px`).setContentWidth('490px');
-          this.setContentHeight('auto').setContentWidth('490px');
+          this.setContentWidth('490px');
         }
       },
 

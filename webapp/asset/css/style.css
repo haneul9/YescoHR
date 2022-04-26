@@ -1654,7 +1654,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
 /* 알림센터 */
-.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-width:490px; min-height:120px; max-height:calc(100% - 143px); padding:0}
+.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-height:120px; max-height:calc(100% - 143px); padding:0}
 .sapUiSizeCompact.notification-popover .notification-popover-header {align-items:center; height:83px; padding-right:20px; padding-left:20px}
 .sapUiSizeCompact.notification-popover .notification-popover-header .sapMTitle {vertical-align:middle; font-size:24px}
 .sapUiSizeCompact.notification-popover .notification-popover-header .sapMLabel {font-weight:400}
