@@ -57,7 +57,6 @@ sap.ui.define(
           oRM.class('vacation-indicator-total');
           oRM.class('w-100');
           oRM.openEnd();
-          // oRM.text(this.getPercent(oControl.getTotal(), oControl));
           oRM.close('div');
         },
         insertRemainDiv(oRM, oControl) {
@@ -71,7 +70,6 @@ sap.ui.define(
             }
           }
           oRM.openEnd();
-          // oRM.text(this.getPercent(fRemain, oControl));
           oRM.close('div');
         },
         insertUsedDiv(oRM, oControl) {
