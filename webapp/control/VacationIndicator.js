@@ -72,22 +72,22 @@ sap.ui.define(
             let sRemainWidth = '66.6666666%';
             let sUsedWidth = '33.3333333%';
 
-            if (this.getUsedType() === 'WeekTime') {
-              sRemainWidth = this._getUsedWidth(fUsed2);
-              sUsedWidth = this._getUsedWidth(fUsed);
-            }
+            // if (this.getUsedType() === 'WeekTime') {
+            sRemainWidth = this._getUsedWidth(fUsed2);
+            sUsedWidth = this._getUsedWidth(fUsed);
+            // }
 
             const $remain = $indicator.find('.vacation-indicator-remain').show();
-            if (fUsed2 > 0) {
+            if (fUsed2 >= 1) {
               $remain.css('width', sRemainWidth);
             }
             $remain.toggleClass('vacation-indicator-animation', true);
 
             const $used = $indicator
               .find('.vacation-indicator-used')
-              .toggleClass('vacation-indicator-zero', fUsed === 0)
+              .toggleClass('vacation-indicator-zero', fUsed < 4.5)
               .show();
-            if (fUsed > 0) {
+            if (fUsed >= 1) {
               $used.css('width', sUsedWidth);
             }
             $used.toggleClass('vacation-indicator-animation', true);
@@ -97,9 +97,9 @@ sap.ui.define(
             $indicator.find('.vacation-indicator-remain').toggleClass('w-100', true);
             const $used = $indicator
               .find('.vacation-indicator-used')
-              .toggleClass('vacation-indicator-zero', fUsed === 0)
+              .toggleClass('vacation-indicator-zero', fUsed < 4.5)
               .show();
-            if (fUsed > 0) {
+            if (fUsed >= 1) {
               $used.css('width', sUsedWidth);
             }
             $used.toggleClass('vacation-indicator-animation', true);
@@ -113,7 +113,7 @@ sap.ui.define(
         const fMaxPercent = 82;
 
         let fUsedPercent = fTotal === 0 ? 0 : (fUsed / fTotal) * 100;
-        if (fUsedPercent === 0) {
+        if (fUsedPercent < 4.5) {
           return '.5rem';
         } else if (fUsedPercent === 100) {
           return '100%';

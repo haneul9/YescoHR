@@ -105,7 +105,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 .portlet-member-position {margin-right:12px; width:50px}
 .portlet-p03p04 .portlet-members .portlet-member-org {width:calc(100% - 222px)}/* 42 + 62 + 62 + ~ + 56 */
 .portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:calc(100% - 255px)}/* 42 + 62 + 62 + ~ + 56 + 33 */
-.portlet-p03p04 [data-portlet-member-status] {margin-left:6px; border:1px solid; border-radius:3px; height:18px; line-height:18px; font-size:11px !important}
+.portlet-p03p04 [data-portlet-member-status] {margin-left:6px; border:1px solid; border-radius:3px; height:18px; line-height:17px; font-size:12px !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-member-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
 .portlet-p03p04 [data-portlet-member-status="2"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 출장중 */
@@ -247,6 +247,11 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .vacation-indicator.x2.vacation-indicator-bottom {height:5rem}
 .vacation-indicator.x2.vacation-indicator-middle .vacation-indicator-text > div {padding:0 1rem}
 .vacation-indicator.x2 .vacation-indicator-gauge .vacation-indicator-used.vacation-indicator-zero {width:1rem}
+
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
+.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:1px 0 #000}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
 [data-new-attachment="O"] {text-decoration:none; cursor:default; color:#000}
 [data-new-attachment="O"]:hover,
@@ -1753,12 +1758,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .portlet .sapMGTSubHdrTxt .sapMText {font-size:14px; background:linear-gradient(transparent 70%, #a8ffbe 60%) no-repeat}
 .portlet.type-b .sapMGTSubHdrTxt .sapMText {font-size:11px; background:none}
 
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
-.portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
-.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
-
 .portlet.team-member-list .sapMImg {width:30px; height:30px; border-radius:50%}
-
 
 .portlet-btn .sapMBtnInner {border-radius:8px !important; font-weight:500; font-size:14px}
 .sapUiSizeCompact .sapMBtn.portlet-btn {min-width:100%}
