@@ -171,16 +171,16 @@ sap.ui.define(
        */
       onSelectClick(oEvent) {
         const oEmpModel = this.getViewModel();
-        const aSelectedEmp = oEmpModel.getProperty('/employeeModel/SelectedEmp');
+        const mSelectedEmp = oEmpModel.getProperty('/employeeModel/SelectedEmp');
 
-        if (!aSelectedEmp.length) {
+        if (_.isEmpty(mSelectedEmp)) {
           return MessageBox.alert(this.getBundleText('MSG_00050'));
         }
 
         const oAppModel = this.getViewModel('appointeeModel');
-        oAppModel.setData({ ...aSelectedEmp[0], Werks: aSelectedEmp[0].Persa, Orgtx: aSelectedEmp[0].Fulln }, true);
+        oAppModel.setData({ ...mSelectedEmp, Werks: mSelectedEmp.Persa, Orgtx: mSelectedEmp.Fulln }, true);
         oEvent.getSource().getParent().close();
-        this.onRefresh(aSelectedEmp[0]);
+        this.onRefresh(mSelectedEmp);
       },
 
       /*
@@ -195,25 +195,16 @@ sap.ui.define(
        */
       onRowSelection(oEvent) {
         const oEventSource = oEvent.getSource();
-        const aSelected = oEventSource.getSelectedIndices();
         const oEmpModel = this.getViewModel();
 
-        if (!aSelected) return;
+        oEmpModel.setProperty('/employeeModel/SelectedEmp', {});
 
-        if (aSelected.length > 1) {
-          oEventSource.clearSelection();
-          return MessageBox.alert(this.getBundleText('MSG_00029'));
+        if (oEventSource.getSelectedIndex() === -1) {
+          return;
         }
 
-        const aSelectionDatas = [];
-
-        oEmpModel.setProperty('/employeeModel/SelectedEmp', []);
-
-        aSelected.forEach((e) => {
-          aSelectionDatas.push(oEmpModel.getProperty(`/employeeModel/empList/${e}`));
-        });
-
-        oEmpModel.setProperty('/employeeModel/SelectedEmp', aSelectionDatas);
+        oEventSource.setSelectedIndex(oEventSource.getSelectedIndex());
+        oEmpModel.setProperty('/employeeModel/SelectedEmp', oEmpModel.getProperty(oEvent.getParameter('rowContext').getPath()));
       },
 
       /*
@@ -259,7 +250,7 @@ sap.ui.define(
           InitialSearch: false,
           Search: {},
           Enabled: { Persa: true, Ename: true, Orgeh: true, Stat2: true, Persg: true, Persk: true },
-          SelectedEmp: [],
+          SelectedEmp: {},
           empList: [],
           PersArea: [],
           WorkType: [],
@@ -286,7 +277,7 @@ sap.ui.define(
             })
             .attachBeforeClose((oEvent) => {
               if (fnCallback && typeof fnCallback === 'function') {
-                const [mSelectedEmp] = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || [];
+                const mSelectedEmp = this.getViewModel().getProperty('/employeeModel/SelectedEmp') || {};
                 const bClickedCloseButton = oEvent.getParameter('origin').getProperty('text') === AppUtils.getBundleText('LABEL_00115');
 
                 fnCallback.call(this, mSelectedEmp || {}, bClickedCloseButton);
