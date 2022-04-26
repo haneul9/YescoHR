@@ -92,19 +92,19 @@
             <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px">
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09028}"/>
           <table:template>
             <Text text="{ path: 'Mob01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px">
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09029}"/>
           <table:template>
             <Text text="{ path: 'Mob02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="150px">
+        <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09030}"/>
           <table:template>
             <Text text="{ path: 'Mobtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
@@ -119,7 +119,7 @@
             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="200px">
+        <table:Column width="200px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09031}"/>
           <table:template>
             <Text text="{ZmobResn}" width="100%" textAlign="Left" wrapping="false" class="tableRow_Text"/>
@@ -144,7 +144,6 @@
           <Label text="{i18n>LABEL_00169}"/>
           <table:template>
             <core:Icon src="sap-icon://attachment" width="100%" visible="{= ${Attyn} === 'X' }"/>
-            <!-- <Button type="Transparent" icon="sap-icon://attachment" class="mnw-0" press=".TableUtils.onFileListDialog" visible="{= ${Attyn} === 'X' }"/> -->
           </table:template>
         </table:Column>
       </table:columns>
