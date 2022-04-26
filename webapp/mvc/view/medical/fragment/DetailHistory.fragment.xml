@@ -68,7 +68,7 @@
             <Text text="{Medorg}" textAlign="Center" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <table:Column width="250px">
+        <table:Column width="200px">
           <Label text="{i18n>LABEL_09015}"/>
           <table:template>
             <Text text="{Recpgbtx}" textAlign="Center" width="100%" class="tableRow_Text"/>
@@ -92,7 +92,7 @@
             <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <!-- <table:Column width="150px">
+        <table:Column width="150px">
           <Label text="{i18n>LABEL_09028}"/>
           <table:template>
             <Text text="{ path: 'Mob01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
@@ -109,7 +109,7 @@
           <table:template>
             <Text text="{ path: 'Mobtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
           </table:template>
-        </table:Column> -->
+        </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09027}"/>
           <table:template>
@@ -119,12 +119,12 @@
             }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
           </table:template>
         </table:Column>
-        <!-- <table:Column width="200px">
+        <table:Column width="200px">
           <Label text="{i18n>LABEL_09031}"/>
           <table:template>
             <Text text="{ZmobResn}" width="100%" textAlign="Left" wrapping="false" class="tableRow_Text"/>
           </table:template>
-        </table:Column> -->
+        </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
           <Label text="{i18n>LABEL_09009}"/>
           <table:template>
