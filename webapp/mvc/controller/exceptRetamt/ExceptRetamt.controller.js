@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/FragmentEvent',
@@ -14,7 +13,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
     FragmentEvent,
@@ -25,7 +23,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.exceptRetamt.ExceptRetamt', {
       FragmentEvent: FragmentEvent,
-      EmployeeSearch: EmployeeSearch,
 
       initializeModel() {
         return {

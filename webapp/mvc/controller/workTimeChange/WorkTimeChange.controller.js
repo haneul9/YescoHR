@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -18,7 +17,6 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
     FragmentEvent,
     TableUtils,
     TextUtils,
@@ -32,7 +30,6 @@ sap.ui.define(
       sDialChartId: 'WorkAppDialChart',
       sChartDiv: 'chart-work-change-dial-container',
 
-      EmployeeSearch: EmployeeSearch,
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
       TextUtils: TextUtils,

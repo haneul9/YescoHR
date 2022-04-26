@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,7 +14,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    EmployeeSearch,
     DateUtils,
     Client,
     ServiceNames,
@@ -26,7 +24,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.List', {
       TableUtils: TableUtils,
-      EmployeeSearch: EmployeeSearch,
 
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
