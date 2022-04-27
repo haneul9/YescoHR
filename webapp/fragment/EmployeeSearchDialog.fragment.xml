@@ -4,7 +4,7 @@
   xmlns:table="sap.ui.table">
   <Dialog title="{i18n>LABEL_00205}" contentWidth="1500px" contentHeight="665px" busyIndicatorDelay="0" busy="{/busy}">
     <beginButton>
-      <Button text="{i18n>LABEL_00112}" press=".onConfirm" type="Emphasized" />
+      <Button text="{i18n>LABEL_00112}" press=".onConfirm" type="Emphasized" enabled="{= ${/results/list}.length > 0 }" />
     </beginButton>
     <endButton>
       <Button text="{i18n>LABEL_00115}" press=".onClose" />

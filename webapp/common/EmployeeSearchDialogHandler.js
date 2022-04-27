@@ -133,6 +133,7 @@ sap.ui.define(
 
           this.oResultTable = this.oCommonEmployeeSearchDialog.getContent()[0].getItems()[1].getItems()[1];
           this.oResultTable.toggleStyleClass('radio-selection-table', !this.bMultiSelect);
+          this.oResultTable.clearSelection();
 
           if (this.bOnLoadSearch) this.readData();
           else oEmployeeDialogModel.setProperty('/busy', false);
