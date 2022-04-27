@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/common/mobile/ListStatusPopover',
   ],
   (
     // prettier 방지용 주석
@@ -16,8 +15,7 @@ sap.ui.define(
     TableUtils,
     Client,
     ServiceNames,
-    BaseController,
-    ListStatusPopover
+    BaseController
   ) => {
     'use strict';
 
@@ -26,7 +24,6 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      ListStatusPopover: ListStatusPopover,
 
       initializeModel() {
         return {
