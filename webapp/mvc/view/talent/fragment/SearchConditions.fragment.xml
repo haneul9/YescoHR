@@ -6,18 +6,12 @@
       <ComboBox items="{/entry/Werks}" selectedKey="{/search/Werks}">
         <core:Item text="{Pbtxt}" key="{Werks}" />
       </ComboBox>
-      <ComboBox width="240px" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
+      <ComboBox width="280px" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
         <core:Item key="{Zcode}" text="{Ztext}" />
       </ComboBox>
       <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_del.png" iconDensityAware="false" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
       <Label text="{i18n>LABEL_00201}" />
-      <Input width="460px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
-      <ComboBox selectedKey="{/search/Command}">
-        <items>
-          <core:Item text="AND" key="AND" />
-          <core:Item text="OR" key="OR" />
-        </items>
-      </ComboBox>
+      <Input width="520px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
       <Button text="{i18n>LABEL_00101}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressSearch" />
       <Button text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
       <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" />

@@ -54,7 +54,6 @@ sap.ui.define(
             entry: [],
           },
           search: {
-            Command: 'AND',
             Werks: '',
             Freetx: '',
             Prcty: 'A',
@@ -121,30 +120,63 @@ sap.ui.define(
           this.getEntrySearchCondition();
           oViewModel.setProperty('/saved/selectedCondition', 'ALL');
 
-          const oPAModel = this.getModel(ServiceNames.PA);
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
-          const aEntryDataList = await Promise.all([
+          const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
+          const [aWerks, aEntryA, aEntryB, aEntryC, aEntryD, aEntryE, aEntryF, aEntryG, aEntryH, aEntryI, aEntryJ, aEntryK, aEntryL, aEntryM] = await Promise.all([
             Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
-            ..._.chain('ABCDEFGHIJKLM')
-              .split('')
-              .map((s) => Client.getEntitySet(oPAModel, 'TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: s }))
-              .value(),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'A' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'B' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'C' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'D' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'E' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'F' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'G' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'H' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'I' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'J' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'K' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'L' }),
+            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'M' }),
           ]);
 
-          const aIncludeResetEntry = ['D', 'I', 'J', 'K', 'L', 'M'];
-          const aNumberCodeEntry = ['D', 'M'];
-
           oViewModel.setProperty('/search/Werks', this.getAppointeeProperty('Werks'));
-          oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
           oViewModel.setProperty('/entry', {
-            Werks: _.map(aEntryDataList[0], (o) => _.omit(o, '__metadata')),
-            ..._.chain('ABCDEFGHIJKLM')
-              .split('')
-              .map((s, i) => ({ [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[++i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }) }))
-              .reduce((acc, cur) => ({ ...acc, ...cur }), {})
-              .value(),
+            Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
+            A: _.map(aEntryA, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            B: _.map(aEntryB, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            C: _.map(aEntryC, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            D: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryD, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
+            ),
+            E: _.map(aEntryE, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            F: _.map(aEntryF, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            G: _.map(aEntryG, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            H: _.map(aEntryH, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
+            I: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryI, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            J: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryJ, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            K: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryK, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            L: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryL, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
+            ),
+            M: _.concat(
+              { Zcode: '', Ztext: '' },
+              _.map(aEntryM, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
+            ),
           });
+
+          oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
         } catch (oError) {
           this.debug('Controller > Talent > onObjectMatched Error', oError);
 
@@ -153,27 +185,6 @@ sap.ui.define(
           this.byId('searchFilterBody').removeStyleClass('expanded');
           oViewModel.setProperty('/busy', false);
         }
-      },
-
-      convertSearchConditionEntry({ aEntries, bContainReset = false, bNumberCode = false }) {
-        return _.chain(aEntries)
-          .map((o) => ({ ..._.omit(o, '__metadata'), Zcode: bNumberCode ? _.toNumber(o.Zcode) : _.trim(o.Zcode) }))
-          .thru((arr) => (bContainReset ? [{ Zcode: '', Ztext: '' }, ...arr] : arr))
-          .value();
-      },
-
-      convertCompareRow({ aCompareResults, sLabelCode, sTargetProp, bEvaluation = false }) {
-        return _.concat(
-          { type: bEvaluation ? 'label' : null, data: [{ type: 'label', value: this.getBundleText(sLabelCode) }] },
-          _.map(aCompareResults, (o) => ({
-            block9: bEvaluation ? _.toNumber(o.Value07) : null,
-            data: _.chain(o)
-              .get(sTargetProp)
-              .split('<br>')
-              .map((d) => ({ type: 'text', value: d }))
-              .value(),
-          }))
-        );
       },
 
       async onCompareDialog() {
@@ -230,15 +241,115 @@ sap.ui.define(
               _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl, Value01: o.Value01 }))
             )
           );
-          oViewModel.setProperty('/compare/row2', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35013', sTargetProp: 'Value02' })); // 기본정보
-          oViewModel.setProperty('/compare/row3', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_00222', sTargetProp: 'Value04' })); // 직무
-          oViewModel.setProperty('/compare/row4', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35016', sTargetProp: 'Value05' })); // 학력
-          oViewModel.setProperty('/compare/row5', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35014', sTargetProp: 'Value06', bEvaluation: true })); // 평가이력
-          oViewModel.setProperty('/compare/row6', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35015', sTargetProp: 'Value03' })); // 사내경력
-          oViewModel.setProperty('/compare/row7', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35017', sTargetProp: 'Value09' })); // 사외경력
-          oViewModel.setProperty('/compare/row8', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35018', sTargetProp: 'Value08' })); // 외국어
-          oViewModel.setProperty('/compare/row9', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35019', sTargetProp: 'Value10' })); // 포상
-          oViewModel.setProperty('/compare/row10', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35020', sTargetProp: 'Value11' })); // 징계
+          oViewModel.setProperty(
+            '/compare/row2',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35013') }] }, // 기본정보
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value02)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row3',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_00222') }] }, // 직무
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value04)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row4',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35016') }] }, // 학력
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value05)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row5',
+            _.concat(
+              { type: 'label', data: [{ type: 'label', value: this.getBundleText('LABEL_35014') }] }, // 평가이력
+              _.map(aCompareResults, (o) => ({
+                block9: _.toNumber(o.Value07),
+                data: _.chain(o.Value06)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row6',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35015') }] }, // 사내경력
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value03)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row7',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35017') }] }, // 사외경력
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value09)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row8',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35018') }] }, // 외국어
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value08)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row9',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35019') }] }, // 포상
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value10)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
+          oViewModel.setProperty(
+            '/compare/row10',
+            _.concat(
+              { data: [{ type: 'label', value: this.getBundleText('LABEL_35020') }] }, // 징계
+              _.map(aCompareResults, (o) => ({
+                data: _.chain(o.Value11)
+                  .split('<br>')
+                  .map((d) => ({ type: 'text', value: d }))
+                  .value(),
+              }))
+            )
+          );
           oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
 
           this.onCompareDialog();
@@ -474,7 +585,7 @@ sap.ui.define(
           const mSearch = _.cloneDeep(oViewModel.getProperty('/search'));
           _.chain(mSearch).set('Freetx', _.chain(mSearch.Freetx).replace(/ /g, '').replace(/[,]/g, '/').value()).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
 
-          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Command', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx', 'Command');
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
 
@@ -606,7 +717,6 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/search/Freetx', '');
-        oViewModel.setProperty('/search/Command', 'AND');
       },
 
       resetComplexSearch() {
