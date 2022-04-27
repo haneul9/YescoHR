@@ -26,7 +26,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {
@@ -97,7 +96,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return this.TextUtils.toCurrency(vPay) || '0';
+        return TextUtils.toCurrency(vPay) || '0';
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {

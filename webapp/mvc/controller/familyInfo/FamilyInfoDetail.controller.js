@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/exceptions/ODataReadError',
@@ -22,7 +21,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     UI5Error,
-    TextUtils,
     ServiceNames,
     MessageBox,
     ODataReadError,
@@ -62,7 +60,6 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {

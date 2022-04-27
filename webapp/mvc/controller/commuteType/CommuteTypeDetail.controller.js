@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -20,7 +19,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     UI5Error,
-    TextUtils,
     TableUtils,
     Client,
     ServiceNames,
@@ -32,7 +30,6 @@ sap.ui.define(
       LIST_PAGE_ID: { E: 'container-ehr---commuteType', H: 'container-ehr---h_commuteType' },
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {

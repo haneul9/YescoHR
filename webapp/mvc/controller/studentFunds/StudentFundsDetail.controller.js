@@ -28,7 +28,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFundsDetail', {
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {
@@ -154,13 +153,13 @@ sap.ui.define(
 
       // 학자금 총액에 들어가는 금액입력
       costCalculation(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+        TextUtils.liveChangeCurrency(oEvent);
         this.totalCost();
       },
 
       // 장학금 입력시
       onSchoCost(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+        TextUtils.liveChangeCurrency(oEvent);
       },
 
       // 지원금액 호출

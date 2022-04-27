@@ -28,7 +28,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {
@@ -82,9 +81,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        vPay = this.TextUtils.toCurrency(vPay);
-
-        return vPay;
+        return TextUtils.toCurrency(vPay);
       },
 
       onSearch() {

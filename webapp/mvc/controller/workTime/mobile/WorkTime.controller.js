@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -15,7 +14,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     TableUtils,
-    TextUtils,
     ListStatusPopover,
     Client,
     ServiceNames,
@@ -29,7 +27,6 @@ sap.ui.define(
       AttachFileAction: AttachFileAction,
       ListStatusPopover: ListStatusPopover,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {

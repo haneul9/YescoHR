@@ -9,7 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -27,7 +26,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     UI5Error,
-    TextUtils,
     TableUtils,
     Client,
     ServiceNames,
@@ -41,7 +39,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
       LIST_PAGE_ID: { E: 'container-ehr---clubJoin', H: 'container-ehr---h_clubJoin' },
 
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {
