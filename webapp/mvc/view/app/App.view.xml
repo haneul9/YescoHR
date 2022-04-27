@@ -28,7 +28,11 @@
 
     <HBox alignItems="Center" class="notification-wrapper">
       <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverToggle" tooltip="{i18n>LABEL_01002}" />
-      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center" />
+      <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">
+        <custom:layoutData>
+          <FlexItemData styleClass="unread-count" />
+        </custom:layoutData>
+      </custom:PressableLabel>
     </HBox>
 
     <Button type="Transparent" visible="{appModel>/isAtHome}" class="icon-button settings" press=".onPressPortletsP13nDialogOpen" tooltip="{i18n>LABEL_01003}">

@@ -150,7 +150,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p08 .portlet-todo-list .menu-link {width:100%; line-height:40px}
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
-.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:0.6rem; min-width:40px; max-width:40px; line-height:16px; height:17px; text-align:center !important}
+.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:12px; line-height:17px; height:18px}
 .portlet-p10 [data-appraisal-status-color="3"] {color:#1bae49}
 .portlet-p10 [data-appraisal-status-color="2"] {color:#df9f0f}
 .portlet-p10 [data-appraisal-status-color="1"] {color:#767676}
@@ -1658,7 +1658,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner .sapMBtnIcon {color:#484c50; font-size:22px; font-weight:200}
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification.svg'); background-repeat:no-repeat; background-position:center}
 .notification-wrapper:hover .sapMBtn.icon-button.notification .sapMBtnInner:after {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification_hover.svg')}
-.notification-wrapper > .sapMFlexItem:last-child {position:absolute; left:50%}
+.notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-3px; left:50%; height:15px}
 .notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
 /* 알림센터 */
@@ -2043,8 +2043,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .letter-spacing-xs {letter-spacing:-0.6px}
 .letter-spacing-sm {letter-spacing:-0.3px}
 .normal {font-weight:500}
-.display-flex {display:flex}
-.overflow-visible {overflow:visible}
 text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link .sapMImg {cursor:pointer}
 .all-transparent, .all-transparent * {border-color:transparent; color:transparent; background-color:transparent}
 .sapUiSizeCompact .all-transparent .sapMListSwp {right:0}

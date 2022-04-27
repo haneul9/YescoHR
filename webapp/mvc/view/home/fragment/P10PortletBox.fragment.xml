@@ -39,20 +39,13 @@
                   <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
                 </core:customData>
               </core:Icon>
-              <Text text="{Itext}" tooltip="{Itext}" wrapping="false">
+              <Text width="100%" text="{Itext}" tooltip="{Itext}" wrapping="false" class="pr-15-px">
                 <layoutData>
-                  <FlexItemData growFactor="1" />
+                  <FlexItemData minWidth="calc(100% - 136px)" maxWidth="calc(100% - 136px)" />
                 </layoutData>
               </Text>
-              <Text text="{Perce}%" wrapping="false">
-                <layoutData>
-                  <FlexItemData baseSize="10%" />
-                </layoutData>
-              </Text>
-              <Text text="{Atext}" tooltip="{Atext}" wrapping="false">
-                <layoutData>
-                  <FlexItemData baseSize="10%" />
-                </layoutData>
+              <Text width="65px" text="{Perce}%" textAlign="Right" wrapping="false" class="pr-15-px" />
+              <Text width="50px" text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false">
                 <customData>
                   <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
                 </customData>

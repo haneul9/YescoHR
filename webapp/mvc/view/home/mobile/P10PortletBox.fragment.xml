@@ -32,36 +32,39 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <HBox width="100%" visible="{= ${listCount} &gt; 0 }">
-            <VBox width="21px" height="100%" items="{list}">
+            <VBox width="21px" height="100%" items="{list}" class="pr-5-px">
               <HBox width="100%" height="28px" alignItems="Center">
-                <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
+                <core:Icon src="sap-icon://color-fill" width="16px" height="16px">
                   <core:customData>
                     <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
                   </core:customData>
                 </core:Icon>
               </HBox>
             </VBox>
-            <VBox width="calc(100% - 96px)" height="100%" items="{list}" class="pr-5-px">
-              <HBox height="28px" alignItems="Center">
-                <Text text="{Itext}" tooltip="{Itext}" wrapping="false">
+            <VBox width="calc(100% - 131px)" height="100%" items="{list}" class="pr-10-px">
+              <HBox width="100%" height="28px" alignItems="Center">
+                <Text width="100%" text="{Itext}" wrapping="false">
                   <layoutData>
-                    <FlexItemData maxWidth="100%" />
+                    <FlexItemData minWidth="100%" maxWidth="100%" />
                   </layoutData>
                 </Text>
               </HBox>
             </VBox>
-            <VBox width="35px" height="100%" items="{list}">
+            <VBox width="60px" height="100%" items="{list}" class="pr-10-px">
               <HBox width="100%" height="28px" alignItems="Center">
-                <Text text="{Perce}%" wrapping="false">
+                <Text width="100%" text="{Perce}%" textAlign="Right" wrapping="false">
                   <layoutData>
-                    <FlexItemData maxWidth="100%" />
+                    <FlexItemData minWidth="100%" />
                   </layoutData>
                 </Text>
               </HBox>
             </VBox>
-            <VBox width="40px" height="100%" items="{list}">
+            <VBox width="50px" height="100%" items="{list}">
               <HBox width="100%" height="28px" alignItems="Center">
-                <Text text="{Atext}" wrapping="false">
+                <Text width="100%" text="{Atext}" textAlign="Center" wrapping="false">
+                  <layoutData>
+                    <FlexItemData minWidth="100%" />
+                  </layoutData>
                   <customData>
                     <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
                   </customData>

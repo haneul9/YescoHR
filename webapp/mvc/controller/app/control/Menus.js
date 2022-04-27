@@ -62,6 +62,7 @@ sap.ui.define(
         aMenuTree.forEach((mMenu, i) => {
           oAppMenuToolbar.insertContent(
             new MenuLevel1({
+              id: `menu-${mMenu.Menid}`,
               text: mMenu.Mname,
               customData: new CustomData({ key: 'Mnid1', value: mMenu.Mnid1 }),
             })
