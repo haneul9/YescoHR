@@ -15,6 +15,11 @@
             </layoutData>
             <core:Item key="{Werks}" text="{Pbtxt}" />
           </ComboBox>
+          <Button class="sapUiTinyMarginBegin" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
+            <layoutData>
+              <FlexItemData minWidth="33%" maxWidth="33%" />
+            </layoutData>
+          </Button>
         </HBox>
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
           <ComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" change=".onChangeSearchCondition">
@@ -23,7 +28,7 @@
             </layoutData>
             <core:Item key="{Zcode}" text="{Ztext}" />
           </ComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
+          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
             <layoutData>
               <FlexItemData minWidth="33%" maxWidth="33%" />
             </layoutData>
@@ -35,11 +40,15 @@
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </layoutData>
           </SearchField>
-          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
+          <ComboBox selectedKey="{/search/Command}" class="sapUiTinyMarginBegin">
             <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
+              <FlexItemData minWidth="35%" maxWidth="35%" />
             </layoutData>
-          </Button>
+            <items>
+              <core:Item text="AND" key="AND" />
+              <core:Item text="OR" key="OR" />
+            </items>
+          </ComboBox>
         </HBox>
       </VBox>
       <HBox justifyContent="SpaceBetween" class="header-wrap">

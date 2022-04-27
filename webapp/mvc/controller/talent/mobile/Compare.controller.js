@@ -97,43 +97,16 @@ sap.ui.define(
                     colorSet: i % 2 === 0 ? 'ColorSet2' : 'ColorSet1',
                     align: 'Start',
                     value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').value() }],
-                    value02: _.chain(o.Value02)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value03: _.chain(o.Value03)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value04: _.chain(o.Value04)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value05: _.chain(o.Value05)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value06: _.chain(o.Value06)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
+                    value02: this.convertCompareRow(o, 'Value02'),
+                    value03: this.convertCompareRow(o, 'Value03'),
+                    value04: this.convertCompareRow(o, 'Value04'),
+                    value05: this.convertCompareRow(o, 'Value05'),
+                    value06: this.convertCompareRow(o, 'Value06'),
                     value07: o.Value07 || '0',
-                    value08: _.chain(o.Value08)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value09: _.chain(o.Value09)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value10: _.chain(o.Value10)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
-                    value11: _.chain(o.Value11)
-                      .split('<br>')
-                      .map((d) => ({ text: d }))
-                      .value(),
+                    value08: this.convertCompareRow(o, 'Value08'),
+                    value09: this.convertCompareRow(o, 'Value09'),
+                    value10: this.convertCompareRow(o, 'Value10'),
+                    value11: this.convertCompareRow(o, 'Value11'),
                   };
                 })
               )
@@ -153,6 +126,14 @@ sap.ui.define(
             },
           });
         }
+      },
+
+      convertCompareRow(mRowData, sTargetProp) {
+        return _.chain(mRowData)
+          .get(sTargetProp)
+          .split('<br>')
+          .map((d) => ({ text: d }))
+          .value();
       },
 
       onPressPic(oEvent) {

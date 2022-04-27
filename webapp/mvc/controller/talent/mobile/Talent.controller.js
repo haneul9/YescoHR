@@ -55,6 +55,7 @@ sap.ui.define(
             entry: [],
           },
           search: {
+            Command: 'AND',
             Werks: '',
             Freetx: '',
             Prcty: 'A',
@@ -110,63 +111,30 @@ sap.ui.define(
           await this.getEntrySearchCondition();
           oViewModel.setProperty('/saved/selectedCondition', 'ALL');
 
+          const oPAModel = this.getModel(ServiceNames.PA);
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
-          const fCurried = Client.getEntitySet(this.getModel(ServiceNames.PA));
-          const [aWerks, aEntryA, aEntryB, aEntryC, aEntryD, aEntryE, aEntryF, aEntryG, aEntryH, aEntryI, aEntryJ, aEntryK, aEntryL, aEntryM] = await Promise.all([
+          const aEntryDataList = await Promise.all([
             Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'A' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'B' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'C' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'D' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'E' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'F' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'G' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'H' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'I' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'J' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'K' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'L' }),
-            fCurried('TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: 'M' }),
+            ..._.chain('ABCDEFGHIJKLM')
+              .split('')
+              .map((s) => Client.getEntitySet(oPAModel, 'TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: s }))
+              .value(),
           ]);
 
-          oViewModel.setProperty('/search/Werks', this.getAppointeeProperty('Werks'));
-          oViewModel.setProperty('/entry', {
-            Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
-            A: _.map(aEntryA, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            B: _.map(aEntryB, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            C: _.map(aEntryC, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            D: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryD, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
-            ),
-            E: _.map(aEntryE, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            F: _.map(aEntryF, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            G: _.map(aEntryG, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            H: _.map(aEntryH, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) })),
-            I: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryI, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
-            ),
-            J: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryJ, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
-            ),
-            K: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryK, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
-            ),
-            L: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryL, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.trim(o.Zcode) }))
-            ),
-            M: _.concat(
-              { Zcode: '', Ztext: '' },
-              _.map(aEntryM, (o) => ({ ..._.omit(o, '__metadata'), Zcode: _.toNumber(o.Zcode) }))
-            ),
-          });
+          const aIncludeResetEntry = ['D', 'I', 'J', 'K', 'L', 'M'];
+          const aNumberCodeEntry = ['D', 'M'];
 
           oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
+          oViewModel.setProperty('/search/Werks', this.getAppointeeProperty('Werks'));
+          oViewModel.setProperty('/entry', {
+            Werks: _.map(aEntryDataList[0], (o) => _.omit(o, '__metadata')),
+            ..._.chain('ABCDEFGHIJKLM')
+              .split('')
+              .map((s, i) => ({ [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[++i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }) }))
+              .reduce((acc, cur) => ({ ...acc, ...cur }), {})
+              .value(),
+          });
         } catch (oError) {
           this.debug('Controller > Talent Mobile > onObjectMatched Error', oError);
 
@@ -180,6 +148,13 @@ sap.ui.define(
             },
           });
         }
+      },
+
+      convertSearchConditionEntry({ aEntries, bContainReset = false, bNumberCode = false }) {
+        return _.chain(aEntries)
+          .map((o) => ({ ..._.omit(o, '__metadata'), Zcode: bNumberCode ? _.toNumber(o.Zcode) : _.trim(o.Zcode) }))
+          .thru((arr) => (bContainReset ? [{ Zcode: '', Ztext: '' }, ...arr] : arr))
+          .value();
       },
 
       async onPressDetailConditionsDialog() {
@@ -502,7 +477,7 @@ sap.ui.define(
           const mSearch = _.cloneDeep(oViewModel.getProperty('/search'));
           _.chain(mSearch).set('Freetx', _.chain(mSearch.Freetx).replace(/ /g, '').replace(/[,]/g, '/').value()).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
 
-          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx');
+          const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Command', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx', 'Command');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
@@ -615,6 +590,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/search/Freetx', '');
+        oViewModel.setProperty('/search/Command', 'AND');
       },
 
       resetComplexSearch() {
