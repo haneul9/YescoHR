@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
+    'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/core/routing/History',
     'sap/ui/model/json/JSONModel',
@@ -14,6 +15,7 @@ sap.ui.define(
     // prettier 방지용 주석
     UIComponent,
     Controller,
+    Fragment,
     HashChanger,
     History,
     JSONModel,
@@ -352,6 +354,27 @@ sap.ui.define(
 
       onDialogClose(oEvent) {
         oEvent.getSource().getParent().close();
+      },
+
+      /**
+       * Mobile Common
+       */
+      async openMobileCommonListStatusPop(oEvent) {
+        const oButton = oEvent.getSource();
+
+        if (!this._pPopover) {
+          const oView = this.getView();
+
+          this._pPopover = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.fragment.mobile.ListStatusPopover',
+            controller: this,
+          });
+
+          oView.addDependent(this._pPopover);
+        }
+
+        this._pPopover.openBy(oButton);
       },
 
       /**

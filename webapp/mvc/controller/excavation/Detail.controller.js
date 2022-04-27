@@ -11,7 +11,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -25,7 +24,6 @@ sap.ui.define(
     AttachFileAction,
     ServiceNames,
     TableUtils,
-    TextUtils,
     BaseController
   ) => {
     'use strict';
@@ -34,7 +32,6 @@ sap.ui.define(
       APPTP: 'HR06',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
 
       sRouteName: '',
 

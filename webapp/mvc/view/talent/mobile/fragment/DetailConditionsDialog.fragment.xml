@@ -146,10 +146,13 @@
           </HBox>
           <Label text="{i18n>LABEL_00222}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }">
+            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
+              <customData>
+                <core:CustomData key="seq" value="1" />
+              </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
           </HBox>
@@ -168,10 +171,13 @@
           </HBox>
           <Label text="{i18n>LABEL_00222}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }">
+            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
               <layoutData>
-                <FlexItemData growFactor="1" />
+                <FlexItemData growFactor="2" />
               </layoutData>
+              <customData>
+                <core:CustomData key="seq" value="2" />
+              </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
           </HBox>
@@ -190,10 +196,13 @@
           </HBox>
           <Label text="{i18n>LABEL_00222}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }">
+            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
+              <customData>
+                <core:CustomData key="seq" value="3" />
+              </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
           </HBox>
@@ -212,10 +221,13 @@
           </HBox>
           <Label text="{i18n>LABEL_00222}4" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }">
+            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
+              <customData>
+                <core:CustomData key="seq" value="4" />
+              </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
             </ComboBox>
           </HBox>

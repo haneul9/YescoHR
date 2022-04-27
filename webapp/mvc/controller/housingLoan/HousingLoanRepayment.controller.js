@@ -38,7 +38,6 @@ sap.ui.define(
       LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {
@@ -83,7 +82,7 @@ sap.ui.define(
       },
 
       formatAmount(sAmount) {
-        return this.TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
+        return TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
       },
 
       getCurrentLocationText() {
@@ -106,7 +105,7 @@ sap.ui.define(
         if (iRepay > parseInt(oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))) {
           const sBeforeRepay = oDetailModel.getProperty('/DialogData/RpamtMpr');
 
-          oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
+          oEventSource.setValue(TextUtils.toCurrency(sBeforeRepay));
           oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
           MessageBox.alert(this.getBundleText('MSG_07004'));
         } else {

@@ -28,28 +28,6 @@ sap.ui.define(
           oEventSource.setValue(this.toCurrency(sValue || '0'));
           oEventSource.getModel().setProperty(sPath, sValue || '0');
         },
-
-        /**************************
-         * 신청자에있는 신청일시 oDataFormat
-         *************************/
-        setAppdt(vAppdt) {
-          const sPattern = 'YYYY.MM.DD, HH:mm';
-
-          if (typeof vAppdt === 'string') {
-            return moment(vAppdt, 'YYYYMMDD HHmm').format(sPattern);
-          } else if (vAppdt instanceof Date) {
-            return moment(vAppdt).format(sPattern);
-          }
-
-          return '';
-        },
-
-        /**************************
-         * 결재상태 fragment 신청번호 앞에 0없앰
-         *************************/
-        getDocnoTxt(sDocno) {
-          return (sDocno || '').replace(/^0+/, '');
-        },
       };
     }
 );

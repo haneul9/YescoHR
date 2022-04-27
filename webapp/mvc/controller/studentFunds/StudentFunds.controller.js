@@ -24,7 +24,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFunds', {
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {
@@ -118,7 +117,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return this.TextUtils.toCurrency(vPay);
+        return TextUtils.toCurrency(vPay);
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {

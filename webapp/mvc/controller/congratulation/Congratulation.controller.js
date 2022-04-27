@@ -22,7 +22,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.Congratulation', {
       FileListDialogHandler: null,
       TableUtils: TableUtils,
-      AppUtils: AppUtils,
 
       initializeModel() {
         return {

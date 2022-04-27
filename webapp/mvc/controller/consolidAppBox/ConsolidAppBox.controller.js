@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,7 +13,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
     BaseController
@@ -23,7 +21,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.consolidAppBox.ConsolidAppBox', {
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       NAVIGATION: {
         1120: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 가족변경

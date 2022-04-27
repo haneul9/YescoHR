@@ -22,7 +22,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.withdrawMiddle.WithdrawMiddleDetail', {
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {
@@ -65,7 +64,7 @@ sap.ui.define(
       },
 
       costCalculation(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+        TextUtils.liveChangeCurrency(oEvent);
       },
 
       getCurrentLocationText(oArguments) {

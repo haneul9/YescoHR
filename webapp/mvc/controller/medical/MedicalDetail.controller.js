@@ -34,7 +34,6 @@ sap.ui.define(
       DIALOG_FILE_ID: 'DialogAttFile',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {
@@ -113,9 +112,9 @@ sap.ui.define(
       },
 
       forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
-        const sMob1 = this.TextUtils.toCurrency(cost1);
-        const sMob2 = this.TextUtils.toCurrency(cost2);
-        const sMobtot = this.TextUtils.toCurrency(costtot);
+        const sMob1 = TextUtils.toCurrency(cost1);
+        const sMob2 = TextUtils.toCurrency(cost2);
+        const sMobtot = TextUtils.toCurrency(costtot);
 
         return `${sMobtot} (${sMob1} / ${sMob2})`;
       },
@@ -880,7 +879,7 @@ sap.ui.define(
             const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               return true;
             }
           }
@@ -893,7 +892,7 @@ sap.ui.define(
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
                 // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             } else {
@@ -901,7 +900,7 @@ sap.ui.define(
 
               if (iAddBet02 < iActCost) {
                 // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             }
@@ -1076,7 +1075,7 @@ sap.ui.define(
             const iBet01 = parseInt(mReciptDetails.Bet01);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               oViewModel.setProperty('/DialogLimit', true);
             }
           } else {
@@ -1086,7 +1085,7 @@ sap.ui.define(
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
                 // 비급여를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
@@ -1094,14 +1093,14 @@ sap.ui.define(
 
               if (iAddBet02 < iActCost) {
                 // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             }
           }
         }
 
-        oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
+        oEventSource.setValue(TextUtils.toCurrency(sAmount));
         oViewModel.setProperty(sPath, !sAmount ? '0' : sAmount);
 
         setTimeout(() => {

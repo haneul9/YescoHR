@@ -30,7 +30,6 @@ sap.ui.define(
 
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
 
       initializeModel() {
         return {
@@ -72,7 +71,7 @@ sap.ui.define(
           return;
         }
 
-        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
+        return `${TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
       },
 
       // 주행거리
@@ -85,9 +84,9 @@ sap.ui.define(
           const sReVal = value.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          value = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          value = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          value = this.TextUtils.toCurrency(value.slice(0, 11));
+          value = TextUtils.toCurrency(value.slice(0, 11));
         }
 
         return value;
@@ -107,9 +106,9 @@ sap.ui.define(
           const sReVal = sValue.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          sValue = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          sValue = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          sValue = this.TextUtils.toCurrency(sValue.slice(0, 11));
+          sValue = TextUtils.toCurrency(sValue.slice(0, 11));
         }
 
         // oEvent.getSource().setMaxLength(6);

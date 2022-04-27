@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -23,7 +22,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     ComboEntry,
-    TextUtils,
     TableUtils,
     ODataReadError,
     ODataCreateError,
@@ -38,7 +36,6 @@ sap.ui.define(
       LIST_PAGE_ID: 'container-ehr---housingLoan',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {

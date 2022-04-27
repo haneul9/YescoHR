@@ -614,6 +614,7 @@ sap.ui.define(
         });
       },
 
+      // 직무진단
       onPressDiagnosisButton() {
         MessageBox.alert('Not ready yet.');
         // const oView = this.getView();

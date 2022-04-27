@@ -4,30 +4,24 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/common/mobile/ListStatusPopover',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
     TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
-    BaseController,
-    ListStatusPopover
+    BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.accountChange.mobile.AccountChange', {
       AttachFileAction: AttachFileAction,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
-      ListStatusPopover: ListStatusPopover,
 
       initializeModel() {
         return {

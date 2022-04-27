@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -18,7 +17,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     AttachFileAction,
-    TextUtils,
     TableUtils,
     Client,
     ServiceNames,
@@ -28,7 +26,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTimeChange.mobile.WorkTimeChangeDetail', {
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
 
       initializeModel() {

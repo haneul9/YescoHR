@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
@@ -11,7 +10,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    ListStatusPopover,
     Client,
     ServiceNames,
     TableUtils,
@@ -21,7 +19,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.mobile.List', {
       TableUtils: TableUtils,
-      ListStatusPopover: ListStatusPopover,
       TABLE_ID: 'paystubTable',
 
       initializeModel() {
