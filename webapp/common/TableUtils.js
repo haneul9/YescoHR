@@ -112,11 +112,14 @@ sap.ui.define(
         const $Table = oTable.$();
         const iOffsetTopOfTbody = Math.ceil($Table.find('.sapUiTableCCnt').offset().top); // Table 데이터 시작행의 border-top으로부터 body 최상단까지의 거리
         const $parentBox = $Table.parents('.sapMFlexBox'); // Table을 감싸고 있는 FlexBox
-        const iParentBoxPaddingBottom = rem2px($parentBox.css('padding-bottom'));
-        const iParentBoxBorderBottomWidth = rem2px($parentBox.css('border-bottom-width'));
+        const iParentBoxBottom = rem2px($parentBox.css('padding-bottom')) + rem2px($parentBox.css('border-bottom-width'));
         const iRowHeight = oTable.getRowHeight() + 1; // Table에 세팅된 행높이 + 실제 렌더링될 때 더해지는 1픽셀
-        const iVisibleRowCount = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentBoxPaddingBottom - iParentBoxBorderBottomWidth) / iRowHeight);
-        // console.log('calculateVisibleRowCount', { iBodyHeight, iOffsetTopOfTbody, iParentBoxPaddingBottom, iParentBoxBorderBottomWidth, iRowHeight, iVisibleRowCount });
+        const $cardBox = $Table.parents('.vCardBox'); // Table 영역 전체를 감싸고 있는 Box
+        const iCardBoxBottom = rem2px($cardBox.css('padding-bottom')) + rem2px($cardBox.css('border-bottom-width'));
+        const aCardBoxShadow = $cardBox.css('box-shadow').match(/[^\s\(]+(\(.+\))?/g);
+        const iCardBoxShadow = rem2px(aCardBoxShadow[2]) + rem2px(aCardBoxShadow[3]) + rem2px(aCardBoxShadow[4]); // box shadow (v-offset + blur + spread)
+        const iVisibleRowCount = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentBoxBottom - iCardBoxBottom - iCardBoxShadow) / iRowHeight);
+        // console.log('calculateVisibleRowCount', { iBodyHeight, iOffsetTopOfTbody, iParentBoxBottom, iCardBoxBottom, iCardBoxShadow, iRowHeight, iVisibleRowCount });
         return iVisibleRowCount;
       },
 
