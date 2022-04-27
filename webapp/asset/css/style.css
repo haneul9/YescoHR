@@ -279,7 +279,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 --BorderColorHover:#74b7ff;
 --BorderColorActive:#74b7ff;
 --BorderColorFocus:#007bff;
---BorderColorDisabled:#d6d6d6;
+--BorderColorDisabled:#e6e6e6;
 --BorderColorReadonly:#bdbdbd;
 --BorderColorSuccess:#28a745;
 --BorderColorError:#dc3545;
@@ -878,7 +878,8 @@ body {color:#000; font-weight:bold}
 /*input readonly*/
 .sapMInputBaseReadonly .sapMInputBaseContentWrapper {border:0 !important; background-color:unset !important}
 /*input disabled*/
-.sapMInputBaseDisabled .sapMInputBaseContentWrapper {border-color:var(--BorderColorDisabled) !important; background:#fdfdfd}
+.sapMInputBaseDisabled .sapMInputBaseContentWrapper,
+.sapMInputBaseDisabled .sapMInputBaseContentWrapper:hover {border-color:var(--BorderColorDisabled) !important; background:#fdfdfd}
 
 button .sapMBtnDefault {border-radius:20px}
 button .sapMBtnAccept {border-radius:20px}
@@ -1275,6 +1276,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapMDialogSection {padding-bottom:20px}
 
 .conspicuous-disabled.sapMInputBaseDisabled .sapMInputBaseContentWrapper .sapMInputBaseInner {color:#222 !important}
+.conspicuous-disabled.sapMInputBaseDisabled .sapMInputBaseContentWrapper .sapMInputBaseIconContainer {visibility:hidden !important}
 
 /* 자료실 */
 .sapUiLayoutCSSGrid .sapMPDFViewerError {width:100%; height:90%}
