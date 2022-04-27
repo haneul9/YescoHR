@@ -30,9 +30,7 @@ sap.ui.define(
        * Functions
        *************************/
       check({ mFieldValue, aFieldProperties = [], sPrefixMessage }) {
-        if (!mFieldValue) {
-          return false;
-        }
+        if (_.isEmpty(mFieldValue)) return false;
 
         const bIsValid = !aFieldProperties.some((o) => {
           const sValue = mFieldValue[o.field];
