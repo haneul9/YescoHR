@@ -19,7 +19,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation', {
       TableUtils: TableUtils,
-      AppUtils: AppUtils,
 
       initializeModel() {
         return {

@@ -19,7 +19,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.mobile.List', {
       TableUtils: TableUtils,
-      AppUtils: AppUtils,
 
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
