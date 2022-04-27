@@ -96,7 +96,6 @@ sap.ui.define(
             rowCount: 0,
             list: [],
           },
-          selectedEmployees: [],
         };
       },
 
