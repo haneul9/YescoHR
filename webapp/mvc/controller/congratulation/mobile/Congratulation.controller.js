@@ -4,19 +4,14 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/FragmentEvent',
-    'sap/ui/yesco/common/mobile/ListStatusPopover',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
     ServiceNames,
     AppUtils,
     TableUtils,
-    FragmentEvent,
-    ListStatusPopover,
     Client,
     BaseController
   ) => {
@@ -24,8 +19,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation', {
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
-      ListStatusPopover: ListStatusPopover,
       AppUtils: AppUtils,
 
       initializeModel() {

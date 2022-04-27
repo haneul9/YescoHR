@@ -13,11 +13,8 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
@@ -32,7 +29,6 @@ sap.ui.define(
     Client,
     ServiceNames,
     TableUtils,
-    TextUtils,
     Validator,
     BaseController
   ) => {
@@ -48,7 +44,6 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
 
       getPreviousRouteName() {
         return 'attendance';

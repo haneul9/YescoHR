@@ -1,14 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
   <VBox class="contents">
-    <VBox width="100%" class="vCardBox">
-      <SegmentedButton width="30%" selectedKey="{/situation/segmentKey}" selectionChange=".onSegmentBtn" class="type-b">
+    <HBox width="100%" class="vCardBox" alignItems="End">
+      <SegmentedButton selectedKey="{/situation/segmentKey}" selectionChange=".onSegmentBtn" class="sapUiMediumMarginEnd type-b">
         <items>
           <SegmentedButtonItem text="{i18n>LABEL_15022}" key="A"/>
           <SegmentedButtonItem text="{i18n>LABEL_15023}" key="B"/>
         </items>
       </SegmentedButton>
-    </VBox>
+      <Text text="{i18n>MSG_15008}" class="desc-txt" />
+    </HBox>
     <VBox class="vCardBox">
       <HBox class="form-bar" alignItems="Center">
         <Label text="{/CascadingSitu/Label1}" />

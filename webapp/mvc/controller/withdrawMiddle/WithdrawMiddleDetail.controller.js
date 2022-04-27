@@ -3,20 +3,16 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     Client,
@@ -26,9 +22,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.withdrawMiddle.WithdrawMiddleDetail', {
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -70,7 +64,7 @@ sap.ui.define(
       },
 
       costCalculation(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+        TextUtils.liveChangeCurrency(oEvent);
       },
 
       getCurrentLocationText(oArguments) {

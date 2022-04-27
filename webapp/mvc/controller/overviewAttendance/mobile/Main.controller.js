@@ -9,10 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewAttendance/constants/ChartsSetting',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Decimal',
-    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -217,7 +213,7 @@ sap.ui.define(
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
               width: _.has(mChartInfo, 'ChartWidth') ? mChartInfo.ChartWidth : '100%',
-              height: '100%',
+              height: _.has(mChartInfo, 'ChartHeight') ? mChartInfo.ChartHeight : '100%',
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();

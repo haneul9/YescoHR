@@ -79,7 +79,7 @@ sap.ui.define(
         const mFilters = {
           Ename: sValue,
           Stat2: '3',
-          Accty: 'Z',
+          Accty: 'M', // 권한 해제 : 타사 임직원도 검색 + 전화번호
         };
 
         return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);

@@ -146,26 +146,18 @@ sap.ui.define(
       async onPressMyMemberAdd() {
         const oController = this.getController();
         const mInitModelData = {
-          visibleEntda: false, // 입사일 숨김
-          visibleRetdt: false, // 퇴사일 숨김
-          Enabled: { Stat2: false },
-          Search: {
-            Stat2: '3',
-            Accty: 'Z', // 권한 해제 : 타사 임직원도 검색
-          },
+          fieldVisible: { Entda: false, Retdt: false },
+          fieldEnabled: { Stat2: false },
+          searchConditions: { Accty: 'Z' },
         };
 
-        await oController.EmployeeSearch.onSearchDialog.call(
-          oController,
-          (mSelectedEmp = {}, bClickedCloseButton) => {
-            if (bClickedCloseButton) {
-              return;
-            }
-
-            this.getSelectedPortletHandler().oPortletHandler.addMyMember(mSelectedEmp.Pernr);
-          },
-          mInitModelData
-        );
+        oController
+          .getEmployeeSearchDialogHandler()
+          .setOnLoadSearch(false)
+          .setChangeAppointee(false)
+          .setOptions(mInitModelData)
+          .setCallback((mSelectedEmp = {}) => this.getSelectedPortletHandler().oPortletHandler.addMyMember(mSelectedEmp.Pernr))
+          .openDialog();
       },
 
       onPressMyMemberRemove(oEvent) {

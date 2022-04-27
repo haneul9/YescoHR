@@ -3,21 +3,16 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/competency/constant/Constants',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Pernr',
-    'sap/ui/yesco/mvc/model/type/Decimal',
   ],
   (
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -27,8 +22,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.competency.List', {
-      EmployeeSearch: EmployeeSearch,
-
       initializeModel() {
         return {
           busy: false,

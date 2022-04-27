@@ -8,15 +8,10 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FragmentEvent',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
@@ -26,8 +21,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     ComboEntry,
-    FragmentEvent,
-    TextUtils,
     TableUtils,
     Client,
     ServiceNames,
@@ -37,9 +30,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTimeDetail', {
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

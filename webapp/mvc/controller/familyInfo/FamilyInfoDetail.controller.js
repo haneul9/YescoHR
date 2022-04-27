@@ -7,15 +7,12 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/FragmentEvent',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -24,8 +21,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     UI5Error,
-    FragmentEvent,
-    TextUtils,
     ServiceNames,
     MessageBox,
     ODataReadError,
@@ -65,8 +60,6 @@ sap.ui.define(
       },
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

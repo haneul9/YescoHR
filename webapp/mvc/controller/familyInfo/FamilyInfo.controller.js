@@ -4,22 +4,17 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     ServiceNames,
@@ -30,10 +25,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -104,7 +96,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return this.TextUtils.toCurrency(vPay) || '0';
+        return TextUtils.toCurrency(vPay) || '0';
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {

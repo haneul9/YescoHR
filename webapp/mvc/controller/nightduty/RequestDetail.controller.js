@@ -2,17 +2,12 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/ApprovalRequest',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/RequestDetail',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Month',
-    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
     ApprovalRequest,
-    TextUtils,
     BaseController,
     RequestDetail
   ) => {
@@ -20,8 +15,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestDetail', {
       oApprovalRequest: null,
-
-      TextUtils: TextUtils,
 
       getApprovalType() {
         return 'HR05';

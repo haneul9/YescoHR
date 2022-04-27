@@ -51,8 +51,8 @@ sap.ui.define([], function () {
     CHART_OPTIONS: {
       'stackedcolumn2d-S': {
         chart: {
-          baseFontSize: 10,
-          valueFontSize: 10,
+          baseFontSize: 14,
+          valueFontSize: 14,
           showValues: 1,
           showLegend: 0,
           rotateValues: 0,
@@ -87,9 +87,9 @@ sap.ui.define([], function () {
       },
       stackedcolumn2d: {
         chart: {
-          baseFontSize: 10,
-          valueFontSize: 10,
-          legendItemFontSize: 10,
+          baseFontSize: 14,
+          valueFontSize: 14,
+          legendItemFontSize: 14,
           showSum: 1,
           showValues: 1,
           rotateValues: 0,
@@ -125,9 +125,9 @@ sap.ui.define([], function () {
       },
       msstackedcolumn2dlinedy: {
         chart: {
-          baseFontSize: 10,
-          valueFontSize: 10,
-          legendItemFontSize: 10,
+          baseFontSize: 14,
+          valueFontSize: 14,
+          legendItemFontSize: 14,
           showSum: 1,
           showValues: 1,
           rotateValues: 0,

@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -16,8 +15,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
@@ -27,7 +24,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     ComboEntry,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     ServiceNames,
@@ -42,9 +38,7 @@ sap.ui.define(
       LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -88,7 +82,7 @@ sap.ui.define(
       },
 
       formatAmount(sAmount) {
-        return this.TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
+        return TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
       },
 
       getCurrentLocationText() {
@@ -111,7 +105,7 @@ sap.ui.define(
         if (iRepay > parseInt(oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))) {
           const sBeforeRepay = oDetailModel.getProperty('/DialogData/RpamtMpr');
 
-          oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
+          oEventSource.setValue(TextUtils.toCurrency(sBeforeRepay));
           oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
           MessageBox.alert(this.getBundleText('MSG_07004'));
         } else {

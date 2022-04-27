@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
   ],
   (
     // prettier 방지용 주석
@@ -57,7 +56,7 @@ sap.ui.define(
               type: 'angulargauge',
               renderAt: `${this.sChartId}-container`,
               width: '100%',
-              height: 154,
+              height: '154',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getChartOption(),
@@ -128,23 +127,24 @@ sap.ui.define(
 
       getChartOption() {
         return {
-          showValue: 1,
-          valueFontSize: 12,
-          showTooltip: 0,
-          gaugeOriginY: 110,
-          gaugeOuterRadius: 75,
-          gaugeInnerRadius: 53,
-          majorTMNumber: 13,
+          showValue: '1',
+          baseFontSize: '12',
+          valueFontSize: '14',
+          showTooltip: '0',
+          gaugeOriginY: '110',
+          gaugeOuterRadius: '75',
+          gaugeInnerRadius: '53',
+          majorTMNumber: '13',
           majorTMColor: '#333',
-          majorTMHeight: -2.5,
-          majorTMThickness: 1,
-          tickValueDistance: 5,
-          tickValueStep: 10,
-          showPlotBorder: 0,
-          showGaugeBorder: 0,
-          showPivotBorder: 0,
+          majorTMHeight: '-2.5',
+          majorTMThickness: '1',
+          tickValueDistance: '5',
+          tickValueStep: '10',
+          showPlotBorder: '0',
+          showGaugeBorder: '0',
+          showPivotBorder: '0',
           bgColor: 'transparent',
-          pivotRadius: 3,
+          pivotRadius: '3',
           pivotFillColor: '#000',
           theme: 'ocean',
         };

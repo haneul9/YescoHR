@@ -9,7 +9,7 @@
   <grid:CSSGrid visible="{= !!${/ApprovalDetails/ZappStatAl} }" gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
     <Label text="{i18n>LABEL_00138}" />
     <VBox>
-      <Text text="{ path: '/ApprovalDetails/Docno', formatter: '.TextUtils.getDocnoTxt' }" />
+      <Text text="{= ${/ApprovalDetails/Docno}.replace(/^0+/, '') }" />
     </VBox>
     <Label text="{i18n>LABEL_00140}" />
     <VBox>

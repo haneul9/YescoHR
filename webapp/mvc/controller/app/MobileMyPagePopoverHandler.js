@@ -8,8 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/mvc/model/type/Date', // XML expression binding용 type preloading
-    'sap/ui/yesco/mvc/model/type/Time',
   ],
   (
     // prettier 방지용 주석
@@ -78,7 +76,6 @@ sap.ui.define(
       async readEmployeeData() {
         const oCommonModel = this.oController.getModel(ServiceNames.COMMON);
         const mFilters = {
-          Ename: this.oController.getSessionProperty('Pernr'),
           Actda: moment().hour(9).toDate(),
           Zflag: 'X', // 근속 기간 조회
           Accty: 'Y', // 본인 데이터 조회

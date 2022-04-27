@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:core="sap.ui.core">
+	<Dialog id="examDialog" title="{/year} {i18n>LABEL_10034}" contentWidth="1300px" contentHeight="650px">
+		<buttons>
+			<Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onExSaveBtn" />
+			<Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onExCompleteBtn" />
+			<Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+		</buttons>
+		<content>
+			<VBox class="vCardBox">
+				<grid:CSSGrid gridGap="1px" class="form-grid type-job" gridTemplateColumns="1fr 2fr 3fr 4fr">
+					<Label text="{i18n>LABEL_00147}" width="100%" textAlign="Center" />
+					<Label text="{i18n>LABEL_10103}" width="100%" textAlign="Center" />
+					<Label text="{i18n>LABEL_10104}" width="100%" textAlign="Center" />
+					<Label text="{i18n>LABEL_10105}" width="100%" textAlign="Center" />
+					<Label text="{i18n>LABEL_10015}" width="100%" textAlign="Center">
+						<layoutData>
+							<grid:GridItemLayoutData gridRow="span 4" />
+						</layoutData>
+					</Label>
+					<Label text="{i18n>LABEL_10106}" width="100%" textAlign="Center" />
+					<ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required">
+						<core:Item text="{Ztext}" key="{Zcode}" />
+					</ComboBox>
+					<TextArea class="required" rows="2" value="{/manage/Z131}" width="100%" maxLength="{/fieldControl/limit/Z131}" />
+					<Label text="{i18n>LABEL_10107}" width="100%" textAlign="Center" />
+					<ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required">
+						<core:Item text="{Ztext}" key="{Zcode}" />
+					</ComboBox>
+					<TextArea class="required" rows="2" value="{/manage/Z132}" width="100%" maxLength="{/fieldControl/limit/Z132}" />
+					<Label text="{i18n>LABEL_10108}" width="100%" textAlign="Center" />
+					<Input value="{/FormData/Pstlzf}" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch" class="required" />
+					<TextArea class="required" rows="2" value="{/manage/Z136}" width="100%" maxLength="{/fieldControl/limit/Z136}" />
+					<Label text="{i18n>LABEL_10109}" width="100%" textAlign="Center" />
+					<ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required">
+						<core:Item text="{Ztext}" key="{Zcode}" />
+					</ComboBox>
+					<TextArea class="required" rows="2" value="{/manage/Z137}" width="100%" maxLength="{/fieldControl/limit/Z137}" />
+					<Label text="{i18n>LABEL_35011}" width="100%" textAlign="Center">
+						<layoutData>
+							<grid:GridItemLayoutData gridRow="span 3" />
+						</layoutData>
+					</Label>
+					<Label text="{i18n>LABEL_10107}" width="100%" textAlign="Center" />
+					<ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required">
+						<core:Item text="{Ztext}" key="{Zcode}" />
+					</ComboBox>
+					<TextArea class="required" rows="2" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" />
+					<Label text="{i18n>LABEL_10110}" width="100%" textAlign="Center" />
+					<ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required">
+						<core:Item text="{Ztext}" key="{Zcode}" />
+					</ComboBox>
+					<TextArea class="required" rows="2" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" />
+					<Label text="{i18n>LABEL_10111}" width="100%" textAlign="Center" />
+					<Input value="{/FormData/Pstlzf}" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch" class="required" />
+					<TextArea class="required" rows="2" value="{/manage/Papp1}" width="100%" maxLength="{/fieldControl/limit/Papp1}" />
+				</grid:CSSGrid>
+			</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

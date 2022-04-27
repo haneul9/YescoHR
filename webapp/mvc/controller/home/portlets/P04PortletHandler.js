@@ -42,7 +42,7 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          this.refreshMyMembers();
+          this.reloadMyMembers();
         } catch (oError) {
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
@@ -63,7 +63,7 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          this.refreshMyMembers();
+          this.reloadMyMembers();
         } catch (oError) {
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
@@ -74,7 +74,7 @@ sap.ui.define(
         }
       },
 
-      async refreshMyMembers() {
+      async reloadMyMembers() {
         const aMyMembers = await this.readContentData();
         const mMyMembers = this.transformMembersData(aMyMembers);
         const oPortletModel = this.getPortletModel();

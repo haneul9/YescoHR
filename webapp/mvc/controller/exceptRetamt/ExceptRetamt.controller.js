@@ -2,31 +2,22 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
-    FragmentEvent,
     BaseController,
     MessageBox
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.exceptRetamt.ExceptRetamt', {
-      FragmentEvent: FragmentEvent,
-      EmployeeSearch: EmployeeSearch,
-
       initializeModel() {
         return {
           busy: false,

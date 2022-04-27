@@ -8,14 +8,11 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
@@ -25,7 +22,6 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     ComboEntry,
-    FragmentEvent,
     TextUtils,
     TableUtils,
     Client,
@@ -38,9 +34,7 @@ sap.ui.define(
       DIALOG_FILE_ID: 'DialogAttFile',
 
       AttachFileAction: AttachFileAction,
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -115,6 +109,14 @@ sap.ui.define(
         sDate = !sDate || _.toNumber(sDate) === 0 ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
 
         return sDate;
+      },
+
+      forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
+        const sMob1 = TextUtils.toCurrency(cost1);
+        const sMob2 = TextUtils.toCurrency(cost2);
+        const sMobtot = TextUtils.toCurrency(costtot);
+
+        return `${sMobtot} (${sMob1} / ${sMob2})`;
       },
 
       getCurrentLocationText(oArguments) {
@@ -877,7 +879,7 @@ sap.ui.define(
             const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               return true;
             }
           }
@@ -889,16 +891,16 @@ sap.ui.define(
 
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) {
-                // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             }
@@ -1073,7 +1075,7 @@ sap.ui.define(
             const iBet01 = parseInt(mReciptDetails.Bet01);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               oViewModel.setProperty('/DialogLimit', true);
             }
           } else {
@@ -1082,23 +1084,23 @@ sap.ui.define(
 
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
               if (iAddBet02 < iActCost) {
-                // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                // 비급여 추가한도를 초과했을경우
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             }
           }
         }
 
-        oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
+        oEventSource.setValue(TextUtils.toCurrency(sAmount));
         oViewModel.setProperty(sPath, !sAmount ? '0' : sAmount);
 
         setTimeout(() => {

@@ -261,7 +261,7 @@ sap.ui.define(
             if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
               this.setTeamGridList(aGridList);
             } else {
-              aGridList.unshift({ Stext: this.getBundleText('MSG_15002') });
+              aGridList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
             }
 
             oViewModel.setProperty('/PartList', aGridList);
@@ -322,6 +322,20 @@ sap.ui.define(
             },
           });
         });
+      },
+
+      async onUrlTree(oEvent) {
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getParameter('listItem').getBindingContext().getPath();
+        const oRowData = oViewModel.getProperty(vPath);
+
+        if (!oRowData.Zfiledoc || !oRowData.Zfilekey) {
+          return;
+        }
+
+        const [oUrl] = await this.getUrl(oRowData);
+
+        window.open(oUrl.Url, '_blank');
       },
 
       async onPressLink(oEvent) {
@@ -521,7 +535,7 @@ sap.ui.define(
           if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
             this.setTeamGridList(aPartList);
           } else {
-            aPartList.unshift({ Stext: this.getBundleText('MSG_15002') });
+            aPartList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
           }
 
           oViewModel.setProperty('/PartList', aPartList);
@@ -906,6 +920,10 @@ sap.ui.define(
                     aList.push(e);
                   }
                 });
+
+                if (_.isEmpty(aList)) {
+                  aList.push({ Orgeh: aGridData[0].Orgeh });
+                }
               } else {
                 aGridData = oViewModel.getProperty('/Tmp');
 

@@ -3,24 +3,16 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
-    FragmentEvent,
     TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
     BaseController
@@ -29,10 +21,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.accountChange.AccountChange', {
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -94,7 +83,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      async onRefresh() {
+      async callbackAppointeeChange() {
         const oListModel = this.getViewModel();
 
         try {

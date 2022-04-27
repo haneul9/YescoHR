@@ -9,8 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/FragmentEvent',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -18,8 +16,6 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date',
   ],
   (
     // prettier 방지용 주석
@@ -30,8 +26,6 @@ sap.ui.define(
     AppUtils,
     ComboEntry,
     UI5Error,
-    FragmentEvent,
-    TextUtils,
     TableUtils,
     Client,
     ServiceNames,
@@ -45,9 +39,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoinDetail', {
       LIST_PAGE_ID: { E: 'container-ehr---clubJoin', H: 'container-ehr---h_clubJoin' },
 
-      TextUtils: TextUtils,
       TableUtils: TableUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {

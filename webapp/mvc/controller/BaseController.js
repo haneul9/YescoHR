@@ -3,20 +3,24 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/UIComponent',
     'sap/ui/core/mvc/Controller',
+    'sap/ui/core/Fragment',
     'sap/ui/core/routing/HashChanger',
     'sap/ui/core/routing/History',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/EmployeeSearchDialogHandler',
     'sap/ui/yesco/common/exceptions/UI5Error',
   ],
   (
     // prettier 방지용 주석
     UIComponent,
     Controller,
+    Fragment,
     HashChanger,
     History,
     JSONModel,
     AppUtils,
+    EmployeeSearchDialogHandler,
     UI5Error
   ) => {
     'use strict';
@@ -34,6 +38,8 @@ sap.ui.define(
         }
 
         this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+
+        this.oEmployeeSearchDialogHandler = new EmployeeSearchDialogHandler(this);
 
         // 각 업무 controller에서는 onInit overriding 대신 onBeforeShow, onAfterShow를 사용할 것
         this.getView().addEventDelegate(
@@ -256,15 +262,36 @@ sap.ui.define(
         throw new UI5Error({ message: this.getBundleText('MSG_00053', 'Controller', 'getApprovalType') }); // {Controller}에 {getApprovalType} function을 선언하세요.
       },
 
-      onRefresh() {
-        this.debug('BaseController.onRefresh');
-      },
-
       navToNotFound() {
         // display the "notFound" target without changing the hash
         this.getRouter().getTargets().display('notFound', {
           from: 'home',
         });
+      },
+
+      getEmployeeSearchDialogHandler() {
+        return this.oEmployeeSearchDialogHandler;
+      },
+
+      onEmployeeSearchOpen() {
+        this.getEmployeeSearchDialogHandler()
+          .setChangeAppointee(true) // 선택 후 대상자 변경 여부
+          .setOnLoadSearch(this.getEmployeeSearchDialogOnLoadSearch()) // Open 후 조회 여부 - 각 화면에서 구현
+          .setOptions(this.getEmployeeSearchDialogCustomOptions()) // Fields 활성화여부 및 초기 선택값 - 각 화면에서 구현
+          .setCallback(this.callbackAppointeeChange.bind(this)) // 선택 후 실행 할 Function - 각 화면에서 구현
+          .openDialog();
+      },
+
+      getEmployeeSearchDialogCustomOptions() {
+        return {};
+      },
+
+      getEmployeeSearchDialogOnLoadSearch() {
+        return false;
+      },
+
+      callbackAppointeeChange() {
+        return null;
       },
 
       /**
@@ -312,6 +339,42 @@ sap.ui.define(
 
       getUnknownAvatarImageURL() {
         return AppUtils.getUnknownAvatarImageURL();
+      },
+
+      /**
+       * HELP Message Box handler
+       */
+      toggleHelpBox(oEvent) {
+        const oPanel = oEvent.getSource().getParent().getParent();
+        const oToolbar = oEvent.getSource().getParent();
+
+        oToolbar.getContent()[2].toggleStyleClass('expanded');
+        oPanel.setExpanded(!oPanel.getExpanded());
+      },
+
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
+      /**
+       * Mobile Common
+       */
+      async openMobileCommonListStatusPop(oEvent) {
+        const oButton = oEvent.getSource();
+
+        if (!this._pPopover) {
+          const oView = this.getView();
+
+          this._pPopover = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.fragment.mobile.ListStatusPopover',
+            controller: this,
+          });
+
+          oView.addDependent(this._pPopover);
+        }
+
+        this._pPopover.openBy(oButton);
       },
 
       /**

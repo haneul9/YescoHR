@@ -3,28 +3,20 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date',
-    'sap/ui/yesco/mvc/model/type/Currency',
   ],
   (
     // prettier 방지용 주석
     Filter,
     FilterOperator,
-    JSONModel,
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     ServiceNames,
@@ -35,10 +27,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -69,7 +58,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      onRefresh() {
+      callbackAppointeeChange() {
         this.totalCount();
         this.onSearch();
       },
@@ -92,9 +81,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        vPay = this.TextUtils.toCurrency(vPay);
-
-        return vPay;
+        return TextUtils.toCurrency(vPay);
       },
 
       onSearch() {

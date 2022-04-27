@@ -7,13 +7,9 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Month', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Percent',
   ],
   (
     // prettier 방지용 주석
@@ -23,7 +19,6 @@ sap.ui.define(
     FilterOperator,
     JSONModel,
     DateUtils,
-    EmployeeSearch,
     TableUtils,
     MessageBox,
     BaseController
@@ -31,7 +26,6 @@ sap.ui.define(
     'use strict';
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.Components', {
       DateUtils,
-      EmployeeSearch,
 
       /* =========================================================== */
       /* lifecycle methods                                           */
@@ -119,7 +113,13 @@ sap.ui.define(
       },
 
       openEmployeeDialog() {
-        this.EmployeeSearch.onSearchDialog.call(this);
+        this.getEmployeeSearchDialogHandler()
+          .activeMultiSelect()
+          .setOnLoadSearch(false)
+          .setChangeAppointee(false)
+          .setOptions({})
+          .setCallback((aSelectedEmp = []) => this.debug(aSelectedEmp))
+          .openDialog();
       },
 
       openTestDialog() {

@@ -54,11 +54,14 @@ sap.ui.define(
       // 진척율 입력
       progressInput(oEvent) {
         const oViewModel = this.getViewModel();
-        let sValue = oEvent
-          .getParameter('value')
-          .trim()
-          .replace(/[^\d'.']/g, '');
-
+        let sValue = _.trimStart(
+          oEvent
+            .getParameter('value')
+            .trim()
+            .replace(/[^\d'.']/g, ''),
+          '0',
+          ''
+        );
         if (_.includes(sValue, '.')) {
           const sReVal = sValue.replace(/['.']{2}/g, '.');
           const iIndex = sReVal.indexOf('.');
@@ -70,9 +73,10 @@ sap.ui.define(
 
         const oEventSource = oEvent.getSource();
         const sPath = oEventSource.getParent().getBindingContext().getPath();
+        const sScore = sValue || '0';
 
-        oViewModel.setProperty(`${sPath}/Prgrt`, sValue);
-        oEventSource.setValue(sValue);
+        oViewModel.setProperty(`${sPath}/Prgrt`, sScore);
+        oEventSource.setValue(sScore);
       },
 
       async onObjectMatched() {
@@ -282,14 +286,15 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const mPayLoad = {
-          Objid: mSelectedRow.Objid9091,
+          Objid9091: mSelectedRow.Objid9091,
+          ObjidO: mSelectedRow.ObjidO,
           Otype: mSelectedRow.Otype,
-          Zyear: oViewModel.getProperty('/search/Syear'),
+          Syear: oViewModel.getProperty('/search/Syear'),
         };
 
         oViewModel.setProperty('/TeamList', []);
 
-        return Client.getEntitySet(oModel, 'KpiCascadingTeamList', mPayLoad);
+        return Client.getEntitySet(oModel, 'KpiProztTeamList', mPayLoad);
       },
 
       // List의 CommentBtn 클릭

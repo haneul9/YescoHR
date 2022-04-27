@@ -4,24 +4,18 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/EmployeeSearch',
-    'sap/ui/yesco/common/FragmentEvent',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Currency',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
   ],
   (
     // prettier 방지용 주석
     Fragment,
     AppUtils,
     AttachFileAction,
-    EmployeeSearch,
-    FragmentEvent,
     TableUtils,
     TextUtils,
     Client,
@@ -35,10 +29,7 @@ sap.ui.define(
       DRIVE_TABLE_ID: 'driveTable',
 
       AttachFileAction: AttachFileAction,
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
-      TextUtils: TextUtils,
-      FragmentEvent: FragmentEvent,
 
       initializeModel() {
         return {
@@ -80,7 +71,7 @@ sap.ui.define(
           return;
         }
 
-        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
+        return `${TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
       },
 
       // 주행거리
@@ -93,9 +84,9 @@ sap.ui.define(
           const sReVal = value.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          value = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          value = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          value = this.TextUtils.toCurrency(value.slice(0, 11));
+          value = TextUtils.toCurrency(value.slice(0, 11));
         }
 
         return value;
@@ -115,9 +106,9 @@ sap.ui.define(
           const sReVal = sValue.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          sValue = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          sValue = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          sValue = this.TextUtils.toCurrency(sValue.slice(0, 11));
+          sValue = TextUtils.toCurrency(sValue.slice(0, 11));
         }
 
         // oEvent.getSource().setMaxLength(6);
@@ -158,7 +149,7 @@ sap.ui.define(
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
-      async onRefresh() {
+      async callbackAppointeeChange() {
         const oViewModel = this.getViewModel();
 
         try {

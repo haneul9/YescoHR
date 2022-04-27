@@ -4,20 +4,16 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/EmployeeSearch',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/model/type/Date', // DatePicker 에러 방지 import : Loading of data failed: Error: Date must be a JavaScript date object
-    'sap/ui/yesco/mvc/model/type/Pernr',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     AppUtils,
     DateUtils,
-    EmployeeSearch,
     Client,
     ServiceNames,
     TableUtils,
@@ -26,7 +22,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.List', {
-      EmployeeSearch: EmployeeSearch,
       TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
 

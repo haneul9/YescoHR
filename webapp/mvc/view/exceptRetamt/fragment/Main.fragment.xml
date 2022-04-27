@@ -22,7 +22,7 @@
                         <OverflowToolbar height="3rem" style="Clear">
                             <Title text="HELP"/>
                             <ToolbarSpacer/>
-                            <Button press=".FragmentEvent.onTogglePanel" type="Transparent" class="icon-button close expanded"/>
+                            <Button press=".toggleHelpBox" type="Transparent" class="icon-button close expanded"/>
                         </OverflowToolbar>
                     </headerToolbar>
                     <content>
