@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -11,7 +10,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -55,12 +53,12 @@ sap.ui.define(
 
           oViewModel.setProperty('/data/tree', this.oDataChangeTree(aTreeData));
 
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc2Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc3Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 4, 5, 6], sTheadOrTbody: 'thead' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 1, 2, 3, 5, 6], sTheadOrTbody: 'tbody' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc6Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
-          TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc7Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc2Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc3Table'), aColIndices: [0, 1], sTheadOrTbody: 'tbody' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 4, 5, 6], sTheadOrTbody: 'thead' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc4Table'), aColIndices: [0, 1, 2, 3, 5, 6], sTheadOrTbody: 'tbody' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc6Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
+          this.TableUtils.adjustRowSpan({ oTable: this.byId('roleDesc7Table'), aColIndices: [0, 4, 5], sTheadOrTbody: 'thead' });
 
           await this.callRoleData(this.getAppointeeProperty('Plans'));
         } catch (oError) {

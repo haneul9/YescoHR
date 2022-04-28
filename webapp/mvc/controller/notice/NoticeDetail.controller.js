@@ -4,7 +4,6 @@ sap.ui.define(
     // prettier 방지주석
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/control/MessageBox',
@@ -16,7 +15,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Appno,
     AppUtils,
-    AttachFileAction,
     ServiceNames,
     Client,
     MessageBox,
@@ -31,8 +29,6 @@ sap.ui.define(
         E: 'container-ehr---notice',
         H: 'container-ehr---h_notice',
       },
-
-      AttachFileAction: AttachFileAction,
 
       initializeModel() {
         return {
@@ -190,7 +186,7 @@ sap.ui.define(
                 oFormData.Hide = 'X';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 const oModel = this.getModel(ServiceNames.COMMON);
                 const sWerks = this.getSessionProperty('Werks');
@@ -254,7 +250,7 @@ sap.ui.define(
                 const sWerks = this.getSessionProperty('Werks');
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 const oModel = this.getModel(ServiceNames.COMMON);
                 let oSendObject = {
@@ -371,7 +367,7 @@ sap.ui.define(
         const bMySelf = oDetailModel.getProperty('/MySelf');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,
           Type: this.getApprovalType(),
           Appno: sAppno,

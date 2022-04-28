@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileListDialogHandler',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,7 +11,6 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     FileListDialogHandler,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -21,7 +19,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.Congratulation', {
       FileListDialogHandler: null,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -121,7 +118,7 @@ sap.ui.define(
           const oTable = this.byId('conguTable');
 
           oViewModel.setProperty('/CongList', aTableList);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -142,7 +139,7 @@ sap.ui.define(
         const oTable = this.byId('conguTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_02022');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onPressFileListDialogOpen(oEvent) {

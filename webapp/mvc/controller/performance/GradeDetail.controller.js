@@ -10,7 +10,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
   ],
@@ -25,7 +24,6 @@ sap.ui.define(
     Client,
     ServiceNames,
     UI5Error,
-    TableUtils,
     BaseController,
     Constants
   ) => {
@@ -79,7 +77,7 @@ sap.ui.define(
        * @override
        */
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId('departmentTable'),
           aColIndices: [0],
           sTheadOrTbody: 'thead',
@@ -172,7 +170,7 @@ sap.ui.define(
           setTimeout(() => {
             this.setGridFilter();
 
-            TableUtils.setColorColumn({
+            this.TableUtils.setColorColumn({
               oTable: this.byId('summaryTable'),
               bIncludeHeader: true,
               mHeaderColorMap: { 2: 'bgType04', 3: 'bgType05', 4: 'bgType06' },
@@ -249,7 +247,7 @@ sap.ui.define(
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: aListByDepart,
           mSumField: { Zzappuntx1: sSumLabel },
           vCalcProps: /^Dept/,
@@ -663,7 +661,7 @@ sap.ui.define(
           { type: 'String', label: this.getBundleText('LABEL_10078'), property: 'FappTx' },
         ];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
+        this.TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
       },
 
       /*****************************************************************

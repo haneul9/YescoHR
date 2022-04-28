@@ -4,7 +4,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -13,7 +12,6 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -22,8 +20,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.healthCare.HealthCareDetail', {
       LIST_PAGE_ID: 'container-ehr---healthCare',
-
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {

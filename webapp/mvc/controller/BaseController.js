@@ -8,8 +8,12 @@ sap.ui.define(
     'sap/ui/core/routing/History',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/AttachFileAction',
+    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/EmployeeSearchDialogHandler',
     'sap/ui/yesco/common/exceptions/UI5Error',
+    'sap/ui/yesco/common/TableUtils',
+    'sap/ui/yesco/common/TextUtils',
   ],
   (
     // prettier 방지용 주석
@@ -20,12 +24,21 @@ sap.ui.define(
     History,
     JSONModel,
     AppUtils,
+    AttachFileAction,
+    DateUtils,
     EmployeeSearchDialogHandler,
-    UI5Error
+    UI5Error,
+    TableUtils,
+    TextUtils
   ) => {
     'use strict';
 
     return Controller.extend('sap.ui.yesco.mvc.controller.BaseController', {
+      AttachFileAction: AttachFileAction,
+      DateUtils: DateUtils,
+      TableUtils: TableUtils,
+      TextUtils: TextUtils,
+
       bMobile: false,
 
       onInit() {

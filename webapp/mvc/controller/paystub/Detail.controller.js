@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -13,7 +12,6 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
@@ -104,9 +102,9 @@ sap.ui.define(
           oViewModel.setProperty('/base/rowCount', _.filter(aBaseList, (o) => !_.isEmpty(o.Caltx)).length || 1);
 
           setTimeout(() => {
-            if (!bShowHeader) TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
-            TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 2: 'bgType10', 3: 'bgType10', 4: 'bgType10', 5: 'bgType11', 6: 'bgType12', 7: 'bgType12', 8: 'bgType12' } });
-            // TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
+            if (!bShowHeader) this.TableUtils.summaryColspan({ oTable: this.byId('payTable'), aHideIndex: [1, 2] });
+            this.TableUtils.setColorColumn({ oTable: this.byId('summaryTable'), mColorMap: { 2: 'bgType10', 3: 'bgType10', 4: 'bgType10', 5: 'bgType11', 6: 'bgType12', 7: 'bgType12', 8: 'bgType12' } });
+            // this.TableUtils.setColorColumn({ oTable: this.byId('workTable'), mColorMap: { 0: 'bgType01', 1: 'bgType01' } });
           }, 100);
         } catch (oError) {
           this.debug('Controller > paystub Detail > loadPage Error', oError);
@@ -120,7 +118,7 @@ sap.ui.define(
       transformTreeData({ aTreeData }) {
         const mGroupedByParents = _.groupBy(aTreeData, 'Uppno');
         const mCatsById = _.keyBy(aTreeData, 'Itmno');
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: mGroupedByParents[''] ?? [],
           mSumField: { Pyitx: this.getBundleText('LABEL_00172') }, // 합계
           vCalcProps: ['Betrg'],

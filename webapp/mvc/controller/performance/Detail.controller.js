@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -20,7 +19,6 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
     Client,
     UI5Error,
@@ -32,8 +30,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
-      AttachFileAction: AttachFileAction,
-
       getPreviousRouteName() {
         return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
@@ -409,7 +405,7 @@ sap.ui.define(
           oViewModel.setProperty('/opposition/Appno', _.isEmpty(sAppno) || _.toNumber(sAppno) === 0 ? null : sAppno);
           oViewModel.setProperty('/opposition/ZzabjfbTx', _.get(mResult, 'ZzabjfbTx'));
 
-          AttachFileAction.setAttachFile(this, {
+          this.AttachFileAction.setAttachFile(this, {
             Editable: bEditable,
             Type: 'APP1',
             Appno: oViewModel.getProperty('/opposition/Appno'),
@@ -518,7 +514,7 @@ sap.ui.define(
               oViewModel.setProperty('/opposition/Appno', sAppno);
             }
 
-            await AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
+            await this.AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
           }
 
           await Client.getEntitySet(oModel, 'AppraisalDifOpi', {
@@ -703,7 +699,7 @@ sap.ui.define(
       },
 
       onPressOppositionDialogSave() {
-        const iAttachLength = AttachFileAction.getFileCount.call(this);
+        const iAttachLength = this.AttachFileAction.getFileCount.call(this);
 
         if (iAttachLength < 1) {
           MessageBox.alert(this.getBundleText('MSG_10023')); // 이의신청서를 첨부하세요.

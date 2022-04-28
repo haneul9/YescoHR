@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/PostcodeDialogHandler',
@@ -19,7 +18,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     PostcodeDialogHandler,
@@ -29,7 +27,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.certification.CertificationDetail', {
       PostcodeDialogHandler: null,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {

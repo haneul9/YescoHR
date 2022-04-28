@@ -2,10 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -13,10 +10,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
-    TextUtils,
     ServiceNames,
     Client,
     BaseController
@@ -24,9 +18,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.Medical', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           routeName: '',
@@ -123,7 +114,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return TextUtils.toCurrency(vPay);
+        return this.TextUtils.toCurrency(vPay);
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -172,7 +163,7 @@ sap.ui.define(
           const oTable = this.byId('medTable');
 
           oViewModel.setProperty('/List', aList);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -244,7 +235,7 @@ sap.ui.define(
         const oTable = this.byId('medTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_09010');
 
-        TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        this.TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

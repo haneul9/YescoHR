@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/idp/constant/Constants',
   ],
@@ -15,7 +14,6 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController,
     Constants
   ) => {
@@ -72,7 +70,7 @@ sap.ui.define(
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId('idpTable');
 
-        oViewModel.setProperty('/listInfo/rowCount', _.get(TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
+        oViewModel.setProperty('/listInfo/rowCount', _.get(this.TableUtils.count({ oTable, aRowData }), 'rowCount', 1));
         oViewModel.setProperty(
           '/list',
           _.map(aRowData, (o) => _.omit(o, '__metadata'))

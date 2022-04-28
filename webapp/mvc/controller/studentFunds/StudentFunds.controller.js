@@ -2,9 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,9 +9,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
     BaseController
@@ -22,9 +16,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFunds', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           routeName: '',
@@ -60,7 +51,7 @@ sap.ui.define(
           const oTable = this.byId('studentTable');
 
           oViewModel.setProperty('/StudentList', aList);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList }));
 
           const [mTotal] = await this.totalCount();
           const sYear = mTotal.Zyear;
@@ -87,7 +78,7 @@ sap.ui.define(
           const oTable = this.byId('studentTable');
 
           oViewModel.setProperty('/StudentList', aList);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList }));
 
           const [mTotal] = await this.totalCount();
           const sYear = mTotal.Zyear;
@@ -117,7 +108,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return TextUtils.toCurrency(vPay);
+        return this.TextUtils.toCurrency(vPay);
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -134,7 +125,7 @@ sap.ui.define(
           const oTable = this.byId('studentTable');
 
           oViewModel.setProperty('/StudentList', aList);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList }));
 
           const [mTotal] = await this.totalCount();
           const sYear = mTotal.Zyear;
@@ -188,7 +179,7 @@ sap.ui.define(
         const oTable = this.byId('studentTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_03028'); // {학자금 신청}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

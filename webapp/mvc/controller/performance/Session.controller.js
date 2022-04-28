@@ -8,7 +8,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/performance/constant/Constants',
   ],
@@ -21,7 +20,6 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController,
     Constants
   ) => {
@@ -66,7 +64,7 @@ sap.ui.define(
        * @override
        */
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId('departmentTable'),
           aColIndices: [0],
           sTheadOrTbody: 'thead',
@@ -246,7 +244,7 @@ sap.ui.define(
           .value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: aListByDepart,
           mSumField: { Zzappuntx2: sSumLabel },
           vCalcProps: /^Dept/,
@@ -613,7 +611,7 @@ sap.ui.define(
           { type: 'String', label: this.getBundleText('LABEL_10095'), property: 'LfappTx' },
         ];
 
-        TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
+        this.TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
       },
 
       /*****************************************************************

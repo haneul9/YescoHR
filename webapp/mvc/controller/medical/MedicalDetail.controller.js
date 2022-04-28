@@ -6,10 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TextUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -20,10 +17,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TextUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -32,9 +26,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.medical.MedicalDetail', {
       DIALOG_FILE_ID: 'DialogAttFile',
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -112,9 +103,9 @@ sap.ui.define(
       },
 
       forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
-        const sMob1 = TextUtils.toCurrency(cost1);
-        const sMob2 = TextUtils.toCurrency(cost2);
-        const sMobtot = TextUtils.toCurrency(costtot);
+        const sMob1 = this.TextUtils.toCurrency(cost1);
+        const sMob2 = this.TextUtils.toCurrency(cost2);
+        const sMobtot = this.TextUtils.toCurrency(costtot);
 
         return `${sMobtot} (${sMob1} / ${sMob2})`;
       },
@@ -409,7 +400,7 @@ sap.ui.define(
         // 첨부파일
         const bResult = aHisList.every((e) => e.Attyn === 'X');
 
-        if (!bResult && !AttachFileAction.getFileCount.call(this)) {
+        if (!bResult && !this.AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_09028'));
           return true;
         }
@@ -475,15 +466,15 @@ sap.ui.define(
               }
 
               // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
               const aDeleteDatas = oViewModel.getProperty('/RemoveFiles');
 
               if (!!aDeleteDatas.length) {
                 await aDeleteDatas.forEach((e) => {
-                  AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
+                  this.AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
                 });
               }
 
@@ -536,15 +527,15 @@ sap.ui.define(
               }
 
               // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
               const aDeleteDatas = oViewModel.getProperty('/RemoveFiles');
 
               if (!!aDeleteDatas.length) {
                 await aDeleteDatas.forEach((e) => {
-                  AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
+                  this.AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
                 });
               }
 
@@ -815,7 +806,7 @@ sap.ui.define(
         const sStatus = oViewModel.getProperty('/FormData/Lnsta');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
@@ -879,7 +870,7 @@ sap.ui.define(
             const iActCost = parseInt(mDialogData.Bet01) * parseFloat(mTargetDetails.Prate);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               return true;
             }
           }
@@ -892,7 +883,7 @@ sap.ui.define(
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
                 // 비급여 한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             } else {
@@ -900,7 +891,7 @@ sap.ui.define(
 
               if (iAddBet02 < iActCost) {
                 // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 return true;
               }
             }
@@ -966,12 +957,12 @@ sap.ui.define(
           const oTable = this.byId('medHisTable');
 
           oViewModel.setProperty('/HisList', aDetail);
-          oViewModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aHisList, sStatCode: 'ZappStat' }));
 
           this.setAppAmount();
           this.addSeqnrNum();
 
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
+          await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
           let sFile = '';
@@ -1024,7 +1015,7 @@ sap.ui.define(
           });
 
           await this.checkedDialogData(aDetail);
-          await AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
+          await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           oViewModel.setProperty('/HisList', aDetail);
 
@@ -1075,7 +1066,7 @@ sap.ui.define(
             const iBet01 = parseInt(mReciptDetails.Bet01);
 
             if (iBet01 < iActCost) {
-              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
+              MessageBox.alert(this.getBundleText('MSG_09017', mReciptDetails.Bet01Basic, this.TextUtils.toCurrency(parseInt(iBet01 / parseFloat(mTargetDetails.Prate)))));
               oViewModel.setProperty('/DialogLimit', true);
             }
           } else {
@@ -1085,7 +1076,7 @@ sap.ui.define(
             if ((sAddBet02 === '0' || !sAddBet02) && !mReciptDetails.Bet02AddChk) {
               if (iBet02 < iActCost) {
                 // 비급여를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09062', mReciptDetails.Bet02Basic, this.TextUtils.toCurrency(parseInt(iBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
@@ -1093,14 +1084,14 @@ sap.ui.define(
 
               if (iAddBet02 < iActCost) {
                 // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
                 oViewModel.setProperty('/DialogLimit', true);
               }
             }
           }
         }
 
-        oEventSource.setValue(TextUtils.toCurrency(sAmount));
+        oEventSource.setValue(this.TextUtils.toCurrency(sAmount));
         oViewModel.setProperty(sPath, !sAmount ? '0' : sAmount);
 
         setTimeout(() => {
@@ -1209,7 +1200,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sAppno = oViewModel.getProperty('/DialogData/Appno2') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
           Editable: oViewModel.getProperty('/ReWriteStat'),
           Type: this.getApprovalType(),
