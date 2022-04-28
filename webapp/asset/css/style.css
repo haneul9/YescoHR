@@ -138,8 +138,8 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 .portlet-members > .sapMFlexItem:last-child {margin-right:0}
 .portlet-p03p04 .portlet-member-name {font-weight:700; margin-right:12px; width:45px}
 .portlet-p03p04 .portlet-member-position {margin-right:12px; width:55px}
-.portlet-p03p04 .portlet-members .portlet-member-org {width:calc(100% - 222px)}/* 42 + 62 + 62 + ~ + 56 */
-.portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:calc(100% - 255px)}/* 42 + 62 + 62 + ~ + 56 + 33 */
+.portlet-p03p04 .portlet-members .portlet-member-org {width:calc(100% - 222px)}/* 42 + 57 + 67 + ~ + 60 */
+.portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:calc(100% - 255px)}/* 42 + 57 + 67 + ~ + 60 + 33 */
 .portlet-p03p04 [data-portlet-member-status] {margin-left:6px; border:1px solid; border-radius:3px; height:18px; line-height:17px; font-size:12px !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-member-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
