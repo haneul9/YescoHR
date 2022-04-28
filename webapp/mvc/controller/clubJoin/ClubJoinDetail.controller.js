@@ -63,20 +63,20 @@ sap.ui.define(
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const sMenid = this.getCurrentMenuId();
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/busy', true);
-        oDetailModel.setProperty('/menid', sMenid);
-        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/menid', sMenid);
+        oViewModel.setProperty('/ViewKey', sDataKey);
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'ClubJoinAppl')));
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'ClubJoinAppl')));
 
           const aList = await this.getList();
 
-          oDetailModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
+          oViewModel.setProperty('/ClubType', new ComboEntry({ codeKey: 'Zclub', valueKey: 'Zclubtx', aEntries: aList }));
           this.setFormData();
         } catch (oError) {
           if (oError instanceof Error) oError = new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
@@ -88,7 +88,7 @@ sap.ui.define(
             },
           });
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -101,9 +101,9 @@ sap.ui.define(
       // 상세조회
       async setFormData() {
         const oView = this.getView();
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const sViewKey = oViewModel.getProperty('/ViewKey');
         const mPernr = this.isHass() ? { Pernr: this.getAppointeeProperty('Pernr') } : {};
         const mListData = await Client.getEntitySet(oModel, 'BenefitCodeList', {
           ...mPernr,
@@ -115,24 +115,24 @@ sap.ui.define(
 
         const sMaximubCount = mListData[0].Zchar1;
 
-        oDetailModel.setProperty(
+        oViewModel.setProperty(
           '/InfoMessage',
           `<p>${this.getBundleText('MSG_14002', sMaximubCount)}</p>
           <p>${this.getBundleText('MSG_14003')}</p>`
         );
 
-        oDetailModel.setProperty('/FormData/CountMessage', this.getBundleText('MSG_14005', sMaximubCount));
+        oViewModel.setProperty('/FormData/CountMessage', this.getBundleText('MSG_14005', sMaximubCount));
 
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
           const mAppointeeData = this.getAppointeeData();
 
-          oDetailModel.setProperty('/FormData/Coaid', '');
-          oDetailModel.setProperty('/FormData/Zclub', 'ALL');
-          oDetailModel.setProperty('/FormData/Pernr', mAppointeeData.Pernr);
-          oDetailModel.setProperty('/FormData/Ename', mAppointeeData.Ename);
+          oViewModel.setProperty('/FormData/Coaid', '');
+          oViewModel.setProperty('/FormData/Zclub', 'ALL');
+          oViewModel.setProperty('/FormData/Pernr', mAppointeeData.Pernr);
+          oViewModel.setProperty('/FormData/Ename', mAppointeeData.Ename);
 
-          oDetailModel.setProperty('/ApplyInfo', {
+          oViewModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
             Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
@@ -172,8 +172,8 @@ sap.ui.define(
               if (oData) {
                 const oTargetData = oData.results[0];
 
-                oDetailModel.setProperty('/FormData', oTargetData);
-                oDetailModel.setProperty('/ApplyInfo', oTargetData);
+                oViewModel.setProperty('/FormData', oTargetData);
+                oViewModel.setProperty('/ApplyInfo', oTargetData);
               }
             },
             error: (oError) => {
@@ -212,33 +212,33 @@ sap.ui.define(
 
       // 동호회 선택시
       onClubType(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
 
         if (sKey === 'ALL' || !sKey) return;
 
-        oDetailModel.getProperty('/ClubType').forEach((e) => {
+        oViewModel.getProperty('/ClubType').forEach((e) => {
           if (e.Zclub === sKey) {
-            // oDetailModel.setProperty('/FormData', e);
-            oDetailModel.setProperty('/FormData/Zclubtx', e.Zclubtx);
-            oDetailModel.setProperty('/FormData/Begda', e.Begda);
-            oDetailModel.setProperty('/FormData/Endda', e.Endda);
-            oDetailModel.setProperty('/FormData/Period', e.Period);
-            oDetailModel.setProperty('/FormData/Mcnt', e.Mcnt);
-            oDetailModel.setProperty('/FormData/PerHead', e.PerHead);
-            oDetailModel.setProperty('/FormData/Headnm', e.Headnm);
-            oDetailModel.setProperty('/FormData/PerLead', e.PerLead);
-            oDetailModel.setProperty('/FormData/Leadnm', e.Leadnm);
-            oDetailModel.setProperty('/FormData/Betrg', e.Betrg);
-            oDetailModel.setProperty('/FormData/Zinfo', e.Zinfo);
-            oDetailModel.setProperty('/FormData/Memberyn', e.Memberyn);
+            // oViewModel.setProperty('/FormData', e);
+            oViewModel.setProperty('/FormData/Zclubtx', e.Zclubtx);
+            oViewModel.setProperty('/FormData/Begda', e.Begda);
+            oViewModel.setProperty('/FormData/Endda', e.Endda);
+            oViewModel.setProperty('/FormData/Period', e.Period);
+            oViewModel.setProperty('/FormData/Mcnt', e.Mcnt);
+            oViewModel.setProperty('/FormData/PerHead', e.PerHead);
+            oViewModel.setProperty('/FormData/Headnm', e.Headnm);
+            oViewModel.setProperty('/FormData/PerLead', e.PerLead);
+            oViewModel.setProperty('/FormData/Leadnm', e.Leadnm);
+            oViewModel.setProperty('/FormData/Betrg', e.Betrg);
+            oViewModel.setProperty('/FormData/Zinfo', e.Zinfo);
+            oViewModel.setProperty('/FormData/Memberyn', e.Memberyn);
           }
         });
       },
 
       // 회사지원체크
       async onSelected(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oEventSource = oEvent.getSource();
         const bSelected = oEventSource.getSelected();
 
@@ -255,20 +255,20 @@ sap.ui.define(
 
             await Client.getEntitySet(oModel, 'ClubJoinAppl', mPayLoad);
 
-            oDetailModel.setProperty('/FormData/Coaid', 'X');
+            oViewModel.setProperty('/FormData/Coaid', 'X');
           } catch (oError) {
             AppUtils.handleError(oError);
-            oDetailModel.setProperty('/FormData/Coaid', '');
+            oViewModel.setProperty('/FormData/Coaid', '');
             oEventSource.setSelected(false);
           }
         } else {
-          oDetailModel.setProperty('/FormData/Coaid', '');
+          oViewModel.setProperty('/FormData/Coaid', '');
         }
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const oFormData = oViewModel.getProperty('/FormData');
 
         // 동호회
         if (oFormData.Zclub === 'ALL' || !oFormData.Zclub) {
@@ -281,18 +281,18 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Lnsta', '');
+        oViewModel.setProperty('/FormData/Appno', '');
+        oViewModel.setProperty('/FormData/Lnsta', '');
       },
 
       // 임시저장
       onSaveBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const sAppno = oViewModel.getProperty('/FormData/Appno');
+        const oFormData = oViewModel.getProperty('/FormData');
 
         if (this.checkError()) return;
 
@@ -306,15 +306,15 @@ sap.ui.define(
                 if (!sAppno) {
                   const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
+                  oViewModel.setProperty('/FormData/Appno', sAppno);
+                  oViewModel.setProperty('/FormData/Appda', new Date());
                 }
 
                 let oSendObject = {};
 
                 oSendObject = oFormData;
                 oSendObject.Prcty = 'T';
-                oSendObject.Menid = oDetailModel.getProperty('/menid');
+                oSendObject.Menid = oViewModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 await new Promise((resolve, reject) => {
@@ -342,9 +342,9 @@ sap.ui.define(
       // 신청
       onApplyBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/FormData/Appno');
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const sAppno = oViewModel.getProperty('/FormData/Appno');
+        const oFormData = oViewModel.getProperty('/FormData');
 
         if (this.checkError()) return;
 
@@ -358,15 +358,15 @@ sap.ui.define(
                 if (!sAppno) {
                   const sAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/Appda', new Date());
+                  oViewModel.setProperty('/FormData/Appno', sAppno);
+                  oViewModel.setProperty('/FormData/Appda', new Date());
                 }
 
                 let oSendObject = {};
 
                 oSendObject = oFormData;
                 oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/menid');
+                oSendObject.Menid = oViewModel.getProperty('/menid');
                 oSendObject.Waers = 'KRW';
 
                 await new Promise((resolve, reject) => {
@@ -398,7 +398,7 @@ sap.ui.define(
       // 취소
       onCancelBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
@@ -408,10 +408,10 @@ sap.ui.define(
 
               let oSendObject = {};
 
-              // oSendObject = oDetailModel.getProperty('/FormData');
+              // oSendObject = oViewModel.getProperty('/FormData');
               oSendObject.Prcty = 'W';
-              oSendObject.Appno = oDetailModel.getProperty('/FormData/Appno');
-              oSendObject.Menid = oDetailModel.getProperty('/menid');
+              oSendObject.Appno = oViewModel.getProperty('/FormData/Appno');
+              oSendObject.Menid = oViewModel.getProperty('/menid');
 
               oModel.create('/ClubJoinApplSet', oSendObject, {
                 success: () => {
@@ -435,7 +435,7 @@ sap.ui.define(
       // 삭제
       onDeleteBtn() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
@@ -444,7 +444,7 @@ sap.ui.define(
               AppUtils.setAppBusy(true);
 
               const sPath = oModel.createKey('/ClubJoinApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
+                Appno: oViewModel.getProperty('/FormData/Appno'),
               });
 
               oModel.remove(sPath, {
