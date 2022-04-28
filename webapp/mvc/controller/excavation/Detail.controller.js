@@ -432,6 +432,13 @@ sap.ui.define(
         this.onPressSummaryDialogClose(oEvent);
       },
 
+      onPressSummaryExcelDownload() {
+        const oTable = this.byId('summaryDialogTable');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
+
+        TableUtils.export({ oTable, sFileName });
+      },
+
       onPressSummaryDialogClose(oEvent) {
         AppUtils.setAppBusy(false);
 

@@ -16,6 +16,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/DateWeekday',
     'sap/ui/yesco/mvc/model/type/Decimal',
+    'sap/ui/yesco/mvc/model/type/Docno',
     'sap/ui/yesco/mvc/model/type/Month',
     'sap/ui/yesco/mvc/model/type/MonthDate',
     'sap/ui/yesco/mvc/model/type/Percent',

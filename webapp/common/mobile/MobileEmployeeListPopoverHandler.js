@@ -193,13 +193,12 @@ sap.ui.define(
           return;
         }
 
-        const oContext = oEvent.getSource().getBindingContext();
+        const oContextProperties = oEvent.getSource().getBindingContext().getProperty();
         // if (oContext.getProperty('') === 'M') {
         if (this.oController.reduceViewResource && typeof this.oController.reduceViewResource === 'function') {
           this.oController.reduceViewResource();
         }
-        const sPernr = oContext.getProperty('Pernr');
-        this.oController.getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
+        this.oController.getRouter().navTo('mobile/m/employee-detail', { pernr: oContextProperties.Pernr });
         // }
       },
 

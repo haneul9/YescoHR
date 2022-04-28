@@ -17,6 +17,41 @@
   html .type-b .sapMITBInLine.sapMITBTextOnly>.sapMITBVertical {padding-left:15px !important; padding-right:15px !important}
 }
 
+:root {
+/* Font Color */
+--FontColorNormal:#222;
+--FontColorDisabled:#9ca5aa;
+/* Border Color */
+--BorderColorNormal:#c0c0c0;
+--BorderColorHover:#74b7ff;
+--BorderColorActive:#74b7ff;
+--BorderColorFocus:#007bff;
+--BorderColorDisabled:#e6e6e6;
+--BorderColorReadonly:#bdbdbd;
+--BorderColorSuccess:#28a745;
+--BorderColorError:#dc3545;
+--BorderColorWarning:#ffc107;
+--BorderColorInfomation:#17a2b8;
+/* background Color */
+--BackgroundColorHover:#fff;
+--BackgroundColorActive:#fff;
+--BackgroundColorFocus:#fff;
+/**/
+--ComboBoxItemHeight:53px;
+--StatisticNumberFontSize:14px;
+--StatisticNumberLargeFontSize:40px;
+/* 평가 */
+--PerformanceGradeColor0:#24a3fb;
+--PerformanceGradeColor1:#81daea;
+--PerformanceGradeColor2:#a2eb7b;
+--PerformanceGradeColor3:#ffe479;
+--PerformanceGradeColor4:#dde1e6;
+}
+
+/* 공통 Scroll Bar */
+html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar {width:5px !important; background:transparent !important}
+html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-radius:2.5px !important; background-color:#c1c3c8 !important}
+
 html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}
 html, body {box-sizing:border-box; overflow:hidden}
@@ -71,7 +106,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet .sapMBtn.icon-button.portlet-link-icon .sapMBtnIcon {font-size:18px; line-height:110%; margin-top:-3px}
 .portlet-header + .portlet-body {height:calc(100% - 34px)}
 .portlet-body {width:100%; height:100%}
-.portlet-body .sapMFlexBoxScroll .sapMScrollCont {box-sizing:border-box; width:100% !important; height:calc(100% + .5px) !important; padding-right:5px; overflow:hidden auto !important}
+.portlet-body .sapMFlexBoxScroll .sapMScrollCont {box-sizing:border-box; width:calc(100% + 5px) !important; height:calc(100% + .5px) !important; padding-right:5px; overflow:hidden auto !important}
 .portlet-body .no-data, .vCardBox.no-data {display:flex; justify-content:center; align-items:center; color:#ccc; height:calc(100% - 24px) !important}
 .portlet-body .no-data .sapMText:before, .vCardBox.no-data .sapMText::before {content:""; display:block; width:26px; height:26px; margin:0 auto 6px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/no-data.svg'); background-size:100%}
 .portlet-body .no-data .sapMText, .vCardBox.no-data .sapMText {color:#ccc}
@@ -269,41 +304,6 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .desc-txt2 {background:linear-gradient(transparent 60%, #d0ecff 60%) no-repeat; margin-left:10px}
 /* .sapMHBox > div {margin-right:1rem !important} */
 .worklist .sapMHBox > div:not(.sapUiMedia-Std-Phone *)  {margin-right:1rem !important}
-
-:root {
-/* Font Color */
---FontColorNormal:#222;
---FontColorDisabled:#9ca5aa;
-/* Border Color */
---BorderColorNormal:#c0c0c0;
---BorderColorHover:#74b7ff;
---BorderColorActive:#74b7ff;
---BorderColorFocus:#007bff;
---BorderColorDisabled:#e6e6e6;
---BorderColorReadonly:#bdbdbd;
---BorderColorSuccess:#28a745;
---BorderColorError:#dc3545;
---BorderColorWarning:#ffc107;
---BorderColorInfomation:#17a2b8;
-/* background Color */
---BackgroundColorHover:#fff;
---BackgroundColorActive:#fff;
---BackgroundColorFocus:#fff;
-/**/
---ComboBoxItemHeight:53px;
---StatisticNumberFontSize:14px;
---StatisticNumberLargeFontSize:40px;
-/* 평가 */
---PerformanceGradeColor0:#24a3fb;
---PerformanceGradeColor1:#81daea;
---PerformanceGradeColor2:#a2eb7b;
---PerformanceGradeColor3:#ffe479;
---PerformanceGradeColor4:#dde1e6;
-}
-
-/* 공통 Scroll Bar */
-html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar {width:5px !important; background:none !important}
-html:not(.sapUiNativeScrollbars) :not(.sapUiNativeScrollbars)::-webkit-scrollbar-thumb {border-radius:5px !important; background-color:#c1c3c8 !important}
 
 /* 공통 Margin, Padding */
 /* .sapMTextArea > div {padding:0.1875rem}
@@ -941,10 +941,10 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapMSF .sapMSFF {height:40px; padding:0; border-radius:4px}
 .sapMSF .sapMSFF .sapMSFI {padding:11.5px 11px 10.5px; height:100%; font-size:15px}
 .sapMSF .sapMSFF .sapMSFI::placeholder {font-style:normal}
-.sapMSF .sapMSFF .sapMSFR.sapMSFB {height:40px; line-height:40px}
-.sapMSF .sapMSFF .sapMSFS.sapMSFB {height:40px; line-height:40px}
+.sapMSF .sapMSFF .sapMSFR.sapMSFB,
+.sapMSF .sapMSFF .sapMSFS.sapMSFB {height:40px; line-height:40px; background-color:transparent}
 .sapMSFS:after {display:none}
-.sapMSFS:before {content:""; display:inline-block; width:100%; height:40px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png'); background-repeat:no-repeat; background-position:3px center; background-size:19px}
+.sapMSFS:before {content:""; display:inline-block; width:100%; height:38px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png'); background-repeat:no-repeat; background-position:3px center; background-size:19px}
 
 /*textarea*/
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {font-family:Pretendard; font-weight:500; color:#222}
@@ -1589,6 +1589,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 
 /* 인재검색 */
 .form-bar > * {margin-right:12px}
+.form-bar > *:last-child {margin-right:0}
 .form-bar .sapMLabel {padding-left:30px; padding-right:20px} 
 .form-bar .sapMFlexItem:first-child .sapMLabel {padding-left:0px} 
 .form-bar .sapMInputBaseHeightMargin {margin:0}

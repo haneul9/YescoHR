@@ -3,7 +3,6 @@
 @import url("style.css");
 
 html, body {max-width:884px} /* Samsung Galaxy Fold2 */
-html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !important}
 
 /* MOBILE */
 .mobile-only {display:inherit !important}
@@ -50,7 +49,7 @@ html:not(.sapUiNativeScrollbars) .sapMPopoverCont::-webkit-scrollbar {width:0 !i
 .notification-wrapper > .sapMFlexItem:last-child {top:0}
 [data-background="dev"], [data-background="dev"] *:not(.unread-count, .unread-count bdi) {background-color:#f4fce3}
 
-.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-width:100% !important; max-height:inherit; padding-top:20px}
+.sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-width:calc(100% + 5px) !important; max-height:inherit; padding-top:20px}
 .sapUiSizeCompact.notification-popover .notification-popover-header {height:48px}
 .sapUiSizeCompact.notification-popover .notification-popover-header .sapMTitle {font-size:16px}
 .sapUiSizeCompact.notification-popover .sapMPopoverCont {border-bottom:8px solid #ebeef2}

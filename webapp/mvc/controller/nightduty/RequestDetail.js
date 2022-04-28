@@ -48,6 +48,7 @@ sap.ui.define(
         this.oDetailModel = oModel;
         this.oCurrentListDialogHandler = new CurrentListDialogHandler({
           oController: this.oController,
+          sPrcty: 'C',
           sSelectionMode: SelectionMode.MultiToggle,
           fnCallback: this.appendToBeSchedule.bind(this),
         });

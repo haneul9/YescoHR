@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/BoxHandler',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/nightduty/CurrentListDialogHandler',
@@ -11,6 +12,7 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     BoxHandler,
+    TableUtils,
     Client,
     ServiceNames,
     CurrentListDialogHandler
@@ -22,7 +24,7 @@ sap.ui.define(
        * @override
        */
       init() {
-        this.oCurrentListDialogHandler = new CurrentListDialogHandler({ oController: this.oController });
+        this.oCurrentListDialogHandler = new CurrentListDialogHandler({ oController: this.oController, sPrcty: 'R' });
         this.YYYY = this.oController.getSessionProperty('DTFMTYYYY');
 
         const oTodayMoment = moment().hours(9);
@@ -70,12 +72,11 @@ sap.ui.define(
        */
       async readData() {
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
-        const sUrl = 'OnCallSummary';
         const mFilters = {
           Pernr: this.oController.getAppointeeProperty('Pernr'),
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, 'OnCallSummary', mFilters);
       },
 
       /**

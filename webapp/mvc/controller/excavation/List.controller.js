@@ -184,8 +184,9 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
           });
 
+          const iRowCount = aSummaryList.length || 1;
           oViewModel.setProperty('/dialog/list', [...aSummaryList]);
-          oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
+          oViewModel.setProperty('/dialog/rowCount', iRowCount > 10 ? 10 : iRowCount);
 
           this.pSummaryDialog = Fragment.load({
             id: oView.getId(),
@@ -203,6 +204,13 @@ sap.ui.define(
 
       onPressSummaryDialogClose() {
         this.byId('summaryDialog').close();
+      },
+
+      onPressSummaryExcelDownload() {
+        const oTable = this.byId('summaryDialogTable');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
+
+        TableUtils.export({ oTable, sFileName });
       },
 
       async onChangeDialogSearch() {

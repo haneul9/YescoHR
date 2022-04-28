@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
@@ -18,14 +19,16 @@ sap.ui.define(
     SelectionMode,
     AppUtils,
     ComboEntry,
+    TableUtils,
     Client,
     ServiceNames
   ) => {
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.CurrentListDialogHandler', {
-      constructor: function ({ oController, sSelectionMode = SelectionMode.None, fnCallback = () => {} }) {
+      constructor: function ({ oController, sPrcty = 'R', sSelectionMode = SelectionMode.None, fnCallback = () => {} }) {
         this.oController = oController;
+        this.sPrcty = sPrcty;
         this.sSelectionMode = sSelectionMode;
         this.fnCallback = fnCallback;
         this.oCurrentListDialog = null;
@@ -136,6 +139,7 @@ sap.ui.define(
           Begmm: sYearMonth, // prettier 방지용 주석
           Endmm: sYearMonth,
           Ocshf: sSelectedDutyGroup,
+          Prcty: this.sPrcty,
         };
         if (aPernrList.length) {
           mFilters.Pernr = aPernrList;
@@ -180,6 +184,14 @@ sap.ui.define(
 
       onPressDialogClose() {
         this.oCurrentListDialog.close();
+      },
+
+      onPressExcelDownload() {
+        const sSelectionMode = this.sSelectionMode.toLowerCase();
+        const oTable = this.oController.byId(`${sSelectionMode}--currentListTable`);
+        const sFileName = this.oController.getBundleText('LABEL_00282', 'LABEL_06007'); // {당직근무현황}_목록
+
+        TableUtils.export({ oTable, sFileName });
       },
     });
   }

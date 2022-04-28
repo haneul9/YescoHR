@@ -59,7 +59,7 @@
           <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded sapUiTinyMarginTop" />
         </VBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars pl-12-px pr-7-px">
         <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(10, 270px)" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
           <!-- 인원현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />

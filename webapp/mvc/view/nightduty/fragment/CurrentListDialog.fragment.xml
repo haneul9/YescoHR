@@ -3,16 +3,20 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <m:Dialog title="{i18n>MSG_06004}" busy="{busy}" busyIndicatorDelay="0" contentWidth="1000px" contentHeight="533px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
-    <m:HBox justifyContent="SpaceBetween" alignItems="Center" class="hCardBox dialog-search-box sapUiSmallMarginBottom">
-      <m:HBox class="form-bar" alignItems="Center">
-        <m:Label text="{i18n>MSG_06005}" />
-        <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeYearMonth" width="110px" />
-        <m:Label text="{i18n>MSG_06006}" />
-        <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}" change=".onChangeDutyGroup" selectionChange=".onChangeDutyGroup" width="110px">
-          <core:Item key="{code}" text="{text}" />
-        </m:ComboBox>
+    <m:HBox alignItems="Center" class="hCardBox dialog-search-box sapUiSmallMarginBottom">
+      <m:HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+        <m:HBox class="form-bar" alignItems="Center">
+          <m:Label text="{i18n>MSG_06005}" />
+          <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeYearMonth" width="110px" />
+          <m:Label text="{i18n>MSG_06006}" />
+          <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}" change=".onChangeDutyGroup" selectionChange=".onChangeDutyGroup" width="110px">
+            <core:Item key="{code}" text="{text}" />
+          </m:ComboBox>
+        </m:HBox>
+        <m:HBox class="form-bar" alignItems="Center">
+          <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+        </m:HBox>
       </m:HBox>
-      <m:Button type="Transparent" class="icon-button search" press=".onPressCurrentListSearch" visible="false" tooltip="{i18n>LABEL_00100}" />
     </m:HBox>
     <m:VBox class="hCardBox mb-16-px dialog-content-table">
       <Table id="currentListTable" width="100%" columnHeaderHeight="35" rowHeight="34" selectionMode="{currentListMode}" rows="{currentList}" visibleRowCount="{currentListRowCount}" busy="{busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
