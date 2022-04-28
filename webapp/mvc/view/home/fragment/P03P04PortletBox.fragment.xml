@@ -52,9 +52,9 @@
             <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
-              <VBox width="calc(100% - 208px)" height="40px" class="ml-12-px">
+              <VBox height="40px" class="ml-12-px">
                 <layoutData>
-                  <FlexItemData growFactor="1" />
+                  <FlexItemData growFactor="1" minWidth="calc(100% - 196px)" maxWidth="calc(100% - 196px)" />
                 </layoutData>
                 <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" width="100%">
                   <layoutData>
@@ -86,9 +86,9 @@
             <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
-              <VBox height="40px" class="ml-12-px">
+              <VBox width="calc(100% - 208px)" height="40px" class="ml-12-px">
                 <layoutData>
-                  <FlexItemData growFactor="1" minWidth="calc(100% - 241px)" maxWidth="calc(100% - 208px)" />
+                  <FlexItemData growFactor="1" minWidth="calc(100% - 229px)" maxWidth="calc(100% - 196px)" />
                 </layoutData>
                 <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" width="100%">
                   <layoutData>
