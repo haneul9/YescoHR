@@ -180,7 +180,7 @@ sap.ui.define(
           // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
           MessageBox.alert(this.getBundleText('MSG_00057'), {
             onClose: () => {
-              location.reload();
+              location.href = '/sap/public/bc/icf/logoff?from=logoff';
             },
           });
         } else {
