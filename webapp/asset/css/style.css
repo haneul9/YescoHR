@@ -129,18 +129,12 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p02 .portlet-header + .sapMFlexItem {margin-top:-2px}
 .portlet-p02 .portlet-body .icon-mimic {border:1px solid #387fe9; border-radius:3px; padding:0 4px; font-size:10px; color:#387fe9; cursor:default}
 .portlet-p02 .portlet-body .sapUiIcon {vertical-align:text-top}
-.portlet-p03p04 .sapMImg {width:30px; height:30px; margin-right:12px; border:1px solid #fff; box-sizing:border-box}
+.portlet-p03p04 .sapMImg {box-sizing:border-box; border:1px solid #fff}
 .portlet-p03p04 .portlet-members {justify-content:space-between; align-items:center; height:auto !important}
-.portlet-p03p04 .portlet-members > div {margin-bottom:24px}
+.portlet-p03p04 .portlet-members > div {margin-bottom:16px}
 .portlet-p03p04 .portlet-members > div:last-child {margin-bottom:0}
-.portlet-p03p04 .portlet-members > .sapMFlexItem {color:#222; font-weight:500}
 .portlet-p03p04 .portlet-members > .sapMFlexItem > * {display:flex}
-.portlet-p03p04 .portlet-members > .sapMFlexItem:last-child {margin-right:0}
-.portlet-p03p04 .portlet-member-name {font-weight:700; margin-right:12px; width:45px}
-.portlet-p03p04 .portlet-member-position {margin-right:12px; width:55px}
-.portlet-p03p04 .portlet-members .portlet-member-org {width:calc(100% - 226px)}/* 42 + 57 + 67 + ~ + 60 */
-.portlet-p03p04:hover .portlet-members.my-members .portlet-member-org {width:calc(100% - 259px)}/* 42 + 57 + 67 + ~ + 60 + 33 */
-.portlet-p03p04 [data-portlet-member-status] {margin-left:6px; border:1px solid; border-radius:3px; height:18px; line-height:17px; font-size:12px !important}
+.portlet-p03p04 [data-portlet-member-status] {margin-left:6px; border:1px solid; border-radius:3px; height:18px; line-height:16px; font-size:12px !important}
 .portlet-p03p04 [data-portlet-member-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-member-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
 .portlet-p03p04 [data-portlet-member-status="2"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 출장중 */
@@ -149,7 +143,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 [data-portlet-member-status="H"] {border-color:#ffca3c; background-color:transparent; color:#ffca3c}/* 휴일 */
 .portlet-p03p04 [data-portlet-member-status="W"] {border-color:#222; background-color:transparent; color:#222}/* 근무중 */
 .portlet-p03p04 .sapMBtn.icon-button.portlet-member-remove {display:none}
-.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:inline-flex; margin-left:12px}/* 12 + 21 */
+.portlet-p03p04:hover .sapMBtn.icon-button.portlet-member-remove {display:inline-flex}/* 12 + 21 */
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 tspan {font-size:7px}
