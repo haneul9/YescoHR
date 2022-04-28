@@ -12,7 +12,7 @@
       <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_del.png" iconDensityAware="false" class="icon-button" type="Transparent" enabled="{= !${/result/busy} }" press=".onPressDeleteSearchCondition" />
       <Label text="{i18n>LABEL_00201}" />
       <Input width="460px" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35001}" enabled="{= ${/search/Prcty} === 'A' }" submit=".onPressSearch" />
-      <ComboBox selectedKey="{/search/Command}">
+      <ComboBox selectedKey="{/search/Command}" enabled="{= ${/search/Prcty} === 'A' }">
         <items>
           <core:Item text="AND" key="AND" />
           <core:Item text="OR" key="OR" />
