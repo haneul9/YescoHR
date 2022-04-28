@@ -77,7 +77,8 @@ sap.ui.define(
             }
           }
 
-          const sExtendNode = this.getViewModel().getProperty('/extendNode') || _.noop();
+          const oViewModel = this.getViewModel();
+          const sExtendNode = oViewModel.getProperty('/extendNode') || _.noop();
           this.oD3Chart = new D3OrgChart({
             extendNode: sExtendNode,
             items: {
@@ -109,6 +110,17 @@ sap.ui.define(
 
               oChartControl.render().fit();
             }, 200);
+          }
+
+          const bCompact = oViewModel.getProperty('/compact');
+          const sLayout = oViewModel.getProperty('/layout');
+
+          if (_.isEqual(sLayout, 'left') && bCompact) {
+            setTimeout(() => this.oD3Chart.getChart().layout('left').compact(true).render().fit(), 200);
+          } else if (_.isEqual(sLayout, 'left') && !bCompact) {
+            setTimeout(() => this.oD3Chart.getChart().layout('left').render().fit(), 200);
+          } else if (!_.isEqual(sLayout, 'left') && bCompact) {
+            setTimeout(() => this.oD3Chart.getChart().compact(true).render().fit(), 200);
           }
         } catch (oError) {
           this.debug('Controller > organization Main > onObjectMatched Error', oError);
