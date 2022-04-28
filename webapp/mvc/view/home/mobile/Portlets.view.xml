@@ -7,7 +7,7 @@
     </HBox>
   </OverflowToolbar>
   <ScrollContainer height="calc(100% - 48px)" horizontal="false" vertical="true">
-    <VBox id="portlets-grid" justifyContent="Center" class="sapUiSmallMarginTopBottom mx-auto pl-12-px pr-7-px">
+    <VBox id="portlets-grid" justifyContent="Center" class="sapUiSmallMarginTopBottom mx-auto px-12-px">
     </VBox>
   </ScrollContainer>
 </mvc:View>

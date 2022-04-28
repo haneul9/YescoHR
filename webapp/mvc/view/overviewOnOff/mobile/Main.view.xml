@@ -26,7 +26,7 @@
           <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
         </VBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars pl-12-px pr-7-px">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
         <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(4, 280px)" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A02" type="XML" />
