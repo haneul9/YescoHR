@@ -69,7 +69,6 @@ html.sap-ios ::-webkit-scrollbar {width:0 !important}
 .portlet-box {border-radius:8px}
 .portlet-header {justify-content:space-between; display:flex}
 .portlet-header h2.sapMTitle {font-size:1.1rem}
-html.sap-ios .portlet-body .sapMFlexBoxScroll .sapMScrollCont {width:calc(100% + 5px) !important}
 .sapUiSizeCompact .portlet-header .sapMSegB {margin-bottom:-6px}
 .sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {display:none}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
