@@ -10,19 +10,29 @@
 		<content>
 			<VBox class="vCardBox">
 				<grid:CSSGrid gridGap="1px" class="form-grid type-job" gridTemplateColumns="1fr 2fr 3fr 4fr" items="{/jobDiagnosis/deep}">
-					<HBox>
+					<HBox justifyContent="Center">
 						<layoutData>
 							<grid:GridItemLayoutData gridRow="{spanCount}" />
 						</layoutData>
 						<Label text="{title}" visible="{= ${type} === 'title' }" width="100%" textAlign="Center" />
-						<Text text="{label}" visible="{= ${type} === 'label' }" width="100%" textAlign="Center">
-						</Text>
+						<Text text="{label}" visible="{= ${type} === 'label' }" width="100%" textAlign="Center" />
 						<Text text="{subLabel}" visible="{= ${type} === 'subLabel' }" width="100%" textAlign="Center" />
-						<ComboBox items="{path: '/jobDiagnosis/codeList1', templateShareable: true}" visible="{= ${Zcode} !== '90' &amp;&amp; ${type} === 'value' }" selectedKey="{value}" class="required">
+						<ComboBox items="{path: '/jobDiagnosis/codeList1', templateShareable: true}" visible="{= ${Zcode} !== '90' &amp;&amp; ${type} === 'value' }" width="100%" selectedKey="{value}">
 							<core:Item text="{Ztext}" key="{Zcode}" />
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
 						</ComboBox>
-						<Input value="{value}" visible="{= ${Zcode} === '90' &amp;&amp; ${type} === 'value' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch" class="required" />
-						<TextArea class="required" value="{area}" visible="{= ${type} === 'area' }" width="100%" maxLength="{/fieldControl/limit/Z131}" />
+						<Input value="{value}" visible="{= ${Zcode} === '90' &amp;&amp; ${type} === 'value' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Input>
+						<TextArea value="{area}" visible="{= ${type} === 'area' }" width="100%" maxLength="{/fieldControl/limit/Z131}">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</TextArea>
 					</HBox>
 				</grid:CSSGrid>
 			</VBox>

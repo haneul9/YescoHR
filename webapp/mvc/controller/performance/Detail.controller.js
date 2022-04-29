@@ -646,7 +646,9 @@ sap.ui.define(
         //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `span ${_.toString(_.size(e[1]))}` };
         //       const aList = [];
 
-        //       _.forEach(e[1], (e1) => {
+        //       _.forEach(e[1], async (e1) => {
+        //         const aCode = await this.getJobDiagnosisCode1(e1.Zcode);
+        //         debugger;
         //         aList.push(
         //           // prettier
         //           { subLabel: e1.Zzjaitmtx, type: 'subLabel' },
@@ -668,7 +670,6 @@ sap.ui.define(
         //     { title: this.getBundleText('LABEL_10105'), type: 'title' },
         //     ...aDeepData,
         //   ]);
-        //   debugger;
 
         //   if (!this.pExamDialog) {
         //     this.pExamDialog = Fragment.load({
@@ -700,14 +701,29 @@ sap.ui.define(
       },
 
       // 직무진단 Code
-      getJobDiagnosisCode1() {
+      getJobDiagnosisCode1(sCode = '') {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const dDate = moment().hour(9).toDate();
+        const sWerks = this.getAppointeeProperty('Werks');
+        let sUrl = '';
+        let mPayLoad = {};
 
-        return Client.getEntitySet(oModel, 'JobDiagnosisCode1', {
-          Mode: 'A',
-          ...this.getViewModel().getProperty('/param'),
-          JobDiagnosisItemSet: [],
-        });
+        if (sCode !== '90') {
+          sUrl = 'JobDiagnosisCode1';
+          mPayLoad = {
+            Sbcod: sCode,
+            Datum: dDate,
+            Werks: sWerks,
+          };
+        } else {
+          sUrl = 'JobDiagnosisCode2';
+          mPayLoad = {
+            Datum: dDate,
+            Werks: sWerks,
+          };
+        }
+
+        return Client.getEntitySet(oModel, sUrl, mPayLoad);
       },
 
       onPressRejectViewButton() {
