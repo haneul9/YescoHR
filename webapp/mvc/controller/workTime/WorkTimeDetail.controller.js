@@ -369,8 +369,9 @@ sap.ui.define(
               e.Abrst = mDialogData.Abrst;
               e.Ottyp = mDialogData.Ottyp;
               e.Ottyptx = mDialogData.Ottyptx;
-              e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
-              e.Nxtwk = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk;
+              e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype;
+              e.Nxtwktx = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
+              e.Nxtwk = mDialogData.Nxtwk;
               e.Gaptm = mDialogData.Gaptm;
               e.Nxtoff = mDialogData.Nxtoff;
               e.Atrsn = mDialogData.Atrsn;
@@ -446,6 +447,8 @@ sap.ui.define(
         oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 근무일
@@ -465,6 +468,8 @@ sap.ui.define(
         oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 초과근무시간

@@ -50,7 +50,7 @@
         <table:Column width="7%">
           <Label text="{i18n>LABEL_27018}" />
           <table:template>
-            <Text text="{Nxtwk}" width="100%" textAlign="Center" />
+            <Text text="{Nxtwktx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="7%">

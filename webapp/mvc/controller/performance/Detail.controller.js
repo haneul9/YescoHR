@@ -643,7 +643,7 @@ sap.ui.define(
         //     .groupBy('Appgbtx')
         //     .toPairs()
         //     .map((e) => {
-        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `${_.toString(_.size(e[1]))}` };
+        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `span ${_.toString(_.size(e[1]))}` };
         //       const aList = [];
 
         //       _.forEach(e[1], (e1) => {

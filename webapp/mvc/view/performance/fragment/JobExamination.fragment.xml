@@ -14,7 +14,7 @@
 						<Label text="{title}" visible="{= ${type} === 'title' }" width="100%" textAlign="Center" />
 						<Text text="{label}" visible="{= ${type} === 'label' }" width="100%" textAlign="Center">
 							<layoutData>
-								<grid:GridItemLayoutData gridRow="span {spanCount}" />
+								<grid:GridItemLayoutData gridRow="span 4" />
 							</layoutData>
 						</Text>
 						<Text text="{subLabel}" visible="{= ${type} === 'subLabel' }" width="100%" textAlign="Center" />
