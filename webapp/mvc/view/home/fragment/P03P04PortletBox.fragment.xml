@@ -49,34 +49,20 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
-            <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
+            <custom:HBox press=".navToProfile">
               <custom:customData>
                 <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
               </custom:customData>
-              <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
-              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
-              <VBox height="40px" class="ml-12-px">
-                <layoutData>
-                  <FlexItemData growFactor="1" minWidth="calc(100% - 196px)" maxWidth="calc(100% - 196px)" />
-                </layoutData>
-                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" width="100%">
-                  <layoutData>
-                    <FlexItemData styleClass="h-20-px" />
-                  </layoutData>
-                </Text>
-                <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" width="100%">
-                  <layoutData>
-                    <FlexItemData styleClass="h-20-px" />
-                  </layoutData>
-                </Text>
+              <Image src="{Photo}" mode="Background" class="members-photo" />
+              <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
+              <VBox class="members-position">
+                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" />
+                <Text text="{Orgtx}" tooltip="{Orgtx}" />
               </VBox>
-              <Text text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false" width="100%" class="ml-12-px">
+              <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
-                  <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
                 </customData>
-                <layoutData>
-                  <FlexItemData minWidth="72px" maxWidth="72px" />
-                </layoutData>
               </Text>
             </custom:HBox>
           </VBox>
@@ -86,36 +72,26 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
-            <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
+            <custom:HBox press=".navToProfile">
               <custom:customData>
                 <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
               </custom:customData>
-              <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
-              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
-              <VBox width="calc(100% - 208px)" height="40px" class="ml-12-px">
-                <layoutData>
-                  <FlexItemData growFactor="1" minWidth="calc(100% - 229px)" maxWidth="calc(100% - 196px)" />
-                </layoutData>
-                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" wrapping="false" width="100%">
-                  <layoutData>
-                    <FlexItemData styleClass="h-20-px" />
-                  </layoutData>
-                </Text>
-                <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" width="100%">
-                  <layoutData>
-                    <FlexItemData styleClass="h-20-px" />
-                  </layoutData>
-                </Text>
+              <Image src="{Photo}" mode="Background" class="members-photo" />
+              <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
+              <VBox class="members-position">
+                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" />
+                <Text text="{Orgtx}" tooltip="{Orgtx}" />
               </VBox>
-              <Text text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false" width="100%" class="ml-12-px">
+              <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
-                  <core:CustomData key="portlet-member-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
                 </customData>
-                <layoutData>
-                  <FlexItemData minWidth="72px" maxWidth="72px" />
-                </layoutData>
               </Text>
-              <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="portlet-member-remove icon-button ml-12-px" press=".onPressMyMemberRemove" />
+              <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button" press=".onPressMyMemberRemove">
+                <layoutData>
+                  <FlexItemData styleClass="members-remove" />
+                </layoutData>
+              </Button>
             </custom:HBox>
           </VBox>
         </ScrollContainer>
