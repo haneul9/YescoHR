@@ -72,8 +72,6 @@ sap.ui.define(
             deep: [
               {
                 spanCount: 1,
-                bTitle: true,
-                bSubTitle: true,
                 Appgb: '',
                 Appgbtx: '',
                 Zbigo: '',
@@ -645,17 +643,29 @@ sap.ui.define(
         //     .groupBy('Appgbtx')
         //     .toPairs()
         //     .map((e) => {
-        //       return [{ label: e[0], bTitle: false, bSubTitle: true, spanCount: `span ${_.toString(_.size(e[1]))}` }, ...e[1]];
+        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `${_.toString(_.size(e[1]))}` };
+        //       const aList = [];
+
+        //       _.forEach(e[1], (e1) => {
+        //         aList.push(
+        //           // prettier
+        //           { subLabel: e1.Zzjaitmtx, type: 'subLabel' },
+        //           { value: e1.Zcode === '90' ? e1.Zzjarsttx : e1.Zzjarst, Zcode: e1.Zcode, type: 'value' },
+        //           { area: e1.Zbigo, type: 'area' }
+        //         );
+        //       });
+
+        //       return [mSubTitle, ...aList];
         //     })
         //     .flatten()
         //     .value();
 
         //   oViewModel.setProperty('/jobDiagnosis/deep', [
         //     // prettier
-        //     { label: this.getBundleText('LABEL_00147'), bTitle: true, bSubTitle: false },
-        //     { label: this.getBundleText('LABEL_10103'), bTitle: true, bSubTitle: false },
-        //     { label: this.getBundleText('LABEL_10104'), bTitle: true, bSubTitle: false },
-        //     { label: this.getBundleText('LABEL_10105'), bTitle: true, bSubTitle: false },
+        //     { title: this.getBundleText('LABEL_00147'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10103'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10104'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10105'), type: 'title' },
         //     ...aDeepData,
         //   ]);
         //   debugger;
