@@ -83,7 +83,7 @@ sap.ui.define(
 
           return bOpen;
         } else {         
-          const bOpen = moment().isAfter(moment('2022-04-30 09:00', 'YYYY-MM-DD HH:mm')); 
+          const bOpen = moment().isAfter(moment('2022-04-30 18:00', 'YYYY-MM-DD HH:mm')); 
           const sMessage = this.getBundleText('MSG_33005', 'LABEL_00110'); // 예상퇴직금 조회 서비스는 4/30일에 오픈할 예정이니 양해 부탁드립니다.
 
           if (!bOpen)
