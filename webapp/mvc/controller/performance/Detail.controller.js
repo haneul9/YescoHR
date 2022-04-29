@@ -65,6 +65,25 @@ sap.ui.define(
           listInfo: {},
           tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
+          jobDiagnosis: {
+            // 진단평가 팝업
+            codeList1: [],
+            codeList2: [],
+            deep: [
+              {
+                spanCount: 'span 1',
+                Appgb: '',
+                Appgbtx: '',
+                Zbigo: '',
+                Zcheck: '',
+                Zcode: '',
+                Zzjaitm: '',
+                Zzjaitmtx: '',
+                Zzjarst: '',
+                Zzjarsttx: '',
+              },
+            ],
+          },
           stage: {
             headers: [],
             rows: [],
@@ -611,21 +630,100 @@ sap.ui.define(
       },
 
       // 직무진단
-      onPressDiagnosisButton() {
+      async onPressDiagnosisButton() {
         MessageBox.alert('Not ready yet.');
-        // const oView = this.getView();
+        // const oViewModel = this.getViewModel();
 
-        // if (!this.pExamDialog) {
-        //   this.pExamDialog = Fragment.load({
-        //     id: oView.getId(),
-        //     name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-        //     controller: this,
-        //   }).then((oDialog) => {
-        //     oView.addDependent(oDialog);
-        //     return oDialog;
-        //   });
+        // try {
+        //   oViewModel.setProperty('/busy', true);
+
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepData = _.chain(aDeep.JobDiagnosisItemSet.results)
+        //     .groupBy('Appgbtx')
+        //     .toPairs()
+        //     .map((e) => {
+        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `span ${_.toString(_.size(e[1]))}` };
+        //       const aList = [];
+
+        //       _.forEach(e[1], async (e1) => {
+        //         const aCode = await this.getJobDiagnosisCode1(e1.Zcode);
+        //         debugger;
+        //         aList.push(
+        //           // prettier
+        //           { subLabel: e1.Zzjaitmtx, type: 'subLabel' },
+        //           { value: e1.Zcode === '90' ? e1.Zzjarsttx : e1.Zzjarst, Zcode: e1.Zcode, type: 'value' },
+        //           { area: e1.Zbigo, type: 'area' }
+        //         );
+        //       });
+
+        //       return [mSubTitle, ...aList];
+        //     })
+        //     .flatten()
+        //     .value();
+
+        //   oViewModel.setProperty('/jobDiagnosis/deep', [
+        //     // prettier
+        //     { title: this.getBundleText('LABEL_00147'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10103'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10104'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10105'), type: 'title' },
+        //     ...aDeepData,
+        //   ]);
+
+        //   if (!this.pExamDialog) {
+        //     this.pExamDialog = Fragment.load({
+        //       id: oView.getId(),
+        //       name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //       controller: this,
+        //     }).then((oDialog) => {
+        //       oView.addDependent(oDialog);
+        //       return oDialog;
+        //     });
+        //   }
+        //   this.pExamDialog.then((oDialog) => oDialog.open());
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
         // }
-        // this.pExamDialog.then((oDialog) => oDialog.open());
+      },
+
+      // 직무진단 조회
+      getJobDiagnosis() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return Client.deep(oModel, 'JobDiagnosis', {
+          Mode: 'A',
+          ...this.getViewModel().getProperty('/param'),
+          JobDiagnosisItemSet: [],
+        });
+      },
+
+      // 직무진단 Code
+      getJobDiagnosisCode1(sCode = '') {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const dDate = moment().hour(9).toDate();
+        const sWerks = this.getAppointeeProperty('Werks');
+        let sUrl = '';
+        let mPayLoad = {};
+
+        if (sCode !== '90') {
+          sUrl = 'JobDiagnosisCode1';
+          mPayLoad = {
+            Sbcod: sCode,
+            Datum: dDate,
+            Werks: sWerks,
+          };
+        } else {
+          sUrl = 'JobDiagnosisCode2';
+          mPayLoad = {
+            Datum: dDate,
+            Werks: sWerks,
+          };
+        }
+
+        return Client.getEntitySet(oModel, sUrl, mPayLoad);
       },
 
       onPressRejectViewButton() {

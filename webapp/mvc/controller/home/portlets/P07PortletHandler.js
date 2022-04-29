@@ -19,14 +19,6 @@ sap.ui.define(
      * 이런 메뉴 어떠세요? Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P07PortletHandler', {
-      init() {
-        const oAppComponent = AppUtils.getAppComponent();
-        this.oAppMenu = oAppComponent.getAppMenu();
-        this.oMenuModel = oAppComponent.getMenuModel();
-
-        AbstractPortletHandler.prototype.init.call(this);
-      },
-
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
 
@@ -34,29 +26,18 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
+        const oMenuModel = this.getMenuModel();
         const aList = aPortletContentData
           .filter(({ Menid }) => {
-            return Menid && this.oMenuModel.getProperties(Menid);
+            return Menid && oMenuModel.getProperties(Menid);
           })
           .map(({ Menid }) => {
-            return { ...this.oMenuModel.getProperties(Menid) };
+            return { ...oMenuModel.getProperties(Menid) };
           });
         return {
           list: aList,
           listCount: aList.length,
         };
-      },
-
-      formatMenuUrl(...aArgs) {
-        return this.oAppMenu.formatMenuUrl(...aArgs);
-      },
-
-      formatMenuTarget(...aArgs) {
-        return this.oAppMenu.formatMenuTarget(...aArgs);
-      },
-
-      handleMenuLink(...aArgs) {
-        this.oAppMenu.handleMenuLink(...aArgs);
       },
     });
   }

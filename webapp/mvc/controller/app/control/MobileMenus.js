@@ -53,6 +53,9 @@ sap.ui.define(
         });
       },
 
+      /**
+       * 최근 사용 메뉴 등록
+       */
       async saveFavorite({ Menid, Mnid1, Mnid2, Mnid3 }) {
         try {
           const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);

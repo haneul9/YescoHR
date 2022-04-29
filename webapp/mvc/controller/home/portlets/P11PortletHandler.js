@@ -105,7 +105,7 @@ sap.ui.define(
       },
 
       getMenuName(sMenid) {
-        return AppUtils.getAppComponent().getMenuModel().getProperties(sMenid).Mname;
+        return this.getMenuModel().getProperties(sMenid).Mname;
       },
 
       setChartData(mPortletData) {

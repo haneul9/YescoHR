@@ -21,14 +21,6 @@ sap.ui.define(
      * To Do List Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P08PortletHandler', {
-      init() {
-        const oAppComponent = AppUtils.getAppComponent();
-        this.oAppMenu = oAppComponent.getAppMenu();
-        this.oMenuModel = oAppComponent.getMenuModel();
-
-        AbstractPortletHandler.prototype.init.call(this);
-      },
-
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
@@ -52,13 +44,14 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
+        const oMenuModel = this.oMenuModel;
         const aTodayList = _.chain(aPortletContentData)
           .filter((o) => moment(o.Datum).isSame(moment(), 'day'))
-          .map((o) => ({ ...o, ...this.oMenuModel.getProperties(o.MenidPc) }))
+          .map((o) => ({ ...o, ...oMenuModel.getProperties(o.MenidPc) }))
           .value();
         const aFutureList = _.chain(aPortletContentData)
           .filter((o) => !moment(o.Datum).isSame(moment(), 'day'))
-          .map((o) => ({ ...o, ...this.oMenuModel.getProperties(o.MenidPc) }))
+          .map((o) => ({ ...o, ...oMenuModel.getProperties(o.MenidPc) }))
           .value();
 
         return {
@@ -71,18 +64,6 @@ sap.ui.define(
             listCount: aFutureList.length,
           },
         };
-      },
-
-      formatMenuUrl(...aArgs) {
-        return this.oAppMenu.formatMenuUrl(...aArgs);
-      },
-
-      formatMenuTarget(...aArgs) {
-        return this.oAppMenu.formatMenuTarget(...aArgs);
-      },
-
-      handleMenuLink(...aArgs) {
-        this.oAppMenu.handleMenuLink(...aArgs);
       },
     });
   }

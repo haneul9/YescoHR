@@ -58,6 +58,18 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
+      <!-- <table:Column width="auto" sortProperty="Dtype" filterProperty="Dtype">
+        <Label text="{i18n>LABEL_27021}" wrapping="true"/>
+        <table:template>
+          <Text text="{Dtype}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Nxtwktx" filterProperty="Nxtwktx">
+        <Label text="{i18n>LABEL_27018}"/>
+        <table:template>
+          <Text text="{Nxtwktx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column> -->
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>

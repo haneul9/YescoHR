@@ -265,11 +265,7 @@ sap.ui.define(
 
           const { Mnurl } = await Client.get(oCommonModel, 'GetMenuUrl', mKeyMap);
           if (Mnurl) {
-            if (this.bMobile) {
-              this.saveFavorite(oContext.getProperty());
-            }
-            const sMenuUrl = this.bMobile ? `mobile/${Mnurl}` : Mnurl;
-            this.moveToMenu(sMenuUrl);
+            this.moveToMenu(this.bMobile ? `mobile/${Mnurl}` : Mnurl);
           } else {
             this.failMenuLink(AppUtils.getBundleText('MSG_01003')); // 알 수 없는 메뉴입니다.
           }
@@ -286,22 +282,32 @@ sap.ui.define(
         });
       },
 
-      moveToMenu(sRouteName) {
+      moveToMenu(...aArgs) {
+        AppUtils.setMenuBusy(true).setAppBusy(true);
+
+        const sRouteName = aArgs[0] || '';
         // 같은 메뉴 클릭시
         if (HashChanger.getInstance().getHash() === sRouteName) {
           AppUtils.setAppBusy(false).setMenuBusy(false);
           return;
         }
+
         const bHomeRoute = !sRouteName || sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
-        const bExistRoute = this.oAppController.getOwnerComponent().getRouter().match(sRouteName);
+        const sMenuUrl = sRouteName.split(/-/)[0];
+        const bExistRoute = this.oAppController.getOwnerComponent().getRouter().match(sMenuUrl);
         if (!bHomeRoute && !bExistRoute) {
-          // 개발중입니다.
-          MessageBox.alert(AppUtils.getBundleText('MSG_01005'), {
+          const sMessage = AppUtils.isPRD() ? AppUtils.getBundleText('MSG_01003') : AppUtils.getBundleText('MSG_01005'); // 알 수 없는 메뉴입니다. : 개발중입니다.
+          MessageBox.alert(sMessage, {
             onClose: () => {
               AppUtils.setAppBusy(false).setMenuBusy(false);
             },
           });
           return;
+        }
+
+        if (!bHomeRoute && this.bMobile) {
+          const mMenuProperties = this.oMenuModel.getProperties(this.oMenuModel.getMenid(sMenuUrl));
+          this.saveFavorite(mMenuProperties); // 최근 사용 메뉴 등록
         }
 
         this.oAppController.getAppointeeModel().setData({
@@ -318,7 +324,7 @@ sap.ui.define(
           .getOwnerComponent()
           .reduceViewResource() // 메뉴 이동 전 View hidden 처리로 불필요한 DOM 정보를 제거
           .getRouter()
-          .navTo(sRouteName);
+          .navTo(...aArgs);
       },
     });
   }

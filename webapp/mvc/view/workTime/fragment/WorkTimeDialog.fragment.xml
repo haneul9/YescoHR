@@ -22,9 +22,21 @@
             <TimePicker width="120px" value="{/DialogData/Enduz}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
             <Input value="{/DialogData/Abrst}" editable="false" class="ml-10-px" />
           </HBox>
+          <!-- <Label text="{i18n>LABEL_27017}"/>
+          <HBox>
+            <ComboBox items="{/WorkTimeList}" selectedKey="{/DialogData/Dtype}" class="required" enabled="{= !!${/DialogData/bType} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+          </HBox>
+          <Label text="{i18n>LABEL_27018}"/>
+          <HBox>
+            <ComboBox items="{/WorkTimeList2}" selectedKey="{/DialogData/Nxtwk}" class="required" enabled="{= !!${/DialogData/bWork} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+          </HBox> -->
           <Label text="{i18n>LABEL_00154}"/>
           <HBox>
-            <ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" change=".onCause" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+            <ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
               <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
           </HBox>

@@ -123,6 +123,7 @@ sap.ui.define(
           delete mData.__metadata;
 
           mData.Photo ||= sUnknownAvatarImageURL;
+          mData.ProfileView = this.bHasProfileMenuAuth ? 'O' : '';
         });
 
         return {
