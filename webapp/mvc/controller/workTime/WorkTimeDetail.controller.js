@@ -34,6 +34,16 @@ sap.ui.define(
           employees: [],
           DeletedRows: [],
           CauseType: [],
+          WorkTimeList: [
+            { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') },
+            { Zcode: 'Y', Ztext: 'Y' },
+            { Zcode: 'N', Ztext: 'N' },
+          ],
+          WorkTimeList2: [
+            { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') },
+            { Zcode: 'Y', Ztext: this.getBundleText('LABEL_27019') },
+            { Zcode: 'N', Ztext: this.getBundleText('LABEL_27020') },
+          ],
           detail: {
             listMode: 'MultiToggle', // None
             list: [],
@@ -196,6 +206,10 @@ sap.ui.define(
               Beguz: '18:00',
               Abrst: '',
               Ottyp: 'ALL',
+              Dtype: 'ALL',
+              Nxtwk: 'ALL',
+              bType: false,
+              bWork: false,
             });
 
             aList.push({
@@ -355,6 +369,10 @@ sap.ui.define(
               e.Abrst = mDialogData.Abrst;
               e.Ottyp = mDialogData.Ottyp;
               e.Ottyptx = mDialogData.Ottyptx;
+              e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
+              e.Nxtwk = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk;
+              e.Gaptm = mDialogData.Gaptm;
+              e.Nxtoff = mDialogData.Nxtoff;
               e.Atrsn = mDialogData.Atrsn;
             })
             .value(),
@@ -422,6 +440,10 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
+        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
       },
@@ -437,6 +459,10 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
+        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
       },

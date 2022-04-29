@@ -58,6 +58,18 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
+      <table:Column width="auto" sortProperty="Dtype" filterProperty="Dtype">
+        <Label text="{i18n>LABEL_27021}" wrapping="true"/>
+        <table:template>
+          <Text text="{Dtype}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Nxtwk" filterProperty="Nxtwk">
+        <Label text="{i18n>LABEL_27018}"/>
+        <table:template>
+          <Text text="{Nxtwk}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
@@ -86,12 +98,6 @@
         <Label text="{i18n>LABEL_00154}"/>
         <table:template>
           <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-        </table:template>
-      </table:Column>
-      <table:Column width="auto" sortProperty="Apename" filterProperty="Apename">
-        <Label text="{i18n>LABEL_00135}"/>
-        <table:template>
-          <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
