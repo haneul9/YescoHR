@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -12,13 +11,11 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.paystub.List', {
-      TableUtils: TableUtils,
       TABLE_ID: 'paystubTable',
 
       CHART_ID: 'paystubSummaryChart',
@@ -90,7 +87,7 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
+        this.TableUtils.summaryColspan({ oTable: this.byId(this.TABLE_ID), aHideIndex: [1, 2] });
       },
 
       async onObjectMatched(oParameter, sRouteName) {
@@ -130,7 +127,7 @@ sap.ui.define(
         const oTable = this.byId(this.TABLE_ID);
         const oListInfo = oViewModel.getProperty('/listInfo');
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: aRowData,
           mSumField: { Idx: sSumLabel },
           vCalcProps: /^Bet0/,
@@ -142,10 +139,10 @@ sap.ui.define(
         oViewModel.setProperty('/summary/dataSources/data/0/value', _.get(mSumRow, 'Bet05', '0'));
         oViewModel.setProperty('/summary/dataSources/data/1/value', _.get(mSumRow, 'Bet06', '0'));
         oViewModel.setProperty('/list', _.isEmpty(mSumRow) ? [] : [...aRowData.map((o, i) => ({ ...o, Idx: ++i })), { Idx: sSumLabel, ...mSumRow }]);
-        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...this.TableUtils.count({ oTable, aRowData, bHasSumRow: true }) });
 
         setTimeout(() => {
-          TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 3: 'bgType10', 4: 'bgType10', 5: 'bgType10', 6: 'bgType11', 7: 'bgType12', 8: 'bgType12', 9: 'bgType12' } });
+          this.TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 3: 'bgType10', 4: 'bgType10', 5: 'bgType10', 6: 'bgType11', 7: 'bgType12', 8: 'bgType12', 9: 'bgType12' } });
         }, 100);
       },
 
@@ -212,7 +209,7 @@ sap.ui.define(
         const oTable = this.byId(this.TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_13036'); // {급여명세서}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

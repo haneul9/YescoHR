@@ -3,8 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -13,8 +11,6 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    AttachFileAction,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -22,9 +18,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.commuteConfirm.CommuteConfirm', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -85,7 +78,7 @@ sap.ui.define(
           const oTable = this.byId('commuteTable');
 
           oViewModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             isShowApprove: false, // 승인 text hide
             ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
@@ -155,7 +148,7 @@ sap.ui.define(
                   const mMyCom = oViewModel.getProperty('/MyCom');
 
                   oViewModel.setProperty('/listInfo', {
-                    ...TableUtils.count({ oTable, aRowData: aTableList }),
+                    ...this.TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
                     isShowApprove: false, // 승인 text hide
                     ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
@@ -220,7 +213,7 @@ sap.ui.define(
                   const mMyCom = oViewModel.getProperty('/MyCom');
 
                   oViewModel.setProperty('/listInfo', {
-                    ...TableUtils.count({ oTable, aRowData: aTableList }),
+                    ...this.TableUtils.count({ oTable, aRowData: aTableList }),
                     ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
                     isShowApprove: false, // 승인 text hide
                     ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
@@ -257,7 +250,7 @@ sap.ui.define(
           const oTable = this.byId('commuteTable');
 
           oViewModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             ObjTxt1: this.getBundleText('LABEL_00197'), // 미신청
             isShowApprove: false, // 승인 text hide
             ObjTxt4: this.getBundleText('LABEL_10049'), // 확정취소
@@ -320,7 +313,7 @@ sap.ui.define(
         const oTable = this.byId('commuteTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_30006'); // 시차출퇴근 확정
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

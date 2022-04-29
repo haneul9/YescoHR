@@ -4,9 +4,6 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -16,9 +13,6 @@ sap.ui.define(
     Filter,
     FilterOperator,
     AppUtils,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
     ServiceNames,
     ODataReadError,
     BaseController
@@ -26,9 +20,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           detailName: this.isHass() ? 'h/clubJoin-detail' : 'clubJoin-detail',
@@ -81,7 +72,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return TextUtils.toCurrency(vPay);
+        return this.TextUtils.toCurrency(vPay);
       },
 
       onSearch() {
@@ -115,7 +106,7 @@ sap.ui.define(
               const oList = oData.results;
 
               oListModel.setProperty('/List', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
+              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
               oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
               oListModel.setProperty('/busy', false);
             }
@@ -169,7 +160,7 @@ sap.ui.define(
         const oTable = this.byId('clubTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_14014');
 
-        TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
+        this.TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
     });
   }

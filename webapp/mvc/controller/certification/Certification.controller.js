@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -10,7 +9,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -18,8 +16,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.certification.Certification', {
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -116,7 +112,7 @@ sap.ui.define(
 
           oListModel.setProperty('/List', aTableList);
           oListModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable: this.byId('certiTable'), aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable: this.byId('certiTable'), aRowData: aTableList }),
             infoMessage: this.getBundleText('MSG_17001'),
             isShowProgress: false,
             isShowApply: true,
@@ -166,7 +162,7 @@ sap.ui.define(
         const oTable = this.byId('certiTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_17001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

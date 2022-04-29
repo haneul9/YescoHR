@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/GroupDialogHandler',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -17,14 +16,12 @@ sap.ui.define(
     ComboEntry,
     Client,
     ServiceNames,
-    TableUtils,
     GroupDialogHandler,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.leaveSummary.App', {
-      TableUtils: TableUtils,
       TABLE_ID: 'leaveSummaryTable',
 
       CHART_ID: 'leaveSummaryChart',
@@ -126,7 +123,7 @@ sap.ui.define(
           oViewModel.setProperty('/search/Orgtx', _.isEmpty(mOrgData) ? '' : mOrgData.Stext);
         });
 
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
           aColIndices: [0, 1, 2, 3, 4, 15],
           sTheadOrTbody: 'thead',
@@ -379,7 +376,7 @@ sap.ui.define(
           oViewModel.setProperty('/listInfo', {
             ...oListInfo,
             infoMessage: this.getBundleText('LABEL_23010', _.get(mSummary, 'Tmprd')),
-            ...TableUtils.count({ oTable, aRowData: aPlanList }),
+            ...this.TableUtils.count({ oTable, aRowData: aPlanList }),
           });
 
           const mViewSummary = oViewModel.getProperty('/summary');
@@ -424,7 +421,7 @@ sap.ui.define(
         const oTable = this.byId(this.TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_23015'); // {연간휴가계획현황}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

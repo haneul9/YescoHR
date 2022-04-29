@@ -8,11 +8,8 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -24,11 +21,8 @@ sap.ui.define(
     UI5Error,
     Appno,
     AppUtils,
-    DateUtils,
-    AttachFileAction,
     Client,
     ServiceNames,
-    TableUtils,
     Validator,
     BaseController
   ) => {
@@ -42,8 +36,6 @@ sap.ui.define(
         T: 'LABEL_00104', // 임시저장
         C: 'LABEL_00121', // 신청
       },
-
-      AttachFileAction: AttachFileAction,
 
       getPreviousRouteName() {
         return 'attendance';
@@ -85,7 +77,7 @@ sap.ui.define(
 
         if (oParameter.type === this.PAGE_TYPE.CHANGE) {
           // Multiple table generate
-          TableUtils.adjustRowSpan({
+          this.TableUtils.adjustRowSpan({
             oTable: this.byId('approveMultipleTable'),
             aColIndices: [8],
             sTheadOrTbody: 'thead',
@@ -209,7 +201,7 @@ sap.ui.define(
         const sAppno = oViewModel.getProperty('/Appno') || '';
         const sType = oViewModel.getProperty('/type') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.APPTP,
           Appno: sAppno,
@@ -269,7 +261,7 @@ sap.ui.define(
 
           this.oFormChangeDialog
             .attachBeforeOpen(() => {
-              TableUtils.adjustRowSpan({
+              this.TableUtils.adjustRowSpan({
                 oTable: this.byId('dialogChangeTable'),
                 aColIndices: [8],
                 sTheadOrTbody: 'thead',
@@ -382,8 +374,8 @@ sap.ui.define(
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveChangeList', {
             Prcty: 'C',
             Pernr: this.getAppointeeProperty('Pernr'),
-            Begda: DateUtils.parse(mSearchConditions.Begda),
-            Endda: DateUtils.parse(mSearchConditions.Endda),
+            Begda: this.DateUtils.parse(mSearchConditions.Begda),
+            Endda: this.DateUtils.parse(mSearchConditions.Endda),
           });
 
           oViewModel.setProperty(
@@ -469,7 +461,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const iAttachLength = AttachFileAction.getFileCount.call(this);
+          const iAttachLength = this.AttachFileAction.getFileCount.call(this);
           let sAppno = oViewModel.getProperty('/Appno');
 
           if (!sAppno) {
@@ -478,7 +470,7 @@ sap.ui.define(
           }
 
           if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
+            await this.AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
           }
 
           const aTableData = _.cloneDeep(oViewModel.getProperty('/form/list'));
@@ -981,12 +973,12 @@ sap.ui.define(
             isChanged: true,
             AbrtgTxt: Number(mInputData.Abrtg),
             Tmrsn: mInputData.Tmrsn,
-            Begda: DateUtils.parse(mInputData.Begda),
-            Endda: DateUtils.parse(mInputData.Endda),
+            Begda: this.DateUtils.parse(mInputData.Begda),
+            Endda: this.DateUtils.parse(mInputData.Endda),
           };
           oTable = this.byId('approveMultipleTable');
 
-          if (DateUtils.format(mRowData.Begda2) === DateUtils.format(mChangedData.Begda) && DateUtils.format(mRowData.Endda2) === DateUtils.format(mChangedData.Endda)) {
+          if (this.DateUtils.format(mRowData.Begda2) === this.DateUtils.format(mChangedData.Begda) && this.DateUtils.format(mRowData.Endda2) === this.DateUtils.format(mChangedData.Endda)) {
             MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
             return;
           }
@@ -998,8 +990,8 @@ sap.ui.define(
 
           aListData.push({
             ...mInputData,
-            Begda: DateUtils.parse(mInputData.Begda),
-            Endda: DateUtils.parse(mInputData.Endda),
+            Begda: this.DateUtils.parse(mInputData.Begda),
+            Endda: this.DateUtils.parse(mInputData.Endda),
           });
 
           oViewModel.setProperty('/form/list', aListData);

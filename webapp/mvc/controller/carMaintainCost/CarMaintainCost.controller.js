@@ -2,9 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,9 +9,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
     BaseController
@@ -22,9 +16,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.carMaintainCost.CarMaintainCost', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -71,7 +62,7 @@ sap.ui.define(
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
           const oTable = this.byId('carTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -104,7 +95,7 @@ sap.ui.define(
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
           const oTable = this.byId('carTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -123,7 +114,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return TextUtils.toCurrency(vPay);
+        return this.TextUtils.toCurrency(vPay);
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -148,7 +139,7 @@ sap.ui.define(
           const aTableList = await Client.getEntitySet(oModel, 'MaintenanceCarAppl', mPayLoad);
           const oTable = this.byId('carTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -170,7 +161,7 @@ sap.ui.define(
         const oTable = this.byId('carTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_25001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

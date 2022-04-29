@@ -9,8 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -29,8 +27,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     Client,
-    DateUtils,
-    AttachFileAction,
     ComboEntry,
     UI5Error,
     ServiceNames,
@@ -345,7 +341,7 @@ sap.ui.define(
           ]);
 
           // Milestone set
-          oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: DateUtils.format(o.Datum) })) || _.noop());
+          oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: this.DateUtils.format(o.Datum) })) || _.noop());
 
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);
@@ -694,9 +690,9 @@ sap.ui.define(
         try {
           if (!sAppno) sAppno = await Appno.get();
 
-          if (!_.isEmpty(oOriginFiles)) await AttachFileAction.deleteFile(sAppno, sMenuKey, oOriginFiles[0].Seqnr);
+          if (!_.isEmpty(oOriginFiles)) await this.AttachFileAction.deleteFile(sAppno, sMenuKey, oOriginFiles[0].Seqnr);
 
-          await AttachFileAction.upload.call(this, sAppno, sMenuKey, oFiles);
+          await this.AttachFileAction.upload.call(this, sAppno, sMenuKey, oFiles);
         } catch (oError) {
           this.debug('Controller > Employee > uploadInputFormFiles Error', oError);
 
@@ -909,7 +905,7 @@ sap.ui.define(
               mInputData = {
                 ...oSido,
                 ...mFieldValue,
-                Begda: mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
+                Begda: mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
               };
 
               break;
@@ -934,8 +930,8 @@ sap.ui.define(
                 Appno: sAppno,
                 Zzfinyn: mFieldValue.Zzfinyn ? 'X' : '',
                 Zzrecab: mFieldValue.Zzrecab ? 'X' : '',
-                Begda: mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
-                Endda: mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : mFieldValue.Endda,
+                Begda: mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
+                Endda: mFieldValue.Endda ? this.DateUtils.parse(mFieldValue.Endda) : mFieldValue.Endda,
               };
 
               break;
@@ -954,18 +950,18 @@ sap.ui.define(
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Eamdt: mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Eamdt,
+                Eamdt: mFieldValue.Eamdt ? this.DateUtils.parse(mFieldValue.Eamdt) : mFieldValue.Eamdt,
               };
 
               if (sPrcty === 'C') {
                 _.chain(mInputData)
-                  .set('Begda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
-                  .set('Endda', mFieldValue.Eamdt ? DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .set('Begda', mFieldValue.Eamdt ? this.DateUtils.parse(mFieldValue.Eamdt) : _.noop())
+                  .set('Endda', mFieldValue.Eamdt ? this.DateUtils.parse(mFieldValue.Eamdt) : _.noop())
                   .commit();
               } else {
                 _.chain(mInputData)
-                  .set('Begda', mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : _.noop())
-                  .set('Endda', mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : _.noop())
+                  .set('Begda', mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : _.noop())
+                  .set('Endda', mFieldValue.Endda ? this.DateUtils.parse(mFieldValue.Endda) : _.noop())
                   .commit();
               }
 
@@ -980,18 +976,18 @@ sap.ui.define(
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Regdt: mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Regdt,
+                Regdt: mFieldValue.Regdt ? this.DateUtils.parse(mFieldValue.Regdt) : mFieldValue.Regdt,
               };
 
               if (sPrcty === 'C') {
                 _.chain(mInputData)
-                  .set('Begda', mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : _.noop())
-                  .set('Endda', mFieldValue.Regdt ? DateUtils.parse(mFieldValue.Regdt) : _.noop())
+                  .set('Begda', mFieldValue.Regdt ? this.DateUtils.parse(mFieldValue.Regdt) : _.noop())
+                  .set('Endda', mFieldValue.Regdt ? this.DateUtils.parse(mFieldValue.Regdt) : _.noop())
                   .commit();
               } else {
                 _.chain(mInputData)
-                  .set('Begda', mFieldValue.Begda ? DateUtils.parse(mFieldValue.Begda) : _.noop())
-                  .set('Endda', mFieldValue.Endda ? DateUtils.parse(mFieldValue.Endda) : _.noop())
+                  .set('Begda', mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : _.noop())
+                  .set('Endda', mFieldValue.Endda ? this.DateUtils.parse(mFieldValue.Endda) : _.noop())
                   .commit();
               }
 
@@ -1074,14 +1070,14 @@ sap.ui.define(
 
           switch (sMenuKey) {
             case this.CRUD_TABLES.ADDRESS.path:
-              mFilters.Begda = DateUtils.parse(mFilters.Begda);
+              mFilters.Begda = this.DateUtils.parse(mFilters.Begda);
 
               break;
             case this.CRUD_TABLES.EDUCATION.path:
             case this.CRUD_TABLES.LANGUAGE.path:
             case this.CRUD_TABLES.CERTIFICATE.path:
-              mFilters.Begda = DateUtils.parse(mFilters.Begda);
-              mFilters.Endda = DateUtils.parse(mFilters.Endda);
+              mFilters.Begda = this.DateUtils.parse(mFilters.Begda);
+              mFilters.Endda = this.DateUtils.parse(mFilters.Endda);
 
               break;
             default:
@@ -1118,7 +1114,7 @@ sap.ui.define(
 
           // 파일 조회
           if (_.has(mTableRowDetail, 'Appno')) {
-            const aFileList = await AttachFileAction.readFileList(mTableRowDetail.Appno, sSelectedMenuCode);
+            const aFileList = await this.AttachFileAction.readFileList(mTableRowDetail.Appno, sSelectedMenuCode);
 
             if (!_.isEmpty(aFileList)) {
               oViewModel.setProperty('/employee/dialog/file/originFile', aFileList);
@@ -1170,14 +1166,14 @@ sap.ui.define(
               try {
                 switch (sMenuKey) {
                   case this.CRUD_TABLES.ADDRESS.path:
-                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
+                    mPayload.Begda = this.DateUtils.parse(mPayload.Begda);
 
                     break;
                   case this.CRUD_TABLES.EDUCATION.path:
                   case this.CRUD_TABLES.LANGUAGE.path:
                   case this.CRUD_TABLES.CERTIFICATE.path:
-                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
-                    mPayload.Endda = DateUtils.parse(mPayload.Endda);
+                    mPayload.Begda = this.DateUtils.parse(mPayload.Begda);
+                    mPayload.Endda = this.DateUtils.parse(mPayload.Endda);
 
                     break;
                   default:
@@ -1248,8 +1244,8 @@ sap.ui.define(
                   case this.CRUD_TABLES.ADDRESS.path:
                   case this.CRUD_TABLES.LANGUAGE.path:
                   case this.CRUD_TABLES.CERTIFICATE.path:
-                    mPayload.Begda = DateUtils.parse(mPayload.Begda);
-                    mPayload.Endda = DateUtils.parse(mPayload.Endda);
+                    mPayload.Begda = this.DateUtils.parse(mPayload.Begda);
+                    mPayload.Endda = this.DateUtils.parse(mPayload.Endda);
 
                     break;
                   default:
@@ -1398,7 +1394,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sUrl = oViewModel.getProperty('/employee/dialog/form/Fileuri');
 
-        AttachFileAction.openFileLink(sUrl);
+        this.AttachFileAction.openFileLink(sUrl);
       },
 
       async onEmployeePrint() {

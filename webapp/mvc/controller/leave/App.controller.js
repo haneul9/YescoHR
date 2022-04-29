@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -16,13 +15,11 @@ sap.ui.define(
     Client,
     ServiceNames,
     UI5Error,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.leave.App', {
-      TableUtils: TableUtils,
       TABLE_ID: 'leaveTable',
       CHART_LEAVE_ID: 'LeaveMonthlyChart',
       PERSONAL_DIALOG_ID: 'sap.ui.yesco.mvc.view.leave.fragment.PersonalDialog',
@@ -96,7 +93,7 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
           aColIndices: [0, 1],
           sTheadOrTbody: 'thead',
@@ -139,7 +136,7 @@ sap.ui.define(
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId(this.TABLE_ID);
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: aRowData,
           mSumField: { Orgtx: sSumLabel },
           vCalcProps: ['Empcnt', ..._.times(12, (i) => `Inw${_.padStart(i + 1, 2, '0')}`)],
@@ -162,7 +159,7 @@ sap.ui.define(
         oViewModel.setProperty('/listInfo/rowCount', aRowData.length + 1);
 
         setTimeout(() => {
-          TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 7: 'bgType02', 13: 'bgType02' } });
+          this.TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 7: 'bgType02', 13: 'bgType02' } });
         }, 100);
       },
 
@@ -177,7 +174,7 @@ sap.ui.define(
           }).then((oDialog) => {
             oView.addDependent(oDialog);
 
-            TableUtils.adjustRowSpan({
+            this.TableUtils.adjustRowSpan({
               oTable: this.byId(this.PERSONAL_TABLE_ID),
               aColIndices: [0, 1, 2, 3, 4, 5, 6, 11],
               sTheadOrTbody: 'thead',
@@ -329,7 +326,7 @@ sap.ui.define(
         const oTable = this.byId('leaveTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16021'); // {휴가부서별현황}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

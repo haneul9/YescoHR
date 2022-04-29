@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,7 +11,6 @@ sap.ui.define(
     // prettier 방지용 주석
     AppUtils,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -20,8 +18,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.consolidAppBox.ConsolidAppBox', {
-      TableUtils: TableUtils,
-
       NAVIGATION: {
         1120: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 가족변경
         1210: { url: '', key: [{ key: 'oDataKey', value: 'Appno' }] }, // 제증명
@@ -107,7 +103,7 @@ sap.ui.define(
           });
           const oTable = this.byId('consolidTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_19001'));
           oListModel.setProperty('/listInfo/isShowProgress', false);
           oListModel.setProperty('/List', aTableList);
@@ -157,7 +153,7 @@ sap.ui.define(
           });
           const oTable = this.byId('consolidTable');
 
-          oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aTableList }));
+          oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aTableList }));
           oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_19001'));
           oListModel.setProperty('/List', aTableList);
         } catch (oError) {
@@ -211,7 +207,7 @@ sap.ui.define(
         const oTable = this.byId('consolidTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_19001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

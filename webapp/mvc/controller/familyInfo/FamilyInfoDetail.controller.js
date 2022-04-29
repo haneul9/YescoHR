@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -16,7 +15,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    AttachFileAction,
     Appno,
     AppUtils,
     ComboEntry,
@@ -58,8 +56,6 @@ sap.ui.define(
           TH: '그 밖에 항시 치료를 요하는 중증환자',
         },
       },
-
-      AttachFileAction: AttachFileAction,
 
       initializeModel() {
         return {
@@ -384,7 +380,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileCount.call(this)) {
+        if (!this.AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_03005'));
           return true;
         }
@@ -424,7 +420,7 @@ sap.ui.define(
                 oSendObject.Pernr = this.getAppointeeProperty('Pernr');
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/FamilyInfoApplSet', oSendObject, {
@@ -493,7 +489,7 @@ sap.ui.define(
         const bFixed = oDetailModel.getProperty('/Fixed');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10' || bFixed,
           Type: this.getApprovalType(),
           Appno: sAppno,

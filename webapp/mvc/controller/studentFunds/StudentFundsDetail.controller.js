@@ -5,8 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TextUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -17,8 +15,6 @@ sap.ui.define(
     Appno,
     AppUtils,
     ComboEntry,
-    TextUtils,
-    AttachFileAction,
     Client,
     ServiceNames,
     MessageBox,
@@ -27,8 +23,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFundsDetail', {
-      AttachFileAction: AttachFileAction,
-
       initializeModel() {
         return {
           previousName: '',
@@ -153,13 +147,13 @@ sap.ui.define(
 
       // 학자금 총액에 들어가는 금액입력
       costCalculation(oEvent) {
-        TextUtils.liveChangeCurrency(oEvent);
+        this.TextUtils.liveChangeCurrency(oEvent);
         this.totalCost();
       },
 
       // 장학금 입력시
       onSchoCost(oEvent) {
-        TextUtils.liveChangeCurrency(oEvent);
+        this.TextUtils.liveChangeCurrency(oEvent);
       },
 
       // 지원금액 호출
@@ -545,7 +539,7 @@ sap.ui.define(
 
         if (!(sWerks === '2000' && (mFormData.Slart === '03' || mFormData.Slart === '04'))) {
           // 첨부파일
-          if (!AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
+          if (!this.AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
             MessageBox.alert(this.getBundleText('MSG_03005'));
             return true;
           }
@@ -591,7 +585,7 @@ sap.ui.define(
               }
 
               // FileUpload
-              await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
 
               const oModel = this.getModel(ServiceNames.BENEFIT);
               const mSendObject = {
@@ -648,7 +642,7 @@ sap.ui.define(
               };
 
               // FileUpload
-              await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
 
               const oModel = this.getModel(ServiceNames.BENEFIT);
 
@@ -748,7 +742,7 @@ sap.ui.define(
         const mFormData = oViewModel.getProperty('/FormData');
         const sAppno = mFormData.Appno || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !mFormData.Status || mFormData.Status === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,

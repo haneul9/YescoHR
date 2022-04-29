@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,7 +11,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
     ServiceNames,
     Client,
     BaseController,
@@ -21,8 +19,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.mobile.NoticeDetail', {
-      AttachFileAction: AttachFileAction,
-
       initializeModel() {
         return {
           MenId: '',
@@ -35,7 +31,7 @@ sap.ui.define(
         };
       },
 
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         return this.getBundleText('LABEL_08001'); // 공지사항
       },
 
@@ -136,7 +132,7 @@ sap.ui.define(
         const bMySelf = oViewModel.getProperty('/MySelf');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,
           Type: this.getApprovalType(),
           Appno: sAppno,

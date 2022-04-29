@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -19,7 +18,6 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     ComboEntry,
-    DateUtils,
     Client,
     UI5Error,
     ServiceNames,
@@ -139,7 +137,7 @@ sap.ui.define(
           ] = await Promise.all([
             fCurriedGetEntitySet('AppStatusStepList', { Werks: this.getSessionProperty('Werks'), Zzappid: mParameter.Zzappid, Zzappty: '20' }),
             fCurriedGetEntitySet('AppValueList', { VClass: 'Q', VType: '702' }),
-            fCurriedGetEntitySet('CompAppStatScale', { Objid: sElementqid, Datum: DateUtils.parse(new Date()) }),
+            fCurriedGetEntitySet('CompAppStatScale', { Objid: sElementqid, Datum: this.DateUtils.parse(new Date()) }),
             Client.deep(oModel, 'AppraisalCoDoc', {
               ...mParameter,
               Menid: this.getCurrentMenuId(),

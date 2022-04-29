@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -17,9 +15,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     UI5Error,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -28,9 +24,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.commuteType.CommuteTypeDetail', {
       LIST_PAGE_ID: { E: 'container-ehr---commuteType', H: 'container-ehr---h_commuteType' },
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -141,7 +134,7 @@ sap.ui.define(
               };
 
               // FileUpload
-              await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+              await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
               await Client.create(oModel, 'WorkScheduleApply', oSendObject);
 
               // {신청}되었습니다.
@@ -165,7 +158,7 @@ sap.ui.define(
         const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.getApprovalType(),
           Appno: sAppno,

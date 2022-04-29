@@ -6,7 +6,6 @@ sap.ui.define(
     'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -19,7 +18,6 @@ sap.ui.define(
     FilterOperator,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
     ServiceNames,
     MessageBox,
@@ -28,8 +26,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.CongDetail', {
-      AttachFileAction: AttachFileAction,
-
       initializeModel() {
         return {
           menuId: '',
@@ -610,7 +606,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
@@ -664,7 +660,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
                 await new Promise((resolve, reject) => {
                   oModel.create('/ConExpenseApplSet', oSendObject, {
                     success: () => {
@@ -766,7 +762,7 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,

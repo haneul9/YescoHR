@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -17,9 +15,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -27,9 +23,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.carMaintainCost.CarMaintainCostDetail', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           Hass: this.isHass(),
@@ -395,7 +388,7 @@ sap.ui.define(
           }
 
           // 첨부파일
-          if (mFormData.Fixed && !AttachFileAction.getFileCount.call(this)) {
+          if (mFormData.Fixed && !this.AttachFileAction.getFileCount.call(this)) {
             MessageBox.alert(this.getBundleText('MSG_00046'));
             return true;
           }
@@ -463,8 +456,8 @@ sap.ui.define(
               };
 
               // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
               await Client.create(oModel, 'MaintenanceCarAppl', oSendObject);
@@ -515,8 +508,8 @@ sap.ui.define(
               };
 
               // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
               const oModel = this.getModel(ServiceNames.BENEFIT);
@@ -580,7 +573,7 @@ sap.ui.define(
         const bFixed = oDetailModel.getProperty('/FormData/Appty') !== 'D';
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Visible: bFixed,
           Type: this.getApprovalType(),

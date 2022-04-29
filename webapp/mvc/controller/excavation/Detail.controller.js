@@ -8,9 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -21,18 +19,13 @@ sap.ui.define(
     UI5Error,
     Appno,
     AppUtils,
-    AttachFileAction,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.Detail', {
       APPTP: 'HR06',
-
-      AttachFileAction: AttachFileAction,
-
       sRouteName: '',
 
       getPreviousRouteName() {
@@ -69,7 +62,7 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId('approvalTable'),
           aColIndices: [0, 1, 2],
           sTheadOrTbody: 'thead',
@@ -165,7 +158,7 @@ sap.ui.define(
         const sStatus = oViewModel.getProperty('/ZappStatAl');
         const sAppno = oViewModel.getProperty('/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.APPTP,
           Appno: sAppno,
@@ -222,7 +215,7 @@ sap.ui.define(
 
       async createProcess({ sPrcty = 'C' }) {
         const oViewModel = this.getViewModel();
-        const iAttachLength = AttachFileAction.getFileCount.call(this);
+        const iAttachLength = this.AttachFileAction.getFileCount.call(this);
         let sAppno = oViewModel.getProperty('/Appno');
 
         try {
@@ -232,7 +225,7 @@ sap.ui.define(
           }
 
           if (iAttachLength > 0) {
-            await AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
+            await this.AttachFileAction.uploadFile.call(this, sAppno, this.APPTP);
           }
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -436,7 +429,7 @@ sap.ui.define(
         const oTable = this.byId('summaryDialogTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onPressSummaryDialogClose(oEvent) {

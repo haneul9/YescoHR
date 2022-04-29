@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewAttendance/constants/ChartsSetting',
   ],
@@ -15,7 +14,6 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController,
     ChartsSetting
   ) => {
@@ -513,7 +511,7 @@ sap.ui.define(
         const oTable = oEvent.getSource().getParent().getParent().getParent();
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

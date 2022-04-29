@@ -2,9 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -12,9 +10,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -22,9 +18,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.educationHistory.EducationHistory', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -85,7 +78,7 @@ sap.ui.define(
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_31001'), // 교육이력
           });
@@ -122,7 +115,7 @@ sap.ui.define(
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_31001'), // 교육이력
           });
@@ -150,7 +143,7 @@ sap.ui.define(
           const oTable = this.byId('eduTable');
 
           oListModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_31001'), // 교육이력
           });
@@ -201,7 +194,7 @@ sap.ui.define(
         const oTable = this.byId('eduTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_31001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }
