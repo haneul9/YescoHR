@@ -21,7 +21,7 @@
       <Text text="total {/listInfo/totalCount}" />
       <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
     </HBox>
-    <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".openMobileCommonListStatusPop" visible="{/listInfo/Popover}" />
+    <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".openMobileCommonListStatusPop" visible="{/listInfo/Popover}" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
   </HBox>
   <!-- </HBox> -->
 </core:FragmentDefinition>
