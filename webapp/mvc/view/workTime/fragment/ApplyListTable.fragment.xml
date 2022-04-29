@@ -61,13 +61,13 @@
       <table:Column width="auto" sortProperty="Dtype" filterProperty="Dtype">
         <Label text="{i18n>LABEL_27021}" wrapping="true"/>
         <table:template>
-          <Text text="{Dtypetx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Dtype}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Nxtwk" filterProperty="Nxtwk">
+      <table:Column width="auto" sortProperty="Nxtwktx" filterProperty="Nxtwktx">
         <Label text="{i18n>LABEL_27018}"/>
         <table:template>
-          <Text text="{Nxtwk}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Nxtwktx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
