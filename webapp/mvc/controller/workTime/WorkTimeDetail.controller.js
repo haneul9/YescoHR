@@ -441,8 +441,8 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
         oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
@@ -462,8 +462,8 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
         oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
@@ -511,6 +511,18 @@ sap.ui.define(
         // 근무시간
         if (mDialogData.Abrst === '0' || !mDialogData.Abrst) {
           MessageBox.alert(this.getBundleText('MSG_27005'));
+          return true;
+        }
+
+        // 시차출퇴근(D유형)
+        if ((mDialogData.Dtype === 'ALL' || !mDialogData.Dtype) && mDialogData.bType) {
+          MessageBox.alert(this.getBundleText('MSG_27010'));
+          return true;
+        }
+
+        // 익일근무
+        if ((mDialogData.Nxtwk === 'ALL' || !mDialogData.Nxtwk) && mDialogData.bWork) {
+          MessageBox.alert(this.getBundleText('MSG_27011'));
           return true;
         }
 

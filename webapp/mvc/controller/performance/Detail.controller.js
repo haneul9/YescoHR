@@ -71,7 +71,7 @@ sap.ui.define(
             codeList2: [],
             deep: [
               {
-                spanCount: 1,
+                spanCount: 'span 1',
                 Appgb: '',
                 Appgbtx: '',
                 Zbigo: '',

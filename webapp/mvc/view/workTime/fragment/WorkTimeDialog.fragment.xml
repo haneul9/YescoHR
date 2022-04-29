@@ -24,13 +24,13 @@
           </HBox>
           <Label text="{i18n>LABEL_27017}"/>
           <HBox>
-            <ComboBox items="{/WorkTimeList}" selectedKey="{/DialogData/Dtype}" enabled="{= !!${/DialogData/bType} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
+            <ComboBox items="{/WorkTimeList}" selectedKey="{/DialogData/Dtype}" class="required" enabled="{= !!${/DialogData/bType} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
               <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
           </HBox>
           <Label text="{i18n>LABEL_27018}"/>
           <HBox>
-            <ComboBox items="{/WorkTimeList2}" selectedKey="{/DialogData/Nxtwk}" enabled="{= !!${/DialogData/bWork} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
+            <ComboBox items="{/WorkTimeList2}" selectedKey="{/DialogData/Nxtwk}" class="required" enabled="{= !!${/DialogData/bWork} &amp;&amp; (${/FormData/Lnsta} === '10' || !${/FormData/Lnsta}) }">
               <core:Item text="{Ztext}" key="{Zcode}" />
             </ComboBox>
           </HBox>

@@ -11,14 +11,14 @@
 			<VBox class="vCardBox">
 				<grid:CSSGrid gridGap="1px" class="form-grid type-job" gridTemplateColumns="1fr 2fr 3fr 4fr" items="{/jobDiagnosis/deep}">
 					<HBox>
+						<layoutData>
+							<grid:GridItemLayoutData gridRow="{spanCount}" />
+						</layoutData>
 						<Label text="{title}" visible="{= ${type} === 'title' }" width="100%" textAlign="Center" />
 						<Text text="{label}" visible="{= ${type} === 'label' }" width="100%" textAlign="Center">
-							<layoutData>
-								<grid:GridItemLayoutData gridRow="span 4" />
-							</layoutData>
 						</Text>
 						<Text text="{subLabel}" visible="{= ${type} === 'subLabel' }" width="100%" textAlign="Center" />
-						<ComboBox items="{/jobDiagnosis/codeList1}" visible="{= ${Zcode} !== '90' &amp;&amp; ${type} === 'value' }" selectedKey="{value}" class="required">
+						<ComboBox items="{path: '/jobDiagnosis/codeList1', templateShareable: true}" visible="{= ${Zcode} !== '90' &amp;&amp; ${type} === 'value' }" selectedKey="{value}" class="required">
 							<core:Item text="{Ztext}" key="{Zcode}" />
 						</ComboBox>
 						<Input value="{value}" visible="{= ${Zcode} === '90' &amp;&amp; ${type} === 'value' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch" class="required" />
