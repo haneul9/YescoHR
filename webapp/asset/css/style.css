@@ -179,7 +179,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p08 .portlet-todo-list .menu-link {width:100%; line-height:40px}
 .portlet-p09 img {vertical-align:sub}
 .portlet-p09 .sapMCLI .sapMText {vertical-align:middle}
-.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:12px; line-height:17px; height:18px}
+.portlet-p10 [data-appraisal-status-color] {margin-right:0px; border:1px solid; border-radius:3px; font-size:12px; line-height:16px; height:18px}
 .portlet-p10 [data-appraisal-status-color="3"] {color:#1bae49}
 .portlet-p10 [data-appraisal-status-color="2"] {color:#df9f0f}
 .portlet-p10 [data-appraisal-status-color="1"] {color:#767676}
@@ -282,6 +282,9 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:1px 0 #000}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
+[data-profile-view="O"] .sapMImg,
+[data-profile-view="O"] .sapMLnk,
+[data-profile-view="O"] .sapMText {cursor:pointer}
 [data-new-attachment="O"] {text-decoration:none; cursor:default; color:#000}
 [data-new-attachment="O"]:hover,
 [data-new-attachment="O"]:active,

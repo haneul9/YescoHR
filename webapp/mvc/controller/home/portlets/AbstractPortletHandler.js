@@ -42,9 +42,17 @@ sap.ui.define(
       },
 
       async init() {
+        this.setEmployeeProfileNavInfo();
         this.addPortlet();
         this.showContentData();
         this.setBusy(false);
+      },
+
+      async setEmployeeProfileNavInfo() {
+        await this.oMenuModel.getPromise();
+
+        this.sProfileMenuUrl = this.oMenuModel.getEmployeeProfileMenuUrl();
+        this.bHasProfileMenuAuth = this.oMenuModel.hasEmployeeProfileMenuAuth();
       },
 
       async addPortlet() {
@@ -121,31 +129,25 @@ sap.ui.define(
         this.navTo(sUrl);
       },
 
-      navTo(...aArgs) {
-        AppUtils.setMenuBusy(true).setAppBusy(true);
-
-        if (this.bMobile && !/^mobile/.test(aArgs[0])) {
-          aArgs[0] = `mobile/${aArgs[0]}`;
-        }
-
-        this.getMenuModel().setRecentMenu([{ Menid: this.getMenid(aArgs[0]) }]);
-
-        this.getController()
-          .reduceViewResource()
-          .getRouter()
-          .navTo(...aArgs);
-      },
-
       navToProfile(oEvent) {
         if (AppUtils.isPRD()) {
           return;
         }
 
-        const oContext = oEvent.getSource().getBindingContext();
-        // if (oContext.getProperty('') === 'M') {
-        const sPernr = oContext.getProperty('Pernr');
-        this.getController().reduceViewResource().getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
-        // }
+        if (!this.bHasProfileMenuAuth) {
+          return;
+        }
+
+        const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+        this.navTo(this.sProfileMenuUrl, { pernr: sPernr });
+      },
+
+      navTo(...aArgs) {
+        if (this.bMobile && !/^mobile/.test(aArgs[0])) {
+          aArgs[0] = `mobile/${aArgs[0]}`;
+        }
+
+        this.getAppMenu().moveToMenu(...aArgs);
       },
 
       onAfterDragAndDrop() {},
@@ -187,6 +189,18 @@ sap.ui.define(
 
       getMenid(sMenuUrl) {
         return this.getMenuModel().getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+      },
+
+      formatMenuUrl(...aArgs) {
+        return this.getAppMenu().formatMenuUrl(...aArgs);
+      },
+
+      formatMenuTarget(...aArgs) {
+        return this.getAppMenu().formatMenuTarget(...aArgs);
+      },
+
+      handleMenuLink(...aArgs) {
+        this.getAppMenu().handleMenuLink(...aArgs);
       },
 
       setBusy(bBusy = true, sPath = '/busy') {

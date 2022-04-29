@@ -50,6 +50,9 @@
           </HBox>
           <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
             <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
+              <custom:customData>
+                <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
+              </custom:customData>
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
               <VBox height="40px" class="ml-12-px">
@@ -84,6 +87,9 @@
           </HBox>
           <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
             <custom:HBox width="100%" alignItems="Center" press=".navToProfile">
+              <custom:customData>
+                <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
+              </custom:customData>
               <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="40px" height="40px" />
               <Text text="{Ename}" tooltip="{Ename}" wrapping="false" width="60px" class="ml-12-px lh-40-px font-15-px font-w700" />
               <VBox width="calc(100% - 208px)" height="40px" class="ml-12-px">

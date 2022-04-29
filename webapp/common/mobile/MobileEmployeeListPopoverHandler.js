@@ -54,6 +54,8 @@ sap.ui.define(
       },
 
       async init() {
+        this.setEmployeeProfileNavInfo();
+
         const oView = this.oController.getView();
 
         this.oPopover = await Fragment.load({
@@ -86,6 +88,14 @@ sap.ui.define(
           .bindElement('/popover');
 
         oView.addDependent(this.oPopover);
+      },
+
+      async setEmployeeProfileNavInfo() {
+        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
+        await oMenuModel.getPromise();
+
+        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
+        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
       },
 
       onAfterClose() {
@@ -132,7 +142,7 @@ sap.ui.define(
 
           this.oPopoverModel.setProperty(
             '/popover/employees',
-            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode }))
+            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode, ProfileView: this.bHasProfileMenuAuth ? 'O' : '' }))
           );
         } catch (oError) {
           AppUtils.debug('MobileEmployeeListPopoverHandler > openPopover Error', oError);
@@ -193,13 +203,12 @@ sap.ui.define(
           return;
         }
 
-        const oContextProperties = oEvent.getSource().getBindingContext().getProperty();
-        // if (oContext.getProperty('') === 'M') {
-        if (this.oController.reduceViewResource && typeof this.oController.reduceViewResource === 'function') {
-          this.oController.reduceViewResource();
+        if (!this.bHasProfileMenuAuth) {
+          return;
         }
-        this.oController.getRouter().navTo('mobile/m/employee-detail', { pernr: oContextProperties.Pernr });
-        // }
+
+        const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
+        AppUtils.getAppController().getAppMenu().moveToMenu(this.sProfileMenuUrl, { pernr: sPernr });
       },
 
       setBusy(bBusy = true) {

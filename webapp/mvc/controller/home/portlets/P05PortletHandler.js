@@ -19,14 +19,6 @@ sap.ui.define(
      * 즐겨찾기 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P05PortletHandler', {
-      init() {
-        const oAppComponent = AppUtils.getAppComponent();
-        this.oAppMenu = oAppComponent.getAppMenu();
-        this.oMenuModel = oAppComponent.getMenuModel();
-
-        AbstractPortletHandler.prototype.init.call(this);
-      },
-
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
 
@@ -34,12 +26,13 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
+        const oMenuModel = this.getMenuModel();
         const aList = aPortletContentData
           .filter(({ Menid }) => {
-            return Menid && this.oMenuModel.getProperties(Menid);
+            return Menid && oMenuModel.getProperties(Menid);
           })
           .map(({ Menid }) => {
-            return { ...this.oMenuModel.getProperties(Menid), Favor: true };
+            return { ...oMenuModel.getProperties(Menid), Favor: true };
           });
         return {
           list: aList,
@@ -51,11 +44,11 @@ sap.ui.define(
         const oContext = oEvent.getSource().getBindingContext();
         const bPressed = oEvent.getParameter('pressed');
 
-        const bSuccess = await this.oAppMenu.saveFavorite(oContext.getProperty());
+        const bSuccess = await this.getAppMenu().saveFavorite(oContext.getProperty());
         if (bSuccess) {
           this.refreshFavorites(); // 즐겨찾기 Portlet 새로고침
 
-          this.oMenuModel.removeFavoriteMenid(oContext.getProperty('Menid')); // 메뉴에서 즐겨찾기 제거
+          this.getMenuModel().removeFavoriteMenid(oContext.getProperty('Menid')); // 메뉴에서 즐겨찾기 제거
         } else {
           const sPath = oContext.getPath();
           oContext.getModel().setProperty(`${sPath}/Favor`, !bPressed);
@@ -69,18 +62,6 @@ sap.ui.define(
 
         oPortletModel.setProperty('/list', mFavorites.list);
         oPortletModel.setProperty('/listCount', mFavorites.listCount);
-      },
-
-      formatMenuUrl(...aArgs) {
-        return this.oAppMenu.formatMenuUrl(...aArgs);
-      },
-
-      formatMenuTarget(...aArgs) {
-        return this.oAppMenu.formatMenuTarget(...aArgs);
-      },
-
-      handleMenuLink(...aArgs) {
-        this.oAppMenu.handleMenuLink(...aArgs);
       },
     });
   }
