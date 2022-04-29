@@ -3,9 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,9 +11,6 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
     ServiceNames,
     ODataReadError,
     BaseController
@@ -24,9 +18,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.familyInfo.FamilyInfo', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -96,7 +87,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return TextUtils.toCurrency(vPay) || '0';
+        return this.TextUtils.toCurrency(vPay) || '0';
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
@@ -144,7 +135,7 @@ sap.ui.define(
               const oList = oData.results;
 
               oListModel.setProperty('/FamilyList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
+              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList }));
               oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
               oListModel.setProperty('/busy', false);
             }
@@ -191,7 +182,7 @@ sap.ui.define(
         const oTable = this.byId('familyTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_05001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

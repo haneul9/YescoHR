@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/common/exceptions/ODataDeleteError',
@@ -20,9 +18,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     ODataReadError,
     ODataCreateError,
     ODataDeleteError,
@@ -34,9 +30,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanDetail', {
       LIST_PAGE_ID: 'container-ehr---housingLoan',
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -58,7 +51,7 @@ sap.ui.define(
         };
       },
       onBeforeShow() {
-        TableUtils.summaryColspan({ oTable: this.byId('repayHisTable'), aHideIndex: [1] });
+        this.TableUtils.summaryColspan({ oTable: this.byId('repayHisTable'), aHideIndex: [1] });
       },
 
       onObjectMatched(oParameter) {
@@ -95,7 +88,7 @@ sap.ui.define(
         const oTable = this.byId('repayHisTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07033');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       // 융자금액 입력시
@@ -557,7 +550,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -618,7 +611,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanAmtApplSet', oSendObject, {
@@ -725,7 +718,7 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,

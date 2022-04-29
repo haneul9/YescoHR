@@ -6,10 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TextUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/common/exceptions/ODataCreateError',
@@ -22,10 +19,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TextUtils,
-    TableUtils,
     ServiceNames,
     ODataReadError,
     ODataCreateError,
@@ -36,9 +30,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.housingLoan.HousingLoanRepayment', {
       LIST_PAGE_ID: 'container-ehr---housingLoanDetail',
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -82,7 +73,7 @@ sap.ui.define(
       },
 
       formatAmount(sAmount) {
-        return TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
+        return this.TextUtils.toCurrency(!_.parseInt(sAmount) ? 0 : sAmount);
       },
 
       getCurrentLocationText() {
@@ -105,7 +96,7 @@ sap.ui.define(
         if (iRepay > parseInt(oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))) {
           const sBeforeRepay = oDetailModel.getProperty('/DialogData/RpamtMpr');
 
-          oEventSource.setValue(TextUtils.toCurrency(sBeforeRepay));
+          oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
           oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
           MessageBox.alert(this.getBundleText('MSG_07004'));
         } else {
@@ -154,7 +145,7 @@ sap.ui.define(
         const oTable = this.byId('repaymentTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_07036');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       // Dialog 닫기
@@ -340,7 +331,7 @@ sap.ui.define(
                   oDetailModel.setProperty('/LoanAppList', aList);
 
                   setTimeout(() => {
-                    oDetailModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
+                    oDetailModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
 
                     if (!bRouteAppBox) {
                       this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
@@ -534,7 +525,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (!AttachFileAction.getFileCount.call(this)) {
+        if (!this.AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
@@ -583,7 +574,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -644,7 +635,7 @@ sap.ui.define(
                 oSendObject.Waers = 'KRW';
 
                 // FileUpload
-                await AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
 
                 await new Promise((resolve, reject) => {
                   oModel.create('/LoanRepayApplSet', oSendObject, {
@@ -753,7 +744,7 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
         const sAppno = oDetailModel.getProperty('/DialogData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,

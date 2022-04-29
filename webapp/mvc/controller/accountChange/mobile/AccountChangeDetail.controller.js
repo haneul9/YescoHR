@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -17,9 +15,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -27,9 +23,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.accountChange.mobile.AccountChangeDetail', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           Hass: this.isHass(),
@@ -208,7 +201,7 @@ sap.ui.define(
         }
 
         // 첨부파일
-        if (sType === 'C' && !AttachFileAction.getFileCount.call(this)) {
+        if (sType === 'C' && !this.AttachFileAction.getFileCount.call(this)) {
           MessageBox.alert(this.getBundleText('MSG_00046'));
           return true;
         }
@@ -246,8 +239,8 @@ sap.ui.define(
               const mFormData = oDetailModel.getProperty('/FormData');
 
               // FileUpload
-              if (!!AttachFileAction.getFileCount.call(this)) {
-                await AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
               }
 
               const oModel = this.getModel(ServiceNames.PAY);
@@ -314,7 +307,7 @@ sap.ui.define(
         const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
         const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus,
           Type: this.getApprovalType(),
           Appno: sAppno,

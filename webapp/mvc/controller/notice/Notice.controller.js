@@ -2,8 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -11,8 +9,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    AttachFileAction,
-    TableUtils,
     ServiceNames,
     ODataReadError,
     BaseController
@@ -20,9 +16,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.notice.Notice', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           busy: false,
@@ -87,7 +80,7 @@ sap.ui.define(
               const oList = oData.Notice1Nav.results;
 
               oListModel.setProperty('/NoticeList', oList);
-              oListModel.setProperty('/listInfo', TableUtils.count({ oTable, aRowData: oList }));
+              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList }));
               oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_00166'));
               oListModel.setProperty('/listInfo/visibleStatus', 'X');
               oListModel.setProperty('/busy', false);
@@ -112,7 +105,7 @@ sap.ui.define(
         const oTable = this.byId('noticeTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_08001');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

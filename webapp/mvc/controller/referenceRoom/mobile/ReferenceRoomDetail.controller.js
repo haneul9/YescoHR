@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -9,7 +8,6 @@ sap.ui.define(
   ],
   (
     //
-    AttachFileAction,
     AppUtils,
     Client,
     ServiceNames,
@@ -20,7 +18,6 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.referenceRoom.mobile.ReferenceRoomDetail', {
       PDF_FILE_TYPE: 'INF1',
 
-      AttachFileAction: AttachFileAction,
       initializeModel() {
         return {
           busy: false,
@@ -142,7 +139,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: false,
           RefeFilebox: true,
           Type: this.getApprovalType(),

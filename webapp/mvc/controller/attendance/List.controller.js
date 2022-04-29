@@ -2,26 +2,20 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
-    DateUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.attendance.List', {
-      TableUtils: TableUtils,
-
       PAGE_TYPE: { NEW: 'A', CHANGE: 'B', CANCEL: 'C' },
 
       initializeModel() {
@@ -101,8 +95,8 @@ sap.ui.define(
             fCurriedGetEntitySet('LeaveApplContent', {
               Menid: this.getCurrentMenuId(),
               Pernr: sPernr,
-              Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
-              Apend: DateUtils.parse(oSearchConditions.Apend),
+              Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: this.DateUtils.parse(oSearchConditions.Apend),
             }),
           ]);
 
@@ -146,8 +140,8 @@ sap.ui.define(
             fCurriedGetEntitySet('LeaveApplContent', {
               Menid: this.getCurrentMenuId(),
               Pernr: sPernr,
-              Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
-              Apend: DateUtils.parse(oSearchConditions.Apend),
+              Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: this.DateUtils.parse(oSearchConditions.Apend),
             }),
           ]);
 
@@ -192,7 +186,7 @@ sap.ui.define(
         const oListInfo = oViewModel.getProperty('/listInfo');
 
         oViewModel.setProperty('/list', aRowData);
-        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData }) });
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...this.TableUtils.count({ oTable, aRowData }) });
       },
 
       /*****************************************************************
@@ -209,8 +203,8 @@ sap.ui.define(
           const aRowData = await Client.getEntitySet(oModel, 'LeaveApplContent', {
             Menid: this.getCurrentMenuId(),
             Pernr: this.getAppointeeProperty('Pernr'),
-            Apbeg: DateUtils.parse(oSearchConditions.Apbeg),
-            Apend: DateUtils.parse(oSearchConditions.Apend),
+            Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg),
+            Apend: this.DateUtils.parse(oSearchConditions.Apend),
           });
 
           this.setTableData({ oViewModel, aRowData });
@@ -227,7 +221,7 @@ sap.ui.define(
         const oTable = this.byId('attendanceTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_04001'); // {근태신청}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

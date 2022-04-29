@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -20,7 +19,6 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
     Client,
     UI5Error,
@@ -32,8 +30,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
-      AttachFileAction: AttachFileAction,
-
       getPreviousRouteName() {
         return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
@@ -69,6 +65,25 @@ sap.ui.define(
           listInfo: {},
           tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
+          jobDiagnosis: {
+            // 진단평가 팝업
+            codeList1: [],
+            codeList2: [],
+            deep: [
+              {
+                spanCount: 1,
+                Appgb: '',
+                Appgbtx: '',
+                Zbigo: '',
+                Zcheck: '',
+                Zcode: '',
+                Zzjaitm: '',
+                Zzjaitmtx: '',
+                Zzjarst: '',
+                Zzjarsttx: '',
+              },
+            ],
+          },
           stage: {
             headers: [],
             rows: [],
@@ -409,7 +424,7 @@ sap.ui.define(
           oViewModel.setProperty('/opposition/Appno', _.isEmpty(sAppno) || _.toNumber(sAppno) === 0 ? null : sAppno);
           oViewModel.setProperty('/opposition/ZzabjfbTx', _.get(mResult, 'ZzabjfbTx'));
 
-          AttachFileAction.setAttachFile(this, {
+          this.AttachFileAction.setAttachFile(this, {
             Editable: bEditable,
             Type: 'APP1',
             Appno: oViewModel.getProperty('/opposition/Appno'),
@@ -518,7 +533,7 @@ sap.ui.define(
               oViewModel.setProperty('/opposition/Appno', sAppno);
             }
 
-            await AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
+            await this.AttachFileAction.uploadFile.call(this, sAppno, 'APP1');
           }
 
           await Client.getEntitySet(oModel, 'AppraisalDifOpi', {
@@ -615,21 +630,84 @@ sap.ui.define(
       },
 
       // 직무진단
-      onPressDiagnosisButton() {
+      async onPressDiagnosisButton() {
         MessageBox.alert('Not ready yet.');
-        // const oView = this.getView();
+        // const oViewModel = this.getViewModel();
 
-        // if (!this.pExamDialog) {
-        //   this.pExamDialog = Fragment.load({
-        //     id: oView.getId(),
-        //     name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-        //     controller: this,
-        //   }).then((oDialog) => {
-        //     oView.addDependent(oDialog);
-        //     return oDialog;
-        //   });
+        // try {
+        //   oViewModel.setProperty('/busy', true);
+
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepData = _.chain(aDeep.JobDiagnosisItemSet.results)
+        //     .groupBy('Appgbtx')
+        //     .toPairs()
+        //     .map((e) => {
+        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `span ${_.toString(_.size(e[1]))}` };
+        //       const aList = [];
+
+        //       _.forEach(e[1], (e1) => {
+        //         aList.push(
+        //           // prettier
+        //           { subLabel: e1.Zzjaitmtx, type: 'subLabel' },
+        //           { value: e1.Zcode === '90' ? e1.Zzjarsttx : e1.Zzjarst, Zcode: e1.Zcode, type: 'value' },
+        //           { area: e1.Zbigo, type: 'area' }
+        //         );
+        //       });
+
+        //       return [mSubTitle, ...aList];
+        //     })
+        //     .flatten()
+        //     .value();
+
+        //   oViewModel.setProperty('/jobDiagnosis/deep', [
+        //     // prettier
+        //     { title: this.getBundleText('LABEL_00147'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10103'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10104'), type: 'title' },
+        //     { title: this.getBundleText('LABEL_10105'), type: 'title' },
+        //     ...aDeepData,
+        //   ]);
+        //   debugger;
+
+        //   if (!this.pExamDialog) {
+        //     this.pExamDialog = Fragment.load({
+        //       id: oView.getId(),
+        //       name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //       controller: this,
+        //     }).then((oDialog) => {
+        //       oView.addDependent(oDialog);
+        //       return oDialog;
+        //     });
+        //   }
+        //   this.pExamDialog.then((oDialog) => oDialog.open());
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
         // }
-        // this.pExamDialog.then((oDialog) => oDialog.open());
+      },
+
+      // 직무진단 조회
+      getJobDiagnosis() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return Client.deep(oModel, 'JobDiagnosis', {
+          Mode: 'A',
+          ...this.getViewModel().getProperty('/param'),
+          JobDiagnosisItemSet: [],
+        });
+      },
+
+      // 직무진단 Code
+      getJobDiagnosisCode1() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return Client.getEntitySet(oModel, 'JobDiagnosisCode1', {
+          Mode: 'A',
+          ...this.getViewModel().getProperty('/param'),
+          JobDiagnosisItemSet: [],
+        });
       },
 
       onPressRejectViewButton() {
@@ -703,7 +781,7 @@ sap.ui.define(
       },
 
       onPressOppositionDialogSave() {
-        const iAttachLength = AttachFileAction.getFileCount.call(this);
+        const iAttachLength = this.AttachFileAction.getFileCount.call(this);
 
         if (iAttachLength < 1) {
           MessageBox.alert(this.getBundleText('MSG_10023')); // 이의신청서를 첨부하세요.

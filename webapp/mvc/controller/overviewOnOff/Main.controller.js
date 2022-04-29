@@ -3,7 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -14,7 +13,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     AppUtils,
-    TableUtils,
     MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
@@ -400,7 +398,7 @@ sap.ui.define(
         const oTable = this.byId('overviewOnOffDetailTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28049'); // 입퇴사현황상세
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       /*****************************************************************

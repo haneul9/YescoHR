@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -13,7 +12,6 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
@@ -118,7 +116,7 @@ sap.ui.define(
       transformTreeData({ aTreeData }) {
         const mGroupedByParents = _.groupBy(aTreeData, 'Uppno');
         const mCatsById = _.keyBy(aTreeData, 'Itmno');
-        const mSumRow = TableUtils.generateSumRow({
+        const mSumRow = this.TableUtils.generateSumRow({
           aTableData: mGroupedByParents[''] ?? [],
           mSumField: { Uppno: '9999', Pyitx: this.getBundleText('LABEL_00172') }, // 합계
           vCalcProps: ['Betrg'],

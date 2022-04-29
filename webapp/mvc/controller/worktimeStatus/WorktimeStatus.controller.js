@@ -3,8 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -13,8 +11,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     AppUtils,
-    AttachFileAction,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -26,9 +22,6 @@ sap.ui.define(
       ORG_TABLE_ID: 'orgTable',
       PERNR_TABLE_ID: 'pernrTable',
       DIALOG_ORG_TABLE_ID: 'dialogOrgTable',
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -83,14 +76,14 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.ORG_TABLE_ID),
           aColIndices: [0, 1, 2],
           sTheadOrTbody: 'thead',
           bMultiLabel: true,
         });
 
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.PERNR_TABLE_ID),
           aColIndices: [0, 1, 2, 3, 4, 5],
           sTheadOrTbody: 'thead',
@@ -360,7 +353,7 @@ sap.ui.define(
             controller: this,
           }).then(function (oDialog) {
             oView.addDependent(oDialog);
-            TableUtils.adjustRowSpan({
+            this.TableUtils.adjustRowSpan({
               oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID),
               aColIndices: [0, 1, 2, 3, 4, 5],
               sTheadOrTbody: 'thead',
@@ -445,7 +438,7 @@ sap.ui.define(
       onPressExcelDownload(oTable) {
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_32001'); // {근로시간현황}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

@@ -4,7 +4,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -13,7 +12,6 @@ sap.ui.define(
     // prettier 방지용 주석
     MessageBox,
     AppUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -309,7 +307,7 @@ sap.ui.define(
           const mListPayload = oViewModel.getProperty('/history/search');
           const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'AppraisalHistory', mListPayload);
 
-          oViewModel.setProperty('/history/rowCount', TableUtils.count({ oTable: this.byId('apprHistoryTable'), aRowData }).rowCount);
+          oViewModel.setProperty('/history/rowCount', this.TableUtils.count({ oTable: this.byId('apprHistoryTable'), aRowData }).rowCount);
           oViewModel.setProperty(
             '/history/list',
             _.map(aRowData, (o) => _.omit(o, '__metadata'))

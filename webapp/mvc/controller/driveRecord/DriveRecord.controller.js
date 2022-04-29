@@ -3,9 +3,6 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/TableUtils',
-    'sap/ui/yesco/common/TextUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -15,9 +12,6 @@ sap.ui.define(
     // prettier 방지용 주석
     Fragment,
     AppUtils,
-    AttachFileAction,
-    TableUtils,
-    TextUtils,
     Client,
     ServiceNames,
     MessageBox,
@@ -27,9 +21,6 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.driveRecord.DriveRecord', {
       DRIVE_TABLE_ID: 'driveTable',
-
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
 
       initializeModel() {
         return {
@@ -71,7 +62,7 @@ sap.ui.define(
           return;
         }
 
-        return `${TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
+        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
       },
 
       // 주행거리
@@ -84,9 +75,9 @@ sap.ui.define(
           const sReVal = value.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          value = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          value = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          value = TextUtils.toCurrency(value.slice(0, 11));
+          value = this.TextUtils.toCurrency(value.slice(0, 11));
         }
 
         return value;
@@ -106,9 +97,9 @@ sap.ui.define(
           const sReVal = sValue.replace(/['.']{3}/g, '.');
           const iIndex = sReVal.indexOf('.');
 
-          sValue = TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
+          sValue = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
         } else {
-          sValue = TextUtils.toCurrency(sValue.slice(0, 11));
+          sValue = this.TextUtils.toCurrency(sValue.slice(0, 11));
         }
 
         // oEvent.getSource().setMaxLength(6);
@@ -131,7 +122,7 @@ sap.ui.define(
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
@@ -164,7 +155,7 @@ sap.ui.define(
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
@@ -209,7 +200,7 @@ sap.ui.define(
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
-            ...TableUtils.count({ oTable, aRowData: aTableList }),
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
             visibleStatus: 'X',
             Title: this.getBundleText('LABEL_34005'), // 운행기록
           });
@@ -390,7 +381,7 @@ sap.ui.define(
         const oTable = this.byId(this.DRIVE_TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_34001'); // {차량운행기록부}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
     });
   }

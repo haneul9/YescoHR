@@ -3,26 +3,21 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     AppUtils,
-    DateUtils,
     Client,
     ServiceNames,
-    TableUtils,
     BaseController
   ) => {
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.excavation.List', {
-      TableUtils: TableUtils,
       TABLE_ID: 'excavationTable',
 
       sRouteName: '',
@@ -77,7 +72,7 @@ sap.ui.define(
       },
 
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
           aColIndices: [0, 1, 2, 3, 12, 13],
           sTheadOrTbody: 'thead',
@@ -98,7 +93,7 @@ sap.ui.define(
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [aResultSummary, aRowData] = await Promise.all([
             fCurriedGetEntitySet('DrillSummary', { Pernr: sPernr }), //
-            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
+            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg), Apend: this.DateUtils.parse(oSearchConditions.Apend) }),
           ]);
 
           oViewModel.setProperty('/summary', { ...mSummary, ...aResultSummary[0] });
@@ -125,7 +120,7 @@ sap.ui.define(
           const sPernr = this.getAppointeeProperty('Pernr');
           const [aResultSummary, aRowData] = await Promise.all([
             fCurriedGetEntitySet('DrillSummary', { Pernr: sPernr }), //
-            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: DateUtils.parse(oSearchConditions.Apbeg), Apend: DateUtils.parse(oSearchConditions.Apend) }),
+            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg), Apend: this.DateUtils.parse(oSearchConditions.Apend) }),
           ]);
 
           oViewModel.setProperty('/summary', { ...mSummary, ...aResultSummary[0] });
@@ -144,7 +139,7 @@ sap.ui.define(
         const oListInfo = oViewModel.getProperty('/listInfo');
 
         oViewModel.setProperty('/list', [...aRowData]);
-        oViewModel.setProperty('/listInfo', { ...oListInfo, ...TableUtils.count({ oTable, aRowData }) });
+        oViewModel.setProperty('/listInfo', { ...oListInfo, ...this.TableUtils.count({ oTable, aRowData }) });
       },
 
       /*****************************************************************
@@ -159,7 +154,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await Client.getEntitySet(oModel, 'DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: DateUtils.parse(mSearchConditions.Apbeg), Apend: DateUtils.parse(mSearchConditions.Apend) });
+          const aRowData = await Client.getEntitySet(oModel, 'DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(mSearchConditions.Apbeg), Apend: this.DateUtils.parse(mSearchConditions.Apend) });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -210,7 +205,7 @@ sap.ui.define(
         const oTable = this.byId('summaryDialogTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       async onChangeDialogSearch() {
@@ -243,7 +238,7 @@ sap.ui.define(
         const oTable = this.byId(this.TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11002'); // {통합굴착야간근무변경신청}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {

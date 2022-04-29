@@ -6,9 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -19,9 +17,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -29,9 +25,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.WorkTimeDetail', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           previousName: '',
@@ -41,6 +34,16 @@ sap.ui.define(
           employees: [],
           DeletedRows: [],
           CauseType: [],
+          WorkTimeList: [
+            { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') },
+            { Zcode: 'Y', Ztext: 'Y' },
+            { Zcode: 'N', Ztext: 'N' },
+          ],
+          WorkTimeList2: [
+            { Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') },
+            { Zcode: 'Y', Ztext: this.getBundleText('LABEL_27019') },
+            { Zcode: 'N', Ztext: this.getBundleText('LABEL_27020') },
+          ],
           detail: {
             listMode: 'MultiToggle', // None
             list: [],
@@ -203,6 +206,10 @@ sap.ui.define(
               Beguz: '18:00',
               Abrst: '',
               Ottyp: 'ALL',
+              Dtype: 'ALL',
+              Nxtwk: 'ALL',
+              bType: false,
+              bWork: false,
             });
 
             aList.push({
@@ -362,6 +369,11 @@ sap.ui.define(
               e.Abrst = mDialogData.Abrst;
               e.Ottyp = mDialogData.Ottyp;
               e.Ottyptx = mDialogData.Ottyptx;
+              e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype;
+              e.Nxtwktx = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
+              e.Nxtwk = mDialogData.Nxtwk;
+              e.Gaptm = mDialogData.Gaptm;
+              e.Nxtoff = mDialogData.Nxtoff;
               e.Atrsn = mDialogData.Atrsn;
             })
             .value(),
@@ -429,8 +441,14 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
+        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 근무일
@@ -444,8 +462,14 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
+        oDetailModel.setProperty('/DialogData/bType', !oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 초과근무시간
@@ -578,8 +602,8 @@ sap.ui.define(
                       AppUtils.setAppBusy(true);
 
                       // FileUpload
-                      if (!!AttachFileAction.getFileCount.call(this)) {
-                        await AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
+                      if (!!this.AttachFileAction.getFileCount.call(this)) {
+                        await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
                       }
 
                       oSendObject.Prcty = 'C';
@@ -603,8 +627,8 @@ sap.ui.define(
                 });
               } else {
                 // FileUpload
-                if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
+                if (!!this.AttachFileAction.getFileCount.call(this)) {
+                  await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
                 }
 
                 oSendObject.Prcty = 'C';
@@ -637,7 +661,7 @@ sap.ui.define(
         const [aDetailList] = oDetailModel.getProperty('/detail/list');
         const sAppno = _.isEmpty(aDetailList) ? '' : aDetailList.Appno;
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: oDetailModel.getProperty('/Fixed'),
           Type: this.getApprovalType(),
           Appno: sAppno,

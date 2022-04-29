@@ -5,9 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -17,9 +15,7 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
     ComboEntry,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -27,9 +23,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.workTime.mobile.WorkTimeDetail', {
-      AttachFileAction: AttachFileAction,
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           Fixed: true,
@@ -424,8 +417,8 @@ sap.ui.define(
                       AppUtils.setAppBusy(true);
 
                       // FileUpload
-                      if (!!AttachFileAction.getFileCount.call(this)) {
-                        await AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
+                      if (!!this.AttachFileAction.getFileCount.call(this)) {
+                        await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
                       }
 
                       oSendObject.Prcty = 'C';
@@ -449,8 +442,8 @@ sap.ui.define(
                 });
               } else {
                 // FileUpload
-                if (!!AttachFileAction.getFileCount.call(this)) {
-                  await AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
+                if (!!this.AttachFileAction.getFileCount.call(this)) {
+                  await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
                 }
 
                 oSendObject.Prcty = 'C';
@@ -483,7 +476,7 @@ sap.ui.define(
         const [aDetailList] = oDetailModel.getProperty('/detail/list');
         const sAppno = _.isEmpty(aDetailList) ? '' : aDetailList.Appno;
 
-        AttachFileAction.setAttachFile(this, {
+        this.AttachFileAction.setAttachFile(this, {
           Editable: oDetailModel.getProperty('/Fixed'),
           Type: this.getApprovalType(),
           Appno: sAppno,

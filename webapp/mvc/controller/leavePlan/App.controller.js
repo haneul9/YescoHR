@@ -5,8 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/AttachFileAction',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -18,8 +16,6 @@ sap.ui.define(
     MessageBox,
     Appno,
     AppUtils,
-    AttachFileAction,
-    DateUtils,
     Client,
     ServiceNames,
     UI5Error,
@@ -231,7 +227,7 @@ sap.ui.define(
 
           if (!oSignature.isDraw()) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
 
-          await AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}.png`);
+          await this.AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}.png`);
         } catch (oError) {
           throw oError;
         }
@@ -253,7 +249,7 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             AnnualLeaveNav: _.chain(aPlans)
               .reject({ awart: '' })
-              .map((o) => ({ Seqno: '1', Pernr: sPernr, Plnyy: sYear, Tmdat: DateUtils.parse(o.day), Awart: o.awart }))
+              .map((o) => ({ Seqno: '1', Pernr: sPernr, Plnyy: sYear, Tmdat: this.DateUtils.parse(o.day), Awart: o.awart }))
               .value(),
           });
 

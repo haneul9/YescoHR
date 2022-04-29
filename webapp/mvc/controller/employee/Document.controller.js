@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/table/Table',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -16,7 +15,6 @@ sap.ui.define(
     Table,
     AppUtils,
     Client,
-    DateUtils,
     ComboEntry,
     ServiceNames,
     BaseController
@@ -189,7 +187,7 @@ sap.ui.define(
           ]);
 
           // Milestone set
-          oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: DateUtils.format(o.Datum) })) || _.noop());
+          oViewModel.setProperty('/employee/header/timeline', _.map(aMilestoneReturnData, (o) => ({ ...o, Datum: this.DateUtils.format(o.Datum) })) || _.noop());
 
           // Dialog Combo entry set
           oViewModel.setProperty('/employee/dialog/countryList', aCountryList);

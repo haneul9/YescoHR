@@ -6,8 +6,6 @@ sap.ui.define(
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/DateUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -18,15 +16,11 @@ sap.ui.define(
     Filter,
     FilterOperator,
     JSONModel,
-    DateUtils,
-    TableUtils,
     MessageBox,
     BaseController
   ) => {
     'use strict';
     return BaseController.extend('sap.ui.yesco.mvc.controller.zample.Components', {
-      DateUtils,
-
       /* =========================================================== */
       /* lifecycle methods                                           */
       /* =========================================================== */
@@ -49,7 +43,7 @@ sap.ui.define(
 
         const oTable = this.byId('groupTable');
         if (oTable) {
-          TableUtils.adjustRowSpan({
+          this.TableUtils.adjustRowSpan({
             oTable,
             aColIndices: [0, 1, 2, 3, 4, 5],
             sTheadOrTbody: 'thead',
@@ -68,7 +62,7 @@ sap.ui.define(
         const oTable = this.byId('comp-table-001');
         const sFileName = this.getBundleText('LABEL_00282', 'Component001Table');
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       summaryColspan() {

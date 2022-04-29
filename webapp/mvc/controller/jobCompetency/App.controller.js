@@ -3,7 +3,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -11,7 +10,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    TableUtils,
     Client,
     ServiceNames,
     BaseController
@@ -19,8 +17,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.jobCompetency.App', {
-      TableUtils: TableUtils,
-
       initializeModel() {
         return {
           menid: this.getCurrentMenuId(),
@@ -100,12 +96,12 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
 
-          TableUtils.adjustRowSpan({
+          this.TableUtils.adjustRowSpan({
             oTable: this.byId('defineContent2Table'),
             aColIndices: [0, 1, 2, 3, 4, 5, 6],
             sTheadOrTbody: 'thead',
           });
-          TableUtils.adjustRowSpan({
+          this.TableUtils.adjustRowSpan({
             oTable: this.byId('defineContent2Table'),
             aColIndices: [0, 1, 2],
             sTheadOrTbody: 'tbody',

@@ -2,7 +2,6 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/nightduty/SummaryBoxHandler',
     'sap/ui/yesco/mvc/controller/nightduty/SearchBoxHandler',
@@ -10,7 +9,6 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     AppUtils,
-    TableUtils,
     BaseController,
     SummaryBoxHandler,
     SearchBoxHandler
@@ -18,8 +16,6 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.nightduty.RequestList', {
-      TableUtils: TableUtils,
-
       sRequestListTableId: 'requestListTable',
       oSummaryBoxHandler: null,
       oSearchBoxHandler: null,
@@ -27,7 +23,7 @@ sap.ui.define(
       sRouteName: '',
 
       onBeforeShow() {
-        TableUtils.adjustRowSpan({
+        this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.sRequestListTableId),
           aColIndices: [0, 1, 2, 3, 4, 5, 14, 15],
           sTheadOrTbody: 'thead',
@@ -70,7 +66,7 @@ sap.ui.define(
         const oTable = this.byId(this.sRequestListTableId);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_06001'); // {당직변경신청}_목록
 
-        TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({ oTable, sFileName });
       },
 
       onSelectRow(oEvent) {
