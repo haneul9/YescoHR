@@ -50,25 +50,24 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const oModel = this.getModel(ServiceNames.COMMON);
           const mAppointee = this.getAppointeeData();
-          const mPayLoad = {
+          let aOrgList = [];
+          let oModel = {};
+          let mPayLoad = {
             Pernr: mAppointee.Pernr,
-            Werks: mAppointee.Werks,
           };
 
-          const aOrgList = await Client.getEntitySet(oModel, 'DashboardOrgList', mPayLoad);
+          if (this.isHass()) {
+            oModel = this.getModel(ServiceNames.COMMON);
+
+            aOrgList = await Client.getEntitySet(oModel, 'DashboardOrgList', _.set(mPayLoad, 'Werks', mAppointee.Werks));
+          } else {
+            oModel = this.getModel(ServiceNames.WORKTIME);
+
+            aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', mPayLoad);
+          }
 
           oViewModel.setProperty('/OrgList', aOrgList);
-          // const oModel = this.getModel(ServiceNames.WORKTIME);
-          // const mAppointee = this.getAppointeeData();
-          // const mPayLoad = {
-          //   Pernr: mAppointee.Pernr,
-          //   Actty: this.isHass() ? 'H' : 'M',
-          //   Werks: mAppointee.Werks,
-          // };
-
-          // const aOrgList = await Client.getEntitySet(oModel, 'MssOrgList', mPayLoad);
 
           // 나의 근무일정
           const [mMyCom] = await this.getMySchedule();

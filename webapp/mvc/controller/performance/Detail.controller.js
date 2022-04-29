@@ -69,6 +69,27 @@ sap.ui.define(
           listInfo: {},
           tab: { selectedKey: Constants.TAB.GOAL },
           appointee: {},
+          jobDiagnosis: {
+            // 진단평가 팝업
+            codeList1: [],
+            codeList2: [],
+            deep: [
+              {
+                spanCount: 1,
+                bTitle: true,
+                bSubTitle: true,
+                Appgb: '',
+                Appgbtx: '',
+                Zbigo: '',
+                Zcheck: '',
+                Zcode: '',
+                Zzjaitm: '',
+                Zzjaitmtx: '',
+                Zzjarst: '',
+                Zzjarsttx: '',
+              },
+            ],
+          },
           stage: {
             headers: [],
             rows: [],
@@ -615,21 +636,72 @@ sap.ui.define(
       },
 
       // 직무진단
-      onPressDiagnosisButton() {
+      async onPressDiagnosisButton() {
         MessageBox.alert('Not ready yet.');
-        // const oView = this.getView();
+        // const oViewModel = this.getViewModel();
 
-        // if (!this.pExamDialog) {
-        //   this.pExamDialog = Fragment.load({
-        //     id: oView.getId(),
-        //     name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-        //     controller: this,
-        //   }).then((oDialog) => {
-        //     oView.addDependent(oDialog);
-        //     return oDialog;
-        //   });
+        // try {
+        //   oViewModel.setProperty('/busy', true);
+
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepData = _.chain(aDeep.JobDiagnosisItemSet.results)
+        //     .groupBy('Appgbtx')
+        //     .toPairs()
+        //     .map((e) => {
+        //       return [{ label: e[0], bTitle: false, bSubTitle: true, spanCount: `span ${_.toString(_.size(e[1]))}` }, ...e[1]];
+        //     })
+        //     .flatten()
+        //     .value();
+
+        //   oViewModel.setProperty('/jobDiagnosis/deep', [
+        //     // prettier
+        //     { label: this.getBundleText('LABEL_00147'), bTitle: true, bSubTitle: false },
+        //     { label: this.getBundleText('LABEL_10103'), bTitle: true, bSubTitle: false },
+        //     { label: this.getBundleText('LABEL_10104'), bTitle: true, bSubTitle: false },
+        //     { label: this.getBundleText('LABEL_10105'), bTitle: true, bSubTitle: false },
+        //     ...aDeepData,
+        //   ]);
+        //   debugger;
+
+        //   if (!this.pExamDialog) {
+        //     this.pExamDialog = Fragment.load({
+        //       id: oView.getId(),
+        //       name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //       controller: this,
+        //     }).then((oDialog) => {
+        //       oView.addDependent(oDialog);
+        //       return oDialog;
+        //     });
+        //   }
+        //   this.pExamDialog.then((oDialog) => oDialog.open());
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
         // }
-        // this.pExamDialog.then((oDialog) => oDialog.open());
+      },
+
+      // 직무진단 조회
+      getJobDiagnosis() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return Client.deep(oModel, 'JobDiagnosis', {
+          Mode: 'A',
+          ...this.getViewModel().getProperty('/param'),
+          JobDiagnosisItemSet: [],
+        });
+      },
+
+      // 직무진단 Code
+      getJobDiagnosisCode1() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+
+        return Client.getEntitySet(oModel, 'JobDiagnosisCode1', {
+          Mode: 'A',
+          ...this.getViewModel().getProperty('/param'),
+          JobDiagnosisItemSet: [],
+        });
       },
 
       onPressRejectViewButton() {
