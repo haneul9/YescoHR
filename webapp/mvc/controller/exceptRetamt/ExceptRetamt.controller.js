@@ -33,8 +33,7 @@ sap.ui.define(
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
 
-        // if (AppUtils.isPRD() && !this.serviceAvailable()) return;
-        if (!this.serviceAvailable()) return;
+        if (AppUtils.isPRD() && !this.serviceAvailable()) return;
 
         try {
           oViewModel.setProperty('/busy', true);
