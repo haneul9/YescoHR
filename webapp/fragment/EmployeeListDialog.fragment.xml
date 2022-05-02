@@ -57,7 +57,11 @@
             <Column width="80px" filterProperty="Ename" sortProperty="Ename">
               <m:Label text="{i18n>LABEL_00210}"/>
               <template>
-                <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressEmployeeRow" />
+                <m:Link text="{Ename}" subtle="{= ${ProfileView} !== 'O' }" enabled="{= ${ProfileView} === 'O' }" press=".onPressEmployeeRow" class="showLine" width="100%" textAlign="Center">
+                  <m:customData>
+                    <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
+                  </m:customData>
+                </m:Link>
               </template>
             </Column>
             <Column width="80px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">

@@ -51,6 +51,8 @@ sap.ui.define(
       },
 
       async init() {
+        this.setEmployeeProfileNavInfo();
+
         const oView = this.oController.getView();
 
         this.oDialog = await Fragment.load({
