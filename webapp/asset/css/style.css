@@ -285,7 +285,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
-.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:-0.5px -0.5px 2px #000}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:0 0 10px #a0c7ec}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
 .sapMLnkDsbl[data-profile-view=""] {font-weight:500; color:#000; opacity:1; cursor:text}
