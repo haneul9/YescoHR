@@ -22,8 +22,14 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.common.EmployeeListDialogHandler', {
-      oController: null,
-      oDialog: null,
+      mService: {
+        H: 'PA',
+        T: 'WORKTIME',
+      },
+      mEntitySet: {
+        H: 'HeadCountDetail',
+        T: 'TimeOverviewDetail1',
+      },
 
       constructor: function (oController) {
         this.oController = oController;
@@ -58,6 +64,13 @@ sap.ui.define(
         oView.addDependent(this.oDialog);
       },
 
+      async setEmployeeProfileNavInfo() {
+        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
+        await oMenuModel.getPromise();
+
+        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+      },
+
       async openDialog(oParam) {
         try {
           setTimeout(() => {
@@ -65,32 +78,34 @@ sap.ui.define(
             this.oDialog.open();
           });
 
-          let mPayload;
+          let mPayload, sService, sEntitySet;
           if (oParam instanceof sap.ui.base.Event) {
             // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            const oSessionProperty = this.oController.getSessionModel().getData();
             const mEventSourceData = oParam.getSource().data();
-            mPayload = {
-              Zyear: moment().year(),
-              Werks: oSessionProperty.Werks,
-              Orgeh: oSessionProperty.Orgeh,
-              Headty: mEventSourceData.Headty,
-              Discod: mEventSourceData.Discod,
-            };
+
+            sService = this.mService[mEventSourceData.OData];
+            sEntitySet = this.mEntitySet[mEventSourceData.OData];
+            mPayload = this.getPayload(mEventSourceData);
           } else {
             // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
-            delete oParam.OData;
+            sService = this.mService[oParam.OData];
+            sEntitySet = this.mEntitySet[oParam.OData];
 
+            delete oParam.OData;
             mPayload = oParam;
           }
 
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.PA), 'HeadCountDetail', mPayload);
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sService]), sEntitySet, mPayload);
 
           this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
           this.oDialogModel.setProperty('/dialog/totalCount', _.size(aEmployees));
           this.oDialogModel.setProperty(
             '/dialog/list',
-            _.map(aEmployees, (o, i) => ({ Idx: ++i, ...o }))
+            _.map(aEmployees, (o, i) => ({
+              Idx: ++i,
+              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+              ...o,
+            }))
           );
         } catch (oError) {
           this.debug('EmployeeListDialogHandler > openDialog Error', oError);
@@ -103,6 +118,27 @@ sap.ui.define(
             this.oController.byId('overviewEmpDetailTable').setFirstVisibleRow();
           }
           this.setBusy(false);
+        }
+      },
+
+      getPayload(mEventSourceData) {
+        const mSessionProperty = this.oController.getSessionModel().getData();
+        if (mEventSourceData.OData === 'H') {
+          return {
+            Zyear: moment().year(),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
+        } else if (mEventSourceData.OData === 'T') {
+          return {
+            Datum: moment().startOf('date').add(9, 'hours'),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
         }
       },
 
@@ -124,6 +160,10 @@ sap.ui.define(
       },
 
       onPressEmployeeRow(oEvent) {
+        if (!this.bHasProfileMenuAuth) {
+          return;
+        }
+
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
         const sUsrty = this.oController.isMss() ? 'M' : this.oController.isHass() ? 'H' : '';

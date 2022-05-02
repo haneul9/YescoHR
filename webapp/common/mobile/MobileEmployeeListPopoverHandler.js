@@ -142,7 +142,16 @@ sap.ui.define(
 
           this.oPopoverModel.setProperty(
             '/popover/employees',
-            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({ Photo: Photo || sUnknownAvatarImageURL, Ename, Pernr, Zzjikcht: Zzjikgbtx, Zzjikgbt: Zzjikchtx, Fulln: Orgtx, IconMode: this.sIconMode, ProfileView: this.bHasProfileMenuAuth ? 'O' : '' }))
+            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
+              Photo: Photo || sUnknownAvatarImageURL,
+              Ename,
+              Pernr,
+              Zzjikcht: Zzjikgbtx,
+              Zzjikgbt: Zzjikchtx,
+              Fulln: Orgtx,
+              IconMode: this.sIconMode,
+              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            }))
           );
         } catch (oError) {
           AppUtils.debug('MobileEmployeeListPopoverHandler > openPopover Error', oError);
