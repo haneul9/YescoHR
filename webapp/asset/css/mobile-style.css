@@ -102,6 +102,8 @@ html.sap-ios ::-webkit-scrollbar {width:0 !important}
 .sapMPopover.sapMPopoverWithoutBar.team-member-count-popover .sapMPopoverCont {padding:0}
 .sapMPopover .sapMPopoverScroll {overflow-y:auto; height:100%}
 
+.sapMPopover.status-popover {border-radius:.25rem}
+.sapMPopover.status-popover .sapMPopoverScroll {overflow-y:visible}
 .sapMPopover .status-wrap {margin-right:0}
 .sapMPopover .status-wrap .sapMFlexItem {margin-bottom:6px}
 .sapMPopover .status-wrap .sapMFlexItem:last-child {margin-bottom:0px}
