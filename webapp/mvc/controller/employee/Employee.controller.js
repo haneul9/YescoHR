@@ -418,10 +418,7 @@ sap.ui.define(
               let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
-                for (let i = 1; i <= mSubMenu.header.length; i++) {
-                  let sKey = `Value${_.padStart(i, 2, '0')}`;
-                  mSubMenu.data.push(o[sKey]);
-                }
+                _.times(mSubMenu.header.length, (d) => mSubMenu.data.push(o[`Value${_.padStart(++d, 2, '0')}`]));
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.data.push(o);
               }
@@ -465,7 +462,7 @@ sap.ui.define(
 
           /**
            * OMenu.type: '5'  Table
-           *      - 주소 테이블의 경우 CRUD가 추가된다.
+           *      - 주소|학력|자격|어학 테이블의 경우 CRUD가 추가된다.
            * OMenu.type: '6'  Grid
            */
           Object.keys(aSubMenuContents).forEach((key) => {
@@ -523,7 +520,11 @@ sap.ui.define(
 
             oSubVBox.addItem(oSubHBox);
 
-            // Content (Table|Grid)
+            /**
+             * Build Contents
+             *  1. Table - 5
+             *  2. Grid - 6
+             */
             if (mMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
               const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
@@ -540,9 +541,7 @@ sap.ui.define(
               aVisibleHeaders.forEach((head, index) => {
                 const oColumn = new sap.ui.table.Column({ width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%` });
 
-                oColumn.setLabel(new sap.m.Label({ text: head.Header }));
-                oColumn.setTemplate(new sap.m.Text({ width: '100%', textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align, text: { path: `Value${_.padStart(index + 1, 2, '0')}` } }));
-                oTable.addColumn(oColumn);
+                oTable.addColumn(oColumn.setLabel(new sap.m.Label({ text: head.Header })).setTemplate(new sap.m.Text({ width: '100%', textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align, text: { path: `Value${_.padStart(index + 1, 2, '0')}` } })));
               });
 
               oSubVBox.addItem(oTable);
@@ -550,13 +549,11 @@ sap.ui.define(
               const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '1px 0px' }).addStyleClass('form-grid');
 
               mMenu.header.forEach((head, index) => {
-                oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
-                oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
+                oCSSGrid.addItem(new sap.m.Label({ text: head.Header })).addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
               });
 
               if (mMenu.header.length % 2 === 1) {
-                oCSSGrid.addItem(new sap.m.Label({ text: '' }));
-                oCSSGrid.addItem(new sap.m.Input({ value: '', editable: false }));
+                oCSSGrid.addItem(new sap.m.Label({ text: '' })).addItem(new sap.m.Input({ value: '', editable: false }));
               }
 
               oSubVBox.addItem(oCSSGrid);
@@ -574,59 +571,54 @@ sap.ui.define(
 
         AppUtils.setAppBusy(true);
 
-        setTimeout(() => {
+        setTimeout(async () => {
           if (!this._pInputFormDialog) {
-            this._pInputFormDialog = Fragment.load({
+            this._pInputFormDialog = await Fragment.load({
               id: oView.getId(),
               name: 'sap.ui.yesco.mvc.view.employee.fragment.InputFormDialog',
               controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
             });
+
+            oView.addDependent(this._pInputFormDialog);
           }
-          this._pInputFormDialog.then(function (oDialog) {
-            AppUtils.setAppBusy(false);
-            oDialog.open();
-          });
+
+          this._pInputFormDialog.open();
+          AppUtils.setAppBusy(false);
         }, 100);
       },
 
-      openSelectDialog({ path, codeKey, valueKey, fragmentName }) {
+      async openSelectDialog({ path, codeKey, valueKey, fragmentName }) {
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const aItems = oViewModel.getProperty(`/employee/dialog/${path}`);
         const sInputCode = oViewModel.getProperty(`/employee/dialog/form/${codeKey}`);
+        let oSelectDialog = this[`_p${fragmentName}`];
 
         AppUtils.setAppBusy(true);
 
-        if (!this[`_p${fragmentName}`]) {
-          this[`_p${fragmentName}`] = Fragment.load({
+        if (!oSelectDialog) {
+          oSelectDialog = await Fragment.load({
             id: oView.getId(),
             name: `sap.ui.yesco.mvc.view.employee.fragment.form.${fragmentName}`,
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          oView.addDependent(oSelectDialog);
         }
-        this[`_p${fragmentName}`].then(async (oDialog) => {
-          if (sInputCode) {
-            oDialog.getBinding('items').filter(new Filter(codeKey, FilterOperator.EQ, sInputCode));
-          }
 
-          oViewModel.setProperty(
-            `/employee/dialog/${path}`,
-            aItems.map((o) => ({
-              ...o,
-              selected: o[codeKey] === sInputCode,
-            }))
-          );
+        if (sInputCode) oSelectDialog.getBinding('items').filter(new Filter(codeKey, FilterOperator.EQ, sInputCode));
 
-          oViewModel.setProperty('/employee/dialog/selectedHelpDialog', { codeKey, valueKey });
-          AppUtils.setAppBusy(false);
-          oDialog.open();
-        });
+        oViewModel.setProperty('/employee/dialog/selectedHelpDialog', { codeKey, valueKey });
+        oViewModel.setProperty(
+          `/employee/dialog/${path}`,
+          aItems.map((o) => ({
+            ...o,
+            selected: o[codeKey] === sInputCode,
+          }))
+        );
+
+        oSelectDialog.open();
+        AppUtils.setAppBusy(false);
       },
 
       async refreshTableContents({ oViewModel, sMenuKey }) {
@@ -664,15 +656,15 @@ sap.ui.define(
 
       transformTreeData({ aTreeData, sRootId }) {
         const sImageURL = this.getImageURL('icon_employee.svg');
-        aTreeData = _.map(aTreeData, (o) =>
+        const aConvertedTreeData = _.map(aTreeData, (o) =>
           _.chain(o)
             .omit(['Datum', '__metadata'])
             .set('ref', o.Otype === 'O' ? _.noop() : o.Xchif === 'X' ? sImageURL : sImageURL)
             .value()
         );
 
-        const mGroupedByParents = _.groupBy(aTreeData, 'ObjidUp');
-        const mCatsById = _.keyBy(aTreeData, 'Objid');
+        const mGroupedByParents = _.groupBy(aConvertedTreeData, 'ObjidUp');
+        const mCatsById = _.keyBy(aConvertedTreeData, 'Objid');
 
         _.each(_.omit(mGroupedByParents, sRootId), (children, parentId) => (mCatsById[parentId].nodes = children));
 
@@ -714,12 +706,7 @@ sap.ui.define(
         oSideBody.toggleStyleClass('expanded', !bPressed);
         oProfileBody.toggleStyleClass('expanded', bPressed);
 
-        setTimeout(
-          () => {
-            oViewModel.setProperty('/sideNavigation/isShow', !bPressed);
-          },
-          bPressed ? 100 : 200
-        );
+        setTimeout(() => oViewModel.setProperty('/sideNavigation/isShow', !bPressed), bPressed ? 100 : 200);
       },
 
       async onSelectSideTab(oEvent) {
@@ -1124,7 +1111,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/employee/dialog/activeButton', true);
           this.openInputFormDialog(oEvent);
-          oTable.clearSelection();
+          // oTable.clearSelection();
         } catch (oError) {
           this.debug('Controller > Employee > onPressModifyTable Error', oError);
 
