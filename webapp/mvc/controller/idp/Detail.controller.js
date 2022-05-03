@@ -153,10 +153,14 @@ sap.ui.define(
           oViewModel.setProperty('/entry/levels', new ComboEntry({ codeKey: 'ValueEid', valueKey: 'ValueText', aEntries: aGrades }) ?? []);
 
           // 직무역량
+          // oViewModel.setProperty(
+          //   '/entry/competency',
+          //   _.map(aQlist, (o) => _.omit(o, '__metadata'))
+          // );
           oViewModel.setProperty(
             '/entry/competency',
-            _.map(aQlist, (o) => _.omit(o, '__metadata'))
-          );
+            _.map(this.oDataChangeTree(aQlist, 'CompTree'), (o) => _.omit(o, '__metadata'))
+          );          
 
           // 팀장의견
           oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
@@ -385,12 +389,21 @@ sap.ui.define(
           oView.addDependent(this.pCompetencyDialog);
         }
 
+        const oTree = this.byId("CompTree");
+
+        oTree.collapseAll();
+        oTree.expandToLevel(1);
+
         this.pCompetencyDialog.open();
+      },
+
+      onPressCompetencyHelpDialogClose() {
+        this.pCompetencyDialog.close();
       },
 
       onSearchDialogHelp(oEvent) {
         oEvent.getParameter('itemsBinding').filter([
-          new Filter('Stext', FilterOperator.Contains, oEvent.getParameter('value')), //
+          new Filter('Stext', FilterOperator.Contains, oEvent.getParameter('value')),
         ]);
       },
 
@@ -401,7 +414,14 @@ sap.ui.define(
 
         try {
           const aItems = oViewModel.getProperty('/goals/comp');
-          const mSelectedData = oEvent.getParameter('selectedItem').getBindingContext().getObject();
+          // const mSelectedData = oEvent.getParameter('selectedItem').getBindingContext().getObject();
+          const sPath = oEvent.getParameter('listItem').getBindingContext().getPath();
+          const mSelectedData = oViewModel.getProperty(sPath);
+          console.log(mSelectedData);
+
+          if (mSelectedData.Otype !== 'Q') {
+            return;
+          }
 
           if (_.some(aItems, (o) => _.isEqual(o.Zobjidq, mSelectedData.Zobjidq))) {
             throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_36001') }); // 이미 선택한 역량입니다.
@@ -412,32 +432,55 @@ sap.ui.define(
           const sType = oViewModel.getProperty('/type');
 
           // 저장
-          await Client.create(oModel, 'AppraisalIdpQlist', {
-            Prcty: 'A',
-            Werks: this.getAppointeeProperty('Werks'),
-            ..._.pick(mSelectedData, ['Zobjidqk', 'Zobjidq']),
-            ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
-          });
+          try{
+            const mManage = _.cloneDeep(oViewModel.getProperty('/manage'));
+            const mReject = _.cloneDeep(oViewModel.getProperty('/buttons/form'));
+            const aItem = _.cloneDeep(oViewModel.getProperty('/goals/comp'));
+  
+            await Client.deep(oModel, 'AppraisalIdpDoc', {
+              ...mParameter,
+              ...mManage,
+              ...mReject,
+              Menid: this.getCurrentMenuId(),
+              Prcty: 'T',
+              AppraisalIdpDocDetSet: aItem
+            });
+  
+          } catch {
+            this.debug('Controller > IDP Detail > onCloseDialogHelp > AppraisalIdpDoc Error', oError);
 
-          // 문서 재조회
-          const mDetailData = await Client.deep(oModel, 'AppraisalIdpDoc', {
-            ...mParameter,
-            Menid: this.getCurrentMenuId(),
-            Prcty: Constants.PROCESS_TYPE.DETAIL.code,
-            Zzappgb: sType,
-            AppraisalIdpDocDetSet: [],
-            AppraisalBottnsSet: [],
-            AppraisalScreenSet: [],
-          });
+            AppUtils.handleError(oError);
+          } finally {
+            await Client.create(oModel, 'AppraisalIdpQlist', {
+              Prcty: 'A',
+              Werks: this.getAppointeeProperty('Werks'),
+              ..._.pick(mSelectedData, ['Zobjidqk', 'Zobjidq']),
+              ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
+            });
+  
+            // 문서 재조회
+            const mDetailData = await Client.deep(oModel, 'AppraisalIdpDoc', {
+              ...mParameter,
+              Menid: this.getCurrentMenuId(),
+              Prcty: Constants.PROCESS_TYPE.DETAIL.code,
+              Zzappgb: sType,
+              AppraisalIdpDocDetSet: [],
+              AppraisalBottnsSet: [],
+              AppraisalScreenSet: [],
+            });
+  
+            // 팀장의견
+            oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
+  
+            // 직무역량
+            oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
+            oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
 
-          // 팀장의견
-          oViewModel.setProperty('/manage', { ..._.pick({ ...mDetailData }, Constants.MANAGE_PROPERTIES) });
-
-          // 직무역량
-          oViewModel.setProperty(`/goals/comp`, _.map(mDetailData.AppraisalIdpDocDetSet.results, this.initializeItem.bind(this)) ?? []);
-          oViewModel.setProperty('/currentItemsLength', _.size(mDetailData.AppraisalIdpDocDetSet.results));
+            this.onPressCompetencyHelpDialogClose();
+          }         
+          
         } catch (oError) {
-          this.debug('Controller > IDP Detail > onObjectMatched Error', oError);
+          this.debug('Controller > IDP Detail > onCloseDialogHelp Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -484,18 +527,18 @@ sap.ui.define(
 
             const oModel = this.getModel(ServiceNames.APPRAISAL);
             const mParameter = oViewModel.getProperty('/param');
-            const aCompetency = oViewModel.getProperty('/entry/competency');
+            // const aCompetency = oViewModel.getProperty('/entry/competency');
             const { sDeleteTargetNum } = oSource.data();
             const aGoalItems = oViewModel.getProperty(`/goals/comp`);
             const sElementQid = _.chain(aGoalItems).find({ OrderNo: sDeleteTargetNum }).get('ElementQid').value();
-            const sZobjidqk = _.chain(aCompetency).find({ Zobjidq: sElementQid }).get('Zobjidqk').value();
+            // const sZobjidqk = _.chain(aCompetency).find({ Zobjidq: sElementQid }).get('Zobjidqk').value();
 
             // 삭제
             await Client.remove(oModel, 'AppraisalIdpQlist', {
               Prcty: 'X',
               Werks: this.getAppointeeProperty('Werks'),
               Zobjidq: sElementQid,
-              Zobjidqk: sZobjidqk,
+              // Zobjidqk: sZobjidqk,
               ..._.pick(mParameter, ['Zzappid', 'Zzappty', 'Zdocid']),
             });
 
@@ -625,6 +668,20 @@ sap.ui.define(
 
       onPressSaveButton() {
         this.createProcess(Constants.PROCESS_TYPE.SAVE);
+      },
+
+       // oData Tree구조로 만듦
+      oDataChangeTree(aList = [], sTreeId) {
+        const aConvertedList = _.chain(aList)
+          .cloneDeep()
+          .map((o) => _.omit(o, '__metadata'))
+          .value();
+        const mGroupedByParents = _.groupBy(aConvertedList, 'Upobjid');
+        const mCatsById = _.keyBy(aConvertedList, 'Zobjidq');
+        
+        _.each(_.omit(mGroupedByParents, '00000000'), (Noteren, parentId) => _.set(mCatsById, [parentId, 'Noteren'], Noteren));
+
+        return mGroupedByParents['00000000'];
       },
     });
   }

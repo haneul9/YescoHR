@@ -40,10 +40,10 @@
 							<VBox>
 								<Text text="{/data/Dat05}" />
 							</VBox>
-							<Label text="{i18n>LABEL_33012}" />
+							<!-- <Label text="{i18n>LABEL_33012}" />
 							<HBox>
 								<Text text="{/data/Dat06}" />
-							</HBox>
+							</HBox> -->
 							<Label text="{i18n>LABEL_33013}" />
 							<HBox>
 								<ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />

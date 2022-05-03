@@ -203,7 +203,7 @@ sap.ui.define(
               if (this.bMobile) {
                 location.href = '/sap/public/bc/icf/logoff?from=logoff';
               } else {
-                window.open(this.getImageURL('logout.html'));
+                window.open(this.getStaticResourceURL('logout.html'));
                 window.close();
               }
             }

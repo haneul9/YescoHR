@@ -18,20 +18,18 @@
             <HBox>
                 <Text text="{/data/Dat02}" />
             </HBox>
-            <Label text="{i18n>LABEL_33011}" />
-            <VBox>
-                <Text text="{/data/Dat05}" />
-            </VBox>
-            <Label text="{i18n>LABEL_33012}" />
-            <HBox>
-                <Text text="{/data/Dat06}" />
-            </HBox>
             <Label text="{i18n>LABEL_33013}" />
             <HBox>
                 <ObjectStatus text="{/data/Dat07}" state="Indication05" />
             </HBox>
-            <HBox></HBox>
-            <HBox></HBox>
+            <Label text="{i18n>LABEL_33011}" />
+            <VBox>
+                <Text text="{/data/Dat05}" />
+            </VBox>
+            <!-- <Label text="{i18n>LABEL_33012}" />
+            <HBox>
+                <Text text="{/data/Dat06}" />
+            </HBox> -->
         </grid:CSSGrid>
     </VBox>
 </core:FragmentDefinition>

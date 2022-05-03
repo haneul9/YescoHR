@@ -106,8 +106,12 @@ sap.ui.define(
         return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       },
 
+      getStaticResourceURL(sResourcePath) {
+        return `/sap/public/bc/ui2/zui5_yescohr/${sResourcePath.replace(/^\/+/, '')}`;
+      },
+
       getImageURL(sImageName) {
-        return `/sap/public/bc/ui2/zui5_yescohr/images/${sImageName}`;
+        return this.getStaticResourceURL(`images/${sImageName}`);
       },
 
       getUnknownAvatarImageURL() {

@@ -13,7 +13,7 @@
         </VBox>
         <VBox class="contents">
             <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-            <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
+            <!-- <HBox id="InfoMegBox" justifyContent="SpaceBetween" class="vCardBox info-area" visible="{= !!${/InfoMessage} }">
                 <Panel id="InfoMegBoxPanel" width="auto" expandable="true" expanded="true">
                     <layoutData>
                         <FlexItemData growFactor="1"/>
@@ -32,7 +32,7 @@
                         </HBox>
                     </content>
                 </Panel>
-            </HBox>
+            </HBox> -->
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailForm" type="XML" />
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.exceptRetamt.fragment.DetailResult" type="XML" />
         </VBox>

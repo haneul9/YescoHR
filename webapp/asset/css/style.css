@@ -154,8 +154,6 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 [data-portlet-members-status="W"] {border-color:#222; background-color:transparent; color:#222}/* 근무중 */
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
-.portlet-p06 tspan {font-size:7px}
-.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
@@ -287,9 +285,10 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
-.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:1px 0 #000}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:0 0 10px #a0c7ec}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
+.sapMLnkDsbl[data-profile-view=""] {font-weight:500; color:#000; opacity:1; cursor:text}
 [data-profile-view="O"] .sapMImg,
 [data-profile-view="O"] .sapMLnk,
 [data-profile-view="O"] .sapMText {cursor:pointer}
@@ -650,6 +649,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableCtrlCnt {min-height:44px !important}
 .dialog-content-table .sapUiTableCtrlCnt,
 .dialog-content-table .sapUiTableCCnt {min-height:34px !important}
+.dialog-content-table .sapMLnk:not(.sapMLnkDsbl) {font-weight:500}
 .sapUiTableHeaderRow {background-color:#fbfcfd}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color:#f5f9fd; color:#222}
 .sapUiTable:not(.sapUiTableDragDrop) .sapUiTableHeaderCellActive:active {background-color:#e2ebf4; color:#222}
