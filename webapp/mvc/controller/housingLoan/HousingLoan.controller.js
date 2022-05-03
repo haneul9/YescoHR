@@ -5,7 +5,6 @@ sap.ui.define(
     'sap/ui/yesco/common/ComboEntry',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -14,7 +13,6 @@ sap.ui.define(
     ComboEntry,
     Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
