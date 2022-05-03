@@ -10,7 +10,8 @@
 				<custom:Breadcrumbs />
 				<HBox>
 					<Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/SAVE/Availability} === 'X' }" press=".onPressSaveButton" />
-					<Button text="{i18n>LABEL_10034}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/DIAGNOSIS/Availability} === 'X' }" press=".onPressDiagnosisButton" />
+					<!-- <Button text="{i18n>LABEL_10034}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/DIAGNOSIS/Availability} === 'X' }" press=".onPressDiagnosisButton" /> -->
+					<Button text="{i18n>LABEL_10034}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" press=".onPressDiagnosisButton" />
 					<Button text="{i18n>LABEL_00142}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
 					<Button text="{i18n>LABEL_10032}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/TOP_GOAL/Availability} === 'X' &amp;&amp; !!${/buttons/form/Zdocid2} }" press=".onPressTopGoal" />
 					<Button text="{i18n>LABEL_00175}" class="sapUiTinyMarginEnd" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' || ${/buttons/submit/COMPL_P/Availability} === 'X' }" press=".onPressSubmitButton" />

@@ -1,6 +1,31 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <SelectDialog contentHeight="50%" title="{i18n>LABEL_36019}" items="{ path: '/entry/competency'}" liveChange=".onSearchDialogHelp" search=".onSearchDialogHelp" confirm=".onCloseDialogHelp">
+    <!-- <SelectDialog contentHeight="50%" title="{i18n>LABEL_36019}" items="{ path: '/entry/competency'}" liveChange=".onSearchDialogHelp" search=".onSearchDialogHelp" confirm=".onCloseDialogHelp">
         <StandardListItem type="Active" title="{Stext}" description="{Zobjidq}" />
-    </SelectDialog>
+    </SelectDialog> -->
+    <Dialog
+        contentWidth="25%"
+        contentHeight="50%"
+        draggable="false"
+        horizontalScrolling="false"
+        resizable="false"
+        title="{i18n>LABEL_36019}"
+    >
+        <content>
+            <Tree id="CompTree" mode="SingleSelectMaster" items="{path: '/entry/competency'}" selectionChange=".onCloseDialogHelp">
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+            <CustomTreeItem>
+                <HBox>
+                    <Image visible="{= ${Otype} === 'Q' }" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tree_node02.svg" />
+                    <Text text="{Stext}"/>
+                </HBox>
+            </CustomTreeItem>
+            </Tree>
+        </content>
+        <endButton>
+            <Button text="{i18n>LABEL_00115}" press=".onPressCompetencyHelpDialogClose"/>
+        </endButton>
+    </Dialog>
 </core:FragmentDefinition>

@@ -30,6 +30,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.performance.Detail', {
+      JOB_PATH: '',
+
       getPreviousRouteName() {
         return _.chain(this.getRouter().getHashChanger().getHash()).split('/').dropRight(2).join('/').value();
       },
@@ -67,22 +69,8 @@ sap.ui.define(
           appointee: {},
           jobDiagnosis: {
             // 진단평가 팝업
-            codeList1: [],
-            codeList2: [],
-            deep: [
-              {
-                spanCount: 'span 1',
-                Appgb: '',
-                Appgbtx: '',
-                Zbigo: '',
-                Zcheck: '',
-                Zcode: '',
-                Zzjaitm: '',
-                Zzjaitmtx: '',
-                Zzjarst: '',
-                Zzjarsttx: '',
-              },
-            ],
+            list: [{ codeList: [] }],
+            rowCount: 1,
           },
           stage: {
             headers: [],
@@ -639,54 +627,126 @@ sap.ui.define(
 
         //   const oView = this.getView();
         //   const aDeep = await this.getJobDiagnosis();
-        //   const aDeepData = _.chain(aDeep.JobDiagnosisItemSet.results)
-        //     .groupBy('Appgbtx')
-        //     .toPairs()
-        //     .map((e) => {
-        //       const mSubTitle = { label: e[0], child: e[1], type: 'label', spanCount: `span ${_.toString(_.size(e[1]))}` };
-        //       const aList = [];
+        //   const aDeepList = aDeep.JobDiagnosisItemSet.results;
 
-        //       _.forEach(e[1], async (e1) => {
-        //         const aCode = await this.getJobDiagnosisCode1(e1.Zcode);
-        //         debugger;
-        //         aList.push(
-        //           // prettier
-        //           { subLabel: e1.Zzjaitmtx, type: 'subLabel' },
-        //           { value: e1.Zcode === '90' ? e1.Zzjarsttx : e1.Zzjarst, Zcode: e1.Zcode, type: 'value' },
-        //           { area: e1.Zbigo, type: 'area' }
-        //         );
-        //       });
+        //   await Promise.all(
+        //     _.forEach(aDeepList, async (e, i) => {
+        //       const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
 
-        //       return [mSubTitle, ...aList];
+        //       oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, aCodeList);
         //     })
-        //     .flatten()
-        //     .value();
+        //   );
 
-        //   oViewModel.setProperty('/jobDiagnosis/deep', [
-        //     // prettier
-        //     { title: this.getBundleText('LABEL_00147'), type: 'title' },
-        //     { title: this.getBundleText('LABEL_10103'), type: 'title' },
-        //     { title: this.getBundleText('LABEL_10104'), type: 'title' },
-        //     { title: this.getBundleText('LABEL_10105'), type: 'title' },
-        //     ...aDeepData,
-        //   ]);
+        //   oViewModel.setProperty('/jobDiagnosis/list', aDeepList);
+        //   oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
+        //   this.tableBodyRowSpan(aCodeList);
 
-        //   if (!this.pExamDialog) {
-        //     this.pExamDialog = Fragment.load({
-        //       id: oView.getId(),
-        //       name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-        //       controller: this,
-        //     }).then((oDialog) => {
-        //       oView.addDependent(oDialog);
-        //       return oDialog;
-        //     });
-        //   }
-        //   this.pExamDialog.then((oDialog) => oDialog.open());
+        //   setTimeout(() => {
+        //     if (!this.pExamDialog) {
+        //       this.pExamDialog = Fragment.load({
+        //         id: oView.getId(),
+        //         name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //         controller: this,
+        //       }).then((oDialog) => {
+        //         oView.addDependent(oDialog);
+        //         return oDialog;
+        //       });
+        //     }
+        //     this.pExamDialog.then((oDialog) => oDialog.open());
+        //   }, 300);
         // } catch (oError) {
         //   AppUtils.handleError(oError);
         // } finally {
         //   oViewModel.setProperty('/busy', false);
         // }
+      },
+
+      // table rowSpan
+      tableBodyRowSpan(aCodeList = []) {
+        const oTable = this.byId('jobExamTable');
+        const aSpanGroup = _.chain(aCodeList).groupBy('Appgb').values().value();
+
+        oTable.addEventDelegate({
+          onAfterRendering() {
+            _.forEach(aSpanGroup, (e, i) => {
+              $(`#${`${$(`#${oTable.getId()} tbody>tr`)[i + 1].id}-col0`}`).attr('rowSpan', _.size(e));
+
+              _.forEach(e, (e1, i) => {
+                $(`#${`${$(`#${oTable.getId()} tbody>tr`)[i + 2].id}-col0`}`).remove();
+              });
+            });
+          },
+        });
+      },
+
+      // 직무진단 Code 90일 경우 팝업호출
+      onJobSearch(oEvent) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          if (!this.pCodeDialog) {
+            const oView = this.getView();
+
+            this.pCodeDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.performance.fragment.JobCodeDialog',
+              controller: this,
+            }).then((oDialog) => {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+
+          const sPath = oEvent.getSource().getBindingContext().getPath();
+
+          this.JOB_PATH = sPath;
+          oViewModel.setProperty('/jobDiagnosis/list/codeList', this.oDataChangeTree(oViewModel.getProperty(`${sPath}/codeList`)));
+          this.pCodeDialog.then((oDialog) => oDialog.open());
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      // TreeSelect
+      async onSelectTree(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sPath = oEvent.getSource().getSelectedContexts()[0].getPath();
+        const mSelectedTree = oViewModel.getProperty(sPath);
+
+        if (mSelectedTree.Otype !== 'C') {
+          return;
+        }
+
+        oViewModel.setProperty(`${this.JOB_PATH}/Zzjarst`, mSelectedTree.ObjidComb);
+        oViewModel.setProperty(`${this.JOB_PATH}/Zzjarsttx`, mSelectedTree.StextComb);
+        oEvent.getSource().getParent().close();
+      },
+
+      // oData Tree Setting
+      oDataChangeTree(aList = []) {
+        const aConvertedList = _.chain(aList)
+          .cloneDeep()
+          .map((o) => _.omit(o, '__metadata'))
+          .value();
+        const mGroupedByParents = _.groupBy(aConvertedList, 'Upobjid');
+        const mCatsById = _.keyBy(aConvertedList, 'Objid');
+        const oTree = this.byId('codeTree');
+
+        oTree.collapseAll();
+        _.each(mGroupedByParents, (Noteren, parentId) => _.set(mCatsById, [parentId, 'Noteren'], Noteren));
+
+        return _.chain(mGroupedByParents)
+          .map((e) => {
+            return _.find(e, (e1) => {
+              return !e1.Upstext;
+            });
+          })
+          .compact()
+          .value();
       },
 
       // 직무진단 조회
