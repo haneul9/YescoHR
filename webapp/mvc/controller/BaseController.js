@@ -346,6 +346,10 @@ sap.ui.define(
         return this.FileAttachmentBoxHandler;
       },
 
+      getStaticResourceURL(sResourcePath) {
+        return AppUtils.getStaticResourceURL(sResourcePath);
+      },
+
       getImageURL(sImageName) {
         return AppUtils.getImageURL(sImageName);
       },

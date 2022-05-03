@@ -243,7 +243,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .sapMObjectNumber.statistic-number.statistic-number-active>.sapMObjectNumberText,
 .sapMObjectNumber.statistic-number.statistic-number-active>.sapMObjectNumberUnit {cursor:pointer}
 
-.sapMLnkSubtle {font-weight:500; color:#222}
+.sapMLnkSubtle {color:#222}
 .sapMLnkLabel {color:#222}
 
 .type-list > .sapMHBox {margin-bottom:8px; font-weight:500; flex:150px auto}
