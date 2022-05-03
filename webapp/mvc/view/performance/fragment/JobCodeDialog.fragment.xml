@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog id="inputFormDialog" showHeader="false" contentWidth="500px">
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose"/>
+    </buttons>
+    <content>
+      <Tree id="codeTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/jobDiagnosis/list/codeList}">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <CustomTreeItem>
+          <HBox>
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tree_node02.svg" visible="{= ${Otype} === 'C' }" width="16px" height="16px" />
+            <Text text="{Stext}"/>
+          </HBox>
+        </CustomTreeItem>
+      </Tree>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>
