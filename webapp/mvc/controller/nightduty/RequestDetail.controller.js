@@ -41,8 +41,8 @@ sap.ui.define(
       async onObjectMatched(mRouteArguments) {
         const sAppno = ((mRouteArguments || {}).sAppno || '').replace(/^0$/, '');
 
-        // 이전 버튼 클릭 후 다시 들어오는 경우를 위해 ||= 로 처리
-        this.oApprovalRequest ||= new ApprovalRequest({ oController: this, oRequestDetail: new RequestDetail(this) });
+        // 이전 버튼 클릭 후 다시 들어오는 경우를 위해
+        this.oApprovalRequest = this.oApprovalRequest || new ApprovalRequest({ oController: this, oRequestDetail: new RequestDetail(this) });
 
         this.oApprovalRequest.setAppno(sAppno).showData();
       },

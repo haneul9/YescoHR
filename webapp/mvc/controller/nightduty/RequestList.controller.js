@@ -34,8 +34,8 @@ sap.ui.define(
         try {
           this.sRouteName = sRouteName;
 
-          this.oSummaryBoxHandler ||= new SummaryBoxHandler(this);
-          this.oSearchBoxHandler ||= new SearchBoxHandler(this, this.sRequestListTableId);
+          this.oSummaryBoxHandler = this.oSummaryBoxHandler || new SummaryBoxHandler(this);
+          this.oSearchBoxHandler = this.oSearchBoxHandler || new SearchBoxHandler(this, this.sRequestListTableId);
 
           this.onPressSearchBoxIcon();
         } catch (oError) {

@@ -105,7 +105,7 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          this.YearPlanBoxHandler ||= new YearPlanBoxHandler({ oController: this });
+          this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this });
           // this.setMonth();
           this.formYear();
 

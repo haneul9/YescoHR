@@ -184,7 +184,16 @@ sap.ui.define(
           // Session이 만료되었습니다.\n로그온 화면으로 이동합니다.
           MessageBox.alert(this.getBundleText('MSG_00057'), {
             onClose: () => {
-              location.href = '/sap/public/bc/icf/logoff?from=logoff';
+              if (this.isMobile()) {
+                // from=logoff : 모바일(iOS)에서 로그아웃 후 생체인증으로 바로 다시 로그인 되어버리는 현상 방지를 위해 추가
+                location.href = '/sap/public/bc/icf/logoff?from=logoff';
+              } else {
+                if (this.isPRD()) {
+                  location.reload(); // 운영은 SSO가 있기때문에 /sap/public/bc/icf/logoff 호출 금지
+                } else {
+                  location.href = '/sap/public/bc/icf/logoff';
+                }
+              }
             },
           });
         } else {

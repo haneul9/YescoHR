@@ -58,7 +58,7 @@ sap.ui.define(
           this.oPopoverModel.setProperty(
             '/popover/employees',
             aEmployees.map((mEmployee) => {
-              mEmployee.Photo ||= sUnknownAvatarImageURL;
+              mEmployee.Photo = mEmployee.Photo || sUnknownAvatarImageURL;
               mEmployee.IconMode = this.sIconMode;
               return mEmployee;
             })

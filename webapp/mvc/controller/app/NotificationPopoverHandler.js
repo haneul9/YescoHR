@@ -74,8 +74,6 @@ sap.ui.define(
         oView.addDependent(this.oNotificationPopover);
 
         this.showContentData();
-
-        $('.notification-count').removeClass('display-none');
       },
 
       async showContentData() {
@@ -89,6 +87,8 @@ sap.ui.define(
         oNotificationModel.setProperty('/unreadCount', `${unreadCount > 99 ? '+' : ''}${iUnreadCount}`);
         oNotificationModel.setProperty('/listCount', listCount);
         oNotificationModel.setProperty('/list', list);
+
+        $('.notification-count').removeClass('display-none');
       },
 
       async readContentData() {

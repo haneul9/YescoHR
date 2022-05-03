@@ -122,7 +122,7 @@ sap.ui.define(
         aMembers.forEach((mData) => {
           delete mData.__metadata;
 
-          mData.Photo ||= sUnknownAvatarImageURL;
+          mData.Photo = mData.Photo || sUnknownAvatarImageURL;
           mData.ProfileView = this.bHasProfileMenuAuth ? 'O' : '';
         });
 

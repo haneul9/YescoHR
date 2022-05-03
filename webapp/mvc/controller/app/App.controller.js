@@ -200,21 +200,11 @@ sap.ui.define(
           actions: [MessageBox.Action.YES, MessageBox.Action.NO],
           onClose: (sAction) => {
             if (sAction === MessageBox.Action.YES) {
-              if (this.bMobile) {
-                location.href = '/sap/public/bc/icf/logoff?from=logoff';
-              } else {
-                window.open(this.getStaticResourceURL('logout.html'));
-                window.close();
-              }
+              // from=logoff : 모바일(iOS)에서 로그아웃 후 생체인증으로 바로 다시 로그인 되어버리는 현상 방지를 위해 추가
+              location.href = this.bMobile ? '/sap/public/bc/icf/logoff?from=logoff' : this.getStaticResourceURL('logoff.html');
             }
           },
         });
-      },
-
-      onExit: function () {
-        if (this._oMobileMenuPopover) {
-          this._oMobileMenuPopover.destroy();
-        }
       },
     });
   }

@@ -86,8 +86,7 @@ sap.ui.define(
 
       transformEmployeeData([mEmployeeData = {}]) {
         let { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 } = mEmployeeData;
-        Photo ||= AppUtils.getUnknownAvatarImageURL();
-        return { Photo, Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 };
+        return { Photo: Photo || AppUtils.getUnknownAvatarImageURL(), Ename, Zzjikgbt, Zzjikcht, Chief, Pbtxt, Fulln, Text1, Text2 };
       },
 
       async readVersionData() {
