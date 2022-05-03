@@ -68,6 +68,8 @@ sap.ui.define(
         UIComponent.prototype.init.apply(this, aArgs);
 
         this.initRouter();
+
+        $('#image-preload-layer').remove();
       },
 
       /**
