@@ -82,6 +82,14 @@ sap.ui.define(
           if (this.bMobile) {
             this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
           }
+
+          window.callAttendanceDetail = (sArgs) => {
+            const aProps = ['Headty', 'Discod'];
+            const aArgs = _.split(sArgs, ',');
+            const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+
+            this.callDetail(mPayload);
+          };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onObjectMatched Error', oError);
 
@@ -124,23 +132,35 @@ sap.ui.define(
 
             break;
           case 'column2d':
+            let fColumn2dMaxValues = 0;
             _.chain(mChartSetting)
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => {
+                  fColumn2dMaxValues = Math.max(fColumn2dMaxValues, Number(o.Cnt01));
+                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` };
+                })
               )
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fColumn2dMaxValues * 1.3);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'bar2d':
+            let fBar2dMaxValues = 0;
             _.chain(mChartSetting)
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => {
+                  fBar2dMaxValues = Math.max(fBar2dMaxValues, Number(o.Cnt01));
+                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` };
+                })
               )
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fBar2dMaxValues * 1.3);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -169,27 +189,39 @@ sap.ui.define(
 
             break;
           case 'mscolumn2d':
+            let fMscolumn2dMaxValues = 0;
             _.chain(mChartSetting)
               .set(
                 ['categories', 0, 'category', 0],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt.replace(/\(/, ' (') }))
               )
               .set(['dataset', 0], {
                 seriesname: this.getBundleText('LABEL_32004'), // 법정
                 color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt01));
+                  return { value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` };
+                }),
               })
               .set(['dataset', 1], {
                 seriesname: 'OT',
                 color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt02));
+                  return { value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` };
+                }),
               })
               .set(['dataset', 2], {
                 seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                 color: '#FFE479',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt03, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod03}` })),
+                data: _.map(aChartDatas, (o) => {
+                  fMscolumn2dMaxValues = Math.max(fMscolumn2dMaxValues, Number(o.Cnt03));
+                  return { value: o.Cnt03, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod03}` };
+                }),
               })
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fMscolumn2dMaxValues * 1.5);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -365,7 +397,11 @@ sap.ui.define(
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
           oViewModel.setProperty(
             '/dialog/list',
-            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
+            _.map(aDetailData, (o, i) => ({
+              Idx: ++i,
+              ProfileView: 'O',
+              ...o,
+            }))
           );
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > callDetail Error', oError);
@@ -530,13 +566,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function callAttendanceDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewAttendance').getController();
-  const aProps = ['Headty', 'Discod'];
-  const aArgs = _.split(sArgs, ',');
-  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-
-  oController.callDetail(mPayload);
-}

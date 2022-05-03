@@ -154,8 +154,6 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .portlet-p03p04 [data-portlet-members-status="W"] {border-color:#222; background-color:transparent; color:#222}/* 근무중 */
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
-.portlet-p06 tspan {font-size:7px}
-.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
 .portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
@@ -245,7 +243,7 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 .sapMObjectNumber.statistic-number.statistic-number-active>.sapMObjectNumberText,
 .sapMObjectNumber.statistic-number.statistic-number-active>.sapMObjectNumberUnit {cursor:pointer}
 
-.sapMLnkSubtle {color:#222}
+.sapMLnkSubtle {font-weight:500; color:#222}
 .sapMLnkLabel {color:#222}
 
 .type-list > .sapMHBox {margin-bottom:8px; font-weight:500; flex:150px auto}
@@ -287,9 +285,10 @@ html.sap-desktop .portlet .sapMLnk:focus:not(.sapMLnkDsbl),
 
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-remain {background-color:#e7ebee}
 .portlet-vacation-summary .vacation-indicator .vacation-indicator-gauge .vacation-indicator-used {background-color:#a0c7ec}
-.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:1px 0 #000}
+.portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:0 0 10px #a0c7ec}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
+.sapMLnkDsbl[data-profile-view=""] {font-weight:500; color:#000; opacity:1; cursor:text}
 [data-profile-view="O"] .sapMImg,
 [data-profile-view="O"] .sapMLnk,
 [data-profile-view="O"] .sapMText {cursor:pointer}
@@ -650,6 +649,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableCtrlCnt {min-height:44px !important}
 .dialog-content-table .sapUiTableCtrlCnt,
 .dialog-content-table .sapUiTableCCnt {min-height:34px !important}
+.dialog-content-table .sapMLnk:not(.sapMLnkDsbl) {font-weight:500}
 .sapUiTableHeaderRow {background-color:#fbfcfd}
 .sapUiTableHeaderCell:not(.sapUiTableRowActionHeaderCell):hover {background-color:#f5f9fd; color:#222}
 .sapUiTable:not(.sapUiTableDragDrop) .sapUiTableHeaderCellActive:active {background-color:#e2ebf4; color:#222}
@@ -1741,8 +1741,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMPopover .sapMPopoverFooter .sapMBtn:active span.sapMBtnInner.sapMBtnDefault {background-image:none; background-color:#f4f4f4 !important; border-color:#d8dbdd !important; color:#5a6268 !important; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%)}
 .sapMPopover .sapMPopoverFooter .sapMBtn.sapMBtnDisabled span.sapMBtnInner.sapMBtnDefault {background-image:none; background-color:#f0f3f7 !important; border-color:#f0f3f7 !important; color:#9ca5aa !important; text-shadow:0 0 0.125rem rgb(0 0 0 / 0%)}
 .sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {margin-bottom:0; margin-top:0; padding:0 20px}
-
-.mobileStatusPop .sapMPopoverCont {border-bottom: 0px !important;}
 
 .personal-portlets-setting .sapMCb {display:flex; -webkit-flex-direction:row-reverse; flex-direction:row-reverse; white-space:nowrap; border:1px solid #e3e6ea; align-items:center; padding-left:20px; padding-right:20px; height:50px; border-radius:4px}
 .personal-portlets-setting .sapMCb[aria-checked=false] {background-color:#f8f9fa; border:1px dashed #b0b7bb; color:#9da6ab}

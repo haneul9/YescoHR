@@ -9,7 +9,7 @@ sap.ui.define([], function () {
         Target: 'A01',
         Chart: 'cylinder',
         ChartWidth: '110',
-        ChartHeight: '85%',
+        ChartHeight: '95%',
         DetailEntity: 'TimeOverviewDetail1',
         Fields: [
           { prop: 'Cnt01', path: [0, 'Cnt01'] }, //
@@ -94,26 +94,26 @@ sap.ui.define([], function () {
     CHART_OPTIONS: {
       cylinder: {
         chart: {
-          caption: '', // 출근율
+          baseFontSize: '10',
           valueFontSize: '14',
+          caption: '', // 출근율
           lowerlimit: '0',
           upperlimit: '100',
           lowerlimitdisplay: '0%',
           upperlimitdisplay: '100%',
           numbersuffix: '%',
-          cylfillcolor: '#5d62b5',
           cylfillhoveralpha: '85',
-          animation: '1',
-          refreshInstantly: '1',
-          theme: 'ocean',
-          chartTopMargin: '0',
-          chartBottomMargin: '0',
           cylFillColor: '#30c4ee',
           cylYScale: '10',
+          valuePadding: '7',
+          animation: '1',
+          refreshInstantly: '1',
           toolTipBgColor: '#ffffff',
           toolTipColor: '#222222',
           showToolTipShadow: '1',
+          plotcolorintooltip: '1',
           plottooltext: '출근율 $dataValue',
+          theme: 'ocean',
         },
         value: 10,
       },
@@ -183,7 +183,7 @@ sap.ui.define([], function () {
         chart: {
           baseFontSize: '14',
           valueFontSize: '14',
-          legendItemFontSize: '10',
+          legendItemFontSize: '14',
           animation: '0',
           showValues: '1',
           rotateValues: '0',
@@ -216,7 +216,7 @@ sap.ui.define([], function () {
         chart: {
           baseFontSize: '14',
           valueFontSize: '14',
-          legendItemFontSize: '10',
+          legendItemFontSize: '14',
           showSum: '1',
           showValues: '1',
           rotateValues: '0',

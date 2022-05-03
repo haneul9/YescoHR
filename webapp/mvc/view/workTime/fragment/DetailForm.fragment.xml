@@ -41,7 +41,7 @@
             <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <!-- <table:Column width="7%">
+        <table:Column width="7%">
           <Label text="{i18n>LABEL_27021}" wrapping="true" />
           <table:template>
             <Text text="{Dtype}" width="100%" textAlign="Center" />
@@ -52,7 +52,7 @@
           <table:template>
             <Text text="{Nxtwktx}" width="100%" textAlign="Center" />
           </table:template>
-        </table:Column> -->
+        </table:Column>
         <table:Column width="7%">
           <Label text="{i18n>LABEL_27005}" />
           <table:template>

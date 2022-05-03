@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P06PortletEmployeeListDialogHandler',
   ],
   (
     // prettier 방지용 주석
@@ -13,7 +14,8 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    AbstractPortletHandler
+    AbstractPortletHandler,
+    P06PortletEmployeeListDialogHandler
   ) => {
     'use strict';
 
@@ -46,7 +48,7 @@ sap.ui.define(
           this.buildChart();
         }
 
-        this.oEmployeeListPopupHandler = oController.getEmployeeListPopupHandler();
+        this.oEmployeeListPopupHandler = this.bMobile ? oController.getEmployeeListPopupHandler() : new P06PortletEmployeeListDialogHandler(oController);
       },
 
       buildChart() {
@@ -114,22 +116,24 @@ sap.ui.define(
 
       getChartOption() {
         return {
+          baseFontSize: '10',
+          valueFontSize: '14',
           caption: AppUtils.getBundleText('LABEL_01130'), // 출근율
           lowerlimit: '0',
           upperlimit: '100',
           lowerlimitdisplay: '0%',
           upperlimitdisplay: '100%',
           numbersuffix: '%',
-          cylfillcolor: '#5d62b5',
           cylfillhoveralpha: '85',
           cylFillColor: '#30c4ee',
-          cylYScale: 10,
-          animation: 1,
-          refreshInstantly: 1,
+          cylYScale: '10',
+          valuePadding: '7',
+          animation: '1',
+          refreshInstantly: '1',
           toolTipBgColor: '#ffffff',
           toolTipColor: '#222222',
-          showToolTipShadow: 1,
-          plotcolorintooltip: 1,
+          showToolTipShadow: '1',
+          plotcolorintooltip: '1',
           plottooltext: AppUtils.getBundleText('LABEL_01131', '$dataValue'), // 출근율: <b>$dataValue%</b>
           theme: 'ocean',
         };
@@ -147,7 +151,14 @@ sap.ui.define(
         if (this.bMobile) {
           this.oEmployeeListPopupHandler.openPopover(oEvent);
         } else {
-          // this.oEmployeeListPopupHandler.openDialog(oEvent);
+          this.oEmployeeListPopupHandler.openDialog(oEvent);
+        }
+      },
+      /*
+      onPressCount(oEvent) {
+        if (this.bMobile) {
+          this.oEmployeeListPopupHandler.openPopover(oEvent);
+        } else {
           const oEventSource = oEvent.getSource();
           this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
         }
@@ -207,7 +218,7 @@ sap.ui.define(
         const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
         this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
       },
-
+      */
       onAfterDragAndDrop() {
         FusionCharts(this.sChartId).render();
       },

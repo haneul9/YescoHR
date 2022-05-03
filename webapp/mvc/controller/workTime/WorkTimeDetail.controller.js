@@ -195,19 +195,17 @@ sap.ui.define(
 
             oDetailModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
 
-            // const aDetailList = oDetailModel.getProperty('/detail/list');
             let aList = [];
             let iLength = 1;
 
             // 신청내역 없을때
-            // if (_.isEmpty(aDetailList)) {
             oDetailModel.setProperty('/DialogData', {
               Datum: new Date(),
               Beguz: '18:00',
               Abrst: '',
               Ottyp: 'ALL',
-              // Dtype: 'ALL',
-              // Nxtwk: 'ALL',
+              Dtype: 'ALL',
+              Nxtwk: 'ALL',
               bType: false,
               bWork: false,
             });
@@ -221,21 +219,6 @@ sap.ui.define(
             });
 
             iLength = 1;
-            // } else {
-            //   const [mList] = aDetailList;
-
-            //   oDetailModel.setProperty('/DialogData', {
-            //     Datum: mList.Datum,
-            //     Beguz: mList.Beguz,
-            //     Enduz: mList.Enduz,
-            //     Abrst: mList.Abrst,
-            //     Ottyp: mList.Ottyp,
-            //     Atrsn: mList.Atrsn,
-            //   });
-
-            //   aList = aDetailList;
-            //   iLength = _.size(aDetailList);
-            // }
 
             oDetailModel.setProperty('/dialog/list', aList);
             oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
@@ -369,11 +352,11 @@ sap.ui.define(
               e.Abrst = mDialogData.Abrst;
               e.Ottyp = mDialogData.Ottyp;
               e.Ottyptx = mDialogData.Ottyptx;
-              // e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype;
-              // e.Nxtwktx = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
-              // e.Nxtwk = mDialogData.Nxtwk;
-              // e.Gaptm = mDialogData.Gaptm;
-              // e.Nxtoff = mDialogData.Nxtoff;
+              e.Dtype = mDialogData.Dtype === 'ALL' ? '' : mDialogData.Dtype;
+              e.Nxtwktx = mDialogData.Nxtwk === 'ALL' ? '' : mDialogData.Nxtwk === 'Y' ? this.getBundleText('LABEL_27019') : this.getBundleText('LABEL_27020');
+              e.Nxtwk = mDialogData.Nxtwk;
+              e.Gaptm = mDialogData.Gaptm;
+              e.Nxtoff = mDialogData.Nxtoff;
               e.Atrsn = mDialogData.Atrsn;
             })
             .value(),
@@ -441,14 +424,14 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
-        // oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
-        // oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
-        // oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
-        // oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
-        // oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
-        // oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 근무일
@@ -462,14 +445,14 @@ sap.ui.define(
         // 초과시간
         const oOverTime = await this.overTime();
 
-        // oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
-        // oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
-        // oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
-        // oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
+        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
         oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
         oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
-        // oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
-        // oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
       },
 
       // Dialog 초과근무시간
@@ -514,17 +497,17 @@ sap.ui.define(
           return true;
         }
 
-        // // 시차출퇴근(D유형)
-        // if ((mDialogData.Dtype === 'ALL' || !mDialogData.Dtype) && mDialogData.bType) {
-        //   MessageBox.alert(this.getBundleText('MSG_27010'));
-        //   return true;
-        // }
+        // 시차출퇴근(D유형)
+        if ((mDialogData.Dtype === 'ALL' || !mDialogData.Dtype) && mDialogData.bType) {
+          MessageBox.alert(this.getBundleText('MSG_27010'));
+          return true;
+        }
 
-        // // 익일근무
-        // if ((mDialogData.Nxtwk === 'ALL' || !mDialogData.Nxtwk) && mDialogData.bWork) {
-        //   MessageBox.alert(this.getBundleText('MSG_27011'));
-        //   return true;
-        // }
+        // 익일근무
+        if ((mDialogData.Nxtwk === 'ALL' || !mDialogData.Nxtwk) && mDialogData.bWork) {
+          MessageBox.alert(this.getBundleText('MSG_27011'));
+          return true;
+        }
 
         const aList = oDetailModel.getProperty('/dialog/list');
         const aDetailList = oDetailModel.getProperty('/detail/list');
