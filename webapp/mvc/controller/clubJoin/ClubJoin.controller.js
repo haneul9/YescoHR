@@ -1,20 +1,16 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
+    Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -22,7 +18,7 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.clubJoin.ClubJoin', {
       initializeModel() {
         return {
-          detailName: this.isHass() ? 'h/clubJoin-detail' : 'clubJoin-detail',
+          routeName: '',
           busy: false,
           Data: [],
           LoanType: [],
@@ -42,16 +38,31 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched() {
-        this.totalCount();
-        this.onSearch();
-        this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
+      async onObjectMatched(oParameter, sRouteName) {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/routeName', sRouteName);
+
+        try {
+          this.totalCount();
+          this.onSearch();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 대상자 정보 사원선택시 화면 Refresh
       callbackAppointeeChange() {
-        this.totalCount();
-        this.onSearch();
+        try {
+          this.totalCount();
+          this.onSearch();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // override AttachFileCode
@@ -60,10 +71,11 @@ sap.ui.define(
       },
 
       onClick() {
-        this.getRouter().navTo(this.getViewModel().getProperty('/detailName'), { oDataKey: 'N' });
+        this.getRouter().navTo(`${this.getViewModel().getProperty('/routeName')}-detail`, { oDataKey: 'N' });
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {
+        // {0}년 현재 가입된 내역입니다.
         return this.getBundleText('MSG_14001', sYear);
       },
 
@@ -75,90 +87,57 @@ sap.ui.define(
         return this.TextUtils.toCurrency(vPay);
       },
 
-      onSearch() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const oTable = this.byId('clubTable');
-        const oSearch = oListModel.getProperty('/search');
-        const dDate = moment(oSearch.secondDate).hours(9).toDate();
-        const dDate2 = moment(oSearch.date).hours(9).toDate();
-        const sMenid = this.getCurrentMenuId();
-        const aFilters = [
-          // prettier 방지주석
-          new Filter('Prcty', FilterOperator.EQ, 'L'),
-          new Filter('Menid', FilterOperator.EQ, sMenid),
-          new Filter('Apbeg', FilterOperator.EQ, dDate),
-          new Filter('Apend', FilterOperator.EQ, dDate2),
-        ];
+      async onSearch() {
+        const oViewModel = this.getViewModel();
 
-        oListModel.setProperty('/busy', true);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
+          const mSearch = oViewModel.getProperty('/search');
+          const dDate = moment(_.get(mSearch, 'secondDate')).hours(9).toDate();
+          const dDate2 = moment(_.get(mSearch, 'date')).hours(9).toDate();
+          const sMenid = this.getCurrentMenuId();
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const oList = await Client.getEntitySet(oModel, 'ClubJoinAppl', {
+            Prcty: 'L',
+            Menid: sMenid,
+            Apbeg: dDate,
+            Apend: dDate2,
+            Pernr: this.getAppointeeProperty('Pernr'),
+          });
 
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
+          const oTable = this.byId('clubTable');
+
+          oViewModel.setProperty('/List', oList);
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
+          oViewModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006')); // 가입/신청 내역
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-
-        oModel.read('/ClubJoinApplSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
-
-              oListModel.setProperty('/List', oList);
-              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList, sStatCode: 'Lnsta' }));
-              oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_14006'));
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            this.debug(oError);
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
       },
 
-      totalCount() {
+      async totalCount() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oListModel = this.getViewModel();
-        const aFilters = [];
+        const oViewModel = this.getViewModel();
+        const [oTotal] = await Client.getEntitySet(oModel, 'ClubJoinMyclub', { Pernr: this.getAppointeeProperty('Pernr') });
 
-        if (this.isHass()) {
-          const sPernr = this.getAppointeeProperty('Pernr');
-
-          aFilters.push(new Filter('Pernr', FilterOperator.EQ, sPernr));
-        }
-
-        oModel.read('/ClubJoinMyclubSet', {
-          filters: aFilters,
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
-
-              oListModel.setProperty('/Total', oList);
-            }
-          },
-          error: (oError) => {
-            this.debug(oError);
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
+        oViewModel.setProperty('/Total', oTotal);
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
+        const sPath = oEvent.getParameter('rowBindingContext').getPath();
+        const oViewModel = this.getViewModel();
+        const mRowData = oViewModel.getProperty(sPath);
 
-        oListModel.setProperty('/parameters', oRowData);
-        this.getRouter().navTo(oListModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
+        oViewModel.setProperty('/parameters', mRowData);
+        this.getRouter().navTo(`${oViewModel.getProperty('/routeName')}-detail`, { oDataKey: _.get(mRowData, 'Appno') });
       },
 
       onPressExcelDownload() {
         const oTable = this.byId('clubTable');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_14014');
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_14014'); // {동호회 가입신청}_목록
 
         this.TableUtils.export({ oTable, sFileName, sStatCode: 'Lnsta', sStatTxt: 'Lnstatx' });
       },
