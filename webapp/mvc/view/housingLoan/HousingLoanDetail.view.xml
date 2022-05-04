@@ -9,13 +9,13 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox class="button-group">
-            <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" />
-            <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-            <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
-            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
-            <Button text="{i18n>LABEL_00146}" press=".onNavBack" />
-            <Button text="{i18n>LABEL_07018}" press=".onAppPDF" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '20' || ${/FormData/Lnsta} === '30' }" />
+            <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' }" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_00146}" press=".onNavBack" busyIndicatorDelay="0" busy="{/busy}" />
+            <Button text="{i18n>LABEL_07018}" press=".onAppPDF" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '20' || ${/FormData/Lnsta} === '30' }" busyIndicatorDelay="0" busy="{/busy}" />
             <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
             <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
           </HBox>
