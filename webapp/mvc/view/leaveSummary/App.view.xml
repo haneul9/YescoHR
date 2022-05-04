@@ -7,8 +7,8 @@
     <VBox class="contents-header">
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
-        <HBox>
-          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+        <HBox class="button-group">
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
         </HBox>
       </HBox>

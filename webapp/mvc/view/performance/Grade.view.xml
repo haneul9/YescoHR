@@ -1,29 +1,29 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.performance.Grade"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-                </HBox>
-            </HBox>
-        </VBox>
-        <VBox class="contents">
-            <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-            <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" class="header-wrap">
-                    <HBox class="header">
-                        <Title level="H3" text="{i18n>LABEL_10069}" class="sapUiSmallMarginEnd" />
-                        <Text text="{i18n>MSG_10001}" class="sapUiMediumMarginEnd desc-txt" />
-                    </HBox>
-                </HBox>
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GradeTable" type="XML" />
-            </VBox>
-        </VBox>
-    </Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+      <VBox class="vCardBox">
+        <HBox justifyContent="SpaceBetween" class="header-wrap">
+          <HBox class="header">
+            <Title level="H3" text="{i18n>LABEL_10069}" class="sapUiSmallMarginEnd" />
+            <Text text="{i18n>MSG_10001}" class="sapUiMediumMarginEnd desc-txt" />
+          </HBox>
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GradeTable" type="XML" />
+      </VBox>
+    </VBox>
+  </Page>
 </mvc:View>

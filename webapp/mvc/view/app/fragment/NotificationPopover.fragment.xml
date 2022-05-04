@@ -50,7 +50,7 @@
       <OverflowToolbar>
         <ToolbarSpacer />
         <Button type="Emphasized" text="{i18n>LABEL_01406}" press=".onPressAllNotificationRead" visible="{= ${unreadCount} &gt; 0 }" />
-        <Button text="{i18n>LABEL_00115}" press=".onPopoverClose" id="notification-popover-close" />
+        <Button id="notification-popover-close" text="{i18n>LABEL_00115}" press=".onPopoverClose" class="cancel" />
       </OverflowToolbar>
     </custom:footer>
   </custom:Popover>

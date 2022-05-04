@@ -7,7 +7,7 @@
       <Button text="{i18n>LABEL_00112}" press=".onConfirm" type="Emphasized" enabled="{= ${/results/list}.length > 0 }" />
     </beginButton>
     <endButton>
-      <Button text="{i18n>LABEL_00115}" press=".onClose" />
+      <Button text="{i18n>LABEL_00115}" press=".onClose" class="cancel" />
     </endButton>
     <content>
       <HBox width="100%" class="dialog-content">

@@ -80,7 +80,7 @@
     </m:VBox>
     <m:buttons>
       <m:Button type="Emphasized" text="{i18n>LABEL_00112}" visible="{= ${currentListMode} === 'MultiToggle' }" enabled="{enabled}" press=".onPressSelectionDone" />
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose"/>
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose" class="cancel" />
     </m:buttons>
   </m:Dialog>
 </core:FragmentDefinition>

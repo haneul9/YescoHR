@@ -187,22 +187,21 @@ sap.ui.define(
       // 진척율 Click
       async onPressProgress(oEvent) {
         try {
-          if (!this.dProgressDialog) {
-            const oView = this.getView();
-
-            this.dProgressDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.progress.ProgressDialog',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
-            });
-          }
-
           const oViewModel = this.getViewModel();
           const sPath = oEvent.getSource().getBindingContext().getPath();
           const mSelectedRow = _.cloneDeep(oViewModel.getProperty(sPath));
+
+          if (!this.dProgressDialog) {
+            const oView = this.getView();
+
+            this.dProgressDialog = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.progress.ProgressDialog',
+              controller: this,
+            });
+
+            oView.addDependent(this.dProgressDialog);
+          }
 
           this.getProgressDetail(mSelectedRow);
 
@@ -212,20 +211,19 @@ sap.ui.define(
             part: mSelectedRow.Orgtx,
           });
 
-          this.dProgressDialog.then(function (oDialog) {
-            oDialog.open();
-          });
+          this.dProgressDialog.open();
         } catch (oError) {
           AppUtils.handleError(oError);
         }
       },
 
       // 진척도 상세조회
-      async getProgressDetail(mSelectedRow = {}) {
+      async getProgressDetail({ ObjidO, Objid9091 }) {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const mPayLoad = {
-          ..._.pick(mSelectedRow, ['ObjidO', 'Objid9091']),
+          ObjidO,
+          Objid9091,
           Werks: this.getAppointeeProperty('Werks'),
           Syear: oViewModel.getProperty('/search/Syear'),
         };

@@ -1,72 +1,72 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog showHeader="false" contentWidth="1600px" contentHeight="520px" draggable="true">
-        <m:content>
-            <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
-                <custom:Placeholder />
-            </m:VBox>
-            <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
-                <m:HBox class="header-wrap">
-                    <m:HBox class="header" alignItems="Center">
-                        <m:Title level="H3" text="{i18n>LABEL_10019}" class="sapUiSmallMarginEnd" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Label text="{/dialog/gradeTx}" class="perGrade-type">
-                            <m:customData>
-                                <core:CustomData key="type" value="type0{/dialog/grade}" writeToDom="true" />
-                            </m:customData>
-                        </m:Label>
-                    </m:HBox>
-                </m:HBox>
-                <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
-                    <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
-                        <layoutData>
-                            <m:FlexItemData minWidth="280px" />
-                        </layoutData>
-                        <customData>
-                            <core:CustomData key="Zzappun2" value="{Zzappun2}" />
-                        </customData>
-                        <extension>
-                            <m:HBox class="sapUiTinyMarginBottom" alignItems="Center">
-                                <m:Title level="H4" text="{Zzappuntx2}" />
-                                <m:Text text="total {TargetCnt}" class="sapUiTinyMarginBegin" />
-                            </m:HBox>
-                        </extension>
-                        <columns class="SmallMarginTop">
-                            <Column width="auto">
-                                <m:Label text="{i18n>LABEL_00210}"/>
-                                <template>
-                                    <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                                </template>
-                            </Column>
-                            <Column width="20%">
-                                <m:Label text="{i18n>LABEL_10082}"/>
-                                <template>
-                                    <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                                </template>
-                            </Column>
-                            <Column width="20%">
-                                <m:Label text="{i18n>LABEL_10089}"/>
-                                <template>
-                                    <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                                </template>
-                            </Column>
-                            <Column width="20%">
-                                <m:Label text="{i18n>LABEL_10018}"/>
-                                <template>
-                                    <m:Text text="{LfappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                                </template>
-                            </Column>
-                        </columns>
-                    </Table>
-                </m:HBox>
-            </m:VBox>
-        </m:content>
-        <m:buttons>
-            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" visible="{/isActive}" press=".onPressGradeByDepartDialogApply"/>
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressGradeByDepartDialogClose"/>
-        </m:buttons>
-    </m:Dialog>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <m:Dialog showHeader="false" contentWidth="1600px" contentHeight="520px" draggable="true">
+    <m:content>
+      <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
+        <custom:Placeholder />
+      </m:VBox>
+      <m:VBox class="dialog-content-table" visible="{= !${/dialog/busy} }">
+        <m:HBox class="header-wrap">
+          <m:HBox class="header" alignItems="Center">
+            <m:Title level="H3" text="{i18n>LABEL_10019}" class="sapUiSmallMarginEnd" />
+          </m:HBox>
+          <m:HBox>
+            <m:Label text="{/dialog/gradeTx}" class="perGrade-type">
+              <m:customData>
+                <core:CustomData key="type" value="type0{/dialog/grade}" writeToDom="true" />
+              </m:customData>
+            </m:Label>
+          </m:HBox>
+        </m:HBox>
+        <m:HBox id="gradeByDepartContainer" items="{ path: '/department/list', templateShareable: true, filters: [{path: 'Zzappun2', operator: 'NE', value1: ''}] }" class="pt-20-px">
+          <Table selectionMode="{= ${/isActive} ? 'MultiToggle' : 'None' }" rows="{/dialog/list}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeByDepartSelection">
+            <layoutData>
+              <m:FlexItemData minWidth="280px" />
+            </layoutData>
+            <customData>
+              <core:CustomData key="Zzappun2" value="{Zzappun2}" />
+            </customData>
+            <extension>
+              <m:HBox class="sapUiTinyMarginBottom" alignItems="Center">
+                <m:Title level="H4" text="{Zzappuntx2}" />
+                <m:Text text="total {TargetCnt}" class="sapUiTinyMarginBegin" />
+              </m:HBox>
+            </extension>
+            <columns class="SmallMarginTop">
+              <Column width="auto">
+                <m:Label text="{i18n>LABEL_00210}"/>
+                <template>
+                  <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+              </Column>
+              <Column width="20%">
+                <m:Label text="{i18n>LABEL_10082}"/>
+                <template>
+                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+              </Column>
+              <Column width="20%">
+                <m:Label text="{i18n>LABEL_10089}"/>
+                <template>
+                  <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+              </Column>
+              <Column width="20%">
+                <m:Label text="{i18n>LABEL_10018}"/>
+                <template>
+                  <m:Text text="{LfappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                </template>
+              </Column>
+            </columns>
+          </Table>
+        </m:HBox>
+      </m:VBox>
+    </m:content>
+    <m:buttons>
+      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" visible="{/isActive}" press=".onPressGradeByDepartDialogApply"/>
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressGradeByDepartDialogClose" class="cancel" />
+    </m:buttons>
+  </m:Dialog>
 </core:FragmentDefinition>

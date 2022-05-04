@@ -1,27 +1,27 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button type="Emphasized" class="sapUiTinyMarginEnd" text="{i18n>LABEL_00121}" press=".onPressNewApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-                </HBox>
-            </HBox>
-        </VBox>
-        <VBox class="contents">
-            <HBox justifyContent="SpaceAround">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.Summary" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.OverviewSearchCondition" type="XML" />
-            </HBox>
-            <VBox class="vCardBox">
-                <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.OverviewTable" type="XML" />
-            </VBox>
-        </VBox>
-    </Page>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button type="Emphasized" text="{i18n>LABEL_00121}" press=".onPressNewApprovalBtn" busyIndicatorDelay="0" busy="{/busy}" />
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <HBox justifyContent="SpaceAround">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.Summary" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.OverviewSearchCondition" type="XML" />
+      </HBox>
+      <VBox class="vCardBox">
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.excavation.fragment.OverviewTable" type="XML" />
+      </VBox>
+    </VBox>
+  </Page>
 </core:FragmentDefinition>

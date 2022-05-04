@@ -831,7 +831,7 @@
                 <Button type="Emphasized" text="Emphasized" />
                 <Button type="Accept" text="Accept" />
                 <Button type="Reject" text="Reject" />
-                <Button text="취소" class="cancel"/>
+                <Button text="취소" class="cancel" />
                 <Button text="이전" />
                 <Button text="Coming Soon" />
                 <Button text="Default"/>

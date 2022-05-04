@@ -11,7 +11,7 @@
       <CheckBox text="{title}" selected="{active}" enabled="{switchable}" select=".onSelectPortletSwitch" class="type-b" />
     </grid:CSSGrid>
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onPressPortletsP13nDialogClose" />
+      <Button text="{i18n>LABEL_00115}" press=".onPressPortletsP13nDialogClose" class="cancel" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

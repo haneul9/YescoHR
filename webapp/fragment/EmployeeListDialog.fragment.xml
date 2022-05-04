@@ -171,7 +171,7 @@
       </m:VBox>
     </m:content>
     <m:buttons>
-      <m:Button text="{i18n>LABEL_00115}" press=".closeDialog"/>
+      <m:Button text="{i18n>LABEL_00115}" press=".closeDialog" class="cancel" />
     </m:buttons>
   </m:Dialog>
 </core:FragmentDefinition>

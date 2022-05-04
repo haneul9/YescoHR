@@ -1,27 +1,27 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:table="sap.ui.table">
-    <Dialog id= "EmployeeSearch" showHeader="false" contentWidth="300px" contentHeight="200px" busyIndicatorDelay="0" busy="{/employeeModel/busy}">
-        <endButton>
-            <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
-        </endButton>
-        <content>
-            <table:Table rows="{/TeamList}" visibleRowCount="{/TeamRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
-                <table:columns>
-                    <table:Column width="auto">
-                        <Label text="{i18n>LABEL_15019}"/>
-                        <table:template>
-                            <Text text="{Orgtx}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
-                        </table:template>
-                    </table:Column>
-                    <table:Column width="100px">
-                        <Label text="{i18n>LABEL_15020}"/>
-                        <table:template>
-                            <Text text="{Chief}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
-                        </table:template>
-                    </table:Column>
-                </table:columns>
-            </table:Table>
-        </content>
-    </Dialog>
+  xmlns:core="sap.ui.core"
+  xmlns:table="sap.ui.table">
+  <Dialog id= "EmployeeSearch" showHeader="false" contentWidth="300px" contentHeight="200px" busyIndicatorDelay="0" busy="{/employeeModel/busy}">
+    <endButton>
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
+    </endButton>
+    <content>
+      <table:Table rows="{/TeamList}" visibleRowCount="{/TeamRowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
+        <table:columns>
+          <table:Column width="auto">
+            <Label text="{i18n>LABEL_15019}"/>
+            <table:template>
+              <Text text="{Orgtx}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
+            </table:template>
+          </table:Column>
+          <table:Column width="100px">
+            <Label text="{i18n>LABEL_15020}"/>
+            <table:template>
+              <Text text="{Chief}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            </table:template>
+          </table:Column>
+        </table:columns>
+      </table:Table>
+    </content>
+  </Dialog>
 </core:FragmentDefinition>

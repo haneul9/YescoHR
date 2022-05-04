@@ -1,56 +1,56 @@
 <core:FragmentDefinition xmlns="sap.m"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:table="sap.ui.table"
-	xmlns:core="sap.ui.core">
-	<Dialog id="examDialog" title="{/year} {i18n>LABEL_10034}" contentWidth="1300px">
-		<buttons>
-			<Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onExSaveBtn" />
-			<Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onExCompleteBtn" />
-			<Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
-		</buttons>
-		<content>
-			<VBox class="vCardBox">
-				<table:Table id="jobExamTable" class="row-link" rows="{/jobDiagnosis/list}" visibleRowCount="{/jobDiagnosis/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
-					<table:columns>
-						<table:Column width="10%" sortProperty="Appgbtx" filterProperty="Appgbtx">
-							<Label text="{i18n>LABEL_00147}"/>
-							<table:template>
-								<Text text="{Appgbtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="20%" sortProperty="Zzjaitmtx" filterProperty="Zzjaitmtx">
-							<Label text="{i18n>LABEL_10103}"/>
-							<table:template>
-								<Text text="{Zzjaitmtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-							</table:template>
-						</table:Column>
-						<table:Column width="30%" sortProperty="Zzjarsttx" filterProperty="Zzjarsttx">
-							<Label text="{i18n>LABEL_10104}"/>
-							<table:template>
-								<HBox>
-									<ComboBox items="{path: 'codeList', templateShareable: true}" visible="{= ${Zcode} !== '90' }" width="100%" selectedKey="{Zzjarst}">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-										<core:Item text="{Ztext}" key="{Zcode}" />
-									</ComboBox>
-									<Input value="{Zzjarsttx}" visible="{= ${Zcode} === '90' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch">
-										<layoutData>
-											<FlexItemData growFactor="1" />
-										</layoutData>
-									</Input>
-								</HBox>
-							</table:template>
-						</table:Column>
-						<table:Column width="40%" sortProperty="Zbigo" filterProperty="Zbigo">
-							<Label text="{i18n>LABEL_10105}" wrapping="true"/>
-							<table:template>
-								<TextArea value="{Zbigo}" width="100%" maxLength="{/fieldControl/limit/Z131}" />
-							</table:template>
-						</table:Column>
-					</table:columns>
-				</table:Table>
-				<!-- <grid:CSSGrid gridGap="1px" class="form-grid type-job" gridTemplateColumns="1fr 2fr 3fr 4fr" items="{/jobDiagnosis/deep}">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <Dialog id="examDialog" title="{/year} {i18n>LABEL_10034}" contentWidth="1300px">
+    <buttons>
+      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onExSaveBtn" />
+      <Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onExCompleteBtn" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
+    </buttons>
+    <content>
+      <VBox class="vCardBox">
+        <table:Table id="jobExamTable" class="row-link" rows="{/jobDiagnosis/list}" visibleRowCount="{/jobDiagnosis/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+          <table:columns>
+            <table:Column width="10%" sortProperty="Appgbtx" filterProperty="Appgbtx">
+              <Label text="{i18n>LABEL_00147}"/>
+              <table:template>
+                <Text text="{Appgbtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+              </table:template>
+            </table:Column>
+            <table:Column width="20%" sortProperty="Zzjaitmtx" filterProperty="Zzjaitmtx">
+              <Label text="{i18n>LABEL_10103}"/>
+              <table:template>
+                <Text text="{Zzjaitmtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+              </table:template>
+            </table:Column>
+            <table:Column width="30%" sortProperty="Zzjarsttx" filterProperty="Zzjarsttx">
+              <Label text="{i18n>LABEL_10104}"/>
+              <table:template>
+                <HBox>
+                  <ComboBox items="{path: 'codeList', templateShareable: true}" visible="{= ${Zcode} !== '90' }" width="100%" selectedKey="{Zzjarst}">
+                    <layoutData>
+                      <FlexItemData growFactor="1" />
+                    </layoutData>
+                    <core:Item text="{Ztext}" key="{Zcode}" />
+                  </ComboBox>
+                  <Input value="{Zzjarsttx}" visible="{= ${Zcode} === '90' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch">
+                    <layoutData>
+                      <FlexItemData growFactor="1" />
+                    </layoutData>
+                  </Input>
+                </HBox>
+              </table:template>
+            </table:Column>
+            <table:Column width="40%" sortProperty="Zbigo" filterProperty="Zbigo">
+              <Label text="{i18n>LABEL_10105}" wrapping="true"/>
+              <table:template>
+                <TextArea value="{Zbigo}" width="100%" maxLength="{/fieldControl/limit/Z131}" />
+              </table:template>
+            </table:Column>
+          </table:columns>
+        </table:Table>
+        <!-- <grid:CSSGrid gridGap="1px" class="form-grid type-job" gridTemplateColumns="1fr 2fr 3fr 4fr" items="{/jobDiagnosis/deep}">
 					<HBox justifyContent="Center">
 						<layoutData>
 							<grid:GridItemLayoutData gridRow="{spanCount}" />
@@ -76,7 +76,7 @@
 						</TextArea>
 					</HBox>
 				</grid:CSSGrid> -->
-			</VBox>
-		</content>
-	</Dialog>
+      </VBox>
+    </content>
+  </Dialog>
 </core:FragmentDefinition>

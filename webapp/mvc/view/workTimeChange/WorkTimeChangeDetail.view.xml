@@ -8,10 +8,10 @@
       <VBox class="contents-header">
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
-          <HBox>
-            <Button text="{i18n>LABEL_00121}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onApplyBtn" visible="{/Fixed}" />
-            <Button text="{i18n>LABEL_00146}" class="sapUiTinyMarginEnd" press=".onNavBack" />
-            <Button text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" icon="sap-icon://print" press=".onPagePrint" />
+          <HBox class="button-group">
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{/Fixed}" />
+            <Button text="{i18n>LABEL_00146}" press=".onNavBack" />
+            <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
             <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" />
           </HBox>
         </HBox>

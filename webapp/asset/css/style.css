@@ -734,8 +734,10 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMFlexBox .title .desc-txt {position:relative; top:5px}
 .sapMFlexBox .title .total-txt {position:relative; top:5px}
 .header-wrap .desc-txt {position:relative}
-.vCardBox .table-toolbar .title + .table-actions .sapMBtn, .table-actions .sapMBtn {min-width:auto}
+/* .vCardBox .table-toolbar .title + .table-actions .sapMBtn, .table-actions .sapMBtn {min-width:auto} */
 .vCardBox .table-toolbar .title .sapMLnk {margin-left:10px; position:relative; top:5px}
+.table-actions.sapMHBox .sapMFlexItem + .sapMFlexItem {margin-left:5px}
+.table-actions.sapMVBox .sapMFlexItem + .sapMFlexItem {margin-top:5px}
 
 .sapUiTableRowHighlight.sapUiTableRowHighlightNone {background-color:var(--BorderColorReadonly) !important}
 .sapUiTableRowHighlight.sapUiTableRowHighlightIndication01 {background-color:var(--BorderColorReadonly) !important}
@@ -1129,8 +1131,10 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .sapMBtn.icon-button.search .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png'); background-repeat:no-repeat; background-position:center}
 
 .breadcrumbs {align-items:center; background-color:#fff; height:60px; width:1600px; max-width:1600px; margin:0 auto}
-.breadcrumbs .sapMBtn {margin-right:5px !important}
 .breadcrumbs .contents {width:1600px; display:flex; justify-content:space-between}
+
+.button-group.sapMHBox .sapMFlexItem + .sapMFlexItem {margin-left:5px}
+.button-group.sapMVBox .sapMFlexItem + .sapMFlexItem {margin-top:5px}
 
 .app-menu-toolbar .my-info {margin:0; height:100%; padding:0 6px; box-shadow:none}
 .app-menu-toolbar .my-info .sapMGTContent,

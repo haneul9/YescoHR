@@ -77,7 +77,7 @@
       <OverflowToolbar>
         <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
         <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00118}" type="Default" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" class="sapUiTinyMarginEnd" />
+        <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
       </OverflowToolbar>
     </footer>

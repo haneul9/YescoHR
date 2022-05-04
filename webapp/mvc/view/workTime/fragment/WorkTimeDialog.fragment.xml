@@ -6,7 +6,7 @@
   <Dialog id="detailDialog" afterClose=".onDialogAfClose" title="{i18n>LABEL_27001}" contentWidth="1100px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onDialogSavBtn" />
-      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <content>
       <VBox class="vCardBox sapUiMediumMarginBottom">
@@ -56,8 +56,8 @@
             <Title level="H4" text="{i18n>LABEL_02023}" />
             <Text text="{i18n>MSG_27003}" class="desc-txt" />
           </HBox>
-          <HBox>
-            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogAdd" class="sapUiTinyMarginEnd" />
+          <HBox class="button-group">
+            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogAdd" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDialogDel" />
           </HBox>
         </HBox>

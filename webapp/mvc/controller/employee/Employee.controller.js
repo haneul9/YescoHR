@@ -485,14 +485,14 @@ sap.ui.define(
                     text: this.getBundleText('LABEL_00106'), // 등록
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressRegTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
+                  }).addStyleClass('icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
                     customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
                     enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressModifyTable.bind(this),
-                  }).addStyleClass('sapUiTinyMarginEnd icon-button'),
+                  }).addStyleClass('icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
@@ -510,10 +510,6 @@ sap.ui.define(
                   }).addStyleClass('icon-button'),
                 ],
               }).addStyleClass('table-actions');
-
-              if (!_.isEqual(mMenu.code, this.CRUD_TABLES.ADDRESS.key)) {
-                oSubButtonBox.getItems()[2].addStyleClass('sapUiTinyMarginEnd');
-              }
 
               oSubHBox.addItem(oSubButtonBox);
             }

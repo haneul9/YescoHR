@@ -1,72 +1,72 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Dialog id="DetailHisDialog" title="{i18n>LABEL_09022}" contentWidth="1100px" contentHeight="auto">
-        <buttons>
-            <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
-            <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
-            <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
-        </buttons>
-        <content>
-            <VBox class="vCardBox sapUiMediumMarginBottom">
-                <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 2fr" gridGap="1px 0" class="form-grid">
-                    <Label text="{i18n>LABEL_09021}"/>
-                    <VBox>
-                        <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{/ReWriteStat}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
-                    </VBox>
-                    <Label text="{i18n>LABEL_09016}"/>
-                    <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData2" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09020}"/>
-                    <VBox>
-                        <Input id="DialogData3" maxLength="{/FieldLimitPop/Disenm}" value="{/DialogData/Disenm}" class="required" editable="{/ReWriteStat}"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_09017}"/>
-                    <FlexBox alignItems="Start" justifyContent="End">
-                        <Input id="DialogData4" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09014}"/>
-                    <VBox>
-                        <Input id="DialogData5" maxLength="{/FieldLimitPop/Medorg}" value="{/DialogData/Medorg}" class="required" editable="{/ReWriteStat}"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_09018}"/>
-                    <FlexBox alignItems="Start" justifyContent="End">
-                        <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09015}"/>
-                    <VBox>
-                        <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{/ReWriteStat}">
-                            <core:Item text="{Ztext}" key="{Zcode}" />
-                        </ComboBox>
-                    </VBox>
-                    <Label text="{i18n>LABEL_09032}" width="180px" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ 
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Dialog id="DetailHisDialog" title="{i18n>LABEL_09022}" contentWidth="1100px" contentHeight="auto">
+    <buttons>
+      <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
+      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
+    </buttons>
+    <content>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 2fr" gridGap="1px 0" class="form-grid">
+          <Label text="{i18n>LABEL_09021}"/>
+          <VBox>
+            <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{/ReWriteStat}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+          </VBox>
+          <Label text="{i18n>LABEL_09016}"/>
+          <FlexBox alignItems="Start" justifyContent="End">
+            <Input id="DialogData2" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
+          </FlexBox>
+          <Label text="{i18n>LABEL_09020}"/>
+          <VBox>
+            <Input id="DialogData3" maxLength="{/FieldLimitPop/Disenm}" value="{/DialogData/Disenm}" class="required" editable="{/ReWriteStat}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_09017}"/>
+          <FlexBox alignItems="Start" justifyContent="End">
+            <Input id="DialogData4" maxLength="10" textAlign="Right" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveCompar" editable="{/ReWriteStat}"/>
+          </FlexBox>
+          <Label text="{i18n>LABEL_09014}"/>
+          <VBox>
+            <Input id="DialogData5" maxLength="{/FieldLimitPop/Medorg}" value="{/DialogData/Medorg}" class="required" editable="{/ReWriteStat}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_09018}"/>
+          <FlexBox alignItems="Start" justifyContent="End">
+            <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+          </FlexBox>
+          <Label text="{i18n>LABEL_09015}"/>
+          <VBox>
+            <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{/ReWriteStat}">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+          </VBox>
+          <Label text="{i18n>LABEL_09032}" width="180px" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
+          <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
+            <Text text="{ 
                             parts: [{path: '/DialogData/Mob01'}, {path: '/DialogData/Mob02'}, {path: '/DialogData/Mobtot'}],
                             formatter: '.forMatCost' 
                         }" />
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09031}" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
-                    <FlexBox alignItems="Start" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{/DialogData/ZmobResn}" />
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09027}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09019}"/>
-                    <FlexBox alignItems="Start" justifyContent="{= ${/DialogData/ZappStat} === 'P' ? 'Start' : 'End' }">
-                        <Text text="{/DialogData/Pratetx}" />
-                    </FlexBox>
-                    <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
-                    <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
-                        <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-                    </FlexBox>
-                </grid:CSSGrid>
-            </VBox>
-            <core:Fragment id="DialogAttFile" fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-        </content>
-    </Dialog>
+          </FlexBox>
+          <Label text="{i18n>LABEL_09031}" visible="{= ${/DialogData/ZappStat} === 'P' }"/>
+          <FlexBox alignItems="Start" visible="{= ${/DialogData/ZappStat} === 'P' }">
+            <Text text="{/DialogData/ZmobResn}" />
+          </FlexBox>
+          <Label text="{i18n>LABEL_09027}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+          <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
+            <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+          </FlexBox>
+          <Label text="{i18n>LABEL_09019}"/>
+          <FlexBox alignItems="Start" justifyContent="{= ${/DialogData/ZappStat} === 'P' ? 'Start' : 'End' }">
+            <Text text="{/DialogData/Pratetx}" />
+          </FlexBox>
+          <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+          <FlexBox alignItems="Start" justifyContent="End" visible="{= ${/DialogData/ZappStat} === 'P' }">
+            <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+          </FlexBox>
+        </grid:CSSGrid>
+      </VBox>
+      <core:Fragment id="DialogAttFile" fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+    </content>
+  </Dialog>
 </core:FragmentDefinition>

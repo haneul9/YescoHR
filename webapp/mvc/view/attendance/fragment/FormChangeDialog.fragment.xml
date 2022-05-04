@@ -1,114 +1,114 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1400px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
-        <m:content>
-            <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
-                <m:HBox justifyContent="SpaceBetween" alignItems="Center">
-                    <m:HBox class="form-bar" alignItems="Center">
-                        <m:Label text="{i18n>LABEL_00338}" />
-                        <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Button text="{i18n>LABEL_04030}" class="sapUiTinyMarginEnd" press=".onPressAMToPM" />
-                        <m:Button text="{i18n>LABEL_04031}" class="sapUiTinyMarginEnd" press=".onPressPMToAM" />
-                        <m:Button text="{i18n>LABEL_04020}" class="sapUiTinyMarginEnd" press=".onPressHalfToOne" />
-                        <m:Button text="{i18n>LABEL_04021}" press=".onPressOneToHalf" />
-                    </m:HBox>
-                </m:HBox>
-            </m:VBox>
-            <m:VBox class="hCardBox mb-16-px dialog-content-table">
-                <Table id="dialogChangeTable" width="100%" enableSelectAll="false" columnHeaderHeight="35" rowHeight="34" rows="{/form/dialog/list}" busyIndicatorDelay="0" busy="{/form/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionChangeTableRow">
-                    <columns>
-                        <Column width="10%" headerSpan="4">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04011}" />
-                                <m:Label text="{i18n>LABEL_04010}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{Atext2}" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="12%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04011}" />
-                                <m:Label text="{i18n>LABEL_00148}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="12%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04011}" />
-                                <m:Label text="{i18n>LABEL_00149}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="6%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04011}" />
-                                <m:Label text="{i18n>LABEL_00155}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="10%" headerSpan="4">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04012}" />
-                                <m:Label text="{i18n>LABEL_04010}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{Atext}" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="14%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04012}" />
-                                <m:Label text="{i18n>LABEL_00148}" />
-                            </multiLabels>
-                            <template>
-                                <custom:DatePicker class="sapIcon_Date small-table-input" dateValue="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{isActive}" change=".onChangeRowBegda" />
-                            </template>
-                        </Column>
-                        <Column width="14%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04012}" />
-                                <m:Label text="{i18n>LABEL_00149}" />
-                            </multiLabels>
-                            <template>
-                                <custom:DatePicker class="sapIcon_Date small-table-input" minDate="{Begda}" dateValue="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${isActive} &amp;&amp; ${Abrtg2} !== '1.00' }" change=".validChangeLeave" />
-                            </template>
-                        </Column>
-                        <Column width="6%">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04012}" />
-                                <m:Label text="{i18n>LABEL_00155}" />
-                            </multiLabels>
-                            <template>
-                                <m:Text text="{ path: 'Abrtg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="auto">
-                            <multiLabels>
-                                <m:Label text="{i18n>LABEL_04013}" />
-                                <m:Label text="{i18n>LABEL_04013}" />
-                            </multiLabels>
-                            <template>
-                                <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
-                            </template>
-                        </Column>
-                    </columns>
-                </Table>
-            </m:VBox>
-        </m:content>
-        <m:buttons>
-            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormChangeDialogSave" />
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressFormChangeDialogClose" />
-        </m:buttons>
-    </m:Dialog>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1400px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
+    <m:content>
+      <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
+        <m:HBox justifyContent="SpaceBetween" alignItems="Center">
+          <m:HBox class="form-bar" alignItems="Center">
+            <m:Label text="{i18n>LABEL_00338}" />
+            <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
+          </m:HBox>
+          <m:HBox class="button-group">
+            <m:Button text="{i18n>LABEL_04030}" press=".onPressAMToPM" />
+            <m:Button text="{i18n>LABEL_04031}" press=".onPressPMToAM" />
+            <m:Button text="{i18n>LABEL_04020}" press=".onPressHalfToOne" />
+            <m:Button text="{i18n>LABEL_04021}" press=".onPressOneToHalf" />
+          </m:HBox>
+        </m:HBox>
+      </m:VBox>
+      <m:VBox class="hCardBox mb-16-px dialog-content-table">
+        <Table id="dialogChangeTable" width="100%" enableSelectAll="false" columnHeaderHeight="35" rowHeight="34" rows="{/form/dialog/list}" busyIndicatorDelay="0" busy="{/form/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionChangeTableRow">
+          <columns>
+            <Column width="10%" headerSpan="4">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04011}" />
+                <m:Label text="{i18n>LABEL_04010}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{Atext2}" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="12%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04011}" />
+                <m:Label text="{i18n>LABEL_00148}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="12%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04011}" />
+                <m:Label text="{i18n>LABEL_00149}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="6%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04011}" />
+                <m:Label text="{i18n>LABEL_00155}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="10%" headerSpan="4">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04012}" />
+                <m:Label text="{i18n>LABEL_04010}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{Atext}" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="14%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04012}" />
+                <m:Label text="{i18n>LABEL_00148}" />
+              </multiLabels>
+              <template>
+                <custom:DatePicker class="sapIcon_Date small-table-input" dateValue="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{isActive}" change=".onChangeRowBegda" />
+              </template>
+            </Column>
+            <Column width="14%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04012}" />
+                <m:Label text="{i18n>LABEL_00149}" />
+              </multiLabels>
+              <template>
+                <custom:DatePicker class="sapIcon_Date small-table-input" minDate="{Begda}" dateValue="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${isActive} &amp;&amp; ${Abrtg2} !== '1.00' }" change=".validChangeLeave" />
+              </template>
+            </Column>
+            <Column width="6%">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04012}" />
+                <m:Label text="{i18n>LABEL_00155}" />
+              </multiLabels>
+              <template>
+                <m:Text text="{ path: 'Abrtg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="auto">
+              <multiLabels>
+                <m:Label text="{i18n>LABEL_04013}" />
+                <m:Label text="{i18n>LABEL_04013}" />
+              </multiLabels>
+              <template>
+                <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
+              </template>
+            </Column>
+          </columns>
+        </Table>
+      </m:VBox>
+    </m:content>
+    <m:buttons>
+      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormChangeDialogSave" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormChangeDialogClose" class="cancel" />
+    </m:buttons>
+  </m:Dialog>
 </core:FragmentDefinition>
