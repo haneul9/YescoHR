@@ -332,7 +332,7 @@ sap.ui.define(
         oViewModel.setProperty('/FormData/Pratetx', mSelectedDetail.Pratetx);
         oViewModel.setProperty('/FormData/Prate', mSelectedDetail.Prate);
 
-        if (oEvent.getSource().getSelectedItem().getBindingContext().getPath().substr(-1) === '0') {
+        if (sTargetPath.substr(-1) === '0') {
           return;
         }
 
