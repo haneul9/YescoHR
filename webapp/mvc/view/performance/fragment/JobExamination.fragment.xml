@@ -50,11 +50,7 @@
             <table:Column width="40%">
               <Label text="{i18n>LABEL_10105}" wrapping="true"/>
               <table:template>
-                <TextArea value="{Zbigo}" width="100%" editable="{= ${Zdeactive} !== 'X' }" maxLength="{/fieldControl/limit/Z131}">
-                  <customData>
-                    <core:CustomData key="required" value="{Zcheck}" writeToDom="true" />
-                  </customData>
-                </TextArea>
+                <TextArea value="{Zbigo}" width="100%" editable="{= ${Zdeactive} !== 'X' }" maxLength="{/fieldControl/limit/Z131}" />
               </table:template>
             </table:Column>
           </table:columns>
