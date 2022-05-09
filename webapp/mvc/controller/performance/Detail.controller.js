@@ -462,6 +462,18 @@ sap.ui.define(
           return false;
         }
 
+        if (oViewModel.getProperty('/type') === 'MA' && oViewModel.getProperty('/jobDiagnosis/fixed')) {
+          // 직무진단을 완료하지 않았습니다.\n직무진단을 완료하신 후 평가결과를 전송하시기 바랍니다.
+          MessageBox.confirm(this.getBundleText('MSG_10030'), {
+            onClose: (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) return;
+
+              this.onPressDiagnosisButton();
+            },
+          });
+          return false;
+        }
+
         return true;
       },
 
@@ -621,55 +633,53 @@ sap.ui.define(
 
       // 직무진단
       async onPressDiagnosisButton() {
-        // MessageBox.alert('Not ready yet.');
-        const oViewModel = this.getViewModel();
+        MessageBox.alert('Not ready yet.');
+        // const oViewModel = this.getViewModel();
 
-        try {
-          oViewModel.setProperty('/busy', true);
+        // try {
+        //   oViewModel.setProperty('/busy', true);
 
-          const oView = this.getView();
-          const aDeep = await this.getJobDiagnosis();
-          const aDeepList = aDeep.JobDiagnosisItemSet.results;
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepList = aDeep.JobDiagnosisItemSet.results;
 
-          oViewModel.setProperty('/jobDiagnosis/myJob', _.pick(aDeep, ['Orgeh', 'Stell']));
+        //   oViewModel.setProperty('/jobDiagnosis/myJob', _.pick(aDeep, ['Orgeh', 'Stell']));
 
-          await Promise.all(
-            _.forEach(aDeepList, async (e, i) => {
-              const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
+        //   oViewModel.setProperty(
+        //     '/jobDiagnosis/fixed',
+        //     _.some(aDeepList, (e) => {
+        //       return e.Zdeactive !== 'X';
+        //     })
+        //   );
+        //   oViewModel.setProperty('/jobDiagnosis/list', aDeepList);
+        //   oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
 
-              oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, aCodeList);
-            })
-          );
+        //   _.forEach(aDeepList, async (e, i) => {
+        //     const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
 
-          oViewModel.setProperty(
-            '/jobDiagnosis/fixed',
-            _.some(aDeepList, (e) => {
-              return e.Zdeactive !== 'X';
-            })
-          );
-          oViewModel.setProperty('/jobDiagnosis/list', aDeepList);
-          oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
+        //     oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, aCodeList);
+        //   });
 
-          setTimeout(() => {
-            if (!this.pExamDialog) {
-              this.pExamDialog = Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-                controller: this,
-              }).then((oDialog) => {
-                oView.addDependent(oDialog);
-                return oDialog;
-              });
-            }
+        //   setTimeout(() => {
+        //     if (!this.pExamDialog) {
+        //       this.pExamDialog = Fragment.load({
+        //         id: oView.getId(),
+        //         name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //         controller: this,
+        //       }).then((oDialog) => {
+        //         oView.addDependent(oDialog);
+        //         return oDialog;
+        //       });
+        //     }
 
-            this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
-            this.pExamDialog.then((oDialog) => oDialog.open());
-          }, 500);
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        //     this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
+        //     this.pExamDialog.then((oDialog) => oDialog.open());
+        //   }, 500);
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
+        // }
       },
 
       // 저장
@@ -736,7 +746,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aDeepList = oViewModel.getProperty('/jobDiagnosis/list');
         const mCheckTarget = _.find(aDeepList, (e) => {
-          return e.Zcheck === 'X' && !e.Zzjarst;
+          return e.Zcheck === 'X' && !e.Zzjarst && e.Appgb === oViewModel.getProperty('/type');
         });
 
         if (!_.isEmpty(mCheckTarget)) {
