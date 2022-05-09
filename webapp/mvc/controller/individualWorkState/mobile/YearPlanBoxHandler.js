@@ -16,8 +16,9 @@ sap.ui.define(
     'use strict';
 
     return BaseObject.extend('sap.ui.yesco.mvc.controller.individualWorkState.mobile.YearPlanBoxHandler', {
-      constructor: function ({ oController }) {
+      constructor: function ({ oController, sPernr }) {
         this.oController = oController;
+        this.sPernr = sPernr;
       },
 
       async getYearPlan() {
@@ -27,6 +28,7 @@ sap.ui.define(
         const sWerks = this.oController.getAppointeeProperty('Werks');
         const mPayLoad = {
           Werks: sWerks,
+          Pernr: sPernr,
           Tmyea: mSearchDate.year,
           Tmmon: mSearchDate.month,
         };

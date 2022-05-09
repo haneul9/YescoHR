@@ -27,10 +27,13 @@ sap.ui.define(
       initializeModel() {
         return {
           FullYear: '',
-          year: moment().year(),
+          pernr: '',
+          year: moment().get('year'),
+          month: moment().get('month'),
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
+          appointee: {},
           MonthStrList: [],
           YearPlan: [
             {
@@ -45,6 +48,7 @@ sap.ui.define(
               ],
             },
           ],
+          week: { busy: false },
           WeekWork: {
             Wkrultx: '',
             WeekTime: 52,
@@ -83,7 +87,7 @@ sap.ui.define(
         return !sTime1 || !sTime2 ? '0' : `${sTime1.slice(-4, -2)}:${sTime1.slice(-2)} ~ ${sTime2.slice(-4, -2)}:${sTime2.slice(-2)}`;
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setSizeLimit(500);
@@ -91,9 +95,21 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this });
-          this.setMonth();
-          this.formYear();
+          const sWerks = this.getAppointeeProperty('Werks');
+          const sPernr = oParameter.pernr ?? this.getAppointeeProperty('Pernr');
+          const sYear = oParameter.year ?? moment().get('year');
+          const sMonth = oParameter.month ?? moment().get('month');
+
+          oViewModel.setProperty('/pernr', sPernr);
+          oViewModel.setProperty('/year', _.toNumber(sYear));
+          oViewModel.setProperty('/month', _.toNumber(sMonth));
+          oViewModel.setProperty('/WeekWorkDate', oParameter.year ? moment().year(_.toNumber(sYear)).month(_.toNumber(sMonth)).toDate() : new Date());
+
+          this.YearPlanBoxHandler = new YearPlanBoxHandler({ oController: this, sPernr });
+
+          this.setAppointee(sPernr);
+          this.setMonth(sMonth);
+          this.formYear(sYear);
 
           oViewModel.setProperty(
             '/MonthStrList',
@@ -102,14 +118,12 @@ sap.ui.define(
             })
           );
 
-          this.YearPlanBoxHandler.getYearPlan();
-
-          const sWerks = this.getAppointeeProperty('Werks');
-          const sYear = oViewModel.getProperty('/year');
+          this.YearPlanBoxHandler.getYearPlan(sYear);
 
           // 휴가계획현황
           const mPayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
           };
 
@@ -120,7 +134,10 @@ sap.ui.define(
           this.buildDoughChart(aPlanList);
 
           // 휴가유형 별 현황
-          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: sPernr,
+          });
 
           oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
 
@@ -128,12 +145,13 @@ sap.ui.define(
             oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
           }
 
-          const sMonth = oViewModel.getProperty('/WorkMonth');
+          const sWorkMonth = oViewModel.getProperty('/WorkMonth');
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
-            Month: sMonth,
+            Month: sWorkMonth,
           };
 
           // 근무현황 -> 근무일수
@@ -148,7 +166,7 @@ sap.ui.define(
 
           const mWeekWorkPayLoad = {
             Menid: this.getCurrentMenuId(),
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: sPernr,
             Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
           };
 
@@ -167,6 +185,7 @@ sap.ui.define(
 
           const mWorkTypePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Awart: sCode,
             Tmyea: sYear,
           };
@@ -179,6 +198,7 @@ sap.ui.define(
 
           const mDailyWorkPayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
           };
 
@@ -199,10 +219,25 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
+          AppUtils.setAppBusy(false).setMenuBusy(false);
         }
       },
 
-      //////////////////////////// Doughnut Chart Setting
+      async setAppointee(sPernr) {
+        const oViewModel = this.getViewModel();
+
+        if (_.isEqual(sPernr, this.getAppointeeProperty('Pernr'))) {
+          oViewModel.setProperty('/appointee', AppUtils.getAppComponent().getAppointeeModel().getData());
+        } else {
+          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Ename: sPernr,
+          });
+
+          oViewModel.setProperty('/appointee', { ...mAppointee, Orgtx: mAppointee.Fulln, Photo: mAppointee.Photo || this.getUnknownAvatarImageURL() });
+        }
+      },
+
+      // Doughnut Chart Setting
       getDoughnutChartOption() {
         return {
           legendPosition: 'right',
@@ -234,15 +269,45 @@ sap.ui.define(
 
         oDetailModel.setProperty('/vacationChart', mPlan);
 
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sDoughChartId,
-            type: 'doughnut2d',
-            renderAt: 'chart-doughnut-container',
-            width: '40%',
-            height: '100%',
-            dataFormat: 'json',
-            dataSource: {
+        if (!FusionCharts(this.sDoughChartId)) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sDoughChartId,
+              type: 'doughnut2d',
+              renderAt: 'chart-doughnut-container',
+              width: '40%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getDoughnutChartOption(),
+                data: [
+                  {
+                    label: this.getBundleText('LABEL_18002'), // 사용일수
+                    value: mPlan.dUsed,
+                    displayValue: `${mPlan.pUsed}%`,
+                    color: '#7BB4EB',
+                  },
+                  {
+                    label: this.getBundleText('LABEL_18003'), // 계획일수
+                    value: mPlan.dPlan,
+                    displayValue: `${mPlan.pPlan}%`,
+                    color: '#A2EB7B',
+                  },
+                  {
+                    label: this.getBundleText('LABEL_18004'), // 잔여일수 (미사용&미계획)
+                    value: mPlan.dUnPlan,
+                    displayValue: `${mPlan.pUnPlan}%`,
+                    color: '#FFE479',
+                  },
+                ],
+              },
+            }).render();
+          });
+        } else {
+          const oChart = FusionCharts(this.sDoughChartId);
+
+          oChart.setChartData(
+            {
               chart: this.getDoughnutChartOption(),
               data: [
                 {
@@ -265,11 +330,13 @@ sap.ui.define(
                 },
               ],
             },
-          }).render();
-        });
+            'json'
+          );
+          setTimeout(() => oChart.render(), 200);
+        }
       },
 
-      // Dough ReRanderring
+      // Dough Rerendering
       setDoughChartData(aPlanList) {
         const oChart = FusionCharts(this.sDoughChartId);
         const oDetailModel = this.getViewModel();
@@ -313,7 +380,7 @@ sap.ui.define(
         oChart.render();
       },
 
-      //////////////////////////// Combination Chart Setting
+      // Combination Chart Setting
       getCombiChartOption() {
         return {
           //Cosmetics
@@ -356,15 +423,48 @@ sap.ui.define(
           )
           .value();
 
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sCombiChartId,
-            type: 'mscombidy2d',
-            renderAt: 'chart-combination-container',
-            width: '100%',
-            height: '300px',
-            dataFormat: 'json',
-            dataSource: {
+        if (!FusionCharts(this.sCombiChartId)) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sCombiChartId,
+              type: 'mscombidy2d',
+              renderAt: 'chart-combination-container',
+              width: '100%',
+              height: '300px',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getCombiChartOption(),
+                categories: [
+                  {
+                    category: oDetailModel.getProperty('/MonthStrList'),
+                  },
+                ],
+                dataset: [
+                  {
+                    seriesName: this.getBundleText('LABEL_16005'),
+                    labelFontSize: '13',
+                    data: aWorkTypeList.Monuse,
+                    color: '#7bb4eb',
+                  },
+                  {
+                    seriesName: this.getBundleText('LABEL_00196'),
+                    labelFontSize: '13',
+                    renderAs: 'line',
+                    data: aWorkTypeList.Current,
+                    color: '#000000',
+                    anchorBgColor: '#000000',
+                    anchorRadius: '3',
+                    lineThickness: '1',
+                  },
+                ],
+              },
+            }).render();
+          });
+        } else {
+          const oChart = FusionCharts(this.sCombiChartId);
+
+          oChart.setChartData(
+            {
               chart: this.getCombiChartOption(),
               categories: [
                 {
@@ -390,11 +490,13 @@ sap.ui.define(
                 },
               ],
             },
-          }).render();
-        });
+            'json'
+          );
+          setTimeout(() => oChart.render(), 200);
+        }
       },
 
-      // Combination ReRanderring
+      // Combination Rerendering
       setCombiChartData(aWorkTypeList) {
         const oDetailModel = this.getViewModel();
         const oChart = FusionCharts(this.sCombiChartId);
@@ -553,7 +655,7 @@ sap.ui.define(
         return parseFloat(sVal);
       },
 
-      setMonth() {
+      setMonth(sMonth = moment().month()) {
         const oViewModel = this.getViewModel();
         const aMonth = [];
 
@@ -562,7 +664,7 @@ sap.ui.define(
         }
 
         oViewModel.setProperty('/WorkMonths', aMonth);
-        oViewModel.setProperty('/WorkMonth', moment().month() + 1);
+        oViewModel.setProperty('/WorkMonth', _.toNumber(sMonth) + 1);
       },
 
       // 근무현황 월 선택
@@ -571,6 +673,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mPayLoad = {
           Werks: this.getAppointeeProperty('Werks'),
+          Pernr: oViewModel.getProperty('/pernr'),
           Tmyea: oViewModel.getProperty('/year'),
           Month: oViewModel.getProperty('/WorkMonth'),
         };
@@ -588,12 +691,12 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/week/busy', true);
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mWeekWorkPayLoad = {
             Menid: this.getCurrentMenuId(),
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Pernr: oViewModel.getProperty('/pernr'),
             Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
           };
           // 주 52시간 현황
@@ -604,7 +707,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/busy', false);
+          oViewModel.setProperty('/week/busy', false);
         }
       },
 
@@ -614,6 +717,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mPayLoad = {
           Werks: this.getAppointeeProperty('Werks'),
+          Pernr: oViewModel.getProperty('/pernr'),
           Awart: oEvent.getSource().getSelectedKey(),
           Tmyea: oViewModel.getProperty('/year'),
         };
@@ -631,18 +735,20 @@ sap.ui.define(
       },
 
       // 년도 선택시 화면전체조회
-      async formReflesh() {
+      async formRefresh() {
         const oViewModel = this.getViewModel();
 
         try {
           oViewModel.setProperty('/busy', true);
 
           const sWerks = this.getAppointeeProperty('Werks');
+          const sPernr = oViewModel.getProperty('/pernr');
           const sYear = oViewModel.getProperty('/year');
 
           // 휴가계획현황
           const mPayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
           };
 
@@ -653,7 +759,10 @@ sap.ui.define(
           this.setDoughChartData(aPlanList);
 
           // 휴가유형 별 현황
-          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: sPernr,
+          });
 
           oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
 
@@ -665,6 +774,7 @@ sap.ui.define(
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
             Month: sMonth,
           };
@@ -688,6 +798,7 @@ sap.ui.define(
 
           const mWorkTypePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Awart: sCode,
             Tmyea: sYear,
           };
@@ -700,6 +811,7 @@ sap.ui.define(
 
           const mDailyWorkPayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
           };
 
@@ -727,13 +839,13 @@ sap.ui.define(
       onPressPrevYear() {
         this.YearPlanBoxHandler.onPressPrevYear();
         this.formYear(this.getViewModel().getProperty('/year'));
-        this.formReflesh();
+        this.formRefresh();
       },
 
       onPressNextYear() {
         this.YearPlanBoxHandler.onPressNextYear();
         this.formYear(this.getViewModel().getProperty('/year'));
-        this.formReflesh();
+        this.formRefresh();
       },
 
       onClickDay(oEvent) {

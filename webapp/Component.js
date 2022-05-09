@@ -329,6 +329,9 @@ sap.ui.define(
             }
 
             setTimeout(() => {
+              const oPage = oView.getContent()[0];
+
+              if (oPage && _.has(oPage.constructor.prototype, 'scrollTo')) oPage.scrollTo(0);
               $('#sap-ui-preserve').empty();
             });
           });
