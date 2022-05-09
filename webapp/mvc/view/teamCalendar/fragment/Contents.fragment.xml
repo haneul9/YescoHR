@@ -1,0 +1,103 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents" justifyContent="SpaceBetween">
+            <HBox class="vCardBox" justifyContent="SpaceBetween" height="80px">
+                <HBox class="form-bar" alignItems="Center">
+                    <Label text="{i18n>LABEL_00328}" />
+                    <DatePicker width="250px" displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/searchConditions/Tyymm}" busyIndicatorDelay="0" busy="{/busy/Tyymm}" />
+                    <Label text="{i18n>LABEL_00237}" />
+                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
+                        <core:Item text="{Pbtxt}" key="{Werks}" />
+                    </ComboBox>
+                    <Label text="{i18n>LABEL_00224}" />
+                    <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
+                        <core:Item text="{Orgtx}" key="{Orgeh}" />
+                    </ComboBox>
+                    <CheckBox text="{i18n>LABEL_37001}" selected="{ path: '/searchConditions/Downinc', type: 'sap.ui.yesco.mvc.model.type.Boolean' }" visible="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}" />
+                    <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressSearch"/>
+                </HBox>
+            </HBox>
+            <VBox width="100%" class="vCardBox small">
+                <HBox class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="Team Calendar" class="sapUiSmallMarginEnd" />
+                        <Text text="{i18n>MSG_37001}" class="desc-txt ml-0" />
+                    </HBox>
+                </HBox>
+                <HBox justifyContent="Center" class="year-plan-head">
+                    <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" enabled="{= !${/busy/Calendar} }" />
+                    <Title level="H2" text="{/calendar/yearMonth}" />
+                    <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" enabled="{= !${/busy/Calendar} }" />
+                </HBox>
+                <grid:CSSGrid class="year-plan-grid fixed-grid-header" gridTemplateColumns="{/calendar/columnTemplate}" gridGap="1px" items="{path: '/calendar/plans'}" busyIndicatorDelay="0" busy="{/busy/Calendar}">
+                    <custom:DayBox width="100%" press=".onPressDayBox">
+                        <custom:customData>
+                            <core:CustomData key="pernr" value="{Pernr}" />
+                            <core:CustomData key="empno" value="{empno}" />
+                            <core:CustomData key="moveToIndi" value="{moveToIndi}" />
+                            <core:CustomData key="day" value="{day}" />
+                            <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+                            <core:CustomData key="border" value="{borderNames}" writeToDom="true" />
+                        </custom:customData>
+                        <Image src="{photo}" mode="Background" class="members-photo" visible="{= !!${photo} }">
+                            <layoutData>
+                                <FlexItemData minHeight="30px" maxHeight="30px" />
+                            </layoutData>
+                        </Image>
+                        <Text width="100%" textAlign="Center" text="{label}" visible="{= !!${photo} }" class="active-link" />
+                        <Text width="100%" textAlign="Center" text="{label}" visible="{= !${photo} }">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                            <customData>
+                                <core:CustomData key="day" value="{day}" />
+                                <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
+                                <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+                            </customData>
+                        </Text>
+                    </custom:DayBox>
+                </grid:CSSGrid>
+                <HBox class="box style-02 status-wrap year-plan bottom-fixed sapUiTinyMarginTop">
+                    <VBox>
+                        <Text text="{i18n>LABEL_20006}" class="type01" />
+                        <Text text="{i18n>LABEL_20008}" class="type02" />
+                        <Text text="{i18n>LABEL_18033}" class="type03" />
+                        <Text text="{i18n>LABEL_18034}" class="type04" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>LABEL_00188}" class="type11" />
+                        <Text text="{i18n>LABEL_01123}" class="type12" />
+                        <Text text="{i18n>LABEL_18035}" class="type13" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>LABEL_00182}" class="type21" />
+                        <Text text="{i18n>LABEL_00181}" class="type22" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>LABEL_28055}" class="type31" />
+                        <Text text="{i18n>LABEL_00189}" class="type32" />
+                        <Text text="{i18n>LABEL_18036}" class="type33" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>LABEL_23007}" class="type18" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>LABEL_00180}" class="type15" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </Page>
+</core:FragmentDefinition>

@@ -25,6 +25,7 @@ sap.ui.define(
       initializeModel() {
         return {
           FullYear: '',
+          pernr: '',
           searchDate: {
             full: moment().format('YYYY.MM'),
             month: moment().format('MM'),
@@ -97,7 +98,7 @@ sap.ui.define(
         return sDateRange;
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setSizeLimit(500);
@@ -105,7 +106,11 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this });
+          const sPernr = oParameter.pernr ?? this.getAppointeeProperty('Pernr');
+
+          oViewModel.setProperty('/pernr', sPernr);
+
+          this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this, sPernr });
           // this.setMonth();
           this.formYear();
 
@@ -124,6 +129,7 @@ sap.ui.define(
           // 휴가계획현황
           const mPayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
           };
 
@@ -134,7 +140,10 @@ sap.ui.define(
           this.buildDoughChart(aPlanList);
 
           // 휴가유형 별 현황
-          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+          const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: sPernr,
+          });
 
           oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
 
@@ -142,6 +151,7 @@ sap.ui.define(
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
             Month: sMonth,
           };
@@ -156,13 +166,12 @@ sap.ui.define(
 
           oViewModel.setProperty('/OTWorkList', aOTList);
 
-          const mWeekWorkPayLoad = {
-            Werks: sWerks,
-            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-          };
-
           // 주 52시간 현황
-          const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+          const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', {
+            Werks: sWerks,
+            Pernr: sPernr,
+            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+          });
 
           oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime.Wkrultx);
           oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
@@ -173,13 +182,12 @@ sap.ui.define(
           oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
           oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
 
-          const mDailyWorkPayLoad = {
-            Werks: sWerks,
-            Tmyea: sYear,
-          };
-
           // 일별 근태현황
-          const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+          const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', {
+            Werks: sWerks,
+            Pernr: sPernr,
+            Tmyea: sYear,
+          });
 
           oViewModel.setProperty('/DailyWorkList', aDailyList);
         } catch (oError) {
@@ -190,7 +198,7 @@ sap.ui.define(
         }
       },
 
-      //////////////////////////// Doughnut Chart Setting
+      // Doughnut Chart Setting
       getDoughnutChartOption() {
         return {
           legendPosition: 'right',
@@ -373,6 +381,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mPayLoad = {
           Werks: this.getAppointeeProperty('Werks'),
+          Pernr: oViewModel.getProperty('/pernr'),
           Tmyea: oViewModel.getProperty('/searchDate/year'),
           Month: oViewModel.getProperty('/searchDate/month'),
         };
@@ -389,12 +398,14 @@ sap.ui.define(
       async onWeekWorkTime() {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
-        const mWeekWorkPayLoad = {
-          Werks: this.getAppointeeProperty('Werks'),
-          Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-        };
+
         // 주 52시간 현황
-        const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', mWeekWorkPayLoad);
+        const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', {
+          Werks: this.getAppointeeProperty('Werks'),
+          Pernr: oViewModel.getProperty('/pernr'),
+          Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
+        });
+
         oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime.Wkrultx);
         oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
         oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
@@ -409,14 +420,14 @@ sap.ui.define(
       async onWorkTypeUse(oEvent) {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
-        const mPayLoad = {
-          Werks: this.getAppointeeProperty('Werks'),
-          Awart: oEvent.getSource().getSelectedKey(),
-          Tmyea: oViewModel.getProperty('/searchDate/year'),
-        };
 
         // 근태유형 별 연간 사용현황
-        const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', mPayLoad);
+        const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', {
+          Werks: this.getAppointeeProperty('Werks'),
+          Pernr: oViewModel.getProperty('/pernr'),
+          Awart: oEvent.getSource().getSelectedKey(),
+          Tmyea: oViewModel.getProperty('/searchDate/year'),
+        });
 
         // Combination Chart
         this.setCombiChartData(aWorkTypeList);
@@ -430,7 +441,7 @@ sap.ui.define(
       },
 
       // 년도 선택시 화면전체조회
-      async formReflesh(sBeYear) {
+      async formRefresh(sBeYear) {
         const oViewModel = this.getViewModel();
 
         try {
@@ -438,12 +449,14 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sWerks = this.getAppointeeProperty('Werks');
+          const sPernr = oViewModel.getProperty('/pernr');
           const mSearchDate = oViewModel.getProperty('/searchDate');
           const sYear = mSearchDate.year;
           const sMonth = mSearchDate.month;
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
+            Pernr: sPernr,
             Tmyea: sYear,
             Month: sMonth,
           };
@@ -460,28 +473,29 @@ sap.ui.define(
 
           if (sBeYear !== sYear) {
             // 휴가계획현황
-            const mPayLoad = {
+            const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', {
               Werks: sWerks,
+              Pernr: sPernr,
               Tmyea: sYear,
-            };
-
-            const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', mPayLoad);
+            });
 
             // Doughnut Chart
             this.setDoughChartData(aPlanList);
 
             // 휴가유형 별 현황
-            const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', { Menid: this.getCurrentMenuId() });
+            const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', {
+              Menid: this.getCurrentMenuId(),
+              Pernr: sPernr,
+            });
 
             oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
 
-            const mDailyWorkPayLoad = {
-              Werks: sWerks,
-              Tmyea: sYear,
-            };
-
             // 일별 근태현황
-            const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', mDailyWorkPayLoad);
+            const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', {
+              Werks: sWerks,
+              Pernr: sPernr,
+              Tmyea: sYear,
+            });
 
             oViewModel.setProperty('/DailyWorkList', aDailyList);
           }
@@ -500,14 +514,14 @@ sap.ui.define(
         const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
         this.YearPlanBoxHandler.onPressPrevYear();
         this.formYear();
-        this.formReflesh(sBeYear);
+        this.formRefresh(sBeYear);
       },
 
       onPressNextYear() {
         const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
         this.YearPlanBoxHandler.onPressNextYear();
         this.formYear();
-        this.formReflesh(sBeYear);
+        this.formRefresh(sBeYear);
       },
 
       onClickDay(oEvent) {
