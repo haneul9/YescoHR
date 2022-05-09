@@ -87,7 +87,7 @@
       <table:Column width="12%" filterProperty="Atext" sortProperty="Awart">
         <Label text="{i18n>LABEL_00163}"/>
         <table:template>
-          <Text text="{Zzapept}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zzapeptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </table:template>
       </table:Column>
     </table:columns>
