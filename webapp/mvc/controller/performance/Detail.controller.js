@@ -747,35 +747,61 @@ sap.ui.define(
           return true;
         }
 
-        if (
-          !_.chain(aDeepList)
-            .find((e) => {
-              return e.Zzjaitm === '1040' && (e.Zzjarst === '10' || e.Zzjarst === '20');
-            })
-            .isEmpty()
-            .value()
-        ) {
-          const mCheckMyJob = _.find(aDeepList, (e) => {
-            return e.Zcode === '90';
-          });
+        if (oViewModel.getProperty('/type') === 'ME') {
+          if (
+            !_.chain(aDeepList)
+              .find((e) => {
+                return e.Zzjaitm === '1040' && (e.Zzjarst === '10' || e.Zzjarst === '20');
+              })
+              .isEmpty()
+              .value()
+          ) {
+            const mCheckMyJob = _.find(aDeepList, (e) => {
+              return e.Zcode === '90' && e.Appgb === 'ME';
+            });
 
-          const aSelectJob = mCheckMyJob.Zzjarst.split('/');
-          const mMyJob = oViewModel.getProperty('/jobDiagnosis/myJob');
+            const aSelectJob = mCheckMyJob.Zzjarst.split('/');
+            const mMyJob = oViewModel.getProperty('/jobDiagnosis/myJob');
 
-          if (mCheckMyJob.Appgb === oViewModel.getProperty('/type') && aSelectJob[0] === mMyJob.Orgeh && aSelectJob[1] === mMyJob.Stell) {
-            // 현재와 다른 조직 혹은 직무를 선택하시기 바랍니다.
-            MessageBox.alert(this.getBundleText('MSG_10028'));
-            return true;
+            if (aSelectJob[0] === mMyJob.Orgeh && aSelectJob[1] === mMyJob.Stell) {
+              // 현재와 다른 조직 혹은 직무를 선택하시기 바랍니다.
+              MessageBox.alert(this.getBundleText('MSG_10028'));
+              return true;
+            }
+
+            if (!mCheckMyJob.Zzjarst) {
+              // 이동 희망 팀/직무를 선택하세요.
+              MessageBox.alert(this.getBundleText('MSG_10029'));
+              return true;
+            }
           }
+        } else {
+          if (
+            !_.chain(aDeepList)
+              .find((e) => {
+                return e.Zzjaitm === '1020' && (e.Zzjarst === '10' || e.Zzjarst === '20');
+              })
+              .isEmpty()
+              .value()
+          ) {
+            const mCheckMyJob = _.find(aDeepList, (e) => {
+              return e.Zcode === '90' && e.Appgb === 'MA';
+            });
 
-          const mNullJob = _.find(aDeepList, (e) => {
-            return e.Appgb === oViewModel.getProperty('/type') && e.Zcode === '90' && !e.Zzjarst;
-          });
+            const aSelectJob = mCheckMyJob.Zzjarst.split('/');
+            const mMyJob = oViewModel.getProperty('/jobDiagnosis/myJob');
 
-          if (!_.isEmpty(mNullJob)) {
-            // 이동 희망 팀/직무를 선택하세요.
-            MessageBox.alert(this.getBundleText('MSG_10029'));
-            return true;
+            if (aSelectJob[0] === mMyJob.Orgeh && aSelectJob[1] === mMyJob.Stell) {
+              // 현재와 다른 조직 혹은 직무를 선택하시기 바랍니다.
+              MessageBox.alert(this.getBundleText('MSG_10028'));
+              return true;
+            }
+
+            if (!mCheckMyJob.Zzjarst) {
+              // 이동 희망 팀/직무를 선택하세요.
+              MessageBox.alert(this.getBundleText('MSG_10029'));
+              return true;
+            }
           }
         }
 
