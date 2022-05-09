@@ -18,7 +18,7 @@
                     <Label text="{i18n>LABEL_00328}" />
                     <DatePicker width="250px" displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/searchConditions/Tyymm}" busyIndicatorDelay="0" busy="{/busy/Tyymm}" />
                     <Label text="{i18n>LABEL_00237}" />
-                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
+                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" enabled="{= ${/auth} !== 'E' }" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
                         <core:Item text="{Pbtxt}" key="{Werks}" />
                     </ComboBox>
                     <Label text="{i18n>LABEL_00224}" />
