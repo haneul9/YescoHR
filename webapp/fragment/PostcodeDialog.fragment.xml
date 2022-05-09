@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <Dialog showHeader="false" contentWidth="540px" class="dialog-post">
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onPostcodeDialogClose"/>
+      <Button text="{i18n>LABEL_00115}" press=".onPostcodeDialogClose" class="cancel" />
     </buttons>
     <custom:Postcode completed=".callbackPostcode" />
   </Dialog>

@@ -1,56 +1,56 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.leave.App"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-                </HBox>
-            </HBox>
-        </VBox>
-        <VBox class="contents">
-            <VBox class="vCardBox">
-                <HBox class="form-bar" alignItems="Center">
-                    <Label text="{i18n>LABEL_00328}" />
-                    <DatePicker value="{/search/Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" />
-                    <Label text="{i18n>LABEL_00227}" />
-                    <ComboBox selectedKey="{/search/Orgeh}" items="{/entry/department}">
-                        <core:Item key="{Orgeh}" text="{Orgtx}" />
-                    </ComboBox>
-                    <Label text="{i18n>LABEL_16001}" />
-                    <ComboBox selectedKey="{/search/Qtaty}" items="{/entry/leaveType}">
-                        <core:Item key="{Zcode}" text="{Ztext}" />
-                    </ComboBox>
-                    <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" />
-                </HBox>
-            </VBox>
-            <VBox class="vCardBox">
-                <HBox alignItems="Center" class="table-toolbar">
-                    <HBox class="title">
-                        <Title level="H2" text="{i18n>LABEL_16002}" />
-                    </HBox>
-                </HBox>
-                <HBox height="250px">
-                    <core:HTML content="&lt;div id='chart-h/leave-container'&gt;&lt;/div&gt;" />
-                </HBox>
-            </VBox>
-            <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
-                    <HBox class="title">
-                        <Title level="H2" text="{i18n>LABEL_16003}" />
-                        <Text text="{i18n>MSG_16002}" class="desc-txt" />
-                    </HBox>
-                    <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
-                </HBox>
-                <HBox>
-                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leave.fragment.TeamTable" type="XML" />
-                </HBox>
-            </VBox>
-        </VBox>
-    </Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <VBox class="vCardBox">
+        <HBox class="form-bar" alignItems="Center">
+          <Label text="{i18n>LABEL_00328}" />
+          <DatePicker value="{/search/Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" />
+          <Label text="{i18n>LABEL_00227}" />
+          <ComboBox selectedKey="{/search/Orgeh}" items="{/entry/department}">
+            <core:Item key="{Orgeh}" text="{Orgtx}" />
+          </ComboBox>
+          <Label text="{i18n>LABEL_16001}" />
+          <ComboBox selectedKey="{/search/Qtaty}" items="{/entry/leaveType}">
+            <core:Item key="{Zcode}" text="{Ztext}" />
+          </ComboBox>
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" />
+        </HBox>
+      </VBox>
+      <VBox class="vCardBox">
+        <HBox alignItems="Center" class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_16002}" />
+          </HBox>
+        </HBox>
+        <HBox height="250px">
+          <core:HTML content="&lt;div id='chart-h/leave-container'&gt;&lt;/div&gt;" />
+        </HBox>
+      </VBox>
+      <VBox class="vCardBox">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_16003}" />
+            <Text text="{i18n>MSG_16002}" class="desc-txt" />
+          </HBox>
+          <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
+        </HBox>
+        <HBox>
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.leave.fragment.TeamTable" type="XML" />
+        </HBox>
+      </VBox>
+    </VBox>
+  </Page>
 </mvc:View>

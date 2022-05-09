@@ -1,17 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Dialog id="rejectDialog" showHeader="false" contentWidth="600px">
-        <buttons>
-            <Button type="Emphasized" text="{i18n>LABEL_00124}" enabled="{= ${/buttons/form/confirmEnable} }" visible="{= ${/buttons/form/isRejectProcess} }" press=".onPressRejectDialogSave"/>
-            <Button text="{i18n>LABEL_00115}" press=".onPressRejectDialogClose"/>
-        </buttons>
-        <Panel expanded="true" headerText="{i18n>LABEL_00142}">
-            <content>
-                <VBox>
-                    <TextArea width="100%" value="{/buttons/form/Rjctr}" growing="true" growingMaxLines="35" editable="false" visible="{= !${/buttons/form/isRejectProcess} }" />
-                    <TextArea width="100%" value="{/buttons/form/Rjctrin}" rows="10" maxLength="{/fieldControl/limit/Rjctrin}" visible="{= ${/buttons/form/isRejectProcess} }" liveChange=".onCheckReject" />
-                </VBox>
-            </content>
-        </Panel>
-    </Dialog>
+  xmlns:core="sap.ui.core">
+  <Dialog id="rejectDialog" showHeader="false" contentWidth="600px">
+    <buttons>
+      <Button type="Emphasized" text="{i18n>LABEL_00124}" enabled="{= ${/buttons/form/confirmEnable} }" visible="{= ${/buttons/form/isRejectProcess} }" press=".onPressRejectDialogSave"/>
+      <Button text="{i18n>LABEL_00115}" press=".onPressRejectDialogClose" class="cancel" />
+    </buttons>
+    <Panel expanded="true" headerText="{i18n>LABEL_00142}">
+      <content>
+        <VBox>
+          <TextArea width="100%" value="{/buttons/form/Rjctr}" growing="true" growingMaxLines="35" editable="false" visible="{= !${/buttons/form/isRejectProcess} }" />
+          <TextArea width="100%" value="{/buttons/form/Rjctrin}" rows="10" maxLength="{/fieldControl/limit/Rjctrin}" visible="{= ${/buttons/form/isRejectProcess} }" liveChange=".onCheckReject" />
+        </VBox>
+      </content>
+    </Panel>
+  </Dialog>
 </core:FragmentDefinition>

@@ -7,7 +7,7 @@
       <Button text="{i18n>LABEL_00112}" press=".onPressSelectOrg" type="Emphasized" />
     </beginButton>
     <endButton>
-      <Button text="{i18n>LABEL_00115}" press=".onPressCloseOrg" />
+      <Button text="{i18n>LABEL_00115}" press=".onPressCloseOrg" class="cancel" />
     </endButton>
     <content>
       <VBox class="hCardBox sapUiSmallMarginBottom">

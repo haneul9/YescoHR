@@ -7,7 +7,7 @@
       <m:HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
         <m:HBox class="form-bar" alignItems="Center">
           <m:Label text="{i18n>MSG_06005}" />
-          <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeYearMonth" width="110px" />
+          <custom:DatePicker value="{ path: 'yearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeYearMonth" width="110px" class="sapIcon_Date" />
           <m:Label text="{i18n>MSG_06006}" />
           <m:ComboBox items="{dutyGroups}" selectedKey="{selectedDutyGroup}" change=".onChangeDutyGroup" selectionChange=".onChangeDutyGroup" width="110px">
             <core:Item key="{code}" text="{text}" />
@@ -80,7 +80,7 @@
     </m:VBox>
     <m:buttons>
       <m:Button type="Emphasized" text="{i18n>LABEL_00112}" visible="{= ${currentListMode} === 'MultiToggle' }" enabled="{enabled}" press=".onPressSelectionDone" />
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose"/>
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressDialogClose" class="cancel" />
     </m:buttons>
   </m:Dialog>
 </core:FragmentDefinition>

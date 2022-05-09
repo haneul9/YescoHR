@@ -7,7 +7,7 @@
         <m:HBox justifyContent="SpaceBetween" alignItems="Center">
           <m:HBox class="form-bar" alignItems="Center">
             <m:Label text="{i18n>MSG_06005}" />
-            <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" width="110px" />
+            <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" width="110px" class="sapIcon_Date" />
           </m:HBox>
           <m:HBox class="form-bar" alignItems="Center">
             <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressSummaryExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
@@ -71,7 +71,7 @@
     </m:content>
     <m:buttons>
       <m:Button type="Emphasized" text="{i18n>LABEL_00121}" visible="{= ${/dialog/mode} === 'C' }" enabled="{/dialog/isActiveApproval}" press=".onPressAddData"/>
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressSummaryDialogClose"/>
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressSummaryDialogClose" class="cancel" />
     </m:buttons>
   </m:Dialog>
 </core:FragmentDefinition>

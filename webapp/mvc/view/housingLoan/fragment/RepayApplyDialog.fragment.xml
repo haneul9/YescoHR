@@ -1,78 +1,78 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Dialog id="RepayApplyDialog" title="{i18n>LABEL_07034}" contentWidth="1100px" contentHeight="auto">
-        <buttons>
-            <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/DialogData/Lnsta} === '45' }" />
-            <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" />
-            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" />
-            <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/DialogData/Lnsta} === '20' }" />
-            <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/DialogData/Lnsta} === '10' || ${/DialogData/Lnsta} === '45' }" />
-            <Button text="{i18n>LABEL_00115}" press=".onClose" />
-        </buttons>
-        <content>
-            <VBox class="vCardBox sapUiMediumMarginBottom">
-                <grid:CSSGrid gridTemplateColumns="2fr 5fr 2fr 5fr" gridGap="1px 0" class="form-grid">
-                    <Label text="{i18n>LABEL_07040}" />
-                    <VBox>
-                        <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) }" class="required">
-                            <core:Item text="{Ztext}" key="{Zcode}" />
-                        </ComboBox>
-                    </VBox>
-                    <Label text="{i18n>LABEL_07045}" />
-                    <VBox>
-                        <Text text="{/DialogData/Lnrte}"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_07044}"/>
-                    <VBox>
-                        <custom:DatePicker change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" class="required"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_07041}"/>
-                    <VBox>
-                        <Input value="{
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Dialog id="RepayApplyDialog" title="{i18n>LABEL_07034}" contentWidth="1100px" contentHeight="auto">
+    <buttons>
+      <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/DialogData/Lnsta} === '45' }" />
+      <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" />
+      <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta} }" />
+      <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/DialogData/Lnsta} === '20' }" />
+      <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/DialogData/Lnsta} === '10' || ${/DialogData/Lnsta} === '45' }" />
+      <Button text="{i18n>LABEL_00115}" press=".onClose" class="cancel" />
+    </buttons>
+    <content>
+      <VBox class="vCardBox sapUiMediumMarginBottom">
+        <grid:CSSGrid gridTemplateColumns="2fr 5fr 2fr 5fr" gridGap="1px 0" class="form-grid">
+          <Label text="{i18n>LABEL_07040}" />
+          <VBox>
+            <ComboBox items="{/LaonType}" selectedKey="{/DialogData/Rptyp}" change=".onLaonType" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) }" class="required">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </ComboBox>
+          </VBox>
+          <Label text="{i18n>LABEL_07045}" />
+          <VBox>
+            <Text text="{/DialogData/Lnrte}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_07044}"/>
+          <VBox>
+            <custom:DatePicker change=".onPayDateChange" maxDate="{/maxDate}" dateValue="{ path: '/DialogData/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !!${/DateEditable} }" class="required"/>
+          </VBox>
+          <Label text="{i18n>LABEL_07041}"/>
+          <VBox>
+            <Input value="{
                         path: '/DialogData/RpamtMpr',
                         type: 'sap.ui.yesco.mvc.model.type.Currency'
                     }" maxLength="16" liveChange=".repayCost" editable="{= (${/DialogData/Lnsta} === '10' || !${/DialogData/Lnsta}) &amp;&amp; !${/DateEditable} }" class="required"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_00266}"/>
-                    <VBox>
-                        <Text text="{
+          </VBox>
+          <Label text="{i18n>LABEL_00266}"/>
+          <VBox>
+            <Text text="{
                             path: '/DialogData/Appda',
                             type: 'sap.ui.yesco.mvc.model.type.Date'
                         }"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_07042}"/>
-                    <VBox>
-                        <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${
+          </VBox>
+          <Label text="{i18n>LABEL_07042}"/>
+          <VBox>
+            <Text text="{= !${/DialogData/RpamtMin} ? '0' : ${
                             path: '/DialogData/RpamtMin',
                             type: 'sap.ui.yesco.mvc.model.type.Currency'
                         } }"/>
-                    </VBox>
-                    <Label text="{= !!${/DialogData/Lnstatx} ? ${i18n>LABEL_00261} : '' }"/>
-                    <VBox>
-                        <Text text="{= !!${/DialogData/Lnstatx} ? ${/DialogData/Lnstatx} : ''}"/>
-                    </VBox>
-                    <Label text="{i18n>LABEL_07046}"/>
-                    <VBox>
-                        <ObjectStatus text="{
+          </VBox>
+          <Label text="{= !!${/DialogData/Lnstatx} ? ${i18n>LABEL_00261} : '' }"/>
+          <VBox>
+            <Text text="{= !!${/DialogData/Lnstatx} ? ${/DialogData/Lnstatx} : ''}"/>
+          </VBox>
+          <Label text="{i18n>LABEL_07046}"/>
+          <VBox>
+            <ObjectStatus text="{
                             path: '/DialogData/RpamtTot',
                             formatter: '.formatAmount'
                         }" state="Indication05"/>
-                    </VBox>
-                    <HBox>
-                        <Label text="{i18n>LABEL_00142}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="{/DialogData/ZappResn}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
-                    </HBox>
-                    <Label text="{i18n>LABEL_07017}"/>
-                    <VBox>
-                        <Text text="{/DialogData/Account}"/>
-                    </VBox>
-                </grid:CSSGrid>
-            </VBox>
-            <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
-        </content>
-    </Dialog>
+          </VBox>
+          <HBox>
+            <Label text="{i18n>LABEL_00142}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
+          </HBox>
+          <HBox>
+            <Text text="{/DialogData/ZappResn}" visible="{= ${/DialogData/Lnsta} === '45' }"/>
+          </HBox>
+          <Label text="{i18n>LABEL_07017}"/>
+          <VBox>
+            <Text text="{/DialogData/Account}"/>
+          </VBox>
+        </grid:CSSGrid>
+      </VBox>
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+    </content>
+  </Dialog>
 </core:FragmentDefinition>

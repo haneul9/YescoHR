@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core">
   <Dialog id="inputFormDialog" showHeader="false" contentWidth="500px">
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onDialogClose"/>
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <content>
       <Tree id="codeTree" mode="SingleSelectMaster" selectionChange=".onSelectTree" items="{/jobDiagnosis/list/codeList}">

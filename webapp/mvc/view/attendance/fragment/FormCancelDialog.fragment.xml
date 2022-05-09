@@ -1,55 +1,55 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1000px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
-        <m:content>
-            <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
-                <m:HBox class="form-bar" alignItems="Center">
-                    <m:Label text="{i18n>LABEL_00338}" />
-                    <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveCancel" />
-                </m:HBox>
-            </m:VBox>
-            <m:VBox class="hCardBox mb-16-px dialog-content-table">
-                <Table id="dialogCancelTable" width="100%" enableSelectAll="false" columnHeaderHeight="35" rowHeight="34" rows="{/form/dialog/list}" busyIndicatorDelay="0" busy="{/form/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionCancelTableRow">
-                    <columns>
-                        <Column width="15%">
-                            <m:Label text="{i18n>LABEL_04010}" />
-                            <template>
-                                <m:Text text="{Atext2}" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="20%">
-                            <m:Label text="{i18n>LABEL_00148}" />
-                            <template>
-                                <m:Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="20%">
-                            <m:Label text="{i18n>LABEL_00149}" />
-                            <template>
-                                <m:Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="10%">
-                            <m:Label text="{i18n>LABEL_00155}" />
-                            <template>
-                                <m:Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
-                            </template>
-                        </Column>
-                        <Column width="auto">
-                            <m:Label text="{i18n>LABEL_04006}" />
-                            <template>
-                                <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
-                            </template>
-                        </Column>
-                    </columns>
-                </Table>
-            </m:VBox>
-        </m:content>
-        <m:buttons>
-            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" />
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" />
-        </m:buttons>
-    </m:Dialog>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1000px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
+    <m:content>
+      <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
+        <m:HBox class="form-bar" alignItems="Center">
+          <m:Label text="{i18n>LABEL_00338}" />
+          <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveCancel" />
+        </m:HBox>
+      </m:VBox>
+      <m:VBox class="hCardBox mb-16-px dialog-content-table">
+        <Table id="dialogCancelTable" width="100%" enableSelectAll="false" columnHeaderHeight="35" rowHeight="34" rows="{/form/dialog/list}" busyIndicatorDelay="0" busy="{/form/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionCancelTableRow">
+          <columns>
+            <Column width="15%">
+              <m:Label text="{i18n>LABEL_04010}" />
+              <template>
+                <m:Text text="{Atext2}" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="20%">
+              <m:Label text="{i18n>LABEL_00148}" />
+              <template>
+                <m:Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="20%">
+              <m:Label text="{i18n>LABEL_00149}" />
+              <template>
+                <m:Text text="{ path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="10%">
+              <m:Label text="{i18n>LABEL_00155}" />
+              <template>
+                <m:Text text="{ path: 'Abrtg2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+              </template>
+            </Column>
+            <Column width="auto">
+              <m:Label text="{i18n>LABEL_04006}" />
+              <template>
+                <m:Input value="{Tmrsn}" class="small-table-input" enabled="{isActive}" />
+              </template>
+            </Column>
+          </columns>
+        </Table>
+      </m:VBox>
+    </m:content>
+    <m:buttons>
+      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" class="cancel" />
+    </m:buttons>
+  </m:Dialog>
 </core:FragmentDefinition>

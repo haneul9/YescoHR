@@ -3,7 +3,7 @@
   xmlns:table="sap.ui.table">
   <Dialog id="listFileDialog" busyIndicatorDelay="0" busy="{/Data/busy}" title= "{i18n>LABEL_00248}" contentWidth= "500px" contentHeight= "120px">
     <beginButton>
-      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </beginButton>
     <content>
       <table:Table id= "listFileTable" width="100%" rows="{/Data}" visibleRowCount="1" selectionMode="None" columnHeaderVisible= "false">

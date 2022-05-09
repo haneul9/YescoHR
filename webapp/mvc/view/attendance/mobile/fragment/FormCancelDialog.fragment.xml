@@ -1,19 +1,19 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:m="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <Dialog id="FormCancelDialog" title="{i18n>LABEL_04028}" contentWidth="" horizontalScrolling="false" verticalScrolling="false">
-        <content>
-            <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid pl-20-px pr-20-px">
-                <Label text="{i18n>LABEL_04029}" />
-                <VBox>
-                    <m:Input value="{/form/dialog/data/Tmrsn}" class="required" />
-                </VBox>
-            </grid:CSSGrid>
-        </content>
-        <buttons>
-            <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" />
-            <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" />
-        </buttons>
-    </Dialog>
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <Dialog id="FormCancelDialog" title="{i18n>LABEL_04028}" contentWidth="" horizontalScrolling="false" verticalScrolling="false">
+    <content>
+      <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid pl-20-px pr-20-px">
+        <Label text="{i18n>LABEL_04029}" />
+        <VBox>
+          <m:Input value="{/form/dialog/data/Tmrsn}" class="required" />
+        </VBox>
+      </grid:CSSGrid>
+    </content>
+    <buttons>
+      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" class="cancel" />
+    </buttons>
+  </Dialog>
 </core:FragmentDefinition>

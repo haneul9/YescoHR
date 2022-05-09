@@ -2,8 +2,8 @@
   xmlns:core="sap.ui.core">
   <Dialog id="commentDialog" showHeader="false" contentWidth="400px" contentHeight="200px">
     <buttons>
-      <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onCommentSaveBtn" />
-      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onCommentSaveBtn" />
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
     </buttons>
     <content>
       <HBox justifyContent="Center" class="table-toolbar">

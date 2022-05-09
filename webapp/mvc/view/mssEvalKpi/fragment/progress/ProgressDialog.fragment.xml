@@ -3,8 +3,8 @@
   xmlns:grid="sap.ui.layout.cssgrid">
   <Dialog id="progressDialog" showHeader="false" contentWidth="1000px" contentHeight="180px">
     <buttons>
-      <Button text="{i18n>LABEL_00103}" class="sapUiTinyMarginEnd" type="Emphasized" press=".onSaveBtn" />
-      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onSaveBtn" />
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
     </buttons>
     <content>
       <HBox alignItems="Center" class="table-toolbar">

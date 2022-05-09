@@ -24,7 +24,7 @@
       </Table>
     </m:content>
     <m:endButton>
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressFileListDialogClose" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFileListDialogClose" class="cancel" />
     </m:endButton>
   </m:Dialog>
 </core:FragmentDefinition>

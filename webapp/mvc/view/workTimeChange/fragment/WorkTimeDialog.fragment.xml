@@ -5,7 +5,7 @@
   <Dialog id="detailDialog" title="{i18n>LABEL_00129}" contentWidth="1100px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onDialogSavBtn" />
-      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <content>
       <VBox class="vCardBox">

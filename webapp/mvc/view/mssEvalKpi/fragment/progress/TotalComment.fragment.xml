@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core">
   <Dialog showHeader="false" contentWidth="400px" contentHeight="auto">
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" />
+      <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
     </buttons>
     <content>
       <HBox justifyContent="Center" class="table-toolbar mb-10-px">

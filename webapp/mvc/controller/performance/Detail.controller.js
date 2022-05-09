@@ -620,53 +620,53 @@ sap.ui.define(
 
       // 직무진단
       async onPressDiagnosisButton() {
-        // MessageBox.alert('Not ready yet.');
-        const oViewModel = this.getViewModel();
+        MessageBox.alert('Not ready yet.');
+        // const oViewModel = this.getViewModel();
 
-        try {
-          oViewModel.setProperty('/busy', true);
+        // try {
+        //   oViewModel.setProperty('/busy', true);
 
-          const oView = this.getView();
-          const aDeep = await this.getJobDiagnosis();
-          const aDeepList = aDeep.JobDiagnosisItemSet.results;
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepList = aDeep.JobDiagnosisItemSet.results;
 
-          await Promise.all(
-            _.forEach(aDeepList, async (e, i) => {
-              const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
+        //   await Promise.all(
+        //     _.forEach(aDeepList, async (e, i) => {
+        //       const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
 
-              oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, aCodeList);
-            })
-          );
+        //       oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, aCodeList);
+        //     })
+        //   );
 
-          oViewModel.setProperty(
-            '/jobDiagnosis/fixed',
-            _.some(aDeepList, (e) => {
-              return e.Zdeactive !== 'X';
-            })
-          );
-          oViewModel.setProperty('/jobDiagnosis/list', aDeepList);
-          oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
+        //   oViewModel.setProperty(
+        //     '/jobDiagnosis/fixed',
+        //     _.some(aDeepList, (e) => {
+        //       return e.Zdeactive !== 'X';
+        //     })
+        //   );
+        //   oViewModel.setProperty('/jobDiagnosis/list', aDeepList);
+        //   oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
 
-          setTimeout(() => {
-            if (!this.pExamDialog) {
-              this.pExamDialog = Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-                controller: this,
-              }).then((oDialog) => {
-                oView.addDependent(oDialog);
-                return oDialog;
-              });
-            }
+        //   setTimeout(() => {
+        //     if (!this.pExamDialog) {
+        //       this.pExamDialog = Fragment.load({
+        //         id: oView.getId(),
+        //         name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //         controller: this,
+        //       }).then((oDialog) => {
+        //         oView.addDependent(oDialog);
+        //         return oDialog;
+        //       });
+        //     }
 
-            this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
-            this.pExamDialog.then((oDialog) => oDialog.open());
-          }, 300);
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        //     this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
+        //     this.pExamDialog.then((oDialog) => oDialog.open());
+        //   }, 300);
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
+        // }
       },
 
       // 저장
