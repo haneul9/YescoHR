@@ -26,6 +26,15 @@
       </TileContent>
     </GenericTile>
 
+    <Select selectedKey="{appModel>/language}" change=".onChangeLanguage" autoAdjustWidth="true" class="language-setting" visible="{appModel>/languageVisible}">
+      <items>
+        <core:Item text="KO" key="KO" />
+        <core:Item text="EN" key="EN" />
+        <!-- <core:Item text="JP" key="JP" /> -->
+        <!-- <core:Item text="ZH" key="ZH" /> -->
+      </items>
+    </Select>
+
     <HBox alignItems="Center" class="notification-wrapper">
       <Button id="notification-bell" type="Transparent" class="icon-button notification" press=".onPressNotificationPopoverToggle" tooltip="{i18n>LABEL_01002}" />
       <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">

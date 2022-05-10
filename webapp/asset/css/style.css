@@ -21,6 +21,9 @@
 /* Font Color */
 --FontColorNormal:#222;
 --FontColorDisabled:#9ca5aa;
+--IconColor:#484c50;
+--IconColorHover:#74b7ff;
+--IconColorFocus:#74b7ff;
 /* Border Color */
 --BorderColorNormal:#c0c0c0;
 --BorderColorHover:#74b7ff;
@@ -349,11 +352,12 @@ html.sap-desktop .sapMBtn:focus>.sapMFocusable {outline:none; outline-offset:-0.
 /* .sapMMultiComboBoxFocused .sapMInputBaseIconContainer .sapUiIcon::before {color:unset !important} */
 .sapMSlt.sapMSltDisabled {opacity:1}
 .sapMSlt:hover .sapMSltArrow {background:var(--BackgroundColorHover) !important}
-.sapMSlt:hover .sapMSltArrow::before {color:unset !important}
+/* .sapMSlt:hover .sapMSltArrow::before {color:unset !important} */
 .sapMSlt:active .sapMSltArrow {background:var(--BackgroundColorActive) !important}
-.sapMSlt:active .sapMSltArrow::before {color:unset !important}
+/* .sapMSlt:active .sapMSltArrow::before {color:unset !important} */
 .sapMSltFocused .sapMSltArrow {background:var(--BackgroundColorFocus) !important}
-.sapMSltFocused .sapMSltArrow::before {color:unset !important}
+.sapMSltPressed>.sapMSltArrow {background:var(--BackgroundColorActive) !important}
+/* .sapMSltFocused .sapMSltArrow::before {color:unset !important} */
 .sapMRb.sapMRbDis {opacity:1}
 .sapMRb.sapMRbDis .sapMRbB .sapMRbBInn {display:none}
 .sapMRb.sapMRbRo .sapMRbB .sapMRbBInn {display:none}
@@ -969,7 +973,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapUiSizeCompact .sapMSlt {height:40px; margin:0}
 .sapUiSizeCompact .sapMInputBaseHeightMargin {margin:0}
 .sapUiSizeCompact .sapMSlt>.sapMSltArrow {line-height:40px; width:2.5rem}
-.sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 0 11px 11px !important; line-height:1; color:#222; font-size:15px; font-weight:500}
+.sapUiSizeCompact .sapMSlt>.sapMSltLabel {padding:11px 2.5rem 11px 11px !important; line-height:1; color:#222; font-size:15px; font-weight:500}
 .sapUiSizeCompact .sapMSlt>.sapMSltLabel .sapMSelectListItemText {line-height:normal}
 .sapUiSizeCompact .sapMTokenizer .sapMToken {height:30px; min-width:47px; margin:0 5px 0 0; padding:6px 0px 6px 6px; border-radius:3px; border:solid 1px #dddfe2; background-color:#e7e8ea; font-size:11px; font-weight:500; font-stretch:normal; font-style:normal; line-height:1.45; letter-spacing:normal; text-align:left; color:#222}
 .sapUiSizeCompact .sapMTokenText, .sapUiSizeCompact .sapMTokenIcon {color:#222}
@@ -1055,6 +1059,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 
 /*icon button style*/
 .sapMInputBaseIcon.sapUiIcon::before, .sapMBtn .sapUiIcon::before {color:#484c50}
+.sapMInputBaseIconPressed .sapMInputBaseIcon.sapUiIcon::before, .sapMInputBaseIcon.sapUiIcon:hover::before, .sapMBtn .sapUiIcon:hover::before {color:var(--BorderColorHover)}
 .sapMBtn.icon-button {display:inline-flex; justify-content:center; align-items:center; min-width:auto}
 .sapMBtn.icon-button .sapMBtnInner {display:flex; justify-content:center; align-items:center}
 .sapMBtn.icon-button .sapUiSizeCompact .sapMBtnInner {height:auto}
@@ -1670,8 +1675,15 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutSizeXL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent {padding:16px 30px; font-size:14px}
 
+/* language-setting button */
+.sapUiSizeCompact .sapMSlt.language-setting {margin-right:.3rem; min-width:auto; border:none}
+.sapUiSizeCompact .sapMSlt.language-setting .sapMSltLabel {padding-right:27px !important; font-size:14px}
+.sapUiSizeCompact .sapMSlt.language-setting .sapMSltArrow {width:22px}
+.sapUiSizeCompact .sapMSlt.language-setting .sapMSltArrow::before {content:''; line-height:38px; font-size:21px; color:#484c50}
+.sapUiSizeCompact .sapMSlt.language-setting:hover .sapMSltArrow::before,
+.sapUiSizeCompact .sapMSlt.language-setting.sapMSltPressed .sapMSltArrow::before {color:#3480e9}
 
-/*notification button style*/
+/* notification-center button */
 .sapMIBar.sapMTB .sapMBarChild.notification-wrapper {margin-left:0.8rem}
 .notification-wrapper {position:relative}
 .notification-wrapper .sapMBtn.icon-button.notification {position:relative}
@@ -1682,7 +1694,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-3px; left:50%; height:15px}
 .notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
-/* 알림센터 */
+/* notification-center popover */
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-height:120px; max-height:calc(100% - 143px); padding:0}
 .sapUiSizeCompact.notification-popover .notification-popover-header {align-items:center; height:83px; padding-right:20px; padding-left:20px}
 .sapUiSizeCompact.notification-popover .notification-popover-header .sapMTitle {vertical-align:middle; font-size:24px}
@@ -2119,6 +2131,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .fusion-tooltip th, .fusion-tooltip td {border:none; padding:8px; line-height:20px; font-size:14px !important}
 .fusion-tooltip td {font-weight:400; text-align:left}
 .fusion-tooltip th {font-weight:bold; word-break:keep-all; background-color:#f7f7f7; min-width:40%}
+
+/* 직무진단 팝업 */
+.jobExamTable .sapMLabel, .jobExamTable .sapMText { font-weight:bold !important; }
+.jobExamTable .sapUiTableCtrl>tbody>tr>td:nth-child(-n+2)  { background-color: #fbfcfd; }
 
 .sticky-side-tree {position:sticky; top:80px}
 

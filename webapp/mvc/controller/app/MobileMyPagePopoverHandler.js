@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
+    'sap/ui/yesco/common/UriHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -15,6 +16,7 @@ sap.ui.define(
     JSONModel,
     AppUtils,
     Debuggable,
+    UriHandler,
     Client,
     ServiceNames,
     MessageBox
@@ -38,8 +40,11 @@ sap.ui.define(
       },
 
       getInitialData() {
+        const oUriHandler = new UriHandler();
         return {
           busy: true,
+          Language: oUriHandler.getParameter('sap-language') || 'KO',
+          LanguageVisible: oUriHandler.getParameter('language-test') === 'true',
         };
       },
 
@@ -127,12 +132,16 @@ sap.ui.define(
         }
       },
 
-      async onPressLogout() {
-        this.oController.onPressLogout();
+      onChangeLanguage(oEvent) {
+        this.oController.onChangeLanguage(oEvent);
       },
 
       async onPressRefresh() {
         location.reload();
+      },
+
+      async onPressLogout() {
+        this.oController.onPressLogout();
       },
 
       onPopoverToggle() {
@@ -156,6 +165,10 @@ sap.ui.define(
           bBusy ? 0 : 500
         );
         return this;
+      },
+
+      toggleLanguage() {
+        this.oMyPageModel.setProperty('/LanguageVisible', !this.oMyPageModel.getProperty('/LanguageVisible'));
       },
 
       showLocalInfo() {

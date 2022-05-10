@@ -340,7 +340,7 @@ sap.ui.define(
       onPressExcept() {
         const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-        this.oPopupHandler.openDialog({ ...mSearchConditions, Headty: 'L' });
+        this.oPopupHandler.openDialog({ ...mSearchConditions, Headty: 'L', OData: 'H' });
       },
 
       onPressCount(oEvent) {
