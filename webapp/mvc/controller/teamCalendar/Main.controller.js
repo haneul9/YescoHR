@@ -106,7 +106,9 @@ sap.ui.define(
 
       fireScroll() {
         if (this.isReadMore && this.isScrollBottom()) {
+          this.isReadMore = false;
           this.openBusyDialog();
+
           setTimeout(() => this.readMore(), 0);
         }
       },
@@ -116,21 +118,15 @@ sap.ui.define(
         const iScrollMarginBottom = $scrollDom.prop('scrollHeight') - $scrollDom.prop('scrollTop');
         const iGrowHeight = $scrollDom.height();
 
-        return $scrollDom.prop('scrollTop') > 0 && iScrollMarginBottom === iGrowHeight;
+        this.debug(`Controller > teamCalendar > isScrollBottom iScrollMarginBottom(${iScrollMarginBottom}) - iGrowHeight(${iGrowHeight}) = ${iScrollMarginBottom - iGrowHeight}`);
+
+        return $scrollDom.prop('scrollTop') > 0 && iScrollMarginBottom - iGrowHeight < 100;
       },
 
       readMore() {
         const oViewModel = this.getViewModel();
         const aPlans = oViewModel.getProperty('/calendar/plans');
         const aRemains = oViewModel.getProperty('/calendar/remains');
-
-        if (aRemains.length > this.readPerSize) {
-          this.isReadMore = true;
-          oViewModel.setProperty('/calendar/remains', _.drop(aRemains, this.readPerSize));
-        } else {
-          this.isReadMore = false;
-          oViewModel.setProperty('/calendar/remains', []);
-        }
 
         oViewModel.setProperty('/calendar/plans', [
           ...aPlans,
@@ -142,7 +138,17 @@ sap.ui.define(
             .value(),
         ]);
 
-        setTimeout(() => this._oBusyDialog.close(), 500);
+        setTimeout(() => {
+          if (aRemains.length > this.readPerSize) {
+            this.isReadMore = true;
+            oViewModel.setProperty('/calendar/remains', _.drop(aRemains, this.readPerSize));
+          } else {
+            this.isReadMore = false;
+            oViewModel.setProperty('/calendar/remains', []);
+          }
+
+          this._oBusyDialog.close();
+        }, 500);
       },
 
       async openBusyDialog() {
@@ -292,8 +298,8 @@ sap.ui.define(
         }
       },
 
-      getBoxObject({ day = 'NONE', label = '', empno, photo, moveToIndi = false, classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
-        return { day, label, empno, photo, moveToIndi, classNames, borderNames, stripes, holiday };
+      getBoxObject({ day = 'NONE', label = '', align = 'center', empno, photo, moveToIndi = false, classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
+        return { day, label, align, empno, photo, moveToIndi, classNames, borderNames, stripes, holiday };
       },
 
       getGridBody(aPlanData) {
@@ -317,12 +323,23 @@ sap.ui.define(
 
       convertPlanData(aGridData) {
         return [
-          this.getBoxObject({ label: _.get(aGridData, [0, 'Ename']), photo: _.get(aGridData, [0, 'Picurl']), classNames: 'Normal', empno: _.get(aGridData, [0, 'Pernr']), moveToIndi: true }), //
-          this.getBoxObject({ label: _.get(aGridData, [0, 'Zzjikgbtx']), classNames: 'Normal' }),
-          this.getBoxObject({ label: _.get(aGridData, [0, 'Orgtx']), classNames: 'Normal' }),
+          this.getBoxObject({
+            align: 'start',
+            label: _.get(aGridData, [0, 'Ename']),
+            photo: _.chain(aGridData)
+              .get([0, 'Picurl'])
+              .thru((s) => (_.isEmpty(s) ? this.getUnknownAvatarImageURL() : s))
+              .value(),
+            classNames: 'Normal',
+            empno: _.get(aGridData, [0, 'Pernr']),
+            moveToIndi: true,
+          }), //
+          this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Zzjikgbtx']), classNames: 'Normal' }),
+          this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Orgtx']), classNames: 'Normal' }),
           ..._.map(aGridData, (o) => ({
             ..._.chain(o).pick(['Pernr', 'Colty', 'Ottyp', 'Appsttx1', 'Appsttx2', 'Atext1', 'Atext2', 'Atrsn1', 'Atrsn2', 'Duration1', 'Duration2']).omitBy(_.isEmpty).value(),
             label: '',
+            align: 'center',
             day: moment(o.Tmdat).format('YYYYMMDD'),
             holiday: _.isEqual(o.Holyn, 'X') ? 'Holiday' : 'None',
             classNames: !_.isEmpty(o.Colty) ? o.Colty : _.includes(['6', '7'], o.Wkday) ? 'Weekend' : 'Normal',
@@ -387,7 +404,7 @@ sap.ui.define(
         const sTyymm = oViewModel.getProperty('/searchConditions/Tyymm');
         const iCurrentDayInMonth = moment(sTyymm).daysInMonth();
 
-        oViewModel.setProperty('/calendar/columnTemplate', `100px 80px 120px repeat(${iCurrentDayInMonth}, 1fr)`);
+        oViewModel.setProperty('/calendar/columnTemplate', `100px 120px 160px repeat(${iCurrentDayInMonth}, 1fr)`);
         oViewModel.setProperty('/calendar/plans', this.getGridHeader([], iCurrentDayInMonth));
       },
 
