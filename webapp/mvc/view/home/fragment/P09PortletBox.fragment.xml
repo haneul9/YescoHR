@@ -12,7 +12,7 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" width="100px" pickOnly="true" />
+      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

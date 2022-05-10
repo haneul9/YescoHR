@@ -75,6 +75,14 @@ html.sap-ios ::-webkit-scrollbar {width:0 !important}
 .portlet-p03p04:hover .portlet-members.my-members .members-position {max-width:calc(100% - 208px)}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:none}
 .portlet-p06 .font-12-px {letter-spacing:-0.6px}
+.portlet-p10 .portlet-p10-list>.sapMVBox {height:100%}
+.portlet-p10 .portlet-p10-list>.sapMVBox * {box-sizing:border-box}
+.portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(2) {min-width:calc(100% - 131px) !important; max-width:calc(100% - 131px) !important; padding-right:10px}
+html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(2) {min-width:calc(100% - 161px) !important; max-width:calc(100% - 161px) !important}
+.portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(3) {width:60px; padding-right:10px}
+.portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:50px}
+html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80px}
+.portlet-p10 .portlet-p10-list>.sapMVBox>.sapMHBox {width:100%; height:28px; align-items:center}
 .portlet-p11 .left-box {border:none; background-color:#a3edce}
 .portlet-p11 .right-box {border:none; background-color:#b4cef2}
 .portlet-p11 .portlet-p11-objectstatus19 {margin-top:18px}

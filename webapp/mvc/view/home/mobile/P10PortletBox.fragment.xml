@@ -31,9 +31,9 @@
           <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
             <Text text="{i18n>MSG_00001}" />
           </HBox>
-          <HBox width="100%" visible="{= ${listCount} &gt; 0 }">
-            <VBox width="21px" height="100%" items="{list}" class="pr-5-px">
-              <HBox width="100%" height="28px" alignItems="Center">
+          <HBox width="100%" visible="{= ${listCount} &gt; 0 }" class="portlet-p10-list">
+            <VBox width="21px" items="{list}" class="pr-5-px">
+              <HBox>
                 <core:Icon src="sap-icon://color-fill" width="16px" height="16px">
                   <core:customData>
                     <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
@@ -41,8 +41,8 @@
                 </core:Icon>
               </HBox>
             </VBox>
-            <VBox width="calc(100% - 131px)" height="100%" items="{list}" class="pr-10-px">
-              <HBox width="100%" height="28px" alignItems="Center">
+            <VBox items="{list}">
+              <HBox>
                 <Text width="100%" text="{Itext}" wrapping="false">
                   <layoutData>
                     <FlexItemData minWidth="100%" maxWidth="100%" />
@@ -50,8 +50,8 @@
                 </Text>
               </HBox>
             </VBox>
-            <VBox width="60px" height="100%" items="{list}" class="pr-10-px">
-              <HBox width="100%" height="28px" alignItems="Center">
+            <VBox items="{list}">
+              <HBox>
                 <Text width="100%" text="{Perce}%" textAlign="Right" wrapping="false">
                   <layoutData>
                     <FlexItemData minWidth="100%" />
@@ -59,8 +59,8 @@
                 </Text>
               </HBox>
             </VBox>
-            <VBox width="50px" height="100%" items="{list}">
-              <HBox width="100%" height="28px" alignItems="Center">
+            <VBox items="{list}">
+              <HBox>
                 <Text width="100%" text="{Atext}" textAlign="Center" wrapping="false">
                   <layoutData>
                     <FlexItemData minWidth="100%" />
