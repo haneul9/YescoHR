@@ -19,6 +19,9 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.teamCalendar.Main', {
+      isReadMore: false,
+      readPerSize: 50,
+
       initializeModel() {
         return {
           auth: 'E',
@@ -45,6 +48,7 @@ sap.ui.define(
             columnTemplate: '',
             raw: [],
             plans: [],
+            remains: [],
             detail: {
               title: '',
               data: {},
@@ -58,6 +62,8 @@ sap.ui.define(
 
         try {
           const bIsLoaded = oViewModel.getProperty('/isLoaded');
+
+          this.bindInfiniteScroll();
 
           if (!bIsLoaded) {
             oViewModel.setSizeLimit(20000);
@@ -82,6 +88,83 @@ sap.ui.define(
         } finally {
           this.setContentsBusy(false);
         }
+      },
+
+      bindInfiniteScroll() {
+        const oPage = this.getView().getContent()[0];
+
+        oPage.addEventDelegate({
+          onAfterRendering: () => {
+            oPage
+              .$()
+              .find('.sapMPageEnableScrolling')
+              .off('scroll')
+              .on('scroll', _.throttle(this.fireScroll.bind(this), 100));
+          },
+        });
+      },
+
+      fireScroll() {
+        if (this.isReadMore && this.isScrollBottom()) {
+          this.isReadMore = false;
+          this.openBusyDialog();
+
+          setTimeout(() => this.readMore(), 0);
+        }
+      },
+
+      isScrollBottom() {
+        const $scrollDom = this.getView().getContent()[0].$().find('.sapMPageEnableScrolling');
+        const iScrollMarginBottom = $scrollDom.prop('scrollHeight') - $scrollDom.prop('scrollTop');
+        const iGrowHeight = $scrollDom.height();
+
+        this.debug(`Controller > teamCalendar > isScrollBottom iScrollMarginBottom(${iScrollMarginBottom}) - iGrowHeight(${iGrowHeight}) = ${iScrollMarginBottom - iGrowHeight}`);
+
+        return $scrollDom.prop('scrollTop') > 0 && iScrollMarginBottom - iGrowHeight < 100;
+      },
+
+      readMore() {
+        const oViewModel = this.getViewModel();
+        const aPlans = oViewModel.getProperty('/calendar/plans');
+        const aRemains = oViewModel.getProperty('/calendar/remains');
+
+        oViewModel.setProperty('/calendar/plans', [
+          ...aPlans,
+          ..._.chain(aRemains)
+            .take(this.readPerSize)
+            .reduce((acc, cur) => {
+              return [...acc, ...this.convertPlanData(cur)];
+            }, [])
+            .value(),
+        ]);
+
+        setTimeout(() => {
+          if (aRemains.length > this.readPerSize) {
+            this.isReadMore = true;
+            oViewModel.setProperty('/calendar/remains', _.drop(aRemains, this.readPerSize));
+          } else {
+            this.isReadMore = false;
+            oViewModel.setProperty('/calendar/remains', []);
+          }
+
+          this._oBusyDialog.close();
+        }, 500);
+      },
+
+      async openBusyDialog() {
+        const oView = this.getView();
+
+        if (!this._oBusyDialog) {
+          this._oBusyDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.teamCalendar.fragment.LoadingDialog',
+            controller: this,
+          });
+
+          oView.addDependent(this._oBusyDialog);
+        }
+
+        this._oBusyDialog.open();
       },
 
       async initializeTeamPlanPopover() {
@@ -207,7 +290,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/calendar/plans', [
             ...this.getGridHeader(aPlanData, iCurrentDayInMonth, sYearMonth), //
-            ...this.convertPlans(aPlanData),
+            ...this.getGridBody(aPlanData),
           ]);
           oViewModel.setProperty('/calendar/raw', []);
         } catch (oError) {
@@ -215,36 +298,55 @@ sap.ui.define(
         }
       },
 
-      getBoxObject({ day = 'NONE', label = '', empno, photo, moveToIndi = false, classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
-        return { day, label, empno, photo, moveToIndi, classNames, borderNames, stripes, holiday };
+      getBoxObject({ day = 'NONE', label = '', align = 'center', empno, photo, moveToIndi = false, classNames = '', borderNames = 'Default', stripes = 'None', holiday = 'None' }) {
+        return { day, label, align, empno, photo, moveToIndi, classNames, borderNames, stripes, holiday };
       },
 
-      convertPlans(aPlanData) {
-        const aPlansGroupByPernr = _.groupBy(aPlanData, 'Pernr');
+      getGridBody(aPlanData) {
+        const aPlanValues = _.chain(aPlanData).groupBy('Pernr').values().value();
 
-        return _.reduce(
-          aPlansGroupByPernr,
-          (acc, cur) => {
-            return [
-              ...acc,
-              ...[
-                this.getBoxObject({ label: _.get(cur, [0, 'Ename']), photo: _.get(cur, [0, 'Picurl']), classNames: 'Normal', empno: _.get(cur, [0, 'Pernr']), moveToIndi: true }), //
-                this.getBoxObject({ label: _.get(cur, [0, 'Zzjikgbtx']), classNames: 'Normal' }),
-                this.getBoxObject({ label: _.get(cur, [0, 'Orgtx']), classNames: 'Normal' }),
-                ..._.map(cur, (o) => ({
-                  ..._.chain(o).pick(['Pernr', 'Colty', 'Ottyp', 'Appsttx1', 'Appsttx2', 'Atext1', 'Atext2', 'Atrsn1', 'Atrsn2', 'Duration1', 'Duration2']).omitBy(_.isEmpty).value(),
-                  label: '',
-                  day: moment(o.Tmdat).format('YYYYMMDD'),
-                  holiday: _.isEqual(o.Holyn, 'X') ? 'Holiday' : 'None',
-                  classNames: !_.isEmpty(o.Colty) ? o.Colty : _.includes(['6', '7'], o.Wkday) ? 'Weekend' : 'Normal',
-                  borderNames: !_.isEmpty(o.Ottyp) ? o.Ottyp : 'Default',
-                  stripes: _.isEqual(o.Cssty, 'P') ? 'Stripes' : 'None',
-                })),
-              ],
-            ];
-          },
-          []
-        );
+        if (aPlanValues.length > this.readPerSize) {
+          this.isReadMore = true;
+          this.getViewModel().setProperty('/calendar/remains', _.drop(aPlanValues, this.readPerSize));
+        } else {
+          this.isReadMore = false;
+          this.getViewModel().setProperty('/calendar/remains', []);
+        }
+
+        return _.chain(aPlanValues)
+          .take(this.readPerSize)
+          .reduce((acc, cur) => {
+            return [...acc, ...this.convertPlanData(cur)];
+          }, [])
+          .value();
+      },
+
+      convertPlanData(aGridData) {
+        return [
+          this.getBoxObject({
+            align: 'start',
+            label: _.get(aGridData, [0, 'Ename']),
+            photo: _.chain(aGridData)
+              .get([0, 'Picurl'])
+              .thru((s) => (_.isEmpty(s) ? this.getUnknownAvatarImageURL() : s))
+              .value(),
+            classNames: 'Normal',
+            empno: _.get(aGridData, [0, 'Pernr']),
+            moveToIndi: true,
+          }), //
+          this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Zzjikgbtx']), classNames: 'Normal' }),
+          this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Orgtx']), classNames: 'Normal' }),
+          ..._.map(aGridData, (o) => ({
+            ..._.chain(o).pick(['Pernr', 'Colty', 'Ottyp', 'Appsttx1', 'Appsttx2', 'Atext1', 'Atext2', 'Atrsn1', 'Atrsn2', 'Duration1', 'Duration2']).omitBy(_.isEmpty).value(),
+            label: '',
+            align: 'center',
+            day: moment(o.Tmdat).format('YYYYMMDD'),
+            holiday: _.isEqual(o.Holyn, 'X') ? 'Holiday' : 'None',
+            classNames: !_.isEmpty(o.Colty) ? o.Colty : _.includes(['6', '7'], o.Wkday) ? 'Weekend' : 'Normal',
+            borderNames: !_.isEmpty(o.Ottyp) ? o.Ottyp : 'Default',
+            stripes: _.isEqual(o.Cssty, 'P') ? 'Stripes' : 'None',
+          })),
+        ];
       },
 
       getGridHeader(aPlanData, iCurrentDayInMonth, sYearMonth) {
@@ -302,7 +404,7 @@ sap.ui.define(
         const sTyymm = oViewModel.getProperty('/searchConditions/Tyymm');
         const iCurrentDayInMonth = moment(sTyymm).daysInMonth();
 
-        oViewModel.setProperty('/calendar/columnTemplate', `100px 80px 120px repeat(${iCurrentDayInMonth}, 1fr)`);
+        oViewModel.setProperty('/calendar/columnTemplate', `100px 120px 160px repeat(${iCurrentDayInMonth}, 1fr)`);
         oViewModel.setProperty('/calendar/plans', this.getGridHeader([], iCurrentDayInMonth));
       },
 

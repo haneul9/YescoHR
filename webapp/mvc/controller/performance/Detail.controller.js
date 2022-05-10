@@ -462,7 +462,7 @@ sap.ui.define(
           return false;
         }
 
-        if (oViewModel.getProperty('/type') === 'MA' && oViewModel.getProperty('/jobDiagnosis/fixed')) {
+        if (oViewModel.getProperty('/jobDiagnosis/fixed')) {
           // 직무진단을 완료하지 않았습니다.\n직무진단을 완료하신 후 평가결과를 전송하시기 바랍니다.
           MessageBox.confirm(this.getBundleText('MSG_10030'), {
             onClose: (sAction) => {

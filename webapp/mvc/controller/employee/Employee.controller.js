@@ -911,8 +911,6 @@ sap.ui.define(
                 ...mFieldValue,
                 Prcty: sPrcty,
                 Appno: sAppno,
-                Zzfinyn: mFieldValue.Zzfinyn ? 'X' : '',
-                Zzrecab: mFieldValue.Zzrecab ? 'X' : '',
                 Begda: mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
                 Endda: mFieldValue.Endda ? this.DateUtils.parse(mFieldValue.Endda) : mFieldValue.Endda,
               };
@@ -1070,10 +1068,6 @@ sap.ui.define(
           const [mTableRowDetail] = await Client.getEntitySet(oModel, sOdataEntity, mFilters);
 
           if (_.isEmpty(mTableRowDetail)) throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00034') }); // 조회할 수 없습니다.
-
-          // 체크박스 value <-> Boolean 변환
-          if (_.has(mTableRowDetail, 'Zzfinyn')) mTableRowDetail.Zzfinyn = mTableRowDetail.Zzfinyn === 'X';
-          if (_.has(mTableRowDetail, 'Zzrecab')) mTableRowDetail.Zzrecab = mTableRowDetail.Zzrecab === 'X';
 
           oViewModel.setProperty('/employee/dialog/form', mTableRowDetail);
 

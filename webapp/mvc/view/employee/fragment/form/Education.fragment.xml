@@ -39,9 +39,9 @@
             <core:Item key="{Slabs}" text="{Stext}" />
         </ComboBox>
         <Label text="{i18n>LABEL_00291}" />
-        <CheckBox selected="{/employee/dialog/form/Zzfinyn}" />
+        <CheckBox selected="{ path: '/employee/dialog/form/Zzfinyn', type: 'sap.ui.yesco.mvc.model.type.Boolean' }" />
         <!-- <Label text="{i18n>LABEL_00292}" />
-        <CheckBox selected="{/employee/dialog/form/Zzrecab}" /> -->
+        <CheckBox selected="{ path: '/employee/dialog/form/Zzrecab', type: 'sap.ui.yesco.mvc.model.type.Boolean' }" /> -->
         <Label text="{i18n>LABEL_00293}" />
         <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Zzentba}" items="{ path: '/employee/dialog/school1Entry' }">
             <core:Item key="{code}" text="{text}" />

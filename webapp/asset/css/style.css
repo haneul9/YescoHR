@@ -1571,7 +1571,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .year-plan-head .sapMBtnIcon {margin-left:0; margin-right:0px}
 .year-plan-head h2.sapMTitle {justify-content:center}
 .year-plan-grid {background-color:#e5e5e5; border:1px solid #e5e5e5}
-.year-plan-grid .sapMFlexBox, .year-plan-grid .sapMText {height:40px; display:flex; justify-content:center; align-items:center; font-size:11px; font-weight:700; cursor:default}
+.year-plan-grid .sapMFlexBox, .year-plan-grid .sapMText {height:40px; display:flex; justify-content:center; align-items:center; font-size:14px; font-weight:700; cursor:default}
+.year-plan-grid .sapMFlexBox[data-align="start"] {justify-content: flex-start; padding-left: 8px;}
+.year-plan-grid .sapMFlexBox[data-align="start"] .sapMText {justify-content: flex-start;}
 .year-plan-grid .sapMFlexBox[data-border="Default"] {border:0px solid black}
 .year-plan-grid .sapMFlexBox[data-style="Header"] {background-color:#f7f7f7;}
 .year-plan-grid .sapMFlexBox[data-style="Weekend"] {background-color:#d9dcdf}

@@ -305,6 +305,10 @@
         { "pattern": "h/withdrawMiddle", "name": "h/withdrawMiddle", "target": "h/withdrawMiddle" },
         { "pattern": "h/withdrawMiddle/{oDataKey}", "name": "h/withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
 
+        { "pattern": "workStatusReason", "name": "workStatusReason", "target": "workStatusReason" },
+        { "pattern": "h/workStatusReason", "name": "h/workStatusReason", "target": "h/workStatusReason" },
+        { "pattern": "m/workStatusReason", "name": "m/workStatusReason", "target": "m/workStatusReason" },
+
         { "pattern": "workTime", "name": "workTime", "target": "workTime" },
         { "pattern": "workTime/{oDataKey}", "name": "workTime-detail", "target": "workTimeDetail" },
         { "pattern": "h/workTime", "name": "h/workTime", "target": "h/workTime" },
@@ -517,6 +521,10 @@
         "h/withdrawMiddle": { "viewId": "h_withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleH" },
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
         "withdrawMiddleDetail": { "viewId": "withdrawMiddleDetail", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleDetail" },
+
+        "workStatusReason": { "viewId": "workStatusReason", "viewPath": "sap.ui.yesco.mvc.view.workStatusReason", "viewName": "WorkStatusReason" },
+        "h/workStatusReason": { "viewId": "h_workStatusReason", "viewPath": "sap.ui.yesco.mvc.view.workStatusReason", "viewName": "WorkStatusReasonH" },
+        "m/workStatusReason": { "viewId": "m_workStatusReason", "viewPath": "sap.ui.yesco.mvc.view.workStatusReason", "viewName": "WorkStatusReasonM" },
 
         "h/workTime": { "viewId": "h_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeH" },
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
