@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
+    'sap/ui/yesco/common/UriHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -15,6 +16,7 @@ sap.ui.define(
     JSONModel,
     AppUtils,
     Debuggable,
+    UriHandler,
     Client,
     ServiceNames,
     MessageBox
@@ -38,7 +40,7 @@ sap.ui.define(
       },
 
       getInitialData() {
-        const oUriHandler = this.oController.getUriHandler();
+        const oUriHandler = new UriHandler();
         return {
           busy: true,
           Language: oUriHandler.getParameter('sap-language') || 'KO',

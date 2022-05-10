@@ -51,16 +51,16 @@ sap.ui.define(
         const oUIComponent = this.getOwnerComponent();
 
         this.bMobile = AppUtils.isMobile();
-        this.oUriHandler = new UriHandler();
         if (!this.bMobile) {
           setTimeout(() => {
             this.oAppMenu = new Menus(this);
             oUIComponent.setAppMenu(this.oAppMenu);
           });
 
+          const oUriHandler = new UriHandler();
           const oAppModel = oUIComponent.getAppModel();
-          oAppModel.setProperty('/languageVisible', this.oUriHandler.getParameter('language-test') === 'true');
-          oAppModel.setProperty('/language', this.oUriHandler.getParameter('sap-language') || 'KO');
+          oAppModel.setProperty('/languageVisible', oUriHandler.getParameter('language-test') === 'true');
+          oAppModel.setProperty('/language', oUriHandler.getParameter('sap-language') || 'KO');
         } else {
           setTimeout(() => {
             this.oAppMenu = new MobileMenus(this);
@@ -93,10 +93,6 @@ sap.ui.define(
 
       getAppMenu() {
         return this.oAppMenu;
-      },
-
-      getUriHandler() {
-        return this.oUriHandler;
       },
 
       getLogoPath(sWerks) {
@@ -158,8 +154,9 @@ sap.ui.define(
         AppUtils.setAppBusy(true).setMenuBusy(true);
 
         const sLanguageKey = oEvent.getParameter('selectedItem').getKey();
-        if (this.oUriHandler.getParameter('sap-language') !== sLanguageKey) {
-          this.oUriHandler.setParameter('sap-language', sLanguageKey).redirect();
+        const oUriHandler = new UriHandler();
+        if (oUriHandler.getParameter('sap-language') !== sLanguageKey) {
+          oUriHandler.setParameter('sap-language', sLanguageKey).redirect();
         } else {
           AppUtils.setAppBusy(false).setMenuBusy(false);
         }
