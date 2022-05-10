@@ -20,7 +20,7 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.teamCalendar.Main', {
       isReadMore: false,
-      readPerSize: 30,
+      readPerSize: 50,
 
       initializeModel() {
         return {
