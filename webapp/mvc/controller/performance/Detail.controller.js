@@ -658,7 +658,8 @@ sap.ui.define(
 
             oViewModel.setProperty(`/jobDiagnosis/list/${i}`, {
               ...e,
-              codeList: aCodeList,
+              codeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }),
+              Zzjarst: !e.Zzjarst ? 'ALL' : e.Zzjarst,
             });
           });
 
@@ -683,6 +684,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onClearArea(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sPath = oEvent.getSource().getBindingContext().getPath();
+
+        oViewModel.setProperty(`${sPath}/Zzjarsttx`, '');
+        oViewModel.setProperty(`${sPath}/Zzjarst`, '');
       },
 
       // 저장
@@ -764,6 +773,25 @@ sap.ui.define(
           if (
             !_.chain(aDeepList)
               .find((e) => {
+                return e.Zzjaitm === '1030' && !!e.Zzjarst;
+              })
+              .isEmpty()
+              .value() &&
+            !_.chain(aDeepList)
+              .find((e) => {
+                return e.Zzjaitm === '1040' && e.Zzjarst !== '10' && e.Zzjarst !== '20';
+              })
+              .isEmpty()
+              .value()
+          ) {
+            // 이동사유를 다시 선택하시기 바랍니다.
+            MessageBox.alert(this.getBundleText('MSG_10031'));
+            return true;
+          }
+
+          if (
+            !_.chain(aDeepList)
+              .find((e) => {
                 return e.Zzjaitm === '1040' && (e.Zzjarst === '10' || e.Zzjarst === '20');
               })
               .isEmpty()
@@ -782,7 +810,7 @@ sap.ui.define(
               return true;
             }
 
-            if (!mCheckMyJob.Zzjarst) {
+            if (!mCheckMyJob.Zzjarst || mCheckMyJob.Zzjarst === 'ALL') {
               // 이동 희망 팀/직무를 선택하세요.
               MessageBox.alert(this.getBundleText('MSG_10029'));
               return true;
@@ -810,7 +838,7 @@ sap.ui.define(
               return true;
             }
 
-            if (!mCheckMyJob.Zzjarst) {
+            if (!mCheckMyJob.Zzjarst || mCheckMyJob.Zzjarst === 'ALL') {
               // 이동 희망 팀/직무를 선택하세요.
               MessageBox.alert(this.getBundleText('MSG_10029'));
               return true;

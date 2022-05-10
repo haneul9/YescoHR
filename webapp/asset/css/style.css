@@ -2137,6 +2137,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 /* 직무진단 팝업 */
 .jobExamTable .sapMLabel, .jobExamTable .sapMText { font-weight:bold !important; }
 .jobExamTable .sapUiTableCtrl>tbody>tr>td:nth-child(-n+2)  { background-color: #fbfcfd; }
+.jobExamTable .iconReset.sapUiIconPointer { font-size: 20px; border-radius: 5px; background-color: #ffffff; margin-left: 3px;}
+.jobExamTable .iconReset.sapUiIconPointer::before { color: #484c50;}
 
 .sticky-side-tree {position:sticky; top:80px}
 
