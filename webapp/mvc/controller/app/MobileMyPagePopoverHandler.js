@@ -38,10 +38,11 @@ sap.ui.define(
       },
 
       getInitialData() {
+        const oUriHandler = this.oController.getUriHandler();
         return {
           busy: true,
-          Language: this.oController.getUriHandler().getParameter('sap-language') || 'KO',
-          LanguageVisible: this.oController.getUriHandler().getParameter('language-test') === 'true',
+          Language: oUriHandler.getParameter('sap-language') || 'KO',
+          LanguageVisible: oUriHandler.getParameter('language-test') === 'true',
         };
       },
 
