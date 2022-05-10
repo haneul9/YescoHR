@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <VBox class="hCardBox">
+        <HBox class="form-bar" alignItems="Center">
+            <Label text="{i18n>LABEL_00338}" />
+            <custom:DateRangeSelection dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+            <Label text="{i18n>LABEL_00237}" />
+            <ComboBox items="{/search/werksList}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+                <core:Item text="{Pbtxt}" key="{Werks}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_00224}" />
+            <ComboBox items="{/search/orgList}" selectedKey="{/search/Orgeh}">
+                <core:Item text="{Orgtx}" key="{Orgeh}" />
+            </ComboBox>
+            <Label text="{i18n>LABEL_04010}" />
+            <MultiComboBox width="100%" selectedKeys="{/search/Awart}" items="{ path: '/search/jobList', templateShareable: false }">
+                <core:Item key="{Awart}" text="{Atext}" />
+            </MultiComboBox>
+            <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onSearch"/>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>
