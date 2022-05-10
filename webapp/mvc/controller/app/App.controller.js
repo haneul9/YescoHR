@@ -14,6 +14,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/app/control/Menus',
     'sap/ui/yesco/mvc/controller/app/control/MobileMenus',
     'sap/ui/yesco/mvc/model/type/Currency',
+    'sap/ui/yesco/mvc/model/type/Boolean',
     'sap/ui/yesco/mvc/model/type/Date',
     'sap/ui/yesco/mvc/model/type/DateWeekday',
     'sap/ui/yesco/mvc/model/type/Decimal',

@@ -43,8 +43,8 @@
         <Label text="{i18n>LABEL_10006}"/>
         <table:template>
           <VBox>
-            <Link text="{Zzappgd01}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid1} }" press=".onPressRowPerformance" />
-            <Text text="{Zzappgd01}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid1} }" />
+            <Link text="{= ${Zzappgd01} === '' ? ${Zzapppt01} : ${Zzappgd01} }" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid1} }" press=".onPressRowPerformance" />
+            <Text text="{= ${Zzappgd01} === '' ? ${Zzapppt01} : ${Zzappgd01} }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid1} }" />
           </VBox>
         </table:template>
       </table:Column>
@@ -52,8 +52,8 @@
         <Label text="{i18n>LABEL_10045}"/>
         <table:template>
           <VBox>
-            <Link text="{Zzappgd02}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid2} }" press=".onPressRowCompetency" />
-            <Text text="{Zzappgd02}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid2} }" />
+            <Link text="{= ${Zzappgd02} === '' ? ${Zzapppt02} : ${Zzappgd02} }" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid2} }" press=".onPressRowCompetency" />
+            <Text text="{= ${Zzappgd02} === '' ? ${Zzapppt02} : ${Zzappgd02} }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid2} }" />
           </VBox>
         </table:template>
       </table:Column>

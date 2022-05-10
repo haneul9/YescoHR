@@ -207,7 +207,7 @@
         { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
-        { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
+        { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
         
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
@@ -295,6 +295,10 @@
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
         { "pattern": "mobile/m/talent", "name": "mobile/m/talent", "target": "mobile/m/talent" },
         { "pattern": "mobile/m/talent/{pernrs}", "name": "mobile/m/talent-compare", "target": "mobile/m/talentCompare" },
+
+        { "pattern": "teamCalendar", "name": "teamCalendar", "target": "teamCalendar" },
+        { "pattern": "m/teamCalendar", "name": "m/teamCalendar", "target": "m/teamCalendar" },
+        { "pattern": "h/teamCalendar", "name": "h/teamCalendar", "target": "h/teamCalendar" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
@@ -505,6 +509,10 @@
         "m/talent": { "viewId": "m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
         "mobile/m/talentCompare": { "viewId": "mobile_m_talentCompare", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Compare" },
+        
+        "teamCalendar": { "viewId": "teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainE" },
+        "m/teamCalendar": { "viewId": "m_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainM" },
+        "h/teamCalendar": { "viewId": "h_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainH" },
 
         "h/withdrawMiddle": { "viewId": "h_withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleH" },
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },
