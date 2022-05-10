@@ -1426,6 +1426,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-right:28px !important}
 
 .employee-tree .sapMTreeItemBaseExpander {font-size:1rem; color:#222}
+.employee-tree .sapMTreeItemBase, .sapMTreeItemBaseChildren {border-bottom: none;}
 
 .member-photo {display:inline-block; width:auto; height:auto; border-radius:50%; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg'); background-size:100%; background-position:center top !important; background-repeat:no-repeat}
 .employee-detail .member-photo {width:120px; height:160px; margin-top:9px; margin-bottom:10px; border-radius:0}
