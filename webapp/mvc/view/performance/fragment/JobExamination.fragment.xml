@@ -9,7 +9,7 @@
     </buttons>
     <content>
       <VBox class="vCardBox">
-        <table:Table id="jobExamTable" rows="{/jobDiagnosis/list}" visibleRowCount="{/jobDiagnosis/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+        <table:Table id="jobExamTable" class="jobExamTable" rows="{/jobDiagnosis/list}" visibleRowCount="{/jobDiagnosis/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
           <table:columns>
             <table:Column width="10%" sortProperty="Appgbtx" filterProperty="Appgbtx">
               <Label text="{i18n>LABEL_00147}"/>

@@ -2120,6 +2120,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .fusion-tooltip td {font-weight:400; text-align:left}
 .fusion-tooltip th {font-weight:bold; word-break:keep-all; background-color:#f7f7f7; min-width:40%}
 
+/* 직무진단 팝업 */
+.jobExamTable .sapMLabel, .jobExamTable .sapMText { font-weight:bold !important; }
+.jobExamTable .sapUiTableCtrl>tbody>tr>td:nth-child(-n+2)  { background-color: #fbfcfd; }
+
 .sticky-side-tree {position:sticky; top:80px}
 
 .naked-combo {border:none}
