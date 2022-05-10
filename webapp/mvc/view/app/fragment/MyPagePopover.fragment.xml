@@ -2,7 +2,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0">
+  <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="myPageLanguage">
     <content>
       <VBox height="100%">
         <grid:CSSGrid gridTemplateColumns="3fr 1fr 8fr" gridGap="2px 20px" class="mypage-emp-detail">
@@ -29,6 +29,17 @@
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>
+          <HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" visible="{LanguageVisible}">
+            <Label text="{i18n>LABEL_01605}" id="myPageLanguage" />
+            <Select selectedKey="{Language}" change=".onChangeLanguage" autoAdjustWidth="true" class="language-setting">
+              <items>
+                <core:Item text="KO" key="KO" />
+                <core:Item text="EN" key="EN" />
+                <!-- <core:Item text="JP" key="JP" /> -->
+                <!-- <core:Item text="ZH" key="ZH" /> -->
+              </items>
+            </Select>
+          </HBox>
           <custom:HBox justifyContent="SpaceBetween" alignItems="Center" height="54px" press=".onPressRefresh">
             <Label text="{i18n>LABEL_00199}" />
             <Button type="Transparent" class="icon-button mobile-logout-button" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow_h-r.svg" iconDensityAware="false" />
@@ -51,7 +62,12 @@
             <List class="all-transparent">
               <StandardListItem title="." />
               <swipeContent>
-                <Button icon="sap-icon://sys-help" iconDensityAware="false" type="Transparent" press=".showLocalInfo" class="icon-button" />
+                <CustomListItem>
+                  <content>
+                    <Button icon="sap-icon://world" iconDensityAware="false" type="Transparent" press=".toggleLanguage" class="icon-button" />
+                    <Button icon="sap-icon://sys-help" iconDensityAware="false" type="Transparent" press=".showLocalInfo" class="icon-button ml-20-px" />
+                  </content>
+                </CustomListItem>
               </swipeContent>
             </List>
           </VBox>
