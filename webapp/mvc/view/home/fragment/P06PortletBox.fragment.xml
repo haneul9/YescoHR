@@ -13,7 +13,7 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" width="135px" pickOnly="true" />
+      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" pickOnly="true" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -128,12 +128,13 @@
             </customData>
           </ObjectStatus>
         </VBox>
-        <VBox justifyContent="End" alignItems="End" class="mr-10-px lh-12-px">
+        <HBox justifyContent="End" alignItems="End" class="mr-10-px">
           <layoutData>
             <grid:GridItemLayoutData gridColumn="span 4" />
           </layoutData>
-          <Text text="{i18n>MSG_28003}" wrapping="false" class="font-12-px" />
-        </VBox>
+          <Text text="※" class="font-16-px lh-20-px" />
+          <Text text="{i18n>MSG_28003}" wrapping="false" class="ml-3-px font-12-px lh-12-px" />
+        </HBox>
       </grid:CSSGrid>
     </HBox>
   </VBox>

@@ -32,23 +32,30 @@
           <FlexItemData growFactor="1" maxWidth="63%" />
         </layoutData>
         <ScrollContainer>
-          <VBox width="100%" height="100%" items="{list}">
+          <VBox width="100%" height="100%" items="{list}" class="portlet-p10-list">
             <HBox width="100%" alignItems="Center">
               <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">
                 <core:customData>
                   <core:CustomData key="appraisal-chart-color" value="{Color}" writeToDom="true" />
                 </core:customData>
               </core:Icon>
-              <Text width="100%" text="{Itext}" tooltip="{Itext}" wrapping="false" class="pr-15-px">
+              <Text width="100%" text="{Itext}" tooltip="{Itext}" wrapping="false">
                 <layoutData>
-                  <FlexItemData minWidth="calc(100% - 136px)" maxWidth="calc(100% - 136px)" />
+                  <FlexItemData styleClass="portlet-p10-list-item-text" />
                 </layoutData>
               </Text>
-              <Text width="65px" text="{Perce}%" textAlign="Right" wrapping="false" class="pr-15-px" />
-              <Text width="50px" text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false">
+              <Text width="100%" text="{Perce}%" textAlign="Right" wrapping="false">
+                <layoutData>
+                  <FlexItemData styleClass="portlet-p10-list-item-percent" />
+                </layoutData>
+              </Text>
+              <Text width="100%" text="{Atext}" textAlign="Center" tooltip="{Atext}" wrapping="false">
                 <customData>
                   <core:CustomData key="appraisal-status-color" value="{Acode}" writeToDom="true" />
                 </customData>
+                <layoutData>
+                  <FlexItemData styleClass="portlet-p10-list-item-status" />
+                </layoutData>
               </Text>
             </HBox>
           </VBox>
