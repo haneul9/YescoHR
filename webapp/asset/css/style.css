@@ -1679,7 +1679,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact .sapMSlt.language-setting {margin-right:.3rem; min-width:auto; border:none}
 .sapUiSizeCompact .sapMSlt.language-setting .sapMSltLabel {padding-right:27px !important; font-size:14px}
 .sapUiSizeCompact .sapMSlt.language-setting .sapMSltArrow {width:22px}
-.sapUiSizeCompact .sapMSlt.language-setting .sapMSltArrow::before {content:''; line-height:40px; font-size:21px; color:#484c50}
+.sapUiSizeCompact .sapMSlt.language-setting .sapMSltArrow::before {content:''; line-height:38px; font-size:21px; color:#484c50}
 .sapUiSizeCompact .sapMSlt.language-setting:hover .sapMSltArrow::before,
 .sapUiSizeCompact .sapMSlt.language-setting.sapMSltPressed .sapMSltArrow::before {color:#3480e9}
 
