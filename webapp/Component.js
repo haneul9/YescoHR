@@ -96,6 +96,7 @@ sap.ui.define(
               isAppBusy: true,
               isAtHome: false,
               isMobile: this.bIsMobile,
+              language: 'KO',
               homebarBackground: 'prd',
             }),
             'appModel'

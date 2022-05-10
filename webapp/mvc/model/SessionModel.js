@@ -38,10 +38,9 @@ sap.ui.define(
       async read(sPernr) {
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
-          const sUrl = 'EmpLoginInfo';
           const mFilters = sPernr ? { Pernr: sPernr } : {}; // AppointeeModel용
 
-          const aResults = Client.getEntitySet(oModel, sUrl, mFilters);
+          const aResults = Client.getEntitySet(oModel, 'EmpLoginInfo', mFilters);
 
           this.setData(this.curryData(await aResults), true);
 
@@ -51,8 +50,7 @@ sap.ui.define(
         }
       },
 
-      curryData(aResults) {
-        const mSessionData = aResults[0] || {};
+      curryData([mSessionData = {}]) {
         delete mSessionData.__metadata;
 
         const Dtfmt = mSessionData.Dtfmt;

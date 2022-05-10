@@ -3,6 +3,7 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/InstanceManager',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/UriHandler',
     'sap/ui/yesco/common/mobile/MobileEmployeeSearchPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -30,6 +31,7 @@ sap.ui.define(
     // prettier 방지용 주석
     InstanceManager,
     AppUtils,
+    UriHandler,
     MobileEmployeeSearchPopoverHandler,
     Client,
     ServiceNames,
@@ -46,16 +48,23 @@ sap.ui.define(
       onInit() {
         this.debug('App.onInit');
 
+        const oUIComponent = this.getOwnerComponent();
+
         this.bMobile = AppUtils.isMobile();
+        this.oUriHandler = new UriHandler();
         if (!this.bMobile) {
           setTimeout(() => {
             this.oAppMenu = new Menus(this);
-            this.getOwnerComponent().setAppMenu(this.oAppMenu);
+            oUIComponent.setAppMenu(this.oAppMenu);
           });
+
+          const oAppModel = oUIComponent.getAppModel();
+          oAppModel.setProperty('/languageVisible', this.oUriHandler.getParameter('language-test') === 'true');
+          oAppModel.setProperty('/language', this.oUriHandler.getParameter('sap-language') || 'KO');
         } else {
           setTimeout(() => {
             this.oAppMenu = new MobileMenus(this);
-            this.getOwnerComponent().setAppMenu(this.oAppMenu);
+            oUIComponent.setAppMenu(this.oAppMenu);
           });
           setTimeout(() => {
             this.initMobile();
@@ -84,6 +93,10 @@ sap.ui.define(
 
       getAppMenu() {
         return this.oAppMenu;
+      },
+
+      getUriHandler() {
+        return this.oUriHandler;
       },
 
       getLogoPath(sWerks) {
@@ -138,6 +151,17 @@ sap.ui.define(
           await Client.create(oModel, 'PernrToken', mPayload);
         } catch (oError) {
           this.debug('requestSavePushToken error.', oError);
+        }
+      },
+
+      onChangeLanguage(oEvent) {
+        AppUtils.setAppBusy(true).setMenuBusy(true);
+
+        const sLanguageKey = oEvent.getParameter('selectedItem').getKey();
+        if (this.oUriHandler.getParameter('sap-language') !== sLanguageKey) {
+          this.oUriHandler.setParameter('sap-language', sLanguageKey).redirect();
+        } else {
+          AppUtils.setAppBusy(false).setMenuBusy(false);
         }
       },
 
