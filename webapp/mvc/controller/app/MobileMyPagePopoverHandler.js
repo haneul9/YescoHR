@@ -40,6 +40,8 @@ sap.ui.define(
       getInitialData() {
         return {
           busy: true,
+          Language: this.oController.getUriHandler().getParameter('sap-language') || 'KO',
+          LanguageVisible: this.oController.getUriHandler().getParameter('language-test') === 'true',
         };
       },
 
@@ -127,12 +129,16 @@ sap.ui.define(
         }
       },
 
-      async onPressLogout() {
-        this.oController.onPressLogout();
+      onChangeLanguage(oEvent) {
+        this.oController.onChangeLanguage(oEvent);
       },
 
       async onPressRefresh() {
         location.reload();
+      },
+
+      async onPressLogout() {
+        this.oController.onPressLogout();
       },
 
       onPopoverToggle() {
@@ -156,6 +162,10 @@ sap.ui.define(
           bBusy ? 0 : 500
         );
         return this;
+      },
+
+      toggleLanguage() {
+        this.oMyPageModel.setProperty('/LanguageVisible', !this.oMyPageModel.getProperty('/LanguageVisible'));
       },
 
       showLocalInfo() {
