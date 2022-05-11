@@ -28,7 +28,7 @@ sap.ui.define(
         const sWerks = this.oController.getAppointeeProperty('Werks');
         const mPayLoad = {
           Werks: sWerks,
-          Pernr: sPernr,
+          Pernr: this.sPernr,
           Tmyea: mSearchDate.year,
           Tmmon: mSearchDate.month,
         };

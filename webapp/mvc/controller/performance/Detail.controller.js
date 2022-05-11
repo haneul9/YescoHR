@@ -701,7 +701,7 @@ sap.ui.define(
 
       // 완료
       onExCompleteBtn() {
-        this.oDataCall('2', 'LABEL_00121');
+        this.oDataCall('2', 'LABEL_00117');
       },
 
       oDataCall(sKey, sTitle) {
