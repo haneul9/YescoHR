@@ -19,8 +19,8 @@
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <VBox>
-            <Text visible="{/manager}" text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-            <Link visible="{/manager}" target="_blank" press=".onPressEname" textAlign="Center" width="100%" text="{Ename}"/>
+            <Text visible="{= !${/manager} }" text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Link visible="{/manager}" press=".onPressEname" textAlign="Center" width="100%" text="{Ename}"/>
           </VBox>
         </table:template>
       </table:Column>
@@ -69,13 +69,19 @@
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
-          <Text text="{Beguz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Beguz',
+              formatter: '.setTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Enduz" filterProperty="Enduz">
         <Label text="{i18n>LABEL_27006}"/>
         <table:template>
-          <Text text="{Enduz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Enduz',
+              formatter: '.setTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
@@ -90,7 +96,7 @@
           <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="80px" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_00330}"/>
         <table:template>
           <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>

@@ -77,6 +77,10 @@ sap.ui.define(
         }
       },
 
+      setTime(sTime) {
+        return !sTime ? '' : `${sTime.slice(0, 2)}:${sTime.slice(2)}`;
+      },
+
       async getAppSearch() {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
@@ -140,10 +144,13 @@ sap.ui.define(
       },
 
       onPressEname(oEvent) {
+        const sPath = oEvent.getSource().getBindingContext().getPath();
+        const mSelectData = this.getViewModel().getProperty(sPath);
+
         this.getRouter().navTo('individualWorkState', {
-          pernr: mCustomData.empno,
-          year: dSearchYearMonth.get('year'),
-          month: dSearchYearMonth.get('month'),
+          pernr: mSelectData.Pernr,
+          year: moment(mSelectData.Begda).year(),
+          month: moment(mSelectData.Begda).month(),
         });
       },
 
