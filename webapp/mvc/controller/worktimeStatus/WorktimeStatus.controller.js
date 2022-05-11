@@ -353,7 +353,7 @@ sap.ui.define(
             controller: this,
           }).then(function (oDialog) {
             oView.addDependent(oDialog);
-            this.TableUtils.adjustRowSpan({
+            oController.TableUtils.adjustRowSpan({
               oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID),
               aColIndices: [0, 1, 2, 3, 4, 5],
               sTheadOrTbody: 'thead',
