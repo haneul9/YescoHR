@@ -31,6 +31,7 @@ sap.ui.define(
             month: moment().format('MM'),
             year: moment().format('YYYY'),
           },
+          appointee: {},
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
           WeekWorkDate: new Date(),
@@ -122,6 +123,7 @@ sap.ui.define(
           );
 
           this.YearPlanBoxHandler.getYearPlan();
+          this.setAppointeeDate();
 
           const sWerks = this.getAppointeeProperty('Werks');
           const sYear = oViewModel.getProperty('/searchDate/year');
@@ -438,6 +440,31 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         return oViewModel.setProperty('/FullYear', `${oViewModel.getProperty('/searchDate/year')}${this.getBundleText('LABEL_00252')}`); // 년
+      },
+
+      // 사원정보
+      async setAppointeeDate() {
+        try {
+          const oModel = this.getModel(ServiceNames.COMMON);
+          const mFilters = {
+            Ename: this.getAppointeeProperty('Pernr'),
+            Stat2: '3',
+            Accty: 'M', // 권한 해제 : 타사 임직원도 검색 + 전화번호
+          };
+
+          const aEmployees = await Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
+          const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
+
+          this.getViewModel().setProperty(
+            '/appointee',
+            aEmployees.map((mEmployee) => {
+              mEmployee.Photo = mEmployee.Photo || sUnknownAvatarImageURL;
+              return mEmployee;
+            })[0]
+          );
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        }
       },
 
       // 년도 선택시 화면전체조회

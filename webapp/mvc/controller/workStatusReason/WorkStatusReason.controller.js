@@ -26,6 +26,7 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
+          manager: this.isHass() || this.isMss(),
           search: {
             werksList: [],
             orgList: [],
@@ -76,24 +77,32 @@ sap.ui.define(
         }
       },
 
+      setTime(sTime) {
+        return !sTime ? '' : `${sTime.slice(0, 2)}:${sTime.slice(2)}`;
+      },
+
       async getAppSearch() {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mSearch = this.getViewModel().getProperty('/search');
-        const mPayLoad = {
+        let mPayLoad = {
           Pernr: this.getAppointeeProperty('Pernr'),
           BegdaS: moment(mSearch.date).hours(9).toDate(),
           EnddaS: moment(mSearch.secondDate).hours(9).toDate(),
           Werks: mSearch.Werks,
           Orgeh: mSearch.Orgeh,
-          Awart: _.size(mSearch.Awart) > 1 ? _.compact(mSearch.Awart) : mSearch.Awart,
+          Awart: mSearch.Awart,
         };
+
+        if (_.chain(mPayLoad.Awart).compact().isEmpty().value()) {
+          mPayLoad = _.omit(mPayLoad, 'Awart');
+        }
 
         const aTableList = await Client.getEntitySet(oModel, 'TimeReasonList', mPayLoad);
         const oTable = this.byId(this.APP_TABLE_ID);
 
         _.map(aTableList, (e, i) => {
-          e.No = i;
+          e.No = i + 1;
         });
         oViewModel.setProperty('/listInfo', {
           ...this.TableUtils.count({ oTable, aRowData: aTableList }),
@@ -132,6 +141,17 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onPressEname(oEvent) {
+        const sPath = oEvent.getSource().getBindingContext().getPath();
+        const mSelectData = this.getViewModel().getProperty(sPath);
+
+        this.getRouter().navTo('individualWorkState', {
+          pernr: mSelectData.Pernr,
+          year: moment(mSelectData.Begda).year(),
+          month: moment(mSelectData.Begda).month(),
+        });
       },
 
       onPressExcelDownload() {

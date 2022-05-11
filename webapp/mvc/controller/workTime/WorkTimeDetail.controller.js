@@ -64,16 +64,16 @@ sap.ui.define(
 
       async onObjectMatched(oParameter, sRouteName) {
         const sDataKey = oParameter.oDataKey;
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
 
-        oDetailModel.setData(this.initializeModel());
+        oViewModel.setData(this.initializeModel());
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
-          oDetailModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
-          oDetailModel.setProperty('/busy', true);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
+          oViewModel.setProperty('/busy', true);
 
           const sMenid = this.getCurrentMenuId();
           const sPernr = this.getAppointeeProperty('Pernr');
@@ -84,7 +84,7 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          oDetailModel.setProperty(
+          oViewModel.setProperty(
             '/employees',
             aOtpList.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
           );
@@ -92,13 +92,13 @@ sap.ui.define(
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
 
-            oDetailModel.setProperty('/ApplyInfo', {
+            oViewModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
               Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
-            oDetailModel.setProperty('/busy', true);
+            oViewModel.setProperty('/busy', true);
 
             const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
               Appno: sDataKey,
@@ -106,16 +106,16 @@ sap.ui.define(
 
             const iLength = oTargetData.length;
 
-            oDetailModel.setProperty('/detail', {
+            oViewModel.setProperty('/detail', {
               listMode: 'None',
               list: oTargetData,
               rowCount: iLength < 5 ? iLength : 5,
             });
 
-            oDetailModel.setProperty('/Fixed', false);
-            oDetailModel.setProperty('/DelBtn', oTargetData[0].ZappStatAl === '20');
-            oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
+            oViewModel.setProperty('/Fixed', false);
+            oViewModel.setProperty('/DelBtn', oTargetData[0].ZappStatAl === '20');
+            oViewModel.setProperty('/ApplyInfo', oTargetData[0]);
+            oViewModel.setProperty('/ApprovalDetails', oTargetData[0]);
           }
 
           this.settingsAttachTable();
@@ -123,7 +123,7 @@ sap.ui.define(
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -145,7 +145,7 @@ sap.ui.define(
 
       // 신청내역 checkBox
       onRowSelection(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const aSelectedIndex = oEvent.getSource().getSelectedIndices();
         const oContext = oEvent.getParameter('rowContext');
         let aDelList = [];
@@ -155,92 +155,100 @@ sap.ui.define(
 
           if (!_.isEmpty(aSelectedIndex)) {
             aDelList = _.map(aSelectedIndex, (e) => {
-              return oDetailModel.getProperty(`/${sTableId}/list/${e}`);
+              return oViewModel.getProperty(`/${sTableId}/list/${e}`);
             });
           }
         }
 
-        oDetailModel.setProperty('/DeletedRows', aDelList);
+        oViewModel.setProperty('/DeletedRows', aDelList);
       },
 
       // 신청내역 추가
       onAddDetail() {
         const oView = this.getView();
+        const oViewModel = this.getViewModel();
 
-        setTimeout(() => {
-          if (!this._pDetailDialog) {
-            this._pDetailDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.workTime.fragment.WorkTimeDialog',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          setTimeout(() => {
+            if (!this._pDetailDialog) {
+              this._pDetailDialog = Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.workTime.fragment.WorkTimeDialog',
+                controller: this,
+              }).then(function (oDialog) {
+                oView.addDependent(oDialog);
+                return oDialog;
+              });
+            }
+
+            const oModel = this.getModel(ServiceNames.WORKTIME);
+            const oEmpData = this.getAppointeeData();
+
+            this.byId('workTimeTable').clearSelection();
+
+            this._pDetailDialog.then(async function (oDialog) {
+              // 근무 사유
+              const aCauseList = await Client.getEntitySet(oModel, 'WorktimeCodeList', {
+                Datum: new Date(),
+                Cdnum: 'TM0003',
+                Grcod: 'TM000003',
+              });
+
+              oViewModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
+
+              let aList = [];
+              let iLength = 1;
+
+              // 신청내역 없을때
+              oViewModel.setProperty('/DialogData', {
+                Datum: new Date(),
+                Beguz: '18:00',
+                Abrst: '',
+                Ottyp: 'ALL',
+                Dtype: 'ALL',
+                Nxtwk: 'ALL',
+                bType: false,
+                bWork: false,
+              });
+
+              aList.push({
+                Pernr: oEmpData.Pernr,
+                Ename: oEmpData.Ename,
+                Zzjikgbt: oEmpData.Zzjikgbt,
+                Zzjikcht: oEmpData.Zzjikcht,
+                Orgtx: oEmpData.Orgtx,
+              });
+
+              iLength = 1;
+
+              oViewModel.setProperty('/dialog/list', aList);
+              oViewModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+              oDialog.open();
             });
-          }
-
-          const oDetailModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const oEmpData = this.getAppointeeData();
-
-          this.byId('workTimeTable').clearSelection();
-
-          this._pDetailDialog.then(async function (oDialog) {
-            // 근무 사유
-            const aCauseList = await Client.getEntitySet(oModel, 'WorktimeCodeList', {
-              Datum: new Date(),
-              Cdnum: 'TM0003',
-              Grcod: 'TM000003',
-            });
-
-            oDetailModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
-
-            let aList = [];
-            let iLength = 1;
-
-            // 신청내역 없을때
-            oDetailModel.setProperty('/DialogData', {
-              Datum: new Date(),
-              Beguz: '18:00',
-              Abrst: '',
-              Ottyp: 'ALL',
-              Dtype: 'ALL',
-              Nxtwk: 'ALL',
-              bType: false,
-              bWork: false,
-            });
-
-            aList.push({
-              Pernr: oEmpData.Pernr,
-              Ename: oEmpData.Ename,
-              Zzjikgbt: oEmpData.Zzjikgbt,
-              Zzjikcht: oEmpData.Zzjikcht,
-              Orgtx: oEmpData.Orgtx,
-            });
-
-            iLength = 1;
-
-            oDetailModel.setProperty('/dialog/list', aList);
-            oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
-            oDialog.open();
-          });
-        }, 100);
+          }, 100);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 신청내역 삭제
       onDelDetail() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        if (_.isEmpty(oDetailModel.getProperty('/DeletedRows'))) {
+        if (_.isEmpty(oViewModel.getProperty('/DeletedRows'))) {
           // 삭제할 데이터를 선택하세요.
           return MessageBox.alert(this.getBundleText('MSG_00055'));
         }
 
-        const aDiffList = _.difference(oDetailModel.getProperty('/detail/list'), oDetailModel.getProperty('/DeletedRows'));
+        const aDiffList = _.difference(oViewModel.getProperty('/detail/list'), oViewModel.getProperty('/DeletedRows'));
         const iLength = _.size(aDiffList);
 
-        oDetailModel.setProperty('/detail/list', aDiffList);
-        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/detail/list', aDiffList);
+        oViewModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
         this.byId('workTimeTable').clearSelection();
       },
 
@@ -309,38 +317,45 @@ sap.ui.define(
           return;
         }
 
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
+        try {
+          oViewModel.setProperty('/busy', true);
 
-        await Promise.all(
-          _.forEach(oDetailModel.getProperty('/dialog/list'), async (e, i) => {
-            const oOverTime = await this.overTime(e);
+          await Promise.all(
+            _.map(oViewModel.getProperty('/dialog/list'), async (e, i) => {
+              const oOverTime = await this.overTime(e);
 
-            oDetailModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
-            this.dateMovement(i + 1);
-          })
-        );
+              oViewModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
+              this.dateMovement(i + 1);
+            })
+          );
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       dateMovement(index) {
-        const oDetailModel = this.getViewModel();
-        const aDialogList = oDetailModel.getProperty('/dialog/list');
+        const oViewModel = this.getViewModel();
+        const aDialogList = oViewModel.getProperty('/dialog/list');
 
         if (index !== _.size(aDialogList)) {
           return;
         }
 
         const mDialogData = {
-          ...oDetailModel.getProperty('/DialogData'),
-          Ottyptx: _.chain(oDetailModel.getProperty('/CauseType'))
+          ...oViewModel.getProperty('/DialogData'),
+          Ottyptx: _.chain(oViewModel.getProperty('/CauseType'))
             .find((e) => {
-              return e.Zcode === oDetailModel.getProperty('/DialogData/Ottyp');
+              return e.Zcode === oViewModel.getProperty('/DialogData/Ottyp');
             })
             .get('Ztext')
             .value(),
         };
 
         const aFilterList = [
-          ...oDetailModel.getProperty('/detail/list'),
+          ...oViewModel.getProperty('/detail/list'),
           ..._.chain(aDialogList)
             .filter((e) => {
               return !!e.Pernr;
@@ -364,17 +379,17 @@ sap.ui.define(
 
         const iLength = _.size(aFilterList);
 
-        oDetailModel.setProperty('/detail/list', aFilterList);
-        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/detail/list', aFilterList);
+        oViewModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
         this.byId('detailDialog').close();
       },
 
       //  Dialig 추가
       onDialogAdd() {
-        const oDetailModel = this.getViewModel();
-        const aDialogTable = oDetailModel.getProperty('/dialog/list');
+        const oViewModel = this.getViewModel();
+        const aDialogTable = oViewModel.getProperty('/dialog/list');
 
-        oDetailModel.setProperty('/dialog/list', [
+        oViewModel.setProperty('/dialog/list', [
           ...aDialogTable,
           {
             Pernr: '',
@@ -385,25 +400,25 @@ sap.ui.define(
           },
         ]);
 
-        const iLength = _.size(oDetailModel.getProperty('/dialog/list'));
+        const iLength = _.size(oViewModel.getProperty('/dialog/list'));
 
-        oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
       },
 
       // Dialog 삭제
       onDialogDel() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        if (_.isEmpty(oDetailModel.getProperty('/DeletedRows'))) {
+        if (_.isEmpty(oViewModel.getProperty('/DeletedRows'))) {
           // 삭제할 데이터를 선택하세요.
           return MessageBox.alert(this.getBundleText('MSG_00055'));
         }
 
-        const aDiffList = _.difference(oDetailModel.getProperty('/dialog/list'), oDetailModel.getProperty('/DeletedRows'));
+        const aDiffList = _.difference(oViewModel.getProperty('/dialog/list'), oViewModel.getProperty('/DeletedRows'));
         const iLength = _.size(aDiffList);
 
-        oDetailModel.setProperty('/dialog/list', aDiffList);
-        oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/dialog/list', aDiffList);
+        oViewModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
         this.byId('dialogTable').clearSelection();
       },
 
@@ -414,51 +429,65 @@ sap.ui.define(
 
       // Dialog 근무시간
       async onTimePicker() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         if (!mDialogData.Enduz || !mDialogData.Beguz) {
           return;
         }
 
-        // 초과시간
-        const oOverTime = await this.overTime();
+        try {
+          oViewModel.setProperty('/busy', true);
+          // 초과시간
+          const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
-        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
-        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
-        oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
-        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
-        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+          oViewModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+          oViewModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+          oViewModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+          oViewModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+          oViewModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+          oViewModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Dialog 근무일
       async onWorkDatePicker() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        if (!oDetailModel.getProperty('/DialogData/Datum')) {
+        if (!oViewModel.getProperty('/DialogData/Datum')) {
           return;
         }
 
-        // 초과시간
-        const oOverTime = await this.overTime();
+        try {
+          oViewModel.setProperty('/busy', true);
+          // 초과시간
+          const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
-        oDetailModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
-        oDetailModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
-        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
-        oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
-        oDetailModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
-        oDetailModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+          oViewModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+          oViewModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Dtype', !oOverTime.Dtype ? 'ALL' : oOverTime.Dtype);
+          oViewModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+          oViewModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+          oViewModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+          oViewModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Dialog 초과근무시간
       overTime(mData) {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         if (!mDialogData.Beguz || !mDialogData.Enduz) {
           return;
@@ -482,8 +511,8 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         // 사유
         if (mDialogData.Ottyp === 'ALL' || !mDialogData.Ottyp) {
@@ -509,8 +538,8 @@ sap.ui.define(
           return true;
         }
 
-        const aList = oDetailModel.getProperty('/dialog/list');
-        const aDetailList = oDetailModel.getProperty('/detail/list');
+        const aList = oViewModel.getProperty('/dialog/list');
+        const aDetailList = oViewModel.getProperty('/detail/list');
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
@@ -561,10 +590,10 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true);
 
-              const oDetailModel = this.getViewModel();
+              const oViewModel = this.getViewModel();
               const sAppno = await Appno.get.call(this);
               const oModel = this.getModel(ServiceNames.WORKTIME);
-              const aDetailList = _.each(oDetailModel.getProperty('/detail/list'), (e) => {
+              const aDetailList = _.each(oViewModel.getProperty('/detail/list'), (e) => {
                 e.Beguz = e.Beguz.replace(':', '');
                 e.Enduz = e.Enduz.replace(':', '');
               });
@@ -652,12 +681,12 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const [aDetailList] = oDetailModel.getProperty('/detail/list');
+        const oViewModel = this.getViewModel();
+        const [aDetailList] = oViewModel.getProperty('/detail/list');
         const sAppno = _.isEmpty(aDetailList) ? '' : aDetailList.Appno;
 
         this.AttachFileAction.setAttachFile(this, {
-          Editable: oDetailModel.getProperty('/Fixed'),
+          Editable: oViewModel.getProperty('/Fixed'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,

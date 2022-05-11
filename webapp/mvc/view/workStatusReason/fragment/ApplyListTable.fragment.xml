@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <table:Table id="appTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+  <table:Table id="appTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
     <table:columns>
       <table:Column width="50px" sortProperty="No" filterProperty="No">
         <Label text="{i18n>LABEL_00164}"/>
@@ -19,8 +19,8 @@
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <VBox>
-            <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-            <!-- <Link visible="{= !!${ZappUrl} }" target="_blank" href="{ZappUrl}" text="{Ename}"/> -->
+            <Text visible="{= !${/manager} }" text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Link visible="{/manager}" press=".onPressEname" textAlign="Center" width="100%" text="{Ename}"/>
           </VBox>
         </table:template>
       </table:Column>
@@ -69,13 +69,19 @@
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
-          <Text text="{Beguz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Beguz',
+              formatter: '.setTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Enduz" filterProperty="Enduz">
         <Label text="{i18n>LABEL_27006}"/>
         <table:template>
-          <Text text="{Enduz}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{
+              path: 'Enduz',
+              formatter: '.setTime'
+          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
@@ -90,18 +96,18 @@
           <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="80px" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_00330}"/>
         <table:template>
           <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Appno" filterProperty="Appno">
+      <table:Column width="200px" sortProperty="Appno" filterProperty="Appno">
         <Label text="{i18n>LABEL_19006}"/>
         <table:template>
           <VBox>
-            <Text visible="{= !${ZappUrl} }" text="{Appno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
-            <Link visible="{= !!${ZappUrl} }" target="_blank" href="{ZappUrl}" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }"/>
+            <Text visible="{= !${ZappUrl} }" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Link visible="{= !!${ZappUrl} }" target="_blank" href="{ZappUrl}" textAlign="Center" width="100%" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }"/>
           </VBox>
         </table:template>
       </table:Column>

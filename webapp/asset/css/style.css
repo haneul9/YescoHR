@@ -1168,6 +1168,9 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMLabel {font-size:16px; font-weight:600}
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMText {font-size:16px; font-weight:600}
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMVBox {height:45px; justify-content:center}
+.individual-appointee-box {height: 40px; margin-bottom: 20px !important; padding-bottom: 4px; border-bottom: 1px solid #222; margin-right: 10px; margin-left: 10px; }
+.individual-appointee-box .sapMLnk.name {font-weight: 800; font-size: 20px;}
+.individual-appointee-box .sapMLnk {color: var(--FontColorNormal) !important; font-size: 14px; font-weight: 500; line-height: 1.45; align-self: center; vertical-align: middle;}
 
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent !important}
@@ -1440,6 +1443,8 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-right:28px !important}
 
 .employee-tree .sapMTreeItemBaseExpander {font-size:1rem; color:#222}
+.employee-tree.sapMList [role=tree], .employee-tree .sapMTreeItemBase, .sapMTreeItemBaseChildren {border: none;}
+
 
 .member-photo {display:inline-block; width:auto; height:auto; border-radius:50%; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/avatar-unknown.svg'); background-size:100%; background-position:center top !important; background-repeat:no-repeat}
 .employee-detail .member-photo {width:120px; height:160px; margin-top:9px; margin-bottom:10px; border-radius:0}
@@ -2175,6 +2180,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 /* 직무진단 팝업 */
 .jobExamTable .sapMLabel, .jobExamTable .sapMText { font-weight:bold !important; }
 .jobExamTable .sapUiTableCtrl>tbody>tr>td:nth-child(-n+2)  { background-color: #fbfcfd; }
+.jobExamTable .iconReset.sapUiIconPointer { font-size: 20px; border-radius: 5px; background-color: #ffffff; margin-left: 3px;}
+.jobExamTable .iconReset.sapUiIconPointer::before { color: #484c50;}
 
 .sticky-side-tree {position:sticky; top:80px}
 
