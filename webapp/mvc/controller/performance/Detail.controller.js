@@ -659,7 +659,7 @@ sap.ui.define(
             oViewModel.setProperty(`/jobDiagnosis/list/${i}`, {
               ...e,
               codeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }),
-              Zzjarst: !e.Zzjarst ? 'ALL' : e.Zzjarst,
+              Zzjarst: !e.Zzjarst && e.Zcode !== '90' ? 'ALL' : e.Zzjarst,
             });
           });
 
@@ -758,7 +758,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aDeepList = oViewModel.getProperty('/jobDiagnosis/list');
         const mCheckTarget = _.find(aDeepList, (e) => {
-          return e.Zcheck === 'X' && !e.Zzjarst && e.Appgb === oViewModel.getProperty('/type');
+          return e.Zcheck === 'X' && (!e.Zzjarst || e.Zzjarst === 'ALL') && e.Appgb === oViewModel.getProperty('/type');
         });
 
         if (!_.isEmpty(mCheckTarget)) {
@@ -773,13 +773,13 @@ sap.ui.define(
           if (
             !_.chain(aDeepList)
               .find((e) => {
-                return e.Zzjaitm === '1030' && !!e.Zzjarst;
+                return e.Zzjaitm === '1030' && !!e.Zzjarst && e.Appgb === 'ME';
               })
               .isEmpty()
               .value() &&
             !_.chain(aDeepList)
               .find((e) => {
-                return e.Zzjaitm === '1040' && e.Zzjarst !== '10' && e.Zzjarst !== '20';
+                return e.Zzjaitm === '1040' && e.Appgb === 'ME' && e.Zzjarst !== '10' && e.Zzjarst !== '20';
               })
               .isEmpty()
               .value()
@@ -792,7 +792,7 @@ sap.ui.define(
           if (
             !_.chain(aDeepList)
               .find((e) => {
-                return e.Zzjaitm === '1040' && (e.Zzjarst === '10' || e.Zzjarst === '20');
+                return e.Zzjaitm === '1040' && e.Appgb === 'ME' && (e.Zzjarst === '10' || e.Zzjarst === '20');
               })
               .isEmpty()
               .value()
@@ -820,7 +820,26 @@ sap.ui.define(
           if (
             !_.chain(aDeepList)
               .find((e) => {
-                return e.Zzjaitm === '1020' && (e.Zzjarst === '10' || e.Zzjarst === '20');
+                return e.Zzjaitm === '1030' && !!e.Zzjarst && e.Appgb === 'MA';
+              })
+              .isEmpty()
+              .value() &&
+            !_.chain(aDeepList)
+              .find((e) => {
+                return e.Zzjaitm === '1020' && e.Appgb === 'MA' && e.Zzjarst !== '10' && e.Zzjarst !== '20';
+              })
+              .isEmpty()
+              .value()
+          ) {
+            // 이동사유를 다시 선택하시기 바랍니다.
+            MessageBox.alert(this.getBundleText('MSG_10031'));
+            return true;
+          }
+
+          if (
+            !_.chain(aDeepList)
+              .find((e) => {
+                return e.Zzjaitm === '1020' && e.Appgb === 'MA' && (e.Zzjarst === '10' || e.Zzjarst === '20');
               })
               .isEmpty()
               .value()

@@ -44,7 +44,7 @@
                       <FlexItemData growFactor="1" />
                     </layoutData>
                   </Input>
-                  <core:Icon src="sap-icon://reset" class="iconReset" width="40px" height="40px" tooltip="{i18n>LABEL_10112}" visible="{= ${Zcode} === '90' }" press=".onClearArea" />
+                  <core:Icon src="sap-icon://reset" class="iconReset" width="40px" height="40px" tooltip="{i18n>LABEL_10112}" visible="{= ${Zcode} === '90' &amp;&amp; ${Zdeactive} !== 'X' }" press=".onClearArea" />
                 </HBox>
               </table:template>
             </table:Column>
