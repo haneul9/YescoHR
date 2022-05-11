@@ -709,8 +709,10 @@ sap.ui.define(
 
         if (!bType && this.checkError()) return;
 
-        // {0}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', sTitle), {
+        const sConfirmMSG = bType ? this.getBundleText('MSG_00006', sTitle) : this.getBundleText('MSG_10032')
+
+        // {0}하시겠습니까? : 완료하시면 수정할 수 없습니다. 직무진단을 완료하시겠습니까?
+        MessageBox.confirm(sConfirmMSG, {
           // '', 취소
           actions: [this.getBundleText(sTitle), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
@@ -742,6 +744,7 @@ sap.ui.define(
                 onClose: () => {
                   if (!bType) {
                     this.byId('examDialog').close();
+                    oViewModel.setProperty('/jobDiagnosis/fixed', false);
                   }
                 },
               });
@@ -762,10 +765,11 @@ sap.ui.define(
         });
 
         if (!_.isEmpty(mCheckTarget)) {
+          // 선택, 입력
           const sMsg = mCheckTarget.Zcode === '90' ? this.getBundleText('LABEL_00112') : this.getBundleText('MSG_10027');
 
-          // {0}-{1}을(를) {2}하세요.
-          MessageBox.alert(this.getBundleText('MSG_10026', mCheckTarget.Appgbtx, mCheckTarget.Zzjaitmtx, sMsg));
+          // {0}을(를) {1}하세요.
+          MessageBox.alert(this.getBundleText('MSG_10026', mCheckTarget.Zzjaitmtx, sMsg));
           return true;
         }
 
