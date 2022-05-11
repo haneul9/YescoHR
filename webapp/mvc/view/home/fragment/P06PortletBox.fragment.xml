@@ -22,120 +22,130 @@
       <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" />
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00342}" />
     </HBox>
-    <HBox class="portlet-body">
-      <core:HTML content='&lt;div id="portlet-p06-chart-container"&gt;&lt;/div&gt;'>
-        <core:layoutData>
-          <FlexItemData minWidth="110px" maxWidth="110px" />
-        </core:layoutData>
-      </core:HTML>
-      <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr" gridGap="0px">
-        <grid:layoutData>
-          <FlexItemData growFactor="1" styleClass="pt-15-px" />
-        </grid:layoutData>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01121}" />
-          <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt01} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt01} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod01}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod01}" />
-            </customData>
-          </ObjectStatus>
+    <VBox class="portlet-body">
+      <HBox>
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <VBox class="portlet-p06-chart-area">
+          <Label text="{i18n>LABEL_01130}" textAlign="Center" wrapping="true">
+            <layoutData>
+              <FlexItemData styleClass="portlet-p06-chart-caption" />
+            </layoutData>
+          </Label>
+          <core:HTML content='&lt;div id="portlet-p06-chart-container"&gt;&lt;/div&gt;' />
+          <Label text="{chartValue}%">
+            <layoutData>
+              <FlexItemData styleClass="portlet-p06-chart-value" />
+            </layoutData>
+          </Label>
         </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01122}" />
-          <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt02} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod02}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod02}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_00188}" />
-          <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt03} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod03}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod03}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01123}" />
-          <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt04} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod04}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod04}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01126}" />
-          <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt05} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod05}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod05}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01125}" />
-          <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt06} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod06}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod06}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_20007}" />
-          <ObjectStatus text="{ path: 'counts/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt07} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod07}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod07}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01205}" />
-          <ObjectStatus text="{ path: 'counts/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="popover" value="{= ${counts/Cnt08} === '0' ? 'N' : 'Y' }" writeToDom="true" />
-              <core:CustomData key="table-key" value="k{counts/Cod08}" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="A" />
-              <core:CustomData key="Discod" value="{counts/Cod08}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <HBox justifyContent="End" alignItems="End" class="mr-10-px">
-          <layoutData>
-            <grid:GridItemLayoutData gridColumn="span 4" />
-          </layoutData>
-          <Text text="※" class="font-16-px lh-20-px" />
-          <Text text="{i18n>MSG_28003}" wrapping="false" class="ml-3-px font-12-px lh-12-px" />
-        </HBox>
-      </grid:CSSGrid>
-    </HBox>
+        <grid:CSSGrid gridTemplateColumns="repeat(4, minmax(25%, 25%))" gridTemplateRows="repeat(2, minmax(auto, 50%))" gridGap="10px 0">
+          <grid:layoutData>
+            <FlexItemData growFactor="1" styleClass="portlet-p06-count-area" />
+          </grid:layoutData>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01121}" tooltip="{i18n>LABEL_01121}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt01} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt01} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod01}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod01}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01122}" tooltip="{i18n>LABEL_01122}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt02} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod02}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod02}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_00188}" tooltip="{i18n>LABEL_00188}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt03} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod03}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod03}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01123}" tooltip="{i18n>LABEL_01123}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt04} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod04}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod04}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01126}" tooltip="{i18n>LABEL_01126}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt05} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod05}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod05}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01125}" tooltip="{i18n>LABEL_01125}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt06} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod06}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod06}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_20007}" tooltip="{i18n>LABEL_20007}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt07} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod07}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod07}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01205}" tooltip="{i18n>LABEL_01205}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: 'counts/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt08} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod08}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod08}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+        </grid:CSSGrid>
+      </HBox>
+      <HBox class="portlet-p06-formula">
+        <Text text="※" />
+        <Text text="{i18n>MSG_28003}" wrapping="false" />
+      </HBox>
+    </VBox>
   </VBox>
 </core:FragmentDefinition>

@@ -54,21 +54,25 @@ sap.ui.define(
       buildChart() {
         this.oChartPromise = new Promise((resolve) => {
           FusionCharts.ready(() => {
-            new FusionCharts({
-              id: this.sChartId,
-              type: 'cylinder',
-              renderAt: `${this.sChartId}-container`,
-              width: '110',
-              height: '95%',
-              dataFormat: 'json',
-              dataSource: {
-                chart: this.getChartOption(),
-                value: 0,
-              },
-              events: {
-                rendered: resolve,
-              },
-            }).render();
+            setTimeout(() => {
+              this.iChartHeight = $('.portlet-p06-chart-area').height() - $('.portlet-p06-chart-caption').height() - $('.portlet-p06-chart-value').height();
+
+              new FusionCharts({
+                id: this.sChartId,
+                type: 'cylinder',
+                renderAt: `${this.sChartId}-container`,
+                width: '105',
+                height: this.iChartHeight,
+                dataFormat: 'json',
+                dataSource: {
+                  chart: this.getChartOption(),
+                  value: 0,
+                },
+                events: {
+                  rendered: resolve,
+                },
+              }).render();
+            }, 300);
           });
         });
       },
@@ -99,7 +103,10 @@ sap.ui.define(
           this.setChartData(fValue); // 다른 메뉴를 갔다가 되돌아오는 경우
         }
 
-        return { counts: mPortletContentData };
+        return {
+          counts: mPortletContentData,
+          chartValue: fValue,
+        };
       },
 
       setChartData(fValue) {
@@ -118,23 +125,29 @@ sap.ui.define(
         return {
           baseFontSize: '10',
           valueFontSize: '14',
-          caption: AppUtils.getBundleText('LABEL_01130'), // 출근율
-          lowerlimit: '0',
-          upperlimit: '100',
-          lowerlimitdisplay: '0%',
-          upperlimitdisplay: '100%',
-          numbersuffix: '%',
-          cylfillhoveralpha: '85',
-          cylFillColor: '#30c4ee',
+          showValue: '0',
+          lowerLimit: '0',
+          upperLimit: '100',
+          lowerLimitDisplay: '0%',
+          upperLimitDisplay: '100%',
+          numberSuffix: '%',
+          cylHeight: this.iChartHeight - 20,
           cylYScale: '10',
-          valuePadding: '7',
+          cylFillHoverAlpha: '85',
+          cylFillColor: '#30c4ee',
+          chartTopMargin: '10',
+          chartBottomMargin: '10',
+          // chartRightMargin: '15',
+          // chartLeftMargin: '15',
+          autoScale: '1',
+          manageResize: '1',
           animation: '1',
           refreshInstantly: '1',
           toolTipBgColor: '#ffffff',
           toolTipColor: '#222222',
           showToolTipShadow: '1',
-          plotcolorintooltip: '1',
-          plottooltext: AppUtils.getBundleText('LABEL_01131', '$dataValue'), // 출근율: <b>$dataValue%</b>
+          plotColorInTooltip: '1',
+          plotToolText: AppUtils.getBundleText('LABEL_01131', '$dataValue'), // 출근율: <b>$dataValue%</b>
           theme: 'ocean',
         };
       },
@@ -224,8 +237,8 @@ sap.ui.define(
       },
 
       destroy() {
-        if (this.oPopover) {
-          this.oPopover.destroy();
+        if (this.oEmployeeListPopupHandler) {
+          this.oEmployeeListPopupHandler.destroy();
         }
 
         AbstractPortletHandler.prototype.destroy.call(this);

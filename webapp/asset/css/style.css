@@ -167,11 +167,25 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 .portlet-header .sapIcon_Date {width:120px !important}
 html[lang="en"] .portlet-p06 .portlet-header .sapIcon_Date {width:140px !important}
-.portlet-p06 tspan {font-size:7px}
-.portlet-p06 g[class*=caption] tspan, .portlet-p06 g[class*=datalabel] tspan {font-size:11px}
+.portlet-p06 .portlet-p06-chart-area {align-items:center; margin:10px 5px 10px 0; width:105px}
+.portlet-p06 .portlet-p06-count-area {padding:20px 0}
+.portlet-p06 .portlet-p06-count-area .sapMVBox {height:100%}
+.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem {display:flex; align-items:center}
+.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem:nth-child(1) {height:32px}
+.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem:nth-child(2) {flex-grow:1 !important}
+.portlet-p06 .portlet-p06-formula {justify-content:end; align-items:end; height:12px}
+.portlet-p06 .portlet-p06-formula .sapMFlexItem,
+.portlet-p06 .portlet-p06-formula .sapMFlexItem .sapMText {height:12px; line-height:12px}
+.portlet-p06 .portlet-p06-formula .sapMFlexItem + .sapMFlexItem {margin-left:3px}
+.portlet-p06 .portlet-p06-formula .sapMFlexItem:nth-child(1) .sapMText {font-size:16px}
+.portlet-p06 .portlet-p06-formula .sapMFlexItem:nth-child(2) .sapMText {font-size:12px}
+/* .portlet-p06 .portlet-p06-chart-area>.sapMFlexItem:nth-child(1),
+.portlet-p06 .portlet-p06-chart-area>.sapMFlexItem:nth-child(3) {height:16px}
+.portlet-p06 .portlet-p06-chart-area>.sapMFlexItem:nth-child(2) {height:calc(100% - 32px)} */
+.portlet-p06 .portlet-p06-chart-area>.sapMFlexItem:nth-child(2) {flex-grow:1 !important}
 .portlet-p06 .today {color:grey}
 .portlet-p06 .sapUiLayoutCSSGrid {height:100%}
-.portlet-p06 .team-member-count {margin-top:8px; font-size:24px; font-weight:500; cursor:pointer}
+.portlet-p06 .team-member-count {font-size:24px; font-weight:500; cursor:pointer}
 .portlet-p06 .team-member-count[data-popover="N"] {cursor:default}
 .portlet-p06 .team-member-count[data-table-key*="1"] .sapMObjStatusText {color:#222}/* 총원 */
 .portlet-p06 .team-member-count[data-table-key*="2"] .sapMObjStatusText {color:#0e60c7}/* 휴가 */
