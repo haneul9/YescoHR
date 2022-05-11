@@ -659,7 +659,7 @@ sap.ui.define(
             oViewModel.setProperty(`/jobDiagnosis/list/${i}`, {
               ...e,
               codeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }),
-              Zzjarst: !e.Zzjarst && e.Zcode !== '90' ? 'ALL' : e.Zzjarst,
+              Zzjarst: !e.Zzjarst && e.Zcode !== '90' && e.Zdeactive !== 'X' ? 'ALL' : e.Zzjarst,
             });
           });
 
@@ -709,7 +709,7 @@ sap.ui.define(
 
         if (!bType && this.checkError()) return;
 
-        const sConfirmMSG = bType ? this.getBundleText('MSG_00006', sTitle) : this.getBundleText('MSG_10032')
+        const sConfirmMSG = bType ? this.getBundleText('MSG_00006', sTitle) : this.getBundleText('MSG_10032');
 
         // {0}하시겠습니까? : 완료하시면 수정할 수 없습니다. 직무진단을 완료하시겠습니까?
         MessageBox.confirm(sConfirmMSG, {
