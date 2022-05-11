@@ -322,7 +322,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           await Promise.all(
-            _.forEach(oViewModel.getProperty('/dialog/list'), async (e, i) => {
+            _.map(oViewModel.getProperty('/dialog/list'), async (e, i) => {
               const oOverTime = await this.overTime(e);
 
               oViewModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
