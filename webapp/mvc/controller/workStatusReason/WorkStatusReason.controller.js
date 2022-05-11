@@ -26,6 +26,7 @@ sap.ui.define(
         return {
           busy: false,
           Data: [],
+          manager: this.isHass() || this.isMss(),
           search: {
             werksList: [],
             orgList: [],
@@ -89,16 +90,7 @@ sap.ui.define(
           Awart: mSearch.Awart,
         };
 
-        let sAwart = '';
-
-        if (
-          _.chain(mPayLoad.Awart)
-            .remove((e) => {
-              return !e;
-            })
-            .isEmpty()
-            .value()
-        ) {
+        if (_.chain(mPayLoad.Awart).compact().isEmpty().value()) {
           mPayLoad = _.omit(mPayLoad, 'Awart');
         }
 
@@ -106,7 +98,7 @@ sap.ui.define(
         const oTable = this.byId(this.APP_TABLE_ID);
 
         _.map(aTableList, (e, i) => {
-          e.No = i;
+          e.No = i + 1;
         });
         oViewModel.setProperty('/listInfo', {
           ...this.TableUtils.count({ oTable, aRowData: aTableList }),
@@ -145,6 +137,14 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      onPressEname(oEvent) {
+        this.getRouter().navTo('individualWorkState', {
+          pernr: mCustomData.empno,
+          year: dSearchYearMonth.get('year'),
+          month: dSearchYearMonth.get('month'),
+        });
       },
 
       onPressExcelDownload() {
