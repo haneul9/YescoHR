@@ -1154,6 +1154,9 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMLabel {font-size:16px; font-weight:600}
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMText {font-size:16px; font-weight:600}
 .vCardBox.MultiBoxmobile .section.week-Work-summary.progressBox .sapUiLayoutCSSGrid .sapMVBox {height:45px; justify-content:center}
+.individual-appointee-box {height: 40px; margin-bottom: 20px !important; padding-bottom: 4px; border-bottom: 1px solid #222; margin-right: 10px; margin-left: 10px; }
+.individual-appointee-box .sapMLnk.name {font-weight: 800; font-size: 20px;}
+.individual-appointee-box .sapMLnk {color: var(--FontColorNormal) !important; font-size: 14px; font-weight: 500; line-height: 1.45; align-self: center; vertical-align: middle;}
 
 /*logout button style*/
 .sapMBtn.icon-button.logout .sapMBtnInner {background:transparent !important}
