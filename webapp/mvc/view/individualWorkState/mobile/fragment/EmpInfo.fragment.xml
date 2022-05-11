@@ -1,5 +1,5 @@
-<c:FragmentDefinition xmlns="sap.m"
-  xmlns:c="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
   <HBox alignItems="Center" class="lh-30-px">
     <!-- 사진 -->
     <Image src="{Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="24px" height="24px" press=".navToProfile">
@@ -32,4 +32,4 @@
     </Link>
     <Link visible="{= ${IconMode} === 'Telephone' }" subtle="true" width="20px" class="icon-telephone" enabled="{= !!${Phone} }" href="tel:{Phone}" />
   </HBox>
-</c:FragmentDefinition>
+</core:FragmentDefinition>

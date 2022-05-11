@@ -6,7 +6,7 @@
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.EmpInfo" type="XML" />
+        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.EmpInfo" type="XML" /> -->
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.YearPlan" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.HolidayDays" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.HolidayType" type="XML" />
