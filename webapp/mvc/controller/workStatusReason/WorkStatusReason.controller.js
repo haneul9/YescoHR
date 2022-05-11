@@ -80,14 +80,27 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const mSearch = this.getViewModel().getProperty('/search');
-        const mPayLoad = {
+        let mPayLoad = {
           Pernr: this.getAppointeeProperty('Pernr'),
           BegdaS: moment(mSearch.date).hours(9).toDate(),
           EnddaS: moment(mSearch.secondDate).hours(9).toDate(),
           Werks: mSearch.Werks,
           Orgeh: mSearch.Orgeh,
-          Awart: _.size(mSearch.Awart) > 1 ? _.compact(mSearch.Awart) : mSearch.Awart,
+          Awart: mSearch.Awart,
         };
+
+        let sAwart = '';
+
+        if (
+          _.chain(mPayLoad.Awart)
+            .remove((e) => {
+              return !e;
+            })
+            .isEmpty()
+            .value()
+        ) {
+          mPayLoad = _.omit(mPayLoad, 'Awart');
+        }
 
         const aTableList = await Client.getEntitySet(oModel, 'TimeReasonList', mPayLoad);
         const oTable = this.byId(this.APP_TABLE_ID);

@@ -47,15 +47,15 @@ sap.ui.define(
 
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
 
-        oDetailModel.setData(this.initializeModel());
+        oViewModel.setData(this.initializeModel());
 
         try {
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
-          oDetailModel.setProperty('/busy', true);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.WORKTIME, 'OtWorkApply')));
+          oViewModel.setProperty('/busy', true);
 
           const sMenid = this.getCurrentMenuId();
           const sPernr = this.getAppointeeProperty('Pernr');
@@ -67,7 +67,7 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          oDetailModel.setProperty(
+          oViewModel.setProperty(
             '/employees',
             aOtpList.map((o) => ({ ...o, Pernr: _.trimStart(o.Pernr, '0') }))
           );
@@ -79,18 +79,18 @@ sap.ui.define(
             Grcod: 'TM000003',
           });
 
-          oDetailModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
+          oViewModel.setProperty('/CauseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCauseList }));
 
           if (sDataKey === 'N' || !sDataKey) {
             const mSessionData = this.getSessionData();
 
-            oDetailModel.setProperty('/ApplyInfo', {
+            oViewModel.setProperty('/ApplyInfo', {
               Apename: mSessionData.Ename,
               Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
               Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
             });
           } else {
-            oDetailModel.setProperty('/busy', true);
+            oViewModel.setProperty('/busy', true);
 
             const oTargetData = await Client.getEntitySet(oModel, 'OtWorkApply', {
               Appno: sDataKey,
@@ -98,16 +98,16 @@ sap.ui.define(
 
             const iLength = oTargetData.length;
 
-            oDetailModel.setProperty('/detail', {
+            oViewModel.setProperty('/detail', {
               listMode: 'None',
               list: oTargetData,
               rowCount: iLength < 5 ? iLength : 5,
             });
 
-            oDetailModel.setProperty('/Fixed', false);
-            oDetailModel.setProperty('/DelBtn', oTargetData[0].ZappStatAl === '20');
-            oDetailModel.setProperty('/ApplyInfo', oTargetData[0]);
-            oDetailModel.setProperty('/ApprovalDetails', oTargetData[0]);
+            oViewModel.setProperty('/Fixed', false);
+            oViewModel.setProperty('/DelBtn', oTargetData[0].ZappStatAl === '20');
+            oViewModel.setProperty('/ApplyInfo', oTargetData[0]);
+            oViewModel.setProperty('/ApprovalDetails', oTargetData[0]);
           }
 
           this.onAddDetail();
@@ -117,7 +117,7 @@ sap.ui.define(
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -143,13 +143,13 @@ sap.ui.define(
       // 신청내역 추가
       onAddDetail() {
         setTimeout(() => {
-          const oDetailModel = this.getViewModel();
+          const oViewModel = this.getViewModel();
           const oEmpData = this.getAppointeeData();
 
           let aList = [];
           let iLength = 1;
 
-          oDetailModel.setProperty('/DialogData', {
+          oViewModel.setProperty('/DialogData', {
             Datum: new Date(),
             Beguz: '18:00',
             Abrst: '',
@@ -165,14 +165,14 @@ sap.ui.define(
           });
 
           iLength = 1;
-          oDetailModel.setProperty('/dialog/list', aList);
-          oDetailModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
+          oViewModel.setProperty('/dialog/list', aList);
+          oViewModel.setProperty('/dialog/rowCount', iLength < 5 ? iLength : 5);
         }, 100);
       },
 
       // 신청내역 삭제
       onDelDetail() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         const oList = this.byId('DetailList').getSelectedContexts();
 
@@ -183,14 +183,14 @@ sap.ui.define(
         }
 
         const aDelList = _.map(oList, (e) => {
-          return oDetailModel.getProperty(e.sPath);
+          return oViewModel.getProperty(e.sPath);
         });
 
-        const aDiffList = _.difference(oDetailModel.getProperty('/detail/list'), aDelList);
+        const aDiffList = _.difference(oViewModel.getProperty('/detail/list'), aDelList);
         const iLength = _.size(aDiffList);
 
-        oDetailModel.setProperty('/detail/list', aDiffList);
-        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/detail/list', aDiffList);
+        oViewModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
         this.byId('DetailList').removeSelections(true);
       },
 
@@ -200,40 +200,48 @@ sap.ui.define(
           return;
         }
 
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        await Promise.all(
-          _.forEach(oDetailModel.getProperty('/dialog/list'), async (e, i) => {
-            const oOverTime = await this.overTime(e);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-            oDetailModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
-            this.dateMovement(i + 1);
-          })
-        ).then(() => {
-          this.onAddDetail();
-        });
+          await Promise.all(
+            _.forEach(oViewModel.getProperty('/dialog/list'), async (e, i) => {
+              const oOverTime = await this.overTime(e);
+
+              oViewModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
+              this.dateMovement(i + 1);
+            })
+          ).then(() => {
+            this.onAddDetail();
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       dateMovement(index) {
-        const oDetailModel = this.getViewModel();
-        const aDialogList = oDetailModel.getProperty('/dialog/list');
+        const oViewModel = this.getViewModel();
+        const aDialogList = oViewModel.getProperty('/dialog/list');
 
         if (index !== _.size(aDialogList)) {
           return;
         }
 
         const mDialogData = {
-          ...oDetailModel.getProperty('/DialogData'),
-          Ottyptx: _.chain(oDetailModel.getProperty('/CauseType'))
+          ...oViewModel.getProperty('/DialogData'),
+          Ottyptx: _.chain(oViewModel.getProperty('/CauseType'))
             .find((e) => {
-              return e.Zcode === oDetailModel.getProperty('/DialogData/Ottyp');
+              return e.Zcode === oViewModel.getProperty('/DialogData/Ottyp');
             })
             .get('Ztext')
             .value(),
         };
 
         const aFilterList = [
-          ...oDetailModel.getProperty('/detail/list'),
+          ...oViewModel.getProperty('/detail/list'),
           ..._.chain(aDialogList)
             .filter((e) => {
               return !!e.Pernr;
@@ -252,45 +260,59 @@ sap.ui.define(
 
         const iLength = _.size(aFilterList);
 
-        oDetailModel.setProperty('/detail/list', aFilterList);
-        oDetailModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+        oViewModel.setProperty('/detail/list', aFilterList);
+        oViewModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
       },
 
       // Dialog 근무시간
       async onTimePicker() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         if (!mDialogData.Enduz || !mDialogData.Beguz) {
           return;
         }
 
-        // 초과시간
-        const oOverTime = await this.overTime();
+        try {
+          oViewModel.setProperty('/busy', true);
+          // 초과시간
+          const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
-        oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+          oViewModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+          oViewModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Dialog 근무일
       async onWorkDatePicker() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        if (!oDetailModel.getProperty('/DialogData/Datum')) {
+        if (!oViewModel.getProperty('/DialogData/Datum')) {
           return;
         }
 
-        // 초과시간
-        const oOverTime = await this.overTime();
+        try {
+          oViewModel.setProperty('/busy', true);
+          // 초과시간
+          const oOverTime = await this.overTime();
 
-        oDetailModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
-        oDetailModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+          oViewModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+          oViewModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Dialog 초과근무시간
       overTime(mData) {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         if (!mDialogData.Beguz || !mDialogData.Enduz) {
           return;
@@ -314,8 +336,8 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         // 사유
         if (mDialogData.Ottyp === 'ALL' || !mDialogData.Ottyp) {
@@ -329,8 +351,8 @@ sap.ui.define(
           return true;
         }
 
-        const aList = oDetailModel.getProperty('/dialog/list');
-        const aDetailList = _.cloneDeep(oDetailModel.getProperty('/detail/list'));
+        const aList = oViewModel.getProperty('/dialog/list');
+        const aDetailList = _.cloneDeep(oViewModel.getProperty('/detail/list'));
         const aFilter = _.filter(aList, (e) => {
           return !!e.Pernr;
         });
@@ -381,10 +403,10 @@ sap.ui.define(
             try {
               AppUtils.setAppBusy(true);
 
-              const oDetailModel = this.getViewModel();
+              const oViewModel = this.getViewModel();
               const sAppno = await Appno.get.call(this);
               const oModel = this.getModel(ServiceNames.WORKTIME);
-              const aDetailList = _.each(oDetailModel.getProperty('/detail/list'), (e) => {
+              const aDetailList = _.each(oViewModel.getProperty('/detail/list'), (e) => {
                 e.Beguz = e.Beguz.replace(':', '');
                 e.Enduz = e.Enduz.replace(':', '');
               });
@@ -472,12 +494,12 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const [aDetailList] = oDetailModel.getProperty('/detail/list');
+        const oViewModel = this.getViewModel();
+        const [aDetailList] = oViewModel.getProperty('/detail/list');
         const sAppno = _.isEmpty(aDetailList) ? '' : aDetailList.Appno;
 
         this.AttachFileAction.setAttachFile(this, {
-          Editable: oDetailModel.getProperty('/Fixed'),
+          Editable: oViewModel.getProperty('/Fixed'),
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
