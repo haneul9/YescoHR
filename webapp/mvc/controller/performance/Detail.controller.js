@@ -462,17 +462,17 @@ sap.ui.define(
           return false;
         }
 
-        if (oViewModel.getProperty('/jobDiagnosis/fixed')) {
-          // 직무진단을 완료하지 않았습니다.\n직무진단을 완료하신 후 평가결과를 전송하시기 바랍니다.
-          MessageBox.confirm(this.getBundleText('MSG_10030'), {
-            onClose: (sAction) => {
-              if (MessageBox.Action.CANCEL === sAction) return;
+        // if (oViewModel.getProperty('/jobDiagnosis/fixed')) {
+        //   // 직무진단을 완료하지 않았습니다.\n직무진단을 완료하신 후 평가결과를 전송하시기 바랍니다.
+        //   MessageBox.confirm(this.getBundleText('MSG_10030'), {
+        //     onClose: (sAction) => {
+        //       if (MessageBox.Action.CANCEL === sAction) return;
 
-              this.onPressDiagnosisButton();
-            },
-          });
-          return false;
-        }
+        //       this.onPressDiagnosisButton();
+        //     },
+        //   });
+        //   return false;
+        // }
 
         return true;
       },
@@ -633,57 +633,57 @@ sap.ui.define(
 
       // 직무진단
       async onPressDiagnosisButton() {
-        // MessageBox.alert('Not ready yet.');
-        const oViewModel = this.getViewModel();
+        MessageBox.alert('Not ready yet.');
+        // const oViewModel = this.getViewModel();
 
-        try {
-          oViewModel.setProperty('/busy', true);
+        // try {
+        //   oViewModel.setProperty('/busy', true);
 
-          const oView = this.getView();
-          const aDeep = await this.getJobDiagnosis();
-          const aDeepList = aDeep.JobDiagnosisItemSet.results;
+        //   const oView = this.getView();
+        //   const aDeep = await this.getJobDiagnosis();
+        //   const aDeepList = aDeep.JobDiagnosisItemSet.results;
 
-          oViewModel.setProperty('/jobDiagnosis/myJob', _.pick(aDeep, ['Orgeh', 'Stell']));
+        //   oViewModel.setProperty('/jobDiagnosis/myJob', _.pick(aDeep, ['Orgeh', 'Stell']));
 
-          oViewModel.setProperty(
-            '/jobDiagnosis/fixed',
-            _.some(aDeepList, (e) => {
-              return e.Zdeactive !== 'X';
-            })
-          );
-          oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
+        //   oViewModel.setProperty(
+        //     '/jobDiagnosis/fixed',
+        //     _.some(aDeepList, (e) => {
+        //       return e.Zdeactive !== 'X';
+        //     })
+        //   );
+        //   oViewModel.setProperty('/jobDiagnosis/rowCount', _.size(aDeepList));
 
-          _.forEach(aDeepList, async (e, i) => {
-            const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
+        //   _.forEach(aDeepList, async (e, i) => {
+        //     const aCodeList = await this.getJobDiagnosisCode1(e.Zcode);
 
-            oViewModel.setProperty(`/jobDiagnosis/list/${i}`, {
-              ...e,
-              codeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }),
-              Zzjarst: !e.Zzjarst && e.Zcode !== '90' ? 'ALL' : e.Zzjarst,
-            });
-          });
+        //     oViewModel.setProperty(`/jobDiagnosis/list/${i}`, {
+        //       ...e,
+        //       codeList: new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }),
+        //       Zzjarst: !e.Zzjarst && e.Zcode !== '90' ? 'ALL' : e.Zzjarst,
+        //     });
+        //   });
 
-          if (!this.pExamDialog) {
-            this.pExamDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
-              controller: this,
-            }).then((oDialog) => {
-              oView.addDependent(oDialog);
-              return oDialog;
-            });
-          }
+        //   if (!this.pExamDialog) {
+        //     this.pExamDialog = Fragment.load({
+        //       id: oView.getId(),
+        //       name: 'sap.ui.yesco.mvc.view.performance.fragment.JobExamination',
+        //       controller: this,
+        //     }).then((oDialog) => {
+        //       oView.addDependent(oDialog);
+        //       return oDialog;
+        //     });
+        //   }
 
-          this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
+        //   this.TableUtils.adjustRowSpan({ oTable: this.byId('jobExamTable'), aColIndices: [0], sTheadOrTbody: 'tbody' });
 
-          setTimeout(() => {
-            this.pExamDialog.then((oDialog) => oDialog.open());
-          }, 500);
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        //   setTimeout(() => {
+        //     this.pExamDialog.then((oDialog) => oDialog.open());
+        //   }, 500);
+        // } catch (oError) {
+        //   AppUtils.handleError(oError);
+        // } finally {
+        //   oViewModel.setProperty('/busy', false);
+        // }
       },
 
       onClearArea(oEvent) {
