@@ -432,7 +432,10 @@ sap.ui.define(
         const mCustomData = oSource.data();
 
         if (mCustomData.moveToIndi) {
+          const sAuth = oViewModel.getProperty('/auth');
           const dSearchYearMonth = moment(oViewModel.getProperty('/searchConditions/Tyymm'));
+
+          if (sAuth === 'E') return;
 
           this.getRouter().navTo('individualWorkState', {
             pernr: mCustomData.empno,

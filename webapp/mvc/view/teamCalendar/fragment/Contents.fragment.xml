@@ -33,7 +33,7 @@
                 <HBox class="table-toolbar">
                     <HBox class="title">
                         <Title level="H2" text="Team Calendar" class="sapUiSmallMarginEnd" />
-                        <Text text="{i18n>MSG_37001}" class="desc-txt ml-0" />
+                        <Text text="{i18n>MSG_37001}" class="desc-txt ml-0" visible="{= ${/auth} !== 'E' }" />
                     </HBox>
                 </HBox>
                 <HBox justifyContent="Center" class="year-plan-head">
