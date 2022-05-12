@@ -77,7 +77,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => this.buildChart(oModel, mFilters, o));
 
           if (this.bMobile) {
             this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
@@ -123,12 +123,19 @@ sap.ui.define(
 
         switch (mChartInfo.Chart) {
           case 'cylinder':
-            _.chain(mChartSetting)
-              .set(['chart', 'caption'], this.getBundleText('LABEL_01130'))
-              .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
-              .commit();
+            setTimeout(() => {
+              const iChartHeight = $('.portlet-p06-chart-area').height() - $('.portlet-p06-chart-caption').height() - $('.portlet-p06-chart-value').height();
 
-            this.callFusionChart(mChartInfo, mChartSetting);
+              _.chain(mChartSetting)
+                .set(['chart', 'cylHeight'], iChartHeight - 20)
+                .set(['chart', 'plotToolText'], AppUtils.getBundleText('LABEL_01122', '$dataValue')) // 출근율: <b>$dataValue%</b>
+                .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
+                .commit();
+
+              mChartInfo.ChartHeight = iChartHeight;
+
+              this.callFusionChart(mChartInfo, mChartSetting);
+            }, 300);
 
             break;
           case 'column2d':

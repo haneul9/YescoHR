@@ -121,7 +121,6 @@ sap.ui.define(
           case 'cylinder':
             setTimeout(() => {
               const iChartHeight = $('.portlet-p06-chart-area').height() - $('.portlet-p06-chart-caption').height() - $('.portlet-p06-chart-value').height();
-              console.log(`iChartHeight : ${iChartHeight}`);
 
               _.chain(mChartSetting)
                 .set(['chart', 'cylHeight'], iChartHeight - 20)
