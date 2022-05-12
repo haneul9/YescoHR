@@ -8,7 +8,7 @@ sap.ui.define([], function () {
         Headty: 'A',
         Target: 'A01',
         Chart: 'cylinder',
-        ChartWidth: '105',
+        ChartWidth: '100%',
         DetailEntity: 'TimeOverviewDetail1',
         Fields: [
           { prop: 'Cnt01', path: [0, 'Cnt01'] }, //
@@ -108,8 +108,8 @@ sap.ui.define([], function () {
           cylFillColor: '#30c4ee',
           chartTopMargin: '10',
           chartBottomMargin: '10',
-          // chartRightMargin: '15',
-          // chartLeftMargin: '15',
+          chartRightMargin: '15',
+          chartLeftMargin: '15',
           autoScale: '1',
           manageResize: '1',
           animation: '1',

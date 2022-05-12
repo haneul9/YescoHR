@@ -168,10 +168,11 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p06 .portlet-header .sapIcon_Date {width:120px !important}
 html[lang="en"] .portlet-p06 .portlet-header .sapIcon_Date {width:140px !important}
 .portlet-p06 .portlet-p06-chart-area {align-items:center; margin:10px 5px 10px 0; width:105px}
-.portlet-p06 .portlet-p06-count-area {padding:20px 0}
+.portlet-p06 .portlet-p06-count-area {display:flex; align-items:center}
+.portlet-p06 .portlet-p06-count-area .sapUiLayoutCSSGrid {height:162px; grid-template-columns:repeat(4, minmax(calc(25% - 2px), calc(25% - 2px))); grid-template-rows:repeat(2, minmax(auto, calc(50% - 2px))); grid-gap:4px 2px}
 .portlet-p06 .portlet-p06-count-area .sapMVBox {height:100%}
-.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem {display:flex; align-items:center}
-.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem:nth-child(1) {height:32px}
+.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem {display:flex; justify-content:center; align-items:center; width:100%; border-radius:6px; background-color:transparent}
+.portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem:nth-child(1) {height:40px}
 .portlet-p06 .portlet-p06-count-area .sapMVBox .sapMFlexItem:nth-child(2) {flex-grow:1 !important}
 .portlet-p06 .portlet-p06-formula {justify-content:end; align-items:end; height:12px}
 .portlet-p06 .portlet-p06-formula .sapMFlexItem,

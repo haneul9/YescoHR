@@ -27,7 +27,7 @@
             </layoutData>
           </Label>
         </VBox>
-        <grid:CSSGrid gridTemplateColumns="repeat(4, minmax(25%, 25%))" gridTemplateRows="repeat(2, minmax(auto, 50%))" gridGap="10px 0">
+        <grid:CSSGrid>
           <grid:layoutData>
             <FlexItemData growFactor="1" styleClass="portlet-p06-count-area" />
           </grid:layoutData>
