@@ -804,14 +804,17 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMText[data-status="Z10"],
 .sapMText[data-status="Z15"],
 .sapMText[data-status="Z90"] {color:var(--BorderColorReadonly) !important}
+.sapMText[data-status="Z2"],
 .sapMText[data-status="Z20"],
 .sapMText[data-status="Z30"],
 .sapMText[data-status="Z50"] {color:var(--BorderColorWarning) !important}
+.sapMText[data-status="Z3"],
 .sapMText[data-status="Z40"],
 .sapMText[data-status="ZP"] {color:var(--BorderColorSuccess) !important}
 .sapMText[data-status="Z45"],
 .sapMText[data-status="ZF"],
 .sapMText[data-status="Z65"] {color:var(--BorderColorError) !important}
+.sapMText[data-status="Z1"],
 .sapMText[data-status="Z60"] {color:var(--BorderColorFocus) !important}
 
 /* Mobile Icon */

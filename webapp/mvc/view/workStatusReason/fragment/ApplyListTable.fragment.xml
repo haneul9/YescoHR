@@ -2,20 +2,39 @@
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
   <table:Table id="appTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+    <table:rowSettingsTemplate>
+      <table:RowSettings highlight="{
+          path: 'Status',
+          formatter: '.TableUtils.rowHighlight'
+      }"/>
+    </table:rowSettingsTemplate>
     <table:columns>
-      <table:Column width="50px" sortProperty="No" filterProperty="No">
+      <table:Column width="3%" sortProperty="No" filterProperty="No">
         <Label text="{i18n>LABEL_00164}"/>
         <table:template>
           <Text text="{No}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Pernr" filterProperty="Pernr">
+      <table:Column width="6%" sortProperty="Status" filterProperty="Status">
+        <Label text="{i18n>LABEL_00261}"/>
+        <table:template>
+          <Text text="{
+                path: 'Status',
+                formatter: '.TableUtils.StatusTxt'
+            }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text">
+            <customData>
+              <core:CustomData key="status" value="Z{Status}" writeToDom="true" />
+            </customData>
+          </Text>
+        </table:template>
+      </table:Column>
+      <table:Column width="6%" sortProperty="Pernr" filterProperty="Pernr">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
           <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
+      <table:Column width="6%" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <VBox>
@@ -24,19 +43,19 @@
           </VBox>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="Zzjikgbtx" filterProperty="Zzjikgbtx">
+      <table:Column width="6%" sortProperty="Zzjikgbtx" filterProperty="Zzjikgbtx">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
           <Text text="{Zzjikgbtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Orgtx" filterProperty="Orgtx">
+      <table:Column width="14%" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
           <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
+      <table:Column width="7%" sortProperty="Begda" filterProperty="Begda">
         <Label text="{i18n>LABEL_00148}"/>
         <table:template>
           <Text text="{
@@ -45,13 +64,13 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="WkdayB" filterProperty="WkdayB">
+      <table:Column width="3%" sortProperty="WkdayB" filterProperty="WkdayB">
         <Label text="{i18n>LABEL_06102}"/>
         <table:template>
           <Text text="{WkdayB}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
+      <table:Column width="7%" sortProperty="Endda" filterProperty="Endda">
         <Label text="{i18n>LABEL_00149}"/>
         <table:template>
           <Text text="{
@@ -60,13 +79,13 @@
           }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="WkdayE" filterProperty="WkdayE">
+      <table:Column width="3%" sortProperty="WkdayE" filterProperty="WkdayE">
         <Label text="{i18n>LABEL_06102}"/>
         <table:template>
           <Text text="{WkdayE}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
+      <table:Column width="5%" sortProperty="Beguz" filterProperty="Beguz">
         <Label text="{i18n>LABEL_27005}"/>
         <table:template>
           <Text text="{
@@ -75,7 +94,7 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Enduz" filterProperty="Enduz">
+      <table:Column width="5%" sortProperty="Enduz" filterProperty="Enduz">
         <Label text="{i18n>LABEL_27006}"/>
         <table:template>
           <Text text="{
@@ -84,25 +103,25 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
+      <table:Column width="9%" sortProperty="Atext" filterProperty="Atext">
         <Label text="{i18n>LABEL_04010}"/>
         <table:template>
           <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="50px" sortProperty="Abrtg" filterProperty="Abrtg">
+      <table:Column width="5%" sortProperty="Abrtg" filterProperty="Abrtg">
         <Label text="{i18n>LABEL_00155}"/>
         <table:template>
           <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="80px" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="5%" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_00330}"/>
         <table:template>
           <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="200px" sortProperty="Appno" filterProperty="Appno">
+      <table:Column width="10%" sortProperty="Appno" filterProperty="Appno">
         <Label text="{i18n>LABEL_19006}"/>
         <table:template>
           <VBox>
