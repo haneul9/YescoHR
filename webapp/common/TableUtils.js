@@ -12,6 +12,18 @@ sap.ui.define(
     'use strict';
 
     /**
+     * @constant {number} 완료
+     */
+    const STATE_COMPLETE2 = 1;
+    /**
+     * @constant {number} 진행중
+     */
+    const STATE_IN_PROGRESS3 = 2;
+    /**
+     * @constant {number} 계획
+     */
+    const STATE_IN_PLAN = 3;
+    /**
      * @constant {number} 미신청
      */
     const STATE_IN_PROGRESS0 = 15;
@@ -307,10 +319,12 @@ sap.ui.define(
           case STATE_APPLY1:
           case STATE_APPLY2:
           case STATE_APPLY3:
+          case STATE_IN_PROGRESS3:
             // 신청
             return sap.ui.core.IndicationColor.Indication03;
           case STATE_APPROVE:
           case MED_STATE_COMPLETE:
+          case STATE_IN_PLAN:
             // 승인
             return sap.ui.core.IndicationColor.Indication04;
           case STATE_REJECT1:
@@ -319,6 +333,7 @@ sap.ui.define(
             // 반려
             return sap.ui.core.IndicationColor.Indication02;
           case STATE_COMPLETE:
+          case STATE_COMPLETE2:
             // 완료
             return sap.ui.core.IndicationColor.Indication05;
           default:
@@ -334,6 +349,12 @@ sap.ui.define(
         const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);
 
         switch (vValue) {
+          case STATE_IN_PLAN:
+            // 계획
+            return '계획';
+          case STATE_IN_PROGRESS3:
+            // 진행중
+            return '진행중';
           case STATE_IN_PROGRESS0:
             // 미신청
             return '미신청';
@@ -356,6 +377,7 @@ sap.ui.define(
             // 반려
             return '반려';
           case STATE_COMPLETE:
+          case STATE_COMPLETE2:
             // 완료
             return '완료';
           default:
