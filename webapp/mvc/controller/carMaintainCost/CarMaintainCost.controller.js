@@ -114,7 +114,7 @@ sap.ui.define(
       },
 
       formatPay(vPay = '0') {
-        return this.TextUtils.toCurrency(vPay);
+        return this.TextUtils.toCurrency(_.multiply(vPay, 100));
       },
 
       thisYear(sYear = String(moment().format('YYYY'))) {

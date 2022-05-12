@@ -27,7 +27,10 @@
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_25022}" />
                     <HBox alignItems="Baseline">
-                        <Text text="{/Total/Betoil}" class="car-maintain" />
+                        <Text text="{
+                            path: '/Total/Betoil',
+                            formatter: '.formatPay'
+                        }" class="car-maintain" />
                         <Text text="{i18n>LABEL_25023}" class="bold" />
                     </HBox>
                 </VBox>
