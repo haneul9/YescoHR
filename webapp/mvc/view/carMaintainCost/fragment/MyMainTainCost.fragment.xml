@@ -9,8 +9,8 @@
                 path: '/Total/Zyear',
                 formatter: '.thisYear'
             }" class="sapUiSmallMarginBottom" />
-            <HBox class="mt-50-px">
-                <VBox width="40%" class="summary-info">
+            <HBox class="mt-50-px" justifyContent="SpaceBetween">
+                <VBox width="37%" class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_09009}" />
                     <HBox alignItems="Baseline">
                         <ObjectStatus text="{
@@ -23,6 +23,13 @@
                 <VBox class="summary-info">
                     <Label design="Bold" text="{i18n>LABEL_25003}" />
                     <ObjectStatus text="{/Total/Carno}" state="Indication01" />
+                </VBox>
+                <VBox class="summary-info">
+                    <Label design="Bold" text="{i18n>LABEL_25022}" />
+                    <HBox alignItems="Baseline">
+                        <Text text="{/Total/Betoil}" class="car-maintain" />
+                        <Text text="{i18n>LABEL_25023}" class="bold" />
+                    </HBox>
                 </VBox>
             </HBox>
         </VBox>

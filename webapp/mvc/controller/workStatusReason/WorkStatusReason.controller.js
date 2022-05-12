@@ -1,20 +1,16 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     AppUtils,
     Client,
     ServiceNames,
-    MessageBox,
     BaseController
   ) => {
     'use strict';
@@ -88,7 +84,7 @@ sap.ui.define(
 
       async getAppSearch() {
         const oViewModel = this.getViewModel();
-        const mSearch = this.getViewModel().getProperty('/search');
+        const mSearch = oViewModel.getProperty('/search');
         const mAppointee = this.getAppointeeData();
         let mPayLoad = {
           BegdaS: moment(mSearch.date).hours(9).toDate(),

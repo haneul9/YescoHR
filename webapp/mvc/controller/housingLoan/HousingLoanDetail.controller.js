@@ -51,12 +51,12 @@ sap.ui.define(
       async onObjectMatched(oParameter) {
         const sDataKey = oParameter.oDataKey;
         const sMenid = this.getCurrentMenuId();
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/menid', sMenid);
-        oDetailModel.setProperty('/busy', true);
-        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/menid', sMenid);
+        oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/ViewKey', sDataKey);
 
         try {
           const mAppointeeData = this.getAppointeeData();
@@ -87,14 +87,14 @@ sap.ui.define(
             }),
           ]);
 
-          oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: _.filter(a08Results, (o) => !o.Zchar1) }));
-          oDetailModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: a09Results }));
-          oDetailModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: a10Results }));
-          oDetailModel.setProperty('/baseArea/Text', _.get(m11Result, 'Zbigo'));
-          oDetailModel.setProperty('/baseArea/Code', _.get(m11Result, 'Zchar1'));
+          oViewModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: _.filter(a08Results, (o) => !o.Zchar1) }));
+          oViewModel.setProperty('/AssuranceType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: a09Results }));
+          oViewModel.setProperty('/HouseType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: a10Results }));
+          oViewModel.setProperty('/baseArea/Text', _.get(m11Result, 'Zbigo'));
+          oViewModel.setProperty('/baseArea/Code', _.get(m11Result, 'Zchar1'));
 
           // Input Field Imited
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanAmtAppl')));
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanAmtAppl')));
 
           this.setFormData();
         } catch (oError) {
@@ -102,7 +102,7 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -129,9 +129,9 @@ sap.ui.define(
       loanCost(oEvent) {
         const oEventSource = oEvent.getSource();
         const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const sAmountCode = this.getViewModel().getProperty('/loanAmount/Code');
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const mFormData = oViewModel.getProperty('/FormData');
 
         if (sValue > parseFloat(sAmountCode) && !!mFormData.Lntyp) {
           // const sAmountFormat = new Intl.NumberFormat('ko-KR').format(sAmountCode);
@@ -140,17 +140,17 @@ sap.ui.define(
           // MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, sAmountFormat));
           this.getMonthlyRepayment(sValue);
           oEventSource.setValue(sFormAmount);
-          return oDetailModel.setProperty('/FormData/Lnamt', mFormData.Lnamt);
+          return oViewModel.setProperty('/FormData/Lnamt', mFormData.Lnamt);
         }
 
         oEventSource.setValue(sValue);
-        oDetailModel.setProperty('/FormData/Lnamt', sValue);
+        oViewModel.setProperty('/FormData/Lnamt', sValue);
         this.getMonthlyRepayment(sValue);
       },
 
       // 건평 입력시
       areaSize(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         let sValue = oEvent
           .getParameter('value')
           .trim()
@@ -166,16 +166,16 @@ sap.ui.define(
         }
 
         // oEvent.getSource().setMaxLength(6);
-        oDetailModel.setProperty('/FormData/Zsize', sValue);
+        oViewModel.setProperty('/FormData/Zsize', sValue);
         oEvent.getSource().setValue(sValue);
       },
 
       // 상세조회
       async setFormData() {
-        const oDetailModel = this.getViewModel();
-        const sViewKey = oDetailModel.getProperty('/ViewKey');
+        const oViewModel = this.getViewModel();
+        const sViewKey = oViewModel.getProperty('/ViewKey');
 
-        oDetailModel.setProperty(
+        oViewModel.setProperty(
           '/InfoMessage',
           `<p>${this.getBundleText('MSG_07013')}</p>
           <p>${this.getBundleText('MSG_07005')}</p>`
@@ -184,12 +184,12 @@ sap.ui.define(
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
 
-          oDetailModel.setProperty('/FormData/Appernr', mSessionData.Pernr);
-          oDetailModel.setProperty('/FormData/Lntyp', 'ALL');
-          oDetailModel.setProperty('/FormData/Asmtd', 'ALL');
-          oDetailModel.setProperty('/FormData/Htype', 'ALL');
+          oViewModel.setProperty('/FormData/Appernr', mSessionData.Pernr);
+          oViewModel.setProperty('/FormData/Lntyp', 'ALL');
+          oViewModel.setProperty('/FormData/Asmtd', 'ALL');
+          oViewModel.setProperty('/FormData/Htype', 'ALL');
 
-          oDetailModel.setProperty('/ApplyInfo', {
+          oViewModel.setProperty('/ApplyInfo', {
             Apename: mSessionData.Ename,
             Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
             Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
@@ -197,7 +197,7 @@ sap.ui.define(
 
           this.settingsAttachTable();
         } else {
-          oDetailModel.setProperty('/hisBusy', true);
+          oViewModel.setProperty('/hisBusy', true);
 
           try {
             const oListView = this.getView().getParent().getPage(this.LIST_PAGE_ID);
@@ -224,18 +224,18 @@ sap.ui.define(
 
             const mDeepResult = await Client.deep(this.getModel(ServiceNames.BENEFIT), 'LoanAmtAppl', mPayload);
 
-            oDetailModel.setProperty('/FormData', mDeepResult);
-            oDetailModel.setProperty('/HideBox', this.isHideBox(mDeepResult.Lntyp));
-            oDetailModel.setProperty('/ApplyInfo', {
+            oViewModel.setProperty('/FormData', mDeepResult);
+            oViewModel.setProperty('/HideBox', this.isHideBox(mDeepResult.Lntyp));
+            oViewModel.setProperty('/ApplyInfo', {
               ...mDeepResult,
               Aporgtx: !mDeepResult.Aporgtx || mDeepResult.Aporgtx === '/' ? '' : mDeepResult.Aporgtx,
               Appdt: !mDeepResult.Appdt || _.parseInt(mDeepResult.Appdt.replaceAll('.', '').replaceAll(':', '').replaceAll(' ', '')) === 0 ? '' : mDeepResult.Appdt,
             });
 
             if (mDeepResult.Lnsta === '40' || mDeepResult.Lnsta === '60') {
-              oDetailModel.setProperty('/RepayList', mDeepResult.LoanAmtHistorySet.results);
-              oDetailModel.setProperty('/RepayHisList', mDeepResult.LoanAmtRecordSet.results);
-              oDetailModel.setProperty('/RepayHisLength', Math.min(mDeepResult.LoanAmtRecordSet.results.length, 10));
+              oViewModel.setProperty('/RepayList', mDeepResult.LoanAmtHistorySet.results);
+              oViewModel.setProperty('/RepayHisList', mDeepResult.LoanAmtRecordSet.results);
+              oViewModel.setProperty('/RepayHisLength', Math.min(mDeepResult.LoanAmtRecordSet.results.length, 10));
             }
 
             this.settingsAttachTable();
@@ -243,7 +243,7 @@ sap.ui.define(
           } catch (oError) {
             AppUtils.handleError(oError);
           } finally {
-            oDetailModel.setProperty('/hisBusy', false);
+            oViewModel.setProperty('/hisBusy', false);
           }
         }
       },
@@ -251,7 +251,7 @@ sap.ui.define(
       // 융자금액입력시 금액호출
       async getLoanCost(sKey) {
         try {
-          const oDetailModel = this.getViewModel();
+          const oViewModel = this.getViewModel();
           const [mResults] = await Client.getEntitySet(this.getModel(ServiceNames.BENEFIT), 'BenefitCodeList', {
             Werks: this.getAppointeeProperty('Werks'),
             Datum: new Date(),
@@ -259,18 +259,23 @@ sap.ui.define(
             Grcod: sKey,
           });
 
-          oDetailModel.setProperty('/loanAmount/Code', _.get(mResults, 'Zbetrg'));
-          oDetailModel.setProperty('/loanAmount/Text', _.get(mResults, 'Zbigo'));
-          oDetailModel.setProperty('/FormData/Hdprd', _.get(mResults, 'Zchar2'));
-          oDetailModel.setProperty('/FormData/Lnprd', _.get(mResults, 'Zchar1'));
-          oDetailModel.setProperty('/FormData/Lnrte', _.get(mResults, 'Zchar5'));
+          oViewModel.setProperty('/loanAmount/Code', _.get(mResults, 'Zbetrg'));
+          oViewModel.setProperty('/loanAmount/Text', _.get(mResults, 'Zbigo'));
 
-          const mFormData = oDetailModel.getProperty('/FormData');
+          const sStatus = oViewModel.getProperty('/FormData/Lnsta');
+
+          if (!sStatus || sStatus === '10') {
+            oViewModel.setProperty('/FormData/Hdprd', _.get(mResults, 'Zchar2'));
+            oViewModel.setProperty('/FormData/Lnprd', _.get(mResults, 'Zchar1'));
+            oViewModel.setProperty('/FormData/Lnrte', _.get(mResults, 'Zchar5'));
+          }
+
+          const mFormData = oViewModel.getProperty('/FormData');
 
           if (!!mFormData.Lnamt) {
             if (parseFloat(mFormData.Lnamt) > parseFloat(_.get(mResults, 'Zbetrg'))) {
               MessageBox.alert(this.getBundleText('MSG_07006', mFormData.Lntyptx, new Intl.NumberFormat('ko-KR').format(_.get(mResults, 'Zbetrg')))); // {0} 은(는) {1}까지 신청 가능합니다.
-              // oDetailModel.setProperty('/FormData/Lnamt', mResults.Zbetrg);
+              // oViewModel.setProperty('/FormData/Lnamt', mResults.Zbetrg);
               // sAmount = mResults.Zbetrg;
             }
             // this.getMonthlyRepayment(sAmount);
@@ -311,15 +316,15 @@ sap.ui.define(
 
       // 융자구분 선택시
       onLaonType(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const sKey = oEvent.getSource().getSelectedKey();
 
         if (sKey === 'ALL' || !sKey) return;
 
-        oDetailModel.setProperty('/HideBox', this.isHideBox(sKey));
-        oDetailModel.getProperty('/LaonType').forEach((e) => {
+        oViewModel.setProperty('/HideBox', this.isHideBox(sKey));
+        oViewModel.getProperty('/LaonType').forEach((e) => {
           if (e.Zcode === sKey) {
-            oDetailModel.setProperty('/FormData/Lntyptx', e.Ztext);
+            oViewModel.setProperty('/FormData/Lntyptx', e.Ztext);
           }
         });
 
@@ -329,8 +334,8 @@ sap.ui.define(
       // 융자금액 입력시 월 상환액
       async getMonthlyRepayment(sAmount) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const mFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         if (mFormData.Lntyp === 'ALL' || !mFormData.Lntyp) return;
 
@@ -346,18 +351,18 @@ sap.ui.define(
 
           if (!!oRepayObj[0].Message) {
             MessageBox.alert(oRepayObj[0].Message);
-            // oDetailModel.setProperty('/FormData/Lnamt', oRepayObj[0].Mxamt);
+            // oViewModel.setProperty('/FormData/Lnamt', oRepayObj[0].Mxamt);
           }
 
-          oDetailModel.setProperty('/FormData/RpamtMon', oRepayObj[0].RpamtMon);
+          oViewModel.setProperty('/FormData/RpamtMon', oRepayObj[0].RpamtMon);
         } catch (oError) {
           AppUtils.handleError(oError);
         }
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const oFormData = oViewModel.getProperty('/FormData');
 
         // 융자구분
         if (oFormData.Lntyp === 'ALL' || !oFormData.Lntyp) {
@@ -371,7 +376,7 @@ sap.ui.define(
           return true;
         }
 
-        if (oDetailModel.getProperty('/HideBox')) {
+        if (oViewModel.getProperty('/HideBox')) {
           // 주택종류
           if (oFormData.Htype === 'ALL' || !oFormData.Htype) {
             MessageBox.alert(this.getBundleText('MSG_07009'));
@@ -409,10 +414,10 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/Lnsta', '');
+        oViewModel.setProperty('/FormData/Appno', '');
+        oViewModel.setProperty('/FormData/Lnsta', '');
         this.settingsAttachTable();
       },
 
@@ -552,9 +557,9 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/FormData/Lnsta');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
