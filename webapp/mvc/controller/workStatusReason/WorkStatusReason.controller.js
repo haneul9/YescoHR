@@ -175,7 +175,7 @@ sap.ui.define(
         const sPath = oEvent.getSource().getBindingContext().getPath();
         const mSelectData = this.getViewModel().getProperty(sPath);
 
-        this.getRouter().navTo('m/individualWorkState', {
+        this.getRouter().navTo('individualWorkState', {
           pernr: mSelectData.Pernr,
           year: moment(mSelectData.Begda).year(),
           month: moment(mSelectData.Begda).month(),

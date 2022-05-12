@@ -207,8 +207,7 @@
         { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
-        { "pattern": "individualWorkState", "name": "individualWorkState", "target": "individualWorkState" },
-        { "pattern": "m/individualWorkState/:pernr:/:year:/:month:", "name": "m/individualWorkState", "target": "m/individualWorkState" },
+        { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
 
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
@@ -437,7 +436,6 @@
         "idpView": { "viewId": "idpView", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Document" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
-        "m/individualWorkState": { "viewId": "m_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkStateM" },
         "mobile/individualWorkState": { "viewId": "mobile_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState.mobile", "viewName": "IndividualWorkState" },
 
         "jobCompetency": { "viewId": "jobCompetency", "viewPath": "sap.ui.yesco.mvc.view.jobCompetency", "viewName": "JobCompetency" },

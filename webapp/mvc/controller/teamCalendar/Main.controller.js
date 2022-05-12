@@ -437,7 +437,7 @@ sap.ui.define(
 
           if (sAuth === 'E') return;
 
-          this.getRouter().navTo('m/individualWorkState', {
+          this.getRouter().navTo('individualWorkState', {
             pernr: mCustomData.empno,
             year: dSearchYearMonth.get('year'),
             month: dSearchYearMonth.get('month'),
