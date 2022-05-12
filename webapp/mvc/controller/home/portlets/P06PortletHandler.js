@@ -147,7 +147,7 @@ sap.ui.define(
           toolTipColor: '#222222',
           showToolTipShadow: '1',
           plotColorInTooltip: '1',
-          plotToolText: AppUtils.getBundleText('LABEL_01131', '$dataValue'), // 출근율: <b>$dataValue%</b>
+          plotToolText: AppUtils.getBundleText('LABEL_01122', '$dataValue'), // 출근율: <b>$dataValue%</b>
           theme: 'ocean',
         };
       },

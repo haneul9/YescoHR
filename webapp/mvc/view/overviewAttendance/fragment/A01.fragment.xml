@@ -9,111 +9,122 @@
     <HBox class="portlet-header">
       <Title level="H2" text="{i18n>LABEL_28022}" />
     </HBox>
-    <HBox class="portlet-body">
-      <core:HTML content='&lt;div id="attendance-a01-chart-container"&gt;&lt;/div&gt;'>
-        <core:layoutData>
-          <FlexItemData minWidth="110px" maxWidth="110px" />
-        </core:layoutData>
-      </core:HTML>
-      <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr 1fr" gridGap="0px">
-        <grid:layoutData>
-          <FlexItemData growFactor="1" styleClass="pt-15-px" />
-        </grid:layoutData>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01121}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt01} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="1" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
-            </customData>
-          </ObjectStatus>
+    <VBox class="portlet-body">
+      <HBox>
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <VBox class="portlet-p06-chart-area">
+          <Label text="{i18n>LABEL_01121}" textAlign="Center" wrapping="true">
+            <layoutData>
+              <FlexItemData styleClass="portlet-p06-chart-caption" />
+            </layoutData>
+          </Label>
+          <core:HTML content='&lt;div id="attendance-a01-chart-container"&gt;&lt;/div&gt;' />
+          <Label text="{/contents/A01/data/ChartValue}%">
+            <layoutData>
+              <FlexItemData styleClass="portlet-p06-chart-value" />
+            </layoutData>
+          </Label>
         </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01122}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="2" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_00188}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="3" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01123}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="4" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01126}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="5" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt05C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01125}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="6" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt06C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_20007}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="7" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt07C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="Center" alignItems="Center">
-          <Label design="Bold" text="{i18n>LABEL_01205}" />
-          <ObjectStatus text="{ path: '/contents/A01/data/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
-            <customData>
-              <core:CustomData key="table-key" value="8" writeToDom="true" />
-              <core:CustomData key="OData" value="T" />
-              <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
-              <core:CustomData key="Discod" value="{/contents/A01/data/Cnt08C}" />
-            </customData>
-          </ObjectStatus>
-        </VBox>
-        <VBox justifyContent="End" alignItems="End" class="mr-10-px lh-12-px">
-          <layoutData>
-            <grid:GridItemLayoutData gridColumn="span 4" />
-          </layoutData>
-          <Text text="{i18n>MSG_28003}" wrapping="false" class="font-12-px" />
-        </VBox>
-      </grid:CSSGrid>
-    </HBox>
+        <grid:CSSGrid gridTemplateColumns="repeat(4, minmax(25%, 25%))" gridTemplateRows="repeat(2, minmax(auto, 50%))" gridGap="10px 0">
+          <grid:layoutData>
+            <FlexItemData growFactor="1" styleClass="portlet-p06-count-area" />
+          </grid:layoutData>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01131}" tooltip="{i18n>LABEL_01131}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt01} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="1" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01132}" tooltip="{i18n>LABEL_01132}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="2" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt02C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01133}" tooltip="{i18n>LABEL_01133}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="3" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt03C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01134}" tooltip="{i18n>LABEL_01134}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="4" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt04C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01135}" tooltip="{i18n>LABEL_01135}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="5" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt05C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01136}" tooltip="{i18n>LABEL_01136}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="6" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt06C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01137}" tooltip="{i18n>LABEL_01137}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="7" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt07C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+          <VBox justifyContent="Center" alignItems="Center">
+            <Label text="{i18n>LABEL_01138}" tooltip="{i18n>LABEL_01138}" textAlign="Center" wrapping="true" />
+            <ObjectStatus text="{ path: '/contents/A01/data/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${/contents/A01/data/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="table-key" value="8" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
+                <core:CustomData key="Discod" value="{/contents/A01/data/Cnt08C}" />
+              </customData>
+            </ObjectStatus>
+          </VBox>
+        </grid:CSSGrid>
+      </HBox>
+      <HBox class="portlet-p06-formula">
+        <Text text="※" />
+        <Text text="{i18n>MSG_28003}" wrapping="false" />
+      </HBox>
+    </VBox>
   </VBox>
 </core:FragmentDefinition>

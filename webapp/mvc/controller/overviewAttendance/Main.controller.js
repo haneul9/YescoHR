@@ -75,7 +75,7 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => this.buildChart(oModel, mFilters, o));
 
           window.callAttendanceDetail = (sArgs) => {
             $('#fusioncharts-tooltip-element').css('z-index', 7);
@@ -119,12 +119,20 @@ sap.ui.define(
 
         switch (mChartInfo.Chart) {
           case 'cylinder':
-            _.chain(mChartSetting)
-              .set(['chart', 'caption'], this.getBundleText('LABEL_01130'))
-              .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
-              .commit();
+            setTimeout(() => {
+              const iChartHeight = $('.portlet-p06-chart-area').height() - $('.portlet-p06-chart-caption').height() - $('.portlet-p06-chart-value').height();
+              console.log(`iChartHeight : ${iChartHeight}`);
 
-            this.callFusionChart(mChartInfo, mChartSetting);
+              _.chain(mChartSetting)
+                .set(['chart', 'cylHeight'], iChartHeight - 20)
+                .set(['chart', 'plotToolText'], AppUtils.getBundleText('LABEL_01122', '$dataValue')) // 출근율: <b>$dataValue%</b>
+                .set('value', _.chain(aChartDatas).get([0, 'Rte01']).toNumber().value())
+                .commit();
+
+              mChartInfo.ChartHeight = iChartHeight;
+
+              this.callFusionChart(mChartInfo, mChartSetting);
+            }, 300);
 
             break;
           case 'column2d':
