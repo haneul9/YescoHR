@@ -31,8 +31,8 @@ sap.ui.define(
             werksList: [],
             orgList: [],
             jobList: [],
-            Werks: '',
-            Orgeh: '',
+            Werks: this.getAppointeeProperty('Werks'),
+            Orgeh: this.getAppointeeProperty('Orgeh'),
             Awart: '',
             date: moment(`${moment().year()}-01-01`).hours(9).toDate(),
             secondDate: moment(`${moment().year()}-12-31`).hours(9).toDate(),
@@ -67,8 +67,8 @@ sap.ui.define(
 
             oViewModel.setProperty('/search/werksList', aPersaEntry);
             oViewModel.setProperty('/search/orgList', aOrgehEntry);
-            oViewModel.setProperty('/search/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
-            oViewModel.setProperty('/search/Werks', mAppointee.Werks);
+            // oViewModel.setProperty('/search/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+            // oViewModel.setProperty('/search/Werks', mAppointee.Werks);
           }
 
           const aJobEntry = await Client.getEntitySet(oModel, 'TimeCodeList', { Pernr: mAppointee.Pernr });

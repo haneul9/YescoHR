@@ -109,16 +109,16 @@
           <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="5%" sortProperty="Abrtg" filterProperty="Abrtg">
+      <table:Column width="5%" sortProperty="Abrtgtx" filterProperty="Abrtgtx">
         <Label text="{i18n>LABEL_00155}"/>
         <table:template>
-          <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Abrtgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="5%" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="5%" sortProperty="Abrsttx" filterProperty="Abrsttx">
         <Label text="{i18n>LABEL_00330}"/>
         <table:template>
-          <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Abrsttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="10%" sortProperty="Appno" filterProperty="Appno">
