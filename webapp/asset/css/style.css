@@ -861,6 +861,8 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid.month-plan-grid .sapMFlexBox[data-style="Type32"] {background-color:#fff; border:5px solid #c627ff !important; border-radius:0}/* 당직 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type33"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type33"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type33::before, .sapMFlexBox.type33, .sapMFlexBox[data-style="Type33"] {background-color:#fff; border:2px solid #e18eff !important; border-radius:0}/* 통합굴착 */
 .sapUiLayoutCSSGrid.month-plan-grid .sapMFlexBox[data-style="Type33"] {background-color:#fff; border:5px solid #e18eff !important; border-radius:0}/* 통합굴착 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type34"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type34"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type34::before, .sapMFlexBox.type34, .sapMFlexBox[data-style="Type34"] {background-color:#fff; border:2px solid #f4d6ff !important; border-radius:0}/* 통합굴착 */
+.sapUiLayoutCSSGrid.month-plan-grid .sapMFlexBox[data-style="Type34"] {background-color:#fff; border:5px solid #f4d6ff !important; border-radius:0}/* 시차출퇴근(D유형) */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type41"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type41"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type41::before, .sapMFlexBox.type41, .sapMFlexBox[data-style="Type41"], [class*=plan-grid] .type41 * {background:linear-gradient(-90deg, #fff 50%, #0e60c7 50%) !important}/* 오전반차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type42"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type42"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type42::before, .sapMFlexBox.type42, .sapMFlexBox[data-style="Type42"], [class*=plan-grid] .type42 * {background:linear-gradient(-90deg, #0e60c7 50%, #fff 50%) !important}/* 오후반차 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Type18"], .year-plan.status-wrap .sapMFlexItem .sapMText[data-style="Type18"]::before, .year-plan.status-wrap .sapMFlexItem .sapMText.type18::before, .sapMFlexBox.type18, .sapMFlexBox[data-style="Type18"] {background:repeating-linear-gradient(45deg, #a6a6a6, #a6a6a6 1px, transparent  2px, transparent  5px); border:2px solid #a6a6a6 !important; border-radius:0}/* 신청 */
@@ -873,6 +875,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Type31"] {border:5px solid #9705cc !important; border-radius:0} /* 시간외 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Type32"] {background-color:#fff; border:5px solid #c627ff !important; border-radius:0} /* 당직 */
 .sapUiLayoutCSSGrid .sapMFlexBox[data-border="Type33"] {background-color:#fff; border:5px solid #e18eff !important; border-radius:0} /* 통합굴착 */
+.sapUiLayoutCSSGrid .sapMFlexBox[data-border="Type34"] {background-color:#fff; border:5px solid #f4d6ff !important; border-radius:0} /* 시차출퇴근(D유형) */
 .year-plan.status-wrap .sapMFlexItem .sapMText.type15::before {content:"31"; font-size:8px; border:1px solid #e5e5e5; color:#fc564f; border-radius:0; font-weight:400; text-align:center; border:0; background-color:#fff}
 .sapUiLayoutCSSGrid .sapMFlexBox .sapMText[data-stripes="OK"] {background:repeating-linear-gradient(135deg, rgb(124, 124, 124), rgb(124, 124, 124) 2px, #8880 0, #8880 6px)}
 .year-plan-grid .sapMText[data-stripes="Stripes"] {background:repeating-linear-gradient(45deg, #a6a6a6, #a6a6a6 1px, transparent  0px, transparent  5px) !important}/* 신청표시 */
@@ -1229,6 +1232,8 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .summary-box .desc .sapMText, .summary-box .desc .sapMObjStatus {font-size:1rem; font-weight:600}
 .summary-box .desc .sapMObjStatus {padding:0 0.4rem; font-size:20px}
 .summary-box .desc .sapMFlexItem {font-weight:600}
+.summary-box .sapMText.car-maintain {font-size: 25px; text-align: left; margin-right: 5px; font-weight: bold;}
+.summary-box .sapMText.bold {font-weight: bold;}
 
 .header-wrap {justify-content:space-between; align-items:center; margin-top:-25px; height:70px; padding-top:20px; padding-bottom:10px}
 .header-wrap > .sapMFlexItem {display:flex}
