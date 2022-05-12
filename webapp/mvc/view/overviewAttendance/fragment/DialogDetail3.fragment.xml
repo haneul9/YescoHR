@@ -70,7 +70,7 @@
               </template>
             </Column>
             <Column width="auto" filterProperty="Dedhr" sortProperty="Dedhr">
-              <m:Label text="{i18n>LABEL_01123}"/>
+              <m:Label text="{i18n>LABEL_28061}"/>
               <template>
                 <m:Text text="{ path: 'Dedhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
