@@ -5,19 +5,19 @@
     <Table width="100%" selectionMode="None" enableColumnReordering="false" columnHeaderHeight="35" rowHeight="34" rows="{list}" visibleRowCount="{listCount}" noData="{i18n>MSG_00001}">
       <columns>
         <Column width="80px">
-          <m:Label text="{i18n>LABEL_01127}" />
+          <m:Label text="{i18n>LABEL_01126}" />
           <template>
             <m:Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
           </template>
         </Column>
         <Column width="150px">
-          <m:Label text="{i18n>LABEL_01128}" />
+          <m:Label text="{i18n>LABEL_01127}" />
           <template>
             <m:Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
           </template>
         </Column>
         <Column width="215px" visible="{visiblePeriod}">
-          <m:Label text="{i18n>LABEL_01129}" />
+          <m:Label text="{i18n>LABEL_01128}" />
           <template>
             <m:Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
           </template>

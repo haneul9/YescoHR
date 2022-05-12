@@ -120,7 +120,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label1}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -180,7 +180,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label2}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -240,7 +240,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label3}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -300,7 +300,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label4}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -360,7 +360,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/pernr/Label5}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{

@@ -86,7 +86,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/org/Label1}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -161,7 +161,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/org/Label2}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -236,7 +236,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/org/Label3}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -311,7 +311,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/org/Label4}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
@@ -386,7 +386,7 @@
           </table:customData>
           <table:multiLabels>
             <Label text="{/detail/org/Label5}" />
-            <Label text="{i18n>LABEL_01123}" />
+            <Label text="{i18n>LABEL_32021}" />
           </table:multiLabels>
           <table:template>
             <Text text="{
