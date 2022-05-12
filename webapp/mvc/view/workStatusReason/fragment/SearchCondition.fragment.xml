@@ -5,12 +5,12 @@
         <HBox class="form-bar" alignItems="Center">
             <Label text="{i18n>LABEL_00338}" />
             <custom:DateRangeSelection dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
-            <Label text="{i18n>LABEL_00237}" />
-            <ComboBox items="{/search/werksList}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+            <Label text="{i18n>LABEL_00237}" visible="{/manager}" />
+            <ComboBox items="{/search/werksList}" selectedKey="{/search/Werks}" change=".onChangeWerks" visible="{/manager}">
                 <core:Item text="{Pbtxt}" key="{Werks}" />
             </ComboBox>
-            <Label text="{i18n>LABEL_00224}" />
-            <ComboBox items="{/search/orgList}" selectedKey="{/search/Orgeh}">
+            <Label text="{i18n>LABEL_00224}" visible="{/manager}" />
+            <ComboBox items="{/search/orgList}" selectedKey="{/search/Orgeh}" visible="{/manager}">
                 <core:Item text="{Orgtx}" key="{Orgeh}" />
             </ComboBox>
             <Label text="{i18n>LABEL_04010}" />
