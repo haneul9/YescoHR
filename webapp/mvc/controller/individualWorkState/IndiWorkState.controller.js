@@ -139,11 +139,12 @@ sap.ui.define(
             Pernr: sPernr,
           });
 
-          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
+          const aFilterVacaList = _.remove(aVacaTypeList, (e) => {
+            return _.parseInt(e.Ktart) > 20;
+          });
 
-          if (aVacaTypeList.length > 3) {
-            oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
-          }
+          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList);
+          oViewModel.setProperty('/VacaTypeList2', aFilterVacaList);
 
           const sWorkMonth = oViewModel.getProperty('/WorkMonth');
           // 근무현황
@@ -763,12 +764,12 @@ sap.ui.define(
             Menid: this.getCurrentMenuId(),
             Pernr: sPernr,
           });
+          const aFilterVacaList = _.remove(aVacaTypeList, (e) => {
+            return _.parseInt(e.Ktart) > 20;
+          });
 
-          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList.slice(0, 4));
-
-          if (aVacaTypeList.length > 3) {
-            oViewModel.setProperty('/VacaTypeList2', aVacaTypeList.slice(4));
-          }
+          oViewModel.setProperty('/VacaTypeList1', aVacaTypeList);
+          oViewModel.setProperty('/VacaTypeList2', aFilterVacaList);
 
           const sMonth = oViewModel.getProperty('/WorkMonth');
           // 근무현황
