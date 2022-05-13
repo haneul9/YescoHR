@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:custom="sap.ui.yesco.control">
-    <VBox class="section portlet-p03p04 p-10-px font-20-px">
+    <VBox class="section portlet-p03p04 m-0-px p-10-px font-20-px" busyIndicatorDelay="0" busy="{/busy/Detail}">
         <HBox class="title-bar">
             <Title level="H3" text="{i18n>LABEL_37004}" />
             <Text text="{/detail/displayDate}" class="desc-txt ml-0" />

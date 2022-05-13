@@ -14,7 +14,7 @@
             </custom:VBox>
             <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextMonth" class="icon-button" />
         </HBox>
-        <grid:CSSGrid class="month-plan-grid mobile-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/calendar/plans'}">
+        <grid:CSSGrid class="month-plan-grid mobile-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="repeat(7, 1fr)" items="{path: '/calendar/plans'}" busyIndicatorDelay="0" busy="{/busy/Calendar}">
             <custom:VBox width="100%" press=".onClickDay" height="48px">
                 <custom:customData>
                     <core:CustomData key="style" value="{classNames}" writeToDom="true" />
