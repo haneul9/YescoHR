@@ -24,25 +24,43 @@ sap.ui.define(
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler2', {
-      constructor: function (oEmployeeListProvider) {
-        this.oEmployeeListProvider = oEmployeeListProvider;
+      mService: {
+        H: 'PA',
+        T: 'WORKTIME',
+      },
+      mEntitySet: {
+        H: 'HeadCountDetail',
+        T: 'TimeOverviewDetail1',
+      },
+
+      constructor: function (oController, sIconMode = 'Profile') {
+        this.oController = oController;
+        this.oPopoverModel = new JSONModel(this.getInitialData());
+        this.oPopoverModel.setSizeLimit(10000);
+        this.sIconMode = sIconMode; // Profile | Telephone
 
         this.init();
       },
 
+      getInitialData() {
+        return {
+          popover: {
+            busy: true,
+            resizable: true,
+            terms: null,
+            employees: null,
+          },
+        };
+      },
+
       async init() {
-        this.oPopoverModel = oEmployeeListProvider.getModel();
+        this.setPropertiesForNavTo();
 
-        const onAfterClose = this.oEmployeeListProvider.onAfterClose;
-        if (onAfterClose && typeof onAfterClose === 'function') {
-          this.onAfterClose = onAfterClose;
-        }
-
-        const oView = this.oEmployeeListProvider.getView();
+        const oView = this.oController.getView();
 
         this.oPopover = await Fragment.load({
           id: oView.getId(),
-          name: this.oEmployeeListProvider.getPopoverXML(),
+          name: 'sap.ui.yesco.fragment.mobile.MobileEmployeeListPopover',
           controller: this,
         });
 
@@ -62,12 +80,28 @@ sap.ui.define(
             });
           })
           .attachAfterClose(() => {
-            this.onAfterClose();
+            setTimeout(() => {
+              this.onAfterClose();
+            });
           })
           .setModel(this.oPopoverModel)
           .bindElement('/popover');
 
         oView.addDependent(this.oPopover);
+      },
+
+      async setPropertiesForNavTo() {
+        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
+        await oMenuModel.getPromise();
+
+        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
+        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+      },
+
+      onAfterClose() {
+        this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter([]);
+        this.oPopoverModel.setProperty('/popover/terms', null);
+        this.oPopoverModel.setProperty('/popover/employees', []);
       },
 
       togglePopover(oEvent) {
@@ -86,7 +120,39 @@ sap.ui.define(
             this.oPopover.openBy(AppUtils.getAppController().byId('mobile-basis-home'));
           });
 
-          this.oEmployeeListProvider.retrieve();
+          let mPayload, sService, sEntitySet;
+          if (oParam instanceof sap.ui.base.Event) {
+            // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
+            const mEventSourceData = oParam.getSource().data();
+
+            sService = this.mService[mEventSourceData.OData];
+            sEntitySet = this.mEntitySet[mEventSourceData.OData];
+            mPayload = this.getPayload(mEventSourceData);
+          } else {
+            // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
+            sService = this.mService[oParam.OData];
+            sEntitySet = this.mEntitySet[oParam.OData];
+
+            delete oParam.OData;
+            mPayload = oParam;
+          }
+
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sService]), sEntitySet, mPayload);
+          const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
+
+          this.oPopoverModel.setProperty(
+            '/popover/employees',
+            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
+              Photo: Photo || sUnknownAvatarImageURL,
+              Ename,
+              Pernr,
+              Zzjikcht: Zzjikgbtx,
+              Zzjikgbt: Zzjikchtx,
+              Fulln: Orgtx,
+              IconMode: this.sIconMode,
+              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            }))
+          );
         } catch (oError) {
           AppUtils.debug('MobileEmployeeListPopoverHandler > openPopover Error', oError);
 
@@ -95,6 +161,27 @@ sap.ui.define(
           });
         } finally {
           this.setBusy(false);
+        }
+      },
+
+      getPayload(mEventSourceData) {
+        const mSessionProperty = this.oController.getSessionModel().getData();
+        if (mEventSourceData.OData === 'H') {
+          return {
+            Zyear: moment().year(),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
+        } else if (mEventSourceData.OData === 'T') {
+          return {
+            Datum: moment().startOf('date').add(9, 'hours'),
+            Werks: mSessionProperty.Werks,
+            Orgeh: mSessionProperty.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
         }
       },
 

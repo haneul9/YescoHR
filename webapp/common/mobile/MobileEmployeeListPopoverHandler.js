@@ -54,7 +54,7 @@ sap.ui.define(
       },
 
       async init() {
-        this.setEmployeeProfileNavInfo();
+        this.setPropertiesForNavTo();
 
         const oView = this.oController.getView();
 
@@ -90,7 +90,7 @@ sap.ui.define(
         oView.addDependent(this.oPopover);
       },
 
-      async setEmployeeProfileNavInfo() {
+      async setPropertiesForNavTo() {
         const oMenuModel = AppUtils.getAppComponent().getMenuModel();
         await oMenuModel.getPromise();
 

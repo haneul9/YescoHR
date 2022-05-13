@@ -35,10 +35,10 @@ sap.ui.define(
       },
 
       async readContentData() {
-        const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+        const oController = this.getController();
+        const oModel = oController.getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: this.getMenid('individualWorkState'),
-          Pernr: this.getController().getAppointeeProperty('Pernr'),
+          Menid: this.getPortletCommonMenid(),
         };
 
         return Client.getEntitySet(oModel, 'AbsQuotaList', mPayload);

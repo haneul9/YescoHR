@@ -76,7 +76,7 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
-          Menid: this.getMenid('workTime'),
+          Menid: this.getPortletCommonMenid(),
         };
 
         return Client.getEntitySet(oModel, 'WorkingTime', mPayload);
@@ -93,19 +93,22 @@ sap.ui.define(
           }
         }
 
-        mPortletData.ButtonText1 = this.getMenuName(this.getMenid('attendance'));
+        mPortletData.ButtonText1 = this.getMenuName('attendance');
         const Werks = this.getController().getSessionProperty('Werks');
         if ('1000,4000'.split(',').includes(Werks)) {
-          mPortletData.ButtonText2 = this.getMenuName(this.getMenid('individualWorkState'));
+          mPortletData.ButtonText2 = this.getMenuName('individualWorkState');
         } else {
-          mPortletData.ButtonText2 = this.getMenuName(this.getMenid('workTime'));
+          mPortletData.ButtonText2 = this.getMenuName('workTime');
         }
 
         return mPortletData;
       },
 
-      getMenuName(sMenid) {
-        return this.getMenuModel().getProperties(sMenid).Mname;
+      getMenuName(sMenuUrl) {
+        const oMenuModel = this.getMenuModel();
+        const sMenid = oMenuModel.getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+
+        return oMenuModel.getProperties(sMenid).Mname;
       },
 
       setChartData(mPortletData) {

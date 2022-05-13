@@ -42,13 +42,13 @@ sap.ui.define(
       },
 
       async init() {
-        this.setEmployeeProfileNavInfo();
+        this.setPropertiesForNavTo();
         this.addPortlet();
         this.showContentData();
         this.setBusy(false);
       },
 
-      async setEmployeeProfileNavInfo() {
+      async setPropertiesForNavTo() {
         await this.oMenuModel.getPromise();
 
         this.sProfileMenuUrl = this.oMenuModel.getEmployeeProfileMenuUrl();
@@ -187,8 +187,11 @@ sap.ui.define(
         return this.oMenuModel;
       },
 
-      getMenid(sMenuUrl) {
-        return this.getMenuModel().getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+      /**
+       * @returns Portlet 공용 Menid
+       */
+      getPortletCommonMenid() {
+        return 'MAIN';
       },
 
       formatMenuUrl(...aArgs) {
