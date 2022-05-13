@@ -16,7 +16,7 @@
                 </VBox>
                 <VBox class="members-awart">
                     <Text text="{Atext}" tooltip="{Atext}" />
-                    <Text text="{Period}" tooltip="{Period}" />
+                    <Text text="{Tmprd}" tooltip="{Tmprd}" />
                 </VBox>
             </custom:HBox>
         </VBox>

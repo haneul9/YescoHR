@@ -225,7 +225,7 @@ sap.ui.define(
           });
 
           oViewModel.setProperty('/detail/displayDate', _.isEmpty(sDay) ? dTyymm.format('YYYY.MM') : moment(sDay).format('YYYY.MM.DD'));
-          oViewModel.setProperty('/detail/list', _.map(aResults, (o) => _.set(o, 'Period', `${moment(o.Begda).format('M/DD')}~${moment(o.Endda).format('M/DD')}`)) ?? []);
+          oViewModel.setProperty('/detail/list', _.map(aResults, (o) => _.omit(o, '__metadata')) ?? []);
         } catch (oError) {
           throw oError;
         }
