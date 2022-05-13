@@ -459,8 +459,9 @@ sap.ui.define(
       // Dialog 근무일
       async onWorkDatePicker() {
         const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
-        if (!oViewModel.getProperty('/DialogData/Datum')) {
+        if (!mDialogData.Datum || !mDialogData.Beguz || !mDialogData.Enduz) {
           return;
         }
 
