@@ -13,7 +13,7 @@
                             <core:Item key="{Werks}" text="{Pbtxt}" />
                         </ComboBox>
                     </HBox>
-                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center">
                         <ComboBox width="100%" selectedKey="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
                             <layoutData>
                                 <FlexItemData minWidth="67%" maxWidth="67%" />
