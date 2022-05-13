@@ -30,8 +30,8 @@ sap.ui.define(
             Werks: this.getAppointeeProperty('Werks'),
             Orgeh: this.getAppointeeProperty('Orgeh'),
             Awart: '',
-            date: moment(`${moment().year()}-01-01`).hours(9).toDate(),
-            secondDate: moment(`${moment().year()}-12-31`).hours(9).toDate(),
+            date: moment().startOf('month').hours(9).toDate(),
+            secondDate: moment().endOf('month').hours(9).toDate(),
           },
           listInfo: {
             rowCount: 1,
