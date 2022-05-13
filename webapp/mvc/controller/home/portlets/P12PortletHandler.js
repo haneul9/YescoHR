@@ -38,6 +38,7 @@ sap.ui.define(
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
           Menid: this.getMenid('individualWorkState'),
+          Pernr: this.getController().getAppointeeProperty('Pernr'),
         };
 
         return Client.getEntitySet(oModel, 'AbsQuotaList', mPayload);
