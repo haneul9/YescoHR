@@ -105,7 +105,8 @@ sap.ui.define(
       },
 
       isHass() {
-        return /^h\//.test(HashChanger.getInstance().getHash());
+        const sHash = HashChanger.getInstance().getHash();
+        return /^h\//.test(sHash) || /^mobile\/h\//.test(sHash);
       },
 
       /**

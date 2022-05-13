@@ -299,6 +299,9 @@
         { "pattern": "teamCalendar", "name": "teamCalendar", "target": "teamCalendar" },
         { "pattern": "m/teamCalendar", "name": "m/teamCalendar", "target": "m/teamCalendar" },
         { "pattern": "h/teamCalendar", "name": "h/teamCalendar", "target": "h/teamCalendar" },
+        { "pattern": "mobile/teamCalendar", "name": "mobile/teamCalendar", "target": "mobile/teamCalendar" },
+        { "pattern": "mobile/m/teamCalendar", "name": "mobile/m/teamCalendar", "target": "mobile/m/teamCalendar" },
+        { "pattern": "mobile/h/teamCalendar", "name": "mobile/h/teamCalendar", "target": "mobile/h/teamCalendar" },
 
         { "pattern": "withdrawMiddle", "name": "withdrawMiddle", "target": "withdrawMiddle" },
         { "pattern": "withdrawMiddle/{oDataKey}", "name": "withdrawMiddle-detail", "target": "withdrawMiddleDetail" },
@@ -517,6 +520,9 @@
         "teamCalendar": { "viewId": "teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainE" },
         "m/teamCalendar": { "viewId": "m_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainM" },
         "h/teamCalendar": { "viewId": "h_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainH" },
+        "mobile/teamCalendar": { "viewId": "mobile_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar.mobile", "viewName": "MainE" },
+        "mobile/m/teamCalendar": { "viewId": "mobile_m_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar.mobile", "viewName": "MainM" },
+        "mobile/h/teamCalendar": { "viewId": "mobile_h_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar.mobile", "viewName": "MainH" },
 
         "h/withdrawMiddle": { "viewId": "h_withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddleH" },
         "withdrawMiddle": { "viewId": "withdrawMiddle", "viewPath": "sap.ui.yesco.mvc.view.withdrawMiddle", "viewName": "WithdrawMiddle" },

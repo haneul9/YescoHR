@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.teamCalendar.mobile.Main"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.teamCalendar.mobile.fragment.Contents" type="XML" />
+</mvc:View>
