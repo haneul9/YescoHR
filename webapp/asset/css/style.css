@@ -1227,6 +1227,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 
 .summary-info {margin-bottom:19px; margin-top:6px}
 .summary-info .sapMFlexItem {margin-bottom:0.35rem}
+.summary-info.mb-3px .sapMFlexItem {margin-bottom: 3px}
 .summary-info .sapMObjStatus {font-size:30px}
 .summary-box .desc {justify-content:flex-start; display:flex; align-items:baseline}
 .summary-box .desc .sapMText, .summary-box .desc .sapMObjStatus {font-size:1rem; font-weight:600}

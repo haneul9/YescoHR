@@ -24,7 +24,7 @@
                     <Label design="Bold" text="{i18n>LABEL_25003}" />
                     <ObjectStatus text="{/Total/Carno}" state="Indication01" class="font-25-px" />
                 </VBox>
-                <VBox class="summary-info">
+                <VBox class="summary-info mb-3px">
                     <Label design="Bold" text="{i18n>LABEL_25022}" />
                     <HBox alignItems="Baseline">
                         <Text text="{
