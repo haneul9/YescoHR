@@ -10,7 +10,7 @@
             <custom:HBox press=".navToIndividualAttendance">
                 <Image src="{PicUrl}" mode="Background" class="members-photo" />
                 <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
-                <VBox class="members-position">
+                <VBox class="members-position-ex">
                     <Text text="{Zzjikgbtx}" tooltip="{Zzjikgbtx}" />
                     <Text text="{Orgtx}" tooltip="{Orgtx}" />
                 </VBox>
