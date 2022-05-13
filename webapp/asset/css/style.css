@@ -145,14 +145,12 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p03p04 .portlet-members > .sapMHBox {align-items:center; margin-bottom:16px; width:100%}
 .portlet-p03p04 .portlet-members > .sapMHBox:last-child {margin-bottom:0}
 .portlet-p03p04 .portlet-members > .sapMHBox > * {display:flex}
-.portlet-p03p04:not(.section) .portlet-members > .sapMHBox > .sapMFlexItem + .sapMFlexItem {margin-left:16px}
+.portlet-p03p04 .portlet-members > .sapMHBox > .sapMFlexItem + .sapMFlexItem {margin-left:16px}
 .portlet-p03p04 .portlet-members .sapMText {width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal}
 .portlet-p03p04 .portlet-members .members-photo {width:40px; height:40px; border-radius:50%; background-size:cover; background-position:center top; background-repeat:no-repeat}
 .portlet-p03p04 .portlet-members .members-name {width:60px; line-height:40px; font-size:15px; font-weight:700}
 .portlet-p03p04 .portlet-members .members-position {flex-grow:1; max-width:calc(100% - 208px); height:40px}/* 40 + (16 + 60) + calc(100% - 16 - 192) + (16 + 60) */
-.portlet-p03p04 .portlet-members .members-position-ex {flex-grow:1; max-width:calc(100% - 240px); height:40px}/* 40 + (16 + 60) + calc(100% - 16 - 192) + (16 + 60) */
 .portlet-p03p04 .portlet-members .members-position .sapMFlexItem {height:20px}
-.portlet-p03p04 .portlet-members .members-position-ex .sapMFlexItem {height:20px}
 .portlet-p03p04 .portlet-members .members-awart {width:140px; height:40px;}
 .portlet-p03p04 .portlet-members .members-awart .sapMText {font-size:15px; font-weight:700}
 .portlet-p03p04:hover .portlet-members.my-members .members-position {max-width:calc(100% - 245px)}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
