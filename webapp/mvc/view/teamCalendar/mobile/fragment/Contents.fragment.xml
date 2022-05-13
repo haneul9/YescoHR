@@ -4,7 +4,7 @@
     <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
         <VBox class="contents">
             <custom:MobileScrollContainer horizontal="false" vertical="true">
-                <VBox class="search-area">
+                <VBox class="search-area" visible="{= ${/auth} !== 'E' }">
                     <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
                         <ComboBox width="100%" selectedKey="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
                             <layoutData>
