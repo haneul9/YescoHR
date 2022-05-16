@@ -17,7 +17,7 @@
           <Label text="{i18n>LABEL_04014}" />
           <HBox>
             <custom:DateRangeSelection width="250px" class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
-            <Input width="50px" value="{/form/dialog/data/AbrtgTxt}" editable="false" />
+            <Input width="120px" value="{/form/dialog/data/AbrtgTxt}" editable="false" />
           </HBox>
           <Label text="{i18n>LABEL_04009}" />
           <Input width="400px" class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
