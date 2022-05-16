@@ -147,6 +147,36 @@ sap.ui.define(
         window.open(oUrl.Url, '_blank');
       },
 
+      // 상세 Comment
+      async onCommentLink(oEvent) {
+        if (!this.dCommentDialog) {
+          const oView = this.getView();
+
+          this.dCommentDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.progress.MonthComment',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+
+        const oViewModel = this.getViewModel();
+        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
+        const mRowData = _.cloneDeep(oViewModel.getProperty(vPath));
+
+        oViewModel.setProperty('/monthComment', {
+          Month: mRowData.Smnth,
+          Date: `${oViewModel.getProperty('/search/Syear')}.${mRowData.Smnth}`,
+          Cmmnt: mRowData.Cmmnt,
+        });
+
+        this.dCommentDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+      },
+
       // kpiFileUrl
       async getUrl(mSelectedRow = {}) {
         const oViewModel = this.getViewModel();

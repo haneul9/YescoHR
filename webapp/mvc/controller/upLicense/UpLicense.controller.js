@@ -139,63 +139,78 @@ sap.ui.define(
 
       // Tab에 맞는 Odata호출
       async oDataCallTable(sSelectKey = '') {
-        let sName = ''; // Odata Name
-        let sTableName = ''; // Table Name
-        let sListName = ''; // PropertyList Name
-        let sTableTitle = ''; // TableHeader Title Name
-        let sTableMSG = ''; // TableHeader MSG
-        let mPayLoad = ''; // Odata Paramaters
-
-        switch (sSelectKey) {
-          case 'A':
-            // 행 클릭 시 해당 등록면허/면허상세의 등록 및 등록가능 내역이 팝업으로 조회됩니다.
-            sTableMSG = this.getBundleText('MSG_39001');
-            sTableTitle = this.getBundleText('LABEL_39005'); // 등록면허 보유현황
-            sName = 'LicenseBoard';
-            sTableName = this.sRegistTable;
-            sListName = '/registList';
-            mPayLoad = {};
-            break;
-          case 'B':
-            // 숫자 클릭 시 상세내역이 팝업으로 조회됩니다.
-            sTableMSG = this.getBundleText('MSG_39002');
-            sTableTitle = this.getBundleText('LABEL_39003'); // 부서별 면허보유현황
-            sName = 'PersLicenseList';
-            sTableName = this.sDeptTable;
-            sListName = '/byList';
-            mPayLoad = {};
-            break;
-          case 'C':
-            // 숫자 클릭 시 상세내역이 팝업으로 조회됩니다.
-            sTableMSG = this.getBundleText('MSG_39002');
-            sTableTitle = this.getBundleText('LABEL_39004'); // 개인별 면허보유현황
-            sName = 'OrgLicenseBoard';
-            sTableName = this.sIndividualTable;
-            sListName = '/byList';
-            mPayLoad = {};
-            break;
-          default:
-            return;
-        }
-
         const oViewModel = this.getViewModel();
-        const mInfo = {
-          infoMessage: sTableMSG,
-          Title: sTableTitle,
-          visibleStatus: 'X',
-        };
 
-        oViewModel.setProperty('/listInfo', mInfo);
+        try {
+          oViewModel.setProperty('/busy', true);
+          let sName = ''; // Odata Name
+          let sTableName = ''; // Table Name
+          let sListName = ''; // PropertyList Name
+          let sTableTitle = ''; // TableHeader Title Name
+          let sTableMSG = ''; // TableHeader MSG
+          let mPayLoad = {}; // Odata Paramaters
 
-        const oModel = this.getModel(ServiceNames.WORKTIME);
-        const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
-        const oTable = this.byId(sTableName);
+          switch (sSelectKey) {
+            case 'A':
+              // 행 클릭 시 해당 등록면허/면허상세의 등록 및 등록가능 내역이 팝업으로 조회됩니다.
+              sTableMSG = this.getBundleText('MSG_39001');
+              sTableTitle = this.getBundleText('LABEL_39005'); // 등록면허 보유현황
+              sName = 'LicenseBoard';
+              sTableName = this.sRegistTable;
+              sListName = '/registList';
+              mPayLoad = {
+                Menid: this.getCurrentMenuId(),
+              };
+              break;
+            case 'B':
+              // 숫자 클릭 시 상세내역이 팝업으로 조회됩니다.
+              sTableMSG = this.getBundleText('MSG_39002');
+              sTableTitle = this.getBundleText('LABEL_39003'); // 부서별 면허보유현황
+              sName = 'OrgLicenseBoard';
+              sTableName = this.sDeptTable;
+              sListName = '/deptList';
+              mPayLoad = {
+                Menid: this.getCurrentMenuId(),
+              };
+              break;
+            case 'C':
+              // 숫자 클릭 시 상세내역이 팝업으로 조회됩니다.
+              sTableMSG = this.getBundleText('MSG_39002');
+              sTableTitle = this.getBundleText('LABEL_39004'); // 개인별 면허보유현황
+              sName = 'PersLicenseList';
+              sTableName = this.sIndividualTable;
+              sListName = '/indiList';
+              mPayLoad = {
+                Prcty: '3',
+                Menid: this.getCurrentMenuId(),
+              };
+              break;
+            default:
+              return;
+          }
 
-        oViewModel.setProperty('/listInfo', {
-          ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-          ...mInfo,
-        });
-        oViewModel.setProperty(sListName, aTableList);
+          const mInfo = {
+            infoMessage: sTableMSG,
+            Title: sTableTitle,
+            visibleStatus: 'X',
+          };
+
+          oViewModel.setProperty('/listInfo', mInfo);
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
+          const oTable = this.byId(sTableName);
+
+          oViewModel.setProperty('/listInfo', {
+            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
+            ...mInfo,
+          });
+          oViewModel.setProperty(sListName, aTableList);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // dynamic Table

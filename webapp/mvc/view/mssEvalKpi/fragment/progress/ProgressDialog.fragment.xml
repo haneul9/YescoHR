@@ -24,7 +24,7 @@
             <Label text="{progress}" width="100%" textAlign="Center" />
           </VBox>
           <VBox visible="{= !${hide} }">
-            <Link text="{Smntx}" press=".onPressLink" width="100%" textAlign="Center" />
+            <Link text="{Smntx}" press=".onCommentLink" width="100%" textAlign="Center" />
             <Input value="{Prgrt}" maxLength="6" class="mx-2-px" liveChange=".progressInput" width="100%" textAlign="End" />
           </VBox>
         </VBox>

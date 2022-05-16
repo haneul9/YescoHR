@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Dialog showHeader="false" contentWidth="400px" contentHeight="auto">
+  <Dialog showHeader="false" contentWidth="500px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
     </buttons>
