@@ -485,9 +485,10 @@ sap.ui.define(
       onPressEmployeeRow(oEvent) {
         const sHost = window.location.href.split('#')[0];
         const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
-        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
+        // const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
+        const dSearchDate = moment(this.getViewModel().getProperty('/searchConditions/Datum'));
 
-        window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${dSearchDate.get('year')}/${dSearchDate.get('month')}`, '_blank', 'width=1400,height=800');
       },
 
       async onPressEmployee2Row(oEvent) {
