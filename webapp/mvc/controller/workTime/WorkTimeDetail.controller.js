@@ -321,14 +321,31 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          await Promise.all(
-            _.map(oViewModel.getProperty('/dialog/list'), async (e, i) => {
-              const oOverTime = await this.overTime(e);
+          _.set(oViewModel.getProperty('/DialogData'), 'Beguz', oViewModel.getProperty('/DialogData/Beguz').replace(':', ''));
+          _.set(oViewModel.getProperty('/DialogData'), 'Enduz', oViewModel.getProperty('/DialogData/Enduz').replace(':', ''));
 
-              oViewModel.setProperty(`/dialog/list/${i}/Notes`, oOverTime.Notes);
-              this.dateMovement(i + 1);
-            })
-          );
+          let oSendObject = {
+            ...oViewModel.getProperty('/DialogData'),
+            Appda: new Date(),
+            Menid: this.getCurrentMenuId(),
+            Prcty: 'V',
+            OtWorkNav: oViewModel.getProperty('/dialog/list'),
+          };
+
+          this.dateMovement();
+
+          const oModel = this.getModel(ServiceNames.WORKTIME);
+          const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+
+          _.map(oCheck.OtWorkNav.results, async (e, i) => {
+            oViewModel.setProperty(`/dialog/list/${i}/Notes`, e.Notes);
+          });
+
+          if (!!oCheck.Retmsg) {
+            oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
+
+            MessageBox.alert(oCheck.Retmsg);
+          }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -336,11 +353,11 @@ sap.ui.define(
         }
       },
 
-      dateMovement(index) {
+      dateMovement() {
         const oViewModel = this.getViewModel();
         const aDialogList = oViewModel.getProperty('/dialog/list');
 
-        if (index !== _.size(aDialogList)) {
+        if (_.isEmpty(aDialogList)) {
           return;
         }
 
@@ -427,6 +444,31 @@ sap.ui.define(
         oEvent.getSource().getParent().close();
       },
 
+      // D유형 선택시
+      async onDType(oEvent) {
+        const oViewModel = this.getViewModel();
+        const sKey = oEvent.getSource().getSelectedKey();
+
+        try {
+          oViewModel.setProperty('/busy', true);
+          // 초과시간
+          const oOverTime = await this.overTime({ Pernr: this.getAppointeeProperty('Pernr') }, sKey);
+
+          oViewModel.setProperty('/DialogData/bType', !!oOverTime.Dtype);
+          oViewModel.setProperty('/DialogData/bWork', !!oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Dtype', sKey);
+          oViewModel.setProperty('/DialogData/Nxtwk', !oOverTime.Nxtwk ? 'ALL' : oOverTime.Nxtwk);
+          oViewModel.setProperty('/DialogData/Abrst', oOverTime.Abrst);
+          oViewModel.setProperty('/DialogData/Notes', oOverTime.Notes);
+          oViewModel.setProperty('/DialogData/Gaptm', oOverTime.Gaptm);
+          oViewModel.setProperty('/DialogData/Nxtoff', oOverTime.Nxtoff);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
       // Dialog 근무시간
       async onTimePicker() {
         const oViewModel = this.getViewModel();
@@ -486,7 +528,7 @@ sap.ui.define(
       },
 
       // Dialog 초과근무시간
-      overTime(mData) {
+      overTime(mData, sDtype = '') {
         const oViewModel = this.getViewModel();
         const mDialogData = oViewModel.getProperty('/DialogData');
 
@@ -507,6 +549,10 @@ sap.ui.define(
           Beguz: mDialogData.Beguz.replace(':', ''),
           Enduz: mDialogData.Enduz.replace(':', ''),
         };
+
+        if (!!sDtype && sDtype !== 'ALL') {
+          _.set(mPayLoad, 'Dtype', sDtype);
+        }
 
         return Client.create(oModel, 'OtWorkApply', mPayLoad);
       },
@@ -598,79 +644,32 @@ sap.ui.define(
                 e.Beguz = e.Beguz.replace(':', '');
                 e.Enduz = e.Enduz.replace(':', '');
               });
-              let oSendObject = {
+              const oSendObject = {
                 ...aDetailList[0],
                 Appno: sAppno,
                 Appda: new Date(),
                 Menid: this.getCurrentMenuId(),
-                Prcty: 'V',
+                Prcty: 'C',
                 OtWorkNav: aDetailList,
               };
 
-              const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
-
-              if (!!oCheck.Retmsg) {
-                AppUtils.setAppBusy(false);
-                oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
-
-                // {신청}하시겠습니까?
-                MessageBox.confirm(oCheck.Retmsg, {
-                  // 신청, 취소
-                  actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
-                  onClose: async (vPress) => {
-                    // 신청
-                    if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
-                      return;
-                    }
-
-                    try {
-                      AppUtils.setAppBusy(true);
-
-                      // FileUpload
-                      if (!!this.AttachFileAction.getFileCount.call(this)) {
-                        await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
-                      }
-
-                      oSendObject.Prcty = 'C';
-
-                      const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
-
-                      if (oUrl.ZappUrl) {
-                        window.open(oUrl.ZappUrl, '_blank');
-                      }
-
-                      // {신청}되었습니다.
-                      MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                        onClose: () => {
-                          this.onNavBack();
-                        },
-                      });
-                    } catch (oError) {
-                      AppUtils.handleError(oError);
-                    }
-                  },
-                });
-              } else {
-                // FileUpload
-                if (!!this.AttachFileAction.getFileCount.call(this)) {
-                  await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
-                }
-
-                oSendObject.Prcty = 'C';
-
-                const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
-
-                if (oUrl.ZappUrl) {
-                  window.open(oUrl.ZappUrl, '_blank');
-                }
-
-                // {신청}되었습니다.
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.onNavBack();
-                  },
-                });
+              // FileUpload
+              if (!!this.AttachFileAction.getFileCount.call(this)) {
+                await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
               }
+
+              const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+
+              if (oUrl.ZappUrl) {
+                window.open(oUrl.ZappUrl, '_blank');
+              }
+
+              // {신청}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
