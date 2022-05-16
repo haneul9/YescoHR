@@ -118,7 +118,7 @@ sap.ui.define(
         const iScrollMarginBottom = $scrollDom.prop('scrollHeight') - $scrollDom.prop('scrollTop');
         const iGrowHeight = $scrollDom.height();
 
-        this.debug(`Controller > teamCalendar > isScrollBottom iScrollMarginBottom(${iScrollMarginBottom}) - iGrowHeight(${iGrowHeight}) = ${iScrollMarginBottom - iGrowHeight}`);
+        // this.debug(`Controller > teamCalendar > isScrollBottom iScrollMarginBottom(${iScrollMarginBottom}) - iGrowHeight(${iGrowHeight}) = ${iScrollMarginBottom - iGrowHeight}`);
 
         return $scrollDom.prop('scrollTop') > 0 && iScrollMarginBottom - iGrowHeight < 100;
       },
