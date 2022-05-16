@@ -208,7 +208,7 @@
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
 
         { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
-        { "pattern": "individualWorkStateView/:pernr:/:year:/:month:", "name": "individualWorkStateView", "target": "individualWorkStateView" },
+        { "pattern": "individualWorkStateView/:pernr:/:year:/:month:", "name": "individualWorkState-view", "target": "individualWorkStateView" },
         { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
 
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
