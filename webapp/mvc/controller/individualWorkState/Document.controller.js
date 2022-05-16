@@ -588,7 +588,7 @@ sap.ui.define(
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sDialChartDiv,
-              width: '480px',
+              width: '350px',
               height: '300px',
               dataFormat: 'json',
               dataSource: {
