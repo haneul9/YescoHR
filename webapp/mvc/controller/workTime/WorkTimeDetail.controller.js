@@ -236,7 +236,7 @@ sap.ui.define(
       },
 
       // 신청내역 삭제
-      onDelDetail() {
+      async onDelDetail() {
         const oViewModel = this.getViewModel();
 
         if (_.isEmpty(oViewModel.getProperty('/DeletedRows'))) {
@@ -249,6 +249,27 @@ sap.ui.define(
 
         oViewModel.setProperty('/detail/list', aDiffList);
         oViewModel.setProperty('/detail/rowCount', iLength < 5 ? iLength : 5);
+
+        const mSendObject = {
+          ...oViewModel.getProperty('/DialogData'),
+          Appda: new Date(),
+          Menid: this.getCurrentMenuId(),
+          Prcty: 'V',
+          OtWorkNav: aDiffList,
+        };
+
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        const oCheck = await Client.deep(oModel, 'OtWorkApply', mSendObject);
+
+        _.map(oCheck.OtWorkNav.results, async (e, i) => {
+          oViewModel.setProperty(`/detail/list/${i}/Notes`, e.Notes);
+        });
+
+        if (!!oCheck.Retmsg) {
+          oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
+
+          MessageBox.alert(oCheck.Retmsg);
+        }
         this.byId('workTimeTable').clearSelection();
       },
 
@@ -324,7 +345,7 @@ sap.ui.define(
           _.set(oViewModel.getProperty('/DialogData'), 'Beguz', oViewModel.getProperty('/DialogData/Beguz').replace(':', ''));
           _.set(oViewModel.getProperty('/DialogData'), 'Enduz', oViewModel.getProperty('/DialogData/Enduz').replace(':', ''));
 
-          let oSendObject = {
+          let mSendObject = {
             ...oViewModel.getProperty('/DialogData'),
             Appda: new Date(),
             Menid: this.getCurrentMenuId(),
@@ -339,10 +360,10 @@ sap.ui.define(
           this.dateMovement();
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const oCheck = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+          const oCheck = await Client.deep(oModel, 'OtWorkApply', mSendObject);
 
           _.map(oCheck.OtWorkNav.results, async (e, i) => {
-            oViewModel.setProperty(`/dialog/list/${i}/Notes`, e.Notes);
+            oViewModel.setProperty(`/detail/list/${i}/Notes`, e.Notes);
           });
 
           if (!!oCheck.Retmsg) {
@@ -648,7 +669,7 @@ sap.ui.define(
                 e.Beguz = e.Beguz.replace(':', '');
                 e.Enduz = e.Enduz.replace(':', '');
               });
-              const oSendObject = {
+              const mSendObject = {
                 ...aDetailList[0],
                 Appno: sAppno,
                 Appda: new Date(),
@@ -662,7 +683,7 @@ sap.ui.define(
                 await this.AttachFileAction.uploadFile.call(this, sAppno, this.getApprovalType());
               }
 
-              const oUrl = await Client.deep(oModel, 'OtWorkApply', oSendObject);
+              const oUrl = await Client.deep(oModel, 'OtWorkApply', mSendObject);
 
               if (oUrl.ZappUrl) {
                 window.open(oUrl.ZappUrl, '_blank');

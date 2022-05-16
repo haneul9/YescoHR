@@ -47,8 +47,8 @@
                 <Label text="{i18n>LABEL_15010}"/>
                 <table:template>
                   <HBox>
-                    <Text visible="{= !${Url} }" text="{Objtx9091}" wrapping="false" class="tableRow_Text"/>
-                    <Link visible="{= !!${Url} }" text="{Objtx9091}" press=".onPressLink" />
+                    <Text visible="{= !${Zfilekey} || !${Zfiledoc} }" text="{Objtx9091}" wrapping="false" class="tableRow_Text"/>
+                    <Link visible="{= !!${Zfilekey} &amp;&amp; !!${Zfiledoc} }" text="{Objtx9091}" press=".onPressLink" />
                   </HBox>
                 </table:template>
               </table:Column>

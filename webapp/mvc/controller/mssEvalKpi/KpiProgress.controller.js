@@ -139,32 +139,12 @@ sap.ui.define(
 
       // KPI/과제 명 Link Popover
       async onPressLink(oEvent) {
-        if (!this.dCommentDialog) {
-          const oView = this.getView();
-
-          this.dCommentDialog = Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.mssEvalKpi.fragment.progress.MonthComment',
-            controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-          });
-        }
-
         const oViewModel = this.getViewModel();
         const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
-        const mRowData = _.cloneDeep(oViewModel.getProperty(vPath));
+        const oRowData = oViewModel.getProperty(vPath);
+        const [oUrl] = await this.getUrl(oRowData);
 
-        oViewModel.setProperty('/monthComment', {
-          Month: mRowData.Smnth,
-          Date: `${oViewModel.getProperty('/search/Syear')}.${mRowData.Smnth}`,
-          Cmmnt: mRowData.Cmmnt,
-        });
-
-        this.dCommentDialog.then(function (oDialog) {
-          oDialog.open();
-        });
+        window.open(oUrl.Url, '_blank');
       },
 
       // kpiFileUrl
