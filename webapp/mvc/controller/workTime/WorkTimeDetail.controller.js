@@ -329,7 +329,11 @@ sap.ui.define(
             Appda: new Date(),
             Menid: this.getCurrentMenuId(),
             Prcty: 'V',
-            OtWorkNav: oViewModel.getProperty('/dialog/list'),
+            OtWorkNav: [
+              // prettier방지
+              ...oViewModel.getProperty('/dialog/list'),
+              ...oViewModel.getProperty('/detail/list'),
+            ],
           };
 
           this.dateMovement();
