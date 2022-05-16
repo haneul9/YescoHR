@@ -27,6 +27,14 @@
         <custom:DatePicker width="50%" class="required" value="{ path: '/employee/dialog/form/Regdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/employee/dialog/action} === 'A'}" />
         <Label text="{i18n>LABEL_00322}" />
         <Input width="100%" value="{/employee/dialog/form/Lawrt}" />
+        <Label text="{i18n>LABEL_00347}" visible="{= ${/werks} === '3000' }" />
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Techty}" items="{ path: '/employee/dialog/techtyList' }" visible="{= ${/werks} === '3000' }">
+            <core:Item key="{Techty}" text="{Techtytx}" />
+        </ComboBox>
+        <Label text="{i18n>LABEL_00348}" visible="{= ${/werks} === '3000' }" />
+        <ComboBox width="100%" selectedKey="{/employee/dialog/form/Techgd}" items="{ path: '/employee/dialog/techgdList' }" visible="{= ${/werks} === '3000' }">
+            <core:Item key="{Techgd}" text="{Techgdtx}" />
+        </ComboBox>
         <Label text="{i18n>LABEL_00323}" />
         <Input width="100%" value="{/employee/dialog/form/Zbigo}" />
         <Label text="{i18n>LABEL_00324}" />

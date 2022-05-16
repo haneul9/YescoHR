@@ -119,6 +119,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          werks: null,
           pernr: null,
           orgtx: null,
           orgeh: null,
@@ -165,6 +166,8 @@ sap.ui.define(
               languageTypeList: new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx' }),
               examTypeList: new ComboEntry({ codeKey: 'Exmty', valueKey: 'Exmtytx' }),
               gradeList: new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx' }),
+              techtyList: new ComboEntry({ codeKey: 'Techty', valueKey: 'Techtytx' }),
+              techgdList: new ComboEntry({ codeKey: 'Techgd', valueKey: 'Techgdtx' }),
               school1Entry: new ComboEntry({
                 aEntries: [
                   { code: 'A', text: this.getBundleText('LABEL_00294') }, // 입사후
@@ -237,6 +240,7 @@ sap.ui.define(
           oViewModel.setProperty('/activeReg', false);
         } else if (_.isEmpty(oParameter.orgtx) && _.isEmpty(oParameter.orgeh)) {
           oViewModel.setProperty('/activeReg', _.isEmpty(oParameter.pernr));
+          oViewModel.setProperty('/werks', mSessionData.Werks);
 
           this.toggleSideContainer(false);
 
@@ -325,6 +329,8 @@ sap.ui.define(
             aSchoolTypeList,
             aLanguageTypeList,
             aTestGradeList,
+            aTechtyList,
+            aTechgdList,
           ] = await Promise.all([
             fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
             fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
@@ -338,6 +344,8 @@ sap.ui.define(
             fCurriedGetEntitySet('SchoolTypeCode'),
             fCurriedGetEntitySet('LanguageTypeCode'),
             fCurriedGetEntitySet('TestGradeCode'),
+            fCurriedGetEntitySet('TechTypeCode'),
+            fCurriedGetEntitySet('TechGradeCode'),
           ]);
 
           // Milestone set
@@ -353,6 +361,8 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/schoolTypeList', new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext', aEntries: aSchoolTypeList }));
           oViewModel.setProperty('/employee/dialog/languageTypeList', new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx', aEntries: aLanguageTypeList }));
           oViewModel.setProperty('/employee/dialog/gradeList', new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx', aEntries: aTestGradeList }));
+          oViewModel.setProperty('/employee/dialog/techtyList', new ComboEntry({ codeKey: 'Techty', valueKey: 'Techtytx', aEntries: aTechtyList }));
+          oViewModel.setProperty('/employee/dialog/techgdList', new ComboEntry({ codeKey: 'Techgd', valueKey: 'Techgdtx', aEntries: aTechgdList }));
           //End Dialog Combo entry set
 
           // 상단 프로필 Set
@@ -851,7 +861,7 @@ sap.ui.define(
             oViewModel.setProperty('/employee/dialog/form', { Quali: sDefaultSelectedKey, Exmty: sDefaultSelectedKey, Eamgr: sDefaultSelectedKey });
             break;
           case this.CRUD_TABLES.CERTIFICATE.path:
-            oViewModel.setProperty('/employee/dialog/form', {});
+            oViewModel.setProperty('/employee/dialog/form', { Techty: sDefaultSelectedKey, Techgd: sDefaultSelectedKey });
             break;
           default:
             break;
@@ -952,6 +962,8 @@ sap.ui.define(
               aFieldProperties = this.CRUD_TABLES.CERTIFICATE.valid;
               sAppno = await this.uploadInputFormFiles(this.CRUD_TABLES.CERTIFICATE.key);
               sActionText = `${sActionText}${this.getBundleText('LABEL_00121')}`; // 신청
+
+              if (!_.isEmpty(mFieldValue.Zbigo)) _.remove(aFieldProperties, { field: 'Appno' });
 
               mInputData = {
                 ...mFieldValue,
