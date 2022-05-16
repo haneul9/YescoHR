@@ -16,55 +16,55 @@ sap.ui.define(
     'use strict';
 
     return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.common.mobile.MobileEmployeeSearchPopoverHandler', {
-      /**
-       * @override
-       */
-      constructor: function (oController) {
-        MobileEmployeeListPopoverHandler.apply(this, [oController, 'Telephone']);
+      getPopoverFragmentName() {
+        return 'sap.ui.yesco.fragment.mobile.MobileEmployeeSearchPopover';
       },
 
       onAfterClose() {
-        this.oPopoverModel.setProperty('/popover/terms', null);
-        this.oPopoverModel.setProperty('/popover/employees', []);
+        this.clearTerms();
+        this.clearEmployeeList();
       },
 
-      async openPopover(oEvent) {
-        // Do nothing.
-      },
-
-      liveChange(oEvent) {
+      onLiveChange(oEvent) {
         if (this.liveChangeInterval) {
           clearInterval(this.liveChangeInterval);
         }
 
         const sValue = $.trim(oEvent.getParameter('newValue'));
         if (!sValue || sValue.length < 2) {
-          this.oPopoverModel.setProperty('/popover/employees', []);
+          this.clearEmployeeList();
           return;
         }
 
         this.liveChangeInterval = setInterval(() => {
           clearInterval(this.liveChangeInterval);
-          this.showSuggestionData(sValue);
+          this.readEmployeeList(sValue);
         }, 500);
       },
 
-      async showSuggestionData(sValue) {
+      async readEmployeeList(sValue) {
         try {
-          this.setBusy(true);
-          const aEmployees = await this.readSuggestionData(sValue);
+          this.setBusy();
+
+          const oModel = this.oController.getModel(ServiceNames.COMMON);
+          const mFilters = {
+            Ename: sValue,
+            Stat2: '3',
+            Accty: 'M', // 권한 해제 : 타사 임직원도 검색 + 전화번호
+          };
+
+          const aEmployeeList = await Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
           const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
-          this.oPopoverModel.setProperty(
-            '/popover/employees',
-            aEmployees.map((mEmployee) => {
+          this.setEmployeeList(
+            aEmployeeList.map((mEmployee) => {
               mEmployee.Photo = mEmployee.Photo || sUnknownAvatarImageURL;
-              mEmployee.IconMode = this.sIconMode;
+              mEmployee.IconMode = 'Telephone';
               return mEmployee;
             })
           );
         } catch (oError) {
-          AppUtils.debug('MobileEmployeeSearchPopoverHandler > showSuggestionData Error', oError);
+          AppUtils.debug('MobileEmployeeSearchPopoverHandler > readEmployeeList Error', oError);
 
           AppUtils.handleError(oError, {
             onClose: () => this.closePopover(),
@@ -72,17 +72,6 @@ sap.ui.define(
         } finally {
           this.setBusy(false);
         }
-      },
-
-      async readSuggestionData(sValue) {
-        const oModel = this.oController.getModel(ServiceNames.COMMON);
-        const mFilters = {
-          Ename: sValue,
-          Stat2: '3',
-          Accty: 'M', // 권한 해제 : 타사 임직원도 검색 + 전화번호
-        };
-
-        return Client.getEntitySet(oModel, 'EmpSearchResult', mFilters);
       },
     });
   }

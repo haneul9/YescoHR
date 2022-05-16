@@ -23,7 +23,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler2', {
+    return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler', {
       mService: {
         H: 'PA',
         T: 'WORKTIME',

@@ -2,42 +2,24 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
-    'sap/ui/yesco/common/odata/Client',
-    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     JSONModel,
     AppUtils,
-    Debuggable,
-    Client,
-    ServiceNames
+    Debuggable
   ) => {
     'use strict';
 
     return Debuggable.extend('sap.ui.yesco.common.mobile.MobileEmployeeListPopoverHandler', {
-      mService: {
-        H: 'PA',
-        T: 'WORKTIME',
-      },
-      mEntitySet: {
-        H: 'HeadCountDetail',
-        T: 'TimeOverviewDetail1',
-      },
-
-      constructor: function (oController, sIconMode = 'Profile') {
+      constructor: function (oController) {
         this.oController = oController;
         this.oPopoverModel = new JSONModel(this.getInitialData());
         this.oPopoverModel.setSizeLimit(10000);
-        this.sIconMode = sIconMode; // Profile | Telephone
 
         this.init();
       },
@@ -54,17 +36,23 @@ sap.ui.define(
       },
 
       async init() {
-        this.setPropertiesForNavTo();
+        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
+        await oMenuModel.getPromise();
+
+        this.setPropertiesForNavTo(oMenuModel);
 
         const oView = this.oController.getView();
 
         this.oPopover = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.fragment.mobile.MobileEmployeeListPopover',
+          name: this.getPopoverFragmentName(),
           controller: this,
         });
 
         this.oPopover
+          .attachBeforeOpen(() => {
+            this.onBeforeOpen();
+          })
           .attachAfterOpen(() => {
             setTimeout(() => {
               $('#sap-ui-blocklayer-popup')
@@ -90,18 +78,113 @@ sap.ui.define(
         oView.addDependent(this.oPopover);
       },
 
-      async setPropertiesForNavTo() {
-        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
-        await oMenuModel.getPromise();
+      /**
+       * @abstract
+       */
+      getPopoverFragmentName() {},
 
-        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+      /**
+       * @abstract
+       * @param {sap.ui.yesco.mvc.model.MenuModel} oMenuModel
+       */
+      setPropertiesForNavTo(oMenuModel) {},
+
+      /**
+       * @abstract
+       */
+      onBeforeOpen() {},
+
+      /**
+       * @abstract
+       */
+      onAfterClose() {},
+
+      /**
+       * @abstract
+       * @param {sap.ui.base.Event} oEvent
+       */
+      onLiveChange(oEvent) {},
+
+      /**
+       * @abstract
+       * @param {sap.ui.base.Event | object} oParam
+       */
+      openPopover(oParam) {
+        this.setBusy();
+
+        let mPayloadData, oEventSource;
+        if (oParam instanceof sap.ui.base.Event) {
+          // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
+          oEventSource = oParam.getSource();
+          mPayloadData = this.transformEventSourceDataToPayload(oEventSource.data());
+        } else {
+          // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
+          oEventSource = AppUtils.getAppController().byId('mobile-basis-home');
+          mPayloadData = oParam;
+        }
+
+        this.setPayloadData(mPayloadData);
+
+        this.oPopover.openBy(oEventSource);
       },
 
-      onAfterClose() {
-        this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter([]);
-        this.oPopoverModel.setProperty('/popover/terms', null);
-        this.oPopoverModel.setProperty('/popover/employees', []);
+      transformEventSourceDataToPayload(mEventSourceData) {
+        const mAppointeeData = this.oController.getAppointeeData();
+        if (mEventSourceData.OData === 'H') {
+          return {
+            Zyear: moment().year(),
+            Werks: mAppointeeData.Werks,
+            Orgeh: mAppointeeData.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
+        } else if (mEventSourceData.OData === 'T') {
+          return {
+            Datum: moment().startOf('date').add(9, 'hours'),
+            Werks: mAppointeeData.Werks,
+            Orgeh: mAppointeeData.Orgeh,
+            Headty: mEventSourceData.Headty,
+            Discod: mEventSourceData.Discod,
+          };
+        }
+      },
+
+      setPayloadFromData() {},
+
+      closePopover() {
+        this.oPopover.close();
+      },
+
+      setPayloadData(mPayloadData) {
+        this.mPayloadData = mPayloadData;
+      },
+
+      getPayloadData() {
+        return this.mPayloadData;
+      },
+
+      setSearchFilter(aFilters) {
+        this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter(aFilters);
+      },
+
+      setTerms(sTerms) {
+        this.oPopoverModel.setProperty('/popover/terms', sTerms);
+      },
+
+      setEmployeeList(aEmployeeList) {
+        this.oPopoverModel.setProperty('/popover/employees', aEmployeeList);
+      },
+
+      clearSearchFilter() {
+        this.setSearchFilter([]);
+      },
+
+      clearTerms() {
+        this.setTerms(null);
+      },
+
+      clearEmployeeList() {
+        this.setEmployeeList([]);
       },
 
       togglePopover(oEvent) {
@@ -111,113 +194,6 @@ sap.ui.define(
           this.oPopover.openBy(oEvent.getSource());
           this.setBusy(false);
         }
-      },
-
-      async openPopover(oParam) {
-        try {
-          setTimeout(() => {
-            this.setBusy();
-            this.oPopover.openBy(AppUtils.getAppController().byId('mobile-basis-home'));
-          });
-
-          let mPayload, sService, sEntitySet;
-          if (oParam instanceof sap.ui.base.Event) {
-            // Portlet 같은 곳에서 Headty, Discod 만 넘어오는 경우
-            const mEventSourceData = oParam.getSource().data();
-
-            sService = this.mService[mEventSourceData.OData];
-            sEntitySet = this.mEntitySet[mEventSourceData.OData];
-            mPayload = this.getPayload(mEventSourceData);
-          } else {
-            // MSS 인원현황 메뉴 같은 곳에서 oParam에 검색 조건이 모두 포함되어 넘어오는 경우
-            sService = this.mService[oParam.OData];
-            sEntitySet = this.mEntitySet[oParam.OData];
-
-            delete oParam.OData;
-            mPayload = oParam;
-          }
-
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames[sService]), sEntitySet, mPayload);
-          const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
-
-          this.oPopoverModel.setProperty(
-            '/popover/employees',
-            aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
-              Photo: Photo || sUnknownAvatarImageURL,
-              Ename,
-              Pernr,
-              Zzjikcht: Zzjikgbtx,
-              Zzjikgbt: Zzjikchtx,
-              Fulln: Orgtx,
-              IconMode: this.sIconMode,
-              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
-            }))
-          );
-        } catch (oError) {
-          AppUtils.debug('MobileEmployeeListPopoverHandler > openPopover Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => this.closePopover(),
-          });
-        } finally {
-          this.setBusy(false);
-        }
-      },
-
-      getPayload(mEventSourceData) {
-        const mSessionProperty = this.oController.getSessionModel().getData();
-        if (mEventSourceData.OData === 'H') {
-          return {
-            Zyear: moment().year(),
-            Werks: mSessionProperty.Werks,
-            Orgeh: mSessionProperty.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
-        } else if (mEventSourceData.OData === 'T') {
-          return {
-            Datum: moment().startOf('date').add(9, 'hours'),
-            Werks: mSessionProperty.Werks,
-            Orgeh: mSessionProperty.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
-        }
-      },
-
-      closePopover() {
-        this.oPopover.close();
-      },
-
-      liveChange(oEvent) {
-        const sValue = $.trim(oEvent.getParameter('newValue'));
-        if (!sValue) {
-          this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter([]);
-          return;
-        }
-
-        const aFilters = new Filter({
-          filters: [
-            new Filter('Ename', FilterOperator.Contains, sValue), //
-            new Filter('Pernr', FilterOperator.Contains, sValue),
-          ],
-          and: false,
-        });
-
-        this.oPopover.getContent()[1].getContent()[0].getBinding('items').filter(aFilters);
-      },
-
-      navToProfile(oEvent) {
-        if (this.sIconMode !== 'Profile') {
-          return;
-        }
-
-        if (!this.bHasProfileMenuAuth) {
-          return;
-        }
-
-        const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
-        AppUtils.getAppController().getAppMenu().moveToMenu(this.sProfileMenuUrl, { pernr: sPernr });
       },
 
       setBusy(bBusy = true) {

@@ -220,6 +220,8 @@ sap.ui.define([], function () {
       },
       mscombi2d: {
         chart: {
+          flatScrollBars: '1',
+          scrollheight: '10',
           baseFontSize: '14',
           valueFontSize: '14',
           legendItemFontSize: '14',

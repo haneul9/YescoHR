@@ -1,24 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="section portlet-p03p04 m-0-px px-10-px font-20-px" busyIndicatorDelay="0" busy="{/busy/Detail}">
-        <HBox class="title-bar">
-            <Title level="H3" text="{i18n>LABEL_37004}" />
-            <Text text="{/detail/displayDate}" class="desc-txt ml-0" />
-        </HBox>
-        <VBox width="100%" items="{/detail/list}" class="portlet-members">
-            <custom:HBox press=".navToIndividualAttendance">
-                <Image src="{PicUrl}" mode="Background" class="members-photo" />
-                <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
-                <VBox class="members-position">
-                    <Text text="{Zzjikgbtx}" tooltip="{Zzjikgbtx}" />
-                    <Text text="{Orgtx}" tooltip="{Orgtx}" />
-                </VBox>
-                <VBox class="members-awart">
-                    <Text text="{Atext}" tooltip="{Atext}" />
-                    <Text text="{Tmprd}" tooltip="{Tmprd}" />
-                </VBox>
-            </custom:HBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="section m-0-px px-10-px" busyIndicatorDelay="0" busy="{/busy/Detail}">
+    <HBox class="title-bar">
+      <Title level="H3" text="{i18n>LABEL_37004}" />
+      <Text text="{/detail/displayDate}" class="desc-txt ml-0" />
+    </HBox>
+    <custom:MobileEmployeeList items="{/detail/list}" photo="PicUrl" name="Ename" rank="Zzjikgbtx" department="Orgtx" doubleLine="true" itemPress=".navToIndividualAttendance">
+      <CustomListItem>
+        <VBox>
+          <Text text="{Atext}" class="font-bold" />
+          <Text text="{Tmprd}" class="font-bold" />
         </VBox>
-    </VBox>
+      </CustomListItem>
+    </custom:MobileEmployeeList>
+  </VBox>
 </core:FragmentDefinition>

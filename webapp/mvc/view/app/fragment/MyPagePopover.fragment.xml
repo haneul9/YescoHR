@@ -2,7 +2,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <Popover title="{i18n>LABEL_01005}" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="myPageLanguage">
+  <Popover title="{i18n>LABEL_01005}" modal="true" placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="myPageLanguage">
     <content>
       <VBox height="100%">
         <grid:CSSGrid gridTemplateColumns="3fr 1fr 8fr" gridGap="2px 20px" class="mypage-emp-detail">

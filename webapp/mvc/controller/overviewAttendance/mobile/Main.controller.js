@@ -1,23 +1,29 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewAttendance/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList1PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList2PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList3PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList4PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList5PopoverHandler',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     AppUtils,
-    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
     BaseController,
-    ChartsSetting
+    ChartsSetting,
+    EmployeeList1PopoverHandler,
+    EmployeeList2PopoverHandler,
+    EmployeeList3PopoverHandler,
+    EmployeeList4PopoverHandler,
+    EmployeeList5PopoverHandler
   ) => {
     'use strict';
 
@@ -41,7 +47,7 @@ sap.ui.define(
             A04: { busy: false, Headty: '', data: {} },
             A05: { busy: false, Headty: '' },
             A06: { busy: false, Headty: '' },
-            // A07: { busy: false, Headty: '' },
+            A07: { busy: false, Headty: '' },
             A08: { busy: false, Headty: '', data: {} },
             A09: { busy: false, Headty: '', data: {} },
             // A10: { busy: false, Headty: '' },
@@ -79,9 +85,11 @@ sap.ui.define(
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => this.buildChart(oModel, mFilters, o));
 
-          if (this.bMobile) {
-            this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
-          }
+          this.oEmployeeList1PopoverHandler = new EmployeeList1PopoverHandler(this);
+          this.oEmployeeList2PopoverHandler = new EmployeeList2PopoverHandler(this);
+          this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
+          this.oEmployeeList4PopoverHandler = new EmployeeList4PopoverHandler(this);
+          this.oEmployeeList5PopoverHandler = new EmployeeList5PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
             const aProps = ['Headty', 'Discod'];
@@ -295,131 +303,41 @@ sap.ui.define(
         }
       },
 
-      async openDialog(sHeadty) {
-        const oView = this.getView();
-        let oDialog = null;
+      callDetail(mPayload) {
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-        switch (sHeadty) {
+        this.openDialog({ ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
+      },
+
+      openDialog(mPayload) {
+        switch (mPayload.Headty) {
           case 'A':
-            if (!this.oDetail1Dialog) {
-              this.oDetail1Dialog = await Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail1',
-                controller: this,
-              });
-
-              oView.addDependent(this.oDetail1Dialog);
-            }
-
-            oDialog = this.oDetail1Dialog;
-            this.oDetail1Dialog.open();
+            this.oEmployeeList1PopoverHandler.openPopover(mPayload);
             break;
           case 'B':
           case 'C':
           case 'H':
           case 'I':
           case 'J':
-            if (!this.oDetail3Dialog) {
-              this.oDetail3Dialog = await Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail3',
-                controller: this,
-              });
-
-              oView.addDependent(this.oDetail3Dialog);
-            }
-
-            oDialog = this.oDetail3Dialog;
-            this.oDetail3Dialog.open();
+            this.oEmployeeList3PopoverHandler.openPopover(mPayload);
             break;
           case 'D':
           case 'E':
           case 'F':
           case 'G':
-            if (!this.oDetail2Dialog) {
-              this.oDetail2Dialog = await Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
-                controller: this,
-              });
-
-              oView.addDependent(this.oDetail2Dialog);
-            }
-
-            oDialog = this.oDetail2Dialog;
-            this.oDetail2Dialog.open();
+            this.oEmployeeList2PopoverHandler.openPopover(mPayload);
             break;
           case 'X1':
-            if (!this.oDetail4Dialog) {
-              this.oDetail4Dialog = await Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail4',
-                controller: this,
-              });
-
-              oView.addDependent(this.oDetail4Dialog);
-            }
-
-            oDialog = this.oDetail4Dialog;
-            this.oDetail4Dialog.open();
+            this.oEmployeeList4PopoverHandler.openPopover(mPayload);
             break;
           case 'X2':
-            if (!this.oDetail5Dialog) {
-              this.oDetail5Dialog = await Fragment.load({
-                id: oView.getId(),
-                name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail5',
-                controller: this,
-              });
-
-              oView.addDependent(this.oDetail5Dialog);
-            }
-
-            oDialog = this.oDetail5Dialog;
-            this.oDetail5Dialog.open();
+            this.oEmployeeList5PopoverHandler.openPopover(mPayload);
             break;
           default:
             break;
         }
 
         $('#fusioncharts-tooltip-element').hide();
-
-        return oDialog;
-      },
-
-      async callDetail(mPayload) {
-        const oViewModel = this.getViewModel();
-        let oDialog = null;
-
-        oViewModel.setProperty('/dialog/busy', true);
-
-        try {
-          oDialog = await this.openDialog(mPayload.Headty);
-
-          const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          const sDetailEntity = _.chain(ChartsSetting.CHART_TYPE).find({ Headty: mPayload.Headty }).get('DetailEntity').value();
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, { ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
-
-          oViewModel.setProperty('/dialog/param', mPayload);
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
-          oViewModel.setProperty(
-            '/dialog/list',
-            _.map(aDetailData, (o, i) => ({
-              Idx: ++i,
-              ProfileView: 'O',
-              ...o,
-            }))
-          );
-        } catch (oError) {
-          this.debug('Controller > mobile/m/overviewAttendance Main > callDetail Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => oDialog.close(),
-          });
-        } finally {
-          oViewModel.setProperty('/dialog/busy', false);
-          setTimeout(() => oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
-        }
       },
 
       /*****************************************************************
@@ -464,30 +382,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (this.bMobile) {
-          this.oPopupHandler.openPopover(oEvent);
-        } else {
-          this.callDetail(oEvent.getSource().data());
-        }
-      },
-
-      onPressDetail1DialogClose() {
-        this.oDetail1Dialog.close();
-      },
-
-      onPressDetail2DialogClose() {
-        this.oDetail2Dialog.close();
-      },
-
-      onPressDetail3DialogClose() {
-        this.oDetail3Dialog.close();
-      },
-
-      onPressDetail4DialogClose() {
-        this.oDetail4Dialog.close();
-      },
-      onPressDetail5DialogClose() {
-        this.oDetail5Dialog.close();
+        this.callDetail(oEvent.getSource().data());
       },
 
       onPressEmployeeRow(oEvent) {
@@ -499,72 +394,17 @@ sap.ui.define(
       },
 
       async onPressEmployee2Row(oEvent) {
-        const oViewModel = this.getViewModel();
-        let oDialog;
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+        const sDiscod = this.getViewModel().getProperty('/dialog/param/Discod');
+        const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
 
-        oViewModel.setProperty('/dialog/busy', true);
-
-        try {
-          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
-
-          oDialog = await this.openDialog('X2');
-
-          const sDiscod = oViewModel.getProperty('/dialog/param/Discod');
-          const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail5', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart });
-
-          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
-          oViewModel.setProperty(
-            '/dialog/sub/list',
-            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
-          );
-        } catch (oError) {
-          this.debug('Controller > mobile/m/overviewAttendance Main > onPressEmployee2Row Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => oDialog.close(),
-          });
-        } finally {
-          oViewModel.setProperty('/dialog/busy', false);
-        }
+        this.openDialog({ ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Headty: 'X2', Awart: sAwart });
       },
 
       async onPressEmployee3Row(oEvent) {
-        const oViewModel = this.getViewModel();
-        let oDialog;
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
 
-        oViewModel.setProperty('/dialog/busy', true);
-
-        try {
-          const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
-
-          oDialog = await this.openDialog('X1');
-
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail4', { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']) });
-
-          oViewModel.setProperty('/dialog/sub/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/sub/totalCount', _.size(aDetailData));
-          oViewModel.setProperty(
-            '/dialog/sub/list',
-            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
-          );
-        } catch (oError) {
-          this.debug('Controller > mobile/m/overviewAttendance Main > onPressEmployee3Row Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => oDialog.close(),
-          });
-        } finally {
-          oViewModel.setProperty('/dialog/busy', false);
-        }
-      },
-
-      onPressDetailExcelDownload(oEvent) {
-        const oTable = oEvent.getSource().getParent().getParent().getParent();
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28040'); // 근태현황상세
-
-        this.TableUtils.export({ oTable, sFileName });
+        this.openDialog({ ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Headty: 'X1' });
       },
 
       /*****************************************************************

@@ -37,8 +37,8 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A08" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A09" type="XML" />
         </grid:CSSGrid>
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A07" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A10" type="XML" /> -->
+        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.mobile.A07" type="XML" /> -->
+        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A10" type="XML" /> -->
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

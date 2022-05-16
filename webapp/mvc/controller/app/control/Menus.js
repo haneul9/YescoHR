@@ -318,7 +318,9 @@ sap.ui.define(
 
         // 챠트 툴팁 제거
         const $ChartTooltip = $('#fusioncharts-tooltip-element');
-        if ($ChartTooltip) $ChartTooltip.hide();
+        if ($ChartTooltip.length) {
+          $ChartTooltip.hide();
+        }
 
         this.oAppController
           .getOwnerComponent()

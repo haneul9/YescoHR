@@ -2,20 +2,20 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeListPopoverHandler',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
-    MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
     BaseController,
-    ChartsSetting
+    ChartsSetting,
+    EmployeeListPopoverHandler
   ) => {
     'use strict';
 
@@ -84,7 +84,7 @@ sap.ui.define(
             .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
             .commit();
 
-          this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
+          this.oEmployeeListPopoverHandler = new EmployeeListPopoverHandler(this); // EmployeeListPopoverHandler.js:64 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'Headty')
 
           window.callEmployeeDetail = (sArgs) => {
             $('#fusioncharts-tooltip-element').css('z-index', 7);
@@ -94,7 +94,7 @@ sap.ui.define(
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
             const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-            this.oPopupHandler.openPopover({ ...mSearchConditions, ...mPayload });
+            this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
           };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
@@ -317,7 +317,7 @@ sap.ui.define(
         const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
         const mPayload = oEvent.getSource().data();
 
-        this.oPopupHandler.openPopover({ ...mSearchConditions, ...mPayload });
+        this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },
 
       onPressSearchAreaToggle(oEvent) {
@@ -336,7 +336,7 @@ sap.ui.define(
       },
 
       reduceViewResource() {
-        this.oPopupHandler.destroy();
+        this.oEmployeeListPopoverHandler.destroy();
         Object.values(FusionCharts.items).forEach((oChart) => {
           oChart.dispose();
         });

@@ -8,10 +8,14 @@
       </HBox>
       <ScrollContainer horizontal="false" vertical="true">
         <content>
-          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbt" duty="Zzjikcht" department="Fulln" itemPress=".navToProfile">
+          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
             <CustomListItem>
+              <VBox>
+                <Text text="{Atext}" />
+                <Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" />
+              </VBox>
               <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${ProfileView} === 'O' }" class="icon-search" press=".navToProfile">
+              <Link visible="{= ${ProfileView} === 'O' }" class="icon-search" press=".navTo">
                 <customData>
                   <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
                 </customData>
