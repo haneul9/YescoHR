@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox">
+    <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+    <table:Table id="registTable" class="row-link" rows="{/registList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onRegistSelectRow">
+      <table:columns>
+        <table:Column width="17%" sortProperty="Certtytx" filterProperty="Certtytx">
+          <Label text="{i18n>LABEL_39006}"/>
+          <table:template>
+            <Text text="{Certtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="17%" sortProperty="Certdttx" filterProperty="Certdttx">
+          <Label text="{i18n>LABEL_39007}"/>
+          <table:template>
+            <Text text="{Certdttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="17%" sortProperty="Mancnt" filterProperty="Mancnt">
+          <Label text="{i18n>LABEL_39008}"/>
+          <table:template>
+            <Text text="{Mancnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="17%" sortProperty="Regcnt" filterProperty="Regcnt">
+          <Label text="{i18n>LABEL_00106}"/>
+          <table:template>
+            <Text text="{Regcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="17%" sortProperty="Gapcnt" filterProperty="Gapcnt">
+          <Label text="{i18n>LABEL_39009}"/>
+          <table:template>
+            <Text text="{Gapcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Poscnt" filterProperty="Poscnt">
+          <Label text="{i18n>LABEL_39010}"/>
+          <table:template>
+            <Text text="{Poscnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>

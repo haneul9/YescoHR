@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.upLicense.UpLicense"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc">
+  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.upLicense.fragment.Main" type="XML" />
+</mvc:View>
