@@ -44,7 +44,7 @@ sap.ui.define(
             Zzjikcht: Zzjikgbtx,
             Zzjikgbt: Zzjikchtx,
             Fulln: Orgtx,
-            ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );
 
