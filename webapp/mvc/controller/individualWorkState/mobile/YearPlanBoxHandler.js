@@ -23,14 +23,13 @@ sap.ui.define(
 
       async getYearPlan() {
         const oViewModel = this.oController.getViewModel();
-        const mSearchDate = oViewModel.getProperty('/searchDate');
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
         const sWerks = this.oController.getAppointeeProperty('Werks');
         const mPayLoad = {
           Werks: sWerks,
           Pernr: this.sPernr,
-          Tmyea: mSearchDate.year,
-          Tmmon: mSearchDate.month,
+          Tmyea: oViewModel.getProperty('/year'),
+          Tmmon: oViewModel.getProperty('/month'),
         };
 
         // 1년근태
@@ -46,23 +45,23 @@ sap.ui.define(
       },
       async onPressPrevYear() {
         const oViewModel = this.oController.getViewModel();
-        const sFullDa = oViewModel.getProperty('/searchDate/full').replace('.', '-');
+        const sFullDa = oViewModel.getProperty('/full').replace('.', '-');
         const sFullDate = moment(sFullDa).subtract(1, 'month').format('YYYY-MM');
 
-        oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
-        oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
-        oViewModel.setProperty('/searchDate/full', sFullDate.replace('-', '.'));
+        oViewModel.setProperty('/year', moment(sFullDate).format('YYYY'));
+        oViewModel.setProperty('/month', moment(sFullDate).format('MM'));
+        oViewModel.setProperty('/full', sFullDate.replace('-', '.'));
         await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 
       async onPressNextYear() {
         const oViewModel = this.oController.getViewModel();
-        const sFullDa = oViewModel.getProperty('/searchDate/full').replace('.', '-');
+        const sFullDa = oViewModel.getProperty('/full').replace('.', '-');
         const sFullDate = moment(sFullDa).add(1, 'month').format('YYYY-MM');
 
-        oViewModel.setProperty('/searchDate/year', moment(sFullDate).format('YYYY'));
-        oViewModel.setProperty('/searchDate/month', moment(sFullDate).format('MM'));
-        oViewModel.setProperty('/searchDate/full', sFullDate.replace('-', '.'));
+        oViewModel.setProperty('/year', moment(sFullDate).format('YYYY'));
+        oViewModel.setProperty('/month', moment(sFullDate).format('MM'));
+        oViewModel.setProperty('/full', sFullDate.replace('-', '.'));
         await this.oController.YearPlanBoxHandler.getYearPlan();
       },
 
@@ -111,9 +110,8 @@ sap.ui.define(
 
       getWeekBody() {
         const oViewModel = this.oController.getViewModel();
-        const mSearchDate = oViewModel.getProperty('/searchDate');
-        const iMonth = _.subtract(mSearchDate.month, 1);
-        const sYear = mSearchDate.year;
+        const iMonth = _.subtract(oViewModel.getProperty('/month'), 1);
+        const sYear = oViewModel.getProperty('/year');
         const dFirstDayOfYear = moment({ y: sYear, M: iMonth, d: 1 });
         const iDaysInMonth = dFirstDayOfYear.daysInMonth();
         const iFirstDay = dFirstDayOfYear.day();
@@ -141,9 +139,8 @@ sap.ui.define(
       getActivationDayBody(iDay) {
         const oViewModel = this.oController.getViewModel();
         const oScheduleData = oViewModel.getProperty('/yearPlan');
-        const mSearch = oViewModel.getProperty('/searchDate');
-        const sYear = mSearch.year;
-        const iMonth = _.subtract(mSearch.month, 1);
+        const sYear = oViewModel.getProperty('/year');
+        const iMonth = _.subtract(oViewModel.getProperty('/month'), 1);
         const dDate = moment({ y: sYear, M: iMonth, d: iDay });
         const sFormatDate = dDate.format('YYYYMMDD');
         const iDayNum = dDate.day();

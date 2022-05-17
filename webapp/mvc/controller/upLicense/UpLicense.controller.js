@@ -153,23 +153,39 @@ sap.ui.define(
 
       // dynamic Table
       createDynTable(oTable, sListName, aTableList = []) {
-        const columnData = _.times(_.size(aTableList), (i) => {
-          return { colId: aTableList[i].Certty + aTableList[i].Certdt, colName: aTableList[i].Certtytx, colVisibility: true, colPosition: i };
-        });
         const oModel = new sap.ui.model.json.JSONModel();
+        const aColumnData = [
+          { colId: 'Dept', colName: this.getBundleText('LABEL_00224'), colVisibility: true, colPosition: 0 }, // 부서
+          { colId: 'Cnt', colName: this.getBundleText('LABEL_39014'), colVisibility: true, colPosition: 1 }, // 인원수
+          ..._.times(_.size(aTableList), (i) => {
+            return { colId: aTableList[i].Certty + aTableList[i].Certdt, colName: aTableList[i].Certtytx, colVisibility: true, colPosition: i + 2 };
+          }),
+        ];
+
+        _.map(_.groupBy(aTableList, 'Orgeh'), (e) => {
+          let i1 = 0;
+          _.map(e, (e1) => {
+            const i = _.parseInt(e1.Discntg || 0);
+
+            i1 = i1 + i;
+          });
+          return i1;
+        });
 
         oModel.setData({
           rows: aTableList,
-          columns: columnData,
+          columns: aColumnData,
         });
+        debugger;
 
         oTable.setModel(oModel);
         oTable.bindColumns('/columns', (sId, oContext) => {
           const sColumnName = oContext.getObject().colName;
+          const sColumnId = oContext.getObject().colId;
 
           return new sap.ui.table.Column({
             label: sColumnName,
-            template: sColumnName,
+            template: sColumnId,
           });
         });
         oTable.bindRows(sListName);

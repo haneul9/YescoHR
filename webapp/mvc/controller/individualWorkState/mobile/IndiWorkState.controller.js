@@ -26,11 +26,9 @@ sap.ui.define(
         return {
           FullYear: '',
           pernr: '',
-          searchDate: {
-            full: moment().format('YYYY.MM'),
-            month: moment().format('MM'),
-            year: moment().format('YYYY'),
-          },
+          full: moment().format('YYYY.MM'),
+          month: moment().format('MM'),
+          year: moment().format('YYYY'),
           appointee: {},
           menid: this.getCurrentMenuId(),
           Hass: this.isHass(),
@@ -108,8 +106,28 @@ sap.ui.define(
 
         try {
           const sPernr = oParameter.pernr ?? this.getAppointeeProperty('Pernr');
+          const sYear = oParameter.year ?? moment().get('year');
+          const sMonth = _.parseInt(oParameter.month ?? moment().get('month')) + 1;
 
           oViewModel.setProperty('/pernr', sPernr);
+          oViewModel.setProperty('/year', _.toNumber(sYear));
+          oViewModel.setProperty('/month', _.toNumber(sMonth));
+          oViewModel.setProperty(
+            '/full',
+            moment()
+              .year(sYear)
+              .month(sMonth - 1)
+              .format('YYYY.MM')
+          );
+          oViewModel.setProperty(
+            '/WeekWorkDate',
+            oParameter.year
+              ? moment()
+                  .year(_.toNumber(sYear))
+                  .month(_.toNumber(sMonth) - 1)
+                  .toDate()
+              : new Date()
+          );
 
           this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this, sPernr });
           // this.setMonth();
@@ -126,7 +144,6 @@ sap.ui.define(
           this.setAppointeeDate();
 
           const sWerks = this.getAppointeeProperty('Werks');
-          const sYear = oViewModel.getProperty('/searchDate/year');
 
           // 휴가계획현황
           const mPayLoad = {
@@ -148,8 +165,6 @@ sap.ui.define(
           });
 
           oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
-
-          const sMonth = oViewModel.getProperty('/searchDate/month');
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
@@ -213,8 +228,8 @@ sap.ui.define(
           captionPadding: 0,
           chartLeftMargin: 0,
           chartRightMargin: 0,
-          chartBottomMargin: 0,
-          chartTopMargin: -10,
+          chartBottomMargin: 15,
+          chartTopMargin: 5,
           labelFontSize: 12,
         };
       },
@@ -232,15 +247,45 @@ sap.ui.define(
 
         oDetailModel.setProperty('/vacationChart', mPlan);
 
-        FusionCharts.ready(() => {
-          new FusionCharts({
-            id: this.sDoughChartId,
-            type: 'doughnut2d',
-            renderAt: 'chart-doughnut-container',
-            width: '100%',
-            height: '150px',
-            dataFormat: 'json',
-            dataSource: {
+        if (!FusionCharts(this.sDoughChartId)) {
+          FusionCharts.ready(() => {
+            new FusionCharts({
+              id: this.sDoughChartId,
+              type: 'doughnut2d',
+              renderAt: 'chart-doughnut-container',
+              width: '100%',
+              height: '200px',
+              dataFormat: 'json',
+              dataSource: {
+                chart: this.getDoughnutChartOption(),
+                data: [
+                  {
+                    label: this.getBundleText('LABEL_18002'), // 사용일수
+                    value: mPlan.dUsed,
+                    displayValue: `${mPlan.pUsed}%`,
+                    color: '#7BB4EB',
+                  },
+                  {
+                    label: this.getBundleText('LABEL_18003'), // 계획일수
+                    value: mPlan.dPlan,
+                    displayValue: `${mPlan.pPlan}%`,
+                    color: '#A2EB7B',
+                  },
+                  {
+                    label: this.getBundleText('LABEL_18004'), // 잔여일수 (미사용&미계획)
+                    value: mPlan.dUnPlan,
+                    displayValue: `${mPlan.pUnPlan}%`,
+                    color: '#FFE479',
+                  },
+                ],
+              },
+            }).render();
+          });
+        } else {
+          const oChart = FusionCharts(this.sDoughChartId);
+
+          oChart.setChartData(
+            {
               chart: this.getDoughnutChartOption(),
               data: [
                 {
@@ -263,8 +308,10 @@ sap.ui.define(
                 },
               ],
             },
-          }).render();
-        });
+            'json'
+          );
+          setTimeout(() => oChart.render(), 200);
+        }
       },
 
       // Dough ReRanderring
@@ -384,8 +431,8 @@ sap.ui.define(
         const mPayLoad = {
           Werks: this.getAppointeeProperty('Werks'),
           Pernr: oViewModel.getProperty('/pernr'),
-          Tmyea: oViewModel.getProperty('/searchDate/year'),
-          Month: oViewModel.getProperty('/searchDate/month'),
+          Tmyea: oViewModel.getProperty('/year'),
+          Month: oViewModel.getProperty('/month'),
         };
         const aWorkList = await Client.getEntitySet(oModel, 'WorkingStatus', mPayLoad);
 
@@ -428,7 +475,7 @@ sap.ui.define(
           Werks: this.getAppointeeProperty('Werks'),
           Pernr: oViewModel.getProperty('/pernr'),
           Awart: oEvent.getSource().getSelectedKey(),
-          Tmyea: oViewModel.getProperty('/searchDate/year'),
+          Tmyea: oViewModel.getProperty('/year'),
         });
 
         // Combination Chart
@@ -439,7 +486,7 @@ sap.ui.define(
       formYear() {
         const oViewModel = this.getViewModel();
 
-        return oViewModel.setProperty('/FullYear', `${oViewModel.getProperty('/searchDate/year')}${this.getBundleText('LABEL_00252')}`); // 년
+        return oViewModel.setProperty('/FullYear', `${oViewModel.getProperty('/year')}${this.getBundleText('LABEL_00252')}`); // 년
       },
 
       // 사원정보
@@ -477,9 +524,8 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sWerks = this.getAppointeeProperty('Werks');
           const sPernr = oViewModel.getProperty('/pernr');
-          const mSearchDate = oViewModel.getProperty('/searchDate');
-          const sYear = mSearchDate.year;
-          const sMonth = mSearchDate.month;
+          const sYear = oViewModel.getProperty('/year');
+          const sMonth = oViewModel.getProperty('/month');
           // 근무현황
           const mTablePayLoad = {
             Werks: sWerks,
@@ -538,14 +584,14 @@ sap.ui.define(
       },
 
       onPressPrevYear() {
-        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
+        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/year'));
         this.YearPlanBoxHandler.onPressPrevYear();
         this.formYear();
         this.formRefresh(sBeYear);
       },
 
       onPressNextYear() {
-        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/searchDate/year'));
+        const sBeYear = _.cloneDeep(this.getViewModel().getProperty('/year'));
         this.YearPlanBoxHandler.onPressNextYear();
         this.formYear();
         this.formRefresh(sBeYear);
