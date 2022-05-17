@@ -46,7 +46,7 @@ sap.ui.define(
             Orgtx,
             Tmdat,
             Atext,
-            ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );
 

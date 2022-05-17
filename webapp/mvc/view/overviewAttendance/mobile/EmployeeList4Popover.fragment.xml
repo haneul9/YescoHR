@@ -11,13 +11,13 @@
           <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
             <CustomListItem>
               <VBox>
-                <Text text="{Atext}" />
-                <Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" />
+                <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDateWeekday' }" />
+                <Text text="{i18n>LABEL_28065} : { path: 'Bashr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }/{ path: 'Addhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
               </VBox>
               <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${ProfileView} === 'O' }" class="icon-search" press=".navTo">
+              <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">
                 <customData>
-                  <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
+                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
                 </customData>
                 <layoutData>
                   <FlexItemData styleClass="icon-link" />

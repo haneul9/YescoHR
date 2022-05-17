@@ -15,9 +15,9 @@
                 <Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" />
               </VBox>
               <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${ProfileView} === 'O' }" class="icon-search" press=".navTo">
+              <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">
                 <customData>
-                  <core:CustomData key="profile-view" value="{ProfileView}" writeToDom="true" />
+                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
                 </customData>
                 <layoutData>
                   <FlexItemData styleClass="icon-link" />

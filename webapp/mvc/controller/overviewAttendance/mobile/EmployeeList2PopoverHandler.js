@@ -37,7 +37,7 @@ sap.ui.define(
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
         this.setEmployeeList(
-          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, Crecnt, Dedcnt, Balcnt, Plncnt }) => ({
+          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, Crecnt, Dedcnt, Balcnt, Plncnt, Begda, Endda }) => ({
             Photo: Photo || sUnknownAvatarImageURL,
             Ename,
             Pernr,
@@ -48,7 +48,9 @@ sap.ui.define(
             Dedcnt,
             Balcnt,
             Plncnt,
-            ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            Begda,
+            Endda,
+            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );
 
@@ -84,8 +86,8 @@ sap.ui.define(
           return;
         }
 
-        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
-        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', { pernr: sPernr });
+        const mPayload = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty();
+        this.oController.onPressEmployee2Row(mPayload);
       },
     });
   }

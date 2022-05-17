@@ -334,9 +334,9 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMHBox .sapMFlexItem:nth-child
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-used {text-shadow:1px 0 #000}
 .portlet-vacation-summary .vacation-indicator.vacation-indicator-middle .vacation-indicator-text > div.vacation-indicator-remain {color:#000}
 
-[data-profile-view="O"] .sapMImg,
-[data-profile-view="O"] .sapMLnk,
-[data-profile-view="O"] .sapMText {cursor:pointer}
+[data-navigable="O"] .sapMImg,
+[data-navigable="O"] .sapMLnk,
+[data-navigable="O"] .sapMText {cursor:pointer}
 [data-new-attachment="O"] {text-decoration:none; cursor:default; color:#000}
 [data-new-attachment="O"]:hover,
 [data-new-attachment="O"]:active,

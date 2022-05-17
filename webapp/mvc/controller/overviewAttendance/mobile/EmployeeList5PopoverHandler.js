@@ -37,14 +37,16 @@ sap.ui.define(
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
         this.setEmployeeList(
-          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
+          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, Atext, Tmdat }) => ({
             Photo: Photo || sUnknownAvatarImageURL,
             Ename,
             Pernr,
             Zzjikgbtx,
             Zzjikchtx,
             Orgtx,
-            ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+            Atext,
+            Tmdat,
+            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );
 
@@ -80,8 +82,15 @@ sap.ui.define(
           return;
         }
 
-        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
-        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', { pernr: sPernr });
+        const mRowData = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext();
+        const sPernr = mRowData.getProperty('Pernr');
+        const oTmdat = moment(mRowData.getProperty('Tmdat'));
+        const mParameter = {
+          pernr: sPernr,
+          year: oTmdat.get('year'),
+          month: oTmdat.get('month'),
+        };
+        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', mParameter);
       },
     });
   }

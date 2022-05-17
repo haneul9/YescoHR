@@ -150,7 +150,7 @@ sap.ui.define(
               Zzjikgbt: Zzjikchtx,
               Fulln: Orgtx,
               IconMode: this.sIconMode,
-              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+              Navigable: this.bHasProfileMenuAuth ? 'O' : '',
             }))
           );
         } catch (oError) {
