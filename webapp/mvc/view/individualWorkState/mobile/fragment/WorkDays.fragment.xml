@@ -4,7 +4,7 @@
   <VBox class="vCardBox small MultiBoxmobile">
     <HBox class="title">
       <Title level="H2" text="{i18n>LABEL_18012}" />
-      <Text text="{/searchDate/full}" class="desc-txt" />
+      <Text text="{/full}" class="desc-txt" />
     </HBox>
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/MonthWorkList}">
@@ -16,7 +16,7 @@
     </VBox>
     <HBox class="title mt-15-px">
       <Title level="H2" text="{i18n>LABEL_18013}" />
-      <Text text="{/searchDate/full}" class="desc-txt" />
+      <Text text="{/full}" class="desc-txt" />
     </HBox>
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/OTWorkList}">

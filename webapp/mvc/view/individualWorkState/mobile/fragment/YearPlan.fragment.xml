@@ -9,7 +9,7 @@
     </HBox>
     <HBox justifyContent="SpaceBetween" class="month-plan-head">
       <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
-      <Label text="{/searchDate/full}" class="font-16-px" />
+      <Label text="{/full}" class="font-16-px" />
       <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
     </HBox>
     <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/plans'}">
