@@ -323,7 +323,22 @@ sap.ui.define(
         }
       },
 
-      navToIndividualAttendance() {},
+      navToIndividualAttendance(oEvent) {
+        try {
+          const mRowData = oEvent.getParameter('listItem').getBindingContext().getObject();
+          const dCurrentYearMonth = moment(this.getViewModel().getProperty('/searchConditions/Tyymm'));
+
+          this.getRouter().navTo('mobile/individualWorkState', {
+            pernr: mRowData.Pernr,
+            year: dCurrentYearMonth.get('year'),
+            month: dCurrentYearMonth.get('month'),
+          });
+        } catch (oError) {
+          this.debug('Controller > mobile teamCalendar > navToIndividualAttendance Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
 
       async onClickDay(oEvent) {
         try {
