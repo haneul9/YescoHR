@@ -132,9 +132,7 @@ sap.ui.define(
           ...aPlans,
           ..._.chain(aRemains)
             .take(this.readPerSize)
-            .reduce((acc, cur) => {
-              return [...acc, ...this.convertPlanData(cur)];
-            }, [])
+            .reduce((acc, cur) => [...acc, ...this.convertPlanData(cur)], [])
             .value(),
         ]);
 
@@ -315,24 +313,22 @@ sap.ui.define(
 
         return _.chain(aPlanValues)
           .take(this.readPerSize)
-          .reduce((acc, cur) => {
-            return [...acc, ...this.convertPlanData(cur)];
-          }, [])
+          .reduce((acc, cur) => [...acc, ...this.convertPlanData(cur)], [])
           .value();
       },
 
       convertPlanData(aGridData) {
         return [
           this.getBoxObject({
+            moveToIndi: true,
             align: 'start',
+            classNames: 'Normal',
             label: _.get(aGridData, [0, 'Ename']),
+            empno: _.get(aGridData, [0, 'Pernr']),
             photo: _.chain(aGridData)
               .get([0, 'Picurl'])
               .thru((s) => (_.isEmpty(s) ? this.getUnknownAvatarImageURL() : s))
               .value(),
-            classNames: 'Normal',
-            empno: _.get(aGridData, [0, 'Pernr']),
-            moveToIndi: true,
           }), //
           this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Zzjikgbtx']), classNames: 'Normal' }),
           this.getBoxObject({ align: 'start', label: _.get(aGridData, [0, 'Orgtx']), classNames: 'Normal' }),
@@ -342,9 +338,9 @@ sap.ui.define(
             align: 'center',
             day: moment(o.Tmdat).format('YYYYMMDD'),
             holiday: _.isEqual(o.Holyn, 'X') ? 'Holiday' : 'None',
-            classNames: !_.isEmpty(o.Colty) ? o.Colty : _.includes(['6', '7'], o.Wkday) ? 'Weekend' : 'Normal',
-            borderNames: !_.isEmpty(o.Ottyp) ? o.Ottyp : 'Default',
             stripes: _.isEqual(o.Cssty, 'P') ? 'Stripes' : 'None',
+            borderNames: !_.isEmpty(o.Ottyp) ? o.Ottyp : 'Default',
+            classNames: !_.isEmpty(o.Colty) ? o.Colty : _.includes(['6', '7'], o.Wkday) ? 'Weekend' : 'Normal',
           })),
         ];
       },
