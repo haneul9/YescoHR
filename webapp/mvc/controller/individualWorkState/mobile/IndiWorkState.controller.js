@@ -112,7 +112,22 @@ sap.ui.define(
           oViewModel.setProperty('/pernr', sPernr);
           oViewModel.setProperty('/year', _.toNumber(sYear));
           oViewModel.setProperty('/month', _.toNumber(sMonth));
-          oViewModel.setProperty('/WeekWorkDate', oParameter.year ? moment().year(_.toNumber(sYear)).month(_.toNumber(sMonth)).toDate() : new Date());
+          oViewModel.setProperty(
+            '/full',
+            moment()
+              .year(sYear)
+              .month(sMonth - 1)
+              .format('YYYY.MM')
+          );
+          oViewModel.setProperty(
+            '/WeekWorkDate',
+            oParameter.year
+              ? moment()
+                  .year(_.toNumber(sYear))
+                  .month(_.toNumber(sMonth) - 1)
+                  .toDate()
+              : new Date()
+          );
 
           this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this, sPernr });
           // this.setMonth();
@@ -213,8 +228,8 @@ sap.ui.define(
           captionPadding: 0,
           chartLeftMargin: 0,
           chartRightMargin: 0,
-          chartBottomMargin: 0,
-          chartTopMargin: -10,
+          chartBottomMargin: 15,
+          chartTopMargin: 5,
           labelFontSize: 12,
         };
       },
@@ -239,7 +254,7 @@ sap.ui.define(
               type: 'doughnut2d',
               renderAt: 'chart-doughnut-container',
               width: '100%',
-              height: '150px',
+              height: '200px',
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDoughnutChartOption(),
