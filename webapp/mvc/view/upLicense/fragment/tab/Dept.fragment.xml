@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox">
     <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-    <table:Table id="deptTable" class="row-link" rows="{/deptList}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onDeptSelectRow">
+    <table:Table id="deptTable" class="row-link" rows="{/rows}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onDeptSelectRow">
     </table:Table>
   </VBox>
 </core:FragmentDefinition>

@@ -209,7 +209,7 @@
 
         { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "individualWorkStateView/:pernr:/:year:/:month:", "name": "individualWorkState-view", "target": "individualWorkStateView" },
-        { "pattern": "mobile/individualWorkState", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
+        { "pattern": "mobile/individualWorkState/:pernr:/:year:/:month:", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
 
         { "pattern": "jobCompetency", "name": "jobCompetency", "target": "jobCompetency" },
         { "pattern": "jobCompetency/:objid:/:title:", "name": "jobCompetency-view", "target": "jobCompetencyView" },

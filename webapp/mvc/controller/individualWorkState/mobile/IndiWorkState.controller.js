@@ -447,7 +447,7 @@ sap.ui.define(
         try {
           const oModel = this.getModel(ServiceNames.COMMON);
           const mFilters = {
-            Ename: this.getAppointeeProperty('Pernr'),
+            Ename: this.getViewModel().getProperty('/pernr'),
             Stat2: '3',
             Accty: 'M', // 권한 해제 : 타사 임직원도 검색 + 전화번호
           };

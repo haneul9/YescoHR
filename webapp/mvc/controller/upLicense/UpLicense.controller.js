@@ -29,73 +29,7 @@ sap.ui.define(
           busy: false,
           selectedKey: 'A',
           registList: [],
-          columnData: [
-            { colId: 'Amt', colName: 'Amount', colVisibility: true, colPosition: 0 },
-            { colId: 'Qty', colName: 'Quantity', colVisibility: true, colPosition: 1 },
-            { colId: 'Unt', colName: 'Unit', colVisibility: true, colPosition: 2 },
-            { colId: 'OPA', colName: 'OpenPOAmount', colVisibility: true, colPosition: 3 },
-            { colId: 'OPQ', colName: 'OpenPOQuantity', colVisibility: true, colPosition: 4 },
-          ],
-          deptList: [
-            {
-              Amount: '200',
-              Quantity: 'RF',
-              Unit: 'CV',
-              OpenPOAmount: '5988',
-              OpenPOQuantity: 'YY',
-              EXT_FLDS: {
-                PRINTING_NUM: {
-                  fieldvalue: 10,
-                  fieldlabel: 'Printing Number',
-                  uictrl: 'sap.m.Input',
-                },
-                COUNTRY: {
-                  fieldvalue: 'Thailand',
-                  fieldlabel: 'Country',
-                  uictrl: 'sap.m.ComboBox',
-                },
-              },
-            },
-            {
-              Amount: '80',
-              Quantity: 'UG',
-              Unit: 'RT',
-              OpenPOAmount: '878',
-              OpenPOQuantity: 'RF',
-              EXT_FLDS: {
-                PRINTING_NUM: {
-                  fieldvalue: 11,
-                  fieldlabel: 'Printing Number',
-                  uictrl: 'sap.m.Input',
-                },
-                COUNTRY: {
-                  fieldvalue: 'Thailand',
-                  fieldlabel: 'Country',
-                  uictrl: 'sap.m.ComboBox',
-                },
-              },
-            },
-            {
-              Amount: '789',
-              Quantity: 'GV',
-              Unit: 'ED',
-              OpenPOAmount: '8989',
-              OpenPOQuantity: 'FGG',
-              EXT_FLDS: {
-                PRINTING_NUM: {
-                  fieldvalue: 12,
-                  fieldlabel: 'Printing Number',
-                  uictrl: 'sap.m.Input',
-                },
-                COUNTRY: {
-                  fieldvalue: 'Thailand',
-                  fieldlabel: 'Country',
-                  uictrl: 'sap.m.ComboBox',
-                },
-              },
-            },
-          ],
-          indiList: [],
+          rows: [],
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -168,7 +102,7 @@ sap.ui.define(
               sTableTitle = this.getBundleText('LABEL_39003'); // 부서별 면허보유현황
               sName = 'OrgLicenseBoard';
               sTableName = this.sDeptTable;
-              sListName = '/deptList';
+              sListName = '/rows';
               mPayLoad = {
                 Menid: this.getCurrentMenuId(),
               };
@@ -179,7 +113,7 @@ sap.ui.define(
               sTableTitle = this.getBundleText('LABEL_39004'); // 개인별 면허보유현황
               sName = 'PersLicenseList';
               sTableName = this.sIndividualTable;
-              sListName = '/indiList';
+              sListName = '/rows';
               mPayLoad = {
                 Prcty: '3',
                 Menid: this.getCurrentMenuId(),
@@ -201,11 +135,15 @@ sap.ui.define(
           const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
           const oTable = this.byId(sTableName);
 
-          oViewModel.setProperty('/listInfo', {
-            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-            ...mInfo,
-          });
-          oViewModel.setProperty(sListName, aTableList);
+          if (sSelectKey !== 'A') {
+            this.createDynTable(oTable, sListName, aTableList);
+          } else {
+            oViewModel.setProperty('/listInfo', {
+              ...this.TableUtils.count({ oTable, aRowData: aTableList }),
+              ...mInfo,
+            });
+            oViewModel.setProperty(sListName, aTableList);
+          }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -214,7 +152,28 @@ sap.ui.define(
       },
 
       // dynamic Table
-      createDynTable() {},
+      createDynTable(oTable, sListName, aTableList = []) {
+        const columnData = _.times(_.size(aTableList), (i) => {
+          return { colId: aTableList[i].Certty + aTableList[i].Certdt, colName: aTableList[i].Certtytx, colVisibility: true, colPosition: i };
+        });
+        const oModel = new sap.ui.model.json.JSONModel();
+
+        oModel.setData({
+          rows: aTableList,
+          columns: columnData,
+        });
+
+        oTable.setModel(oModel);
+        oTable.bindColumns('/columns', (sId, oContext) => {
+          const sColumnName = oContext.getObject().colName;
+
+          return new sap.ui.table.Column({
+            label: sColumnName,
+            template: sColumnName,
+          });
+        });
+        oTable.bindRows(sListName);
+      },
     });
   }
 );
