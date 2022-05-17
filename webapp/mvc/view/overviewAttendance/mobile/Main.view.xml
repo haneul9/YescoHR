@@ -4,7 +4,10 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
+    <headerContent>
+      <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchConditions/close}" />
+    </headerContent>
     <VBox class="contents">
       <HBox alignItems="End" class="search-area row-3">
         <VBox width="67%">
@@ -19,11 +22,12 @@
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
         </VBox>
-        <VBox width="33%" justifyContent="End" class="pl-8-px">
+        <VBox width="33%" height="100%" justifyContent="SpaceBetween" class="pl-8-px">
           <layoutData>
             <FlexItemData growFactor="1" maxWidth="33%" />
           </layoutData>
-          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin" />
+          <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded" />
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
         </VBox>
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">

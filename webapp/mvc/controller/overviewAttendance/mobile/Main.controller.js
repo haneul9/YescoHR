@@ -35,6 +35,7 @@ sap.ui.define(
             Datum: moment().hours(9).toDate(),
             Werks: '',
             Orgeh: '',
+            close: false,
           },
           entry: {
             Werks: [],
@@ -404,6 +405,17 @@ sap.ui.define(
 
       onPressEmployee3Row(mPayload) {
         this.openDialog({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']), Headty: 'X1' });
+      },
+
+      onPressSearchAreaToggle() {
+        const bExpanded = $('.row-3').length === 1;
+        $('.search-area').toggleClass('row-3', !bExpanded).toggleClass('row-0', bExpanded);
+        this.getViewModel().setProperty('/searchConditions/close', bExpanded);
+      },
+
+      onChangeFontSize(oEvent) {
+        const sFontSize = oEvent.getSource().getSelectedKey();
+        document.querySelector(':root').style.setProperty('--StatisticNumberFontSize', sFontSize);
       },
 
       /*****************************************************************

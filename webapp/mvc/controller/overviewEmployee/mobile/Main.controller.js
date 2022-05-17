@@ -32,6 +32,7 @@ sap.ui.define(
             Zyear: moment().format('YYYY'),
             Werks: '',
             Orgeh: '',
+            close: false,
           },
           entry: {
             Werks: [],
@@ -320,14 +321,10 @@ sap.ui.define(
         this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },
 
-      onPressSearchAreaToggle(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const oSearchArea = oEventSource.getParent().getParent();
-        const bExpanded = oSearchArea.hasStyleClass('row-4');
-
-        oEventSource.toggleStyleClass('expanded', !bExpanded);
-        oSearchArea.toggleStyleClass('row-4', !bExpanded);
-        oSearchArea.toggleStyleClass('row-2', bExpanded);
+      onPressSearchAreaToggle() {
+        const bExpanded = $('.row-4').length === 1;
+        $('.search-area').toggleClass('row-4', !bExpanded).toggleClass('row-0', bExpanded);
+        this.getViewModel().setProperty('/searchConditions/close', bExpanded);
       },
 
       onChangeFontSize(oEvent) {
