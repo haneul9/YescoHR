@@ -714,6 +714,8 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableCell .sapMLabel {color:#222}
 .sapUiSizeCompact .sapUiTableCell .sapMLabel, .sapUiSizeCondensed .sapUiTableCell .sapMLabel {font-weight:500; font-size:14px}
 .sapUiTableDataCell {border-right:0.0625rem solid #f5f5f5; border-bottom:0.0625rem solid #f5f5f5}
+.sapUiTableCell .sapMObjStatus.table-object-status { text-align: center; font-weight: 500; }
+.sapUiTableCell .sapMObjStatus.table-object-status.align-start { text-align: start; }
 
 .sapUiTableColHdrCnt {background-color:#fbfcfd; border-bottom:1px solid #fbfcfd; border-left:1px solid #e7eaed; border-right:1px solid #e7eaed}
 .sapUiTableVSb {max-height:none !important; background:#f6f6f6; border-bottom:1px solid #e5e5e5; border-top:1px solid #e7eaed; border-right:1px solid #e7eaed; margin-top:-1px}
@@ -747,7 +749,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiIconf::before {display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:center center}/* 아이콘 공통 before */
 .sapIcon_Search .sapUiIcon::before {content:'검색'; font-size:0; background-size:auto 60%; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png');  display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
 .sapIcon_Date .sapUiIcon::before {content:'달력'; font-size:0; background-size:auto; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_date.png'); display:inline-block; width:100%; height:100%; clear:both; vertical-align:top; background-repeat:no-repeat; background-position:4px center}
-.sapIcon_Time .sapUiIcon::before {content:'시간'; font-size:0; background-size:auto; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_time.png')}
+/* .sapIcon_Time .sapUiIcon::before {content:'시간'; font-size:0; background-size:auto; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_time.png')} */
 .sapIcon_Datetime .sapUiIcon::before {content:'달력, 시간'; font-size:0; background-size:auto; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_datetime.png')}
 .sapIcon_Select_Arrow .sapMInputBaseIconContainer .sapUiIcon::before {content:'화살표'; font-size:0; background-size:auto; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_arrow.png')}
 
@@ -802,7 +804,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMObjStatusIndication03 .sapMObjStatusText, .sapMObjStatusIndication03 .sapMObjStatusIcon {color:#27c840 !important}
 .sapMObjStatusIndication04 .sapMObjStatusText, .sapMObjStatusIndication04 .sapMObjStatusIcon {color:#fd5f58 !important}
 .sapMObjStatusIndication05 .sapMObjStatusText, .sapMObjStatusIndication05 .sapMObjStatusIcon {color:#007bff !important}
+.sapMObjStatusIndication06 .sapMObjStatusText, .sapMObjStatusIndication06 .sapMObjStatusIcon {color:#222 !important}
 .sapMObjStatusError .sapMObjStatusText, .sapMObjStatusError .sapMObjStatusIcon {color:#fe5f58 !important}
+.sapMObjStatusNone .sapMObjStatusText, .sapMObjStatusNone .sapMObjStatusIcon {color:#222 !important}
 
 .sapMText[data-status="Z10"],
 .sapMText[data-status="Z15"],
