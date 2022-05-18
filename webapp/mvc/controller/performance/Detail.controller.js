@@ -69,6 +69,7 @@ sap.ui.define(
           appointee: {},
           jobDiagnosis: {
             // 진단평가 팝업
+            fullList: [],
             myJob: {},
             fixed: true,
             list: [{ codeList: [] }],
@@ -303,6 +304,16 @@ sap.ui.define(
           // 필드속성
           oViewModel.setProperty('/fieldControl/display', mConvertScreen);
           oViewModel.setProperty('/fieldControl/limit', _.assignIn(this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDoc'), this.getEntityLimit(ServiceNames.APPRAISAL, 'AppraisalDocDetail')));
+
+          // 직무진단
+          const aDeep = await this.getJobDiagnosis();
+
+          oViewModel.setProperty(
+            '/jobDiagnosis/fixed',
+            _.some(aDeep.JobDiagnosisItemSet.results, (e) => {
+              return e.Zdeactive !== 'X';
+            })
+          );
         } catch (oError) {
           this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
@@ -644,7 +655,6 @@ sap.ui.define(
           const aDeepList = aDeep.JobDiagnosisItemSet.results;
 
           oViewModel.setProperty('/jobDiagnosis/myJob', _.pick(aDeep, ['Orgeh', 'Stell']));
-
           oViewModel.setProperty(
             '/jobDiagnosis/fixed',
             _.some(aDeepList, (e) => {
@@ -1138,7 +1148,7 @@ sap.ui.define(
         MessageBox.confirm(this.getBundleText('MSG_00006', mProcessType.label), {
           // {전송}하시겠습니까?
           onClose: (sAction) => {
-            if (MessageBox.Action.CANCEL === sAction) return;
+            if (MessageBox.Action.CANCEL === sAction || !sAction) return;
 
             this.createProcess(mProcessType);
           },
