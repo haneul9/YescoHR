@@ -71,6 +71,8 @@ sap.ui.define(
             this.oDialog.open();
           });
 
+          this.mPayload = mPayload;
+
           const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail1', mPayload);
 
           this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
@@ -105,9 +107,11 @@ sap.ui.define(
         }
 
         const sHost = window.location.href.split('#')[0];
-        const sPernr = oEvent.getSource().getParent().getBindingContext().getProperty('Pernr');
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
+        // const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
+        const oDatum = moment(this.mPayload.Datum);
 
-        window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1400,height=800');
       },
 
       onPressDetailExcelDownload(oEvent) {

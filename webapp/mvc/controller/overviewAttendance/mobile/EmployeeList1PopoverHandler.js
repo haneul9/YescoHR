@@ -82,8 +82,15 @@ sap.ui.define(
           return;
         }
 
-        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
-        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', { pernr: sPernr });
+        const mRowData = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty();
+        const oTmdat = moment(mRowData.Tmdat);
+        const mParameter = {
+          pernr: mRowData.Pernr,
+          year: oTmdat.get('year'),
+          month: oTmdat.get('month'),
+        };
+
+        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', mParameter);
       },
     });
   }

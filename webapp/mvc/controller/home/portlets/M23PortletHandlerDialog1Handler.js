@@ -8,7 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/mvc/controller/home/portlets/M24PortletHandlerDialog2Handler',
+    'sap/ui/yesco/mvc/controller/home/portlets/M23PortletHandlerDialog2Handler',
   ],
   (
     // prettier 방지용 주석
@@ -19,11 +19,11 @@ sap.ui.define(
     Debuggable,
     Client,
     ServiceNames,
-    M24PortletHandlerDialog2Handler
+    M23PortletHandlerDialog2Handler
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletHandlerDialog1Handler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M23PortletHandlerDialog1Handler', {
       constructor: function (oController) {
         this.oController = oController;
         this.oDialogModel = new JSONModel(this.getInitialData());
@@ -50,7 +50,7 @@ sap.ui.define(
 
         this.oDialog = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
+          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail3',
           controller: this,
         });
 
@@ -58,7 +58,7 @@ sap.ui.define(
 
         oView.addDependent(this.oDialog);
 
-        this.oEmployeeListPopupHandler = new M24PortletHandlerDialog2Handler(this.oController);
+        this.oEmployeeListPopupHandler = new M23PortletHandlerDialog2Handler(this.oController);
       },
 
       async setPropertiesForNavTo() {
@@ -75,9 +75,7 @@ sap.ui.define(
             this.oDialog.open();
           });
 
-          this.mPayload = mPayload;
-
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail2', mPayload);
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail3', mPayload);
 
           this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
           this.oDialogModel.setProperty('/dialog/totalCount', _.size(aEmployees));
@@ -90,10 +88,10 @@ sap.ui.define(
             }))
           );
         } catch (oError) {
-          this.debug('M24PortletHandlerDialog1Handler > openDialog Error', oError);
+          this.debug('M23PortletHandlerDialog1Handler > openDialog Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onPressDetail2DialogClose(),
+            onClose: () => this.onPressDetail3DialogClose(),
           });
         } finally {
           setTimeout(() => this.oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
@@ -101,20 +99,18 @@ sap.ui.define(
         }
       },
 
-      onPressDetail2DialogClose() {
+      onPressDetail3DialogClose() {
         this.oDialog.close();
       },
 
-      onPressEmployee2Row(oEvent) {
+      onPressEmployee3Row(oEvent) {
         if (!this.bHasProfileMenuAuth) {
           return;
         }
 
-        const sAwart = _.includes(['3', '4'], this.mPayload.Discod) ? '2010' : '2000';
         const mRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
-        const mPayload = { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart };
 
-        this.oEmployeeListPopupHandler.openDialog(mPayload);
+        this.oEmployeeListPopupHandler.openDialog({ ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']) });
       },
 
       onPressDetailExcelDownload(oEvent) {
