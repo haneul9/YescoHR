@@ -7,7 +7,7 @@
                 <table:Column width="10%">
                     <Label text="{i18n>LABEL_00170}"/>
                     <table:template>
-                        <ObjectStatus text="{ path: 'Todo1', type: 'sap.ui.yesco.mvc.model.type.Date' }" state="{= ${Holiday} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+                        <ObjectStatus text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" state="{= ${Holiday} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
                     </table:template>
                 </table:Column>
                 <table:Column width="4%">
@@ -25,13 +25,13 @@
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40004}"/>
                     <table:template>
-                        <TimePicker value="{Todo4}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                        <TimePicker value="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40005}"/>
                     <table:template>
-                        <TimePicker value="{Todo5}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                        <TimePicker value="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">

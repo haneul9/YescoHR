@@ -7,61 +7,61 @@
                 <table:Column width="12%">
                     <Label text="{i18n>LABEL_40009}"/>
                     <table:template>
-                        <DatePicker value="{Todo1}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <DatePicker value="{Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40010}"/>
                     <table:template>
-                        <Text text="{Todo2}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{Caldays}" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40011}"/>
                     <table:template>
-                        <Text text="{Todo3}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{Wrkdays}" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40012}"/>
                     <table:template>
-                        <Text text="{Todo4}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{ path: 'Bastim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40013}"/>
                     <table:template>
-                        <Text text="{Todo5}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{ path: 'Ctrtim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40014}"/>
                     <table:template>
-                        <Text text="{Todo6}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{ path: 'Daytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40015}"/>
                     <table:template>
-                        <Text text="{Todo7}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{ path: 'Gaptim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40016}"/>
                     <table:template>
-                        <Text text="{Todo8}" width="100%" textAlign="Center" wrapping="false" />
+                        <Text text="{ path: 'Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_00144}"/>
                     <table:template>
-                        <ObjectStatus text="{Todo9}" state="{= ${Todo9Status} === 'X' ? 'Error' : 'None' }" class="table-object-status" />
+                        <ObjectStatus text="{Statxt}" state="{= ${Stacol} === '2' ? 'Error' : 'Indication05' }" class="table-object-status" />
                     </table:template>
                 </table:Column>
                 <table:Column width="12%">
                     <Label text="{i18n>LABEL_40017}"/>
                     <table:template>
-                        <Text text="{ path: 'Todo10', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{ path: 'Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
             </table:columns>

@@ -806,7 +806,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapMObjStatusIndication05 .sapMObjStatusText, .sapMObjStatusIndication05 .sapMObjStatusIcon {color:#007bff !important}
 .sapMObjStatusIndication06 .sapMObjStatusText, .sapMObjStatusIndication06 .sapMObjStatusIcon {color:#222 !important}
 .sapMObjStatusError .sapMObjStatusText, .sapMObjStatusError .sapMObjStatusIcon {color:#fe5f58 !important}
-.sapMObjStatusNone .sapMObjStatusText, .sapMObjStatusNone .sapMObjStatusIcon {color:#222 !important}
+.sapMObjStatusNone .sapMObjStatusText, .sapMObjStatusNone .sapMObjStatusIcon {color:#222}
 
 .sapMText[data-status="Z10"],
 .sapMText[data-status="Z15"],
