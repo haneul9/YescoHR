@@ -62,6 +62,7 @@ sap.ui.define(
           busy: false,
           param: {},
           type: '',
+          hass: this.isHass(),
           year: moment().format('YYYY'),
           tab: { selectedKey: Constants.TAB.COMP },
           listInfo: {},
@@ -311,6 +312,26 @@ sap.ui.define(
 
       changeTab(sTabKey) {
         this.getViewModel().setProperty('/tab/selectedKey', sTabKey);
+      },
+
+      // 증빙
+      onPressPrint(oEvent) {
+        if (!this.pJobDialog) {
+          const oView = this.getView();
+
+          this.pJobDialog = Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.idp.fragment.JobPrint',
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+
+        this.pJobDialog.then(function (oDialog) {
+          oDialog.open();
+        });
       },
 
       validation() {

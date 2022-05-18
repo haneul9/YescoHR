@@ -9,6 +9,7 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox class="button-group">
+          <Button text="{i18n>LABEL_00133}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/hass}" press=".onPressPrint" />
           <Button text="{i18n>LABEL_00142}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
           <Button text="{i18n>LABEL_00175}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' }" press=".onPressSubmitButton" />
           <Button text="{i18n>LABEL_00117}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/COMPLETE/Availability} === 'X' }" press=".onPressCompleteButton" />
