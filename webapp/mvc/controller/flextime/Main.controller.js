@@ -43,15 +43,15 @@ sap.ui.define(
           details: {
             rowCount: 9,
             list: [
-              { Offyn: 'X', Datum: moment('20220301').toDate(), Daytx: '화', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' }, //
-              { Offyn: '', Datum: moment('20220302').toDate(), Daytx: '수', Atext: '', Beguz: '0900', Enduz: '1800', Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220303').toDate(), Daytx: '목', Atext: '연차', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: '', Datum: moment('20220304').toDate(), Daytx: '금', Atext: '', Beguz: '1000', Enduz: '1500', Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220305').toDate(), Daytx: '토', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220306').toDate(), Daytx: '일', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: '', Datum: moment('20220307').toDate(), Daytx: '월', Atext: '', Beguz: '0900', Enduz: '2130', Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
-              { Offyn: '', Datum: moment('20220308').toDate(), Daytx: '화', Atext: '반차(오전)', Beguz: '1400', Enduz: '1800', Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' },
-              { Offyn: '', Datum: moment('20220309').toDate(), Daytx: '수', Atext: '반차(오후)', Beguz: '0900', Enduz: '1300', Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220301').toDate(), Daytx: '화', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' }, //
+              { Offyn: '', Datum: moment('20220302').toDate(), Daytx: '수', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220303').toDate(), Daytx: '목', Atext: '연차', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220304').toDate(), Daytx: '금', Atext: '', Beguz: moment('1000', 'hhmm').toDate(), Enduz: moment('1500', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220305').toDate(), Daytx: '토', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220306').toDate(), Daytx: '일', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220307').toDate(), Daytx: '월', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('2130', 'hhmm').toDate(), Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
+              { Offyn: '', Datum: moment('20220308').toDate(), Daytx: '화', Atext: '반차(오전)', Beguz: moment('1400', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' },
+              { Offyn: '', Datum: moment('20220309').toDate(), Daytx: '수', Atext: '반차(오후)', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' },
             ],
             breakTime: [],
           },

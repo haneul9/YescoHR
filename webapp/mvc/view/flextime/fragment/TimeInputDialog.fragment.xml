@@ -16,13 +16,13 @@
                         <Column width="50%">
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
-                                <m:TimePicker value="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
+                                <m:TimePicker dateValue="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
                             </template>
                         </Column>
                         <Column width="auto">
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
-                                <m:TimePicker value="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
+                                <m:TimePicker dateValue="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
                             </template>
                         </Column>
                     </columns>
@@ -39,13 +39,13 @@
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
-                                <m:TimePicker value="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                <m:TimePicker dateValue="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                             </template>
                         </Column>
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
-                                <m:TimePicker value="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                <m:TimePicker dateValue="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                             </template>
                         </Column>
                         <Column width="15%">
@@ -75,7 +75,7 @@
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
                                 <m:HBox justifyContent="Center">
-                                    <m:TimePicker value="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                    <m:TimePicker dateValue="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                                     <m:Text text="{Beguz}" visible="{Sumrow}" width="100%" textAlign="Center" />
                                 </m:HBox>
                             </template>
@@ -84,7 +84,7 @@
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
                                 <m:HBox justifyContent="Center">
-                                    <m:TimePicker value="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                    <m:TimePicker dateValue="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                                     <m:Text text="{Enduz}" visible="{Sumrow}" width="100%" textAlign="Center" />
                                 </m:HBox>
                             </template>
