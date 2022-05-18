@@ -25,6 +25,8 @@ sap.ui.define(
 
       initializeModel() {
         return {
+          initBeguz: moment('0900', 'hhmm').toDate(),
+          initEnduz: moment('1800', 'hhmm').toDate(),
           busy: {
             Button: false,
             Dialog: false,
@@ -35,23 +37,23 @@ sap.ui.define(
           summary: {
             rowCount: 1,
             list: [
-              { Zyymm: moment().format('YYYYMM'), Caldays: '31', Wrkdays: '22', Bastim: '177', Ctrtim: '196', Daytim: '194', Gaptim: '-2', Wekavg: '48.50', Statxt: '계약근로시간 미달', Stacol: '1', Clsda: moment('20220405').toDate() }, //
+              { Zyymm: moment().format('YYYYMM'), Caldays: '31', Wrkdays: '22', Bastim: '177', Ctrtim: '196', Daytim: '194', Gaptim: '-2', Wekavg: '48.50', Statxt: '계약근로시간 미달', Stacol: '2', Clsda: moment('20220405').toDate() }, //
             ],
           },
           details: {
             rowCount: 9,
             list: [
-              { Holiday: 'X', Datum: moment('20220301').toDate(), Todo2: '화', Todo3: '', Beguz: 'PT09H00M00S', Enduz: '1800', Todo6: '1.00', Todo7: '0.00', Reltim: '', Todo9: '8.00', Todo10: '8.00', Todo11: '1.00', Todo12: '', Warng: 'N' }, //
-              { Holiday: '', Datum: moment('20220302').toDate(), Todo2: '수', Todo3: '', Beguz: '0900', Enduz: '1800', Todo6: '1.00', Todo7: '0.00', Reltim: '8.00', Todo9: '', Todo10: '16.00', Todo11: '1.00', Todo12: '', Warng: 'N' },
-              { Holiday: '', Datum: moment('20220303').toDate(), Todo2: '목', Todo3: '연차', Beguz: '', Enduz: '', Todo6: '', Todo7: '', Reltim: '', Todo9: '8.00', Todo10: '24.00', Todo11: '', Todo12: '', Warng: 'N' },
-              { Holiday: '', Datum: moment('20220304').toDate(), Todo2: '금', Todo3: '', Beguz: '1000', Enduz: '1500', Todo6: '1.00', Todo7: '0.00', Reltim: '4.50', Todo9: '', Todo10: '28.50', Todo11: '0.50', Todo12: '', Warng: 'N' },
-              { Holiday: 'X', Datum: moment('20220305').toDate(), Todo2: '토', Todo3: '', Beguz: '', Enduz: '', Todo6: '', Todo7: '', Reltim: '', Todo9: '', Todo10: '28.50', Todo11: '', Todo12: '', Warng: 'N' },
-              { Holiday: 'X', Datum: moment('20220306').toDate(), Todo2: '일', Todo3: '', Beguz: '', Enduz: '', Todo6: '', Todo7: '', Reltim: '', Todo9: '', Todo10: '28.50', Todo11: '', Todo12: '', Warng: 'N' },
-              { Holiday: '', Datum: moment('20220307').toDate(), Todo2: '월', Todo3: '', Beguz: '0900', Enduz: '2130', Todo6: '0.50', Todo7: '0.00', Reltim: '12.00', Todo9: '', Todo10: '40.00', Todo11: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
-              { Holiday: '', Datum: moment('20220308').toDate(), Todo2: '화', Todo3: '반차(오전)', Beguz: '1400', Enduz: '1800', Todo6: '0.00', Todo7: '0.00', Reltim: '4.00', Todo9: '4.00', Todo10: '48.00', Todo11: '0.00', Todo12: '시작시간 13시부터 가능', Warng: 'N' },
-              { Holiday: '', Datum: moment('20220309').toDate(), Todo2: '수', Todo3: '반차(오후)', Beguz: '0900', Enduz: '1300', Todo6: '0.00', Todo7: '0.00', Reltim: '4.00', Todo9: '4.00', Todo10: '52.00', Todo11: '0.00', Todo12: '종료시간 14시까지 가능', Warng: 'N' },
+              { Offyn: 'X', Datum: moment('20220301').toDate(), Daytx: '화', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' }, //
+              { Offyn: '', Datum: moment('20220302').toDate(), Daytx: '수', Atext: '', Beguz: '0900', Enduz: '1800', Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220303').toDate(), Daytx: '목', Atext: '연차', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220304').toDate(), Daytx: '금', Atext: '', Beguz: '1000', Enduz: '1500', Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220305').toDate(), Daytx: '토', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220306').toDate(), Daytx: '일', Atext: '', Beguz: '', Enduz: '', Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220307').toDate(), Daytx: '월', Atext: '', Beguz: '0900', Enduz: '2130', Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
+              { Offyn: '', Datum: moment('20220308').toDate(), Daytx: '화', Atext: '반차(오전)', Beguz: '1400', Enduz: '1800', Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' },
+              { Offyn: '', Datum: moment('20220309').toDate(), Daytx: '수', Atext: '반차(오후)', Beguz: '0900', Enduz: '1300', Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' },
             ],
-            breakTime: {},
+            breakTime: [],
           },
           dialog: {
             targetDates: [],
@@ -89,10 +91,10 @@ sap.ui.define(
 
           this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
 
-          await Promise.all([
-            this.readFlextimeSummary(), //
-            this.readFlextimeDetails(),
-          ]);
+          // await Promise.all([
+          //   this.readFlextimeSummary(), //
+          //   this.readFlextimeDetails(),
+          // ]);
 
           this.setTableColor();
           this.setDetailsTableRowColor();
@@ -359,6 +361,31 @@ sap.ui.define(
       },
 
       onPressDialogConfirm() {},
+
+      async createProcess(dDatum) {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
+          const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
+          const aBreakTimes = _.cloneDeep(oViewModel.getProperty('/details/breakTime'));
+
+          if (!_.isEmpty(value)) {
+            aDetails = _.filter(aDetails, { Datum: dDatum });
+            aBreakTimes = _.filter(aBreakTimes, { Datum: dDatum });
+          }
+
+          return await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
+            ...mSummary,
+            Accty: this.sAccty,
+            Pernr: this.getAppointeeProperty('Pernr'),
+            AssoFlexTimeDetailSet: aDetails,
+            AssoFlexTimeBreakSet: aBreakTimes,
+          });
+        } catch (oError) {
+          throw oError;
+        }
+      },
     });
   }
 );
