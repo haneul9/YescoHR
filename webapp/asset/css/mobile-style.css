@@ -285,10 +285,11 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .employee-list.narrow-name .employee-name {width:66px}
 .employee-list.narrow-name .employee-position {width:96px}
 .employee-list.narrow-name .employee-department {flex-grow:1; width:calc(100% - 216px); max-width:calc(100% - 190px)}
-.employee-list.narrow-name.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {width:calc(100% - 220px); max-width:calc(100% - 190px)}
+.employee-list.narrow-name.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {width:calc(100% - 210px); max-width:calc(100% - 180px)}
 .employee-list.narrow-position .employee-name {width:76px}
 .employee-list.narrow-position .employee-position {width:76px}
 .employee-list.narrow-position .employee-department {flex-grow:1; width:calc(100% - 206px); max-width:calc(100% - 180px)}
+.employee-list.narrow-position.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {width:calc(100% - 200px); max-width:calc(100% - 170px)}
 
 .sapMITBSelected>.sapMITBContentArrow {border-bottom:2px solid; border-bottom-color:#1e7db3; height:15px !important}
 
