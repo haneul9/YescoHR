@@ -31,7 +31,7 @@
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40005}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                        <TimePicker dateValue="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
