@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core">
-    <m:Dialog title="{i18n>LABEL_40024}" contentWidth="1200px" contentHeight="570px" draggable="true">
+    <m:Dialog title="{i18n>LABEL_40024}" contentWidth="800px" draggable="true">
         <m:content>
             <m:VBox class="dialog-content-table" busyIndicatorDelay="0" busy="{/busy/Dialog}">
-                <Table width="40%" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/work/list}" visibleRowCount="{/dialog/work/rowCount}" noData="{i18n>MSG_00001}">
+                <Table width="40%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/work/list}" visibleRowCount="{/dialog/work/rowCount}" noData="{i18n>MSG_00001}" visible="{= ${/dialog/targetDates}.length > 1 }">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
@@ -16,18 +16,18 @@
                         <Column width="50%">
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
-                                <m:TimePicker value="{Beguz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:TimePicker value="{Beguz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
                             </template>
                         </Column>
                         <Column width="auto">
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
-                                <m:TimePicker value="{Enduz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:TimePicker value="{Enduz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" />
                             </template>
                         </Column>
                     </columns>
                 </Table>
-                <Table width="100%" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/legal/list}" visibleRowCount="{/dialog/legal/rowCount}" noData="{i18n>MSG_00001}">
+                <Table width="100%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/legal/list}" visibleRowCount="{/dialog/legal/rowCount}" noData="{i18n>MSG_00001}">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
@@ -39,30 +39,30 @@
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
-                                <m:TimePicker value="{Beguz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:TimePicker value="{Beguz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                             </template>
                         </Column>
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
-                                <m:TimePicker value="{Enduz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:TimePicker value="{Enduz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
                             </template>
                         </Column>
                         <Column width="15%">
                             <m:Label text="{i18n>LABEL_00330}"/>
                             <template>
-                                <m:Text text="{Todo1}" width="100%" textAlign="Center" />
+                                <m:Text text="{ path: 'Anzb', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
                             </template>
                         </Column>
                         <Column width="auto">
                             <m:Label text="{i18n>LABEL_40006}"/>
                             <template>
-                                <m:Text text="{Todo2}" width="100%" textAlign="Center" />
+                                <m:Text text="{ path: 'Brk01m', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
                             </template>
                         </Column>
                     </columns>
                 </Table>
-                <Table width="100%" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/extra/list}" visibleRowCount="{/dialog/extra/rowCount}" noData="{i18n>MSG_00001}">
+                <Table id="flextimeExtraTable" width="100%" class="sapUiSmallMarginTop" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/extra/list}" visibleRowCount="{/dialog/extra/rowCount}" noData="{i18n>MSG_00001}">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
@@ -74,25 +74,38 @@
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40004}"/>
                             <template>
-                                <m:TimePicker value="{Beguz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:HBox justifyContent="Center">
+                                    <m:TimePicker value="{Beguz}" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                    <m:Text text="{Beguz}" visible="{Sumrow}" width="100%" textAlign="Center" />
+                                </m:HBox>
                             </template>
                         </Column>
                         <Column width="20%">
                             <m:Label text="{i18n>LABEL_40005}"/>
                             <template>
-                                <m:TimePicker value="{Enduz}" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                                <m:HBox justifyContent="Center">
+                                    <m:TimePicker value="{Enduz}" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
+                                    <m:Text text="{Enduz}" visible="{Sumrow}" width="100%" textAlign="Center" />
+                                </m:HBox>
                             </template>
                         </Column>
                         <Column width="15%">
                             <m:Label text="{i18n>LABEL_00330}"/>
                             <template>
-                                <m:Text text="{Todo1}" width="100%" textAlign="Center" />
+                                <m:Text text="{ path: 'Anzb', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
                             </template>
                         </Column>
                         <Column width="auto">
-                            <m:Label text="{i18n>LABEL_40006}"/>
+                            <m:Label text="{i18n>LABEL_00154}"/>
                             <template>
-                                <m:Input value="{Todo2}" busyIndicatorDelay="0" busy="{/busy/Input}" class="small-table-input" />
+                                <m:HBox>
+                                    <m:Input value="{Resn}" enabled="{= !!${Beguz} &amp;&amp; !!${Enduz} }" visible="{= !${Sumrow} }" busyIndicatorDelay="0" busy="{/busy/Input}" class="required small-table-input">
+                                        <m:layoutData>
+                                            <m:FlexItemData growFactor="1" />
+                                        </m:layoutData>
+                                    </m:Input>
+                                    <m:Text text="" visible="{Sumrow}" width="100%" textAlign="Center" />
+                                </m:HBox>
                             </template>
                         </Column>
                     </columns>
