@@ -8,6 +8,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/controller/home/portlets/M24PortletHandlerDialog2Handler',
   ],
   (
     // prettier 방지용 주석
@@ -17,11 +18,12 @@ sap.ui.define(
     TableUtils,
     Debuggable,
     Client,
-    ServiceNames
+    ServiceNames,
+    M24PortletHandlerDialog2Handler
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletEmployeeListDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletHandlerDialog1Handler', {
       constructor: function (oController) {
         this.oController = oController;
         this.oDialogModel = new JSONModel(this.getInitialData());
@@ -55,6 +57,8 @@ sap.ui.define(
         this.oDialog.setModel(this.oDialogModel);
 
         oView.addDependent(this.oDialog);
+
+        this.oEmployeeListPopupHandler = new M24PortletHandlerDialog2Handler(this.oController);
       },
 
       async setPropertiesForNavTo() {
@@ -70,6 +74,8 @@ sap.ui.define(
             this.setBusy();
             this.oDialog.open();
           });
+
+          this.mPayload = mPayload;
 
           const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail2', mPayload);
 
@@ -104,10 +110,11 @@ sap.ui.define(
           return;
         }
 
-        const sHost = window.location.href.split('#')[0];
-        const sPernr = oEvent.getSource().getParent().getBindingContext().getProperty('Pernr');
+        const sAwart = _.includes(['3', '4'], this.mPayload.Discod) ? '2010' : '2000';
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
+        const mPayload = { ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Awart: sAwart };
 
-        window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
+        this.oEmployeeListPopupHandler.openDialog(mPayload);
       },
 
       onPressDetailExcelDownload(oEvent) {

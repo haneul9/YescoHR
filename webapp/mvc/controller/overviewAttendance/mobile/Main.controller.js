@@ -93,6 +93,8 @@ sap.ui.define(
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
+            $('#fusioncharts-tooltip-element').css('z-index', 7);
+
             const aProps = ['Headty', 'Discod'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
@@ -420,6 +422,16 @@ sap.ui.define(
       onChangeFontSize(oEvent) {
         const sFontSize = oEvent.getSource().getSelectedKey();
         document.querySelector(':root').style.setProperty('--StatisticNumberFontSize', sFontSize);
+      },
+
+      reduceViewResource() {
+        this.oEmployeeList1PopoverHandler.destroy();
+        this.oEmployeeList2PopoverHandler.destroy();
+        this.oEmployeeList3PopoverHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
+        return this;
       },
 
       /*****************************************************************

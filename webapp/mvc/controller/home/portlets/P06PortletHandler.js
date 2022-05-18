@@ -6,7 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/controller/home/portlets/P06PortletEmployeeListDialogHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/P06PortletHandlerDialogHandler',
     'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList1PopoverHandler',
   ],
   (
@@ -16,7 +16,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     AbstractPortletHandler,
-    P06PortletEmployeeListDialogHandler,
+    P06PortletHandlerDialogHandler,
     EmployeeList1PopoverHandler
   ) => {
     'use strict';
@@ -53,7 +53,7 @@ sap.ui.define(
 
         this.buildChart();
 
-        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletEmployeeListDialogHandler(oController));
+        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletHandlerDialogHandler(oController));
       },
 
       buildChart() {
