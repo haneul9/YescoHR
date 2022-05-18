@@ -42,11 +42,14 @@ sap.ui.define(
         this.setPortletBox(oPortletBox);
 
         // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-        if (!FusionCharts(this.sChartId)) {
-          this.buildChart();
+        const oChart = FusionCharts(this.sChartId);
+        if (oChart) {
+          oChart.dispose();
         }
 
-        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeList3PopoverHandler(oController) : new M23PortletEmployeeListDialogHandler(oController);
+        this.buildChart();
+
+        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList3PopoverHandler(oController) : new M23PortletEmployeeListDialogHandler(oController));
       },
 
       buildChart() {
@@ -202,6 +205,8 @@ sap.ui.define(
         if (this.oEmployeeListPopupHandler) {
           this.oEmployeeListPopupHandler.destroy();
         }
+
+        FusionCharts(this.sChartId).dispose();
 
         AbstractPortletHandler.prototype.destroy.call(this);
       },

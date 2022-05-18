@@ -42,9 +42,12 @@ sap.ui.define(
           await AbstractPortletHandler.prototype.addPortlet.call(this);
 
           // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-          if (!FusionCharts(this.sChartId)) {
-            this.buildChart();
+          const oChart = FusionCharts(this.sChartId);
+          if (oChart) {
+            oChart.dispose();
           }
+
+          this.buildChart();
         }
       },
 
@@ -192,6 +195,12 @@ sap.ui.define(
         const sRouteName = '1000,4000'.split(',').includes(Werks) ? 'individualWorkState' : 'workTime';
 
         this.navTo(sRouteName);
+      },
+
+      destroy() {
+        FusionCharts(this.sChartId).dispose();
+
+        AbstractPortletHandler.prototype.destroy.call(this);
       },
     });
   }

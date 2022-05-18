@@ -38,7 +38,7 @@ sap.ui.define(
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController);
+        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController));
       },
 
       async readContentData() {
