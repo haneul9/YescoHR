@@ -5,13 +5,17 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/M24PortletEmployeeListDialogHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList2PopoverHandler',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     Client,
     ServiceNames,
-    AbstractPortletHandler
+    AbstractPortletHandler,
+    M24PortletEmployeeListDialogHandler,
+    EmployeeList2PopoverHandler
   ) => {
     'use strict';
 
@@ -20,9 +24,10 @@ sap.ui.define(
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletHandler', {
       async addPortlet() {
+        const oController = this.getController();
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
-          id: this.getController().getView().getId(),
+          id: oController.getView().getId(),
           name: 'sap.ui.yesco.mvc.view.home.fragment.M24PortletBox',
           controller: this,
         });
@@ -30,31 +35,60 @@ sap.ui.define(
         const iPortletHeight = oPortletModel.getProperty('/height');
         oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
 
-        this.getController().byId(this.sContainerId).addItem(oPortletBox);
+        oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
+
+        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeList2PopoverHandler(oController) : new M24PortletEmployeeListDialogHandler(oController);
       },
 
       async readContentData() {
+        const oController = this.getController();
         const oPortletModel = this.getPortletModel();
         const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
-        const mAppointee = this.getController().getAppointeeData();
+        const mAppointeeData = oController.getAppointeeData();
 
-        const oModel = this.getController().getModel(ServiceNames.WORKTIME);
+        const oModel = oController.getModel(ServiceNames.WORKTIME);
         const mPayload = {
           Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
-          Werks: mAppointee.Werks,
-          Orgeh: mAppointee.Orgeh,
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
           Headty: 'D',
         };
 
         return Client.getEntitySet(oModel, 'TimeOverview', mPayload);
       },
 
-      transformContentData([{ Cnt01 = '0', Cnt03 = '0' }]) {
+      transformContentData([{ Cnt01 = '0', Cod01, Cnt03 = '0', Cod03 }]) {
         return {
-          Annual: { Total: 100, Used: parseFloat(Cnt01) },
-          Summer: { Total: 100, Used: parseFloat(Cnt03) },
+          Annual: { Total: 100, Used: parseFloat(Cnt01), Headty: 'D', Discod: Cod01 },
+          Summer: { Total: 100, Used: parseFloat(Cnt03), Headty: 'D', Discod: Cod03 },
         };
+      },
+
+      openDetailPopup(oEvent) {
+        const mAppointeeData = this.oController.getAppointeeData();
+        const mEventSourceData = oEvent.getSource().data();
+        const mPayload = {
+          Datum: moment().startOf('date').add(9, 'hours'),
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
+          Headty: mEventSourceData.Headty,
+          Discod: mEventSourceData.Discod,
+        };
+
+        if (this.bMobile) {
+          this.oEmployeeListPopupHandler.openPopover(mPayload);
+        } else {
+          this.oEmployeeListPopupHandler.openDialog(mPayload);
+        }
+      },
+
+      destroy() {
+        if (this.oEmployeeListPopupHandler) {
+          this.oEmployeeListPopupHandler.destroy();
+        }
+
+        AbstractPortletHandler.prototype.destroy.call(this);
       },
     });
   }

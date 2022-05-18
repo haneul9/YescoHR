@@ -11,8 +11,8 @@
           <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
             <CustomListItem>
               <VBox>
-                <Text text="{i18n>LABEL_28054} : { path: 'Nomtot', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
-                <Text text="{i18n>LABEL_28062} : { path: 'Holtot', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
+                <Text text="{i18n>LABEL_28054} : { path: 'Nomtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+                <Text text="{i18n>LABEL_28062} : { path: 'Holtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
               </VBox>
               <!-- 돋보기 아이콘 -->
               <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">

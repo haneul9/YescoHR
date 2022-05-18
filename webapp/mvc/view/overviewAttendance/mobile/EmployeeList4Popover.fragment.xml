@@ -12,7 +12,7 @@
             <CustomListItem>
               <VBox>
                 <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.MonthDateWeekday' }" />
-                <Text text="{i18n>LABEL_28065} : { path: 'Bashr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }/{ path: 'Addhr', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
+                <Text text="{i18n>LABEL_28065} : { path: 'Bashr', type: 'sap.ui.yesco.mvc.model.type.Currency' }/{ path: 'Addhr', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
               </VBox>
               <!-- 돋보기 아이콘 -->
               <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">

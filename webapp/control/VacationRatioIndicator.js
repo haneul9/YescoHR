@@ -29,6 +29,9 @@ sap.ui.define(
           if (oControl.getShowTotal()) {
             oRM.class('vacation-indicator-show-total');
           }
+          if (oControl.hasListeners('press')) {
+            oRM.class('sapMPointer');
+          }
           oRM.style('width', oControl.getWidth());
           oRM.openEnd();
 

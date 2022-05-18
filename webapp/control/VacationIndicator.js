@@ -45,6 +45,13 @@ sap.ui.define(
             defaultValue: false,
           },
         },
+        events: {
+          press: {},
+        },
+      },
+
+      onclick() {
+        this.firePress();
       },
 
       onAfterRendering() {

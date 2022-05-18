@@ -16,8 +16,8 @@ sap.ui.define(
     Client,
     ServiceNames,
     AbstractPortletHandler,
-    EmployeeListDialogHandler,
-    EmployeeListPopoverHandler
+    P06PortletEmployeeListDialogHandler,
+    EmployeeList1PopoverHandler
   ) => {
     'use strict';
 
@@ -50,7 +50,7 @@ sap.ui.define(
           this.buildChart();
         }
 
-        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController);
+        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletEmployeeListDialogHandler(oController);
       },
 
       buildChart() {
@@ -82,13 +82,13 @@ sap.ui.define(
       async readContentData() {
         const oPortletModel = this.getPortletModel();
         const oSelectedDate = oPortletModel.getProperty('/selectedDate') || new Date();
-        const mAppointee = this.getController().getAppointeeData();
+        const mAppointeeData = this.getController().getAppointeeData();
 
         const oModel = this.getController().getModel(ServiceNames.WORKTIME);
         const mPayload = {
           Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
-          Werks: mAppointee.Werks,
-          Orgeh: mAppointee.Orgeh,
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
           Headty: 'A',
         };
 
@@ -169,71 +169,7 @@ sap.ui.define(
           this.oEmployeeListPopupHandler.openDialog(oEvent);
         }
       },
-      /*
-      onPressCount(oEvent) {
-        if (this.bMobile) {
-          this.oEmployeeListPopupHandler.openPopover(oEvent);
-        } else {
-          const oEventSource = oEvent.getSource();
-          this.openPopover(oEventSource, oEventSource.data('popover'), oEventSource.data('table-key').replace(/^k/, ''));
-        }
-      },
 
-      async openPopover(oEventSource, sPopover, sTableKey) {
-        await this.createPopover();
-
-        this.oPopover.close();
-        if (sPopover === 'N') {
-          return;
-        }
-        this.oPopover.bindElement(`/table${sTableKey}`);
-
-        setTimeout(async () => {
-          await this.retrieveEmpList(sTableKey);
-          this.oPopover.openBy(oEventSource);
-        }, 300);
-      },
-
-      async createPopover() {
-        if (!this.oPopover) {
-          this.oPopover = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletDataPopover',
-            controller: this,
-          });
-
-          this.getController().getView().addDependent(this.oPopover);
-
-          this.oPopover.setModel(this.getPortletModel());
-        }
-      },
-
-      async retrieveEmpList(sTableKey) {
-        const oController = this.getController();
-        const oPortletModel = this.getPortletModel();
-
-        const oSelectedDate = oPortletModel.getProperty('/selectedDate');
-        const mAppointee = oController.getAppointeeData();
-
-        const oModel = oController.getModel(ServiceNames.WORKTIME);
-        const mPayload = {
-          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
-          Werks: mAppointee.Werks,
-          Orgeh: mAppointee.Orgeh,
-          Headty: 'A',
-          Discod: sTableKey,
-        };
-
-        const aData = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
-        oPortletModel.setProperty(`/table${sTableKey}`, {
-          visiblePeriod: sTableKey !== '1',
-          list: aData,
-          listCount: Math.min(aData.length || 1, 5),
-        });
-
-        const bVisiblePeriod = this.oPopover.getBindingContext().getProperty('visiblePeriod');
-        this.oPopover.setContentWidth(bVisiblePeriod ? '447px' : this.bMobile ? '240px' : '249px');
-      },
-      */
       onAfterDragAndDrop() {
         FusionCharts(this.sChartId).render();
       },
