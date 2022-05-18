@@ -28,10 +28,20 @@ sap.ui.define(
         return {
           busy: false,
           selectedKey: 'A',
-          registList: [],
-          dialog: [],
-          indiList: [],
+          registList: [
+            {
+              list: [],
+              rowCount: 1,
+            },
+          ],
+          indiList: [
+            {
+              list: [],
+              rowCount: 1,
+            },
+          ],
           rows: [],
+          rowCount: 1,
           dialogList: [],
           listInfo: {
             rowCount: 1,
@@ -194,7 +204,7 @@ sap.ui.define(
             visibleStatus: 'X',
           };
 
-          oViewModel.setProperty('/listInfo', mInfo);
+          // oViewModel.setProperty('/listInfo', mInfo);
 
           const oModel = this.getModel(ServiceNames.PA);
           const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
@@ -202,21 +212,21 @@ sap.ui.define(
 
           switch (sSelectKey) {
             case 'A':
-              oViewModel.setProperty('/listInfo', {
-                ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-                ...mInfo,
+              oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
+              oViewModel.setProperty(sListName, {
+                list: aTableList,
+                ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'rowCount'),
               });
-              oViewModel.setProperty(sListName, aTableList);
               break;
             case 'B':
               this.createDynTable(oTable, sListName, mInfo, aTableList);
               break;
             case 'C':
-              oViewModel.setProperty('/listInfo', {
-                ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-                ...mInfo,
+              oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
+              oViewModel.setProperty(sListName, {
+                list: aTableList,
+                ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'rowCount'),
               });
-              oViewModel.setProperty(sListName, aTableList);
               break;
           }
         } catch (oError) {
@@ -317,10 +327,8 @@ sap.ui.define(
           });
         });
         oTable.bindRows(sListName);
-        oViewModel.setProperty('/listInfo', {
-          ...this.TableUtils.count({ oTable, aRowData: aRows }),
-          ...mInfo,
-        });
+        oViewModel.setProperty('/rowCount', this.TableUtils.count({ oTable, aRowData: aRows }).rowCount);
+        oViewModel.setProperty('/listInfo', mInfo);
       },
     });
   }
