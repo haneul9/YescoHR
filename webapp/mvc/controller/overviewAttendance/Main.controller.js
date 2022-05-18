@@ -75,7 +75,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => this.buildChart(oModel, mFilters, o));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
 
           window.callAttendanceDetail = (sArgs) => {
             $('#fusioncharts-tooltip-element').css('z-index', 7);

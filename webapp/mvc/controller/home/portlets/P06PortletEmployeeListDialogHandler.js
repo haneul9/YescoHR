@@ -64,22 +64,12 @@ sap.ui.define(
         this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
       },
 
-      async openDialog(oEvent) {
+      async openDialog(mPayload) {
         try {
           setTimeout(() => {
             this.setBusy();
             this.oDialog.open();
           });
-
-          const mEventSourceData = oEvent.getSource().data();
-          const mAppointeeData = this.oController.getAppointeeData();
-          const mPayload = {
-            Datum: moment().startOf('date').add(9, 'hours'),
-            Werks: mAppointeeData.Werks,
-            Orgeh: mAppointeeData.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
 
           const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail1', mPayload);
 

@@ -31,18 +31,18 @@
         </VBox>
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
-        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(8, 280px)" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
+        <grid:CSSGrid gridGap="20px" gridAutoRows="280px" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A03" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A04" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A05" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A06" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.mobile.A07" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A08" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A09" type="XML" />
+          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.mobile.A10" type="XML" /> -->
         </grid:CSSGrid>
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.mobile.A07" type="XML" /> -->
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A10" type="XML" /> -->
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

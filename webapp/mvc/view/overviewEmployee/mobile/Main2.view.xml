@@ -9,7 +9,7 @@
       <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchAreaClose}" />
     </headerContent>
     <VBox class="contents">
-      <HBox alignItems="End" class="search-area row-4">
+      <HBox alignItems="End" class="search-area row-3">
         <VBox width="67%">
           <layoutData>
             <FlexItemData maxWidth="67%" />
@@ -21,7 +21,7 @@
           <ComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </ComboBox>
-          <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
+          <!-- <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
             <HBox alignItems="Center">
               <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-16-px">
                 <layoutData>
@@ -52,13 +52,27 @@
                 <core:Item text="18px" key="18px" />
               </items>
             </ComboBox>
-          </HBox>
+          </HBox> -->
         </VBox>
-        <VBox width="33%" height="100%" justifyContent="SpaceBetween" class="pl-8-px">
+        <VBox width="33%" height="100%" justifyContent="End" class="pl-8-px">
           <layoutData>
             <FlexItemData growFactor="1" maxWidth="33%" />
           </layoutData>
           <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded" />
+          <HBox height="40px" justifyContent="Center" alignItems="Center" class="sapUiTinyMarginTop">
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px">
+              <layoutData>
+                <FlexItemData styleClass="h-16-px" />
+              </layoutData>
+            </Image>
+            <Text text="{i18n>LABEL_28003}" class="ml-4-px font-14-px" />
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" class="ml-12-px">
+              <layoutData>
+                <FlexItemData styleClass="h-16-px" />
+              </layoutData>
+            </Image>
+            <Text text="{i18n>LABEL_28004}" class="ml-4-px font-14-px" />
+          </HBox>
           <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
         </VBox>
       </HBox>

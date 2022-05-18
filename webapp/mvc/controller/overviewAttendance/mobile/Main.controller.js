@@ -66,10 +66,10 @@ sap.ui.define(
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
-          const mAppointeeData = this.getAppointeeData();
+          const mAppointee = this.getAppointeeData();
           const [aPersaEntry, aOrgehEntry] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointeeData.Pernr }), //
-            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointeeData.Werks, Pernr: mAppointeeData.Pernr }),
+            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointee.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
@@ -82,7 +82,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 9), (o) => this.buildChart(oModel, mFilters, o));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('Mobile')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
 
           this.oEmployeeList1PopoverHandler = new EmployeeList1PopoverHandler(this);
           this.oEmployeeList2PopoverHandler = new EmployeeList2PopoverHandler(this);
@@ -173,6 +177,29 @@ sap.ui.define(
               .commit();
 
             mChartSetting.chart.yAxisMaxValue = Math.ceil(fBar2dMaxValues * 1.3);
+
+            this.callFusionChart(mChartInfo, mChartSetting);
+
+            break;
+          case 'mscombi2d':
+            _.chain(mChartSetting)
+              .set(
+                ['categories', 0, 'category', 0],
+                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
+              )
+              .set(['dataset', 0], {
+                seriesName: this.getBundleText('LABEL_28048'), // 당일
+                showValues: '1',
+                color: '#7BB4EB',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
+              })
+              .set(['dataset', 1], {
+                seriesName: this.getBundleText('LABEL_00196'), // 누적
+                renderAs: 'line',
+                color: '#FFAC4B',
+                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
+              })
+              .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -338,14 +365,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const mAppointeeData = this.getAppointeeData();
+          const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
-            Pernr: mAppointeeData.Pernr,
+            Pernr: mAppointee.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 

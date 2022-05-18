@@ -46,11 +46,14 @@ sap.ui.define(
         this.setPortletBox(oPortletBox);
 
         // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-        if (!FusionCharts(this.sChartId)) {
-          this.buildChart();
+        const oChart = FusionCharts(this.sChartId);
+        if (oChart) {
+          oChart.dispose();
         }
 
-        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletEmployeeListDialogHandler(oController);
+        this.buildChart();
+
+        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletEmployeeListDialogHandler(oController));
       },
 
       buildChart() {
@@ -163,10 +166,21 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
+        const mEventSourceData = oEvent.getSource().data();
+        const oSelectedDate = this.getPortletModel().getProperty('/selectedDate') || new Date();
+        const mAppointeeData = this.getController().getAppointeeData();
+        const mPayload = {
+          Datum: moment(oSelectedDate).startOf('date').add(9, 'hours'),
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
+          Headty: mEventSourceData.Headty,
+          Discod: mEventSourceData.Discod,
+        };
+
         if (this.bMobile) {
-          this.oEmployeeListPopupHandler.openPopover(oEvent);
+          this.oEmployeeListPopupHandler.openPopover(mPayload);
         } else {
-          this.oEmployeeListPopupHandler.openDialog(oEvent);
+          this.oEmployeeListPopupHandler.openDialog(mPayload);
         }
       },
 
@@ -178,6 +192,8 @@ sap.ui.define(
         if (this.oEmployeeListPopupHandler) {
           this.oEmployeeListPopupHandler.destroy();
         }
+
+        FusionCharts(this.sChartId).dispose();
 
         AbstractPortletHandler.prototype.destroy.call(this);
       },
