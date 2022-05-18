@@ -118,29 +118,38 @@ sap.ui.define(
       // Open Dialog
       async openDialog(mPayLoad = {}) {
         const oViewModel = this.getViewModel();
-        const oModel = this.getModel(ServiceNames.PA);
-        const aDetail = await Client.getEntitySet(oModel, 'PersLicenseList', mPayLoad);
 
-        setTimeout(() => {
-          if (!this._pDetailDialog) {
-            const oView = this.getView();
+        try {
+          oViewModel.setProperty('/busy', true);
 
-            this._pDetailDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.upLicense.fragment.DetailDialog',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
+          const oModel = this.getModel(ServiceNames.PA);
+          const aDetail = await Client.getEntitySet(oModel, 'PersLicenseList', mPayLoad);
+
+          setTimeout(() => {
+            if (!this._pDetailDialog) {
+              const oView = this.getView();
+
+              this._pDetailDialog = Fragment.load({
+                id: oView.getId(),
+                name: 'sap.ui.yesco.mvc.view.upLicense.fragment.DetailDialog',
+                controller: this,
+              }).then(function (oDialog) {
+                oView.addDependent(oDialog);
+                return oDialog;
+              });
+            }
+
+            this._pDetailDialog.then(function (oDialog) {
+              oViewModel.setProperty('/dialogList', aDetail);
+              oViewModel.setProperty('/dialogListCount', _.size(aDetail));
+              oDialog.open();
             });
-          }
-
-          this._pDetailDialog.then(function (oDialog) {
-            oViewModel.setProperty('/dialogList', aDetail);
-            oViewModel.setProperty('/dialogListCount', _.size(aDetail));
-            oDialog.open();
-          });
-        }, 100);
+          }, 100);
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // Dialog Close
@@ -198,36 +207,23 @@ sap.ui.define(
               return;
           }
 
+          const oModel = this.getModel(ServiceNames.PA);
+          const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
+          const oTable = this.byId(sTableName);
           const mInfo = {
             infoMessage: sTableMSG,
             Title: sTableTitle,
             visibleStatus: 'X',
           };
 
-          // oViewModel.setProperty('/listInfo', mInfo);
-
-          const oModel = this.getModel(ServiceNames.PA);
-          const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
-          const oTable = this.byId(sTableName);
-
-          switch (sSelectKey) {
-            case 'A':
-              oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
-              oViewModel.setProperty(sListName, {
-                list: aTableList,
-                ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'rowCount'),
-              });
-              break;
-            case 'B':
-              this.createDynTable(oTable, sListName, mInfo, aTableList);
-              break;
-            case 'C':
-              oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
-              oViewModel.setProperty(sListName, {
-                list: aTableList,
-                ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'rowCount'),
-              });
-              break;
+          if (sSelectKey === 'B') {
+            this.createDynTable(oTable, sListName, mInfo, aTableList);
+          } else {
+            oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
+            oViewModel.setProperty(sListName, {
+              list: aTableList,
+              ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'rowCount'),
+            });
           }
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -327,8 +323,8 @@ sap.ui.define(
           });
         });
         oTable.bindRows(sListName);
-        oViewModel.setProperty('/rowCount', this.TableUtils.count({ oTable, aRowData: aRows }).rowCount);
-        oViewModel.setProperty('/listInfo', mInfo);
+        oViewModel.setProperty('/rowCount', _.pick(this.TableUtils.count({ oTable, aRowData: aRows }), 'rowCount'));
+        oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aRows }), 'totalCount') });
       },
     });
   }
