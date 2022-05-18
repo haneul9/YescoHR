@@ -129,7 +129,7 @@ sap.ui.define(
               : new Date()
           );
 
-          this.YearPlanBoxHandler = this.YearPlanBoxHandler || new YearPlanBoxHandler({ oController: this, sPernr });
+          this.YearPlanBoxHandler = new YearPlanBoxHandler({ oController: this, sPernr });
           // this.setMonth();
           this.formYear();
 

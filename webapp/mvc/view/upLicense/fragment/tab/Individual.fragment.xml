@@ -12,7 +12,7 @@
         <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
       </HBox>
     </HBox>
-    <table:Table id="indiTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/indiList}" visibleRowCount="{/listInfo/rowCount}" noData="{i18n>MSG_00001}">
+    <table:Table id="indiTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/indiList/list}" visibleRowCount="{/indiList/rowCount}" noData="{i18n>MSG_00001}">
       <table:rowSettingsTemplate>
         <table:RowSettings highlight="{
               path: 'Certyn',

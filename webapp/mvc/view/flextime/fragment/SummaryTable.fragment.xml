@@ -2,12 +2,12 @@
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <HBox>
-        <table:Table selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
+        <table:Table id="flextimeSummaryTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
             <table:columns>
                 <table:Column width="12%">
                     <Label text="{i18n>LABEL_40009}"/>
                     <table:template>
-                        <DatePicker value="{Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <DatePicker value="{Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" change=".onChangeMonth" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
