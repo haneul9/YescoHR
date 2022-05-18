@@ -2,8 +2,79 @@
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox">
-    <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
-    <table:Table id="indiTable" class="row-link" rows="{/rows}" visibleRowCount="{/listInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onIndiSelectRow">
+    <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <HBox class="header">
+        <Title level="H3" text="{i18n>LABEL_39004}" />
+      </HBox>
+      <HBox class="status-wrap">
+        <ObjectStatus text="{i18n>LABEL_00106}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+        <ObjectStatus text="{i18n>LABEL_39010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
+        <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+      </HBox>
+    </HBox>
+    <table:Table id="indiTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/indiList}" visibleRowCount="{/listInfo/rowCount}" noData="{i18n>MSG_00001}">
+      <table:rowSettingsTemplate>
+        <table:RowSettings highlight="{
+              path: 'Certyn',
+              formatter: '.TableUtils.rowHighlight'
+          }"/>
+      </table:rowSettingsTemplate>
+      <table:columns>
+        <table:Column width="7%" filterProperty="Ename" sortProperty="Ename">
+          <Label text="{i18n>LABEL_00210}" />
+          <table:template>
+            <Text text="{Ename}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="8%" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
+          <Label text="{i18n>LABEL_00136}" />
+          <table:template>
+            <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="9%" filterProperty="Orgtx" sortProperty="Orgtx">
+          <Label text="{i18n>LABEL_00224}" />
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="16%" filterProperty="Cttyptx" sortProperty="Cttyptx">
+          <Label text="{i18n>LABEL_00318}" />
+          <table:template>
+            <Text text="{Cttyptx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="16%" filterProperty="Ctgrdtx" sortProperty="Ctgrdtx">
+          <Label text="{i18n>LABEL_00309}" />
+          <table:template>
+            <Text text="{Ctgrdtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="10%" filterProperty="Techtytx" sortProperty="Techtytx">
+          <Label text="{i18n>LABEL_00347}" />
+          <table:template>
+            <Text text="{Techtytx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="10%" filterProperty="Techgdtx" sortProperty="Techgdtx">
+          <Label text="{i18n>LABEL_00348}" />
+          <table:template>
+            <Text text="{Techgdtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="11%" filterProperty="Certtytx" sortProperty="Certtytx">
+          <Label text="{i18n>LABEL_39006}" />
+          <table:template>
+            <Text text="{Certtytx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto" filterProperty="Certdttx" sortProperty="Certdttx">
+          <Label text="{i18n>LABEL_39007}" />
+          <table:template>
+            <Text text="{Certdttx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
     </table:Table>
   </VBox>
 </core:FragmentDefinition>
