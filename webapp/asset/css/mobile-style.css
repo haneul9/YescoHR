@@ -239,56 +239,50 @@ html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; borde
 .employee-list * {box-sizing:border-box}
 .employee-list li {display:flex; align-items:center; border:none}
 .employee-list li,
-.employee-list li .sapMLIBContent>.sapMHBox {align-items:center; height:30px; line-height:30px}
-.employee-list li + li {margin-top:10px}
-.employee-list li .employee-photo .sapMImg {border-radius:50%; background-position:center top !important}
+.employee-list li .sapMLIBContent>.sapMHBox,
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem {align-items:center; height:30px; line-height:30px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem .sapMImg {border-radius:50%; background-position:center top !important}
 .employee-list li .sapMLnk,
 .employee-list li .sapMText {width:100%; line-height:30px; vertical-align:middle; font-size:14px; font-weight:500; color:var(--FontColorNormal) !important}
+.employee-list li + li {margin-top:10px}
 .sapUiMedia-Std-Phone .section .employee-list li .sapMLnk,
 .sapUiMedia-Std-Phone .section .employee-list li .sapMText {font-size:14px}
-.employee-list li .employee-name .sapMLnk,
-.employee-list li .employee-name .sapMText,
-.sapUiMedia-Std-Phone .section .employee-list li .employee-name .sapMLnk,
-.sapUiMedia-Std-Phone .section .employee-list li .employee-name .sapMText {font-size:16px; font-weight:700}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) .sapMLnk,
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) .sapMText,
+.sapUiMedia-Std-Phone .section .employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) .sapMLnk,
+.sapUiMedia-Std-Phone .section .employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) .sapMText {font-size:16px; font-weight:700}
 
 .employee-list .sapMLIBActive .sapMLnk {text-decoration:none}
-.employee-list .employee-photo,
-.employee-list .employee-photo .sapMImg {width:24px; height:24px}
-.employee-list .employee-name {padding-left:10px; height:30px}
-.employee-list .employee-position,
-.employee-list .employee-department {padding-left:6px; height:30px}
-.employee-list .employee-name {width:76px}
-.employee-list .employee-position {width:96px}
-.employee-list .employee-department {flex-grow:1; width:calc(100% - 226px); max-width:calc(100% - 200px)}
-.employee-list .icon-link {width:26px; height:20px; padding-left:6px; line-height:20px}
-.employee-list .icon-link.sapUiHiddenPlaceholder {padding-left:0}
-.employee-list .icon-link .icon-telephone.sapMLnk {width:20px; height:20px; line-height:30px; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="%23898d9c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>') no-repeat center center}
-.employee-list .icon-link .icon-telephone.sapMLnk[disabled="true"] {background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="%23aaaaaa" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M19 4L3 20L4 21L20 5Z" fill="%23aaaaaa" stroke="%23aaaaaa" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5"/></svg>')}
-.employee-list .icon-link .icon-search.sapMLnk {width:20px; height:20px; line-height:30px; background:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png') no-repeat; background-size:19px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(1),
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(1) .sapMImg {width:24px; height:24px; line-height:24px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) {width:76px; padding-left:10px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(3) {width:96px; padding-left:6px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(4) {flex-grow:1 !important; width:calc(100% - 222px); max-width:calc(100% - 196px); padding-left:6px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link {width:26px; height:20px; padding-left:6px; line-height:20px}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link.sapUiHiddenPlaceholder {padding-left:0}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link .icon-telephone.sapMLnk {width:20px; height:20px; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="%23898d9c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>') no-repeat center center}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link .icon-telephone.sapMLnk[disabled="true"] {background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="%23aaaaaa" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M19 4L3 20L4 21L20 5Z" fill="%23aaaaaa" stroke="%23aaaaaa" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5"/></svg>')}
+.employee-list li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link .icon-search.sapMLnk {width:20px; height:20px; background:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png') no-repeat; background-size:19px}
 
-.employee-list.double-line li,
-.employee-list.double-line li .sapMLIBContent>.sapMHBox {height:40px}
+.employee-list.narrow-name li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) {width:66px}
+.employee-list.narrow-name li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(4) {width:calc(100% - 212px); max-width:calc(100% - 186px)}
+.employee-list.narrow-position li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(3) {width:86px}
+.employee-list.narrow-position li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(4) {width:calc(100% - 212px); max-width:calc(100% - 186px)}
+.employee-list.narrow-name.narrow-position li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(4) {width:calc(100% - 202px); max-width:calc(100% - 176px)}
+
 .employee-list.double-line li.sapMLIB.sapMLIBActive {background-color:transparent}
-.employee-list.double-line li + li {margin-top:15px}
+.employee-list.double-line li,
+.employee-list.double-line li .sapMLIBContent>.sapMHBox,
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem {height:40px; line-height:20px}
 .employee-list.double-line li .sapMLnk,
 .employee-list.double-line li .sapMText {line-height:20px}
-.employee-list.double-line .employee-photo,
-.employee-list.double-line .employee-photo .sapMImg {width:30px; height:30px}
-.employee-list.double-line .employee-name + .sapMFlexItem {width:96px; line-height:20px}
-.employee-list.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {flex-grow:1; width:calc(100% - 220px); max-width:calc(100% - 190px); line-height:20px}
-.employee-list.double-line .employee-name + .sapMFlexItem + .sapMFlexItem>.sapMFlexItem {height:20px; line-height:20px; padding-left:6px}
-.employee-list.double-line .employee-name + .sapMFlexItem + .sapMFlexItem .sapMLnk,
-.employee-list.double-line .employee-name + .sapMFlexItem + .sapMFlexItem .sapMText {width:100%}
-.employee-list.double-line .employee-position,
-.employee-list.double-line .employee-department {width:100%; max-width:100%; height:20px; line-height:20px}
-
-.employee-list.narrow-name .employee-name {width:66px}
-.employee-list.narrow-name .employee-department {flex-grow:1; width:calc(100% - 216px); max-width:calc(100% - 190px)}
-.employee-list.narrow-name.double-line .employee-name + .sapMFlexItem {width:96px}
-.employee-list.narrow-name.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {width:calc(100% - 210px); max-width:calc(100% - 180px)}
-.employee-list.narrow-position .employee-position {width:76px}
-.employee-list.narrow-position .employee-department {flex-grow:1; width:calc(100% - 206px); max-width:calc(100% - 180px)}
-.employee-list.narrow-position.double-line .employee-name + .sapMFlexItem + .sapMFlexItem {width:calc(100% - 200px); max-width:calc(100% - 170px)}
+.employee-list.double-line li + li {margin-top:15px}
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(1),
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(1) .sapMImg {width:30px; height:30px; line-height:30px}
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(2) {line-height:40px}
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(3)>.sapMFlexItem,
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem:nth-child(4)>.sapMFlexItem {width:100%; height:20px; line-height:20px}
+.employee-list.double-line li .sapMLIBContent>.sapMHBox>.sapMFlexItem.icon-link {height:20px}
 
 .sapMITBSelected>.sapMITBContentArrow {border-bottom:2px solid; border-bottom-color:#1e7db3; height:15px !important}
 
