@@ -66,10 +66,10 @@ sap.ui.define(
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
-          const mAppointee = this.getAppointeeData();
+          const mAppointeeData = this.getAppointeeData();
           const [aPersaEntry, aOrgehEntry] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointee.Pernr }), //
-            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
+            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointeeData.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointeeData.Werks, Pernr: mAppointeeData.Pernr }),
           ]);
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
@@ -365,14 +365,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const mAppointee = this.getAppointeeData();
+          const mAppointeeData = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
-            Pernr: mAppointee.Pernr,
+            Pernr: mAppointeeData.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
