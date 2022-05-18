@@ -264,9 +264,8 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMHBox .sapMFlexItem:nth-child
 .portlet-m21 .sapMLabel {justify-content:center}
 .portlet-m21 [data-popover="N"] .sapMObjStatusLink:hover .sapMObjStatusText {cursor:default}
 .portlet-m23 .portlet-body .sapMText {font-size:13px; letter-spacing:-.5px}
-.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime, .portlet-m23 .portlet-body .sapMText.portlet-m23-worktime-unit {color:#387fe9}
-.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {margin-left:.3rem}
-.portlet-m23 .portlet-body .sapMText.portlet-m23-worktime {line-height:1.2; font-size:19px}
+.portlet-m23 .portlet-body .portlet-m23-worktime {margin-left:.3rem; line-height:18px; font-size:19px; font-weight:500}
+.portlet-m23 .portlet-body .portlet-m23-worktime, .portlet-m23 .portlet-body .portlet-m23-worktime-unit {color:#387fe9}
 
 .portlet-box .statistic-text.sapMObjStatus {width:100%; text-align:center}
 .portlet-box .statistic-text.sapMObjStatus .sapMObjStatusText {color:var(--FontColorNormal); font-weight:500}

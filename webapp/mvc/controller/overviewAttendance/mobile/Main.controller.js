@@ -9,8 +9,6 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList1PopoverHandler',
     'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList2PopoverHandler',
     'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList3PopoverHandler',
-    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList4PopoverHandler',
-    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList5PopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -21,9 +19,7 @@ sap.ui.define(
     ChartsSetting,
     EmployeeList1PopoverHandler,
     EmployeeList2PopoverHandler,
-    EmployeeList3PopoverHandler,
-    EmployeeList4PopoverHandler,
-    EmployeeList5PopoverHandler
+    EmployeeList3PopoverHandler
   ) => {
     'use strict';
 
@@ -70,27 +66,25 @@ sap.ui.define(
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
-          const mAppointee = this.getAppointeeData();
+          const mAppointeeData = this.getAppointeeData();
           const [aPersaEntry, aOrgehEntry] = await Promise.all([
-            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointee.Pernr }), //
-            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
+            Client.getEntitySet(oCommonModel, 'WerksList', { Pernr: mAppointeeData.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointeeData.Werks, Pernr: mAppointeeData.Pernr }),
           ]);
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Werks', mAppointeeData.Werks);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => this.buildChart(oModel, mFilters, o));
+          _.forEach(_.take(ChartsSetting.CHART_TYPE, 9), (o) => this.buildChart(oModel, mFilters, o));
 
           this.oEmployeeList1PopoverHandler = new EmployeeList1PopoverHandler(this);
           this.oEmployeeList2PopoverHandler = new EmployeeList2PopoverHandler(this);
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
-          this.oEmployeeList4PopoverHandler = new EmployeeList4PopoverHandler(this);
-          this.oEmployeeList5PopoverHandler = new EmployeeList5PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
             const aProps = ['Headty', 'Discod'];
@@ -181,7 +175,7 @@ sap.ui.define(
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
-          case 'mscombi2d':
+          case 'scrollcombi2d':
             _.chain(mChartSetting)
               .set(
                 ['categories', 0, 'category', 0],
@@ -328,14 +322,6 @@ sap.ui.define(
           case 'G': // 월단위 연차사용율 추이
             this.oEmployeeList2PopoverHandler.openPopover(mPayload);
             break;
-          case 'X1': // sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList3Popover
-            delete mPayload.Headty;
-            this.oEmployeeList4PopoverHandler.openPopover(mPayload);
-            break;
-          case 'X2': // sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList2Popover
-            delete mPayload.Headty;
-            this.oEmployeeList5PopoverHandler.openPopover(mPayload);
-            break;
           default:
             break;
         }
@@ -350,14 +336,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const mAppointee = this.getAppointeeData();
+          const mAppointeeData = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
             Werks: oViewModel.getProperty('/searchConditions/Werks'),
-            Pernr: mAppointee.Pernr,
+            Pernr: mAppointeeData.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
@@ -394,17 +380,6 @@ sap.ui.define(
         const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
         window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
-      },
-
-      onPressEmployee2Row(mPayload) {
-        const sDiscod = this.getViewModel().getProperty('/dialog/param/Discod');
-        const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
-
-        this.openDialog({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']), Headty: 'X2', Awart: sAwart });
-      },
-
-      onPressEmployee3Row(mPayload) {
-        this.openDialog({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']), Headty: 'X1' });
       },
 
       onPressSearchAreaToggle() {

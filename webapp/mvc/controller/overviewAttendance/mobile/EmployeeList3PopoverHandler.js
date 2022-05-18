@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList4PopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -15,11 +16,18 @@ sap.ui.define(
     AppUtils,
     MobileEmployeeListPopoverHandler,
     Client,
-    ServiceNames
+    ServiceNames,
+    EmployeeList4PopoverHandler
   ) => {
     'use strict';
 
     return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewAttendance.mobile.EmployeeList3PopoverHandler', {
+      init() {
+        MobileEmployeeListPopoverHandler.prototype.init.call(this);
+
+        this.oEmployeeList4PopupHandler = new EmployeeList4PopoverHandler(this.oController);
+      },
+
       getPopoverFragmentName() {
         return 'sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList3Popover';
       },
@@ -44,8 +52,8 @@ sap.ui.define(
             Zzjikgbtx,
             Zzjikchtx,
             Orgtx,
-            Nomtot,
-            Holtot,
+            Nomtot: Nomtot || 0,
+            Holtot: Holtot || 0,
             Begda,
             Endda,
             Navigable: this.bHasProfileMenuAuth ? 'O' : '',
@@ -85,7 +93,8 @@ sap.ui.define(
         }
 
         const mPayload = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty();
-        this.oController.onPressEmployee3Row(mPayload);
+
+        this.oEmployeeList4PopupHandler.openPopover({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']) });
       },
     });
   }

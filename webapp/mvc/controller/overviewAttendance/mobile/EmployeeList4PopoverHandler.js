@@ -45,8 +45,8 @@ sap.ui.define(
             Zzjikchtx,
             Orgtx,
             Datum,
-            Bashr,
-            Addhr,
+            Bashr: Bashr || 0,
+            Addhr: Addhr || 0,
             Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );

@@ -122,26 +122,19 @@ sap.ui.define(
 
       transformEventSourceDataToPayload(mEventSourceData) {
         const mAppointeeData = this.oController.getAppointeeData();
+        const mPayload = {
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
+          Headty: mEventSourceData.Headty,
+          Discod: mEventSourceData.Discod,
+        };
         if (mEventSourceData.OData === 'H') {
-          return {
-            Zyear: moment().year(),
-            Werks: mAppointeeData.Werks,
-            Orgeh: mAppointeeData.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
+          mPayload.Zyear = moment().year();
         } else if (mEventSourceData.OData === 'T') {
-          return {
-            Datum: moment().startOf('date').add(9, 'hours'),
-            Werks: mAppointeeData.Werks,
-            Orgeh: mAppointeeData.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
+          mPayload.Datum = moment().startOf('date').add(9, 'hours');
         }
+        return mPayload;
       },
-
-      setPayloadFromData() {},
 
       closePopover(oEvent) {
         oEvent.stopImmediatePropagation();

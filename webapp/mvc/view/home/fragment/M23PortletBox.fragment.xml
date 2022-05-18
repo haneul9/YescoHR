@@ -27,7 +27,8 @@
         </HBox>
         <HBox width="100%" height="28px" justifyContent="Center" alignItems="End">
           <Text text="{Text}" />
-          <Text text="{Rte01}" class="portlet-m23-worktime" />
+          <!-- <Text text="{Rte01}" class="portlet-m23-worktime" /> -->
+          <Link text="{Rte01}" class="portlet-m23-worktime" press=".openDetailPopup" />
           <Text text="{i18n>LABEL_00330}" class="portlet-m23-worktime-unit" />
           <Text text="{i18n>LABEL_01183}" />
         </HBox>

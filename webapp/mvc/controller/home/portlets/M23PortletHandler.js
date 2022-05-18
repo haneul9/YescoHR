@@ -5,13 +5,17 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/M23PortletEmployeeListDialogHandler',
+    'sap/ui/yesco/mvc/controller/overviewAttendance/mobile/EmployeeList3PopoverHandler',
   ],
   (
     // prettier 방지용 주석
     Fragment,
     Client,
     ServiceNames,
-    AbstractPortletHandler
+    AbstractPortletHandler,
+    M23PortletEmployeeListDialogHandler,
+    EmployeeList3PopoverHandler
   ) => {
     'use strict';
 
@@ -23,9 +27,10 @@ sap.ui.define(
       oChartPromise: null,
 
       async addPortlet() {
+        const oController = this.getController();
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
-          id: this.getController().getView().getId(),
+          id: oController.getView().getId(),
           name: 'sap.ui.yesco.mvc.view.home.fragment.M23PortletBox',
           controller: this,
         });
@@ -33,16 +38,24 @@ sap.ui.define(
         const iPortletHeight = oPortletModel.getProperty('/height');
         oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
 
-        this.getController().byId(this.sContainerId).addItem(oPortletBox);
+        oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
         // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
         if (!FusionCharts(this.sChartId)) {
           this.buildChart();
         }
+
+        this.oEmployeeListPopupHandler = this.bMobile ? new EmployeeList3PopoverHandler(oController) : new M23PortletEmployeeListDialogHandler(oController);
       },
 
       buildChart() {
+        window.openDetailPopup = () => {
+          $('#fusioncharts-tooltip-element').css('z-index', 7);
+
+          this.openDetailPopup();
+        };
+
         this.oChartPromise = new Promise((resolve) => {
           FusionCharts.ready(() => {
             new FusionCharts({
@@ -114,6 +127,7 @@ sap.ui.define(
 
       getChartOption() {
         return {
+          clickURL: 'j-openDetailPopup',
           showValue: '1',
           baseFontSize: '12',
           valueFontSize: '14',
@@ -165,6 +179,31 @@ sap.ui.define(
 
       onAfterDragAndDrop() {
         FusionCharts(this.sChartId).render();
+      },
+
+      openDetailPopup() {
+        const mAppointeeData = this.oController.getAppointeeData();
+        const mPayload = {
+          Datum: moment().startOf('date').add(9, 'hours'),
+          Werks: mAppointeeData.Werks,
+          Orgeh: mAppointeeData.Orgeh,
+          Headty: 'B',
+          Discod: '0',
+        };
+
+        if (this.bMobile) {
+          this.oEmployeeListPopupHandler.openPopover(mPayload);
+        } else {
+          this.oEmployeeListPopupHandler.openDialog(mPayload);
+        }
+      },
+
+      destroy() {
+        if (this.oEmployeeListPopupHandler) {
+          this.oEmployeeListPopupHandler.destroy();
+        }
+
+        AbstractPortletHandler.prototype.destroy.call(this);
       },
     });
   }

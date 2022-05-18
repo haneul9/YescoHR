@@ -21,7 +21,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletEmployeeListDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletEmployeeListDialogHandler', {
       constructor: function (oController) {
         this.oController = oController;
         this.oDialogModel = new JSONModel(this.getInitialData());
@@ -48,7 +48,7 @@ sap.ui.define(
 
         this.oDialog = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail1',
+          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
           controller: this,
         });
 
@@ -64,24 +64,14 @@ sap.ui.define(
         this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
       },
 
-      async openDialog(oEvent) {
+      async openDialog(mPayload) {
         try {
           setTimeout(() => {
             this.setBusy();
             this.oDialog.open();
           });
 
-          const mEventSourceData = oEvent.getSource().data();
-          const mAppointeeData = this.oController.getAppointeeData();
-          const mPayload = {
-            Datum: moment().startOf('date').add(9, 'hours'),
-            Werks: mAppointeeData.Werks,
-            Orgeh: mAppointeeData.Orgeh,
-            Headty: mEventSourceData.Headty,
-            Discod: mEventSourceData.Discod,
-          };
-
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail1', mPayload);
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail2', mPayload);
 
           this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
           this.oDialogModel.setProperty('/dialog/totalCount', _.size(aEmployees));
@@ -94,10 +84,10 @@ sap.ui.define(
             }))
           );
         } catch (oError) {
-          this.debug('P06PortletEmployeeListDialogHandler > openDialog Error', oError);
+          this.debug('M24PortletEmployeeListDialogHandler > openDialog Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onPressDetail1DialogClose(),
+            onClose: () => this.onPressDetail2DialogClose(),
           });
         } finally {
           setTimeout(() => this.oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
@@ -105,11 +95,11 @@ sap.ui.define(
         }
       },
 
-      onPressDetail1DialogClose() {
+      onPressDetail2DialogClose() {
         this.oDialog.close();
       },
 
-      onPressEmployeeRow(oEvent) {
+      onPressEmployee2Row(oEvent) {
         if (!this.bHasProfileMenuAuth) {
           return;
         }

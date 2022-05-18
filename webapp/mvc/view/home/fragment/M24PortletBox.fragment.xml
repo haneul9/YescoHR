@@ -26,11 +26,21 @@
         <HBox width="100%" class="mb-10-px">
           <Label text="{i18n>LABEL_01192}" />
         </HBox>
-        <custom:VacationRatioIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" decimal="2" class="x2" />
+        <custom:VacationRatioIndicator width="100%" total="{/Annual/Total}" used="{/Annual/Used}" showTotal="false" decimal="2" class="x2" press=".openDetailPopup">
+          <custom:customData>
+            <core:CustomData key="Headty" value="{/Annual/Headty}" />
+            <core:CustomData key="Discod" value="{/Annual/Discod}" />
+          </custom:customData>
+        </custom:VacationRatioIndicator>
         <HBox width="100%" class="mb-10-px mt-30-px">
           <Label text="{i18n>LABEL_01193}" />
         </HBox>
-        <custom:VacationRatioIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" decimal="2" class="x2" />
+        <custom:VacationRatioIndicator width="100%" total="{/Summer/Total}" used="{/Summer/Used}" showTotal="false" decimal="2" class="x2" press=".openDetailPopup">
+          <custom:customData>
+            <core:CustomData key="Headty" value="{/Summer/Headty}" />
+            <core:CustomData key="Discod" value="{/Summer/Discod}" />
+          </custom:customData>
+        </custom:VacationRatioIndicator>
       </VBox>
     </HBox>
   </VBox>
