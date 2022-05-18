@@ -89,7 +89,7 @@ sap.ui.define(
             '/dialog/list',
             _.map(aEmployees, (o, i) => ({
               Idx: ++i,
-              ProfileView: this.bHasProfileMenuAuth ? 'O' : '',
+              Navigable: this.bHasProfileMenuAuth ? 'O' : '',
               ...o,
             }))
           );

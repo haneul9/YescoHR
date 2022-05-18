@@ -296,7 +296,7 @@ sap.ui.define(
         let oDialog = null;
 
         switch (sHeadty) {
-          case 'A':
+          case 'A': // 현재 근무현황
             if (!this.oDetail1Dialog) {
               this.oDetail1Dialog = await Fragment.load({
                 id: oView.getId(),
@@ -310,11 +310,11 @@ sap.ui.define(
             oDialog = this.oDetail1Dialog;
             this.oDetail1Dialog.open();
             break;
-          case 'B':
-          case 'C':
-          case 'H':
-          case 'I':
-          case 'J':
+          case 'B': // 평균근무시간
+          case 'C': // OT근무현황
+          case 'H': // 조직별 OT평균시간
+          case 'I': // 직급별 OT평균시간
+          case 'J': // 주 단위 근무시간 추이
             if (!this.oDetail3Dialog) {
               this.oDetail3Dialog = await Fragment.load({
                 id: oView.getId(),
@@ -328,10 +328,10 @@ sap.ui.define(
             oDialog = this.oDetail3Dialog;
             this.oDetail3Dialog.open();
             break;
-          case 'D':
-          case 'E':
-          case 'F':
-          case 'G':
+          case 'D': // 휴가 사용율
+          case 'E': // 조직별 연차사용율
+          case 'F': // 직급별 연차사용율
+          case 'G': // 월단위 연차사용율 추이
             if (!this.oDetail2Dialog) {
               this.oDetail2Dialog = await Fragment.load({
                 id: oView.getId(),
@@ -345,7 +345,7 @@ sap.ui.define(
             oDialog = this.oDetail2Dialog;
             this.oDetail2Dialog.open();
             break;
-          case 'X1':
+          case 'X1': // sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail3
             if (!this.oDetail4Dialog) {
               this.oDetail4Dialog = await Fragment.load({
                 id: oView.getId(),
@@ -359,7 +359,7 @@ sap.ui.define(
             oDialog = this.oDetail4Dialog;
             this.oDetail4Dialog.open();
             break;
-          case 'X2':
+          case 'X2': // sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2
             if (!this.oDetail5Dialog) {
               this.oDetail5Dialog = await Fragment.load({
                 id: oView.getId(),
@@ -402,7 +402,7 @@ sap.ui.define(
             '/dialog/list',
             _.map(aDetailData, (o, i) => ({
               Idx: ++i,
-              ProfileView: 'O',
+              Navigable: 'O',
               ...o,
             }))
           );

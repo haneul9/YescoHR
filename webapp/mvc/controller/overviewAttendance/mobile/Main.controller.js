@@ -31,6 +31,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          searchAreaClose: false,
           searchConditions: {
             Datum: moment().hours(9).toDate(),
             Werks: '',
@@ -50,7 +51,7 @@ sap.ui.define(
             A07: { busy: false, Headty: '' },
             A08: { busy: false, Headty: '', data: {} },
             A09: { busy: false, Headty: '', data: {} },
-            // A10: { busy: false, Headty: '' },
+            A10: { busy: false, Headty: '' },
           },
           dialog: {
             busy: false,
@@ -311,26 +312,28 @@ sap.ui.define(
 
       openDialog(mPayload) {
         switch (mPayload.Headty) {
-          case 'A':
+          case 'A': // 현재 근무현황
             this.oEmployeeList1PopoverHandler.openPopover(mPayload);
             break;
-          case 'B':
-          case 'C':
-          case 'H':
-          case 'I':
-          case 'J':
+          case 'B': // 평균근무시간
+          case 'C': // OT근무현황
+          case 'H': // 조직별 OT평균시간
+          case 'I': // 직급별 OT평균시간
+          case 'J': // 주 단위 근무시간 추이
             this.oEmployeeList3PopoverHandler.openPopover(mPayload);
             break;
-          case 'D':
-          case 'E':
-          case 'F':
-          case 'G':
+          case 'D': // 휴가 사용율
+          case 'E': // 조직별 연차사용율
+          case 'F': // 직급별 연차사용율
+          case 'G': // 월단위 연차사용율 추이
             this.oEmployeeList2PopoverHandler.openPopover(mPayload);
             break;
-          case 'X1':
+          case 'X1': // sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList3Popover
+            delete mPayload.Headty;
             this.oEmployeeList4PopoverHandler.openPopover(mPayload);
             break;
-          case 'X2':
+          case 'X2': // sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList2Popover
+            delete mPayload.Headty;
             this.oEmployeeList5PopoverHandler.openPopover(mPayload);
             break;
           default:
@@ -393,18 +396,26 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
-      async onPressEmployee2Row(oEvent) {
-        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+      onPressEmployee2Row(mPayload) {
         const sDiscod = this.getViewModel().getProperty('/dialog/param/Discod');
         const sAwart = _.includes(['3', '4'], sDiscod) ? '2010' : '2000';
 
-        this.openDialog({ ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Headty: 'X2', Awart: sAwart });
+        this.openDialog({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']), Headty: 'X2', Awart: sAwart });
       },
 
-      async onPressEmployee3Row(oEvent) {
-        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+      onPressEmployee3Row(mPayload) {
+        this.openDialog({ ..._.pick(mPayload, ['Pernr', 'Begda', 'Endda']), Headty: 'X1' });
+      },
 
-        this.openDialog({ ..._.pick(mRowData, ['Pernr', 'Begda', 'Endda']), Headty: 'X1' });
+      onPressSearchAreaToggle() {
+        const bExpanded = $('.row-3').length === 1;
+        $('.search-area').toggleClass('row-3', !bExpanded).toggleClass('row-0', bExpanded);
+        this.getViewModel().setProperty('/searchAreaClose', bExpanded);
+      },
+
+      onChangeFontSize(oEvent) {
+        const sFontSize = oEvent.getSource().getSelectedKey();
+        document.querySelector(':root').style.setProperty('--StatisticNumberFontSize', sFontSize);
       },
 
       /*****************************************************************

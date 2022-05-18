@@ -179,22 +179,19 @@ sap.ui.define(
 
       setContentsBusy(bContentsBusy = true, vTarget = []) {
         const oViewModel = this.getViewModel();
+        const mBusy = oViewModel.getProperty('/busy');
 
         if (_.isEmpty(vTarget)) {
-          oViewModel.setProperty('/busy', {
-            Tyymm: bContentsBusy,
-            Werks: bContentsBusy,
-            Orgeh: bContentsBusy,
-            Button: bContentsBusy,
-            Calendar: bContentsBusy,
-          });
+          _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
         } else {
           if (_.isArray(vTarget)) {
-            _.forEach(vTarget, (s) => oViewModel.setProperty(`/busy/${s}`, bContentsBusy));
+            _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
           } else {
-            oViewModel.setProperty(`/busy/${vTarget}`, bContentsBusy);
+            _.set(mBusy, vTarget, bContentsBusy);
           }
         }
+
+        oViewModel.refresh();
       },
 
       onPressSearch() {

@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <HBox>
+        <table:Table width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}">
+            <table:columns>
+                <table:Column width="10%">
+                    <Label text="{i18n>LABEL_00170}"/>
+                    <table:template>
+                        <ObjectStatus text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" state="{= ${Holiday} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="4%">
+                    <Label text="{i18n>LABEL_00350}"/>
+                    <table:template>
+                        <ObjectStatus text="{Todo2}" state="{= ${Holiday} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="12%">
+                    <Label text="{i18n>LABEL_00151}"/>
+                    <table:template>
+                        <Text text="{Todo3}" width="100%" textAlign="Center" wrapping="false" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="9%">
+                    <Label text="{i18n>LABEL_40004}"/>
+                    <table:template>
+                        <TimePicker value="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="9%">
+                    <Label text="{i18n>LABEL_40005}"/>
+                    <table:template>
+                        <TimePicker value="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="9%">
+                    <Label text="{i18n>LABEL_40018}"/>
+                    <table:template>
+                        <Input value="{ path: 'Todo6', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="9%">
+                    <Label text="{i18n>LABEL_40019}"/>
+                    <table:template>
+                        <Input value="{ path: 'Todo7', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_40020}"/>
+                    <table:template>
+                        <ObjectStatus text="{ path: 'Todo8', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" state="Indication05" class="table-object-status" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_40021}"/>
+                    <table:template>
+                        <Text text="{ path: 'Todo9', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_40022}"/>
+                    <table:template>
+                        <Text text="{ path: 'Todo10', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="auto">
+                    <Label text="{i18n>LABEL_40023}"/>
+                    <table:template>
+                        <Text text="{ path: 'Todo11', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="14%">
+                    <Label text="{i18n>LABEL_00163}"/>
+                    <table:template>
+                        <ObjectStatus text="{Todo12}" state="Error" class="table-object-status align-start" />
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
+    </HBox>
+</core:FragmentDefinition>

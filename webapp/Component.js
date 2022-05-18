@@ -53,16 +53,17 @@ sap.ui.define(
         moment.locale(navigator.language || 'ko');
 
         this.bIsMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
-        this.toggleDeviceStyle();
 
-        this.setDeviceModel() // 디바이스 모델 생성
+        this.toggleDeviceStyle()
+          .setDeviceModel() // 디바이스 모델 생성
           .setAppModel() // Busy indicator 값 저장 모델 생성
           .setMetadataModel()
           .setServiceModel() // S4HANA OData 서비스 모델 생성
           .setErrorHandler() // S4HANA ZHR_COMMON_SRV OData 서비스 Error handler 생성
           .setSessionModel() // 세션 정보 모델 생성
           .setAppointeeModel() // 대상자 정보 모델 생성
-          .setMenuModel(); // 메뉴 정보 모델 생성
+          .setMenuModel() // 메뉴 정보 모델 생성
+          .setMobilePopoverStacker();
 
         // call the base component's init function and create the App view
         UIComponent.prototype.init.apply(this, aArgs);
@@ -129,6 +130,7 @@ sap.ui.define(
         } else {
           $('#mobilestyle').remove();
         }
+        return this;
       },
 
       /**
@@ -205,6 +207,25 @@ sap.ui.define(
        */
       getMenuModel() {
         return this.getModel('menuModel');
+      },
+
+      setMobilePopoverStacker() {
+        if (!this.bIsMobile) {
+          return;
+        }
+        this.aMobilePopoverStacker = [];
+        $(document).on('click', '#sap-ui-blocklayer-popup', () => {
+          const oPopover = this.aMobilePopoverStacker.pop();
+          if (oPopover && typeof oPopover.isOpen === 'function' && oPopover.isOpen()) {
+            oPopover.close();
+          }
+        });
+        return this;
+      },
+
+      registerPopover(oPopover) {
+        this.aMobilePopoverStacker.push(oPopover);
+        return this;
       },
 
       /**

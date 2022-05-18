@@ -55,18 +55,10 @@ sap.ui.define(
           })
           .attachAfterOpen(() => {
             setTimeout(() => {
-              $('#sap-ui-blocklayer-popup')
-                .off('click')
-                .on('click', () => {
-                  this.closePopover();
-                });
-            }, 100);
-          })
-          .attachBeforeClose(() => {
-            setTimeout(() => {
-              $('#sap-ui-blocklayer-popup').off('click');
+              AppUtils.getAppComponent().registerPopover(this.oPopover);
             });
           })
+          .attachBeforeClose(() => {})
           .attachAfterClose(() => {
             setTimeout(() => {
               this.onAfterClose();
@@ -151,7 +143,8 @@ sap.ui.define(
 
       setPayloadFromData() {},
 
-      closePopover() {
+      closePopover(oEvent) {
+        oEvent.stopImmediatePropagation();
         this.oPopover.close();
       },
 
