@@ -31,7 +31,7 @@ sap.ui.define(
 
       async onBeforeOpen() {
         const oModel = this.oController.getModel(ServiceNames.PA);
-        const mPayload = this.getPayload();
+        const mPayload = this.getPayloadData();
 
         const aEmployees = await Client.getEntitySet(oModel, 'HeadCountDetail', mPayload);
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
@@ -49,18 +49,6 @@ sap.ui.define(
         );
 
         this.setBusy(false);
-      },
-
-      getPayload() {
-        const mSessionProperty = this.oController.getSessionModel().getData();
-        const mPayloadData = this.getPayloadData();
-        return {
-          Zyear: moment().year(),
-          Werks: mSessionProperty.Werks,
-          Orgeh: mSessionProperty.Orgeh,
-          Headty: mPayloadData.Headty,
-          Discod: mPayloadData.Discod,
-        };
       },
 
       onAfterClose() {

@@ -5,6 +5,7 @@ sap.ui.define([], function () {
     COLORS: ['#7BB4EB', '#81DAEA', '#A9F482', '#FFE479', '#FFB7AF', '#FFAC4B', '#D484F2', '#A684F2', '#9090FF', '#ACB3FF'],
     CHART_TYPE: [
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'A',
         Target: 'A01',
         Chart: 'cylinder',
@@ -31,6 +32,7 @@ sap.ui.define([], function () {
         ],
       },
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'B',
         Target: 'A02',
         Chart: 'column2d',
@@ -41,6 +43,7 @@ sap.ui.define([], function () {
         ],
       },
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'C',
         Target: 'A03',
         Chart: 'column2d',
@@ -51,6 +54,7 @@ sap.ui.define([], function () {
         ],
       },
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'D',
         Target: 'A04',
         Chart: 'none',
@@ -68,9 +72,10 @@ sap.ui.define([], function () {
           { prop: 'Cnt04C', path: [0, 'Cod04'] },
         ],
       },
-      { Headty: 'E', Target: 'A05', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
-      { Headty: 'F', Target: 'A06', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Device: ['PC', 'Mobile'], Headty: 'E', Target: 'A05', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Device: ['PC', 'Mobile'], Headty: 'F', Target: 'A06', Chart: 'bar2d', DetailEntity: 'TimeOverviewDetail2' },
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'H',
         Target: 'A08',
         Chart: 'bar2d',
@@ -80,6 +85,7 @@ sap.ui.define([], function () {
         ],
       },
       {
+        Device: ['PC', 'Mobile'],
         Headty: 'I',
         Target: 'A09',
         Chart: 'bar2d',
@@ -88,8 +94,9 @@ sap.ui.define([], function () {
           { prop: 'Rte02', path: [0, 'Rte02'] }, //
         ],
       },
-      { Headty: 'G', Target: 'A07', Chart: 'mscombi2d', DetailEntity: 'TimeOverviewDetail2' },
-      { Headty: 'J', Target: 'A10', Chart: 'mscolumn2d', DetailEntity: 'TimeOverviewDetail3' },
+      { Device: ['PC'], Headty: 'G', Target: 'A07', Chart: 'mscombi2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Device: ['Mobile'], Headty: 'G', Target: 'A07', Chart: 'scrollcombi2d', DetailEntity: 'TimeOverviewDetail2' },
+      { Device: ['PC'], Headty: 'J', Target: 'A10', Chart: 'mscolumn2d', DetailEntity: 'TimeOverviewDetail3' },
     ],
     CHART_OPTIONS: {
       cylinder: {

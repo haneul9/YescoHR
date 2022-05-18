@@ -322,8 +322,8 @@ sap.ui.define(
       },
 
       onPressSearchAreaToggle() {
-        const bExpanded = $('.row-4').length === 1;
-        $('.search-area').toggleClass('row-4', !bExpanded).toggleClass('row-0', bExpanded);
+        const bExpanded = $('.row-3').length === 1;
+        $('.search-area').toggleClass('row-3', !bExpanded).toggleClass('row-0', bExpanded);
         this.getViewModel().setProperty('/searchAreaClose', bExpanded);
       },
 

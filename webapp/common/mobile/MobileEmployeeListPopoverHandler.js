@@ -115,6 +115,10 @@ sap.ui.define(
           mPayloadData = oParam;
         }
 
+        if (mPayloadData.OData) {
+          delete mPayloadData.OData;
+        }
+
         this.setPayloadData(mPayloadData);
 
         this.oPopover.openBy(oEventSource);
