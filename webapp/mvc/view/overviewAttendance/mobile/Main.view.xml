@@ -6,7 +6,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
     <headerContent>
-      <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchConditions/close}" />
+      <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchAreaClose}" />
     </headerContent>
     <VBox class="contents">
       <HBox alignItems="End" class="search-area row-3">

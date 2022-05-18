@@ -28,11 +28,11 @@ sap.ui.define(
         };
         return {
           busy: false,
+          searchAreaClose: false,
           searchConditions: {
             Zyear: moment().format('YYYY'),
             Werks: '',
             Orgeh: '',
-            close: false,
           },
           entry: {
             Werks: [],
@@ -324,7 +324,7 @@ sap.ui.define(
       onPressSearchAreaToggle() {
         const bExpanded = $('.row-4').length === 1;
         $('.search-area').toggleClass('row-4', !bExpanded).toggleClass('row-0', bExpanded);
-        this.getViewModel().setProperty('/searchConditions/close', bExpanded);
+        this.getViewModel().setProperty('/searchAreaClose', bExpanded);
       },
 
       onChangeFontSize(oEvent) {
