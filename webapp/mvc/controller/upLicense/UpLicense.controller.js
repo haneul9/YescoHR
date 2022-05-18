@@ -64,12 +64,6 @@ sap.ui.define(
         }
       },
 
-      NumTxt(sNum = '0') {
-        Math.sign(sNum);
-
-        return sNum;
-      },
-
       // TabBar 선택
       onSelectTabBar() {
         const oViewModel = this.getViewModel();
@@ -213,9 +207,6 @@ sap.ui.define(
                 ...mInfo,
               });
               oViewModel.setProperty(sListName, aTableList);
-              setTimeout(() => {
-                this.TableUtils.setColorColumn({ oTable, mColorMap: { 0: 'bgType12', 1: 'bgType12' } });
-              }, 50);
               break;
             case 'B':
               this.createDynTable(oTable, sListName, mInfo, aTableList);
@@ -242,17 +233,17 @@ sap.ui.define(
           { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), width: '15%' }, // 부서
           { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), width: '5%' }, // 인원수
           ..._.times(_.size(aTableList), (i) => {
-            return { colId: `Cert${aTableList[i].Certty}${aTableList[i].Certdt}`, colName: aTableList[i].Certtytx, width: 'auto' };
+            return { colId: `Cert${aTableList[i].Certty}${aTableList[i].Certdt}`, colName: aTableList[i].Discert, width: 'auto' };
           }),
-          { colId: 'Sumcnt', colName: this.getBundleText('LABEL_00172'), width: 'auto' }, // 합계
+          // { colId: 'Sumcnt', colName: this.getBundleText('LABEL_00172'), width: 'auto' }, // 합계
         ];
         const aGroupby = _.groupBy(aTableList, 'Orgeh');
-        const aBodyRows = [
+        const aRows = [
           ..._.map(aGroupby, (e) => {
             const [mBody] = _.map(
               _.map(aGroupby, (e) => {
                 return _.map(e, (e1) => {
-                  return [...[`Cert${e1.Certty}${e1.Certdt}`, _.parseInt(e1.Discntg || 0)]];
+                  return [...[`Cert${e1.Certty}${e1.Certdt}`, e1.Discntg]];
                 });
               }),
               (v) => {
@@ -269,22 +260,21 @@ sap.ui.define(
             return { ...mBody, Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt, Sumcnt: iSum };
           }),
         ];
-        const mSumRow = {
-          ...this.TableUtils.generateSumRow({
-            aTableData: aBodyRows,
-            mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
-            vCalcProps: /^Cert/,
-          }),
-          ..._.pick(
-            this.TableUtils.generateSumRow({
-              aTableData: aBodyRows,
-              mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
-              vCalcProps: ['Sumcnt', 'Empcnt'],
-            }),
-            ['Sumcnt', 'Empcnt']
-          ),
-        };
-        const aRows = [...aBodyRows, mSumRow];
+        // const mSumRow = {
+        //   ...this.TableUtils.generateSumRow({
+        //     aTableData: aBodyRows,
+        //     mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
+        //     vCalcProps: /^Cert/,
+        //   }),
+        //   ..._.pick(
+        //     this.TableUtils.generateSumRow({
+        //       aTableData: aBodyRows,
+        //       mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
+        //       vCalcProps: ['Sumcnt', 'Empcnt'],
+        //     }),
+        //     ['Sumcnt', 'Empcnt']
+        //   ),
+        // };
 
         oViewModel.setData(
           {
@@ -331,9 +321,6 @@ sap.ui.define(
           ...this.TableUtils.count({ oTable, aRowData: aRows }),
           ...mInfo,
         });
-        setTimeout(() => {
-          this.TableUtils.setColorColumn({ oTable, mColorMap: { 0: 'bgType12', 1: 'bgType12' } });
-        }, 50);
       },
     });
   }

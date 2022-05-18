@@ -20,31 +20,31 @@
           }"/>
       </table:rowSettingsTemplate>
       <table:columns>
-        <table:Column width="7%" filterProperty="Ename" sortProperty="Ename">
+        <table:Column width="10%" filterProperty="Ename" sortProperty="Ename">
           <Label text="{i18n>LABEL_00210}" />
           <table:template>
             <Text text="{Ename}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="8%" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
+        <table:Column width="10%" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
           <Label text="{i18n>LABEL_00136}" />
           <table:template>
             <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="9%" filterProperty="Orgtx" sortProperty="Orgtx">
+        <table:Column width="10%" filterProperty="Orgtx" sortProperty="Orgtx">
           <Label text="{i18n>LABEL_00224}" />
           <table:template>
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="16%" filterProperty="Cttyptx" sortProperty="Cttyptx">
+        <table:Column width="auto" filterProperty="Cttyptx" sortProperty="Cttyptx">
           <Label text="{i18n>LABEL_00318}" />
           <table:template>
             <Text text="{Cttyptx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="16%" filterProperty="Ctgrdtx" sortProperty="Ctgrdtx">
+        <table:Column width="10%" filterProperty="Ctgrdtx" sortProperty="Ctgrdtx">
           <Label text="{i18n>LABEL_00309}" />
           <table:template>
             <Text text="{Ctgrdtx}" width="100%" textAlign="Center" />
@@ -62,13 +62,13 @@
             <Text text="{Techgdtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="11%" filterProperty="Certtytx" sortProperty="Certtytx">
+        <table:Column width="10%" filterProperty="Certtytx" sortProperty="Certtytx">
           <Label text="{i18n>LABEL_39006}" />
           <table:template>
             <Text text="{Certtytx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="auto" filterProperty="Certdttx" sortProperty="Certdttx">
+        <table:Column width="10%" filterProperty="Certdttx" sortProperty="Certdttx">
           <Label text="{i18n>LABEL_39007}" />
           <table:template>
             <Text text="{Certdttx}" width="100%" textAlign="Center" />
