@@ -29,7 +29,10 @@ sap.ui.define(
           busy: false,
           selectedKey: 'A',
           registList: [],
+          dialog: [],
+          indiList: [],
           rows: [],
+          dialogList: [],
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -40,6 +43,10 @@ sap.ui.define(
             completeCount: 0,
           },
         };
+      },
+
+      onBeforeShow() {
+        this.TableUtils.summaryColspan({ oTable: this.byId(this.sRegistTable), aHideIndex: [1] });
       },
 
       onObjectMatched() {
@@ -69,6 +76,66 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/busy', false);
         }
+      },
+
+      async onRegistSelectRow(oEvent) {
+        const mRowData = oEvent.getParameter('rowBindingContext').getObject();
+        const mPayLoad = {
+          Certty: mRowData.Certty,
+          Certdt: mRowData.Certdt,
+          Prcty: '1',
+          Menid: this.getCurrentMenuId(),
+        };
+
+        this.openDialog(mPayLoad);
+      },
+
+      async onDeptSelectRow(sColumnId, oEvent) {
+        const mRowData = oEvent.getSource().getBindingContext().getProperty();
+        const sCertty = sColumnId.slice(4, 8);
+        const sCertdt = sColumnId.slice(8, 12);
+        const mPayLoad = {
+          Certty: sCertty,
+          Certdt: sCertdt,
+          Orgeh: mRowData.Orgeh,
+          Prcty: '2',
+          Menid: this.getCurrentMenuId(),
+        };
+
+        this.openDialog(mPayLoad);
+      },
+
+      // Open Dialog
+      async openDialog(mPayLoad = {}) {
+        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.PA);
+        const aDetail = await Client.getEntitySet(oModel, 'PersLicenseList', mPayLoad);
+
+        setTimeout(() => {
+          if (!this._pDetailDialog) {
+            const oView = this.getView();
+
+            this._pDetailDialog = Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.upLicense.fragment.DetailDialog',
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+
+          this._pDetailDialog.then(function (oDialog) {
+            oViewModel.setProperty('/dialogList', aDetail);
+            oViewModel.setProperty('/dialogListCount', _.size(aDetail));
+            oDialog.open();
+          });
+        }, 100);
+      },
+
+      // Dialog Close
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
       },
 
       // Tab에 맞는 Odata호출
@@ -108,12 +175,10 @@ sap.ui.define(
               };
               break;
             case 'C':
-              // 숫자 클릭 시 상세내역이 팝업으로 조회됩니다.
-              sTableMSG = this.getBundleText('MSG_39002');
               sTableTitle = this.getBundleText('LABEL_39004'); // 개인별 면허보유현황
               sName = 'PersLicenseList';
               sTableName = this.sIndividualTable;
-              sListName = '/rows';
+              sListName = '/indiList';
               mPayLoad = {
                 Prcty: '3',
                 Menid: this.getCurrentMenuId(),
@@ -135,14 +200,24 @@ sap.ui.define(
           const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
           const oTable = this.byId(sTableName);
 
-          if (sSelectKey !== 'A') {
-            this.createDynTable(oTable, sListName, aTableList);
-          } else {
-            oViewModel.setProperty('/listInfo', {
-              ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-              ...mInfo,
-            });
-            oViewModel.setProperty(sListName, aTableList);
+          switch (sSelectKey) {
+            case 'A':
+              oViewModel.setProperty('/listInfo', {
+                ...this.TableUtils.count({ oTable, aRowData: aTableList }),
+                ...mInfo,
+              });
+              oViewModel.setProperty(sListName, aTableList);
+              break;
+            case 'B':
+              this.createDynTable(oTable, sListName, mInfo, aTableList);
+              break;
+            case 'C':
+              oViewModel.setProperty('/listInfo', {
+                ...this.TableUtils.count({ oTable, aRowData: aTableList }),
+                ...mInfo,
+              });
+              oViewModel.setProperty(sListName, aTableList);
+              break;
           }
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -152,43 +227,100 @@ sap.ui.define(
       },
 
       // dynamic Table
-      createDynTable(oTable, sListName, aTableList = []) {
-        const oModel = new sap.ui.model.json.JSONModel();
+      createDynTable(oTable, sListName, mInfo, aTableList = []) {
+        const oViewModel = this.getViewModel();
         const aColumnData = [
-          { colId: 'Dept', colName: this.getBundleText('LABEL_00224'), colVisibility: true, colPosition: 0 }, // 부서
-          { colId: 'Cnt', colName: this.getBundleText('LABEL_39014'), colVisibility: true, colPosition: 1 }, // 인원수
+          { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), width: '15%' }, // 부서
+          { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), width: '5%' }, // 인원수
           ..._.times(_.size(aTableList), (i) => {
-            return { colId: aTableList[i].Certty + aTableList[i].Certdt, colName: aTableList[i].Certtytx, colVisibility: true, colPosition: i + 2 };
+            return { colId: `Cert${aTableList[i].Certty}${aTableList[i].Certdt}`, colName: aTableList[i].Discert, width: 'auto' };
+          }),
+          // { colId: 'Sumcnt', colName: this.getBundleText('LABEL_00172'), width: 'auto' }, // 합계
+        ];
+        const aGroupby = _.groupBy(aTableList, 'Orgeh');
+        const aRows = [
+          ..._.map(aGroupby, (e) => {
+            const [mBody] = _.map(
+              _.map(aGroupby, (e) => {
+                return _.map(e, (e1) => {
+                  return [...[`Cert${e1.Certty}${e1.Certdt}`, e1.Discntg]];
+                });
+              }),
+              (v) => {
+                return _.fromPairs(v); // 배열을 Obj변환
+              }
+            );
+            const iSum = _.reduce(
+              mBody,
+              (total, num) => {
+                return total + num;
+              },
+              0
+            );
+            return { ...mBody, Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt, Sumcnt: iSum };
           }),
         ];
+        // const mSumRow = {
+        //   ...this.TableUtils.generateSumRow({
+        //     aTableData: aBodyRows,
+        //     mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
+        //     vCalcProps: /^Cert/,
+        //   }),
+        //   ..._.pick(
+        //     this.TableUtils.generateSumRow({
+        //       aTableData: aBodyRows,
+        //       mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
+        //       vCalcProps: ['Sumcnt', 'Empcnt'],
+        //     }),
+        //     ['Sumcnt', 'Empcnt']
+        //   ),
+        // };
 
-        _.map(_.groupBy(aTableList, 'Orgeh'), (e) => {
-          let i1 = 0;
-          _.map(e, (e1) => {
-            const i = _.parseInt(e1.Discntg || 0);
-
-            i1 = i1 + i;
-          });
-          return i1;
-        });
-
-        oModel.setData({
-          rows: aTableList,
-          columns: aColumnData,
-        });
-        debugger;
-
-        oTable.setModel(oModel);
+        oViewModel.setData(
+          {
+            rows: aRows,
+            columns: aColumnData,
+          },
+          true
+        );
+        oTable.setModel(oViewModel);
         oTable.bindColumns('/columns', (sId, oContext) => {
-          const sColumnName = oContext.getObject().colName;
-          const sColumnId = oContext.getObject().colId;
+          const mConObj = oContext.getObject();
+          const sColumnName = mConObj.colName;
+          const sColumnId = mConObj.colId;
+          const sWidth = mConObj.width;
 
           return new sap.ui.table.Column({
-            label: sColumnName,
-            template: sColumnId,
+            label: new sap.m.Label({
+              text: sColumnName,
+            }),
+            template: new sap.m.HBox({
+              items: [
+                new sap.m.Text({
+                  layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
+                  text: `{${sColumnId}}`,
+                  width: '100%',
+                  textAlign: 'Center',
+                  visible: sColumnId === 'Orgtx' || sColumnId === 'Empcnt' || sColumnId === 'Sumcnt',
+                }),
+                new sap.m.Link({
+                  layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
+                  width: '100%',
+                  textAlign: 'Center',
+                  text: `{${sColumnId}}`,
+                  press: this.onDeptSelectRow.bind(this, sColumnId),
+                  visible: sColumnId !== 'Orgtx' && sColumnId !== 'Empcnt' && sColumnId !== 'Sumcnt',
+                }),
+              ],
+            }),
+            width: sWidth,
           });
         });
         oTable.bindRows(sListName);
+        oViewModel.setProperty('/listInfo', {
+          ...this.TableUtils.count({ oTable, aRowData: aRows }),
+          ...mInfo,
+        });
       },
     });
   }

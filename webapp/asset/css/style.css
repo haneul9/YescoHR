@@ -837,6 +837,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiIcon[data-status="Z65"] {color:var(--BorderColorError) !important}
 .sapUiIcon[data-status="Z60"] {color:var(--BorderColorFocus) !important}
 
+.sapMText[data-number="posiNum"] {color: #0450fb !important;}
+.sapMText[data-number="negaNum"] {color: #ff384b !important;}
+
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] {background-color:#e0e0e0}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] {background-color:#707070}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Normal"] {background-color:#fff}
