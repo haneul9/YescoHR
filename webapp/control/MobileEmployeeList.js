@@ -54,53 +54,15 @@ sap.ui.define(
 
         const fItemPress = this.getItemPress();
         if (fItemPress) {
-          oPhoto = new Image({
-            src: `{${this.getPhoto()}}`,
-            mode: ImageMode.Background,
-            layoutData: new FlexItemData({ styleClass: 'employee-photo' }),
-          });
-
-          oName = new Text({
-            text: `{${this.getName()}}`,
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-name' }),
-          });
-
-          oRankDuty = new Text({
-            text: this.getRankDutyBindable(),
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-position' }),
-          });
-
-          oDepartment = new Text({
-            text: `{${this.getDepartment()}}`,
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-department' }),
-          });
+          oPhoto = new Image({ src: `{${this.getPhoto()}}`, mode: ImageMode.Background });
+          oName = new Text({ text: `{${this.getName()}}`, wrapping: false });
+          oRankDuty = new Text({ text: this.getRankDutyBindable(), wrapping: false });
+          oDepartment = new Text({ text: `{${this.getDepartment()}}`, wrapping: false });
         } else {
-          oPhoto = new Image({
-            src: `{${this.getPhoto()}}`,
-            mode: ImageMode.Background,
-            layoutData: new FlexItemData({ styleClass: 'employee-photo' }),
-          });
-
-          oName = new Link({
-            text: `{${this.getName()}}`,
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-name' }),
-          });
-
-          oRankDuty = new Link({
-            text: this.getRankDutyBindable(),
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-position' }),
-          });
-
-          oDepartment = new Link({
-            text: `{${this.getDepartment()}}`,
-            wrapping: false,
-            layoutData: new FlexItemData({ styleClass: 'employee-department' }),
-          });
+          oPhoto = new Image({ src: `{${this.getPhoto()}}`, mode: ImageMode.Background });
+          oName = new Link({ text: `{${this.getName()}}`, wrapping: false });
+          oRankDuty = new Link({ text: this.getRankDutyBindable(), wrapping: false });
+          oDepartment = new Link({ text: `{${this.getDepartment()}}`, wrapping: false });
 
           const sHref = this.getHref();
           if (sHref) {
