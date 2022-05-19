@@ -393,7 +393,11 @@ sap.ui.define(
 
           _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('Mobile')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
