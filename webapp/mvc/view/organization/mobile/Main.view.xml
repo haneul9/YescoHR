@@ -8,12 +8,12 @@
         <layoutData>
           <FlexItemData minHeight="68px" />
         </layoutData>
-        <ComboBox width="100%" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+        <MultiComboBox width="100%" class="mobile-single-combo" items="{/entry/Werks}" selectedKeys="{/search/Werks}" selectionChange=".onChangeWerks">
           <layoutData>
             <FlexItemData minWidth="100%" maxWidth="100%" />
           </layoutData>
           <core:Item text="{Pbtxt}" key="{Werks}" />
-        </ComboBox>
+        </MultiComboBox>
       </HBox>
       <FlexBox id="ChartHolder" class="org-chart-container mt-1-px" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0">
         <customData>

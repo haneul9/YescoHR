@@ -62,7 +62,7 @@ sap.ui.define(
               entry: {
                 Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
               },
-              search: { Werks: mAppointee.Werks },
+              search: { Werks: _.concat(mAppointee.Werks) },
             });
             oViewModel.setSizeLimit(1000);
             this.setViewModel(oViewModel);
@@ -153,14 +153,16 @@ sap.ui.define(
         oChart.compact(!bCompact).render().fit();
       },
 
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
+          this.onMultiToSingleCombo(oEvent);
+
           this.chartHolder.setBusy(true);
           this.chartHolder.removeAllItems();
 
-          const sWerks = oViewModel.getProperty('/search/Werks');
+          const sWerks = oViewModel.getProperty('/search/Werks/0');
           const aReturnData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmployeeOrgTree', {
             Menid: this.getCurrentMenuId(),
             Werks: sWerks,
