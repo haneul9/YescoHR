@@ -312,15 +312,30 @@ sap.ui.define(
         }
       },
 
+      onChangeTimeFormat(oEvent) {
+        const oSource = oEvent.getSource();
+        const aSourceValue = _.split(oSource.getValue(), ':');
+        const iMinutesRemainder = _.chain(aSourceValue).get(1).toNumber().divide(30).value();
+
+        if (!_.isInteger(iMinutesRemainder)) {
+          const iConvertedMinutesValue = _.chain(iMinutesRemainder).floor().multiply(30).value();
+
+          oSource.setValue([_.get(aSourceValue, 0), iConvertedMinutesValue].join(':'));
+          oSource.setDateValue(moment(`${_.get(aSourceValue, 0)}${iConvertedMinutesValue}`, 'hhmm').toDate());
+        } else {
+          oSource.setDateValue(moment(aSourceValue.join(''), 'hhmm').toDate());
+        }
+      },
+
       onDiffTime(oEvent) {
+        this.onChangeTimeFormat(oEvent);
+
         const oRowBindingContext = oEvent.getSource().getBindingContext();
         const mRowData = oRowBindingContext.getObject();
         const sPath = oRowBindingContext.getPath();
         const sTimeFormat = 'hhmm';
 
-        if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) {
-          _.set(mRowData, 'Anzb', '');
-        } else {
+        if (_.isDate(mRowData.Beguz) && _.isDate(mRowData.Enduz)) {
           _.set(
             mRowData,
             'Anzb',
@@ -331,6 +346,8 @@ sap.ui.define(
                 .asHours()
             )
           );
+        } else {
+          _.set(mRowData, 'Anzb', '');
         }
 
         if (_.startsWith(sPath, '/dialog/extra')) this.calcExtraTimeSum();
