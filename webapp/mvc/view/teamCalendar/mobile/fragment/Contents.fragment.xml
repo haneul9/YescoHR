@@ -6,12 +6,12 @@
             <custom:MobileScrollContainer horizontal="false" vertical="true">
                 <VBox class="search-area" visible="{= ${/auth} !== 'E' }">
                     <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-                        <ComboBox width="100%" selectedKey="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
+                        <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Werks}" selectionChange=".onChangeWerks">
                             <layoutData>
                                 <FlexItemData minWidth="67%" maxWidth="67%" />
                             </layoutData>
                             <core:Item key="{Werks}" text="{Pbtxt}" />
-                        </ComboBox>
+                        </MultiComboBox>
                     </HBox>
                     <HBox justifyContent="SpaceBetween" alignItems="Center">
                         <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}" selectionChange=".onMultiToSingleCombo">
