@@ -131,7 +131,7 @@ sap.ui.define(
         const aWeekNames = _.times(7, (e) => {
           return `${this.oController.getBundleText(`LABEL_180${e + 25}`)}`; // 월,화,수,목,금,토,일
         });
-        const mWeekHeaders = aWeekNames.map((o, i) => this.getBoxObject({ label: o, holiday: i === 5 || i === 6 ? 'Holiday' : 'None' }));
+        const mWeekHeaders = aWeekNames.map((o, i) => this.getBoxObject({ label: o, holiday: i === 5 || i === 6 ? 'Holiday' : 'None', classNames: 'Day' }));
 
         return [...mWeekHeaders];
       },
