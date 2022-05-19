@@ -182,9 +182,9 @@ sap.ui.define(
       setDetailsTableRowColor() {
         setTimeout(() => {
           const oDetailsTable = this.byId('flextimeDetailsTable');
-          const $checkBoxEls = $(`${oDetailsTable.getId()}-sapUiTableRowHdrScr`);
+          const sTableId = oDetailsTable.getId();
 
-          oDetailsTable.getRows().forEach((row) => {
+          oDetailsTable.getRows().forEach((row, i) => {
             const mRowData = row.getBindingContext().getObject();
 
             if (mRowData.Erryn === 'X') {
@@ -199,18 +199,27 @@ sap.ui.define(
               row.removeStyleClass('row-select');
             }
 
-            // if (mRowData.Offyn === 'X') {
-            //   $checkBoxEls.find(`[data-sap-ui-rowindex="0"]`).attr()
-            // } else {
-            // }
+            if (mRowData.Offyn === 'X') {
+              $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');
+            } else {
+              $(`#${sTableId}-rowsel${i}`).removeClass('disabled-table-selection');
+            }
           });
         }, 100);
       },
 
       onSelectionDetailsTable(oEvent) {
         const oViewModel = this.getViewModel();
+        const oTable = oEvent.getSource();
         const aDetailsList = oViewModel.getProperty('/details/list');
-        const aSelectedIndices = oEvent.getSource().getSelectedIndices();
+
+        if (oEvent.getParameter('selectAll') === true) {
+          _.forEach(aDetailsList, (o, i) => {
+            if (o.Offyn === 'X') oTable.removeSelectionInterval(i, i);
+          });
+        }
+
+        const aSelectedIndices = oTable.getSelectedIndices();
 
         _.forEach(aDetailsList, (o, i) => _.set(o, 'Checked', _.includes(aSelectedIndices, i)));
         oViewModel.refresh();
@@ -230,7 +239,6 @@ sap.ui.define(
         this._oTimeInputDialog.attachBeforeOpen(async () => {
           const oViewModel = this.getViewModel();
           const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
-          const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
 
           if (aTargetDates.length === 1) {
             const dDate = moment(aTargetDates[0]).hours(9);
@@ -247,8 +255,8 @@ sap.ui.define(
               { Beguz: _.get(mResult, 'Pbeg2'), Enduz: _.get(mResult, 'Pend2'), Anzb: _.get(mResult, 'Anzb2'), Resn: _.get(mResult, 'Resn2'), Sumrow: false },
               { Beguz: _.get(mResult, 'Pbeg3'), Enduz: _.get(mResult, 'Pend3'), Anzb: _.get(mResult, 'Anzb3'), Resn: _.get(mResult, 'Resn3'), Sumrow: false },
               {
-                Beguz: sSumLabel,
-                Enduz: sSumLabel,
+                Beguz: null,
+                Enduz: null,
                 Anzb: _.chain(mResult)
                   .pick(['Pend1', 'Pend2', 'Pend3'])
                   .values()
@@ -260,13 +268,13 @@ sap.ui.define(
               },
             ]);
           } else if (aTargetDates.length > 1) {
-            oViewModel.setProperty('/dialog/work/list', [{ Beguz: '0900', Enduz: '1800' }]);
-            oViewModel.setProperty('/dialog/legal/list', [{ Beguz: '1200', Enduz: '1300', Anzb: '1.00', Brk01m: '1.00' }]);
+            oViewModel.setProperty('/dialog/work/list', [{ Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate() }]);
+            oViewModel.setProperty('/dialog/legal/list', [{ Beguz: moment('1200', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Anzb: '1.00', Brk01m: '1.00' }]);
             oViewModel.setProperty('/dialog/extra/list', [
-              { Beguz: '', Enduz: '', Anzb: '', Resn: '', Sumrow: false }, //
-              { Beguz: '', Enduz: '', Anzb: '', Resn: '', Sumrow: false },
-              { Beguz: '', Enduz: '', Anzb: '', Resn: '', Sumrow: false },
-              { Beguz: sSumLabel, Enduz: sSumLabel, Anzb: '0', Resn: '', Sumrow: true },
+              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false }, //
+              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
+              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
+              { Beguz: null, Enduz: null, Anzb: '0', Resn: '', Sumrow: true },
             ]);
           }
         });
