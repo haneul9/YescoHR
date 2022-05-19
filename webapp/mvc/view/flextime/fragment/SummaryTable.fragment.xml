@@ -4,7 +4,7 @@
     <HBox>
         <table:Table id="flextimeSummaryTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
             <table:columns>
-                <table:Column width="12%">
+                <table:Column width="10%">
                     <Label text="{i18n>LABEL_40009}"/>
                     <table:template>
                         <DatePicker value="{Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" change=".onChangeMonth" />
@@ -52,7 +52,7 @@
                         <Text text="{ path: 'Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="16%">
                     <Label text="{i18n>LABEL_00144}"/>
                     <table:template>
                         <ObjectStatus text="{Statxt}" state="{= ${Stacol} === '2' ? 'Error' : 'Indication05' }" class="table-object-status" />
@@ -61,7 +61,7 @@
                 <table:Column width="12%">
                     <Label text="{i18n>LABEL_40017}"/>
                     <table:template>
-                        <Text text="{ path: 'Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <Text text="{Clsdatx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
             </table:columns>

@@ -37,21 +37,21 @@ sap.ui.define(
           summary: {
             rowCount: 1,
             list: [
-              { Zyymm: moment().format('YYYYMM'), Caldays: '31', Wrkdays: '22', Bastim: '177', Ctrtim: '196', Daytim: '194', Gaptim: '-2', Wekavg: '48.50', Statxt: '계약근로시간 미달', Stacol: '2', Clsda: moment('20220405').toDate() }, //
+              { Zyymm: moment().format('YYYYMM'), Caldays: '31', Wrkdays: '22', Bastim: '177', Ctrtim: '196', Daytim: '194', Gaptim: '-2', Wekavg: '48.50', Statxt: '계약근로시간 미달', Stacol: '2', Clsda: moment('20220405').toDate(), Clsdatx: moment('20220405').format('YYYY.MM.DD') }, //
             ],
           },
           details: {
             rowCount: 9,
             list: [
-              { Offyn: 'X', Datum: moment('20220301').toDate(), Daytx: '화', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' }, //
-              { Offyn: '', Datum: moment('20220302').toDate(), Daytx: '수', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220303').toDate(), Daytx: '목', Atext: '연차', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: '', Datum: moment('20220304').toDate(), Daytx: '금', Atext: '', Beguz: moment('1000', 'hhmm').toDate(), Enduz: moment('1500', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220305').toDate(), Daytx: '토', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: 'X', Datum: moment('20220306').toDate(), Daytx: '일', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
-              { Offyn: '', Datum: moment('20220307').toDate(), Daytx: '월', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('2130', 'hhmm').toDate(), Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
-              { Offyn: '', Datum: moment('20220308').toDate(), Daytx: '화', Atext: '반차(오전)', Beguz: moment('1400', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' },
-              { Offyn: '', Datum: moment('20220309').toDate(), Daytx: '수', Atext: '반차(오후)', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220301').toDate(), Datumtx: moment('20220301').format('YYYY.MM.DD'), Daytx: '화', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' }, //
+              { Offyn: '', Datum: moment('20220302').toDate(), Datumtx: moment('20220302').format('YYYY.MM.DD'), Daytx: '수', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220303').toDate(), Datumtx: moment('20220303').format('YYYY.MM.DD'), Daytx: '목', Atext: '연차', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220304').toDate(), Datumtx: moment('20220304').format('YYYY.MM.DD'), Daytx: '금', Atext: '', Beguz: moment('1000', 'hhmm').toDate(), Enduz: moment('1500', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220305').toDate(), Datumtx: moment('20220305').format('YYYY.MM.DD'), Daytx: '토', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: 'X', Datum: moment('20220306').toDate(), Datumtx: moment('20220306').format('YYYY.MM.DD'), Daytx: '일', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' },
+              { Offyn: '', Datum: moment('20220307').toDate(), Datumtx: moment('20220307').format('YYYY.MM.DD'), Daytx: '월', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('2130', 'hhmm').toDate(), Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' },
+              { Offyn: '', Datum: moment('20220308').toDate(), Datumtx: moment('20220308').format('YYYY.MM.DD'), Daytx: '화', Atext: '반차(오전)', Beguz: moment('1400', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' },
+              { Offyn: '', Datum: moment('20220309').toDate(), Datumtx: moment('20220309').format('YYYY.MM.DD'), Daytx: '수', Atext: '반차(오후)', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' },
             ],
             breakTime: [],
           },
@@ -118,7 +118,12 @@ sap.ui.define(
           });
 
           this.getViewModel().setProperty('/summary/rowCount', 1);
-          this.getViewModel().setProperty('/summary/list', [_.get(aResults, 0, { Zyymm: sYearMonth })]);
+          this.getViewModel().setProperty('/summary/list', [
+            _.chain(aResults)
+              .map((o) => _.set(o, 'Clsdatx', moment(o.Clsda).format('YYYY.MM.DD')))
+              .get(0, { Zyymm: sYearMonth })
+              .value(),
+          ]);
         } catch (oError) {
           throw oError;
         }
@@ -141,7 +146,7 @@ sap.ui.define(
             _.map(aResults, (o) => ({
               ...mPayload,
               Datum: o.Datum,
-              Datumtx: moment(o.Datum).format('YYYYMMDD'),
+              Datumtx: moment(o.Datum).format('YYYY.MM.DD'),
               Beguz: '',
               Enduz: '',
               Pbeg0: '',
@@ -177,6 +182,7 @@ sap.ui.define(
       setDetailsTableRowColor() {
         setTimeout(() => {
           const oDetailsTable = this.byId('flextimeDetailsTable');
+          const $checkBoxEls = $(`${oDetailsTable.getId()}-sapUiTableRowHdrScr`);
 
           oDetailsTable.getRows().forEach((row) => {
             const mRowData = row.getBindingContext().getObject();
@@ -192,6 +198,11 @@ sap.ui.define(
             } else {
               row.removeStyleClass('row-select');
             }
+
+            // if (mRowData.Offyn === 'X') {
+            //   $checkBoxEls.find(`[data-sap-ui-rowindex="0"]`).attr()
+            // } else {
+            // }
           });
         }, 100);
       },

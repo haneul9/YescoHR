@@ -7,7 +7,7 @@
                 <table:Column width="10%">
                     <Label text="{i18n>LABEL_00170}"/>
                     <table:template>
-                        <ObjectStatus text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" state="{= ${Holiday} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+                        <ObjectStatus text="{Datumtx}" state="{= ${Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
                     </table:template>
                 </table:Column>
                 <table:Column width="4%">
