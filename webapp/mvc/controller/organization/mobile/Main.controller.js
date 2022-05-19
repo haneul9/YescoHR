@@ -169,6 +169,11 @@ sap.ui.define(
             Stdat: moment().hour(9).toDate(),
           });
 
+          if (_.isEmpty(aReturnData)) {
+            oViewModel.setProperty('/orgList', []);
+            return;
+          }
+
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(
             '/orgList',
