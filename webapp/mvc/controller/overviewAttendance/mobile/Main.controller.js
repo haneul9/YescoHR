@@ -30,8 +30,8 @@ sap.ui.define(
           searchAreaClose: false,
           searchConditions: {
             Datum: moment().hours(9).toDate(),
-            Werks: '',
-            Orgeh: '',
+            Werks: [],
+            Orgeh: [],
           },
           entry: {
             Werks: [],
@@ -74,13 +74,16 @@ sap.ui.define(
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Werks', mAppointeeData.Werks);
-          // TODO: 시연용
-          // oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
-          oViewModel.setProperty('/searchConditions/Orgeh', _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Werks', _.concat(mAppointeeData.Werks));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? _.concat(mAppointeeData.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const mFilters = oViewModel.getProperty('/searchConditions');
+          const mFilters = _.cloneDeep(oViewModel.getProperty('/searchConditions'));
+
+          _.chain(mFilters)
+            .set('Werks', _.get(mFilters, ['Werks', 0]))
+            .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
+            .commit();
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => {
             if (o.Device.includes('Mobile')) {
@@ -330,7 +333,12 @@ sap.ui.define(
       },
 
       callDetail(mPayload) {
-        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+        const mSearchConditions = _.cloneDeep(this.getViewModel().getProperty('/searchConditions'));
+
+        _.chain(mSearchConditions)
+          .set('Werks', _.get(mFilters, ['Werks', 0]))
+          .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
+          .commit();
 
         this.openDialog({ ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
       },
@@ -363,18 +371,20 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
+          this.onMultiToSingleCombo(oEvent);
+
           const mAppointeeData = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Werks: oViewModel.getProperty('/searchConditions/Werks/0'),
             Pernr: mAppointeeData.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? _.concat(mAppointeeData.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
@@ -389,9 +399,13 @@ sap.ui.define(
           this.setAllBusy(true);
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
-          const mFilters = oViewModel.getProperty('/searchConditions');
+          const mFilters = _.cloneDeep(oViewModel.getProperty('/searchConditions'));
 
-          _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
+          _.chain(mFilters)
+            .set('Datum', moment(mFilters.Datum).hours(9).toDate())
+            .set('Werks', _.get(mFilters, ['Werks', 0]))
+            .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
+            .commit();
 
           _.forEach(ChartsSetting.CHART_TYPE, (o) => {
             if (o.Device.includes('Mobile')) {

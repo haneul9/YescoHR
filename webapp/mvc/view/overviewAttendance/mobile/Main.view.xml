@@ -2,7 +2,6 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
     <headerContent>
@@ -15,12 +14,12 @@
             <FlexItemData maxWidth="67%" />
           </layoutData>
           <custom:DatePicker width="100%" dateValue="{ path: '/searchConditions/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-          <ComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" class="sapUiTinyMarginTop">
+          <MultiComboBox width="100%" class="mobile-single-combo sapUiTinyMarginTop" items="{/entry/Werks}" selectedKeys="{/searchConditions/Werks}" selectionChange=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
-          </ComboBox>
-          <ComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
+          </MultiComboBox>
+          <MultiComboBox width="100%" class="mobile-single-combo sapUiTinyMarginTop" items="{/entry/Orgeh}" selectedKeys="{/searchConditions/Orgeh}" selectionChange=".onMultiToSingleCombo">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
-          </ComboBox>
+          </MultiComboBox>
         </VBox>
         <VBox width="33%" height="100%" justifyContent="SpaceBetween" class="pl-8-px">
           <layoutData>
