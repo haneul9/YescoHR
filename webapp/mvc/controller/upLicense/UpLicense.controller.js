@@ -205,14 +205,29 @@ sap.ui.define(
               return;
           }
 
-          const oModel = this.getModel(ServiceNames.PA);
-          const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
-          const oTable = this.byId(sTableName);
           const mInfo = {
             infoMessage: sTableMSG,
             Title: sTableTitle,
             visibleStatus: 'X',
           };
+
+          if ((sSelectKey !== 'B' && !_.isEmpty(oViewModel.getProperty(`${sListName}/list`))) || (sSelectKey === 'B' && !_.isEmpty(oViewModel.getProperty(sListName)))) {
+            let iCount = 1;
+
+            if (sSelectKey !== 'B') {
+              iCount = oViewModel.getProperty(`${sListName}/rowCount`);
+            } else {
+              iCount = oViewModel.getProperty('/rowCount');
+            }
+
+            oViewModel.setProperty('/listInfo', { ...mInfo, totalCount: iCount });
+            oViewModel.setProperty('/busy', false);
+            return;
+          }
+
+          const oModel = this.getModel(ServiceNames.PA);
+          const aTableList = await Client.getEntitySet(oModel, sName, mPayLoad);
+          const oTable = this.byId(sTableName);
 
           if (sSelectKey === 'B') {
             this.createDynTable(oTable, sListName, mInfo, aTableList);
@@ -239,7 +254,6 @@ sap.ui.define(
           ..._.times(_.size(aTableList), (i) => {
             return { colId: `Cert${aTableList[i].Certty}${aTableList[i].Certdt}`, colName: aTableList[i].Discert, width: 'auto' };
           }),
-          // { colId: 'Sumcnt', colName: this.getBundleText('LABEL_00172'), width: 'auto' }, // 합계
         ];
         const aGroupby = _.groupBy(aTableList, 'Orgeh');
         const aRows = [
@@ -254,31 +268,9 @@ sap.ui.define(
                 return _.fromPairs(v); // 배열을 Obj변환
               }
             );
-            const iSum = _.reduce(
-              mBody,
-              (total, num) => {
-                return total + num;
-              },
-              0
-            );
-            return { ...mBody, Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt, Sumcnt: iSum };
+            return { ...mBody, Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt };
           }),
         ];
-        // const mSumRow = {
-        //   ...this.TableUtils.generateSumRow({
-        //     aTableData: aBodyRows,
-        //     mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
-        //     vCalcProps: /^Cert/,
-        //   }),
-        //   ..._.pick(
-        //     this.TableUtils.generateSumRow({
-        //       aTableData: aBodyRows,
-        //       mSumField: { Orgtx: this.getBundleText('LABEL_00172') },
-        //       vCalcProps: ['Sumcnt', 'Empcnt'],
-        //     }),
-        //     ['Sumcnt', 'Empcnt']
-        //   ),
-        // };
 
         oViewModel.setData(
           {
@@ -305,7 +297,7 @@ sap.ui.define(
                   text: `{${sColumnId}}`,
                   width: '100%',
                   textAlign: 'Center',
-                  visible: sColumnId === 'Orgtx' || sColumnId === 'Empcnt' || sColumnId === 'Sumcnt',
+                  visible: !_.startsWith(sColumnId, 'Cert'),
                 }),
                 new sap.m.Link({
                   layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
@@ -313,7 +305,7 @@ sap.ui.define(
                   textAlign: 'Center',
                   text: `{${sColumnId}}`,
                   press: this.onDeptSelectRow.bind(this, sColumnId),
-                  visible: sColumnId !== 'Orgtx' && sColumnId !== 'Empcnt' && sColumnId !== 'Sumcnt',
+                  visible: _.startsWith(sColumnId, 'Cert'),
                 }),
               ],
             }),
@@ -321,7 +313,7 @@ sap.ui.define(
           });
         });
         oTable.bindRows(sListName);
-        oViewModel.setProperty('/rowCount', _.pick(this.TableUtils.count({ oTable, aRowData: aRows }), 'rowCount'));
+        oViewModel.setProperty('/rowCount', _.get(this.TableUtils.count({ oTable, aRowData: aRows }), 'rowCount'));
         oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aRows }), 'totalCount') });
       },
     });

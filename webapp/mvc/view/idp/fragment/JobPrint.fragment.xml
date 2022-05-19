@@ -1,5 +1,111 @@
 <core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <HBox class="vCardBox appointee-bar" justifyContent="SpaceBetween" alignItems="Center">
-  </HBox>
+  <Dialog id="rejectDialog" showHeader="false" contentWidth="1400px">
+    <buttons>
+      <Button type="Emphasized" text="{i18n>LABEL_00131}" press=".onPressRejectDialogSave"/>
+      <Button text="{i18n>LABEL_00115}" press=".onPressRejectDialogClose" class="cancel" />
+    </buttons>
+    <grid:CSSGrid gridTemplateColumns="1fr 9fr">
+      <Label text="개발계획" class="write-vertical" />
+      <HBox width="100%">
+        <TextArea width="100%" value="11111111111111111" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="22222222222222222" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="33333333333333333" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+      </HBox>
+      <Label text="교육과정 및 자기개발활동" class="write-vertical" />
+      <HBox width="100%">
+        <layoutData>
+          <FlexItemData growFactor="1"/>
+        </layoutData>
+        <TextArea width="100%" value="44444444444444444" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="55555555555555555" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="66666666666666666" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+      </HBox>
+      <Label text="필요지원사항" class="write-vertical" />
+      <HBox width="100%">
+        <layoutData>
+          <FlexItemData growFactor="1"/>
+        </layoutData>
+        <TextArea width="100%" value="77777777777777777" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="88888888888888888" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="99999999999999999" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+      </HBox>
+      <Label text="개발결과" class="write-vertical" />
+      <HBox width="100%">
+        <layoutData>
+          <FlexItemData growFactor="1"/>
+        </layoutData>
+        <TextArea width="100%" value="77777777777777777" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="88888888888888888" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <TextArea width="100%" value="99999999999999999" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+      </HBox>
+      <Label text="팀장의견" class="write-vertical" />
+      <HBox width="100%">
+        <layoutData>
+          <FlexItemData growFactor="1"/>
+        </layoutData>
+        <Label text="팀장의견" class="write-vertical" />
+        <TextArea width="100%" value="77777777777777777" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+        <Label text="팀장의견" class="write-vertical" />
+        <TextArea width="100%" value="88888888888888888" rows="5" editable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </TextArea>
+      </HBox>
+    </grid:CSSGrid>
+  </Dialog>
 </core:FragmentDefinition>
