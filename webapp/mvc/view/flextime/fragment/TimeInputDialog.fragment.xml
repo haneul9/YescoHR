@@ -76,7 +76,7 @@
                             <template>
                                 <m:HBox justifyContent="Center">
                                     <m:TimePicker dateValue="{Beguz}" initialFocusedDateValue="{/initBeguz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
-                                    <m:Text text="{Beguz}" visible="{Sumrow}" width="100%" textAlign="Center" />
+                                    <m:Text text="{i18n>LABEL_00172}" visible="{Sumrow}" width="100%" textAlign="Center" />
                                 </m:HBox>
                             </template>
                         </Column>
@@ -85,7 +85,7 @@
                             <template>
                                 <m:HBox justifyContent="Center">
                                     <m:TimePicker dateValue="{Enduz}" initialFocusedDateValue="{/initEnduz}" minutesStep="30" visible="{= !${Sumrow} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time small-table-input" change=".onDiffTime" />
-                                    <m:Text text="{Enduz}" visible="{Sumrow}" width="100%" textAlign="Center" />
+                                    <m:Text text="{i18n>LABEL_00172}" visible="{Sumrow}" width="100%" textAlign="Center" />
                                 </m:HBox>
                             </template>
                         </Column>
