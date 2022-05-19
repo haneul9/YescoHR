@@ -43,16 +43,16 @@
           </HBox>
           <Label text="{i18n>LABEL_35008}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/EeageFr}" items="{ path: '/entry/D', templateShareable: false }" change=".onPairValue">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/EeageFr}" items="{ path: '/entry/D', templateShareable: false }" selectionChange=".onPairValue">
               <customData>
                 <core:CustomData key="target" value="EeageTo" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/EeageTo}" items="{ path: '/entry/D', templateShareable: false }" enabled="{= !!${/search/EeageFr} }">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/EeageTo}" items="{ path: '/entry/D', templateShareable: false }" enabled="{= !!${/search/EeageFr} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00288}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
@@ -92,61 +92,61 @@
           </HBox>
           <Label text="{i18n>LABEL_35009}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
+                <FlexItemData minWidth="50%" maxWidth="50%" />
               </layoutData>
               <customData>
                 <core:CustomData key="seq" value="1" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv1}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali1} }">
+            </MultiComboBox>
+            <MultiComboBox width="95%" class="mobile-single-combo sapUiTinyMarginBegin" selectedKeys="{/search/Langlv1}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali1} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
+                <FlexItemData minWidth="50%" maxWidth="50%" />
               </layoutData>
               <customData>
                 <core:CustomData key="seq" value="2" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv2}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali2} }">
+            </MultiComboBox>
+            <MultiComboBox width="95%" class="mobile-single-combo sapUiTinyMarginBegin" selectedKeys="{/search/Langlv2}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali2} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
+                <FlexItemData minWidth="50%" maxWidth="50%" />
               </layoutData>
               <customData>
                 <core:CustomData key="seq" value="3" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv3}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali3} }">
+            </MultiComboBox>
+            <MultiComboBox width="95%" class="mobile-single-combo sapUiTinyMarginBegin" selectedKeys="{/search/Langlv3}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali3} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00331}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Gesch}" items="{ path: '/entry/K', templateShareable: false }">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Gesch}" items="{ path: '/entry/K', templateShareable: false }" selectionChange=".onMultiToSingleCombo">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
@@ -154,24 +154,24 @@
                 <core:CustomData key="seq" value="1" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell1} }" change=".onPairValue">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearFr1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell1} }" selectionChange=".onPairValue">
               <customData>
                 <core:CustomData key="target" value="SyearTo1" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr1} }">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearTo1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr1} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="2" />
               </layoutData>
@@ -179,24 +179,24 @@
                 <core:CustomData key="seq" value="2" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell2} }" change=".onPairValue">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearFr2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell2} }" selectionChange=".onPairValue">
               <customData>
                 <core:CustomData key="target" value="SyearTo2" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr2} }">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearTo2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr2} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
@@ -204,24 +204,24 @@
                 <core:CustomData key="seq" value="3" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }" change=".onPairValue">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearFr3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }" selectionChange=".onPairValue">
               <customData>
                 <core:CustomData key="target" value="SyearTo3" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}4" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
+            <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>
@@ -229,20 +229,20 @@
                 <core:CustomData key="seq" value="4" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}4" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell4} }" change=".onPairValue">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearFr4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell4} }" selectionChange=".onPairValue">
               <customData>
                 <core:CustomData key="target" value="SyearTo4" />
               </customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr4} }">
+            <MultiComboBox class="mobile-single-combo" selectedKeys="{/search/SyearTo4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr4} }" selectionChange=".onMultiToSingleCombo">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </MultiComboBox>
           </HBox>
         </grid:CSSGrid>
       </VBox>
