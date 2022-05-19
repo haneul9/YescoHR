@@ -313,8 +313,11 @@ sap.ui.define(
           });
         });
         oTable.bindRows(sListName);
-        oViewModel.setProperty('/rowCount', _.get(this.TableUtils.count({ oTable, aRowData: aRows }), 'rowCount'));
-        oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aRows }), 'totalCount') });
+
+        const mTableCountInfo = this.TableUtils.count({ oTable, aRowData: aRows });
+
+        oViewModel.setProperty('/rowCount', _.get(mTableCountInfo, 'rowCount'));
+        oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(mTableCountInfo, 'totalCount') });
       },
     });
   }
