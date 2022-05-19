@@ -217,6 +217,8 @@ sap.ui.define(
           _.forEach(aDetailsList, (o, i) => {
             if (o.Offyn === 'X') oTable.removeSelectionInterval(i, i);
           });
+
+          // $(`#${oTable.getId()}-selall`).removeClass('sapUiTableSelAll').attr('aria-checked', true);
         }
 
         const aSelectedIndices = oTable.getSelectedIndices();

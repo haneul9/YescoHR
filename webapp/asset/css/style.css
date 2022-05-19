@@ -726,7 +726,7 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableHSb {position:relative; overflow-x:scroll; overflow-y:hidden; -webkit-overflow-scrolling:auto; background-color:#f7f7f7; border-bottom:1px solid #f5f5f5; border-right:1px solid #f5f5f5}
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
-.disabled-table-selection { opacity: 0.4; pointer-events: none; }
+.disabled-table-selection { opacity: 0.3; pointer-events: none; }
 
 /* GNB */
 .sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:246px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
