@@ -21,7 +21,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletEmployeeListDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletHandlerDialog2Handler', {
       constructor: function (oController) {
         this.oController = oController;
         this.oDialogModel = new JSONModel(this.getInitialData());
@@ -34,9 +34,11 @@ sap.ui.define(
         return {
           dialog: {
             busy: true,
-            rowCount: 0,
-            totalCount: 0,
-            list: null,
+            sub: {
+              rowCount: 0,
+              totalCount: 0,
+              list: null,
+            },
           },
         };
       },
@@ -48,7 +50,7 @@ sap.ui.define(
 
         this.oDialog = await Fragment.load({
           id: oView.getId(),
-          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail2',
+          name: 'sap.ui.yesco.mvc.view.overviewAttendance.fragment.DialogDetail5',
           controller: this,
         });
 
@@ -71,12 +73,14 @@ sap.ui.define(
             this.oDialog.open();
           });
 
-          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail2', mPayload);
+          this.mPayload = mPayload;
 
-          this.oDialogModel.setProperty('/dialog/rowCount', Math.min(aEmployees.length, 12));
-          this.oDialogModel.setProperty('/dialog/totalCount', _.size(aEmployees));
+          const aEmployees = await Client.getEntitySet(this.oController.getModel(ServiceNames.WORKTIME), 'TimeOverviewDetail5', mPayload);
+
+          this.oDialogModel.setProperty('/dialog/sub/rowCount', Math.min(aEmployees.length, 12));
+          this.oDialogModel.setProperty('/dialog/sub/totalCount', _.size(aEmployees));
           this.oDialogModel.setProperty(
-            '/dialog/list',
+            '/dialog/sub/list',
             _.map(aEmployees, (o, i) => ({
               Idx: ++i,
               Navigable: this.bHasProfileMenuAuth ? 'O' : '',
@@ -84,10 +88,10 @@ sap.ui.define(
             }))
           );
         } catch (oError) {
-          this.debug('M24PortletEmployeeListDialogHandler > openDialog Error', oError);
+          this.debug('M24PortletHandlerDialog2Handler > openDialog Error', oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.onPressDetail2DialogClose(),
+            onClose: () => this.onPressDetail5DialogClose(),
           });
         } finally {
           setTimeout(() => this.oDialog.getContent()[1].getItems()[0].setFirstVisibleRow(), 100);
@@ -95,19 +99,20 @@ sap.ui.define(
         }
       },
 
-      onPressDetail2DialogClose() {
+      onPressDetail5DialogClose() {
         this.oDialog.close();
       },
 
-      onPressEmployee2Row(oEvent) {
+      onPressEmployeeRow(oEvent) {
         if (!this.bHasProfileMenuAuth) {
           return;
         }
 
         const sHost = window.location.href.split('#')[0];
         const sPernr = oEvent.getSource().getParent().getBindingContext().getProperty('Pernr');
+        const oDatum = moment(this.mPayload.Datum);
 
-        window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1400,height=800');
       },
 
       onPressDetailExcelDownload(oEvent) {

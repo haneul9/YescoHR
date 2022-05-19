@@ -58,7 +58,6 @@ sap.ui.define(
               AppUtils.getAppComponent().registerPopover(this.oPopover);
             });
           })
-          .attachBeforeClose(() => {})
           .attachAfterClose(() => {
             setTimeout(() => {
               this.onAfterClose();

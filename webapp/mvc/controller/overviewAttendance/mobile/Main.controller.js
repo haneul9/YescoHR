@@ -93,6 +93,8 @@ sap.ui.define(
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
+            $('#fusioncharts-tooltip-element').css('z-index', 7);
+
             const aProps = ['Headty', 'Discod'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
@@ -391,7 +393,11 @@ sap.ui.define(
 
           _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 8), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('Mobile')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 
@@ -420,6 +426,16 @@ sap.ui.define(
       onChangeFontSize(oEvent) {
         const sFontSize = oEvent.getSource().getSelectedKey();
         document.querySelector(':root').style.setProperty('--StatisticNumberFontSize', sFontSize);
+      },
+
+      reduceViewResource() {
+        this.oEmployeeList1PopoverHandler.destroy();
+        this.oEmployeeList2PopoverHandler.destroy();
+        this.oEmployeeList3PopoverHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
+        return this;
       },
 
       /*****************************************************************

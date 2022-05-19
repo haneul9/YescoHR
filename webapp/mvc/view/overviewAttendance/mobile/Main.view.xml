@@ -31,7 +31,7 @@
         </VBox>
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
-        <grid:CSSGrid gridGap="20px" gridAutoRows="280px" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
+        <VBox class="overviews mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A03" type="XML" />
@@ -42,7 +42,7 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A08" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A09" type="XML" />
           <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.mobile.A10" type="XML" /> -->
-        </grid:CSSGrid>
+        </VBox>
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

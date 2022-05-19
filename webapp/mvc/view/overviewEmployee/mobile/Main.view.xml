@@ -54,7 +54,7 @@
             </ComboBox>
           </HBox> -->
         </VBox>
-        <VBox width="33%" justifyContent="End" class="pl-8-px">
+        <VBox width="33%" height="100%" justifyContent="SpaceBetween" class="pl-8-px">
           <layoutData>
             <FlexItemData growFactor="1" maxWidth="33%" />
           </layoutData>

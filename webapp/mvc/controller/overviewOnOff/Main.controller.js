@@ -76,6 +76,14 @@ sap.ui.define(
           if (this.bMobile) {
             this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
           }
+
+          window.callOnOffDetail = (sArgs) => {
+            const aProps = ['Headty', 'Discod', 'Disyear'];
+            const aArgs = _.split(sArgs, ',');
+            const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+
+            this.openDetailDialog(mPayload);
+          };
         } catch (oError) {
           this.debug('Controller > m/overviewOnOff Main > onObjectMatched Error', oError);
 
@@ -407,13 +415,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function callOnOffDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
-  const aProps = ['Headty', 'Discod', 'Disyear'];
-  const aArgs = _.split(sArgs, ',');
-  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-
-  oController.openDetailDialog(mPayload);
-}

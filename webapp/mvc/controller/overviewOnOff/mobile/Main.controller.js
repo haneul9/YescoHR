@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewOnOff/constants/ChartsSetting',
+    'sap/ui/yesco/mvc/controller/overviewOnOff/mobile/EmployeeListPopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -15,7 +16,8 @@ sap.ui.define(
     Client,
     ServiceNames,
     BaseController,
-    ChartsSetting
+    ChartsSetting,
+    EmployeeListPopoverHandler
   ) => {
     'use strict';
 
@@ -23,6 +25,7 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
+          searchAreaClose: false,
           searchConditions: {
             Zyear: moment().format('YYYY'),
             Werks: '',
@@ -33,11 +36,11 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, hasLink: true, data: {} },
-            A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             // A03: { busy: false, hasLink: false, data: { headty: 'D', raw: [] } },
-            A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
-            A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A04: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
+            A05: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             // A06: { busy: false, hasLink: false, data: { headty: 'E', raw: [] } },
           },
           dialog: {
@@ -72,6 +75,18 @@ sap.ui.define(
           const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 4), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+
+          this.oEmployeeListPopoverHandler = new EmployeeListPopoverHandler(this);
+
+          window.callOnOffDetail = (sArgs) => {
+            $('#fusioncharts-tooltip-element').css('z-index', 7);
+
+            const aProps = ['Headty', 'Discod', 'Disyear'];
+            const aArgs = _.split(sArgs, ',');
+            const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
+
+            this.openDetailDialog(mPayload);
+          };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewOnOff Main > onObjectMatched Error', oError);
 
@@ -290,45 +305,10 @@ sap.ui.define(
         }
       },
 
-      async openDetailDialog(mPayload) {
-        const oView = this.getView();
-        const oViewModel = this.getViewModel();
+      openDetailDialog(mPayload) {
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-        oViewModel.setProperty('/dialog/busy', true);
-
-        try {
-          if (!this.oDetailDialog) {
-            this.oDetailDialog = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.overviewOnOff.fragment.DialogDetail',
-              controller: this,
-            });
-
-            oView.addDependent(this.oDetailDialog);
-          }
-
-          this.oDetailDialog.open();
-
-          const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { ...mSearchConditions, ..._.omit(mPayload, 'Entity') });
-
-          oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
-          oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));
-          oViewModel.setProperty(
-            '/dialog/list',
-            _.map(aDetailData, (o, i) => ({ Idx: ++i, ...o }))
-          );
-          oViewModel.setProperty('/dialog/busy', false);
-        } catch (oError) {
-          this.debug('Controller > mobile/m/overviewOnOff Main > openDetailDialog Error', oError);
-
-          AppUtils.handleError(oError, {
-            onClose: () => this.oDetailDialog.close(),
-          });
-        } finally {
-          $('#fusioncharts-tooltip-element').hide();
-          if (this.byId('overviewOnOffDetailTable')) this.byId('overviewOnOffDetailTable').setFirstVisibleRow();
-        }
+        this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },
 
       /*****************************************************************
@@ -371,30 +351,24 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        if (oEvent['getSource'] instanceof Function) {
-          this.openDetailDialog(oEvent.getSource().data());
-        } else {
-          this.openDetailDialog(sap.ui.getCore().byId($(oEvent.currentTarget).attr('id')).data());
-        }
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+        const mPayload = oEvent.getSource().data();
+
+        this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },
 
-      onPressDetailDialogClose() {
-        this.oDetailDialog.close();
+      onPressSearchAreaToggle() {
+        const bExpanded = $('.row-3').length === 1;
+        $('.search-area').toggleClass('row-3', !bExpanded).toggleClass('row-0', bExpanded);
+        this.getViewModel().setProperty('/searchAreaClose', bExpanded);
       },
 
-      onPressEmployeeRow(oEvent) {
-        const sHost = window.location.href.split('#')[0];
-        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
-        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
-
-        window.open(`${sHost}#/employeeView/${mRowData.Pernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
-      },
-
-      onPressDetailExcelDownload() {
-        const oTable = this.byId('overviewOnOffDetailTable');
-        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_28049'); // 입퇴사현황상세
-
-        this.TableUtils.export({ oTable, sFileName });
+      reduceViewResource() {
+        this.oEmployeeListPopoverHandler.destroy();
+        Object.values(FusionCharts.items).forEach((oChart) => {
+          oChart.dispose();
+        });
+        return this;
       },
 
       /*****************************************************************
@@ -403,13 +377,3 @@ sap.ui.define(
     });
   }
 );
-
-// eslint-disable-next-line no-unused-vars
-function callOnOffDetail(sArgs) {
-  const oController = sap.ui.getCore().byId('container-ehr---mobile_m_overviewOnOff').getController();
-  const aProps = ['Headty', 'Discod', 'Disyear'];
-  const aArgs = _.split(sArgs, ',');
-  const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-
-  oController.openDetailDialog(mPayload);
-}

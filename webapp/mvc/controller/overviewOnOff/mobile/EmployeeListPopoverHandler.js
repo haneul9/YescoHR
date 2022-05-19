@@ -19,33 +19,34 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewAttendance.mobile.EmployeeList1PopoverHandler', {
+    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewOnOff.mobile.EmployeeListPopoverHandler', {
       getPopoverFragmentName() {
-        return 'sap.ui.yesco.mvc.view.overviewAttendance.mobile.EmployeeList1Popover';
+        return 'sap.ui.yesco.fragment.mobile.MobileEmployeeListPopover';
       },
 
       setPropertiesForNavTo(oMenuModel) {
-        // this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
+        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
         this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
       },
 
       async onBeforeOpen() {
-        const oModel = this.oController.getModel(ServiceNames.WORKTIME);
+        const oModel = this.oController.getModel(ServiceNames.PA);
         const mPayload = this.getPayloadData();
+        const sEntitySet = mPayload.Entity === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail';
 
-        const aEmployees = await Client.getEntitySet(oModel, 'TimeOverviewDetail1', mPayload);
+        delete mPayload.Entity;
+
+        const aEmployees = await Client.getEntitySet(oModel, sEntitySet, mPayload);
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
         this.setEmployeeList(
-          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, Tmdat, Atext }) => ({
+          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
             Photo: Photo || sUnknownAvatarImageURL,
             Ename,
             Pernr,
-            Zzjikgbtx,
-            Zzjikchtx,
-            Orgtx,
-            Tmdat,
-            Atext,
+            Zzjikcht: Zzjikgbtx,
+            Zzjikgbt: Zzjikchtx,
+            Fulln: Orgtx,
             Navigable: this.bHasProfileMenuAuth ? 'O' : '',
           }))
         );
@@ -77,20 +78,13 @@ sap.ui.define(
         this.setSearchFilter(aFilters);
       },
 
-      navTo(oEvent) {
+      navToProfile(oEvent) {
         if (!this.bHasProfileMenuAuth) {
           return;
         }
 
-        const mRowData = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty();
-        const oTmdat = moment(mRowData.Tmdat);
-        const mParameter = {
-          pernr: mRowData.Pernr,
-          year: oTmdat.get('year'),
-          month: oTmdat.get('month'),
-        };
-
-        AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', mParameter);
+        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
+        AppUtils.getAppController().getAppMenu().moveToMenu(this.sProfileMenuUrl, { pernr: sPernr });
       },
     });
   }

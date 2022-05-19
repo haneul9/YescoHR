@@ -726,6 +726,8 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableHSb {position:relative; overflow-x:scroll; overflow-y:hidden; -webkit-overflow-scrolling:auto; background-color:#f7f7f7; border-bottom:1px solid #f5f5f5; border-right:1px solid #f5f5f5}
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
+.disabled-table-selection { opacity: 0.3; pointer-events: none; }
+
 /* GNB */
 .sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:246px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .sapUiSizeCompact .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
@@ -1368,6 +1370,9 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.helpPop .sapMLabel {width:120px}
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox {height:100% !important}
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox .sapMTextArea .sapMTextAreaInner {padding-top:0px !important; padding-bottom:0px !important}
+
+/* 자기개발 */
+.write-vertical {writing-mode: vertical-rl;}
 
 /* LIST style*/
 .sapMSLITitle, .sapMSLITitleOnly, .sapMSLIDescription, .sapMSLIDescriptionText {font-size:14px; color:#222; font-weight:500}
@@ -2297,7 +2302,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .month-plan-head .icon-button .sapMBtnIcon {margin-left:0; margin-right:0px}
 .sapUiMedia-Std-Phone .month-plan-grid * {text-align:center !important; justify-content:center; font-size:14px}
 .sapUiMedia-Std-Phone .month-plan-grid .header {padding-top:8px; padding-bottom:8px; border-bottom:1px solid #ddd}
-.sapUiMedia-Std-Phone .month-plan-grid .sapMFlexBox {padding-top:10px; padding-bottom:10px; border-bottom:1px solid #ddd}
+.sapUiMedia-Std-Phone .month-plan-grid .sapMFlexBox { border-bottom:1px solid #ddd}
 .sapUiMedia-Std-Phone .month-plan-grid .sapMText {font-size:14px}
 .sapUiMedia-Std-Phone .month-plan-grid .sapMVBox .sapMLabel {font-weight:700; font-size:14px; margin-bottom:3px}
 .sapUiMedia-Std-Phone .month-plan-grid .sapMVBox .sapMText {font-size:12px; line-height:1}
@@ -2306,3 +2311,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePage .sapMBar .sapMBarLeft .sapMBtn {min-width:50px; height:2rem}
 .sapMMessagePage .sapMBar .sapMBarMiddle {text-align:center}
 .sapMMessagePage .sapMBar .sapMBarMiddle .sapMBarPH {line-height:2rem}
+
+.fusioncharts-container g[class*="-scroller"] rect {height:4px !important; rx:3px !important; ry:3px !important}
+.fusioncharts-container g[class*="-scroller"] rect:nth-child(1) {stroke:#dfdfdf !important}
+.fusioncharts-container g[class*="-scroller"] rect:nth-child(2) {stroke:#c1c3c8 !important; fill:#c1c3c8 !important}

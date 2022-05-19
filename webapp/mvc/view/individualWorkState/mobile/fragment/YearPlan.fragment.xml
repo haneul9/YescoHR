@@ -13,20 +13,20 @@
       <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
     </HBox>
     <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/plans'}">
-      <Text width="100%" textAlign="Center" text="{label}">
-        <customData>
-          <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
-        </customData>
-      </Text>
-      <custom:VBox width="100%" press=".onClickDay" height="70px">
+      <custom:VBox width="100%" press=".onClickDay" height="{= ${classNames} === 'Day' ? '40px' : '70px' }">
+        <Text width="100%" textAlign="Center" text="{label}" visible="{= ${classNames} === 'Day' }">
+          <customData>
+            <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+          </customData>
+        </Text>
         <custom:customData>
           <core:CustomData key="style" value="{classNames}" writeToDom="true" />
           <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
           <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
         </custom:customData>
-        <Label width="100%" textAlign="Center" text="{label}" />
-        <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{bTime}" />
-        <Text width="100%" textAlign="Center" visible="{= !!${bTime} }" text="{eTime}" />
+        <Label width="100%" textAlign="Center" text="{label}" visible="{= ${classNames} !== 'Day' }" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} &amp;&amp; ${classNames} !== 'Day' }" text="{bTime}" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} &amp;&amp; ${classNames} !== 'Day' }" text="{eTime}" />
       </custom:VBox>
     </grid:CSSGrid>
     <HBox class="box style-02 status-wrap year-plan">
