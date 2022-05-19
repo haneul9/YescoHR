@@ -2306,3 +2306,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePage .sapMBar .sapMBarLeft .sapMBtn {min-width:50px; height:2rem}
 .sapMMessagePage .sapMBar .sapMBarMiddle {text-align:center}
 .sapMMessagePage .sapMBar .sapMBarMiddle .sapMBarPH {line-height:2rem}
+
+.fusioncharts-container g[class*="-scroller"] rect {height:4px !important; rx:3px !important; ry:3px !important}
+.fusioncharts-container g[class*="-scroller"] rect:nth-child(1) {stroke:#dfdfdf !important}
+.fusioncharts-container g[class*="-scroller"] rect:nth-child(2) {stroke:#c1c3c8 !important; fill:#c1c3c8 !important}

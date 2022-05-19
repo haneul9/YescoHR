@@ -539,4 +539,5 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .overviews .statistic-text.sapMLabel,
 .overviews .statistic-text.sapMObjStatus,
 .overviews .statistic-text bdi {line-height:var(--StatisticNumberFontSize); font-size:var(--StatisticNumberFontSize) !important}
+
 .overviews.sapMVBox .portlet-box {margin-top:20px; height:280px}
