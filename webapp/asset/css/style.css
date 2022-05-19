@@ -1758,8 +1758,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner .sapMBtnIcon {color:#484c50; font-size:22px; font-weight:200}
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification.svg'); background-repeat:no-repeat; background-position:center}
 .notification-wrapper:hover .sapMBtn.icon-button.notification .sapMBtnInner:after {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification_hover.svg')}
-.notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-3px; left:50%; height:15px}
-.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
+.notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-4px; left:50%; height:16px; line-height:16px}
+.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; height:16px; line-height:16px; border-radius:10px; padding:0 5px; vertical-align:middle; font-size:12px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
 /* notification-center popover */
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-height:120px; max-height:calc(100% - 143px); padding:0}
