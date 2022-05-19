@@ -28,8 +28,8 @@ sap.ui.define(
           searchAreaClose: false,
           searchConditions: {
             Zyear: moment().format('YYYY'),
-            Werks: '',
-            Orgeh: '',
+            Werks: [],
+            Orgeh: [],
           },
           entry: {
             Werks: [],
@@ -66,13 +66,11 @@ sap.ui.define(
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
-          // TODO: 시연용
-          // oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
-          oViewModel.setProperty('/searchConditions/Orgeh', _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Werks', _.concat(mAppointee.Werks));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
 
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = oViewModel.getProperty('/searchConditions');
+          const mFilters = this.getSearchConditions();
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 4), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
 
@@ -306,7 +304,7 @@ sap.ui.define(
       },
 
       openDetailDialog(mPayload) {
-        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+        const mSearchConditions = this.getSearchConditions();
 
         this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },
@@ -314,18 +312,20 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
+          this.onMultiToSingleCombo(oEvent);
+
           const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Werks: oViewModel.getProperty('/searchConditions/Werks/0'),
             Pernr: mAppointee.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
 
@@ -334,13 +334,11 @@ sap.ui.define(
       },
 
       onPressSearch() {
-        const oViewModel = this.getViewModel();
-
         try {
           this.setAllBusy(true);
 
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = oViewModel.getProperty('/searchConditions');
+          const mFilters = this.getSearchConditions();
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 4), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -351,7 +349,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+        const mSearchConditions = this.getSearchConditions();
         const mPayload = oEvent.getSource().data();
 
         this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
@@ -369,6 +367,16 @@ sap.ui.define(
           oChart.dispose();
         });
         return this;
+      },
+
+      getSearchConditions() {
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+
+        return _.chain(mSearchConditions)
+          .cloneDeep()
+          .set('Werks', _.get(mSearchConditions, ['Werks', 0]))
+          .set('Orgeh', _.get(mSearchConditions, ['Orgeh', 0]))
+          .value();
       },
 
       /*****************************************************************
