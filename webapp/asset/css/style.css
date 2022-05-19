@@ -1371,6 +1371,9 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox {height:100% !important}
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox .sapMTextArea .sapMTextAreaInner {padding-top:0px !important; padding-bottom:0px !important}
 
+/* 자기개발 */
+.write-vertical {writing-mode: vertical-rl;}
+
 /* LIST style*/
 .sapMSLITitle, .sapMSLITitleOnly, .sapMSLIDescription, .sapMSLIDescriptionText {font-size:14px; color:#222; font-weight:500}
 .sapMSLI.sapMSLIThumbnail, .sapMSLI.sapMSLINoIconInset, .sapMSLI.sapMSLIWithDescription, .sapMSLI.sapMSLINoTitleAdapt {height:auto; padding:10px 10px 10px 10px}
