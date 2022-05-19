@@ -336,8 +336,8 @@ sap.ui.define(
         const mSearchConditions = _.cloneDeep(this.getViewModel().getProperty('/searchConditions'));
 
         _.chain(mSearchConditions)
-          .set('Werks', _.get(mFilters, ['Werks', 0]))
-          .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
+          .set('Werks', _.get(mSearchConditions, ['Werks', 0]))
+          .set('Orgeh', _.get(mSearchConditions, ['Orgeh', 0]))
           .commit();
 
         this.openDialog({ ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
