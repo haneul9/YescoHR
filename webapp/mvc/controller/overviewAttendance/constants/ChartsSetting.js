@@ -261,13 +261,15 @@ sap.ui.define([], function () {
       },
       scrollcombi2d: {
         chart: {
-          scrollHeight: '10',
+          scrollHeight: '5',
           flatScrollBars: '1',
           scrollShowButtons: '0',
-          scrollColor: '#cccccc',
+          scrollColor: '#fefefe',
           baseFontSize: '14',
           valueFontSize: '14',
           legendItemFontSize: '14',
+          rotateLabels: '1',
+          slantLabels: '1',
           showValues: '1',
           rotateValues: '0',
           placeValuesInside: '0',
