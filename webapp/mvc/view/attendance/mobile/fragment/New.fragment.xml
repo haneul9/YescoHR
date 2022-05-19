@@ -13,9 +13,9 @@
   <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= !${/ZappStatAl} }">
     <Label text="{i18n>LABEL_04010}"/>
     <VBox>
-      <ComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" change=".onChangeAwartCombo">
+      <custom:SingleComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" selectionChange=".onChangeAwartCombo">
         <core:Item key="{Awart}" text="{Atext}" />
-      </ComboBox>
+      </custom:SingleComboBox>
     </VBox>
     <Label text="{i18n>LABEL_04014}" />
     <VBox>
