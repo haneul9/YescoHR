@@ -35,7 +35,7 @@ sap.ui.define(
           searchConditions: {
             Tyymm: '',
             Werks: '',
-            Orgeh: '',
+            Orgeh: [],
           },
           calendar: {
             yearMonth: '',
@@ -109,12 +109,10 @@ sap.ui.define(
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
-          // TODO: 시연용
           oViewModel.setProperty('/searchConditions', {
             Tyymm: _.isEmpty(mSearchConditions.Tyymm) ? moment().format('YYYYMM') : mSearchConditions.Tyymm,
             Werks: _.isEmpty(mSearchConditions.Werks) ? mAppointee.Werks : mSearchConditions.Werks,
-            // Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'])) : mSearchConditions.Orgeh,
-            Orgeh: _.get(aOrgehEntry, [0, 'Orgeh']),
+            Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value()) : _.concat(mSearchConditions.Orgeh),
           });
           oViewModel.setProperty(
             '/entry/Werks',
@@ -196,7 +194,8 @@ sap.ui.define(
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
           const dTyymm = moment(mSearchConditions.Tyymm);
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'DailyTimeExist', {
-            ..._.pick(mSearchConditions, ['Werks', 'Orgeh']),
+            Werks: _.get(mSearchConditions, 'Werks'),
+            Orgeh: _.get(mSearchConditions, ['Orgeh', 0]),
             BegdaS: dTyymm.startOf('month').hours(9).toDate(),
             EnddaS: dTyymm.endOf('month').hours(9).toDate(),
           });
@@ -218,9 +217,10 @@ sap.ui.define(
             Mobile: 'X',
             Menid: this.getCurrentMenuId(),
             Pernr: this.getAppointeeProperty('Pernr'),
+            Werks: _.get(mSearchConditions, 'Werks'),
+            Orgeh: _.get(mSearchConditions, ['Orgeh', 0]),
             BegdaS: _.isEmpty(sDay) ? dTyymm.startOf('month').hours(9).toDate() : moment(sDay).hours(9).toDate(),
             EnddaS: _.isEmpty(sDay) ? dTyymm.endOf('month').hours(9).toDate() : moment(sDay).hours(9).toDate(),
-            ..._.pick(mSearchConditions, ['Werks', 'Orgeh']),
           });
 
           oViewModel.setProperty('/detail/displayDate', _.isEmpty(sDay) ? dTyymm.format('YYYY.MM') : moment(sDay).format('YYYY.MM.DD'));

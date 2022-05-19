@@ -14,12 +14,12 @@
                         </ComboBox>
                     </HBox>
                     <HBox justifyContent="SpaceBetween" alignItems="Center">
-                        <ComboBox width="100%" selectedKey="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
+                        <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}" selectionChange=".onMultiToSingleCombo">
                             <layoutData>
                                 <FlexItemData minWidth="67%" maxWidth="67%" />
                             </layoutData>
                             <core:Item text="{Orgtx}" key="{Orgeh}" />
-                        </ComboBox>
+                        </MultiComboBox>
                         <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
                             <layoutData>
                                 <FlexItemData minWidth="33%" maxWidth="33%" />

@@ -395,6 +395,10 @@ sap.ui.define(
         this._pPopover.openBy(oButton);
       },
 
+      onMultiToSingleCombo(oEvent) {
+        oEvent.getSource().setSelectedKeys(_.concat(oEvent.getParameter('changedItem').getKey()));
+      },
+
       /**
        * Convenience method for logging.
        * @protected
