@@ -726,8 +726,6 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableHSb {position:relative; overflow-x:scroll; overflow-y:hidden; -webkit-overflow-scrolling:auto; background-color:#f7f7f7; border-bottom:1px solid #f5f5f5; border-right:1px solid #f5f5f5}
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
-.disabled-table-selection { opacity: 0.3; pointer-events: none; }
-
 /* GNB */
 .sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:246px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .sapUiSizeCompact .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
@@ -1372,7 +1370,21 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox .sapMTextArea .sapMTextAreaInner {padding-top:0px !important; padding-bottom:0px !important}
 
 /* 자기개발 */
-.write-vertical {writing-mode: vertical-rl;}
+.sapUiLayoutCSSGrid.job-print-grid .sapMLabel {writing-mode: vertical-rl; padding: 10px; min-height: 1.625rem; height: 100px;  background-color: #e9e9e9;}
+.sapUiLayoutCSSGrid.job-print-grid .sapMLabel > bdi {height: 100%; text-align: center !important; }
+.sapUiLayoutCSSGrid.job-print-grid .sapMLabel.trans {width: 35px !important; writing-mode: horizontal-tb; }
+.sapUiLayoutCSSGrid.job-print-grid .sapMLabel.trans > bdi {height: auto; }
+.sapUiLayoutCSSGrid.job-print-grid .sapMLabel, .sapUiLayoutCSSGrid.job-print-grid .sapMTextArea { border: 1px solid #bfbfbf; border-radius: 3px; margin: 0 !important;}
+.sapUiLayoutCSSGrid.job-print-grid .sapMTextArea { width: 100%; height: 100%;}
+.sapUiLayoutCSSGrid.job-print-grid .top-box { justify-content: space-between; align-items: flex-end;}
+.sapUiLayoutCSSGrid.job-print-grid .top-box .sapMText { font-size: 16px; justify-content: space-between; align-items: flex-end;}
+.sapUiLayoutCSSGrid.job-print-grid .top-box .sapMVBox.border .sapMText { border: 1px solid #bfbfbf; padding: 5px; height: 100%; text-align: center !important; }
+.sapMHBox.header .sapMHBox.apointee {width: 100%; justify-content: end; align-items: end;}
+.sapMHBox.header .sapMHBox.title {width: 100%; justify-content: center; height: 30px; position: fixed;}
+.border-left { border-left: 0 !important; }
+.border-top { border-top: 0 !important; }
+.bold {font-weight: bold;}
+.posi-absol {position: absolute;}
 
 /* LIST style*/
 .sapMSLITitle, .sapMSLITitleOnly, .sapMSLIDescription, .sapMSLIDescriptionText {font-size:14px; color:#222; font-weight:500}
@@ -2311,7 +2323,3 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePage .sapMBar .sapMBarLeft .sapMBtn {min-width:50px; height:2rem}
 .sapMMessagePage .sapMBar .sapMBarMiddle {text-align:center}
 .sapMMessagePage .sapMBar .sapMBarMiddle .sapMBarPH {line-height:2rem}
-
-.fusioncharts-container g[class*="-scroller"] rect {height:4px !important; rx:3px !important; ry:3px !important}
-.fusioncharts-container g[class*="-scroller"] rect:nth-child(1) {stroke:#dfdfdf !important}
-.fusioncharts-container g[class*="-scroller"] rect:nth-child(2) {stroke:#c1c3c8 !important; fill:#c1c3c8 !important}

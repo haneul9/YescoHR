@@ -153,19 +153,24 @@ sap.ui.define(
         oChart.compact(!bCompact).render().fit();
       },
 
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
           this.chartHolder.setBusy(true);
           this.chartHolder.removeAllItems();
 
-          const sWerks = oViewModel.getProperty('/search/Werks');
+          const sWerks = oEvent.getParameter('changedItem').getKey();
           const aReturnData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmployeeOrgTree', {
             Menid: this.getCurrentMenuId(),
             Werks: sWerks,
             Stdat: moment().hour(9).toDate(),
           });
+
+          if (_.isEmpty(aReturnData)) {
+            oViewModel.setProperty('/orgList', []);
+            return;
+          }
 
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
           oViewModel.setProperty(

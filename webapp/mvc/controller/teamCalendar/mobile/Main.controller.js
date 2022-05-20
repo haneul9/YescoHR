@@ -109,12 +109,10 @@ sap.ui.define(
             Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointee.Werks, Pernr: mAppointee.Pernr }),
           ]);
 
-          // TODO: 시연용
           oViewModel.setProperty('/searchConditions', {
             Tyymm: _.isEmpty(mSearchConditions.Tyymm) ? moment().format('YYYYMM') : mSearchConditions.Tyymm,
             Werks: _.isEmpty(mSearchConditions.Werks) ? mAppointee.Werks : mSearchConditions.Werks,
-            // Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'])) : mSearchConditions.Orgeh,
-            Orgeh: _.get(aOrgehEntry, [0, 'Orgeh']),
+            Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'])) : mSearchConditions.Orgeh,
           });
           oViewModel.setProperty(
             '/entry/Werks',
@@ -263,7 +261,7 @@ sap.ui.define(
         }
       },
 
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         this.setContentsBusy(true, 'Orgeh');
@@ -271,11 +269,11 @@ sap.ui.define(
         try {
           const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Werks: oEvent.getParameter('changedItem').getKey(),
             Pernr: mAppointee.Pernr,
           });
 
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'], ''));
           oViewModel.setProperty(
             '/entry/Orgeh',
             _.map(aOrgehEntry, (o) => _.chain(o).omit('__metadata').omitBy(_.isNil).omitBy(_.isEmpty).value())

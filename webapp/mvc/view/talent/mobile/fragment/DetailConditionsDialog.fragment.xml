@@ -1,5 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns:core="sap.ui.core">
   <Dialog title="{i18n>LABEL_35021}" contentHeight="60%" horizontalScrolling="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
     <buttons>
@@ -43,16 +44,16 @@
           </HBox>
           <Label text="{i18n>LABEL_35008}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/EeageFr}" items="{ path: '/entry/D', templateShareable: false }" change=".onPairValue">
-              <customData>
+            <custom:SingleComboBox selectedKey="{/search/EeageFr}" items="{ path: '/entry/D', templateShareable: false }" selectionChange=".onPairValue">
+              <custom:customData>
                 <core:CustomData key="target" value="EeageTo" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/EeageTo}" items="{ path: '/entry/D', templateShareable: false }" enabled="{= !!${/search/EeageFr} }">
+            <custom:SingleComboBox selectedKey="{/search/EeageTo}" items="{ path: '/entry/D', templateShareable: false }" enabled="{= !!${/search/EeageFr} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00288}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
@@ -92,157 +93,157 @@
           </HBox>
           <Label text="{i18n>LABEL_35009}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
-              <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
-              </layoutData>
-              <customData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
+              <custom:layoutData>
+                <FlexItemData minWidth="50%" maxWidth="50%" />
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="1" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv1}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali1} }">
+            </custom:SingleComboBox>
+            <custom:SingleComboBox id="Langlv1" width="95%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv1}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali1} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
-              <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
-              </layoutData>
-              <customData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
+              <custom:layoutData>
+                <FlexItemData minWidth="50%" maxWidth="50%" />
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="2" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv2}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali2} }">
+            </custom:SingleComboBox>
+            <custom:SingleComboBox id="Langlv2" width="95%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv2}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali2} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" change=".onChangeQuali">
-              <layoutData>
-                <FlexItemData minWidth="60%" maxWidth="60%" />
-              </layoutData>
-              <customData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
+              <custom:layoutData>
+                <FlexItemData minWidth="50%" maxWidth="50%" />
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="3" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
-            <ComboBox width="100%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv3}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali3} }">
+            </custom:SingleComboBox>
+            <custom:SingleComboBox id="Langlv3" width="95%" class="sapUiTinyMarginBegin" selectedKey="{/search/Langlv3}" items="{ path: '/entry/J', templateShareable: false }" enabled="{= !!${/search/Quali3} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00331}" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Gesch}" items="{ path: '/entry/K', templateShareable: false }">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Gesch}" items="{ path: '/entry/K', templateShareable: false }">
+              <custom:layoutData>
                 <FlexItemData growFactor="1" />
-              </layoutData>
+              </custom:layoutData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
+              <custom:layoutData>
                 <FlexItemData growFactor="1" />
-              </layoutData>
-              <customData>
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="1" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}1" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell1} }" change=".onPairValue">
-              <customData>
+            <custom:SingleComboBox id="SyearFr1" selectedKey="{/search/SyearFr1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell1} }" selectionChange=".onPairValue">
+              <custom:customData>
                 <core:CustomData key="target" value="SyearTo1" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr1} }">
+            <custom:SingleComboBox id="SyearTo1" selectedKey="{/search/SyearTo1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr1} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
+              <custom:layoutData>
                 <FlexItemData growFactor="2" />
-              </layoutData>
-              <customData>
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="2" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}2" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell2} }" change=".onPairValue">
-              <customData>
+            <custom:SingleComboBox id="SyearFr2" selectedKey="{/search/SyearFr2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell2} }" selectionChange=".onPairValue">
+              <custom:customData>
                 <core:CustomData key="target" value="SyearTo2" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr2} }">
+            <custom:SingleComboBox id="SyearTo2" selectedKey="{/search/SyearTo2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr2} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
+              <custom:layoutData>
                 <FlexItemData growFactor="1" />
-              </layoutData>
-              <customData>
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="3" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}3" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }" change=".onPairValue">
-              <customData>
+            <custom:SingleComboBox id="SyearFr3" selectedKey="{/search/SyearFr3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }" selectionChange=".onPairValue">
+              <custom:customData>
                 <core:CustomData key="target" value="SyearTo3" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }">
+            <custom:SingleComboBox id="SyearTo3" selectedKey="{/search/SyearTo3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr3} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}4" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" change=".onChangeStell">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
+              <custom:layoutData>
                 <FlexItemData growFactor="1" />
-              </layoutData>
-              <customData>
+              </custom:layoutData>
+              <custom:customData>
                 <core:CustomData key="seq" value="4" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}4" />
           <HBox class="sapUiTinyMarginBottom" alignItems="Center">
-            <ComboBox selectedKey="{/search/SyearFr4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell4} }" change=".onPairValue">
-              <customData>
+            <custom:SingleComboBox id="SyearFr4" selectedKey="{/search/SyearFr4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell4} }" selectionChange=".onPairValue">
+              <custom:customData>
                 <core:CustomData key="target" value="SyearTo4" />
-              </customData>
+              </custom:customData>
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
             <Text text="~" class="sapUiTinyMarginBeginEnd" />
-            <ComboBox selectedKey="{/search/SyearTo4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr4} }">
+            <custom:SingleComboBox id="SyearTo4" selectedKey="{/search/SyearTo4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/SyearFr4} }">
               <core:Item key="{Zcode}" text="{Ztext}" />
-            </ComboBox>
+            </custom:SingleComboBox>
           </HBox>
         </grid:CSSGrid>
       </VBox>

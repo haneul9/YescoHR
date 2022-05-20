@@ -622,7 +622,7 @@ sap.ui.define(
 
       onChangeAwartCombo(oEvent) {
         const oViewModel = this.getViewModel();
-        const sSelectedValue = oEvent.getSource().getSelectedItem().getText();
+        const sSelectedValue = oEvent.getParameter('changedItem').getText();
 
         oViewModel.setProperty('/form/dialog/data/Atext', sSelectedValue);
         oViewModel.setProperty('/form/dialog/calcCompleted', false);

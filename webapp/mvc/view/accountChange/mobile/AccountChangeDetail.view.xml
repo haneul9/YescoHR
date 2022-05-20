@@ -15,9 +15,9 @@
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_26008}"/>
             <VBox>
-              <ComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" change=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
+              <custom:SingleComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" selectionChange=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
                 <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
+              </custom:SingleComboBox>
             </VBox>
             <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
             <HBox justifyContent="SpaceBetween">
@@ -27,9 +27,9 @@
             </HBox>
             <Label text="{i18n>LABEL_26010}"/>
             <VBox>
-              <ComboBox items="{/BankList}" selectedKey="{/FormData/Bankl}" change=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+              <custom:SingleComboBox id="accountBankl" items="{/BankList}" selectedKey="{/FormData/Bankl}" selectionChange=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
                 <core:Item text="{Banka}" key="{Bankl}" />
-              </ComboBox>
+              </custom:SingleComboBox>
             </VBox>
             <Label text="{i18n>LABEL_26011}"/>
             <VBox>
@@ -43,7 +43,7 @@
             <VBox>
               <Text text="{/FormData/BanknBef}"/>
             </VBox>
-            <Label text="{i18n>LABEL_26006}"/>            
+            <Label text="{i18n>LABEL_26006}"/>
             <VBox>
               <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>

@@ -363,18 +363,18 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
           const mAppointeeData = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Werks: oEvent.getParameter('changedItem').getKey(),
             Pernr: mAppointeeData.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'], ''));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewAttendance Main > onPressSearch Error', oError);
 

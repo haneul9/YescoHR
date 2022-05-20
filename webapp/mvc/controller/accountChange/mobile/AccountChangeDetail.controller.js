@@ -26,7 +26,10 @@ sap.ui.define(
       initializeModel() {
         return {
           Hass: this.isHass(),
-          FormData: {},
+          FormData: {
+            Acctty: 'A',
+            Bankl: 'ALL',
+          },
           FieldLimit: {},
           AccType: [{ Zcode: 'A', Ztext: this.getBundleText('LABEL_26014') }],
           BankList: [],
@@ -124,8 +127,8 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setProperty('/FormData/Chkyn', '');
-        oDetailModel.setProperty('/FormData/Bankl', 'ALL');
         oDetailModel.setProperty('/FormData/Bankn', '');
+        this.byId('accountBankl').setSelectedKeys(['ALL']);
       },
 
       // 변경된 은행선택

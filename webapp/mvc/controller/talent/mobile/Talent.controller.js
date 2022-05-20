@@ -261,26 +261,26 @@ sap.ui.define(
       onPairValue(oEvent) {
         const oViewModel = this.getViewModel();
         const oControl = oEvent.getSource();
-        const sValue = oControl.getSelectedKey();
+        const sValue = oEvent.getParameter('changedItem').getKey();
         const sTargetProp = oControl.data('target');
         const sTargetValue = oViewModel.getProperty(`/search/${sTargetProp}`);
 
         if (_.isEmpty(sTargetValue) || sValue > sTargetValue) {
-          oViewModel.setProperty(`/search/${sTargetProp}`, oControl.getSelectedKey());
+          oViewModel.setProperty(`/search/${sTargetProp}`, sValue);
         }
 
         if (_.isEmpty(sValue)) {
           oViewModel.setProperty(`/search/${sTargetProp}`, '');
         }
 
-        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
+        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, sValue));
       },
 
-      async onChangeSearchCondition() {
+      async onChangeSearchCondition(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
-          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
+          const sSelectedCondition = oEvent.getParameter('changedItem').getKey();
 
           if (sSelectedCondition === 'ALL') return;
 
@@ -298,18 +298,16 @@ sap.ui.define(
       },
 
       onChangeQuali(oEvent) {
-        const oViewModel = this.getViewModel();
         const sSeq = oEvent.getSource().data('seq');
 
-        oViewModel.setProperty(`/search/Langlv${sSeq}`, '');
+        this.byId(`Langlv${sSeq}`).setSelectedKeys(['']);
       },
 
       onChangeStell(oEvent) {
-        const oViewModel = this.getViewModel();
         const sSeq = oEvent.getSource().data('seq');
 
-        oViewModel.setProperty(`/search/SyearFr${sSeq}`, '');
-        oViewModel.setProperty(`/search/SyearTo${sSeq}`, '');
+        this.byId(`SyearFr${sSeq}`).setSelectedKeys(['']);
+        this.byId(`SyearTo${sSeq}`).setSelectedKeys(['']);
       },
 
       onPressDeleteSearchCondition() {
@@ -499,7 +497,7 @@ sap.ui.define(
         if (mSearch.Prcty === 'A') {
           if (_.isEmpty(mSearch.Freetx)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35006') }); // 검색어를 입력하여 주십시오.
         } else {
-          if (_.chain(mSearch).omit(['Prcty', 'Werks']).omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
+          if (_.chain(mSearch).omit(['Prcty', 'Werks', 'Command']).omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
           if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
           if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
           if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.

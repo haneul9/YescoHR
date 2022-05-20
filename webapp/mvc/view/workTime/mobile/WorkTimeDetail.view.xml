@@ -34,9 +34,9 @@
               </HBox>
               <Label text="{i18n>LABEL_00154}" />
               <HBox>
-                <ComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+                <custom:SingleComboBox items="{/CauseType}" selectedKey="{/DialogData/Ottyp}" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
                   <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
+                </custom:SingleComboBox>
               </HBox>
               <Label text="{i18n>LABEL_27008}"/>
               <HBox>
@@ -60,11 +60,11 @@
             <CustomListItem type="Active">
               <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
                 <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="6px 15px">
-                    <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
-                    <Text text="{Ottyptx}" />
-                    <Text text="{ parts: [{path: 'Beguz'}, {path: 'Enduz'}, {path: 'Abrst'}], formatter: '.formatTime' }"/>
-                    <Text text="{Atrsn}"/>
-                </grid:CSSGrid>               
+                  <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
+                  <Text text="{Ottyptx}" />
+                  <Text text="{ parts: [{path: 'Beguz'}, {path: 'Enduz'}, {path: 'Abrst'}], formatter: '.formatTime' }"/>
+                  <Text text="{Atrsn}"/>
+                </grid:CSSGrid>
               </HBox>
             </CustomListItem>
           </List>

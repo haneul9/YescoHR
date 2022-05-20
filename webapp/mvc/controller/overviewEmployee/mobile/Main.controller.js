@@ -75,9 +75,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
           oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
-          // TODO: 시연용
-          // oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
-          oViewModel.setProperty('/searchConditions/Orgeh', _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
 
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
@@ -280,18 +278,18 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      async onChangeWerks() {
+      async onChangeWerks(oEvent) {
         const oViewModel = this.getViewModel();
 
         try {
           const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks'),
+            Werks: oEvent.getParameter('changedItem').getKey(),
             Pernr: mAppointee.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'], ''));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onPressSearch Error', oError);
 
