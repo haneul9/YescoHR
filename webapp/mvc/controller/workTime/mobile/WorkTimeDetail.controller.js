@@ -41,6 +41,12 @@ sap.ui.define(
             list: [],
             rowCount: 1,
           },
+          DialogData: {
+            Datum: new Date(),
+            Beguz: '18:00',
+            Abrst: '',
+            Ottyp: 'ALL',
+          },
           busy: false,
         };
       },

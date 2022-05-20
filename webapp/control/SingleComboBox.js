@@ -12,7 +12,7 @@ sap.ui.define(
     return MultiComboBox.extend('sap.ui.yesco.control.SingleComboBox', {
       metadata: {
         properties: {
-          selectedKey: { type: 'String' },
+          selectedKey: { type: 'String', group: 'Data', defaultValue: '' },
         },
       },
 
