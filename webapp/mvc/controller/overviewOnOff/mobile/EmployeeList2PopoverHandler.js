@@ -15,9 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewEmployee.mobile.EmployeeListPopoverHandler', {
+    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewOnOff.mobile.EmployeeList2PopoverHandler', {
       getPopoverFragmentName() {
-        return 'sap.ui.yesco.fragment.mobile.MobileEmployeeListPopover';
+        return 'sap.ui.yesco.mvc.view.overviewOnOff.mobile.EmployeeList2Popover';
       },
 
       setPropertiesForNavTo(oMenuModel) {
@@ -28,17 +28,19 @@ sap.ui.define(
         const oModel = this.oController.getModel(ServiceNames.PA);
         const mPayload = this.getPayloadData();
 
-        const aEmployees = await Client.getEntitySet(oModel, 'HeadCountDetail', mPayload);
+        const aEmployees = await Client.getEntitySet(oModel, 'HeadCountEntRetDetail', mPayload);
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
         this.setEmployeeList(
-          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
+          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, MassgEtx, Entda }) => ({
             Photo: Photo || sUnknownAvatarImageURL,
             Ename,
             Pernr,
-            Zzjikcht: Zzjikgbtx,
-            Zzjikgbt: Zzjikchtx,
-            Fulln: Orgtx,
+            Zzjikgbtx,
+            Zzjikchtx,
+            Orgtx,
+            MassgEtx,
+            Entda,
             Navigable: this.bHasProfileViewAuth ? 'O' : '',
           }))
         );

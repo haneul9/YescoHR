@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Popover modal="true" placement="Top" showArrow="false" showHeader="false" horizontalScrolling="false" verticalScrolling="false" resizable="{resizable}" class="half-popover employee-list-popover" busy="{busy}" busyIndicatorDelay="0">
+    <content>
+      <HBox class="search-field-container">
+        <SearchField value="{terms}" placeholder="{i18n>LABEL_00211}" liveChange=".onLiveChange" />
+      </HBox>
+      <ScrollContainer horizontal="false" vertical="true">
+        <content>
+          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" itemPress=".onPressProfileLinkIcon">
+            <CustomListItem>
+              <!-- 사원 프로파일 아이콘 -->
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconProfile" type="XML" />
+            </CustomListItem>
+          </custom:MobileEmployeeList>
+        </content>
+      </ScrollContainer>
+    </content>
+  </Popover>
+</core:FragmentDefinition>

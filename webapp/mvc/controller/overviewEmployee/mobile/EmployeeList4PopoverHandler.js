@@ -15,9 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewOnOff.mobile.EmployeeListPopoverHandler', {
+    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewEmployee.mobile.EmployeeList4PopoverHandler', {
       getPopoverFragmentName() {
-        return 'sap.ui.yesco.fragment.mobile.MobileEmployeeListPopover';
+        return 'sap.ui.yesco.mvc.view.overviewEmployee.mobile.EmployeeList4Popover';
       },
 
       setPropertiesForNavTo(oMenuModel) {
@@ -27,21 +27,20 @@ sap.ui.define(
       async onBeforeOpen() {
         const oModel = this.oController.getModel(ServiceNames.PA);
         const mPayload = this.getPayloadData();
-        const sEntitySet = mPayload.Entity === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail';
 
-        delete mPayload.Entity;
-
-        const aEmployees = await Client.getEntitySet(oModel, sEntitySet, mPayload);
+        const aEmployees = await Client.getEntitySet(oModel, 'HeadCountDetail', mPayload);
         const sUnknownAvatarImageURL = AppUtils.getUnknownAvatarImageURL();
 
         this.setEmployeeList(
-          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx }) => ({
+          aEmployees.map(({ Photo, Ename, Pernr, Zzjikgbtx, Zzjikchtx, Orgtx, Svryy, Entda }) => ({
             Photo: Photo || sUnknownAvatarImageURL,
             Ename,
             Pernr,
-            Zzjikcht: Zzjikgbtx,
-            Zzjikgbt: Zzjikchtx,
-            Fulln: Orgtx,
+            Zzjikgbtx,
+            Zzjikchtx,
+            Orgtx,
+            Svryy,
+            Entda,
             Navigable: this.bHasProfileViewAuth ? 'O' : '',
           }))
         );

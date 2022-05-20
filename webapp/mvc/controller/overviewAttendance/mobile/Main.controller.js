@@ -63,6 +63,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          oViewModel.setProperty('/searchAreaClose', false);
+
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
@@ -93,11 +95,6 @@ sap.ui.define(
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
-            const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
-            setTimeout(() => {
-              $ChartTooltip.hide();
-            }, 3000);
-
             const aProps = ['Headty', 'Discod'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
@@ -114,7 +111,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(8).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('Mobile')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -187,28 +188,6 @@ sap.ui.define(
 
             break;
           case 'mscombi2d':
-            _.chain(mChartSetting)
-              .set(
-                ['categories', 0, 'category', 0],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
-              )
-              .set(['dataset', 0], {
-                seriesName: this.getBundleText('LABEL_28048'), // 당일
-                showValues: '1',
-                color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
-              })
-              .set(['dataset', 1], {
-                seriesName: this.getBundleText('LABEL_00196'), // 누적
-                renderAs: 'line',
-                color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
-              })
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
-
-            break;
           case 'scrollcombi2d':
             _.chain(mChartSetting)
               .set(

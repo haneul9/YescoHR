@@ -2,7 +2,6 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
     <headerContent>
@@ -99,7 +98,7 @@
           <!-- 조직별 현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A10" type="XML" />
           <!-- 임원/팀장 1인당 직원수 -->
-          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" /> -->
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A11" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>

@@ -100,7 +100,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(10).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('PC')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -455,7 +459,11 @@ sap.ui.define(
 
           _.set(mFilters, 'Datum', moment(mFilters.Datum).hours(9).toDate());
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
 

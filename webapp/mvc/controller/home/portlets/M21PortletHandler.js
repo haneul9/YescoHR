@@ -6,7 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/home/portlets/AbstractPortletHandler',
-    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeListPopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeList1PopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -15,7 +15,7 @@ sap.ui.define(
     Client,
     ServiceNames,
     AbstractPortletHandler,
-    EmployeeListPopoverHandler
+    EmployeeList1PopoverHandler
   ) => {
     'use strict';
 
@@ -38,7 +38,7 @@ sap.ui.define(
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeListPopoverHandler(oController) : new EmployeeListDialogHandler(oController));
+        this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList1PopoverHandler(oController) : new EmployeeListDialogHandler(oController));
       },
 
       async readContentData() {

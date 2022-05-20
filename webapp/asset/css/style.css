@@ -2171,6 +2171,9 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
 .fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
+.fusioncharts-container svg g[class*="-scroller"] rect {height:4px !important; rx:3px !important; ry:3px !important}
+.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1) {fill:#ffffff !important; stroke:#dfdfdf !important}
+.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2) {fill:#c1c3c8 !important; stroke:#c1c3c8 !important}
 #employee-a02-chart-container {height:76px}
 #employee-a06-chart-container {height:76px}
 
