@@ -650,6 +650,10 @@ sap.ui.define(
         this.getViewModel().setProperty('/buttons/form/confirmEnable', !!oEvent.getSource().getValue());
       },
 
+      onDialogClose(oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
       onPressRejectDialogSave() {
         const mProcessType = Constants.PROCESS_TYPE.REJECT;
 
