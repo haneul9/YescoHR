@@ -9,7 +9,6 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox class="button-group">
-          <Button text="{i18n>LABEL_00133}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/hass}" press=".onPressPrint" />
           <Button text="{i18n>LABEL_00142}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/REJECT_REASON/Availability} === 'X' &amp;&amp; !!${/buttons/form/Rjctr} }" press=".onPressRejectViewButton" />
           <Button text="{i18n>LABEL_00175}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/Z_SUBMIT/Availability} === 'X' }" press=".onPressSubmitButton" />
           <Button text="{i18n>LABEL_00117}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/buttons/submit/COMPLETE/Availability} === 'X' }" press=".onPressCompleteButton" />
@@ -34,7 +33,7 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.Stage" type="XML" />
         </HBox>
       </VBox>
-      <HBox busyIndicatorDelay="0" busy="{/busy}">
+      <HBox busyIndicatorDelay="0" busy="{/busy}" justifyContent="End">
         <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
           <layoutData>
             <FlexItemData growFactor="1"/>
@@ -83,6 +82,9 @@
             </IconTabFilter>
           </items>
         </IconTabBar>
+        <!-- <HBox class="posi-absol">
+          <Button text="{i18n>LABEL_00133}" type="Emphasized" busyIndicatorDelay="0" busy="{/busy}" visible="{/hass}" press=".onPressPrint" />
+        </HBox> -->
       </HBox>
     </VBox>
   </Page>
