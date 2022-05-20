@@ -36,10 +36,11 @@ sap.ui.define(
       },
 
       async init() {
-        const oMenuModel = AppUtils.getAppComponent().getMenuModel();
-        await oMenuModel.getPromise();
+        this.oAppMenu = AppUtils.getAppController().getAppMenu();
+        this.oMenuModel = AppUtils.getAppComponent().getMenuModel();
+        await this.oMenuModel.getPromise();
 
-        this.setPropertiesForNavTo(oMenuModel);
+        this.setPropertiesForNavTo(this.oMenuModel);
 
         const oView = this.oController.getView();
 
@@ -176,6 +177,24 @@ sap.ui.define(
         this.setEmployeeList([]);
       },
 
+      filterEmployeeList(oEvent) {
+        const sValue = $.trim(oEvent.getParameter('newValue'));
+        if (!sValue) {
+          this.clearSearchFilter();
+          return;
+        }
+
+        const aFilters = new Filter({
+          filters: [
+            new Filter('Ename', FilterOperator.Contains, sValue), //
+            new Filter('Pernr', FilterOperator.Contains, sValue),
+          ],
+          and: false,
+        });
+
+        this.setSearchFilter(aFilters);
+      },
+
       togglePopover(oEvent) {
         if (this.oPopover.isOpen()) {
           this.closePopover();
@@ -184,6 +203,43 @@ sap.ui.define(
           this.setBusy(false);
         }
       },
+
+      /**
+       * 개인별근태현황 icon touch event handler
+       * @param {sap.ui.base.Event} oEvent
+       */
+      onPressAttendanceLinkIcon(oEvent) {
+        if (!this.oMenuModel.hasMssMenuAuth()) {
+          return;
+        }
+
+        const mRowData = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty();
+        const sPernr = mRowData.Pernr;
+        const oDatum = mRowData.Datum || mRowData.Tmdat ? moment(mRowData.Datum || mRowData.Tmdat) : moment();
+
+        this.oAppMenu.moveToMenu('mobile/individualWorkState', { pernr: sPernr, year: oDatum.year(), month: oDatum.month() });
+      },
+
+      /**
+       * 사원 프로파일 icon touch event handler
+       * @param {sap.ui.base.Event} oEvent
+       */
+      onPressProfileLinkIcon(oEvent) {
+        if (!this.oMenuModel.hasEmployeeProfileViewAuth()) {
+          return;
+        }
+
+        const sProfileMenuUrl = this.oMenuModel.getEmployeeProfileMenuUrl();
+        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
+
+        this.oAppMenu.moveToMenu(sProfileMenuUrl, { pernr: sPernr });
+      },
+
+      /**
+       * 검색 icon touch event handler
+       * @param {sap.ui.base.Event} oEvent
+       */
+      onPressSearchLinkIcon(oEvent) {},
 
       setBusy(bBusy = true) {
         setTimeout(

@@ -88,7 +88,10 @@ sap.ui.define(
           this.oEmployeeListPopoverHandler = new EmployeeListPopoverHandler(this); // EmployeeListPopoverHandler.js:64 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'Headty')
 
           window.callEmployeeDetail = (sArgs) => {
-            $('#fusioncharts-tooltip-element').css('z-index', 7);
+            const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+            setTimeout(() => {
+              $ChartTooltip.hide();
+            }, 3000);
 
             const aProps = ['OData', 'Headty', 'Discod', 'Zyear'];
             const aArgs = _.split(`H,${sArgs}`, ',');

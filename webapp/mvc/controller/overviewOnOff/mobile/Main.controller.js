@@ -77,7 +77,10 @@ sap.ui.define(
           this.oEmployeeListPopoverHandler = new EmployeeListPopoverHandler(this);
 
           window.callOnOffDetail = (sArgs) => {
-            $('#fusioncharts-tooltip-element').css('z-index', 7);
+            const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+            setTimeout(() => {
+              $ChartTooltip.hide();
+            }, 3000);
 
             const aProps = ['Headty', 'Discod', 'Disyear'];
             const aArgs = _.split(sArgs, ',');
@@ -304,6 +307,11 @@ sap.ui.define(
       },
 
       openDetailDialog(mPayload) {
+        const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+        setTimeout(() => {
+          $ChartTooltip.hide();
+        }, 3000);
+
         const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
         this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });

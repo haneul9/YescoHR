@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
@@ -11,16 +9,21 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     MobileEmployeeListPopoverHandler,
     Client,
     ServiceNames,
     EmployeeList4PopoverHandler
   ) => {
-    'use strict';
+    ('use strict');
 
+    /**
+     * MSS > HR Boardroom > 근태현황 > 평균근무시간 (Headty : B)
+     * MSS > HR Boardroom > 근태현황 > OT근무현황 (Headty : C)
+     * MSS > HR Boardroom > 근태현황 > 조직별 OT평균시간 (Headty : H)
+     * MSS > HR Boardroom > 근태현황 > 직급별 OT평균시간 (Headty : I)
+     * MSS > HR Boardroom > 근태현황 > 주 단위 근무시간 추이 (Headty : J)
+     */
     return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewAttendance.mobile.EmployeeList3PopoverHandler', {
       init() {
         MobileEmployeeListPopoverHandler.prototype.init.call(this);
@@ -33,8 +36,7 @@ sap.ui.define(
       },
 
       setPropertiesForNavTo(oMenuModel) {
-        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasMssMenuAuth = oMenuModel.hasMssMenuAuth();
       },
 
       async onBeforeOpen() {
@@ -56,7 +58,7 @@ sap.ui.define(
             Holtot: Holtot || 0,
             Begda,
             Endda,
-            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasMssMenuAuth ? 'O' : '',
           }))
         );
 
@@ -70,25 +72,11 @@ sap.ui.define(
       },
 
       onLiveChange(oEvent) {
-        const sValue = $.trim(oEvent.getParameter('newValue'));
-        if (!sValue) {
-          this.clearSearchFilter();
-          return;
-        }
-
-        const aFilters = new Filter({
-          filters: [
-            new Filter('Ename', FilterOperator.Contains, sValue), //
-            new Filter('Pernr', FilterOperator.Contains, sValue),
-          ],
-          and: false,
-        });
-
-        this.setSearchFilter(aFilters);
+        this.filterEmployeeList(oEvent);
       },
 
       navTo(oEvent) {
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasMssMenuAuth) {
           return;
         }
 

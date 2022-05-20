@@ -2,12 +2,6 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}">
-    <layoutData>
-      <grid:GridItemLayoutData gridColumn="span 2" />
-    </layoutData>
-    <custom:Placeholder />
-  </VBox>
   <VBox class="portlet portlet-box" visible="{= !${/contents/A11/busy} }">
     <layoutData>
       <grid:GridItemLayoutData gridColumn="span 2" />
@@ -33,5 +27,11 @@
         </core:layoutData>
       </core:HTML>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}">
+    <layoutData>
+      <grid:GridItemLayoutData gridColumn="span 2" />
+    </layoutData>
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

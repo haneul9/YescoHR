@@ -8,15 +8,10 @@
       </HBox>
       <ScrollContainer horizontal="false" vertical="true">
         <content>
-          <!-- <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbt" duty="Zzjikcht" department="Fulln" linkType="press" press=".navToProfile"> -->
           <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbt" duty="Zzjikcht" department="Fulln" linkType="tel" href="Phone">
             <CustomListItem>
               <!-- 전화 아이콘 -->
-              <Link enabled="{= !!${Phone} }" href="tel:{Phone}" class="icon-telephone">
-                <layoutData>
-                  <FlexItemData styleClass="icon-link" />
-                </layoutData>
-              </Link>
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconTelephone" type="XML" />
             </CustomListItem>
           </custom:MobileEmployeeList>
         </content>

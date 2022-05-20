@@ -52,7 +52,7 @@ sap.ui.define(
         await this.oMenuModel.getPromise();
 
         this.sProfileMenuUrl = this.oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = this.oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasProfileViewAuth = this.oMenuModel.hasEmployeeProfileViewAuth();
       },
 
       async addPortlet() {
@@ -134,7 +134,7 @@ sap.ui.define(
           return;
         }
 
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasProfileViewAuth) {
           return;
         }
 

@@ -93,7 +93,10 @@ sap.ui.define(
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
-            $('#fusioncharts-tooltip-element').css('z-index', 7);
+            const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+            setTimeout(() => {
+              $ChartTooltip.hide();
+            }, 3000);
 
             const aProps = ['Headty', 'Discod'];
             const aArgs = _.split(sArgs, ',');
@@ -336,6 +339,11 @@ sap.ui.define(
       },
 
       openDialog(mPayload) {
+        const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+        setTimeout(() => {
+          $ChartTooltip.hide();
+        }, 3000);
+
         switch (mPayload.Headty) {
           case 'A': // 현재 근무현황
             this.oEmployeeList1PopoverHandler.openPopover(mPayload);
@@ -356,8 +364,6 @@ sap.ui.define(
           default:
             break;
         }
-
-        $('#fusioncharts-tooltip-element').hide();
       },
 
       /*****************************************************************

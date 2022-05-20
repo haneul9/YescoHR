@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
@@ -10,8 +8,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     MobileEmployeeListPopoverHandler,
     Client,
@@ -25,8 +21,7 @@ sap.ui.define(
       },
 
       setPropertiesForNavTo(oMenuModel) {
-        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasProfileViewAuth = oMenuModel.hasEmployeeProfileViewAuth();
       },
 
       async onBeforeOpen() {
@@ -47,7 +42,7 @@ sap.ui.define(
             Zzjikcht: Zzjikgbtx,
             Zzjikgbt: Zzjikchtx,
             Fulln: Orgtx,
-            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasProfileViewAuth ? 'O' : '',
           }))
         );
 
@@ -61,30 +56,7 @@ sap.ui.define(
       },
 
       onLiveChange(oEvent) {
-        const sValue = $.trim(oEvent.getParameter('newValue'));
-        if (!sValue) {
-          this.clearSearchFilter();
-          return;
-        }
-
-        const aFilters = new Filter({
-          filters: [
-            new Filter('Ename', FilterOperator.Contains, sValue), //
-            new Filter('Pernr', FilterOperator.Contains, sValue),
-          ],
-          and: false,
-        });
-
-        this.setSearchFilter(aFilters);
-      },
-
-      navToProfile(oEvent) {
-        if (!this.bHasProfileMenuAuth) {
-          return;
-        }
-
-        const sPernr = (oEvent.getParameter('listItem') || oEvent.getSource()).getBindingContext().getProperty('Pernr');
-        AppUtils.getAppController().getAppMenu().moveToMenu(this.sProfileMenuUrl, { pernr: sPernr });
+        this.filterEmployeeList(oEvent);
       },
     });
   }

@@ -1,9 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
-    <custom:Placeholder />
-  </VBox>
   <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
     <customData>
       <core:CustomData key="key" value="a02" />
@@ -80,5 +77,8 @@
         </VBox>
       </HBox>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

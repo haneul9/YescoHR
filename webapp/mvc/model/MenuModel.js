@@ -253,14 +253,31 @@ sap.ui.define(
         return this.getProperty('/urlToMenid')[sUrl]; // sUrl에 특수문자가 들어있는 경우를 위해 []를 사용
       },
 
+      /**
+       * 사원 프로파일 menu URL
+       */
       getEmployeeProfileMenuUrl() {
         return this.bMobile ? 'mobile/m/employee-detail' : 'employee';
       },
 
-      hasEmployeeProfileMenuAuth() {
+      /**
+       * 개인별근태현황 menu URL
+       */
+      getEmployeeAttendanceMenuUrl() {
+        return this.bMobile ? 'mobile/individualWorkState' : 'individualWorkState';
+      },
+
+      hasEmployeeProfileViewAuth() {
+        if (!this.hasMssMenuAuth()) {
+          return false;
+        }
         const sProfileMenuId = this.getMenid((this.bMobile ? 'mobile/' : '') + 'm/employee');
         const mMenuProperties = this.getProperties(sProfileMenuId);
         return sProfileMenuId && mMenuProperties && mMenuProperties.Mnid1 === '70000';
+      },
+
+      hasMssMenuAuth() {
+        return !!this.getProperties('7000');
       },
 
       /**

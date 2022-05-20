@@ -11,18 +11,11 @@
           <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
             <CustomListItem>
               <VBox>
-                <Text text="{Atext}" />
-                <Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" />
+                <Text text="{Atext}" wrapping="false" />
+                <Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" wrapping="false" />
               </VBox>
-              <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">
-                <customData>
-                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
-                </customData>
-                <layoutData>
-                  <FlexItemData styleClass="icon-link" />
-                </layoutData>
-              </Link>
+              <!-- 사원 프로파일 아이콘 -->
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconProfile" type="XML" />
             </CustomListItem>
           </custom:MobileEmployeeList>
         </content>
