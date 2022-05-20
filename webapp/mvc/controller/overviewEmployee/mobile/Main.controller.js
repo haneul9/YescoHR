@@ -31,8 +31,8 @@ sap.ui.define(
           searchAreaClose: false,
           searchConditions: {
             Zyear: moment().format('YYYY'),
-            Werks: [],
-            Orgeh: [],
+            Werks: '',
+            Orgeh: '',
           },
           entry: {
             Werks: [],
@@ -74,16 +74,11 @@ sap.ui.define(
 
           oViewModel.setProperty('/entry/Werks', aPersaEntry);
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Werks', _.concat(mAppointee.Werks));
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
+          oViewModel.setProperty('/searchConditions/Werks', mAppointee.Werks);
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
 
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = _.cloneDeep(oViewModel.getProperty('/searchConditions'));
-
-          _.chain(mFilters)
-            .set('Werks', _.get(mFilters, ['Werks', 0]))
-            .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
-            .commit();
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.chain(ChartsSetting.CHART_TYPE)
             .take(10)
@@ -98,12 +93,7 @@ sap.ui.define(
             const aProps = ['OData', 'Headty', 'Discod', 'Zyear'];
             const aArgs = _.split(`H,${sArgs}`, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-            const mSearchConditions = _.cloneDeep(this.getViewModel().getProperty('/searchConditions'));
-
-            _.chain(mSearchConditions)
-              .set('Werks', _.get(mSearchConditions, ['Werks', 0]))
-              .set('Orgeh', _.get(mSearchConditions, ['Orgeh', 0]))
-              .commit();
+            const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
             this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
           };
@@ -292,16 +282,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          this.onMultiToSingleCombo(oEvent);
-
           const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks/0'),
+            Werks: oEvent.getParameter('changedItem').getKey(),
             Pernr: mAppointee.Pernr,
           });
 
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'], ''));
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onPressSearch Error', oError);
 
@@ -316,12 +304,7 @@ sap.ui.define(
           this.setAllBusy(true);
 
           const oModel = this.getModel(ServiceNames.PA);
-          const mFilters = _.cloneDeep(oViewModel.getProperty('/searchConditions'));
-
-          _.chain(mFilters)
-            .set('Werks', _.get(mFilters, ['Werks', 0]))
-            .set('Orgeh', _.get(mFilters, ['Orgeh', 0]))
-            .commit();
+          const mFilters = oViewModel.getProperty('/searchConditions');
 
           _.forEach(_.take(ChartsSetting.CHART_TYPE, 10), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
         } catch (oError) {
@@ -332,13 +315,8 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        const mSearchConditions = _.cloneDeep(this.getViewModel().getProperty('/searchConditions'));
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
         const mPayload = oEvent.getSource().data();
-
-        _.chain(mSearchConditions)
-          .set('Werks', _.get(mSearchConditions, ['Werks', 0]))
-          .set('Orgeh', _.get(mSearchConditions, ['Orgeh', 0]))
-          .commit();
 
         this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
       },

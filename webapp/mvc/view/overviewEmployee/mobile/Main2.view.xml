@@ -15,12 +15,12 @@
             <FlexItemData maxWidth="67%" />
           </layoutData>
           <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
-          <MultiComboBox width="100%" class="mobile-single-combo sapUiTinyMarginTop" items="{/entry/Werks}" selectedKeys="{/searchConditions/Werks}" selectionChange=".onChangeWerks">
+          <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks" class="sapUiTinyMarginTop">
             <core:Item text="{Pbtxt}" key="{Werks}" />
-          </MultiComboBox>
-          <MultiComboBox width="100%" class="mobile-single-combo sapUiTinyMarginTop" items="{/entry/Orgeh}" selectedKeys="{/searchConditions/Orgeh}" selectionChange=".onMultiToSingleCombo">
+          </custom:SingleComboBox>
+          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
-          </MultiComboBox>
+          </custom:SingleComboBox>
           <!-- <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
             <HBox alignItems="Center">
               <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-16-px">

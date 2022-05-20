@@ -34,8 +34,8 @@ sap.ui.define(
           },
           searchConditions: {
             Tyymm: '',
-            Werks: [],
-            Orgeh: [],
+            Werks: '',
+            Orgeh: '',
           },
           calendar: {
             yearMonth: '',
@@ -111,8 +111,8 @@ sap.ui.define(
 
           oViewModel.setProperty('/searchConditions', {
             Tyymm: _.isEmpty(mSearchConditions.Tyymm) ? moment().format('YYYYMM') : mSearchConditions.Tyymm,
-            Werks: _.isEmpty(mSearchConditions.Werks) ? _.concat(mAppointee.Werks) : _.concat(mSearchConditions.Werks),
-            Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value()) : _.concat(mSearchConditions.Orgeh),
+            Werks: _.isEmpty(mSearchConditions.Werks) ? mAppointee.Werks : mSearchConditions.Werks,
+            Orgeh: _.isEmpty(mSearchConditions.Orgeh) ? (_.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'])) : mSearchConditions.Orgeh,
           });
           oViewModel.setProperty(
             '/entry/Werks',
@@ -194,8 +194,7 @@ sap.ui.define(
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
           const dTyymm = moment(mSearchConditions.Tyymm);
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'DailyTimeExist', {
-            Werks: _.get(mSearchConditions, ['Werks', 0]),
-            Orgeh: _.get(mSearchConditions, ['Orgeh', 0]),
+            ..._.pick(mSearchConditions, ['Werks', 'Orgeh']),
             BegdaS: dTyymm.startOf('month').hours(9).toDate(),
             EnddaS: dTyymm.endOf('month').hours(9).toDate(),
           });
@@ -217,10 +216,9 @@ sap.ui.define(
             Mobile: 'X',
             Menid: this.getCurrentMenuId(),
             Pernr: this.getAppointeeProperty('Pernr'),
-            Werks: _.get(mSearchConditions, ['Werks', 0]),
-            Orgeh: _.get(mSearchConditions, ['Orgeh', 0]),
             BegdaS: _.isEmpty(sDay) ? dTyymm.startOf('month').hours(9).toDate() : moment(sDay).hours(9).toDate(),
             EnddaS: _.isEmpty(sDay) ? dTyymm.endOf('month').hours(9).toDate() : moment(sDay).hours(9).toDate(),
+            ..._.pick(mSearchConditions, ['Werks', 'Orgeh']),
           });
 
           oViewModel.setProperty('/detail/displayDate', _.isEmpty(sDay) ? dTyymm.format('YYYY.MM') : moment(sDay).format('YYYY.MM.DD'));
@@ -269,15 +267,13 @@ sap.ui.define(
         this.setContentsBusy(true, 'Orgeh');
 
         try {
-          this.onMultiToSingleCombo(oEvent);
-
           const mAppointee = this.getAppointeeData();
           const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
-            Werks: oViewModel.getProperty('/searchConditions/Werks/0'),
+            Werks: oEvent.getParameter('changedItem').getKey(),
             Pernr: mAppointee.Pernr,
           });
 
-          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? _.concat(mAppointee.Orgeh) : _.chain(aOrgehEntry).get([0, 'Orgeh']).concat().value());
+          oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointee.Orgeh) ? mAppointee.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh'], ''));
           oViewModel.setProperty(
             '/entry/Orgeh',
             _.map(aOrgehEntry, (o) => _.chain(o).omit('__metadata').omitBy(_.isNil).omitBy(_.isEmpty).value())

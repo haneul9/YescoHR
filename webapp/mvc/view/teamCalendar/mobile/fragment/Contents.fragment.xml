@@ -6,20 +6,20 @@
             <custom:MobileScrollContainer horizontal="false" vertical="true">
                 <VBox class="search-area" visible="{= ${/auth} !== 'E' }">
                     <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-                        <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Werks}" selectionChange=".onChangeWerks">
-                            <layoutData>
+                        <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" selectionChange=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
+                            <custom:layoutData>
                                 <FlexItemData minWidth="67%" maxWidth="67%" />
-                            </layoutData>
+                            </custom:layoutData>
                             <core:Item key="{Werks}" text="{Pbtxt}" />
-                        </MultiComboBox>
+                        </custom:SingleComboBox>
                     </HBox>
                     <HBox justifyContent="SpaceBetween" alignItems="Center">
-                        <MultiComboBox width="100%" class="mobile-single-combo" selectedKeys="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}" selectionChange=".onMultiToSingleCombo">
-                            <layoutData>
+                        <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
+                            <custom:layoutData>
                                 <FlexItemData minWidth="67%" maxWidth="67%" />
-                            </layoutData>
+                            </custom:layoutData>
                             <core:Item text="{Orgtx}" key="{Orgeh}" />
-                        </MultiComboBox>
+                        </custom:SingleComboBox>
                         <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
                             <layoutData>
                                 <FlexItemData minWidth="33%" maxWidth="33%" />

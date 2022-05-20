@@ -62,7 +62,7 @@ sap.ui.define(
               entry: {
                 Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
               },
-              search: { Werks: _.concat(mAppointee.Werks) },
+              search: { Werks: mAppointee.Werks },
             });
             oViewModel.setSizeLimit(1000);
             this.setViewModel(oViewModel);
@@ -157,12 +157,10 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          this.onMultiToSingleCombo(oEvent);
-
           this.chartHolder.setBusy(true);
           this.chartHolder.removeAllItems();
 
-          const sWerks = oViewModel.getProperty('/search/Werks/0');
+          const sWerks = oEvent.getParameter('changedItem').getKey();
           const aReturnData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmployeeOrgTree', {
             Menid: this.getCurrentMenuId(),
             Werks: sWerks,
