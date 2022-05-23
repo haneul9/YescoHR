@@ -15,21 +15,24 @@
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange=".onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange=".onTypeChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </custom:SingleComboBox>
+              <Text text="{/FormData/Context}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }"/>
             </VBox>
             <Label text="{i18n>LABEL_02008}"/>
             <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" selectionChange=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" selectionChange=".onCauseChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </custom:SingleComboBox>
+              <Text text="{/FormData/Conretx}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }"/>
             </VBox>
             <Label text="{i18n>LABEL_02015}"/>
             <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" selectionChange=".onRelationChange" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/fixRelation} }">
+              <custom:SingleComboBox class="required" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" selectionChange=".onRelationChange" visible="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/fixRelation} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </custom:SingleComboBox>
+              <Text text="{/FormData/Famtx}" visible="{= (${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl}) || !${/fixRelation} }"/>
             </VBox>
             <Label text="{i18n>LABEL_02017}"/>
             <VBox>
