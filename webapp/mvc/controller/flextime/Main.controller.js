@@ -47,9 +47,17 @@ sap.ui.define(
           },
           dialog: {
             targetDates: [],
-            work: { rowCount: 1, list: [] },
-            legal: { rowCount: 1, list: [] },
-            extra: { rowCount: 4, list: [] },
+            work: { rowCount: 1, list: [{ Beguz: null, Enduz: null }] },
+            legal: { rowCount: 1, list: [{ Beguz: null, Enduz: null }] },
+            extra: {
+              rowCount: 4,
+              list: [
+                { Beguz: null, Enduz: null, Sumrow: false },
+                { Beguz: null, Enduz: null, Sumrow: false },
+                { Beguz: null, Enduz: null, Sumrow: false },
+                { Beguz: null, Enduz: null, Sumrow: true },
+              ],
+            },
           },
         };
       },
