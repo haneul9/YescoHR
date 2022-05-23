@@ -264,7 +264,7 @@ sap.ui.define([], function () {
       },
       scrollcolumn2d: {
         chart: {
-          scrollHeight: '10',
+          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4,
           scrollColor: '#ffffff',
           baseFontSize: '14',
           valueFontSize: '14',
