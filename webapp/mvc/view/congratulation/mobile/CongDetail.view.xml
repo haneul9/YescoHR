@@ -36,11 +36,11 @@
             </VBox>
             <Label text="{i18n>LABEL_02017}"/>
             <VBox>
-              <Input id="RelationTxt" class="required" showValueHelp="true" valueHelpRequest=".onTargetDialog" value="{/FormData/Zname}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+              <Input class="required" showValueHelp="true" valueHelpRequest=".onTargetDialog" value="{/FormData/Zname}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/relationTxt} }" />
             </VBox>
             <Label text="{i18n>LABEL_02014}"/>
             <VBox>
-              <custom:DatePicker id="BirthDatePicker" class="required" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
+              <custom:DatePicker class="required" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/birthDatePicker} }" />
             </VBox>
             <Label text="{i18n>LABEL_02009}"/>
             <VBox>
