@@ -291,7 +291,7 @@ sap.ui.define(
                   const aStyleClasses = ['scroll-color', 'scroll-radius'];
                   aStyleClasses.push(bIsIOS ? 'legend-m1d5' : '');
                   $(`#${sChartId}.fusioncharts-container`).addClass(aStyleClasses.join(' '));
-                }, 100);
+                }, 300);
               });
             }
           });
