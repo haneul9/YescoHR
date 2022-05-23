@@ -95,8 +95,8 @@ sap.ui.define(
         const mSessionData = this.getSessionData();
 
         if (!sDataKey || sDataKey === 'N') {
-          oViewModel.setProperty('/FormData', mSessionData);
           oViewModel.setProperty('/FormData', {
+            ...mSessionData,
             Apename: mSessionData.Ename,
             Appernr: mSessionData.Pernr,
             Concode: 'ALL',

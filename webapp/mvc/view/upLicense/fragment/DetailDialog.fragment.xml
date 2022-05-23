@@ -9,7 +9,8 @@
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="header-wrap">
           <HBox class="header">
-            <Title level="H3" text="{i18n>LABEL_00168}" />
+            <Title level="H3" text="{i18n>LABEL_00168}" class="mr-5-px" />
+            <Text text="total {/dialogListCount}" />
           </HBox>
           <HBox class="status-wrap mr-0">
             <ObjectStatus text="{i18n>LABEL_00106}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
@@ -68,13 +69,13 @@
               </table:template>
             </table:Column>
             <table:Column width="10%" filterProperty="Certtytx" sortProperty="Certtytx">
-              <Label text="{i18n>LABEL_39006}" />
+              <Label text="{i18n>LABEL_39015}" />
               <table:template>
                 <Text text="{Certtytx}" width="100%" textAlign="Center" />
               </table:template>
             </table:Column>
-            <table:Column width="10%" filterProperty="Certdttx" sortProperty="Certdttx">
-              <Label text="{i18n>LABEL_39007}" />
+            <table:Column width="15%" filterProperty="Certdttx" sortProperty="Certdttx">
+              <Label text="{i18n>LABEL_39006}" />
               <table:template>
                 <Text text="{Certdttx}" width="100%" textAlign="Center" />
               </table:template>
