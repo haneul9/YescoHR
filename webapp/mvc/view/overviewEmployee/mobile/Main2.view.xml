@@ -100,48 +100,50 @@
           <!-- 임원/팀장 1인당 직원수 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.mobile.A11" type="XML" />
           <HBox width="100%" justifyContent="SpaceBetween" wrap="Wrap" class="mt-20-px" visible="{/isDevMobile}">
-            <ComboBox width="100%" selectedKey="legend-0" change=".onChangeLegendPosition">
-              <layoutData>
+            <custom:SingleComboBox width="100%" selectedKey="+0.0" change=".onChangeLegendPosition">
+              <custom:layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" />
-              </layoutData>
-              <items>
-                <core:Item text="legend-p2" key="legend-p2" />
-                <core:Item text="legend-p1d5" key="legend-p1d5" />
-                <core:Item text="legend-p1" key="legend-p1" />
-                <core:Item text="legend-0" key="legend-0" />
-                <core:Item text="legend-m1" key="legend-m1" />
-                <core:Item text="legend-m1d5" key="legend-m1d5" />
-                <core:Item text="legend-m2" key="legend-m2" />
-              </items>
-            </ComboBox>
-            <ComboBox width="100%" selectedKey="scroll-h10" change=".onChangeScrollHeightCss">
-              <layoutData>
+              </custom:layoutData>
+              <custom:items>
+                <core:Item text="+2.0" key="+2.0" />
+                <core:Item text="+1.5" key="+1.5" />
+                <core:Item text="+1.0" key="+1.0" />
+                <core:Item text="+0.5" key="+0.5" />
+                <core:Item text="+0.0" key="+0.0" />
+                <core:Item text="-0.5" key="-0.5" />
+                <core:Item text="-1.0" key="-1.0" />
+                <core:Item text="-1.5" key="-1.5" />
+                <core:Item text="-2.0" key="-2.0" />
+              </custom:items>
+            </custom:SingleComboBox>
+            <custom:SingleComboBox width="100%" selectedKey="4" change=".onChangeScrollHeightCss">
+              <custom:layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" />
-              </layoutData>
-              <items>
-                <core:Item text="scroll-h" key="scroll-h" />
-                <core:Item text="scroll-h0" key="scroll-h0" />
-                <core:Item text="scroll-h1" key="scroll-h1" />
-                <core:Item text="scroll-h2" key="scroll-h2" />
-                <core:Item text="scroll-h3" key="scroll-h3" />
-                <core:Item text="scroll-h4" key="scroll-h4" />
-                <core:Item text="scroll-h5" key="scroll-h5" />
-                <core:Item text="scroll-h6" key="scroll-h6" />
-                <core:Item text="scroll-h7" key="scroll-h7" />
-                <core:Item text="scroll-h8" key="scroll-h8" />
-                <core:Item text="scroll-h9" key="scroll-h9" />
-                <core:Item text="scroll-h10" key="scroll-h10" />
-                <core:Item text="scroll-h15" key="scroll-h15" />
-                <core:Item text="scroll-h20" key="scroll-h20" />
-                <core:Item text="scroll-h15" key="scroll-h15" />
-                <core:Item text="scroll-h30" key="scroll-h30" />
-              </items>
-            </ComboBox>
-            <ComboBox width="100%" selectedKey="10" change=".onChangeScrollHeight">
-              <layoutData>
+              </custom:layoutData>
+              <custom:items>
+                <core:Item text="" key="" />
+                <core:Item text="0" key="0" />
+                <core:Item text="1" key="1" />
+                <core:Item text="2" key="2" />
+                <core:Item text="3" key="3" />
+                <core:Item text="4" key="4" />
+                <core:Item text="5" key="5" />
+                <core:Item text="6" key="6" />
+                <core:Item text="7" key="7" />
+                <core:Item text="8" key="8" />
+                <core:Item text="9" key="9" />
+                <core:Item text="10" key="10" />
+                <core:Item text="15" key="15" />
+                <core:Item text="20" key="20" />
+                <core:Item text="15" key="15" />
+                <core:Item text="30" key="30" />
+              </custom:items>
+            </custom:SingleComboBox>
+            <custom:SingleComboBox width="100%" selectedKey="4" change=".onChangeScrollHeight">
+              <custom:layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" styleClass="mt-10-px" />
-              </layoutData>
-              <items>
+              </custom:layoutData>
+              <custom:items>
                 <core:Item text="0" key="0" />
                 <core:Item text="1" key="1" />
                 <core:Item text="2" key="2" />
@@ -157,8 +159,8 @@
                 <core:Item text="20" key="20" />
                 <core:Item text="25" key="25" />
                 <core:Item text="30" key="30" />
-              </items>
-            </ComboBox>
+              </custom:items>
+            </custom:SingleComboBox>
           </HBox>
         </VBox>
       </custom:MobileScrollContainer>

@@ -407,11 +407,15 @@ sap.ui.define(
       },
 
       onChangeLegendPosition(oEvent) {
-        $('.fusioncharts-container').attr('class', 'fusioncharts-container ' + oEvent.getParameter('value'));
+        const sClassName = oEvent.getParameter('value').replace(/\+/, 'p').replace(/\-/, 'm').replace(/\./, 'd');
+        $('#employee-a11-chart').toggleClass(['p2d0', 'p1d5', 'p1d0', 'p0d5', 'p0d0', 'm0d5', 'm1d0', 'm1d5', 'm2d0'].map((n) => `legend-${n}`).join(' '), false);
+        $('#employee-a11-chart').toggleClass(`legend-${sClassName}`, true);
       },
 
       onChangeScrollHeightCss(oEvent) {
-        $('.fusioncharts-container').attr('class', 'fusioncharts-container ' + oEvent.getParameter('value'));
+        const sClassName = oEvent.getParameter('value');
+        $('#employee-a11-chart').toggleClass([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => `scroll-h${n}`).join(' '), false);
+        $('#employee-a11-chart').toggleClass(`scroll-h${sClassName}`, true);
       },
 
       onChangeScrollHeight(oEvent) {
