@@ -285,14 +285,10 @@ sap.ui.define(
             if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
               oChart.addEventListener('rendered', (oEvent) => {
                 const oSender = oEvent.sender;
-                setTimeout(() => {
-                  const aStyleClasses = ['scroll-color', 'scroll-radius'];
-                  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-                    oSender.setChartAttribute('scrollHeight', '2');
-                    aStyleClasses.push('legend-m1d5');
-                  }
-                  $(`#${sChartId}.fusioncharts-container`).toggleClass(aStyleClasses.join(' '), true);
-                }, 100);
+                if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+                  oSender.setChartAttribute('scrollHeight', '2');
+                }
+                setTimeout(() => {}, 100);
               });
             }
           });
@@ -412,14 +408,14 @@ sap.ui.define(
 
       onChangeLegendPosition(oEvent) {
         const sClassName = oEvent.getParameter('value').replace(/\+/, 'p').replace(/\-/, 'm').replace(/\./, 'd');
-        $('#employee-a11-chart').toggleClass(['p2d0', 'p1d5', 'p1d0', 'p0d5', 'p0d0', 'm0d5', 'm1d0', 'm1d5', 'm2d0'].map((n) => `legend-${n}`).join(' '), false);
-        $('#employee-a11-chart').toggleClass(`legend-${sClassName}`, true);
+        $('#employee-a11-chart-container').toggleClass(['p2d0', 'p1d5', 'p1d0', 'p0d5', 'p0d0', 'm0d5', 'm1d0', 'm1d5', 'm2d0'].map((n) => `legend-${n}`).join(' '), false);
+        $('#employee-a11-chart-container').toggleClass(`legend-${sClassName}`, true);
       },
 
       onChangeScrollHeightCss(oEvent) {
         const sClassName = oEvent.getParameter('value');
-        $('#employee-a11-chart').toggleClass([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => `scroll-h${n}`).join(' '), false);
-        $('#employee-a11-chart').toggleClass(`scroll-h${sClassName}`, true);
+        $('#employee-a11-chart-container').toggleClass([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => `scroll-h${n}`).join(' '), false);
+        $('#employee-a11-chart-container').toggleClass(`scroll-h${sClassName}`, true);
       },
 
       onChangeScrollHeight(oEvent) {
