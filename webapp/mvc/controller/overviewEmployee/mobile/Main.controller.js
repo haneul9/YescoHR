@@ -272,7 +272,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            const oChart = new FusionCharts({
               id: sChartId,
               type: Chart,
               renderAt: `${sChartId}-container`,
@@ -281,6 +281,15 @@ sap.ui.define(
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
+
+            if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
+              oChart.addEventListener('rendered', () => {
+                const bIsIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+                const aStyleClasses = ['scroll-color', 'scroll-radius'];
+                aStyleClasses.push(bIsIOS ? 'scroll-h1 legend-m1d5' : 'scroll-h4');
+                $(`#${sChartId}.fusioncharts-container`).addClass(aStyleClasses.join(' '));
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);
