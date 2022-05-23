@@ -286,12 +286,13 @@ sap.ui.define(
               oChart.addEventListener('rendered', (oEvent) => {
                 const oSender = oEvent.sender;
                 setTimeout(() => {
-                  // const bIsIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-                  // oSender.setChartAttribute('scrollHeight', bIsIOS ? 2 : 4);
                   const aStyleClasses = ['scroll-color', 'scroll-radius'];
-                  aStyleClasses.push(bIsIOS ? 'legend-m1d5' : '');
-                  $(`#${sChartId}.fusioncharts-container`).addClass(aStyleClasses.join(' '));
-                }, 300);
+                  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+                    oSender.setChartAttribute('scrollHeight', '2');
+                    aStyleClasses.push('legend-m1d5');
+                  }
+                  $(`#${sChartId}.fusioncharts-container`).toggleClass(aStyleClasses.join(' '), true);
+                }, 100);
               });
             }
           });
