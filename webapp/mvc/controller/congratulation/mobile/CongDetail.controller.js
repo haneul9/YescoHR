@@ -400,10 +400,17 @@ sap.ui.define(
           });
 
           if (oTargetList.length === 1) {
-            oViewModel.setProperty('/FormData/Zbirthday', oTargetList[0].Zbirthday);
-            oViewModel.setProperty('/FormData/Kdsvh', oTargetList[0].Kdsvh);
-            oViewModel.setProperty('/FormData/Famtx', oTargetList[0].Atext);
-            oViewModel.setProperty('/FormData/Zname', oTargetList[0].Zname);
+            oViewModel.setData(
+              {
+                FormData: {
+                  Zbirthday: oTargetList[0].Zbirthday,
+                  Kdsvh: oTargetList[0].Kdsvh,
+                  Famtx: oTargetList[0].Atext,
+                  Zname: oTargetList[0].Zname,
+                },
+              },
+              true
+            );
 
             const sAddDate = oViewModel.getProperty('/benefitDate');
 
