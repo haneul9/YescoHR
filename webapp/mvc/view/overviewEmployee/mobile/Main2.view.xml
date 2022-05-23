@@ -17,7 +17,7 @@
           <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks" class="sapUiTinyMarginTop">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </custom:SingleComboBox>
           <!-- <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
@@ -133,10 +133,6 @@
                 <core:Item text="8" key="8" />
                 <core:Item text="9" key="9" />
                 <core:Item text="10" key="10" />
-                <core:Item text="15" key="15" />
-                <core:Item text="20" key="20" />
-                <core:Item text="15" key="15" />
-                <core:Item text="30" key="30" />
               </custom:items>
             </custom:SingleComboBox>
             <custom:SingleComboBox width="100%" selectedKey="10.0" change=".onChangeScrollHeight">
