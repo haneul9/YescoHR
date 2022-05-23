@@ -62,7 +62,8 @@ sap.ui.define(
             rowCount: 0,
             list: [],
           },
-          isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
+          isDevMobile: false,
+          // isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
         };
       },
 
