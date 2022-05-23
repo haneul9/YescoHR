@@ -283,12 +283,14 @@ sap.ui.define(
             }).render();
 
             if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
-              oChart.addEventListener('rendered', () => {
+              oChart.addEventListener('rendered', (oEvent) => {
+                const bIsIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+                oEvent.sender.setChartAttribute('scrollHeight', bIsIOS ? 2 : 4);
                 setTimeout(() => {
                   const aStyleClasses = ['scroll-color', 'scroll-radius'];
-                  aStyleClasses.push(/iphone|ipad|ipod/i.test(navigator.userAgent) ? 'scroll-h1 legend-m1d5' : 'scroll-h4');
+                  aStyleClasses.push(bIsIOS ? 'legend-m1d5' : '');
                   $(`#${sChartId}.fusioncharts-container`).addClass(aStyleClasses.join(' '));
-                }, 300);
+                }, 500);
               });
             }
           });

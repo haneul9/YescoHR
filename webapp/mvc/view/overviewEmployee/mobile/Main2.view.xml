@@ -17,7 +17,7 @@
           <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks" class="sapUiTinyMarginTop">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" class="sapUiTinyMarginTop">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </custom:SingleComboBox>
           <!-- <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
@@ -116,7 +116,7 @@
                 <core:Item text="-2.0" key="-2.0" />
               </custom:items>
             </custom:SingleComboBox>
-            <custom:SingleComboBox width="100%" selectedKey="4" change=".onChangeScrollHeightCss">
+            <custom:SingleComboBox width="100%" selectedKey="10" change=".onChangeScrollHeightCss">
               <custom:layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" />
               </custom:layoutData>
@@ -139,7 +139,7 @@
                 <core:Item text="30" key="30" />
               </custom:items>
             </custom:SingleComboBox>
-            <custom:SingleComboBox width="100%" selectedKey="4" change=".onChangeScrollHeight">
+            <custom:SingleComboBox width="100%" selectedKey="10.0" change=".onChangeScrollHeight">
               <custom:layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" styleClass="mt-10-px" />
               </custom:layoutData>

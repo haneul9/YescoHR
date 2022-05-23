@@ -541,13 +541,14 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
 
 .fusioncharts-container.scroll-radius svg g[class*="-scroller"] rect {rx:3px !important; ry:3px !important}
-.fusioncharts-container.legend-p2 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform: translate(0,2px)}
+.fusioncharts-container.legend-p2d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform: translate(0,2px)}
 .fusioncharts-container.legend-p1d5 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform: translate(0,1.5px)}
-.fusioncharts-container.legend-p1 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform: translate(0,1px)}
-.fusioncharts-container.legend-0  svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
-.fusioncharts-container.legend-m1 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform: translate(0,-1px)}
+.fusioncharts-container.legend-p1d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform: translate(0,1px)}
+.fusioncharts-container.legend-p0d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
+.fusioncharts-container.legend-m0d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
+.fusioncharts-container.legend-m1d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform: translate(0,-1px)}
 .fusioncharts-container.legend-m1d5 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform: translate(0,-1.5px)}
-.fusioncharts-container.legend-m2 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform: translate(0,-2px)}
+.fusioncharts-container.legend-m2d0 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform: translate(0,-2px)}
 .fusioncharts-container.scroll-h0 svg g[class*="-scroller"] rect {height:0 !important}
 .fusioncharts-container.scroll-h1 svg g[class*="-scroller"] rect {height:1px !important}
 .fusioncharts-container.scroll-h2 svg g[class*="-scroller"] rect {height:2px !important}

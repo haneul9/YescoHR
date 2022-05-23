@@ -264,7 +264,7 @@ sap.ui.define([], function () {
       },
       scrollcolumn2d: {
         chart: {
-          scrollHeight: '4',
+          scrollHeight: '10',
           scrollColor: '#ffffff',
           baseFontSize: '14',
           valueFontSize: '14',
