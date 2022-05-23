@@ -87,13 +87,13 @@ sap.ui.define(
        * @public
        */
       isDEV() {
-        return /^(yeshrsapdev|devhrportal)/.test(location.hostname) && /sap-client=100/i.test(location.search);
+        return /^(yeshrsapdev|devhrportal)/.test(location.hostname) && /sap-client=100/i.test(document.cookie);
       },
       /**
        * @public
        */
       isQAS() {
-        return /^(yeshrsapdev|devhrportal)/.test(location.hostname) && /sap-client=300/i.test(location.search);
+        return /^(yeshrsapdev|devhrportal)/.test(location.hostname) && /sap-client=300/i.test(document.cookie);
       },
       /**
        * @public

@@ -172,7 +172,12 @@ sap.ui.define(
       },
 
       showLocalInfo() {
-        MessageBox.alert(`Host\n${location.host}\n\nUser-Agent\n${navigator.userAgent}`);
+        const aSystemInfo = [
+          `location\n${location}`,
+          `document.cookie\n${document.cookie}`, //
+          `navigator.userAgent\n${navigator.userAgent}`,
+        ];
+        MessageBox.alert(aSystemInfo.join('\n\n'));
       },
     });
   }
