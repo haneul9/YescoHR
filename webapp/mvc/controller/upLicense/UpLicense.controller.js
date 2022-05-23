@@ -321,7 +321,7 @@ sap.ui.define(
 
         oViewModel.setData(
           {
-            rows: aReal,
+            rows: _.sortBy(aReal, 'Orgtx'),
             columns: aColumnData,
           },
           true
