@@ -280,15 +280,24 @@ sap.ui.define(
             }
           });
         });
+        const aColBody = _.uniqBy(
+          _.map(aTableList, (e) => {
+            return { colId: `Cert${e.Certty}${e.Certdt}`, colName: e.Certtytx, subColName: e.Certdttx, headerSpan: e.headerSpan };
+          }),
+          'colId'
+        );
+        const bOver = _.size(aColBody) > 7;
+
         const aColumnData = [
-          { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), subColName: this.getBundleText('LABEL_00224'), width: '15%', headerSpan: '1' }, // 부서
-          { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), subColName: this.getBundleText('LABEL_39014'), width: '5%', headerSpan: '1' }, // 인원수
-          ..._.uniqBy(
-            _.map(aTableList, (e) => {
-              return { colId: `Cert${e.Certty}${e.Certdt}`, colName: e.Certtytx, subColName: e.Certdttx, width: '200px', headerSpan: e.headerSpan };
-            }),
-            'colId'
-          ),
+          { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), subColName: this.getBundleText('LABEL_00224'), width: bOver ? '120px' : '10%', headerSpan: '1' }, // 부서
+          { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), subColName: this.getBundleText('LABEL_39014'), width: bOver ? '80px' : '8%', headerSpan: '1' }, // 인원수
+          ..._.forEach(aColBody, (e) => {
+            if (bOver) {
+              return (e.width = '200px');
+            }
+
+            return (e.width = '10%');
+          }),
         ];
         const aGroupby = _.groupBy(aTableList, 'Orgeh');
         const aBody = _.map(
