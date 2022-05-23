@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,6 +15,7 @@ sap.ui.define(
     Fragment,
     MessageBox,
     AppUtils,
+    UI5Error,
     Client,
     ServiceNames,
     BaseController
@@ -403,7 +405,46 @@ sap.ui.define(
         this._oTimeInputDialog.open();
       },
 
-      onPressDialogConfirm() {},
+      onPressDialogConfirm() {
+        try {
+          this.setContentsBusy(true, ['Input', 'Button']);
+
+          const oViewModel = this.getViewModel();
+          const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 3);
+
+          if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Anzb) && _.isEmpty(o.Resn))) {
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
+          }
+
+          const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
+
+          if (aTargetDates.length > 1) {
+            const mWorkTime = oViewModel.getProperty('/dialog/work/list/0');
+
+            if (!_.isDate(mWorkTime.Beguz) || !_.isDate(mWorkTime.Enduz)) {
+              throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00002', 'LABEL_40001') }); // {근무시간}을 입력하세요.
+            }
+          }
+
+          MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+            // {저장}하시겠습니까?
+            onClose: (sAction) => {
+              if (MessageBox.Action.CANCEL !== sAction) {
+                // this.createProcess('T');
+              }
+
+              this.setContentsBusy(false, ['Input', 'Button']);
+              this.byId('flextimeDetailsTable').clearSelection();
+              this._oTimeInputDialog.close();
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > flextime > onPressDialogConfirm Error', oError);
+
+          this.setContentsBusy(false, ['Input', 'Button']);
+          AppUtils.handleError(oError);
+        }
+      },
 
       async createProcess(dDatum) {
         const oViewModel = this.getViewModel();

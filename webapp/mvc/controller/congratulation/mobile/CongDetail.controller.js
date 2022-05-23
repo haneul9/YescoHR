@@ -363,8 +363,6 @@ sap.ui.define(
 
       // 대상자 성명 선택시
       async onTargetDialog() {
-        const oViewModel = this.getViewModel();
-
         // load asynchronous XML fragment
         if (!this.byId('targetSettingsDialog')) {
           Fragment.load({
