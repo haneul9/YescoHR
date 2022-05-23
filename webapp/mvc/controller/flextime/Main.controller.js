@@ -60,10 +60,8 @@ sap.ui.define(
 
           const sZyymm = this.getViewModel().getProperty('/summary/list/0/Zyymm');
 
-          await Promise.all([
-            this.readFlextimeSummary(sZyymm), //
-            this.readFlextimeDetails(sZyymm),
-          ]);
+          await this.readFlextimeSummary(sZyymm);
+          await this.readFlextimeDetails(sZyymm);
 
           this.setDetailsTableRowColor();
         } catch (oError) {
@@ -82,10 +80,8 @@ sap.ui.define(
 
           this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
 
-          await Promise.all([
-            this.readFlextimeSummary(), //
-            this.readFlextimeDetails(),
-          ]);
+          await this.readFlextimeSummary();
+          await this.readFlextimeDetails();
 
           this.setTableColor();
           this.setDetailsTableRowColor();
@@ -299,10 +295,8 @@ sap.ui.define(
 
           const sZyymm = oEvent.getParameter('value');
 
-          await Promise.all([
-            this.readFlextimeSummary(sZyymm), //
-            this.readFlextimeDetails(sZyymm),
-          ]);
+          await this.readFlextimeSummary(sZyymm);
+          await this.readFlextimeDetails(sZyymm);
 
           this.setDetailsTableRowColor();
         } catch (oError) {
