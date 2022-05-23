@@ -15,21 +15,21 @@
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange=".onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
               </custom:SingleComboBox>
             </VBox>
             <Label text="{i18n>LABEL_02008}"/>
             <VBox>
-              <ComboBox id="BenefitCause" class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" change=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" selectionChange=".onCauseChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
+              </custom:SingleComboBox>
             </VBox>
             <Label text="{i18n>LABEL_02015}"/>
             <VBox>
-              <ComboBox id="BenefitRelation" class="required" change=".onRelationChange" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" selectionChange=".onRelationChange" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/fixRelation} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
+              </custom:SingleComboBox>
             </VBox>
             <Label text="{i18n>LABEL_02017}"/>
             <VBox>
