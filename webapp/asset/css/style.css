@@ -2171,31 +2171,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
 .fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
-/* .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform: translate(0,-1px)}
-.fusioncharts-container svg g[class*="-scroller"] rect {height:4px !important; rx:3px !important; ry:3px !important}
 .fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1) {fill:#ffffff !important; stroke:#dfdfdf !important}
-.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2) {fill:#c1c3c8 !important; stroke:#c1c3c8 !important} */
+.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2) {fill:#c1c3c8 !important; stroke:#c1c3c8 !important}
 #employee-a02-chart-container {height:76px}
 #employee-a06-chart-container {height:76px}
-
-.fusioncharts-container.legend-p2 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform: translate(0,2px)}
-.fusioncharts-container.legend-p1d5 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform: translate(0,1.5px)}
-.fusioncharts-container.legend-p1 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform: translate(0,1px)}
-.fusioncharts-container.legend-0  svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
-.fusioncharts-container.legend-m1 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform: translate(0,-1px)}
-.fusioncharts-container.legend-m1d5 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform: translate(0,-1.5px)}
-.fusioncharts-container.legend-m2 svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform: translate(0,-2px)}
-.fusioncharts-container.scroll-h0 svg g[class*="-scroller"] rect {height:0 !important}
-.fusioncharts-container.scroll-h1 svg g[class*="-scroller"] rect {height:1px !important}
-.fusioncharts-container.scroll-h2 svg g[class*="-scroller"] rect {height:2px !important}
-.fusioncharts-container.scroll-h3 svg g[class*="-scroller"] rect {height:3px !important}
-.fusioncharts-container.scroll-h4 svg g[class*="-scroller"] rect {height:4px !important}
-.fusioncharts-container.scroll-h5 svg g[class*="-scroller"] rect {height:5px !important}
-.fusioncharts-container.scroll-h6 svg g[class*="-scroller"] rect {height:6px !important}
-.fusioncharts-container.scroll-h7 svg g[class*="-scroller"] rect {height:7px !important}
-.fusioncharts-container.scroll-h8 svg g[class*="-scroller"] rect {height:8px !important}
-.fusioncharts-container.scroll-h9 svg g[class*="-scroller"] rect {height:9px !important}
-.fusioncharts-container.scroll-h10 svg g[class*="-scroller"] rect {height:10px !important}
 
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection {padding-top:25px}
 .sapMDialog.sapMDialog-NoHeader .sapMDialogSection .sapMPanelHdr {margin-top:-25px}
