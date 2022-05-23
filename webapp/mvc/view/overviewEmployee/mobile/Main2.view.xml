@@ -137,26 +137,26 @@
                 <core:Item text="scroll-h30" key="scroll-h30" />
               </items>
             </ComboBox>
-            <ComboBox width="100%" selectedKey="10px" change=".onChangeScrollHeight">
+            <ComboBox width="100%" selectedKey="10" change=".onChangeScrollHeight">
               <layoutData>
                 <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" styleClass="mt-10-px" />
               </layoutData>
               <items>
-                <core:Item text="0px" key="0px" />
-                <core:Item text="1px" key="1px" />
-                <core:Item text="2px" key="2px" />
-                <core:Item text="3px" key="3px" />
-                <core:Item text="4px" key="4px" />
-                <core:Item text="5px" key="5px" />
-                <core:Item text="6px" key="6px" />
-                <core:Item text="7px" key="7px" />
-                <core:Item text="8px" key="8px" />
-                <core:Item text="9px" key="9px" />
-                <core:Item text="10px" key="10px" />
-                <core:Item text="15px" key="15px" />
-                <core:Item text="20px" key="20px" />
-                <core:Item text="25px" key="25px" />
-                <core:Item text="30px" key="30px" />
+                <core:Item text="0" key="0" />
+                <core:Item text="1" key="1" />
+                <core:Item text="2" key="2" />
+                <core:Item text="3" key="3" />
+                <core:Item text="4" key="4" />
+                <core:Item text="5" key="5" />
+                <core:Item text="6" key="6" />
+                <core:Item text="7" key="7" />
+                <core:Item text="8" key="8" />
+                <core:Item text="9" key="9" />
+                <core:Item text="10" key="10" />
+                <core:Item text="15" key="15" />
+                <core:Item text="20" key="20" />
+                <core:Item text="25" key="25" />
+                <core:Item text="30" key="30" />
               </items>
             </ComboBox>
           </HBox>
