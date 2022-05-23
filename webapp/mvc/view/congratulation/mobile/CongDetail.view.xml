@@ -15,9 +15,9 @@
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_02013}"/>
             <VBox>
-              <ComboBox id="BenefitType" class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" change="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange="onTypeChange" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
                 <core:Item text="{Ztext}" key="{Zcode}" />
-              </ComboBox>
+              </custom:SingleComboBox>
             </VBox>
             <Label text="{i18n>LABEL_02008}"/>
             <VBox>

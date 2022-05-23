@@ -39,7 +39,7 @@ sap.ui.define(
             },
           ],
           rows: [],
-          rowCount: 1,
+          rowCount: 2,
           dialogList: [],
           listInfo: {
             rowCount: 1,
@@ -230,6 +230,12 @@ sap.ui.define(
           const oTable = this.byId(sTableName);
 
           if (sSelectKey === 'B') {
+            this.TableUtils.adjustRowSpan({
+              oTable: this.byId(this.sDeptTable),
+              aColIndices: [0, 1],
+              sTheadOrTbody: 'thead',
+              bMultiLabel: true,
+            });
             this.createDynTable(oTable, sListName, mInfo, aTableList);
           } else {
             oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(this.TableUtils.count({ oTable, aRowData: aTableList }), 'totalCount') });
@@ -248,33 +254,65 @@ sap.ui.define(
       // dynamic Table
       createDynTable(oTable, sListName, mInfo, aTableList = []) {
         const oViewModel = this.getViewModel();
+        const mSortHeaderSpan = _.chain(aTableList)
+          .keyBy('Certdt')
+          .values()
+          .map((e) => {
+            return _.get(e, 'Certty');
+          })
+          .reduce((acc, cur) => {
+            if (acc[cur]) {
+              acc[cur]++;
+            } else {
+              acc[cur] = 1;
+            }
+
+            return acc;
+          }, {})
+          .value();
+        _.map(aTableList, (e1) => {
+          return (e1.headerSpan = mSortHeaderSpan[e1.Certty]);
+        });
+        _.map(_.groupBy(aTableList, 'Certty'), (e) => {
+          return _.map(e, (e1, i1) => {
+            if (i1 !== 0) {
+              return (e.headerSpan = 1);
+            }
+          });
+        });
         const aColumnData = [
-          { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), width: '15%' }, // 부서
-          { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), width: '5%' }, // 인원수
-          ..._.times(_.size(aTableList), (i) => {
-            return { colId: `Cert${aTableList[i].Certty}${aTableList[i].Certdt}`, colName: aTableList[i].Discert, width: 'auto' };
-          }),
+          { colId: 'Orgtx', colName: this.getBundleText('LABEL_00224'), subColName: this.getBundleText('LABEL_00224'), width: '15%', headerSpan: '1' }, // 부서
+          { colId: 'Empcnt', colName: this.getBundleText('LABEL_39014'), subColName: this.getBundleText('LABEL_39014'), width: '5%', headerSpan: '1' }, // 인원수
+          ..._.uniqBy(
+            _.map(aTableList, (e) => {
+              return { colId: `Cert${e.Certty}${e.Certdt}`, colName: e.Certtytx, subColName: e.Certdttx, width: '200px', headerSpan: e.headerSpan };
+            }),
+            'colId'
+          ),
         ];
         const aGroupby = _.groupBy(aTableList, 'Orgeh');
-        const aRows = [
-          ..._.map(aGroupby, (e) => {
-            const [mBody] = _.map(
-              _.map(aGroupby, (e) => {
-                return _.map(e, (e1) => {
-                  return [...[`Cert${e1.Certty}${e1.Certdt}`, e1.Discntg]];
-                });
-              }),
-              (v) => {
-                return _.fromPairs(v); // 배열을 Obj변환
-              }
-            );
-            return { ...mBody, Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt };
+        const aBody = _.map(
+          _.map(aGroupby, (e) => {
+            return _.map(e, (e1) => {
+              return [...[`Cert${e1.Certty}${e1.Certdt}`, e1.Discntg]];
+            });
           }),
-        ];
+          (v) => {
+            return _.fromPairs(v); // 배열을 Obj변환
+          }
+        );
+
+        const aReal = _.merge(
+          [],
+          aBody,
+          _.map(aGroupby, (e) => {
+            return { Orgeh: e[0].Orgeh, Orgtx: e[0].Orgtx, Empcnt: e[0].Empcnt };
+          })
+        );
 
         oViewModel.setData(
           {
-            rows: aRows,
+            rows: aReal,
             columns: aColumnData,
           },
           true
@@ -283,13 +321,20 @@ sap.ui.define(
         oTable.bindColumns('/columns', (sId, oContext) => {
           const mConObj = oContext.getObject();
           const sColumnName = mConObj.colName;
+          const sSubColumnName = mConObj.subColName;
           const sColumnId = mConObj.colId;
           const sWidth = mConObj.width;
+          const sHeaderSpan = mConObj.headerSpan;
 
           return new sap.ui.table.Column({
-            label: new sap.m.Label({
-              text: sColumnName,
-            }),
+            multiLabels: [
+              new sap.m.Label({
+                text: sColumnName,
+              }),
+              new sap.m.Label({
+                text: sSubColumnName,
+              }),
+            ],
             template: new sap.m.HBox({
               items: [
                 new sap.m.Text({
@@ -298,7 +343,7 @@ sap.ui.define(
                   width: '100%',
                   textAlign: 'Center',
                   visible: !_.startsWith(sColumnId, 'Cert'),
-                }),
+                }).addStyleClass('tableRow_Text'),
                 new sap.m.Link({
                   layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
                   width: '100%',
@@ -310,11 +355,12 @@ sap.ui.define(
               ],
             }),
             width: sWidth,
+            headerSpan: sHeaderSpan,
           });
         });
         oTable.bindRows(sListName);
 
-        const mTableCountInfo = this.TableUtils.count({ oTable, aRowData: aRows });
+        const mTableCountInfo = this.TableUtils.count({ oTable, aRowData: aReal });
 
         oViewModel.setProperty('/rowCount', _.get(mTableCountInfo, 'rowCount'));
         oViewModel.setProperty('/listInfo', { ...mInfo, ..._.pick(mTableCountInfo, 'totalCount') });
