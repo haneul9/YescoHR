@@ -35,11 +35,11 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, hasLink: true, data: {} },
-            A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             A03: { busy: false, hasLink: false, data: { headty: 'D', raw: [] } },
-            A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
-            A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A04: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
+            A05: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             A06: { busy: false, hasLink: false, data: { headty: 'E', raw: [] } },
           },
           dialog: {

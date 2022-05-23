@@ -128,6 +128,8 @@ sap.ui.define([], function () {
       },
       scrollstackedcolumn2d: {
         chart: {
+          scrollHeight: '10',
+          scrollColor: '#ffffff',
           baseFontSize: 14,
           valueFontSize: 14,
           legendItemFontSize: 14,
@@ -206,6 +208,8 @@ sap.ui.define([], function () {
       },
       scrollmsstackedcolumn2dlinedy: {
         chart: {
+          scrollHeight: '10',
+          scrollColor: '#ffffff',
           baseFontSize: 14,
           valueFontSize: 14,
           legendItemFontSize: 14,

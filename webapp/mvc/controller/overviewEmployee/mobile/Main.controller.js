@@ -45,23 +45,24 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: mData },
-            A03: { busy: false, data: [] },
-            A04: { busy: false, data: [] },
-            A05: { busy: false, data: {} },
-            A06: { busy: false, data: {} },
-            A07: { busy: false, data: [] },
-            A08: { busy: false, data: [] },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
-            A11: { busy: false },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: mData },
+            A03: { busy: false, hasLink: false, data: [] },
+            A04: { busy: false, hasLink: false, data: [] },
+            A05: { busy: false, hasLink: false, data: {} },
+            A06: { busy: false, hasLink: false, data: {} },
+            A07: { busy: false, hasLink: false, data: [] },
+            A08: { busy: false, hasLink: false, data: [] },
+            A09: { busy: false, hasLink: false, data: {} },
+            A10: { busy: false, hasLink: false },
+            A11: { busy: false, hasLink: false },
           },
           dialog: {
             busy: false,
             rowCount: 0,
             list: [],
           },
+          isDevMobile: AppUtils.isMobile() && AppUtils.isDEV(),
         };
       },
 
@@ -393,6 +394,18 @@ sap.ui.define(
           oChart.dispose();
         });
         return this;
+      },
+
+      onChangeLegendPosition(oEvent) {
+        $('.fusioncharts-container').attr('class', 'fusioncharts-container ' + oEvent.getParameter('value'));
+      },
+
+      onChangeScrollHeightCss(oEvent) {
+        $('.fusioncharts-container').attr('class', 'fusioncharts-container ' + oEvent.getParameter('value'));
+      },
+
+      onChangeScrollHeight(oEvent) {
+        FusionCharts('employee-a11-chart').setChartAttribute('scrollHeight', oEvent.getParameter('value'));
       },
 
       /*****************************************************************

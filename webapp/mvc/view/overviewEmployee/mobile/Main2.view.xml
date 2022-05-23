@@ -99,6 +99,67 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.mobile.A10" type="XML" />
           <!-- 임원/팀장 1인당 직원수 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.mobile.A11" type="XML" />
+          <HBox width="100%" justifyContent="SpaceBetween" wrap="Wrap" class="mt-20-px" visible="{/isDevMobile}">
+            <ComboBox width="100%" selectedKey="legend-0" change=".onChangeLegendPosition">
+              <layoutData>
+                <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" />
+              </layoutData>
+              <items>
+                <core:Item text="legend-p2" key="legend-p2" />
+                <core:Item text="legend-p1d5" key="legend-p1d5" />
+                <core:Item text="legend-p1" key="legend-p1" />
+                <core:Item text="legend-0" key="legend-0" />
+                <core:Item text="legend-m1" key="legend-m1" />
+                <core:Item text="legend-m1d5" key="legend-m1d5" />
+                <core:Item text="legend-m2" key="legend-m2" />
+              </items>
+            </ComboBox>
+            <ComboBox width="100%" selectedKey="scroll-h10" change=".onChangeScrollHeightCss">
+              <layoutData>
+                <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" />
+              </layoutData>
+              <items>
+                <core:Item text="scroll-h" key="scroll-h" />
+                <core:Item text="scroll-h0" key="scroll-h0" />
+                <core:Item text="scroll-h1" key="scroll-h1" />
+                <core:Item text="scroll-h2" key="scroll-h2" />
+                <core:Item text="scroll-h3" key="scroll-h3" />
+                <core:Item text="scroll-h4" key="scroll-h4" />
+                <core:Item text="scroll-h5" key="scroll-h5" />
+                <core:Item text="scroll-h6" key="scroll-h6" />
+                <core:Item text="scroll-h7" key="scroll-h7" />
+                <core:Item text="scroll-h8" key="scroll-h8" />
+                <core:Item text="scroll-h9" key="scroll-h9" />
+                <core:Item text="scroll-h10" key="scroll-h10" />
+                <core:Item text="scroll-h15" key="scroll-h15" />
+                <core:Item text="scroll-h20" key="scroll-h20" />
+                <core:Item text="scroll-h15" key="scroll-h15" />
+                <core:Item text="scroll-h30" key="scroll-h30" />
+              </items>
+            </ComboBox>
+            <ComboBox width="100%" selectedKey="10px" change=".onChangeScrollHeight">
+              <layoutData>
+                <FlexItemData minWidth="calc(50% - 5px)" maxWidth="calc(50% - 5px)" styleClass="mt-10-px" />
+              </layoutData>
+              <items>
+                <core:Item text="0px" key="0px" />
+                <core:Item text="1px" key="1px" />
+                <core:Item text="2px" key="2px" />
+                <core:Item text="3px" key="3px" />
+                <core:Item text="4px" key="4px" />
+                <core:Item text="5px" key="5px" />
+                <core:Item text="6px" key="6px" />
+                <core:Item text="7px" key="7px" />
+                <core:Item text="8px" key="8px" />
+                <core:Item text="9px" key="9px" />
+                <core:Item text="10px" key="10px" />
+                <core:Item text="15px" key="15px" />
+                <core:Item text="20px" key="20px" />
+                <core:Item text="25px" key="25px" />
+                <core:Item text="30px" key="30px" />
+              </items>
+            </ComboBox>
+          </HBox>
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>

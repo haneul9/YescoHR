@@ -266,7 +266,7 @@ sap.ui.define([], function () {
           scrollHeight: '5',
           flatScrollBars: '1',
           scrollShowButtons: '0',
-          scrollColor: '#fefefe',
+          scrollColor: '#ffffff',
           baseFontSize: '14',
           valueFontSize: '14',
           legendItemFontSize: '14',
