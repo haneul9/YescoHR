@@ -15,7 +15,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <core:HTML content='&lt;div id="attendance-a10-chart-container"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="attendance-a10-chart-container" class="custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>
