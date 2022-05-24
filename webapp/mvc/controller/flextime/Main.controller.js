@@ -479,7 +479,7 @@ sap.ui.define(
         if (aTargetDates.length > 1) {
           const mWorkTime = oViewModel.getProperty('/dialog/work/list/0');
 
-          if (!_.isDate(mWorkTime.Beguz) || !_.isDate(mWorkTime.Enduz)) {
+          if (_.isEmpty(mWorkTime.Beguz) || _.isEmpty(mWorkTime.Enduz)) {
             throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00002', 'LABEL_40001') }); // {근무시간}을 입력하세요.
           }
         }
