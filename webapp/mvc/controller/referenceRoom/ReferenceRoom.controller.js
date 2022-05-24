@@ -666,29 +666,6 @@ sap.ui.define(
       },
 
       /*
-       * 첨부파일 삭제 oData
-       */
-      callDeleteFileService(Appno, Seqnr) {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sPath = oModel.createKey('/FileListSet', {
-          Appno: Appno,
-          Zworktyp: this.PDF_FILE_TYPE,
-          Zfileseq: Seqnr,
-        });
-
-        return new Promise((resolve, reject) => {
-          oModel.remove(sPath, {
-            success: () => {
-              resolve();
-            },
-            error: (oError) => {
-              reject(AppUtils.handleError(oError));
-            },
-          });
-        });
-      },
-
-      /*
        *   첨부파일 Upload
        */
       uploadFile(Appno, Type) {
@@ -705,7 +682,11 @@ sap.ui.define(
               Promise.all(
                 _.map(aDeleteFiles, (e) => {
                   if (e.Seqnr) {
-                    this.callDeleteFileService(Appno, e.Seqnr);
+                    this.AttachFileAction.callDeleteFileService(this, {
+                      Appno: Appno,
+                      Zworktyp: this.PDF_FILE_TYPE,
+                      Zfileseq: e.Seqnr,
+                    });
                   }
                 })
               );

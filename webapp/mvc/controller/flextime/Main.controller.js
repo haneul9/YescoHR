@@ -43,7 +43,6 @@ sap.ui.define(
           details: {
             rowCount: 9,
             list: [],
-            breakTime: [],
           },
           dialog: {
             targetDates: [],
@@ -112,12 +111,15 @@ sap.ui.define(
             Zyymm: sYearMonth,
           });
 
-          aResults.push({ Zyymm: sYearMonth, Caldays: '31', Wrkdays: '22', Bastim: '177', Ctrtim: '196', Daytim: '194', Gaptim: '-2', Wekavg: '48.50', Statxt: '계약근로시간 미달', Stacol: '2', Clsda: moment('20220405').toDate(), Clsdatx: moment('20220405').format('YYYY.MM.DD') });
-
           this.getViewModel().setProperty('/summary/rowCount', 1);
           this.getViewModel().setProperty('/summary/list', [
             _.chain(aResults)
-              .map((o) => _.set(o, 'Clsdatx', moment(o.Clsda).format('YYYY.MM.DD')))
+              .map((o) => ({
+                ..._.omit(o, '__metadata'),
+                Clsdatx: moment(o.Clsda).format('YYYY.MM.DD'),
+                Beguz: _.chain(o).get(['Beguz', 'ms']).isEqual(0).value() ? null : o.Beguz,
+                Enduz: _.chain(o).get(['Enduz', 'ms']).isEqual(0).value() ? null : o.Enduz,
+              }))
               .get(0, { Zyymm: sYearMonth })
               .value(),
           ]);
@@ -136,41 +138,14 @@ sap.ui.define(
           };
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeDetail', { ..._.omit(mPayload, 'Werks') });
 
-          aResults.push({ Offyn: 'X', Datum: moment(`${sYearMonth}01`).toDate(), Datumtx: moment(`${sYearMonth}01`).format('YYYY.MM.DD'), Daytx: '화', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '8.00', Brk01m: '1.00', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: '', Datum: moment(`${sYearMonth}02`).toDate(), Datumtx: moment(`${sYearMonth}02`).format('YYYY.MM.DD'), Daytx: '수', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '8.00', Paytim: '', Stdazc: '16.00', Brk01m: '1.00', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: 'X', Datum: moment(`${sYearMonth}03`).toDate(), Datumtx: moment(`${sYearMonth}03`).format('YYYY.MM.DD'), Daytx: '목', Atext: '연차', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '8.00', Stdazc: '24.00', Brk01m: '', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: '', Datum: moment(`${sYearMonth}04`).toDate(), Datumtx: moment(`${sYearMonth}04`).format('YYYY.MM.DD'), Daytx: '금', Atext: '', Beguz: moment('1000', 'hhmm').toDate(), Enduz: moment('1500', 'hhmm').toDate(), Brk01: '1.00', Brk02: '0.00', Reltim: '4.50', Paytim: '', Stdazc: '28.50', Brk01m: '0.50', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: 'X', Datum: moment(`${sYearMonth}05`).toDate(), Datumtx: moment(`${sYearMonth}05`).format('YYYY.MM.DD'), Daytx: '토', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: 'X', Datum: moment(`${sYearMonth}06`).toDate(), Datumtx: moment(`${sYearMonth}06`).format('YYYY.MM.DD'), Daytx: '일', Atext: '', Beguz: null, Enduz: null, Brk01: '', Brk02: '', Reltim: '', Paytim: '', Stdazc: '28.50', Brk01m: '', Notes: '', Erryn: '' });
-          aResults.push({ Offyn: '', Datum: moment(`${sYearMonth}07`).toDate(), Datumtx: moment(`${sYearMonth}07`).format('YYYY.MM.DD'), Daytx: '월', Atext: '', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('2130', 'hhmm').toDate(), Brk01: '0.50', Brk02: '0.00', Reltim: '12.00', Paytim: '', Stdazc: '40.00', Brk01m: '1.00', Notes: '필수휴게시간 미달', Erryn: 'X' });
-          aResults.push({ Offyn: '', Datum: moment(`${sYearMonth}08`).toDate(), Datumtx: moment(`${sYearMonth}08`).format('YYYY.MM.DD'), Daytx: '화', Atext: '반차(오전)', Beguz: moment('1400', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '48.00', Brk01m: '0.00', Notes: '시작시간 13시부터 가능', Erryn: '' });
-          aResults.push({ Offyn: '', Datum: moment(`${sYearMonth}09`).toDate(), Datumtx: moment(`${sYearMonth}09`).format('YYYY.MM.DD'), Daytx: '수', Atext: '반차(오후)', Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Brk01: '0.00', Brk02: '0.00', Reltim: '4.00', Paytim: '4.00', Stdazc: '52.00', Brk01m: '0.00', Notes: '종료시간 14시까지 가능', Erryn: '' });
-
           this.getViewModel().setProperty('/details/rowCount', aResults.length ?? 0);
-          this.getViewModel().setProperty('/details/list', aResults ?? []);
           this.getViewModel().setProperty(
-            '/details/breakTime',
+            '/details/list',
             _.map(aResults, (o) => ({
-              ...mPayload,
-              Datum: o.Datum,
+              ..._.omit(o, '__metadata'),
               Datumtx: moment(o.Datum).format('YYYY.MM.DD'),
-              Beguz: '',
-              Enduz: '',
-              Pbeg0: '',
-              Pend0: '',
-              Pbeg1: '',
-              Pend1: '',
-              Pbeg2: '',
-              Pend2: '',
-              Pbeg3: '',
-              Pend3: '',
-              Anzb0: '',
-              Anzb1: '',
-              Anzb2: '',
-              Anzb3: '',
-              Resn1: '',
-              Resn2: '',
-              Resn3: '',
+              Beguz: _.chain(o).get(['Beguz', 'ms']).isEqual(0).value() ? null : o.Beguz,
+              Enduz: _.chain(o).get(['Enduz', 'ms']).isEqual(0).value() ? null : o.Enduz,
             }))
           );
         } catch (oError) {
@@ -249,48 +224,63 @@ sap.ui.define(
           controller: this,
         });
 
-        this._oTimeInputDialog.attachBeforeOpen(async () => {
-          const oViewModel = this.getViewModel();
-          const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
+        this._oTimeInputDialog
+          .attachBeforeOpen(async () => {
+            this.setContentsBusy(true, 'Dialog');
 
-          if (aTargetDates.length === 1) {
-            const dDate = moment(aTargetDates[0]).hours(9);
-            const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeBreak', {
-              Pernr: this.getAppointeeProperty('Pernr'),
-              Zyymm: dDate.format('YYYYMM'),
-              Datum: dDate.toDate(),
-            });
+            const oViewModel = this.getViewModel();
+            const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
 
-            oViewModel.setProperty('/dialog/work/list', [{}]);
-            oViewModel.setProperty('/dialog/legal/list', [{ Beguz: _.get(mResult, 'Pbeg0'), Enduz: _.get(mResult, 'Pend0'), Anzb: _.get(mResult, 'Anzb0'), Brk01m: _.get(mResult, 'Brk01m') }]);
-            oViewModel.setProperty('/dialog/extra/list', [
-              { Beguz: _.get(mResult, 'Pbeg1'), Enduz: _.get(mResult, 'Pend1'), Anzb: _.get(mResult, 'Anzb1'), Resn: _.get(mResult, 'Resn1'), Sumrow: false }, //
-              { Beguz: _.get(mResult, 'Pbeg2'), Enduz: _.get(mResult, 'Pend2'), Anzb: _.get(mResult, 'Anzb2'), Resn: _.get(mResult, 'Resn2'), Sumrow: false },
-              { Beguz: _.get(mResult, 'Pbeg3'), Enduz: _.get(mResult, 'Pend3'), Anzb: _.get(mResult, 'Anzb3'), Resn: _.get(mResult, 'Resn3'), Sumrow: false },
-              {
-                Beguz: null,
-                Enduz: null,
-                Anzb: _.chain(mResult)
-                  .pick(['Pend1', 'Pend2', 'Pend3'])
-                  .values()
-                  .sumBy((d) => _.toNumber(d))
-                  .toString()
-                  .value(),
-                Resn: '',
-                Sumrow: true,
-              },
-            ]);
-          } else if (aTargetDates.length > 1) {
-            oViewModel.setProperty('/dialog/work/list', [{ Beguz: moment('0900', 'hhmm').toDate(), Enduz: moment('1800', 'hhmm').toDate() }]);
-            oViewModel.setProperty('/dialog/legal/list', [{ Beguz: moment('1200', 'hhmm').toDate(), Enduz: moment('1300', 'hhmm').toDate(), Anzb: '1.00', Brk01m: '1.00' }]);
-            oViewModel.setProperty('/dialog/extra/list', [
-              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false }, //
-              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
-              { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
-              { Beguz: null, Enduz: null, Anzb: '0', Resn: '', Sumrow: true },
-            ]);
-          }
-        });
+            if (aTargetDates.length === 1) {
+              const dDate = moment(aTargetDates[0]).hours(9);
+              const [mResult] = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeBreak', {
+                Pernr: this.getAppointeeProperty('Pernr'),
+                Zyymm: dDate.format('YYYYMM'),
+                Datum: dDate.toDate(),
+              });
+
+              _.chain(mResult)
+                .set('Pbeg0', this.TimeUtils.nvl(mResult.Pbeg0)) //
+                .set('Pend0', this.TimeUtils.nvl(mResult.Pend0))
+                .set('Pbeg1', this.TimeUtils.nvl(mResult.Pbeg1))
+                .set('Pend1', this.TimeUtils.nvl(mResult.Pend1))
+                .set('Pbeg2', this.TimeUtils.nvl(mResult.Pbeg2))
+                .set('Pend2', this.TimeUtils.nvl(mResult.Pend2))
+                .set('Pbeg3', this.TimeUtils.nvl(mResult.Pbeg3))
+                .set('Pend3', this.TimeUtils.nvl(mResult.Pend3))
+                .commit();
+
+              oViewModel.setProperty('/dialog/work/list', [{}]);
+              oViewModel.setProperty('/dialog/legal/list', [{ Beguz: _.get(mResult, 'Pbeg0'), Enduz: _.get(mResult, 'Pend0'), Anzb: _.get(mResult, 'Anzb0'), Brk01m: _.get(mResult, 'Brk01m') }]);
+              oViewModel.setProperty('/dialog/extra/list', [
+                { Beguz: _.get(mResult, 'Pbeg1'), Enduz: _.get(mResult, 'Pend1'), Anzb: _.get(mResult, 'Anzb1'), Resn: _.get(mResult, 'Resn1'), Sumrow: false }, //
+                { Beguz: _.get(mResult, 'Pbeg2'), Enduz: _.get(mResult, 'Pend2'), Anzb: _.get(mResult, 'Anzb2'), Resn: _.get(mResult, 'Resn2'), Sumrow: false },
+                { Beguz: _.get(mResult, 'Pbeg3'), Enduz: _.get(mResult, 'Pend3'), Anzb: _.get(mResult, 'Anzb3'), Resn: _.get(mResult, 'Resn3'), Sumrow: false },
+                {
+                  Beguz: null,
+                  Enduz: null,
+                  Anzb: _.chain(mResult)
+                    .pick(['Anzb1', 'Anzb2', 'Anzb3'])
+                    .values()
+                    .sumBy((d) => _.toNumber(d))
+                    .toString()
+                    .value(),
+                  Resn: '',
+                  Sumrow: true,
+                },
+              ]);
+            } else if (aTargetDates.length > 1) {
+              oViewModel.setProperty('/dialog/work/list', [{ Beguz: this.TimeUtils.toEdm('0900'), Enduz: this.TimeUtils.toEdm('1800') }]);
+              oViewModel.setProperty('/dialog/legal/list', [{ Beguz: this.TimeUtils.toEdm('1200'), Enduz: this.TimeUtils.toEdm('1300'), Anzb: '1.00', Brk01m: '1.00' }]);
+              oViewModel.setProperty('/dialog/extra/list', [
+                { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false }, //
+                { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
+                { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
+                { Beguz: null, Enduz: null, Anzb: '0', Resn: '', Sumrow: true },
+              ]);
+            }
+          })
+          .attachAfterOpen(() => this.setContentsBusy(false, 'Dialog'));
 
         oView.addDependent(this._oTimeInputDialog);
 
@@ -316,19 +306,39 @@ sap.ui.define(
         }
       },
 
+      async onChangeWorktime(oEvent) {
+        this.onChangeTimeFormat(oEvent);
+
+        try {
+          const mRowData = oEvent.getSource().getBindingContext().getObject();
+
+          if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) return;
+
+          // call deep
+          const mResults = await this.createProcess([mRowData.Datum]);
+
+          this.debug(`Deep call :: ${mResults}`);
+        } catch (oError) {
+          this.debug('Controller > flextime > onChangeWorktime Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
       onChangeTimeFormat(oEvent) {
         const oSource = oEvent.getSource();
         const aSourceValue = _.split(oSource.getValue(), ':');
-        const iMinutesRemainder = _.chain(aSourceValue).get(1).toNumber().divide(30).value();
 
-        if (!_.isInteger(iMinutesRemainder)) {
-          const iConvertedMinutesValue = _.chain(iMinutesRemainder).floor().multiply(30).value();
+        if (aSourceValue.length !== 2) return;
 
-          oSource.setValue([_.get(aSourceValue, 0), iConvertedMinutesValue].join(':'));
-          oSource.setDateValue(moment(`${_.get(aSourceValue, 0)}${iConvertedMinutesValue}`, 'hhmm').toDate());
-        } else {
-          oSource.setDateValue(moment(aSourceValue.join(''), 'hhmm').toDate());
-        }
+        const sConvertedMinutesValue = this.TimeUtils.stepMinutes(_.get(aSourceValue, 1));
+
+        if (aSourceValue[1] === sConvertedMinutesValue) return;
+
+        const aConvertTimes = [_.get(aSourceValue, 0), sConvertedMinutesValue];
+
+        // oSource.setValue(_.join(aConvertTimes, ':'));
+        oSource.setDateValue(moment(_.join(aConvertTimes, ''), 'hhmm').toDate());
       },
 
       onDiffTime(oEvent) {
@@ -337,22 +347,8 @@ sap.ui.define(
         const oRowBindingContext = oEvent.getSource().getBindingContext();
         const mRowData = oRowBindingContext.getObject();
         const sPath = oRowBindingContext.getPath();
-        const sTimeFormat = 'hhmm';
 
-        if (_.isDate(mRowData.Beguz) && _.isDate(mRowData.Enduz)) {
-          _.set(
-            mRowData,
-            'Anzb',
-            _.toString(
-              moment
-                .duration(moment(mRowData.Enduz, sTimeFormat).diff(moment(mRowData.Beguz, sTimeFormat)))
-                .abs()
-                .asHours()
-            )
-          );
-        } else {
-          _.set(mRowData, 'Anzb', '');
-        }
+        _.set(mRowData, 'Anzb', this.TimeUtils.diff(mRowData.Beguz, mRowData.Enduz));
 
         if (_.startsWith(sPath, '/dialog/extra')) this.calcExtraTimeSum();
       },
@@ -411,22 +407,7 @@ sap.ui.define(
         try {
           this.setContentsBusy(true, ['Input', 'Button']);
 
-          const oViewModel = this.getViewModel();
-          const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 3);
-
-          if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Anzb) && _.isEmpty(o.Resn))) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
-          }
-
-          const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
-
-          if (aTargetDates.length > 1) {
-            const mWorkTime = oViewModel.getProperty('/dialog/work/list/0');
-
-            if (!_.isDate(mWorkTime.Beguz) || !_.isDate(mWorkTime.Enduz)) {
-              throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00002', 'LABEL_40001') }); // {근무시간}을 입력하세요.
-            }
-          }
+          this.validationBreak();
 
           MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
             // {저장}하시겠습니까?
@@ -448,25 +429,54 @@ sap.ui.define(
         }
       },
 
-      async createProcess(dDatum) {
+      onTimeInputDialogClose(oEvent) {
+        this.byId('flextimeDetailsTable').clearSelection();
+        this.onDialogClose(oEvent);
+      },
+
+      validationBreak() {
         const oViewModel = this.getViewModel();
+        const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 3);
+
+        if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Anzb) && _.isEmpty(o.Resn))) {
+          throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
+        }
+
+        const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
+
+        if (aTargetDates.length > 1) {
+          const mWorkTime = oViewModel.getProperty('/dialog/work/list/0');
+
+          if (!_.isDate(mWorkTime.Beguz) || !_.isDate(mWorkTime.Enduz)) {
+            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00002', 'LABEL_40001') }); // {근무시간}을 입력하세요.
+          }
+        }
+      },
+
+      async createProcess(aDatums = [], mBreak = {}) {
+        const oViewModel = this.getViewModel();
+
+        if (_.isEmpty(aDatums)) return;
 
         try {
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
           const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
-          const aBreakTimes = _.cloneDeep(oViewModel.getProperty('/details/breakTime'));
-
-          if (!_.isEmpty(value)) {
-            aDetails = _.filter(aDetails, { Datum: dDatum });
-            aBreakTimes = _.filter(aBreakTimes, { Datum: dDatum });
-          }
 
           return await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             ...mSummary,
             Accty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
-            AssoFlexTimeDetailSet: aDetails,
-            AssoFlexTimeBreakSet: aBreakTimes,
+            AssoFlexTimeDetailSet: _.map(aDatums, (d) => _.find(aDetails, { Datum: d })),
+            AssoFlexTimeBreakSet: _.isEmpty(mBreak)
+              ? []
+              : _.map(aDatums, (d) => {
+                  const mDetailData = _.find(aDetails, { Datum: d });
+
+                  return {
+                    ..._.pick(mDetailData, ['Pernr', 'Zyymm', 'Datum', 'Beguz', 'Enduz']),
+                    ...mBreak,
+                  };
+                }),
           });
         } catch (oError) {
           throw oError;
