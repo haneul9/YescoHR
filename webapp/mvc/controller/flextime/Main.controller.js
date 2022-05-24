@@ -448,12 +448,16 @@ sap.ui.define(
           Enduz: _.get(mDialog, ['work', 'list', 0, 'Enduz']),
           Pbeg0: _.get(mDialog, ['legal', 'list', 0, 'Beguz']), // 법정휴게시작
           Pend0: _.get(mDialog, ['legal', 'list', 0, 'Enduz']), // 법정휴게종료
+          Anzb0: _.get(mDialog, ['legal', 'list', 0, 'Anzb']), // 법정휴게시간
           Pbeg1: _.get(mDialog, ['extra', 'list', 0, 'Beguz']), // 추가휴게시작1
           Pend1: _.get(mDialog, ['extra', 'list', 0, 'Enduz']), // 추가휴게종료1
+          Anzb1: _.get(mDialog, ['extra', 'list', 0, 'Anzb']), // 추가휴게시간1
           Pbeg2: _.get(mDialog, ['extra', 'list', 1, 'Beguz']), // 추가휴게시작2
           Pend2: _.get(mDialog, ['extra', 'list', 1, 'Enduz']), // 추가휴게종료2
+          Anzb2: _.get(mDialog, ['extra', 'list', 1, 'Anzb']), // 추가휴게시간2
           Pbeg3: _.get(mDialog, ['extra', 'list', 2, 'Beguz']), // 추가휴게시작3
           Pend3: _.get(mDialog, ['extra', 'list', 2, 'Enduz']), // 추가휴게종료3
+          Anzb3: _.get(mDialog, ['extra', 'list', 2, 'Anzb']), // 추가휴게시간3
           Resn1: _.get(mDialog, ['extra', 'list', 0, 'Resn']), // 휴게사유 1
           Resn2: _.get(mDialog, ['extra', 'list', 1, 'Resn']), // 휴게사유 2
           Resn3: _.get(mDialog, ['extra', 'list', 2, 'Resn']), // 휴게사유 3
