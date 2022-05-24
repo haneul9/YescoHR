@@ -285,11 +285,9 @@ sap.ui.define(
 
             if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
               oChart.addEventListener('rendered', (oEvent) => {
-                const oSender = oEvent.sender;
-                if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-                  oSender.setChartAttribute('scrollHeight', '2');
-                }
-                setTimeout(() => {}, 100);
+                setTimeout(() => {
+                  oEvent.sender.setChartAttribute('scrollHeight', /iphone|ipad|ipod/i.test(navigator.userAgent) ? '2' : '4');
+                }, 300);
               });
             }
           });

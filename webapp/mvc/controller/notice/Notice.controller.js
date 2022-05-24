@@ -2,15 +2,15 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/common/AppUtils',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
+    Client,
     ServiceNames,
-    ODataReadError,
     BaseController
   ) => {
     'use strict';
@@ -51,46 +51,43 @@ sap.ui.define(
         this.getRouter().navTo(this.isHass() ? 'h/notice-detail' : 'notice-detail', { Sdate: 'N', Seqnr: 'N' });
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oTable = this.byId('noticeTable');
-        const oSearch = oListModel.getProperty('/search');
+        const oSearch = oViewModel.getProperty('/search');
         const dDate = moment(oSearch.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearch.date).hours(9).toDate();
         const sMenid = this.getCurrentMenuId();
         const sWerks = this.getSessionProperty('Werks');
 
-        oListModel.setProperty('/busy', true);
+        oViewModel.setProperty('/busy', true);
 
-        let oSendObject = {
-          Prcty: '0',
-          Menid: sMenid,
-          Begda: dDate,
-          Endda: dDate2,
-          Werks: sWerks,
-          Title: oSearch.title || '',
-          Notice1Nav: [],
-          Notice2Nav: [],
-        };
+        try {
+          const mSendObject = {
+            Prcty: '0',
+            Menid: sMenid,
+            Begda: dDate,
+            Endda: dDate2,
+            Werks: sWerks,
+            Title: oSearch.title || '',
+            Notice1Nav: [],
+          };
 
-        oModel.create('/NoticeManageSet', oSendObject, {
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.Notice1Nav.results;
+          const oData = await Client.deep(oModel, 'NoticeManage', mSendObject);
+          const aList = oData.Notice1Nav.results;
 
-              oListModel.setProperty('/NoticeList', oList);
-              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/listInfo/Title', this.getBundleText('LABEL_00166'));
-              oListModel.setProperty('/listInfo/visibleStatus', 'X');
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
+          oViewModel.setProperty('/NoticeList', aList);
+          oViewModel.setProperty('/listInfo', {
+            ...this.TableUtils.count({ oTable, aRowData: aList }),
+            Title: this.getBundleText('LABEL_00166'),
+            visibleStatus: 'X',
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       onSelectRow(oEvent) {

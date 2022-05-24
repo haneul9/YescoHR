@@ -540,27 +540,6 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .column-chart [class*="datalabel"] tspan,
 .doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
 
-.scroll-radius .fusioncharts-container svg g[class*="-scroller"] rect {rx:3px !important; ry:3px !important}
-.legend-p2d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform: translate(0,2px)}
-.legend-p1d5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform: translate(0,1.5px)}
-.legend-p1d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform: translate(0,1px)}
-.legend-p0d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
-.legend-m0d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform: translate(0,0)}
-.legend-m1d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform: translate(0,-1px)}
-.legend-m1d5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform: translate(0,-1.5px)}
-.legend-m2d0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform: translate(0,-2px)}
-.scroll-h0 .fusioncharts-container svg g[class*="-scroller"] rect {height:0 !important}
-.scroll-h1 .fusioncharts-container svg g[class*="-scroller"] rect {height:1px !important}
-.scroll-h2 .fusioncharts-container svg g[class*="-scroller"] rect {height:2px !important}
-.scroll-h3 .fusioncharts-container svg g[class*="-scroller"] rect {height:3px !important}
-.scroll-h4 .fusioncharts-container svg g[class*="-scroller"] rect {height:4px !important}
-.scroll-h5 .fusioncharts-container svg g[class*="-scroller"] rect {height:5px !important}
-.scroll-h6 .fusioncharts-container svg g[class*="-scroller"] rect {height:6px !important}
-.scroll-h7 .fusioncharts-container svg g[class*="-scroller"] rect {height:7px !important}
-.scroll-h8 .fusioncharts-container svg g[class*="-scroller"] rect {height:8px !important}
-.scroll-h9 .fusioncharts-container svg g[class*="-scroller"] rect {height:9px !important}
-.scroll-h10 .fusioncharts-container svg g[class*="-scroller"] rect {height:10px !important}
-
 .overviews .statistic-box,
 .overviews .statistic-text,
 .overviews .statistic-text.sapMText,

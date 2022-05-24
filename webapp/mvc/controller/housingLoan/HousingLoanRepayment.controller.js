@@ -7,10 +7,8 @@ sap.ui.define(
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -20,10 +18,8 @@ sap.ui.define(
     Appno,
     AppUtils,
     ComboEntry,
+    Client,
     ServiceNames,
-    ODataReadError,
-    ODataCreateError,
-    ODataDeleteError,
     BaseController
   ) => {
     'use strict';
@@ -56,18 +52,18 @@ sap.ui.define(
           });
         }
 
-        const oDetailModel = this.getViewModel();
-        oDetailModel.setData(this.initializeModel());
+        const oViewModel = this.getViewModel();
+        oViewModel.setData(this.initializeModel());
         // Input Field Imited
-        oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanRepayAppl')));
+        oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'LoanRepayAppl')));
 
         if (!!oParameter.lonid) {
           const sLonid = oParameter.lonid;
 
-          oDetailModel.setProperty('/ViewLonid', sLonid);
+          oViewModel.setProperty('/ViewLonid', sLonid);
         }
 
-        oDetailModel.setProperty('/ViewKey', sDataKey);
+        oViewModel.setProperty('/ViewKey', sDataKey);
 
         this.getList();
       },
@@ -89,20 +85,20 @@ sap.ui.define(
       repayCost(oEvent) {
         const oEventSource = oEvent.getSource();
         const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
-        const oDetailModel = this.getViewModel();
-        const iPayIntrest = parseInt(oDetailModel.getProperty('/DialogData/RpamtMin'));
+        const oViewModel = this.getViewModel();
+        const iPayIntrest = parseInt(oViewModel.getProperty('/DialogData/RpamtMin'));
         const iRepay = parseInt(sValue);
 
-        if (iRepay > parseInt(oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))) {
-          const sBeforeRepay = oDetailModel.getProperty('/DialogData/RpamtMpr');
+        if (iRepay > parseInt(oViewModel.getProperty('/TargetLoanHis/RpamtBal'))) {
+          const sBeforeRepay = oViewModel.getProperty('/DialogData/RpamtMpr');
 
           oEventSource.setValue(this.TextUtils.toCurrency(sBeforeRepay));
-          oDetailModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
+          oViewModel.setProperty('/DialogData/RpamtMpr', sBeforeRepay);
           MessageBox.alert(this.getBundleText('MSG_07004'));
         } else {
           oEventSource.setValue(sValue);
-          oDetailModel.setProperty('/DialogData/RpamtMpr', sValue);
-          oDetailModel.setProperty('/DialogData/RpamtTot', String(iRepay + iPayIntrest));
+          oViewModel.setProperty('/DialogData/RpamtMpr', sValue);
+          oViewModel.setProperty('/DialogData/RpamtTot', String(iRepay + iPayIntrest));
         }
       },
 
@@ -111,21 +107,21 @@ sap.ui.define(
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
         const mDetailData = oListView.getModel().getProperty('/FormData');
-        const oDetailModel = this.getViewModel();
-        const mTargetLoan = oDetailModel.getProperty('/TargetLoanHis');
-        const aAccountTxt = oDetailModel.getProperty('/AccountTxt');
+        const oViewModel = this.getViewModel();
+        const mTargetLoan = oViewModel.getProperty('/TargetLoanHis');
+        const aAccountTxt = oViewModel.getProperty('/AccountTxt');
 
-        oDetailModel.setProperty('/DialogData', _.cloneDeep(mDetailData));
-        oDetailModel.setProperty('/DialogData/Appda', new Date());
-        oDetailModel.setProperty('/DialogData/Appno', '');
-        oDetailModel.setProperty('/DialogData/Lnsta', '');
-        oDetailModel.setProperty('/DialogData/Lnstatx', '');
-        oDetailModel.setProperty('/DialogData/Rptyp', 'ALL');
-        oDetailModel.setProperty('/DialogData/Paydt', new Date());
-        oDetailModel.setProperty('/DialogData/Lnrte', mTargetLoan.Lnrte);
-        oDetailModel.setProperty('/DialogData/RpamtMpr', mTargetLoan.RpamtBal);
-        oDetailModel.setProperty('/DialogData/RpamtTot', mTargetLoan.RpamtBal);
-        oDetailModel.setProperty(
+        oViewModel.setProperty('/DialogData', _.cloneDeep(mDetailData));
+        oViewModel.setProperty('/DialogData/Appda', new Date());
+        oViewModel.setProperty('/DialogData/Appno', '');
+        oViewModel.setProperty('/DialogData/Lnsta', '');
+        oViewModel.setProperty('/DialogData/Lnstatx', '');
+        oViewModel.setProperty('/DialogData/Rptyp', 'ALL');
+        oViewModel.setProperty('/DialogData/Paydt', new Date());
+        oViewModel.setProperty('/DialogData/Lnrte', mTargetLoan.Lnrte);
+        oViewModel.setProperty('/DialogData/RpamtMpr', mTargetLoan.RpamtBal);
+        oViewModel.setProperty('/DialogData/RpamtTot', mTargetLoan.RpamtBal);
+        oViewModel.setProperty(
           '/DialogData/Account',
           !_.find(aAccountTxt, (e) => {
             return !e.Zbigo;
@@ -137,7 +133,7 @@ sap.ui.define(
                 return !e.Zbigo;
               }).Ztext
         );
-        oDetailModel.setProperty('/DateEditable', true);
+        oViewModel.setProperty('/DateEditable', true);
       },
 
       // 상환신청내역 Excel
@@ -155,20 +151,20 @@ sap.ui.define(
 
       // 상환신청내역 클릭
       async onSelectRow(oEvent) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         let oRowData = '';
 
         if (!oEvent.Appno) {
           const vPath = oEvent.getParameters().rowBindingContext.getPath();
-          oRowData = _.cloneDeep(oDetailModel.getProperty(vPath));
+          oRowData = _.cloneDeep(oViewModel.getProperty(vPath));
         } else {
           oRowData = _.cloneDeep(oEvent);
         }
 
-        await this.getRepayType(oRowData.Lnsta);
+        this.getRepayType(oRowData.Lnsta);
 
-        const mTargetLoan = oDetailModel.getProperty('/TargetLoanHis');
-        const aAccountTxt = oDetailModel.getProperty('/AccountTxt');
+        const mTargetLoan = oViewModel.getProperty('/TargetLoanHis');
+        const aAccountTxt = oViewModel.getProperty('/AccountTxt');
 
         if (!this.byId('RepayApplyDialog')) {
           Fragment.load({
@@ -178,8 +174,8 @@ sap.ui.define(
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            oDetailModel.setProperty('/DialogData', oRowData);
-            oDetailModel.setProperty(
+            oViewModel.setProperty('/DialogData', oRowData);
+            oViewModel.setProperty(
               '/DialogData/Account',
               !_.find(aAccountTxt, (e) => {
                 return !e.Zbigo;
@@ -191,13 +187,13 @@ sap.ui.define(
                     return !e.Zbigo;
                   }).Ztext
             );
-            oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
+            oViewModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
             this.settingsAttachTable();
             oDialog.open();
           });
         } else {
-          oDetailModel.setProperty('/DialogData', oRowData);
-          oDetailModel.setProperty(
+          oViewModel.setProperty('/DialogData', oRowData);
+          oViewModel.setProperty(
             '/DialogData/Account',
             !_.find(aAccountTxt, (e) => {
               return !e.Zbigo;
@@ -209,7 +205,7 @@ sap.ui.define(
                   return !e.Zbigo;
                 }).Ztext
           );
-          oDetailModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
+          oViewModel.setProperty('/DateEditable', oRowData.Rptyp === 'FULL');
           this.settingsAttachTable();
           this.byId('RepayApplyDialog').open();
         }
@@ -218,36 +214,22 @@ sap.ui.define(
       // 통합 신청함에서 바로 들어올 경우 상세조회 호출
       repayDetail() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        let oSendObject = {};
 
-        oSendObject.Appbox = 'X';
-        oSendObject.Pernr = this.getAppointeeProperty('Pernr');
-        oSendObject.Menid = this.getCurrentMenuId();
-        oSendObject.Prcty = 'D';
-        oSendObject.Appno = this.getViewModel().getProperty('/ViewLonid');
-        oSendObject.LoanAmtHistorySet = [];
-        oSendObject.LoanAmtRecordSet = [];
-
-        return new Promise((resolve, reject) => {
-          oModel.create('/LoanAmtApplSet', oSendObject, {
-            success: (oData) => {
-              if (oData) {
-                this.debug(`${'/LoanAmtApplSet'} success.`, oData);
-                resolve(oData);
-              }
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-              reject();
-            },
-          });
+        return Client.getEntitySet(oModel, 'LoanAmtAppl', {
+          Appbox: 'X',
+          Pernr: this.getAppointeeProperty('Pernr'),
+          Menid: this.getCurrentMenuId(),
+          Prcty: 'D',
+          Appno: this.getViewModel().getProperty('/ViewLonid'),
+          LoanAmtHistorySet: [],
+          LoanAmtRecordSet: [],
         });
       },
 
       // 화면관련 List호출
       async getList() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oAppointeeData = this.getAppointeeData();
         const oView = this.getView();
         const oListView = oView.getParent().getPage(this.LIST_PAGE_ID);
@@ -260,143 +242,89 @@ sap.ui.define(
           mDetailData = await this.repayDetail();
         }
 
-        return Promise.all([
-          new Promise((resolve) => {
-            // 입금계좌
-            oModel.read('/BenefitCodeListSet', {
-              filters: [
-                // prettier 방지주석
-                new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0015'),
-                new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-                new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-                new sap.ui.model.Filter('Grcod', sap.ui.model.FilterOperator.EQ, 'BE000003'),
-                new sap.ui.model.Filter('Sbcod', sap.ui.model.FilterOperator.EQ, 'IN'),
-                new sap.ui.model.Filter('Comcd', sap.ui.model.FilterOperator.EQ, 'BANK'),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  const aData = oData.results;
-                  const sText = aData[0].Ztext;
-                  const sRedText = `<span style='color:red;'>${this.getBundleText('MSG_07020')}</span>`;
-                  const sText2 = _.size(aData) === 2 ? `<p style='margin-left:59px'>${aData[1].Ztext}</p>` : '';
-
-                  oDetailModel.setProperty('/AccountTxt', aData);
-                  oDetailModel.setProperty(
-                    '/InfoMessage',
-                    `<p>${this.getBundleText('MSG_07014')}</p>
-                    <p>${this.getBundleText('MSG_07018', sText)}</p>
-                    ${sText2}
-                    <p>${this.getBundleText('MSG_07019', sRedText)}</p>`
-                  );
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
+        const [oAmountTxt, [oHis], oAppList] = await Promise.all([
+          // 입금계좌
+          Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Cdnum: 'BE0015',
+            Werks: oAppointeeData.Werks,
+            Datum: new Date(),
+            Grcod: 'BE000003',
+            Sbcod: 'IN',
+            Comcd: 'BANK',
           }),
-          new Promise((resolve) => {
-            // 융자내역
-            oModel.read('/LoanRepayHistorySet', {
-              filters: [
-                // prettier 방지주석
-                new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid),
-                new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp),
-              ],
-              success: (oData) => {
-                if (oData) {
-                  const oHis = oData.results[0];
-
-                  oDetailModel.setProperty('/TargetLoanHis', oHis);
-
-                  resolve();
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
+          // 융자내역
+          Client.getEntitySet(oModel, 'LoanRepayHistory', {
+            Lonid: mDetailData.Lonid,
+            Lntyp: mDetailData.Lntyp,
           }),
-          new Promise((resolve) => {
-            // 신청내역
-            oModel.read('/LoanRepayApplSet', {
-              filters: [new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDetailData.Lonid), new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDetailData.Lntyp), new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L')],
-              success: (oData) => {
-                if (oData) {
-                  const oTable = this.byId('repaymentTable');
-                  const aList = oData.results;
-
-                  oDetailModel.setProperty('/LoanAppList', aList);
-
-                  setTimeout(() => {
-                    oDetailModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
-
-                    if (!bRouteAppBox) {
-                      this.onSelectRow(_.each(aList, (v) => (v.Appno = oDetailModel.getProperty('/ViewKey')))[0]);
-                    }
-
-                    resolve();
-                  }, 100);
-                }
-              },
-              error: (oError) => {
-                AppUtils.handleError(new ODataReadError(oError));
-              },
-            });
+          // 신청내역
+          Client.getEntitySet(oModel, 'LoanRepayAppl', {
+            Lonid: mDetailData.Lonid,
+            Lntyp: mDetailData.Lntyp,
+            Prcty: 'L',
           }),
         ]);
+
+        const sText = oAmountTxt[0].Ztext;
+        const sRedText = `<span style='color:red;'>${this.getBundleText('MSG_07020')}</span>`;
+        const sText2 = _.size(oAmountTxt) === 2 ? `<p style='margin-left:59px'>${oAmountTxt[1].Ztext}</p>` : '';
+
+        oViewModel.setProperty('/AccountTxt', oAmountTxt);
+        oViewModel.setProperty(
+          '/InfoMessage',
+          `<p>${this.getBundleText('MSG_07014')}</p>
+          <p>${this.getBundleText('MSG_07018', sText)}</p>
+          ${sText2}
+          <p>${this.getBundleText('MSG_07019', sRedText)}</p>`
+        );
+        oViewModel.setProperty('/TargetLoanHis', oHis);
+
+        const oTable = this.byId('repaymentTable');
+
+        oViewModel.setProperty('/LoanAppList', oAppList);
+
+        setTimeout(() => {
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oAppList, sStatCode: 'Lnsta' }));
+
+          if (!bRouteAppBox) {
+            this.onSelectRow(_.each(oAppList, (v) => (v.Appno = oViewModel.getProperty('/ViewKey')))[0]);
+          }
+        }, 100);
       },
 
       // 상환유형 Code호출
-      getRepayType(sLnsta) {
+      async getRepayType(sLnsta) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oAppointeeData = this.getAppointeeData();
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/BenefitCodeListSet', {
-            filters: [
-              // prettier 방지주석
-              new sap.ui.model.Filter('Cdnum', sap.ui.model.FilterOperator.EQ, 'BE0016'),
-              new sap.ui.model.Filter('Werks', sap.ui.model.FilterOperator.EQ, oAppointeeData.Werks),
-              new sap.ui.model.Filter('Datum', sap.ui.model.FilterOperator.EQ, new Date()),
-            ],
-            success: (oData) => {
-              if (oData) {
-                let aList = oData.results;
-
-                if (!sLnsta || sLnsta === '10') {
-                  aList = _.filter(aList, (e) => {
-                    return e.Zcode !== 'PAY';
-                  });
-                }
-
-                oDetailModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-                resolve();
-              }
-            },
-            error: (oError) => {
-              AppUtils.handleError(new ODataReadError(oError));
-              reject();
-            },
-          });
+        let aList = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+          Cdnum: 'BE0016',
+          Werks: oAppointeeData.Werks,
+          Datum: new Date(),
         });
+
+        if (!sLnsta || sLnsta === '10') {
+          aList = _.filter(aList, (e) => {
+            return e.Zcode !== 'PAY';
+          });
+        }
+
+        oViewModel.setProperty('/LaonType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
       },
 
       // 상환유형선택
       onLaonType(oEvent) {
         const sKey = oEvent.getSource().getSelectedKey();
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         if (sKey === 'ALL') {
           return;
         } else if (sKey === 'FULL') {
-          oDetailModel.setProperty('/maxDate', moment('9999.12.31').toDate());
-          oDetailModel.setProperty('/DialogData/Paydt', moment().toDate());
+          oViewModel.setProperty('/maxDate', moment('9999.12.31').toDate());
+          oViewModel.setProperty('/DialogData/Paydt', moment().toDate());
         } else {
-          oDetailModel.setProperty('/maxDate', moment().toDate());
+          oViewModel.setProperty('/maxDate', moment().toDate());
         }
 
         this.setLoanType('Type', sKey);
@@ -412,11 +340,10 @@ sap.ui.define(
       },
 
       // 상환에따른 데이터셋팅
-      setLoanType(sType, sKey) {
+      async setLoanType(sType, sKey) {
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
-        const aFiltList = [];
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
         let sKey1 = '';
         let sDate = '';
 
@@ -428,47 +355,33 @@ sap.ui.define(
           sDate = sKey;
         }
 
-        aFiltList.push(
+        let mPayload = {
           // prettier 방지주석
-          new sap.ui.model.Filter('Lonid', sap.ui.model.FilterOperator.EQ, mDialogData.Lonid),
-          new sap.ui.model.Filter('Lntyp', sap.ui.model.FilterOperator.EQ, mDialogData.Lntyp),
-          new sap.ui.model.Filter('Rptyp', sap.ui.model.FilterOperator.EQ, sKey1)
-        );
+          Lonid: mDialogData.Lonid,
+          Lntyp: mDialogData.Lntyp,
+          Rptyp: sKey1,
+        };
         if (sKey1 === 'FULL') {
-          aFiltList.push(
-            // prettier 방지주석
-            new sap.ui.model.Filter('Paydt', sap.ui.model.FilterOperator.EQ, moment(sDate).hours(9).toDate()),
-            new sap.ui.model.Filter('RpamtMpr', sap.ui.model.FilterOperator.EQ, oDetailModel.getProperty('/TargetLoanHis/RpamtBal'))
-          );
-          oDetailModel.setProperty('/DateEditable', true);
+          _.chain(mPayload).set('Paydt', moment(sDate).hours(9).toDate()).set('RpamtMpr', oViewModel.getProperty('/TargetLoanHis/RpamtBal')).value();
+          oViewModel.setProperty('/DateEditable', true);
         } else {
-          oDetailModel.setProperty('/DateEditable', false);
+          oViewModel.setProperty('/DateEditable', false);
         }
 
-        oModel.read('/LoanRepayCheckSet', {
-          filters: aFiltList,
-          success: (oData) => {
-            if (oData) {
-              const oAmount = oData.results[0];
+        const [oAmount] = await Client.getEntitySet(oModel, 'LoanRepayCheck', mPayload);
 
-              if (sType === 'Type' && sKey !== 'FULL') {
-                oDetailModel.setProperty('/DialogData/Paydt', oAmount.Paydt);
-              }
+        if (sType === 'Type' && sKey !== 'FULL') {
+          oViewModel.setProperty('/DialogData/Paydt', oAmount.Paydt);
+        }
 
-              oDetailModel.setProperty('/DialogData/RpamtMpr', oAmount.RpamtMpr);
-              oDetailModel.setProperty('/DialogData/RpamtMin', oAmount.RpamtMin);
-              oDetailModel.setProperty('/DialogData/RpamtTot', oAmount.RpamtTot);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+        oViewModel.setProperty('/DialogData/RpamtMpr', oAmount.RpamtMpr);
+        oViewModel.setProperty('/DialogData/RpamtMin', oAmount.RpamtMin);
+        oViewModel.setProperty('/DialogData/RpamtTot', oAmount.RpamtTot);
       },
 
       // 상환신청
       async onRepayDetailApp() {
-        await this.getRepayType('');
+        this.getRepayType('');
         this.setInitDialogData();
 
         if (!this.byId('RepayApplyDialog')) {
@@ -497,8 +410,8 @@ sap.ui.define(
       },
 
       checkError(sType) {
-        const oDetailModel = this.getViewModel();
-        const mDialogData = oDetailModel.getProperty('/DialogData');
+        const oViewModel = this.getViewModel();
+        const mDialogData = oViewModel.getProperty('/DialogData');
 
         // 상환유형
         if (mDialogData.Rptyp === 'ALL' || !mDialogData.Rptyp) {
@@ -535,69 +448,64 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setProperty('/DialogData/Appno', '');
-        oDetailModel.setProperty('/DialogData/Lnsta', '');
+        oViewModel.setProperty('/DialogData/Appno', '');
+        oViewModel.setProperty('/DialogData/Lnsta', '');
         this.settingsAttachTable();
       },
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/DialogData/Appno');
-        const oDialogData = oDetailModel.getProperty('/DialogData');
-        const oRepayDialog = this.byId('RepayApplyDialog');
-
         if (this.checkError()) return;
 
+        // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+          // 저장, 취소
           actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                oRepayDialog.setBusy(true);
+            // 저장
+            if (!vPress || vPress !== this.getBundleText('LABEL_00103')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            const oRepayDialog = this.byId('RepayApplyDialog');
 
-                  oDetailModel.setProperty('/DialogData/Appno', sAppno);
-                  oDetailModel.setProperty('/DialogData/Appda', new Date());
-                  oDetailModel.setProperty('/DialogData/Seqnr', '');
-                }
+            try {
+              oRepayDialog.setBusy(true);
 
-                let oSendObject = {};
+              const oViewModel = this.getViewModel();
+              const mDialogData = oViewModel.getProperty('/DialogData');
 
-                oSendObject = oDialogData;
-                oSendObject.Prcty = 'T';
-                oSendObject.Waers = 'KRW';
+              if (!mDialogData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/LoanRepayApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
-                  onClose: () => {
-                    this.byId('RepayApplyDialog').close();
-                  },
-                });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                this.getList();
-                oRepayDialog.setBusy(false);
+                _.chain(mDialogData).set('Appno', sAppno).set('Appda', new Date()).set('Seqnr', '').value();
               }
+
+              // FileUpload
+              await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno, this.getApprovalType());
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mDialogData,
+                Prcty: 'T',
+                Waers: 'KRW',
+              };
+
+              await Client.create(oModel, 'LoanRepayAppl', mSendObject);
+
+              // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+                onClose: () => {
+                  this.getList();
+                  this.byId('RepayApplyDialog').close();
+                },
+              });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              oRepayDialog.setBusy(false);
             }
           },
         });
@@ -605,60 +513,55 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sAppno = oDetailModel.getProperty('/DialogData/Appno');
-        const oDialogData = oDetailModel.getProperty('/DialogData');
-        const oRepayDialog = this.byId('RepayApplyDialog');
-
         if (this.checkError('C')) return;
 
+        // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
+          // 신청, 취소
           actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                oRepayDialog.setBusy(true);
+            // 신청
+            if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            const oRepayDialog = this.byId('RepayApplyDialog');
 
-                  oDetailModel.setProperty('/DialogData/Appno', sAppno);
-                  oDetailModel.setProperty('/DialogData/Appda', new Date());
-                  oDetailModel.setProperty('/DialogData/Seqnr', '');
-                }
+            try {
+              oRepayDialog.setBusy(true);
 
-                let oSendObject = {};
+              const oViewModel = this.getViewModel();
+              const mDialogData = oViewModel.getProperty('/DialogData');
 
-                oSendObject = oDialogData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Waers = 'KRW';
+              if (!mDialogData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oDialogData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/LoanRepayApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(new ODataCreateError({ oError }));
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.byId('RepayApplyDialog').close();
-                  },
-                });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                this.getList();
-                oRepayDialog.setBusy(false);
+                _.chain(mDialogData).set('Appno', sAppno).set('Appda', new Date()).set('Seqnr', '').value();
               }
+
+              // FileUpload
+              await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno, this.getApprovalType());
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mDialogData,
+                Prcty: 'C',
+                Waers: 'KRW',
+              };
+
+              await Client.create(oModel, 'LoanRepayAppl', mSendObject);
+
+              // {신청}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.getList();
+                  this.byId('RepayApplyDialog').close();
+                },
+              });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              oRepayDialog.setBusy(false);
             }
           },
         });
@@ -666,36 +569,41 @@ sap.ui.define(
 
       // 취소
       onCancelBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oRepayDialog = this.byId('RepayApplyDialog');
-
+        // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
+          // 확인, 취소
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              oRepayDialog.setBusy(true);
+          onClose: async (vPress) => {
+            // 취소
+            if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
+              return;
+            }
 
-              let oSendObject = {};
+            const oRepayDialog = this.byId('RepayApplyDialog');
 
-              oSendObject = oDetailModel.getProperty('/DialogData');
-              oSendObject.Prcty = 'W';
+            oRepayDialog.setBusy(true);
 
-              oModel.create('/LoanRepayApplSet', oSendObject, {
-                success: () => {
-                  oRepayDialog.setBusy(false);
-                  MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
-                    onClose: () => {
-                      this.getList();
-                      this.byId('RepayApplyDialog').close();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataCreateError({ oError }));
-                  oRepayDialog.setBusy(false);
+            try {
+              const oViewModel = this.getViewModel();
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...oViewModel.getProperty('/DialogData'),
+                Prcty: 'W',
+              };
+
+              await Client.create(oModel, 'LoanRepayAppl', mSendObject);
+
+              // {취소}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
+                onClose: () => {
+                  this.getList();
+                  this.byId('RepayApplyDialog').close();
                 },
               });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              oRepayDialog.setBusy(false);
             }
           },
         });
@@ -703,36 +611,37 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oRepayDialog = this.byId('RepayApplyDialog');
-
+        // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
+          // 삭제, 취소
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              oRepayDialog.setBusy(true);
+          onClose: async (vPress) => {
+            // 삭제
+            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+              return;
+            }
 
-              const sPath = oModel.createKey('/LoanRepayApplSet', {
-                Lonid: oDetailModel.getProperty('/DialogData/Lonid'),
-                Seqnr: oDetailModel.getProperty('/DialogData/Seqnr'),
-              });
+            const oRepayDialog = this.byId('RepayApplyDialog');
 
-              oModel.remove(sPath, {
-                success: () => {
-                  oRepayDialog.setBusy(false);
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.getList();
-                      this.byId('RepayApplyDialog').close();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError(oError));
-                  oRepayDialog.setBusy(false);
+            oRepayDialog.setBusy(true);
+
+            try {
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const oViewModel = this.getViewModel();
+
+              await Client.remove(oModel, 'LoanRepayAppl', _.pick(oViewModel.getProperty('/DialogData'), ['Lonid', 'Seqnr']));
+
+              // {삭제}되었습니다
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+                onClose: () => {
+                  this.getList();
+                  this.byId('RepayApplyDialog').close();
                 },
               });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              oRepayDialog.setBusy(false);
             }
           },
         });
@@ -740,16 +649,15 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/DialogData/Lnsta');
-        const sAppno = oDetailModel.getProperty('/DialogData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/DialogData/Lnsta');
+        const sAppno = oViewModel.getProperty('/DialogData/Appno') || '';
 
         this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 1,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });

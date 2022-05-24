@@ -17,7 +17,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart scroll-color scroll-radius legend-m1d5"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>
