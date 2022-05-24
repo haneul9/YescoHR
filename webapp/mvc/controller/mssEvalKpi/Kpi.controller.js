@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
@@ -10,14 +8,10 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/GroupDialogHandler',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
-    'sap/ui/yesco/common/exceptions/ODataCreateError',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     //
-    Filter,
-    FilterOperator,
     Fragment,
     MessageBox,
     AppUtils,
@@ -25,8 +19,6 @@ sap.ui.define(
     Client,
     ServiceNames,
     GroupDialogHandler,
-    ODataReadError,
-    ODataCreateError,
     BaseController
   ) => {
     'use strict';
@@ -135,40 +127,15 @@ sap.ui.define(
       areaList() {
         const oModel = this.getModel(ServiceNames.COMMON);
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/PersAreaListSet', {
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, 'PersAreaList');
       },
 
       // 부문Code
       partList(sWerks = this.getSessionProperty('Werks')) {
         const oModel = this.getModel(ServiceNames.APPRAISAL);
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingOrgehSet', {
-            filters: [new Filter('Werks', FilterOperator.EQ, sWerks)],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
+        return Client.getEntitySet(oModel, 'KpiCascadingOrgeh', {
+          Werks: sWerks,
         });
       },
 
@@ -180,7 +147,7 @@ sap.ui.define(
         oViewModel.setProperty('/CascadingSitu', {
           Label1: this.getBundleText('LABEL_00220'),
           Label2: this.getBundleText('LABEL_15014'),
-          SecondCode: aKpiList,
+          SecondCode: new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aKpiList }),
         });
 
         oViewModel.setProperty('/search/Objid', 'ALL');
@@ -204,28 +171,15 @@ sap.ui.define(
       },
 
       // 저장 BtnVisible
-      hideSaveBtn(sWerks = this.getSessionProperty('Werks')) {
+      async hideSaveBtn(sWerks = this.getSessionProperty('Werks')) {
+        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.APPRAISAL);
-
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingActiveSet', {
-            filters: [
-              //
-              new Filter('Werks', FilterOperator.EQ, sWerks),
-              new Filter('Zyear', FilterOperator.EQ, this.getViewModel().getProperty('/search/Zyear')),
-            ],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results[0].Active === 'X');
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
+        const [oData] = await Client.getEntitySet(oModel, 'KpiCascadingActive', {
+          Werks: sWerks,
+          Zyear: oViewModel.getProperty('/search/Zyear'),
         });
+
+        oViewModel.setProperty('/BtnStat', oData.Active === 'X');
       },
 
       // 평가년도 클릭
@@ -257,14 +211,34 @@ sap.ui.define(
             oViewModel.setProperty('/listRowCount', iTableLength > 7 ? 7 : iTableLength);
 
             const aGridList = await this.getPartCascading();
+            let aNotEmpty = [];
 
-            if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
-              this.setTeamGridList(aGridList);
+            if (oViewModel.getProperty('/tab/selectedKey') === 'A') {
+              aNotEmpty = aGridList.filter((e) => {
+                return !!e.Stext || !!e.Ztext;
+              });
             } else {
-              aGridList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
+              aGridList.forEach((e) => {
+                if (!e.Stext && !e.Ztext) {
+                  aNotEmpty.push({
+                    Label: e.Orgtx,
+                    Orgtx: e.Orgtx,
+                    Orgeh: e.Orgeh,
+                    TmpGrid: [],
+                  });
+                } else {
+                  aNotEmpty.push(e);
+                }
+              });
             }
 
-            oViewModel.setProperty('/PartList', aGridList);
+            if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
+              this.setTeamGridList(aNotEmpty);
+            } else {
+              aNotEmpty.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
+            }
+
+            oViewModel.setProperty('/PartList', aNotEmpty);
           } else {
             oViewModel.setProperty('/situation/segmentKey', 'A');
 
@@ -303,24 +277,9 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingKpiListSet', {
-            filters: [
-              // prettier 방지주석
-              new Filter('Werks', FilterOperator.EQ, oViewModel.getProperty('/search/Werks')),
-              new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
-            ],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: oData.results }));
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
+        return Client.getEntitySet(oModel, 'KpiCascadingKpiList', {
+          Werks: oViewModel.getProperty('/search/Werks'),
+          Zyear: mSearch.Zyear,
         });
       },
 
@@ -402,7 +361,7 @@ sap.ui.define(
           oViewModel.setProperty('/CascadingSitu', {
             Label1: this.getBundleText('LABEL_00220'),
             Label2: this.getBundleText('LABEL_15014'),
-            SecondCode: aKpiList,
+            SecondCode: new ComboEntry({ codeKey: 'Objid', valueKey: 'Stext', aEntries: aKpiList }),
           });
         }
 
@@ -419,25 +378,11 @@ sap.ui.define(
         const mSearch = oViewModel.getProperty('/search');
         const bKey = oViewModel.getProperty('/situation/segmentKey') === 'A';
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingTreeSet', {
-            filters: [
-              new Filter('Werks', FilterOperator.EQ, mSearch.Werks), //
-              new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear),
-              new Filter('Seroty', FilterOperator.EQ, bKey ? 'O' : mSearch.Otype),
-              new Filter('Serobj', FilterOperator.EQ, bKey ? mSearch.Orgeh : mSearch.Objid === 'ALL' ? '' : mSearch.Objid),
-            ],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
+        return Client.getEntitySet(oModel, 'KpiCascadingTree', {
+          Werks: mSearch.Werks,
+          Zyear: mSearch.Zyear,
+          Seroty: bKey ? 'O' : mSearch.Otype,
+          Serobj: bKey ? mSearch.Orgeh : mSearch.Objid === 'ALL' ? '' : mSearch.Objid,
         });
       },
 
@@ -484,20 +429,10 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingTeamListSet', {
-            filters: [new Filter('Zyear', FilterOperator.EQ, mSearch.Zyear), new Filter('Otype', FilterOperator.EQ, mSearch.Otype), new Filter('Objid', FilterOperator.EQ, mSearch.Objid)],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
+        return Client.getEntitySet(oModel, 'KpiCascadingTeamList', {
+          Zyear: mSearch.Zyear,
+          Otype: mSearch.Otype,
+          Objid: mSearch.Objid,
         });
       },
 
@@ -510,9 +445,7 @@ sap.ui.define(
         oViewModel.setProperty('/search/Orgeh', !!aPartList.length ? aPartList[0].Orgeh : '');
         oViewModel.setProperty('/search/Orgtx', !!aPartList.length ? aPartList[0].Orgtx : '');
 
-        const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
-
-        oViewModel.setProperty('/BtnStat', sBtnStat);
+        this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
       },
 
       async onSearch() {
@@ -520,9 +453,7 @@ sap.ui.define(
 
         oViewModel.setProperty('/busy', true);
         try {
-          const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
-
-          oViewModel.setProperty('/BtnStat', sBtnStat);
+          this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
 
           const aTableList = await this.getAllCascading();
           const iTableLength = aTableList.length;
@@ -531,14 +462,34 @@ sap.ui.define(
           oViewModel.setProperty('/listRowCount', iTableLength > 7 ? 7 : iTableLength);
 
           const aPartList = await this.getPartCascading();
+          let aNotEmpty = [];
 
-          if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
-            this.setTeamGridList(aPartList);
+          if (oViewModel.getProperty('/tab/selectedKey') === 'A') {
+            aNotEmpty = aPartList.filter((e) => {
+              return !!e.Stext || !!e.Ztext;
+            });
           } else {
-            aPartList.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
+            aPartList.forEach((e) => {
+              if (!e.Stext && !e.Ztext) {
+                aNotEmpty.push({
+                  Label: e.Orgtx,
+                  Orgtx: e.Orgtx,
+                  Orgeh: e.Orgeh,
+                  TmpGrid: [],
+                });
+              } else {
+                aNotEmpty.push(e);
+              }
+            });
           }
 
-          oViewModel.setProperty('/PartList', aPartList);
+          if (oViewModel.getProperty('/tab/selectedKey') === 'B') {
+            this.setTeamGridList(aNotEmpty);
+          } else {
+            aNotEmpty.unshift({ Stext: this.getBundleText('MSG_15002'), Orgeh: oViewModel.getProperty('/search/Orgeh') });
+          }
+
+          oViewModel.setProperty('/PartList', aNotEmpty);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -547,14 +498,12 @@ sap.ui.define(
       },
 
       // 부문 선택
-      async onPartSelect(oEvent) {
+      onPartSelect(oEvent) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/search/Orgtx', oEvent.getSource().getValue());
 
-        const sBtnStat = await this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
-
-        oViewModel.setProperty('/BtnStat', sBtnStat);
+        this.hideSaveBtn(oViewModel.getProperty('/search/Werks'));
       },
 
       // 수행 팀 수 Link Press
@@ -602,21 +551,7 @@ sap.ui.define(
 
         this.getViewModel().setProperty('/TeamList', []);
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingTeamListSet', {
-            filters: [new Filter('Zyear', FilterOperator.EQ, mSelectedRow.Zyear), new Filter('Otype', FilterOperator.EQ, mSelectedRow.Otype), new Filter('Objid', FilterOperator.EQ, mSelectedRow.Objid)],
-            success: (oData) => {
-              if (oData) {
-                this.debug(oData);
-                resolve(oData.results);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
-        });
+        return Client.getEntitySet(oModel, 'KpiCascadingTeamList', _.pick(mSelectedRow, ['Zyear', 'Otype', 'Objid']));
       },
 
       // teamcascading 드롭
@@ -789,25 +724,10 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.APPRAISAL);
         const oViewModel = this.getViewModel();
         const oSearch = oViewModel.getProperty('/search');
-        const mFilters = {
+
+        return Client.getEntitySet(oModel, 'KpiCascadingList', {
           Gubun: oViewModel.getProperty('/tab/selectedKey'),
           ..._.pick(oSearch, ['Werks', 'Orgeh', 'Zyear']),
-        };
-
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingListSet', {
-            filters: _.chain(mFilters)
-              .omitBy(_.isNil)
-              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
-              .value(),
-            success: (oData) => {
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
         });
       },
 
@@ -817,50 +737,11 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oSearch = oViewModel.getProperty('/search');
         const sKey = oViewModel.getProperty('/tab/selectedKey');
-        const mFilters = {
+
+        return Client.getEntitySet(oModel, 'KpiCascadingOrgList', {
           Gubun: sKey,
           Orgeh: sOrgeh || oSearch.Orgeh,
           ..._.pick(oSearch, ['Werks', 'Zyear']),
-        };
-
-        return new Promise((resolve, reject) => {
-          oModel.read('/KpiCascadingOrgListSet', {
-            filters: _.chain(mFilters)
-              .omitBy(_.isNil)
-              .map((v, p) => new Filter(p, FilterOperator.EQ, v))
-              .value(),
-            success: (oData) => {
-              if (oData) {
-                const aGridList = oData.results;
-                let aNotEmpty = [];
-
-                if (sKey === 'A') {
-                  aNotEmpty = aGridList.filter((e) => {
-                    return !!e.Stext || !!e.Ztext;
-                  });
-                } else {
-                  aGridList.forEach((e) => {
-                    if (!e.Stext && !e.Ztext) {
-                      aNotEmpty.push({
-                        Label: e.Orgtx,
-                        Orgtx: e.Orgtx,
-                        Orgeh: e.Orgeh,
-                        TmpGrid: [],
-                      });
-                    } else {
-                      aNotEmpty.push(e);
-                    }
-                  });
-                }
-
-                resolve(aNotEmpty);
-              }
-            },
-            error: (oError) => {
-              this.debug(oError);
-              reject(new ODataReadError(oError));
-            },
-          });
         });
       },
 
@@ -934,24 +815,14 @@ sap.ui.define(
                 });
               }
 
-              let oSendObject = {
+              const oModel = this.getModel(ServiceNames.APPRAISAL);
+              const mSendObject = {
                 Gubun: sTabKey,
                 Zyear: oViewModel.getProperty('/search/Zyear'),
                 KpiCascadingNav: aList,
               };
 
-              const oModel = this.getModel(ServiceNames.APPRAISAL);
-
-              await new Promise((resolve, reject) => {
-                oModel.create('/KpiCascadingOrgListSet', oSendObject, {
-                  success: () => {
-                    resolve();
-                  },
-                  error: (oError) => {
-                    reject(new ODataCreateError({ oError }));
-                  },
-                });
-              });
+              await Client.create(oModel, 'KpiCascadingOrgList', mSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
               this.onSearch();
