@@ -117,8 +117,8 @@ sap.ui.define(
               .map((o) => ({
                 ..._.omit(o, '__metadata'),
                 Clsdatx: moment(o.Clsda).format('YYYY.MM.DD'),
-                Beguz: _.chain(o).get(['Beguz', 'ms']).isEqual(0).value() ? null : o.Beguz,
-                Enduz: _.chain(o).get(['Enduz', 'ms']).isEqual(0).value() ? null : o.Enduz,
+                Beguz: this.TimeUtils.nvl(o.Beguz),
+                Enduz: this.TimeUtils.nvl(o.Enduz),
               }))
               .get(0, { Zyymm: sYearMonth })
               .value(),
@@ -144,8 +144,8 @@ sap.ui.define(
             _.map(aResults, (o) => ({
               ..._.omit(o, '__metadata'),
               Datumtx: moment(o.Datum).format('YYYY.MM.DD'),
-              Beguz: _.chain(o).get(['Beguz', 'ms']).isEqual(0).value() ? null : o.Beguz,
-              Enduz: _.chain(o).get(['Enduz', 'ms']).isEqual(0).value() ? null : o.Enduz,
+              Beguz: this.TimeUtils.nvl(o.Beguz),
+              Enduz: this.TimeUtils.nvl(o.Enduz),
             }))
           );
         } catch (oError) {
@@ -314,10 +314,10 @@ sap.ui.define(
 
           if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) return;
 
-          // call deep
-          const mResults = await this.createProcess([mRowData.Datum]);
+          this.setContentsBusy(true, ['Input', 'Button']);
 
-          this.debug(`Deep call :: ${mResults}`);
+          // call deep
+          await this.createProcess([mRowData.Datum]);
         } catch (oError) {
           this.debug('Controller > flextime > onChangeWorktime Error', oError);
 
@@ -411,12 +411,17 @@ sap.ui.define(
 
           MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
             // {저장}하시겠습니까?
-            onClose: (sAction) => {
-              if (MessageBox.Action.CANCEL !== sAction) {
-                // this.createProcess('T');
+            onClose: async (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) {
+                this.setContentsBusy(false, ['Input', 'Button']);
+                return;
               }
 
-              this.setContentsBusy(false, ['Input', 'Button']);
+              const aDatums = this.getViewModel().getProperty('/dialog/targetDates');
+              const mBreak = this.getBreakInputData();
+
+              await this.createProcess(aDatums, mBreak);
+
               this.byId('flextimeDetailsTable').clearSelection();
               this._oTimeInputDialog.close();
             },
@@ -434,11 +439,34 @@ sap.ui.define(
         this.onDialogClose(oEvent);
       },
 
+      getBreakInputData() {
+        const oViewModel = this.getViewModel();
+        const mDialog = oViewModel.getProperty('/dialog');
+
+        const mBreakData = {
+          Beguz: _.get(mDialog, ['work', 'list', 0, 'Beguz']),
+          Enduz: _.get(mDialog, ['work', 'list', 0, 'Enduz']),
+          Pbeg0: _.get(mDialog, ['legal', 'list', 0, 'Beguz']), // 법정휴게시작
+          Pend0: _.get(mDialog, ['legal', 'list', 0, 'Enduz']), // 법정휴게종료
+          Pbeg1: _.get(mDialog, ['extra', 'list', 0, 'Beguz']), // 추가휴게시작1
+          Pend1: _.get(mDialog, ['extra', 'list', 0, 'Enduz']), // 추가휴게종료1
+          Pbeg2: _.get(mDialog, ['extra', 'list', 1, 'Beguz']), // 추가휴게시작2
+          Pend2: _.get(mDialog, ['extra', 'list', 1, 'Enduz']), // 추가휴게종료2
+          Pbeg3: _.get(mDialog, ['extra', 'list', 2, 'Beguz']), // 추가휴게시작3
+          Pend3: _.get(mDialog, ['extra', 'list', 2, 'Enduz']), // 추가휴게종료3
+          Resn1: _.get(mDialog, ['extra', 'list', 0, 'Resn']), // 휴게사유 1
+          Resn2: _.get(mDialog, ['extra', 'list', 1, 'Resn']), // 휴게사유 2
+          Resn3: _.get(mDialog, ['extra', 'list', 2, 'Resn']), // 휴게사유 3
+        };
+
+        return _.chain(mBreakData).omitBy(_.isEmpty).omitBy(_.isNil).omitBy(_.isNull).value();
+      },
+
       validationBreak() {
         const oViewModel = this.getViewModel();
         const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 3);
 
-        if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Anzb) && _.isEmpty(o.Resn))) {
+        if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
           throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
         }
 
@@ -456,13 +484,16 @@ sap.ui.define(
       async createProcess(aDatums = [], mBreak = {}) {
         const oViewModel = this.getViewModel();
 
-        if (_.isEmpty(aDatums)) return;
+        if (_.isEmpty(aDatums)) {
+          this.setContentsBusy(false, ['Input', 'Button']);
+          return;
+        }
 
         try {
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
           const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
 
-          return await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
+          const mResults = await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             ...mSummary,
             Accty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
@@ -478,7 +509,34 @@ sap.ui.define(
                   };
                 }),
           });
+
+          oViewModel.setProperty('/summary/list', [
+            {
+              ..._.omit(mResults, ['__metadata', 'AssoFlexTimeBreakSet', 'AssoFlexTimeDetailSet']),
+              Clsdatx: moment(mResults.Clsda).format('YYYY.MM.DD'),
+              Beguz: this.TimeUtils.nvl(mResults.Beguz),
+              Enduz: this.TimeUtils.nvl(mResults.Enduz),
+            },
+          ]);
+          oViewModel.setProperty(
+            '/details/list',
+            _.map(mResults.AssoFlexTimeDetailSet.results, (o) => ({
+              ..._.omit(o, '__metadata'),
+              Datumtx: moment(o.Datum).format('YYYY.MM.DD'),
+              Beguz: this.TimeUtils.nvl(o.Beguz),
+              Enduz: this.TimeUtils.nvl(o.Enduz),
+            }))
+          );
+
+          if (!_.isEmpty(mResults.Errmsg)) {
+            MessageBox.error(mResults.Errmsg, {
+              onClose: () => this.setContentsBusy(false, ['Input', 'Button']),
+            });
+          } else {
+            setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
+          }
         } catch (oError) {
+          setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
           throw oError;
         }
       },
