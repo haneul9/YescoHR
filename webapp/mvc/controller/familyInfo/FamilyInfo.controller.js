@@ -4,7 +4,7 @@ sap.ui.define(
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/ServiceNames',
-    'sap/ui/yesco/common/exceptions/ODataReadError',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
@@ -12,7 +12,7 @@ sap.ui.define(
     MessageBox,
     AppUtils,
     ServiceNames,
-    ODataReadError,
+    Client,
     BaseController
   ) => {
     'use strict';
@@ -113,68 +113,63 @@ sap.ui.define(
         }
       },
 
-      onSearch() {
+      async onSearch() {
         const oModel = this.getModel(ServiceNames.PA);
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
         const oTable = this.byId('familyTable');
-        const oSearchDate = oListModel.getProperty('/searchDate');
+        const oSearchDate = oViewModel.getProperty('/searchDate');
         const dDate = moment(oSearchDate.secondDate).hours(9).toDate();
         const dDate2 = moment(oSearchDate.date).hours(9).toDate();
 
-        oListModel.setProperty('/busy', true);
+        oViewModel.setProperty('/busy', true);
 
-        oModel.read('/FamilyInfoApplSet', {
-          filters: [
-            new sap.ui.model.Filter('Prcty', sap.ui.model.FilterOperator.EQ, 'L'), //
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, this.getAppointeeProperty('Pernr')),
-            new sap.ui.model.Filter('Begda', sap.ui.model.FilterOperator.EQ, dDate),
-            new sap.ui.model.Filter('Endda', sap.ui.model.FilterOperator.EQ, dDate2),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results;
+        try {
+          const oList = await Client.getEntitySet(oModel, 'FamilyInfoAppl', {
+            Prcty: 'L',
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Begda: dDate,
+            Endda: dDate2,
+          });
 
-              oListModel.setProperty('/FamilyList', oList);
-              oListModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: oList }));
-              oListModel.setProperty('/listInfo/infoMessage', this.getBundleText('MSG_05005'));
-              oListModel.setProperty('/busy', false);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-            oListModel.setProperty('/busy', false);
-          },
-        });
+          oViewModel.setProperty('/FamilyList', oList);
+          oViewModel.setProperty('/listInfo', {
+            ...this.TableUtils.count({ oTable, aRowData: oList }),
+            // 현재 데이터를 수정하고자 할 경우에는 확정 상태의 데이터를 선택한 다음 신청 버튼을 클릭하시기 바랍니다.
+            infoMessage: this.getBundleText('MSG_05005'),
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
-      totalCount() {
+      async totalCount() {
         const oModel = this.getModel(ServiceNames.PA);
-        const oListModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oModel.read('/FamInfoSummarySet', {
-          filters: [
-            new sap.ui.model.Filter('Pernr', sap.ui.model.FilterOperator.EQ, this.getAppointeeProperty('Pernr')), //
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oList = oData.results[0];
+        try {
+          oViewModel.setProperty('/busy', true);
 
-              oListModel.setProperty('/Total', { ...oList, isVisible: _.isEqual(this.getAppointeeProperty('Werks'), '2000') });
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(new ODataReadError(oError));
-          },
-        });
+          const [oList] = await Client.getEntitySet(oModel, 'FamInfoSummary', {
+            Pernr: this.getAppointeeProperty('Pernr'),
+          });
+
+          oViewModel.setProperty('/Total', { ...oList, isVisible: _.isEqual(this.getAppointeeProperty('Werks'), '2000') });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       onSelectRow(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
-        const sRouteName = oListModel.getProperty('/routeName');
+        const oViewModel = this.getViewModel();
+        const oRowData = oViewModel.getProperty(vPath);
+        const sRouteName = oViewModel.getProperty('/routeName');
 
-        oListModel.setProperty('/parameter', oRowData);
+        oViewModel.setProperty('/parameter', oRowData);
         this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno });
       },
 
