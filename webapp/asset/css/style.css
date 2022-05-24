@@ -2173,9 +2173,6 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
 .fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
-/* .custom-chart .fusioncharts-container svg g[class*="-scroller"] rect {rx:3px !important; ry:3px !important}
-.custom-chart .fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1) {fill:rgb(255,255,255) !important; stroke:rgb(223,223,223) !important}
-.custom-chart .fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2) {fill:rgb(193,195,200) !important; stroke:rgb(193,195,200) !important} */
 html:not(.sap-android) .custom-chart .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
 .legend-translate-y-p2p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform:translate(0,2px)}
 .legend-translate-y-p1p5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform:translate(0,1.5px)}

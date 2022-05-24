@@ -2,7 +2,7 @@
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <m:Dialog showHeader="false" contentWidth="1400px" contentHeight="570px" draggable="true">
+  <m:Dialog showHeader="false" contentWidth="{= !${/dialog/isTotal} ? '1400px' : '910px' }" contentHeight="570px" draggable="true">
     <m:content>
       <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
         <custom:Placeholder />
@@ -61,19 +61,19 @@
                 <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Datum" sortProperty="Datum">
+            <Column width="auto" filterProperty="Datum" sortProperty="Datum" visible="{= !${/dialog/isTotal} }">
               <m:Label text="{i18n>LABEL_00170}"/>
               <template>
                 <m:Text text="{path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Atext" sortProperty="Atext">
+            <Column width="auto" filterProperty="Atext" sortProperty="Atext" visible="{= !${/dialog/isTotal} }">
               <m:Label text="{i18n>LABEL_04010}"/>
               <template>
                 <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="15%" filterProperty="Atrsn" sortProperty="Atrsn">
+            <Column width="15%" filterProperty="Atrsn" sortProperty="Atrsn" visible="{= !${/dialog/isTotal} }">
               <m:Label text="{i18n>LABEL_00154}"/>
               <template>
                 <m:Text text="{Atrsn}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />

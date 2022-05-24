@@ -64,10 +64,11 @@ sap.ui.define(
         this.bHasProfileViewAuth = oMenuModel.hasEmployeeProfileViewAuth();
       },
 
-      async openDialog(mPayload) {
+      async openDialog(mPayload, bIsTotal = false) {
         try {
           setTimeout(() => {
             this.setBusy();
+            this.oDialogModel.setProperty('/dialog/isTotal', bIsTotal);
             this.oDialog.open();
           });
 

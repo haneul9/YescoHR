@@ -42,6 +42,7 @@
                 <core:CustomData key="OData" value="T" />
                 <core:CustomData key="Headty" value="{/contents/A01/Headty}" />
                 <core:CustomData key="Discod" value="{/contents/A01/data/Cnt01C}" />
+                <core:CustomData key="Total" value="Y" />
               </customData>
             </ObjectStatus>
           </VBox>

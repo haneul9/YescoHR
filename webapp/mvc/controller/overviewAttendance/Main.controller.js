@@ -258,25 +258,6 @@ sap.ui.define(
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
-
-            FusionCharts.addEventListener('rendered', function () {
-              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
-                  $(this)
-                    .off('click')
-                    .on('click', function () {
-                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
-                      const oViewModel = oController.getViewModel();
-                      const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
-                      const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
-                      const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
-
-                      oController.callDetailPopup(mPayload);
-                    })
-                    .addClass('active-link');
-                });
-              }
-            });
           });
         } else {
           const oChart = FusionCharts(sChartId);
@@ -395,6 +376,7 @@ sap.ui.define(
         let oDialog = null;
 
         oViewModel.setProperty('/dialog/busy', true);
+        oViewModel.setProperty('/dialog/isTotal', mPayload.Total === 'Y');
 
         try {
           oDialog = await this.openDialog(mPayload.Headty);

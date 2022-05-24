@@ -260,7 +260,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            const oChart = new FusionCharts({
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
@@ -270,24 +270,23 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            FusionCharts.addEventListener('rendered', function () {
-              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
-                  $(this)
+            if (mChartInfo.Target === 'A03' || mChartInfo.Target === 'A06') {
+              oChart.addEventListener('rendered', () => {
+                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => {
+                  $(text)
                     .off('click')
-                    .on('click', function () {
-                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
-                      const oViewModel = oController.getViewModel();
+                    .on('click', () => {
+                      const oViewModel = this.getViewModel();
                       const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
                       const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
                       const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
 
-                      oController.openDetailDialog(mPayload);
+                      this.openDetailDialog(mPayload);
                     })
                     .addClass('active-link');
                 });
-              }
-            });
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);

@@ -283,7 +283,7 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
+            if (mChartInfo.Target === 'A11') {
               oChart.addEventListener('rendered', () => {
                 const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
                 $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
