@@ -7,7 +7,6 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/control/MessageBox',
-    'sap/ui/yesco/common/exceptions/ODataDeleteError',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/richtexteditor/RichTextEditor',
   ],
@@ -18,7 +17,6 @@ sap.ui.define(
     ServiceNames,
     Client,
     MessageBox,
-    ODataDeleteError,
     BaseController,
     RTE
   ) => {
@@ -54,30 +52,30 @@ sap.ui.define(
       },
 
       async onObjectMatched(oParameter) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/busy', true);
+        oViewModel.setData(this.initializeModel());
+        oViewModel.setProperty('/busy', true);
 
         try {
           const sSdate = new Date(parseInt(oParameter.Sdate)) || oParameter.Sdate;
           const sSeqnr = oParameter.Seqnr;
           const sMenid = this.getCurrentMenuId();
 
-          oDetailModel.setProperty('/Menid', sMenid);
-          oDetailModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
+          oViewModel.setProperty('/Menid', sMenid);
+          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.COMMON, 'NoticeManage')));
 
           if (!sSeqnr || sSeqnr === 'N') {
             const oSessionData = this.getSessionData();
 
-            oDetailModel.setProperty('/MySelf', true);
-            oDetailModel.setProperty('/FormData', {
+            oViewModel.setProperty('/MySelf', true);
+            oViewModel.setProperty('/FormData', {
               ApernTxt: `${oSessionData.Orgtx} ${oSessionData.Ename}`,
               Apern: oSessionData.Pernr,
             });
           } else {
             const sWerks = this.getSessionProperty('Werks');
-            let oSendObject = {
+            let mSendObject = {
               Prcty: '1',
               Sdate: sSdate,
               Seqnr: sSeqnr,
@@ -88,13 +86,13 @@ sap.ui.define(
 
             $('#readHtml').text('');
             const oModel = this.getModel(ServiceNames.COMMON);
-            const oDetail = await Client.deep(oModel, 'NoticeManage', oSendObject);
+            const oDetail = await Client.deep(oModel, 'NoticeManage', mSendObject);
 
             const oTargetData = oDetail.Notice1Nav.results[0];
             const oDetailData = oDetail.Notice2Nav.results;
 
             if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
-              oDetailModel.setProperty('/MySelf', true);
+              oViewModel.setProperty('/MySelf', true);
             }
 
             oTargetData.Detail = '';
@@ -103,7 +101,7 @@ sap.ui.define(
               oTargetData.Detail += e.Detail;
             });
 
-            oDetailModel.setProperty('/FormData', oTargetData);
+            oViewModel.setProperty('/FormData', oTargetData);
             $('#readHtml').append(oTargetData.Detail);
           }
 
@@ -115,7 +113,7 @@ sap.ui.define(
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -132,17 +130,17 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         // 제목
-        if (!oFormData.Title) {
+        if (!mFormData.Title) {
           MessageBox.alert(this.getBundleText('MSG_08001'));
           return true;
         }
 
         // 내용
-        if (!oFormData.Detail) {
+        if (!mFormData.Detail) {
           MessageBox.alert(this.getBundleText('MSG_08002'));
           return true;
         }
@@ -161,19 +159,19 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true);
 
-                const oDetailModel = this.getViewModel();
-                const sAppno = oDetailModel.getProperty('/FormData/Appno');
+                const oViewModel = this.getViewModel();
+                const sAppno = oViewModel.getProperty('/FormData/Appno');
 
                 if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Sdate', new Date());
+                  oViewModel.setProperty('/FormData/Appno', vAppno);
+                  oViewModel.setProperty('/FormData/Sdate', new Date());
                 }
 
                 const aDetail = [];
-                const oFormData = oDetailModel.getProperty('/FormData');
-                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+                const mFormData = oViewModel.getProperty('/FormData');
+                const aList = mFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
 
                 aList.forEach((e) => {
                   const mDetailObj = {};
@@ -182,11 +180,11 @@ sap.ui.define(
                   aDetail.push(mDetailObj);
                 });
 
-                oFormData.Detail = '';
-                oFormData.Hide = 'X';
+                mFormData.Detail = '';
+                mFormData.Hide = 'X';
 
                 // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
 
                 const oModel = this.getModel(ServiceNames.COMMON);
                 const sWerks = this.getSessionProperty('Werks');
@@ -194,7 +192,7 @@ sap.ui.define(
                 await Client.deep(oModel, 'NoticeManage', {
                   Prcty: '2',
                   Werks: sWerks,
-                  Notice1Nav: [oFormData],
+                  Notice1Nav: [mFormData],
                   Notice2Nav: aDetail,
                 });
 
@@ -223,19 +221,19 @@ sap.ui.define(
             if (vPress && vPress === this.getBundleText('LABEL_00106')) {
               try {
                 AppUtils.setAppBusy(true);
-                const oDetailModel = this.getViewModel();
-                const sAppno = oDetailModel.getProperty('/FormData/Appno');
+                const oViewModel = this.getViewModel();
+                const sAppno = oViewModel.getProperty('/FormData/Appno');
 
                 if (!sAppno) {
                   const vAppno = await Appno.get.call(this);
 
-                  oDetailModel.setProperty('/FormData/Appno', vAppno);
-                  oDetailModel.setProperty('/FormData/Sdate', new Date());
+                  oViewModel.setProperty('/FormData/Appno', vAppno);
+                  oViewModel.setProperty('/FormData/Sdate', new Date());
                 }
 
                 const aDetail = [];
-                const oFormData = oDetailModel.getProperty('/FormData');
-                const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+                const mFormData = oViewModel.getProperty('/FormData');
+                const aList = mFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
 
                 aList.forEach((e) => {
                   const mDetailObj = {};
@@ -244,23 +242,23 @@ sap.ui.define(
                   aDetail.push(mDetailObj);
                 });
 
-                oFormData.Detail = '';
-                oFormData.Hide = '';
+                mFormData.Detail = '';
+                mFormData.Hide = '';
 
                 const sWerks = this.getSessionProperty('Werks');
 
                 // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
+                await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
 
                 const oModel = this.getModel(ServiceNames.COMMON);
-                let oSendObject = {
+                let mSendObject = {
                   Prcty: '2',
                   Werks: sWerks,
-                  Notice1Nav: [oFormData],
+                  Notice1Nav: [mFormData],
                   Notice2Nav: aDetail,
                 };
 
-                await Client.deep(oModel, 'NoticeManage', oSendObject);
+                await Client.deep(oModel, 'NoticeManage', mSendObject);
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
                   onClose: () => {
@@ -279,17 +277,21 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.COMMON);
-        const sWerks = this.getSessionProperty('Werks');
-
+        // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
+          // 삭제, 취소
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true);
+          onClose: async (vPress) => {
+            // 삭제
+            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+              return;
+            }
 
-              const oFormData = this.getViewModel().getProperty('/FormData');
-              const aList = oFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
+            AppUtils.setAppBusy(true);
+
+            try {
+              const mFormData = this.getViewModel().getProperty('/FormData');
+              const aList = mFormData.Detail.match(new RegExp('.{1,' + 4000 + '}', 'g'));
               const aDetail = [];
 
               aList.forEach((e) => {
@@ -299,29 +301,28 @@ sap.ui.define(
                 aDetail.push(mDetailObj);
               });
 
-              oFormData.Detail = '';
+              mFormData.Detail = '';
 
-              let oSendObject = {
+              const oModel = this.getModel(ServiceNames.COMMON);
+              const mSendObject = {
                 Prcty: '3',
-                Werks: sWerks,
-                Notice1Nav: [oFormData],
+                Werks: this.getSessionProperty('Werks'),
+                Notice1Nav: [mFormData],
                 Notice2Nav: aDetail,
               };
 
-              oModel.create('/NoticeManageSet', oSendObject, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                  AppUtils.setAppBusy(false);
-                },
-                error: (oError) => {
-                  AppUtils.handleError(new ODataDeleteError(oError));
-                  AppUtils.setAppBusy(false);
+              await Client.create(oModel, 'NoticeManage', mSendObject);
+
+              // {삭제}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+                onClose: () => {
+                  this.onNavBack();
                 },
               });
+            } catch (error) {
+              AppUtils.handleError(error);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -336,8 +337,8 @@ sap.ui.define(
           this.byId('EditorBox').destroyItems();
         }
 
-        const oDetailModel = this.getViewModel();
-        const bStat = !!oDetailModel.getProperty('/MySelf') && !!oDetailModel.getProperty('/Hass');
+        const oViewModel = this.getViewModel();
+        const bStat = !!oViewModel.getProperty('/MySelf') && !!oViewModel.getProperty('/Hass');
         const oRichTextEditor = new RTE('myRTE', {
           editorType: sap.ui.richtexteditor.EditorType.TinyMCE4, // 'TinyMCE4',
           layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
@@ -350,7 +351,7 @@ sap.ui.define(
           showGroupStructure: bStat,
           showGroupFontStyle: bStat,
           showGroupClipboard: bStat,
-          value: oDetailModel.getProperty('/FormData/Detail'),
+          value: oViewModel.getProperty('/FormData/Detail'),
           editable: bStat,
           ready: function () {
             this.addButtonGroup('styleselect').addButtonGroup('table');
@@ -362,17 +363,16 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const bHass = oDetailModel.getProperty('/Hass');
-        const bMySelf = oDetailModel.getProperty('/MySelf');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const bHass = oViewModel.getProperty('/Hass');
+        const bMySelf = oViewModel.getProperty('/MySelf');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         this.AttachFileAction.setAttachFile(this, {
           Editable: !!bHass && !!bMySelf,
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });
