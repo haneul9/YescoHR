@@ -570,7 +570,7 @@ sap.ui.define(
                 Waers: 'KRW',
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
@@ -623,7 +623,7 @@ sap.ui.define(
                 Waers: 'KRW',
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
@@ -661,7 +661,7 @@ sap.ui.define(
                 Menid: this.getCurrentMenuId(),
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                 onClose: () => {
