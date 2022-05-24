@@ -26,12 +26,13 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.CongDetail', {
       initializeModel() {
         return {
-          FormStatus: '',
           BirthMaxDate: moment().toDate(),
           FormData: {},
           TargetListRowCount: 1,
           benefitDate: '',
           fixRelation: true,
+          relationTxt: true,
+          birthDatePicker: true,
           Settings: {},
           BenefitType: [],
           BenefitCause: [],
@@ -55,7 +56,6 @@ sap.ui.define(
         try {
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/busy', true);
-          oViewModel.setProperty('/FormStatus', mArgs.oDataKey);
 
           const aTypeCode = await this.getBenefitType();
 
@@ -63,9 +63,10 @@ sap.ui.define(
           oViewModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
 
-          this.getTargetData();
+          this.getTargetData(mArgs.oDataKey);
           this.settingsAttachTable();
         } catch (oError) {
+          this.debug('Controller > CongDetail > onObjectMatched Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -77,9 +78,8 @@ sap.ui.define(
       },
 
       // 상세조회
-      async getTargetData() {
+      async getTargetData(sDataKey) {
         const oViewModel = this.getViewModel();
-        const sDataKey = oViewModel.getProperty('/FormStatus');
 
         if (!sDataKey || sDataKey === 'N') {
           const mSessionData = this.getSessionData();
@@ -100,7 +100,6 @@ sap.ui.define(
           });
         } else {
           const oModel = this.getModel(ServiceNames.BENEFIT);
-
           const [oRowData] = await Client.getEntitySet(oModel, 'ConExpenseAppl', {
             Prcty: 'D',
             Menid: this.getCurrentMenuId(),
@@ -153,23 +152,25 @@ sap.ui.define(
             Upcod: mFormData.Concode,
             Upcod2: mFormData.Conresn,
           });
-          const oRelationTxt = this.byId('RelationTxt');
-          const oBirthDatePicker = this.byId('BirthDatePicker');
 
           oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
           oViewModel.setProperty('/TargetList', []);
 
           if (!mFormData.ZappStatAl || mFormData.ZappStatAl === '10') {
+            let bRelTxt = true;
+            let bBirthPick = true;
+
             if (!!oResult[0] && oResult[0].Zcode === 'ME') {
               this.onTargetDialog();
-              oRelationTxt.setEditable(false);
-              oBirthDatePicker.setEditable(false);
-            } else {
-              oRelationTxt.setEditable(true);
-              oBirthDatePicker.setEditable(true);
+              bRelTxt = false;
+              bBirthPick = false;
             }
+
+            oViewModel.setProperty('/relationTxt', bRelTxt);
+            oViewModel.setProperty('/birthDatePicker', bBirthPick);
           }
         } catch (oError) {
+          this.debug('Controller > CongDetail > getBenefitData Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -200,23 +201,19 @@ sap.ui.define(
             Upcod2: 'E',
           });
 
+          oViewModel.setProperty('/relationTxt', true);
+          oViewModel.setProperty('/birthDatePicker', true);
+          oViewModel.setProperty('/TargetList', []);
           oViewModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
           oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
-          oViewModel.setProperty('/FormData/Conresn', 'ALL');
-          oViewModel.setProperty('/FormData/Kdsvh', 'ALL');
-
-          const oRelationTxt = this.byId('RelationTxt');
-          const oBirthDatePicker = this.byId('BirthDatePicker');
-
-          oRelationTxt.setEditable(true);
-          oBirthDatePicker.setEditable(true);
-          oViewModel.setProperty('/TargetList', []);
-          oViewModel.setProperty('/FormData/Zname', '');
-          oViewModel.setProperty('/FormData/Zbirthday', null);
-          oViewModel.setProperty('/FormData/Conddate', null);
-
+          oViewModel.setProperty('/Conresn', 'ALL');
+          oViewModel.setProperty('/Kdsvh', 'ALL');
+          oViewModel.setProperty('/Zname', '');
+          oViewModel.setProperty('/Zbirthday', null);
+          oViewModel.setProperty('/Conddate', null);
           this.getNomalPay();
         } catch (oError) {
+          this.debug('Controller > CongDetail > onTypeChange Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -255,28 +252,32 @@ sap.ui.define(
             Upcod: mFormData.Concode,
             Upcod2: sSelectKey,
           });
-          const oRelationTxt = this.byId('RelationTxt');
-          const oBirthDatePicker = this.byId('BirthDatePicker');
 
           oViewModel.setProperty('/TargetList', []);
           oViewModel.setProperty('/FormData/Zname', '');
           oViewModel.setProperty('/FormData/Zbirthday', null);
           oViewModel.setProperty('/FormData/Kdsvh', 'ALL');
 
+          let bRelTxt = true;
+          let bBirthPick = true;
+          let aRelation = new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult });
+
           if (!oViewModel.getProperty('/FormData/ZappStatAl') || oViewModel.getProperty('/FormData/ZappStatAl') === '10') {
             if (!!oResult[0] && oResult[0].Zcode === 'ME') {
-              oViewModel.setProperty('/BenefitRelation', oResult);
+              aRelation = oResult;
               this.onTargetDialog();
-              oRelationTxt.setEditable(false);
-              oBirthDatePicker.setEditable(false);
+              bRelTxt = false;
+              bBirthPick = false;
             } else {
-              oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
-              oRelationTxt.setEditable(true);
-              oBirthDatePicker.setEditable(true);
               oViewModel.setProperty('/fixRelation', true);
             }
+
+            oViewModel.setProperty('/relationTxt', bRelTxt);
+            oViewModel.setProperty('/birthDatePicker', bBirthPick);
+            oViewModel.setProperty('/BenefitRelation', aRelation);
           }
         } catch (oError) {
+          this.debug('Controller > CongDetail > onCauseChange Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -299,22 +300,24 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const oEventSource = oEvent.getSource();
         const sSelectKey = oEventSource.getSelectedKey();
-        const oRelationTxt = this.byId('RelationTxt');
-        const oBirthDatePicker = this.byId('BirthDatePicker');
 
         oViewModel.setProperty('/FormData/Kdsvh', sSelectKey);
 
+        let bRelTxt = true;
+        let bBirthPick = true;
+
         if (!!sSelectKey && sSelectKey === 'ME') {
           this.onTargetDialog();
-          oRelationTxt.setEditable(false);
-          oBirthDatePicker.setEditable(false);
+          bRelTxt = false;
+          bBirthPick = false;
         } else {
           oViewModel.setProperty('/FormData/Zbirthday', null);
           oViewModel.setProperty('/FormData/Conddate', null);
           oViewModel.setProperty('/FormData/Zname', '');
-          oRelationTxt.setEditable(true);
-          oBirthDatePicker.setEditable(true);
         }
+
+        oViewModel.setProperty('/relationTxt', bRelTxt);
+        oViewModel.setProperty('/birthDatePicker', bBirthPick);
         oEventSource.close();
       },
 
@@ -355,6 +358,7 @@ sap.ui.define(
           oViewModel.setProperty('/FormData/Zflower', oPay.Zflower);
           oViewModel.setProperty('/FormData/Zemp', oPay.Zemp);
         } catch (oError) {
+          this.debug('Controller > CongDetail > getNomalPay Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -396,9 +400,17 @@ sap.ui.define(
           });
 
           if (oTargetList.length === 1) {
-            oViewModel.setProperty('/FormData/Zbirthday', oTargetList[0].Zbirthday);
-            oViewModel.setProperty('/FormData/Kdsvh', oTargetList[0].Kdsvh);
-            oViewModel.setProperty('/FormData/Zname', oTargetList[0].Zname);
+            oViewModel.setData(
+              {
+                FormData: {
+                  Zbirthday: oTargetList[0].Zbirthday,
+                  Kdsvh: oTargetList[0].Kdsvh,
+                  Famtx: oTargetList[0].Atext,
+                  Zname: oTargetList[0].Zname,
+                },
+              },
+              true
+            );
 
             const sAddDate = oViewModel.getProperty('/benefitDate');
 
@@ -431,6 +443,7 @@ sap.ui.define(
 
           this.byId('targetSettingsDialog').open();
         } catch (oError) {
+          this.debug('Controller > CongDetail > getTargetList Error', oError);
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -557,11 +570,12 @@ sap.ui.define(
                 Waers: 'KRW',
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
             } catch (oError) {
+              this.debug('Controller > CongDetail > onSaveBtn Error', oError);
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false);
@@ -609,7 +623,7 @@ sap.ui.define(
                 Waers: 'KRW',
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               // {신청}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
@@ -618,6 +632,7 @@ sap.ui.define(
                 },
               });
             } catch (oError) {
+              this.debug('Controller > CongDetail > onApplyBtn Error', oError);
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false);
@@ -646,7 +661,7 @@ sap.ui.define(
                 Menid: this.getCurrentMenuId(),
               };
 
-              await Client.getEntitySet(oModel, 'ConExpenseAppl', mSendObject);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                 onClose: () => {
@@ -654,6 +669,7 @@ sap.ui.define(
                 },
               });
             } catch (oError) {
+              this.debug('Controller > CongDetail > onCancelBtn Error', oError);
               AppUtils.handleError(oError);
             } finally {
               AppUtils.setAppBusy(false);

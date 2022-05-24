@@ -402,7 +402,7 @@ sap.ui.define(
 
         let sCurrentLocationText;
         if (oController && typeof oController.getCurrentLocationText === 'function') {
-          sCurrentLocationText = oController.getCurrentLocationText(mRouteArguments);
+          sCurrentLocationText = oController.getCurrentLocationText(mRouteArguments, mConfig.name);
         }
 
         oMenuModel.setCurrentMenuData({
