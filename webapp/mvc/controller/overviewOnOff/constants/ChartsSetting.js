@@ -128,7 +128,7 @@ sap.ui.define([], function () {
       },
       scrollstackedcolumn2d: {
         chart: {
-          scrollHeight: '10',
+          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? '10' : '4',
           scrollColor: '#ffffff',
           baseFontSize: 14,
           valueFontSize: 14,
@@ -208,7 +208,7 @@ sap.ui.define([], function () {
       },
       scrollmsstackedcolumn2dlinedy: {
         chart: {
-          scrollHeight: '10',
+          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? '10' : '4',
           scrollColor: '#ffffff',
           baseFontSize: 14,
           valueFontSize: 14,

@@ -62,8 +62,8 @@ sap.ui.define(
             rowCount: 0,
             list: [],
           },
-          isDevMobile: false,
-          // isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
+          // isDevMobile: false,
+          isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
         };
       },
 
@@ -284,10 +284,14 @@ sap.ui.define(
             }).render();
 
             if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
-              oChart.addEventListener('rendered', (oEvent) => {
-                setTimeout(() => {
-                  oEvent.sender.setChartAttribute('scrollHeight', /iphone|ipad|ipod/i.test(navigator.userAgent) ? '2' : '4');
-                }, 300);
+              oChart.addEventListener('rendered', () => {
+                const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#ffffff', stroke: '#dfdfdf' })
+                  .css({ fill: '#ffffff', stroke: '#dfdfdf' });
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#c1c3c8', stroke: '#c1c3c8' })
+                  .css({ fill: '#c1c3c8', stroke: '#c1c3c8' });
               });
             }
           });
