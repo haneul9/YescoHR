@@ -283,14 +283,11 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            // if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
-            //   oChart.addEventListener('rendered', (oEvent) => {
-            //     const oSender = oEvent.sender;
-            //     if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-            //       oSender.setChartAttribute('scrollHeight', '2');
-            //     }
-            //   });
-            // }
+            if (AppUtils.isMobile() && sChartId === 'employee-a11-chart') {
+              oChart.addEventListener('rendered', (oEvent) => {
+                oEvent.sender.setChartAttribute('scrollHeight', /iphone|ipad|ipod/i.test(navigator.userAgent) ? '2' : '4');
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);
