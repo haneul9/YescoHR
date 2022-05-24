@@ -53,11 +53,11 @@
                 </VBox>
               </VBox>
             </IconTabFilter>
-            <IconTabFilter text="{i18n>LABEL_36004}" key="T02">
+            <IconTabFilter text="{i18n>LABEL_36021}" key="T02">
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <Title level="H2" text="{i18n>LABEL_36004}" class="sapUiMediumMarginEnd"/>
+                    <Title level="H2" text="{i18n>LABEL_36021}" class="sapUiMediumMarginEnd"/>
                   </HBox>
                 </HBox>
                 <VBox>

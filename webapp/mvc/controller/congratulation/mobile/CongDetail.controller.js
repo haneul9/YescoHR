@@ -643,9 +643,12 @@ sap.ui.define(
 
       // 취소
       onCancelBtn() {
+        // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
+          // 확인, 취소
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
+            // 취소
             if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
               return;
             }
@@ -663,6 +666,7 @@ sap.ui.define(
 
               await Client.create(oModel, 'ConExpenseAppl', mSendObject);
 
+              // {취소}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                 onClose: () => {
                   this.onNavBack();
@@ -680,32 +684,37 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oViewModel = this.getViewModel();
-
+        // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
+          // 삭제, 취소
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true);
+          onClose: async (vPress) => {
+            // 삭제
+            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+              return;
+            }
 
-              const sPath = oModel.createKey('/ConExpenseApplSet', {
+            AppUtils.setAppBusy(true);
+
+            try {
+              const oViewModel = this.getViewModel();
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+
+              await Client.remove(oModel, 'ConExpenseAppl', {
                 Appno: oViewModel.getProperty('/FormData/Appno'),
               });
 
-              oModel.remove(sPath, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.setAppBusy(false);
-                  AppUtils.handleError(oError);
+              // {삭제}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+                onClose: () => {
+                  this.onNavBack();
                 },
               });
+            } catch (oError) {
+              this.debug('Controller > CongDetail > onDeleteBtn Error', oError);
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -722,7 +731,6 @@ sap.ui.define(
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });
