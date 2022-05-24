@@ -62,8 +62,8 @@ sap.ui.define(
             rowCount: 0,
             list: [],
           },
-          // isDevMobile: false,
-          isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
+          isDevMobile: false,
+          // isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
         };
       },
 
@@ -410,9 +410,9 @@ sap.ui.define(
       },
 
       onChangeLegendPosition(oEvent) {
-        const sClassName = oEvent.getParameter('value').replace(/\+/, 'p').replace(/\-/, 'm').replace(/\./, 'd');
-        $('#employee-a11-chart-container').toggleClass(['p2d0', 'p1d5', 'p1d0', 'p0d5', 'p0d0', 'm0d5', 'm1d0', 'm1d5', 'm2d0'].map((n) => `legend-${n}`).join(' '), false);
-        $('#employee-a11-chart-container').toggleClass(`legend-${sClassName}`, true);
+        const sClassName = oEvent.getParameter('value').replace(/\+/, 'p').replace(/\-/, 'm').replace(/\./, 'p');
+        $('#employee-a11-chart-container').toggleClass(['p2p0', 'p1p5', 'p1p0', 'p0p5', 'p0p0', 'm0p5', 'm1p0', 'm1p5', 'm2p0'].map((n) => `legend-translate-y-${n}`).join(' '), false);
+        $('#employee-a11-chart-container').toggleClass(`legend-translate-y-${sClassName}`, true);
       },
 
       onChangeScrollHeightCss(oEvent) {
