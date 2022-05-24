@@ -25,13 +25,13 @@
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40004}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeTimeFormat" />
+                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40005}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeTimeFormat" />
+                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">

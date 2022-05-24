@@ -43,7 +43,6 @@ sap.ui.define(
           details: {
             rowCount: 9,
             list: [],
-            breakTime: [],
           },
           dialog: {
             targetDates: [],
@@ -307,6 +306,25 @@ sap.ui.define(
         }
       },
 
+      async onChangeWorktime(oEvent) {
+        this.onChangeTimeFormat(oEvent);
+
+        try {
+          const mRowData = oEvent.getSource().getBindingContext().getObject();
+
+          if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) return;
+
+          // call deep
+          const mResults = await this.createProcess([mRowData.Datum]);
+
+          this.debug(`Deep call :: ${mResults}`);
+        } catch (oError) {
+          this.debug('Controller > flextime > onChangeWorktime Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
       onChangeTimeFormat(oEvent) {
         const oSource = oEvent.getSource();
         const aSourceValue = _.split(oSource.getValue(), ':');
@@ -435,25 +453,30 @@ sap.ui.define(
         }
       },
 
-      async createProcess(dDatum) {
+      async createProcess(aDatums = [], mBreak = {}) {
         const oViewModel = this.getViewModel();
+
+        if (_.isEmpty(aDatums)) return;
 
         try {
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
           const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
-          const aBreakTimes = _.cloneDeep(oViewModel.getProperty('/details/breakTime'));
-
-          if (!_.isEmpty(value)) {
-            aDetails = _.filter(aDetails, { Datum: dDatum });
-            aBreakTimes = _.filter(aBreakTimes, { Datum: dDatum });
-          }
 
           return await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             ...mSummary,
             Accty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
-            AssoFlexTimeDetailSet: aDetails,
-            AssoFlexTimeBreakSet: aBreakTimes,
+            AssoFlexTimeDetailSet: _.map(aDatums, (d) => _.find(aDetails, { Datum: d })),
+            AssoFlexTimeBreakSet: _.isEmpty(mBreak)
+              ? []
+              : _.map(aDatums, (d) => {
+                  const mDetailData = _.find(aDetails, { Datum: d });
+
+                  return {
+                    ..._.pick(mDetailData, ['Pernr', 'Zyymm', 'Datum', 'Beguz', 'Enduz']),
+                    ...mBreak,
+                  };
+                }),
           });
         } catch (oError) {
           throw oError;
