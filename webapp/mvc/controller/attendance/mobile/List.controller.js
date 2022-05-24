@@ -133,21 +133,21 @@ sap.ui.define(
         if (isNaN(oRowData.Appno)) return;
 
         oViewModel.setProperty('/parameter/rowData', [oRowData]);
-        this.getRouter().navTo('mobile/attendance-detail', { type: oRowData.Appty, appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'NA' : oRowData.Appno });
+        this.getRouter().navTo(`mobile/attendance-detail${oRowData.Appty}`, { appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'NA' : oRowData.Appno });
       },
 
       onPressNewApprovalBtn() {
-        this.getRouter().navTo('mobile/attendance-detail', { type: this.PAGE_TYPE.NEW });
+        this.getRouter().navTo('mobile/attendance-detailA');
       },
 
       onPressModApprovalBtn() {
         // this.setRowActionParameters();
-        this.getRouter().navTo('mobile/attendance-detail', { type: this.PAGE_TYPE.CHANGE });
+        this.getRouter().navTo('mobile/attendance-detailB');
       },
 
       onPressCancApprovalBtn() {
         // this.setRowActionParameters();
-        this.getRouter().navTo('mobile/attendance-detail', { type: this.PAGE_TYPE.CANCEL });
+        this.getRouter().navTo('mobile/attendance-detailC');
       },
 
       setRowActionParameters() {

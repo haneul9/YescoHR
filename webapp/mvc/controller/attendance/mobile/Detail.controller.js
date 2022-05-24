@@ -67,8 +67,10 @@ sap.ui.define(
         };
       },
 
-      onObjectMatched(oParameter) {
-        if (!'A,B,C'.split(',').includes(oParameter.type)) {
+      onObjectMatched(oParameter, sRouteName) {
+        const sDetailType = _.chain(sRouteName).words().takeRight(1).toString().value();
+
+        if (!'A,B,C'.split(',').includes(sDetailType)) {
           this.getRouter().navTo('mobile/attendance');
           return;
         }
@@ -77,20 +79,21 @@ sap.ui.define(
 
         const oViewModel = this.getView().getModel();
         oViewModel.setData(this.initializeModel());
-        oViewModel.setProperty('/type', oParameter.type);
+        oViewModel.setProperty('/type', sDetailType);
         oViewModel.setProperty('/Appno', oParameter.appno);
 
         this.loadPage();
       },
 
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText(oArguments, sRouteName) {
+        const sDetailType = _.chain(sRouteName).words().takeRight(1).toString().value();
         const sAction = oArguments.appno ? this.getBundleText('LABEL_00100') : ''; // 조회
         const mNavigationMap = {
           A: this.getBundleText('LABEL_04002'), // 신규신청
           B: this.getBundleText('LABEL_04003'), // 변경신청
           C: this.getBundleText('LABEL_04004'), // 취소신청
         };
-        return `${mNavigationMap[oArguments.type]} ${sAction}`;
+        return `${mNavigationMap[sDetailType]} ${sAction}`;
       },
 
       async loadPage() {
