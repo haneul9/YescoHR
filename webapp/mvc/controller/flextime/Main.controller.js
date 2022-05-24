@@ -501,7 +501,10 @@ sap.ui.define(
             ...mSummary,
             Accty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
-            AssoFlexTimeDetailSet: _.map(aDatums, (d) => _.find(aDetails, { Datum: d })),
+            AssoFlexTimeDetailSet: _.map(aDatums, (d) => ({
+              ..._.find(aDetails, { Datum: d }),
+              ..._.pick(mBreak, ['Beguz', 'Enduz']),
+            })),
             AssoFlexTimeBreakSet: _.isEmpty(mBreak)
               ? []
               : _.map(aDatums, (d) => {
