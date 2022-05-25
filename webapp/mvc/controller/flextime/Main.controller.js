@@ -540,6 +540,8 @@ sap.ui.define(
             }))
           );
 
+          this.setDetailsTableRowColor();
+
           if (!_.isEmpty(mResults.Errmsg)) {
             MessageBox.error(mResults.Errmsg, {
               onClose: () => this.setContentsBusy(false, ['Input', 'Button']),
