@@ -25,25 +25,25 @@
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40004}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
+                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' &amp;&amp; ${Alldf} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40005}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
+                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' &amp;&amp; ${Alldf} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40018}"/>
                     <table:template>
-                        <Input value="{ path: 'Brk01', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <Input value="{ path: 'Brk01', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' &amp;&amp; ${Alldf} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40019}"/>
                     <table:template>
-                        <Input value="{ path: 'Brk02', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <Input value="{ path: 'Brk02', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' &amp;&amp; ${Alldf} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
