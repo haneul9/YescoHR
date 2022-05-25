@@ -265,16 +265,16 @@ sap.ui.define(
         }
       },
 
-      callFusionChart(mChartInfo, mChartSetting) {
+      callFusionChart({ Target, Chart }, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `employeeOnOff-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `employeeOnOff-${_.toLower(Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             const oChart = new FusionCharts({
               id: sChartId,
-              type: _.replace(mChartInfo.Chart, '-S', ''),
+              type: _.replace(Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
               width: '100%',
               height: '100%',
@@ -282,7 +282,7 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            if (mChartInfo.Target === 'A03' || mChartInfo.Target === 'A06') {
+            if (Target === 'A03' || Target === 'A06') {
               oChart.addEventListener('rendered', () => {
                 const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
                 $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
@@ -291,13 +291,13 @@ sap.ui.define(
                 $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2)`) //
                   .attr({ height: iHeight, rx: 3, ry: 3, fill: '#c1c3c8', stroke: '#c1c3c8' })
                   .css({ fill: '#c1c3c8', stroke: '#c1c3c8' });
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => {
+                $(`#employeeOnOff-${_.toLower(Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => {
                   $(text)
                     .off('click')
                     .on('click', () => {
                       const oViewModel = this.getViewModel();
-                      const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
-                      const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
+                      const sHeadty = oViewModel.getProperty(`/contents/${Target}/data/headty`);
+                      const sDisyear = oViewModel.getProperty(`/contents/${Target}/data/raw/${idx}/Ttltxt`);
                       const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
 
                       this.openDetailDialog(mPayload);

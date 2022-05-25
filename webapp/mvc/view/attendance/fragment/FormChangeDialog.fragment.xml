@@ -2,7 +2,7 @@
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1400px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
+  <m:Dialog title="{i18n>LABEL_00156} {i18n>LABEL_00107}" contentWidth="1600px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
     <m:content>
       <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
         <m:HBox justifyContent="SpaceBetween" alignItems="Center">

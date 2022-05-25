@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <Dialog id="rejectDialog" showHeader="false" contentWidth="1400px">
+  <Dialog id="rejectDialog" showHeader="false" contentWidth="1600px">
     <buttons>
       <Button type="Emphasized" text="{i18n>LABEL_00131}" press=".onPagePrint"/>
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
