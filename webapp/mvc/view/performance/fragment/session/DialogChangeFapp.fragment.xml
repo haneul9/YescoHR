@@ -21,7 +21,7 @@
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00209}"/>
                 <template>
-                  <m:Text text="{Zzappee}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                 </template>
               </Column>
               <Column width="auto">
