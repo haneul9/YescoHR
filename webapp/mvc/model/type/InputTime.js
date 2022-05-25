@@ -25,8 +25,11 @@ sap.ui.define(
       parseValue(oValue) {
         if (!oValue || _.isNaN(oValue.getTime())) return null;
 
+        const dInputDate = moment(oValue).set({ year: 1970, month: 0, date: 1 });
+        const iConvertedMillisecond = dInputDate.isSame(moment('19700101').format()) ? 86400000 : dInputDate.valueOf() + this.i9Hours;
+
         return {
-          ms: moment(oValue).set({ year: 1970, month: 0, date: 1 }).valueOf() + this.i9Hours,
+          ms: iConvertedMillisecond,
           __edmType: 'Edm.Time',
         };
       },
