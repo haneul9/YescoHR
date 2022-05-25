@@ -2,7 +2,7 @@
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <m:Dialog showHeader="false" contentWidth="1400px" contentHeight="570px" draggable="true">
+  <m:Dialog showHeader="false" contentWidth="1600px" contentHeight="570px" draggable="true">
     <m:content>
       <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
         <custom:Placeholder />
@@ -24,7 +24,7 @@
             </m:HBox>
           </extension>
           <columns>
-            <Column width="50px" filterProperty="Idx" sortProperty="Idx">
+            <Column width="60px" filterProperty="Idx" sortProperty="Idx">
               <m:Label text="No."/>
               <template>
                 <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />

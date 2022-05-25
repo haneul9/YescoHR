@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <Dialog title="{i18n>LABEL_20005}" contentWidth="1500px" contentHeight="660px" busyIndicatorDelay="0" busy="{/plans/busy}">
+  <Dialog title="{i18n>LABEL_20005}" contentWidth="1600px" contentHeight="660px" busyIndicatorDelay="0" busy="{/plans/busy}">
     <endButton>
       <Button text="{i18n>LABEL_00115}" press=".onPressClosePlanDialog" class="cancel" />
     </endButton>
