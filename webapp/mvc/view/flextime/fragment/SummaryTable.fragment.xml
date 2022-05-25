@@ -43,7 +43,7 @@
                 <table:Column width="auto">
                     <Label text="{i18n>LABEL_40015}"/>
                     <table:template>
-                        <Text text="{ path: 'Gaptim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+                        <ObjectStatus text="{Gaptimtx}" state="{= ${Gaptim} &lt; 0 ? 'Error' : 'Indication05' }" class="table-object-status" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">
