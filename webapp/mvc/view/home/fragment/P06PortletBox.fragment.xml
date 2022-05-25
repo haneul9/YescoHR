@@ -53,6 +53,7 @@
                 <core:CustomData key="OData" value="T" />
                 <core:CustomData key="Headty" value="A" />
                 <core:CustomData key="Discod" value="{counts/Cod01}" />
+                <core:CustomData key="Total" value="Y" />
               </customData>
             </ObjectStatus>
           </VBox>

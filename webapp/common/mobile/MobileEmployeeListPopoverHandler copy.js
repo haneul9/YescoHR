@@ -95,7 +95,7 @@ sap.ui.define(
         await oMenuModel.getPromise();
 
         this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasProfileViewAuth = oMenuModel.hasEmployeeProfileViewAuth();
       },
 
       onAfterClose() {
@@ -150,7 +150,7 @@ sap.ui.define(
               Zzjikgbt: Zzjikchtx,
               Fulln: Orgtx,
               IconMode: this.sIconMode,
-              Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+              Navigable: this.bHasProfileViewAuth ? 'O' : '',
             }))
           );
         } catch (oError) {
@@ -212,7 +212,7 @@ sap.ui.define(
           return;
         }
 
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasProfileViewAuth) {
           return;
         }
 

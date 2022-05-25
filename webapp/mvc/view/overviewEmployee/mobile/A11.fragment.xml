@@ -1,17 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}">
-    <layoutData>
-      <grid:GridItemLayoutData gridColumn="span 2" />
-    </layoutData>
-    <custom:Placeholder />
-  </VBox>
-  <VBox class="portlet portlet-box" visible="{= !${/contents/A11/busy} }">
-    <layoutData>
-      <grid:GridItemLayoutData gridColumn="span 2" />
-    </layoutData>
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A11/busy} }" height="400px">
     <HBox class="portlet-header">
       <Title level="H2" text="{i18n>LABEL_28019}" />
       <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" tooltip="{i18n>LABEL_28003}" />
@@ -21,17 +11,20 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="false" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+      <Button visible="{/contents/A11/hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
     </HBox>
     <VBox class="portlet-body">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>
       </core:HTML>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}" height="400px">
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

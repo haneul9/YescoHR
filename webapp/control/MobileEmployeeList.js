@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/m/CustomListItem',
-    'sap/m/FlexItemData',
     'sap/m/HBox',
     'sap/m/Image',
     'sap/m/ImageMode',
@@ -14,8 +12,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    CustomListItem,
-    FlexItemData,
     HBox,
     Image,
     ImageMode,
@@ -35,9 +31,8 @@ sap.ui.define(
           rank: { type: 'string', group: 'Misc', defaultValue: '' }, // 직급
           duty: { type: 'string', group: 'Misc', defaultValue: '' }, // 직책
           department: { type: 'string', group: 'Misc', defaultValue: '' },
-          linkType: { type: 'string', group: 'Misc', defaultValue: '' }, // tel | href | press
-          href: { type: 'string', group: 'Misc', defaultValue: '' }, // linkType === 'tel' | linkType === 'href'
-          press: { type: 'string', group: 'Misc', defaultValue: '' }, // linkType === 'press'
+          linkType: { type: 'string', group: 'Misc', defaultValue: '' }, // tel | href
+          href: { type: 'string', group: 'Misc', defaultValue: '' },
           doubleLine: { type: 'boolean', group: 'Appearance', defaultValue: false },
         },
       },
@@ -52,8 +47,7 @@ sap.ui.define(
 
         let oPhoto, oName, oRankDuty, oDepartment;
 
-        const fItemPress = this.getItemPress();
-        if (fItemPress) {
+        if (this.hasListeners('itemPress')) {
           oPhoto = new Image({ src: `{${this.getPhoto()}}`, mode: ImageMode.Background });
           oName = new Text({ text: `{${this.getName()}}`, wrapping: false });
           oRankDuty = new Text({ text: this.getRankDutyBindable(), wrapping: false });
@@ -79,14 +73,6 @@ sap.ui.define(
 
               oDepartment.bindProperty('href', sHrefBindable);
               oDepartment.bindProperty('enabled', sEnabled);
-            } else if (sLinkType === 'press') {
-              const fPress = this.getPress();
-              if (fPress) {
-                oPhoto.attachEvent('press', this.getListener()[fPress]);
-                oName.attachEvent('press', this.getListener()[fPress]);
-                oRankDuty.attachEvent('press', this.getListener()[fPress]);
-                oDepartment.attachEvent('press', this.getListener()[fPress]);
-              }
             } else {
               const sHrefBindable = `{${sHref}}`;
               oName.bindProperty('href', sHrefBindable);
@@ -97,17 +83,15 @@ sap.ui.define(
         }
 
         const bDoubleLine = this.getDoubleLine();
-        const aContent = bDoubleLine ? [oPhoto, oName, new VBox({ items: [oRankDuty, oDepartment] })] : [oPhoto, oName, oRankDuty, oDepartment];
-
         const aItemsTemplate = this.getBindingInfo('items').template;
-        const oHBox = new HBox({
-          items: aContent.concat(aItemsTemplate.removeAllContent()),
-        });
+        const aDefaultItems = bDoubleLine ? [oPhoto, oName, new VBox({ items: [oRankDuty, oDepartment] })] : [oPhoto, oName, oRankDuty, oDepartment];
+        const oHBox = new HBox({ items: aDefaultItems.concat(aItemsTemplate.removeAllContent()) });
+
         aItemsTemplate.addContent(oHBox).setType(ListType.Active);
 
         this.bindProperty('noDataText', 'i18n>MSG_00001')
           .setRememberSelections(false)
-          .addStyleClass(bDoubleLine ? 'employee-list double-line' : 'employee-list');
+          .addStyleClass(bDoubleLine ? 'employee-list double-line' : 'employee-list single-line');
       },
 
       getRankDutyBindable() {
@@ -118,13 +102,13 @@ sap.ui.define(
         return `${sRankBindable}/${sDutyBindable}`.replace(/^\/|\/$/g, '');
       },
 
-      getItemPress() {
-        return (((this.mEventRegistry || { itemPress: [{ fFunction: null }] }).itemPress || [{ fFunction: null }])[0] || { fFunction: null }).fFunction;
-      },
+      // getItemPress() {
+      //   return (((this.mEventRegistry || { itemPress: [{ fFunction: null }] }).itemPress || [{ fFunction: null }])[0] || { fFunction: null }).fFunction;
+      // },
 
-      getListener() {
-        return (((this.mEventRegistry || { itemPress: [{ oListener: null }] }).itemPress || [{ oListener: null }])[0] || { oListener: null }).oListener;
-      },
+      // getListener() {
+      //   return (((this.mEventRegistry || { itemPress: [{ oListener: null }] }).itemPress || [{ oListener: null }])[0] || { oListener: null }).oListener;
+      // },
     });
   }
 );

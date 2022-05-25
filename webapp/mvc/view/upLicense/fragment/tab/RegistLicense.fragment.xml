@@ -6,13 +6,13 @@
     <table:Table id="registTable" fixedBottomRowCount="1" class="row-link" rows="{/registList/list}" visibleRowCount="{/registList/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onRegistSelectRow">
       <table:columns>
         <table:Column width="17%" sortProperty="Certtytx" filterProperty="Certtytx">
-          <Label text="{i18n>LABEL_39006}"/>
+          <Label text="{i18n>LABEL_39015}"/>
           <table:template>
             <Text text="{Certtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>
         </table:Column>
         <table:Column width="17%" sortProperty="Certdttx" filterProperty="Certdttx">
-          <Label text="{i18n>LABEL_39007}"/>
+          <Label text="{i18n>LABEL_39006}"/>
           <table:template>
             <Text text="{Certdttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
           </table:template>

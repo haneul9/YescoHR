@@ -15,9 +15,9 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.common.mobile.MobileEmployeeSearchPopoverHandler', {
+    return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.common.mobile.MobilePhoneNumberListPopoverHandler', {
       getPopoverFragmentName() {
-        return 'sap.ui.yesco.fragment.mobile.MobileEmployeeSearchPopover';
+        return 'sap.ui.yesco.fragment.mobile.MobilePhoneNumberListPopover';
       },
 
       onAfterClose() {

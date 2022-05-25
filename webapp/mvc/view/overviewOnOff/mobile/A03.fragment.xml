@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }" height="400px">
+    <HBox class="portlet-header">
+      <Title level="H2" text="{i18n>LABEL_28030}" />
+      <Text text="{i18n>LABEL_28029}" class="desc-txt" />
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <Button visible="{/contents/A03/hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+    </HBox>
+    <VBox class="portlet-body">
+      <layoutData>
+        <FlexItemData growFactor="1" />
+      </layoutData>
+      <core:HTML content='&lt;div id="employeeOnOff-a03-chart-container" class="custom-chart"&gt;&lt;/div&gt;'>
+        <core:layoutData>
+          <FlexItemData growFactor="1" />
+        </core:layoutData>
+      </core:HTML>
+    </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A03/busy}" height="400px">
+    <custom:Placeholder />
+  </VBox>
+</core:FragmentDefinition>

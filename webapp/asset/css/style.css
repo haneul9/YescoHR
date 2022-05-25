@@ -726,6 +726,8 @@ html.sap-desktop .sapContrast .sapMFooter-CTX .sapMBtnInner.sapMBtnReject, html.
 .sapUiTableHSb {position:relative; overflow-x:scroll; overflow-y:hidden; -webkit-overflow-scrolling:auto; background-color:#f7f7f7; border-bottom:1px solid #f5f5f5; border-right:1px solid #f5f5f5}
 .sapUiTableRowFirstFixedBottom td {background-color:#eff3f8}
 
+.disabled-table-selection { opacity: 0.4; pointer-events: none; }
+
 /* GNB */
 .sapUiSizeCompact .megadrop-menu-layer {box-sizing:border-box; position:absolute; z-index:7; top:59px; min-height:246px; border-radius:0; padding-bottom:20px; color:#222; background-color:#fff; box-shadow:0 3px 5px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%)}
 .sapUiSizeCompact .megadrop-menu-layer:before {content:""; height:0px !important; width:100%; border-bottom:1px solid #ccc; position:absolute; top:0; left:0; right:0}
@@ -1775,8 +1777,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner .sapMBtnIcon {color:#484c50; font-size:22px; font-weight:200}
 .notification-wrapper .sapMBtn.icon-button.notification .sapMBtnInner:after {content:""; display:inline-block; width:27px; height:23px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification.svg'); background-repeat:no-repeat; background-position:center}
 .notification-wrapper:hover .sapMBtn.icon-button.notification .sapMBtnInner:after {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_notification_hover.svg')}
-.notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-3px; left:50%; height:15px}
-.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; border-radius:10px; padding:2px 5px; font-size:9px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
+.notification-wrapper > .sapMFlexItem:last-child {position:absolute; top:-4px; left:50%; height:16px; line-height:16px}
+.notification-wrapper > .sapMFlexItem:last-child .notification-count {display:inline-block; min-width:10px; height:16px; line-height:16px; border-radius:10px; padding:0 5px; vertical-align:middle; font-size:12px; font-weight:400; color:#fff; background-color:#f00; cursor:pointer}
 
 /* notification-center popover */
 .sapUiSizeCompact.notification-popover.sapMPopoverWithBar.sapMPopoverWithFooter:not(.sapMRPCalendar)>.sapMPopoverCont {min-height:120px; max-height:calc(100% - 143px); padding:0}
@@ -2171,6 +2173,26 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
 .fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
+html:not(.sap-android) .custom-chart .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
+.legend-translate-y-p2p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform:translate(0,2px)}
+.legend-translate-y-p1p5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform:translate(0,1.5px)}
+.legend-translate-y-p1p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform:translate(0,1px)}
+.legend-translate-y-p0p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
+.legend-translate-y-m0p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
+.legend-translate-y-m1p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform:translate(0,-1px)}
+.legend-translate-y-m1p5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
+.legend-translate-y-m2p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform:translate(0,-2px)}
+.scroll-h0 .fusioncharts-container svg g[class*="-scroller"] rect {height:0 !important}
+.scroll-h1 .fusioncharts-container svg g[class*="-scroller"] rect {height:1px !important}
+.scroll-h2 .fusioncharts-container svg g[class*="-scroller"] rect {height:2px !important}
+.scroll-h3 .fusioncharts-container svg g[class*="-scroller"] rect {height:3px !important}
+.scroll-h4 .fusioncharts-container svg g[class*="-scroller"] rect {height:4px !important}
+.scroll-h5 .fusioncharts-container svg g[class*="-scroller"] rect {height:5px !important}
+.scroll-h6 .fusioncharts-container svg g[class*="-scroller"] rect {height:6px !important}
+.scroll-h7 .fusioncharts-container svg g[class*="-scroller"] rect {height:7px !important}
+.scroll-h8 .fusioncharts-container svg g[class*="-scroller"] rect {height:8px !important}
+.scroll-h9 .fusioncharts-container svg g[class*="-scroller"] rect {height:9px !important}
+.scroll-h10 .fusioncharts-container svg g[class*="-scroller"] rect {height:10px !important}
 #employee-a02-chart-container {height:76px}
 #employee-a06-chart-container {height:76px}
 

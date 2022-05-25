@@ -2,7 +2,6 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
     <headerContent>
@@ -31,14 +30,14 @@
         </VBox>
       </HBox>
       <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
-        <grid:CSSGrid gridGap="20px" gridTemplateRows="repeat(4, 280px)" gridTemplateColumns="1fr" class="overviews mt-20-px mb-11-px">
+        <VBox class="overviews row-280-px mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A04" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A05" type="XML" />
-        </grid:CSSGrid>
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A03" type="XML" /> -->
-        <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A06" type="XML" /> -->
+          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A03" type="XML" /> -->
+          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A06" type="XML" /> -->
+        </VBox>
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

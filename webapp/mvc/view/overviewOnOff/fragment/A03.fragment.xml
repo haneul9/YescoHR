@@ -2,12 +2,6 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A03/busy}">
-    <layoutData>
-      <grid:GridItemLayoutData gridColumn="span 2" />
-    </layoutData>
-    <custom:Placeholder />
-  </VBox>
   <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }">
     <layoutData>
       <grid:GridItemLayoutData gridColumn="span 2" />
@@ -26,11 +20,17 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <core:HTML content='&lt;div id="employeeOnOff-a03-chart-container"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="employeeOnOff-a03-chart-container" class="custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>
       </core:HTML>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A03/busy}">
+    <layoutData>
+      <grid:GridItemLayoutData gridColumn="span 2" />
+    </layoutData>
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

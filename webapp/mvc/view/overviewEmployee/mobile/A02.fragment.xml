@@ -1,9 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
-    <custom:Placeholder />
-  </VBox>
   <VBox class="portlet portlet-box" visible="{= !${/contents/A02/busy} }">
     <customData>
       <core:CustomData key="key" value="a02" />
@@ -16,7 +13,7 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="false" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+      <Button visible="{/contents/A02/hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
     </HBox>
     <VBox class="portlet-body">
       <layoutData>
@@ -81,5 +78,8 @@
         </VBox>
       </HBox>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A02/busy}">
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

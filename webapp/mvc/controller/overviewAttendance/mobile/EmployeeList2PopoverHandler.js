@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
@@ -11,8 +9,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     MobileEmployeeListPopoverHandler,
     Client,
@@ -21,6 +17,12 @@ sap.ui.define(
   ) => {
     'use strict';
 
+    /**
+     * MSS > HR Boardroom > 근태현황 > 휴가 사용율 (Headty D)
+     * MSS > HR Boardroom > 근태현황 > 조직별 연차사용율 (Headty E)
+     * MSS > HR Boardroom > 근태현황 > 직급별 연차사용율 (Headty F)
+     * MSS > HR Boardroom > 근태현황 > 월단위 연차사용율 추이 (Headty G)
+     */
     return MobileEmployeeListPopoverHandler.extend('sap.ui.yesco.mvc.controller.overviewAttendance.mobile.EmployeeList2PopoverHandler', {
       init() {
         MobileEmployeeListPopoverHandler.prototype.init.call(this);
@@ -33,8 +35,7 @@ sap.ui.define(
       },
 
       setPropertiesForNavTo(oMenuModel) {
-        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasMssMenuAuth = oMenuModel.hasMssMenuAuth();
       },
 
       async onBeforeOpen() {
@@ -58,7 +59,7 @@ sap.ui.define(
             Plncnt: Plncnt || 0,
             Begda,
             Endda,
-            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasMssMenuAuth ? 'O' : '',
           }))
         );
 
@@ -72,25 +73,11 @@ sap.ui.define(
       },
 
       onLiveChange(oEvent) {
-        const sValue = $.trim(oEvent.getParameter('newValue'));
-        if (!sValue) {
-          this.clearSearchFilter();
-          return;
-        }
-
-        const aFilters = new Filter({
-          filters: [
-            new Filter('Ename', FilterOperator.Contains, sValue), //
-            new Filter('Pernr', FilterOperator.Contains, sValue),
-          ],
-          and: false,
-        });
-
-        this.setSearchFilter(aFilters);
+        this.filterEmployeeList(oEvent);
       },
 
       navTo(oEvent) {
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasMssMenuAuth) {
           return;
         }
 

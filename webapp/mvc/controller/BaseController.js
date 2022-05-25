@@ -10,6 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/AttachFileAction',
     'sap/ui/yesco/common/DateUtils',
+    'sap/ui/yesco/common/TimeUtils',
     'sap/ui/yesco/common/EmployeeSearchDialogHandler',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/TableUtils',
@@ -26,6 +27,7 @@ sap.ui.define(
     AppUtils,
     AttachFileAction,
     DateUtils,
+    TimeUtils,
     EmployeeSearchDialogHandler,
     UI5Error,
     TableUtils,
@@ -36,6 +38,7 @@ sap.ui.define(
     return Controller.extend('sap.ui.yesco.mvc.controller.BaseController', {
       AttachFileAction: AttachFileAction,
       DateUtils: DateUtils,
+      TimeUtils: TimeUtils,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
 

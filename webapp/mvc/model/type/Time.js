@@ -80,7 +80,7 @@ sap.ui.define(
         }
 
         if (typeof oValue === 'string' || oValue instanceof String) {
-          return { __edmType: 'Edm.Time', ms: this.getMoment(oValue).get('millisecond') };
+          return { __edmType: 'Edm.Time', ms: this.getMoment(oValue).valueOf() };
         }
 
         throw new ParseException(`Don't know how to parse Time from ${sTargetType}`);
@@ -92,11 +92,11 @@ sap.ui.define(
 
       getMoment(oValue) {
         if (/^PT/.test(oValue)) {
-          return moment(oValue, '[PT]HH[H]mm[M]ss[S]').add(this.i9Hours, 'milliseconds');
+          return moment.duration(oValue).add(this.i9Hours, 'milliseconds');
         }
 
-        const sDateString = oValue.replace(/[^\d]/g, '');
-        return moment(`19700101${sDateString}`, this.getParsePatternForMoment());
+        const sTimeString = oValue.replace(/[^\d]/g, '');
+        return moment(`19700101${sTimeString}`, this.getParsePatternForMoment());
       },
     });
   }

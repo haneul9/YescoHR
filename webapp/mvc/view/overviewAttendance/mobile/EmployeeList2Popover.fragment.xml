@@ -8,21 +8,14 @@
       </HBox>
       <ScrollContainer horizontal="false" vertical="true">
         <content>
-          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
+          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo" class="narrow-name narrow-position">
             <CustomListItem>
               <VBox>
-                <Text text="{i18n>LABEL_28063} : { path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }/{ path: 'Dedcnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-                <Text text="{i18n>LABEL_28064} : { path: 'Balcnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }/{ path: 'Plncnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+                <Text text="{i18n>LABEL_28063} : { path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }/{ path: 'Dedcnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" wrapping="false" />
+                <Text text="{i18n>LABEL_28064} : { path: 'Balcnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }/{ path: 'Plncnt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" wrapping="false" />
               </VBox>
-              <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">
-                <customData>
-                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
-                </customData>
-                <layoutData>
-                  <FlexItemData styleClass="icon-link" />
-                </layoutData>
-              </Link>
+              <!-- 개인별근태현황 아이콘 -->
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconAttendance" type="XML" />
             </CustomListItem>
           </custom:MobileEmployeeList>
         </content>

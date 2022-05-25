@@ -38,17 +38,17 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: mData },
-            A03: { busy: false, data: [] },
-            A04: { busy: false, data: [] },
-            A05: { busy: false, data: {} },
-            A06: { busy: false, data: {} },
-            A07: { busy: false, data: [] },
-            A08: { busy: false, data: [] },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
-            A11: { busy: false },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: mData },
+            A03: { busy: false, hasLink: false, data: [] },
+            A04: { busy: false, hasLink: false, data: [] },
+            A05: { busy: false, hasLink: false, data: {} },
+            A06: { busy: false, hasLink: false, data: {} },
+            A07: { busy: false, hasLink: false, data: [] },
+            A08: { busy: false, hasLink: false, data: [] },
+            A09: { busy: false, hasLink: false, data: {} },
+            A10: { busy: false, hasLink: false },
+            A11: { busy: false, hasLink: false },
           },
           dialog: {
             busy: false,
@@ -79,7 +79,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
 
           this.oPopupHandler = new EmployeeListDialogHandler(this);
 
@@ -103,7 +107,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(11).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('PC')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -329,7 +337,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > m/overviewEmployee Main > onPressSearch Error', oError);
 

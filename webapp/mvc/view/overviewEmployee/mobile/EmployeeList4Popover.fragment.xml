@@ -8,15 +8,14 @@
       </HBox>
       <ScrollContainer horizontal="false" vertical="true">
         <content>
-          <!-- <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbt" duty="Zzjikcht" department="Fulln" linkType="press" press=".navToProfile"> -->
-          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbt" duty="Zzjikcht" department="Fulln" linkType="tel" href="Phone">
+          <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".onPressProfileLinkIcon" class="narrow-name narrow-position">
             <CustomListItem>
-              <!-- 전화 아이콘 -->
-              <Link enabled="{= !!${Phone} }" href="tel:{Phone}" class="icon-telephone">
-                <layoutData>
-                  <FlexItemData styleClass="icon-link" />
-                </layoutData>
-              </Link>
+              <VBox>
+                <Text text="{i18n>LABEL_28036} : { path: 'Svryy', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" wrapping="false" />
+                <Text text="{i18n>LABEL_00235} : { path: 'Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
+              </VBox>
+              <!-- 사원 프로파일 아이콘 -->
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconProfile" type="XML" />
             </CustomListItem>
           </custom:MobileEmployeeList>
         </content>

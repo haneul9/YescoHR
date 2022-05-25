@@ -2,11 +2,10 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
@@ -14,11 +13,10 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    Filter,
-    FilterOperator,
     Appno,
     AppUtils,
     ComboEntry,
+    Client,
     ServiceNames,
     MessageBox,
     BaseController
@@ -28,12 +26,13 @@ sap.ui.define(
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.mobile.CongDetail', {
       initializeModel() {
         return {
-          menuId: '',
-          FormStatus: '',
           BirthMaxDate: moment().toDate(),
           FormData: {},
           TargetListRowCount: 1,
           benefitDate: '',
+          fixRelation: true,
+          relationTxt: true,
+          birthDatePicker: true,
           Settings: {},
           BenefitType: [],
           BenefitCause: [],
@@ -52,33 +51,25 @@ sap.ui.define(
       },
 
       async onObjectMatched(mArgs) {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
         try {
-          oDetailModel.setData(this.initializeModel());
-          oDetailModel.setProperty('/busy', true);
-          oDetailModel.setProperty('/FormStatus', mArgs.oDataKey);
+          oViewModel.setData(this.initializeModel());
+          oViewModel.setProperty('/busy', true);
 
           const aTypeCode = await this.getBenefitType();
 
-          oDetailModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aTypeCode }));
-          oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
-          oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
+          oViewModel.setProperty('/BenefitType', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aTypeCode }));
+          oViewModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
+          oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
 
-          const oRowData = await this.getTargetData();
-
-          if (!!oRowData) {
-            oDetailModel.setProperty('/FormData', oRowData);
-            oDetailModel.setProperty('/ApplyInfo', oRowData);
-            oDetailModel.setProperty('/ApprovalDetails', oRowData);
-            this.getBenefitData();
-          }
-
+          this.getTargetData(mArgs.oDataKey);
           this.settingsAttachTable();
         } catch (oError) {
+          this.debug('Controller > CongDetail > onObjectMatched Error', oError);
           AppUtils.handleError(oError);
         } finally {
-          oDetailModel.setProperty('/busy', false);
+          oViewModel.setProperty('/busy', false);
         }
       },
 
@@ -87,51 +78,39 @@ sap.ui.define(
       },
 
       // 상세조회
-      getTargetData() {
-        const oDetailModel = this.getViewModel();
-        const sDataKey = oDetailModel.getProperty('/FormStatus');
-        const sMenid = this.getCurrentMenuId();
-        const mSessionData = this.getSessionData();
+      async getTargetData(sDataKey) {
+        const oViewModel = this.getViewModel();
 
-        return new Promise((resolve, reject) => {
-          oDetailModel.setProperty('/menuId', sMenid);
+        if (!sDataKey || sDataKey === 'N') {
+          const mSessionData = this.getSessionData();
 
-          if (!sDataKey || sDataKey === 'N') {
-            oDetailModel.setProperty('/FormData', mSessionData);
-            oDetailModel.setProperty('/FormData', {
-              Apename: mSessionData.Ename,
-              Appernr: mSessionData.Pernr,
-              Concode: 'ALL',
-              Conresn: 'ALL',
-              Kdsvh: 'ALL',
-            });
+          oViewModel.setProperty('/FormData', {
+            ...mSessionData,
+            Apename: mSessionData.Ename,
+            Appernr: mSessionData.Pernr,
+            Concode: 'ALL',
+            Conresn: 'ALL',
+            Kdsvh: 'ALL',
+          });
 
-            oDetailModel.setProperty('/ApplyInfo', {
-              Apename: mSessionData.Ename,
-              Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
-              Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
-            });
+          oViewModel.setProperty('/ApplyInfo', {
+            Apename: mSessionData.Ename,
+            Aporgtx: `${mSessionData.Btrtx} / ${mSessionData.Orgtx}`,
+            Apjikgbtl: `${mSessionData.Zzjikgbt} / ${mSessionData.Zzjikcht}`,
+          });
+        } else {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const [oRowData] = await Client.getEntitySet(oModel, 'ConExpenseAppl', {
+            Prcty: 'D',
+            Menid: this.getCurrentMenuId(),
+            Appno: sDataKey,
+          });
 
-            resolve();
-          } else {
-            const oModel = this.getModel(ServiceNames.BENEFIT);
-            const sUrl = '/ConExpenseApplSet';
-
-            oModel.read(sUrl, {
-              filters: [
-                new Filter('Prcty', FilterOperator.EQ, 'D'), //
-                new Filter('Menid', FilterOperator.EQ, sMenid),
-                new Filter('Appno', FilterOperator.EQ, sDataKey),
-              ],
-              success: (oData) => {
-                resolve(oData.results[0]);
-              },
-              error: (oError) => {
-                reject(oError);
-              },
-            });
-          }
-        });
+          oViewModel.setProperty('/FormData', oRowData);
+          oViewModel.setProperty('/ApplyInfo', oRowData);
+          oViewModel.setProperty('/ApprovalDetails', oRowData);
+          this.getBenefitData();
+        }
       },
 
       // 경조유형
@@ -139,223 +118,207 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sWerks = this.getSessionProperty('Werks');
 
-        return new Promise((resolve, reject) => {
-          oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new Filter('Cdnum', FilterOperator.EQ, 'BE0001'), //
-              new Filter('Werks', FilterOperator.EQ, sWerks),
-              new Filter('Datum', FilterOperator.EQ, new Date()),
-            ],
-            success: (oData) => {
-              resolve(oData.results);
-            },
-            error: (oError) => {
-              reject(oError);
-            },
-          });
+        return Client.getEntitySet(oModel, 'BenefitCodeList', {
+          Cdnum: 'BE0001',
+          Werks: sWerks,
+          Datum: new Date(),
         });
       },
 
       // 전체list에 맞는코드 조회
-      getBenefitData() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
+      async getBenefitData() {
+        const oViewModel = this.getViewModel();
 
-        oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new Filter('Cdnum', FilterOperator.EQ, 'BE0002'), //
-            new Filter('Werks', FilterOperator.EQ, sWerks),
-            new Filter('Datum', FilterOperator.EQ, new Date()),
-            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
-            new Filter('Upcod2', FilterOperator.EQ, 'E'),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const aList = oData.results;
+        try {
+          oViewModel.setProperty('/busy', true);
 
-              oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mFormData = oViewModel.getProperty('/FormData');
+          const sWerks = this.getSessionProperty('Werks');
+          const aList = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Cdnum: 'BE0002',
+            Werks: sWerks,
+            Datum: new Date(),
+            Upcod: mFormData.Concode,
+            Upcod2: 'E',
+          });
+
+          oViewModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+
+          const oResult = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Cdnum: 'BE0003',
+            Werks: sWerks,
+            Datum: new Date(),
+            Upcod: mFormData.Concode,
+            Upcod2: mFormData.Conresn,
+          });
+
+          oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
+          oViewModel.setProperty('/TargetList', []);
+
+          if (!mFormData.ZappStatAl || mFormData.ZappStatAl === '10') {
+            let bRelTxt = true;
+            let bBirthPick = true;
+
+            if (!!oResult[0] && oResult[0].Zcode === 'ME') {
+              this.onTargetDialog();
+              bRelTxt = false;
+              bBirthPick = false;
             }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
 
-        oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new Filter('Cdnum', FilterOperator.EQ, 'BE0003'), //
-            new Filter('Werks', FilterOperator.EQ, sWerks),
-            new Filter('Datum', FilterOperator.EQ, new Date()),
-            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
-            new Filter('Upcod2', FilterOperator.EQ, oFormData.Conresn),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oResult = oData.results;
-              const oRelationTxt = this.byId('RelationTxt');
-              const oBirthDatePicker = this.byId('BirthDatePicker');
-
-              oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
-              oDetailModel.setProperty('/TargetList', []);
-
-              if (!oFormData.ZappStatAl || oFormData.ZappStatAl === '10') {
-                if (!!oResult[0] && oResult[0].Zcode === 'ME') {
-                  this.onTargetDialog();
-                  oRelationTxt.setEditable(false);
-                  oBirthDatePicker.setEditable(false);
-                } else {
-                  oRelationTxt.setEditable(true);
-                  oBirthDatePicker.setEditable(true);
-                }
-              }
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
+            oViewModel.setProperty('/relationTxt', bRelTxt);
+            oViewModel.setProperty('/birthDatePicker', bBirthPick);
+          }
+        } catch (oError) {
+          this.debug('Controller > CongDetail > getBenefitData Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 경조유형 선택시
-      onTypeChange(oEvent) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const sSelectKey = oEvent.getSource().getSelectedKey();
-        const sWerks = this.getSessionProperty('Werks');
-        let sSelectText = oEvent.getSource().getSelectedItem().getText();
+      async onTypeChange(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oEventSource = oEvent.getSource();
 
-        oDetailModel.setProperty('/FormData/Context', sSelectText);
+        try {
+          oViewModel.setProperty('/busy', true);
 
-        new Promise((resolve) => {
-          oModel.read('/BenefitCodeListSet', {
-            filters: [
-              new Filter('Cdnum', FilterOperator.EQ, 'BE0002'), //
-              new Filter('Werks', FilterOperator.EQ, sWerks),
-              new Filter('Datum', FilterOperator.EQ, new Date()),
-              new Filter('Upcod', FilterOperator.EQ, sSelectKey),
-              new Filter('Upcod2', FilterOperator.EQ, 'E'),
-            ],
-            success: (oData) => {
-              if (oData) {
-                const aList = oData.results;
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const oSelectItems = oEvent.getParameter('changedItem');
+          const sSelectKey = oSelectItems.getKey();
+          const sWerks = this.getSessionProperty('Werks');
+          const sSelectText = oSelectItems.getText();
 
-                oDetailModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-                oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
-                oDetailModel.setProperty('/FormData/Conresn', 'ALL');
-                oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
-              }
+          oViewModel.setProperty('/FormData/Context', sSelectText);
 
-              const oRelationTxt = this.byId('RelationTxt');
-              const oBirthDatePicker = this.byId('BirthDatePicker');
-
-              oRelationTxt.setEditable(true);
-              oBirthDatePicker.setEditable(true);
-              oDetailModel.setProperty('/TargetList', []);
-              oDetailModel.setProperty('/FormData/Zname', '');
-              oDetailModel.setProperty('/FormData/Zbirthday', null);
-              oDetailModel.setProperty('/FormData/Conddate', null);
-
-              resolve();
-            },
-            error: (oError) => {
-              AppUtils.handleError(oError);
-            },
+          const aList = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Cdnum: 'BE0002',
+            Werks: sWerks,
+            Datum: new Date(),
+            Upcod: sSelectKey,
+            Upcod2: 'E',
           });
-        }).then(() => {
+
+          oViewModel.setProperty('/relationTxt', true);
+          oViewModel.setProperty('/birthDatePicker', true);
+          oViewModel.setProperty('/TargetList', []);
+          oViewModel.setProperty('/BenefitCause', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+          oViewModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
+          oViewModel.setProperty('/Conresn', 'ALL');
+          oViewModel.setProperty('/Kdsvh', 'ALL');
+          oViewModel.setProperty('/Zname', '');
+          oViewModel.setProperty('/Zbirthday', null);
+          oViewModel.setProperty('/Conddate', null);
           this.getNomalPay();
-        });
+        } catch (oError) {
+          this.debug('Controller > CongDetail > onTypeChange Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+          oEventSource.close();
+        }
       },
 
       // 경조사유 선택시
-      onCauseChange(oEvent) {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sSelectKey = oEvent.getSource().getSelectedKey();
-        const sSelectText = oEvent.getSource().getSelectedItem().getText();
-        const sWerks = this.getSessionProperty('Werks');
+      async onCauseChange(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oEventSource = oEvent.getSource();
 
-        oDetailModel.setProperty('/FormData/Conretx', sSelectText);
-        oDetailModel.setProperty(
-          '/benefitDate',
-          _.find(oDetailModel.getProperty('/BenefitCause'), (e) => {
-            return sSelectKey === e.Zcode;
-          }).Zchar1
-        );
+        try {
+          const oSelectItems = oEvent.getParameter('changedItem');
+          const sSelectKey = oSelectItems.getKey();
+          const sSelectText = oSelectItems.getText();
 
-        this.getNomalPay(this);
+          oViewModel.setProperty('/busy', true);
+          oViewModel.setProperty('/FormData/Conretx', sSelectText);
+          oViewModel.setProperty(
+            '/benefitDate',
+            _.find(oViewModel.getProperty('/BenefitCause'), (e) => {
+              return sSelectKey === e.Zcode;
+            }).Zchar1
+          );
 
-        oModel.read('/BenefitCodeListSet', {
-          filters: [
-            new Filter('Cdnum', FilterOperator.EQ, 'BE0003'), //
-            new Filter('Werks', FilterOperator.EQ, sWerks),
-            new Filter('Datum', FilterOperator.EQ, new Date()),
-            new Filter('Upcod', FilterOperator.EQ, oFormData.Concode),
-            new Filter('Upcod2', FilterOperator.EQ, sSelectKey),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oResult = oData.results;
-              const oRelationTxt = this.byId('RelationTxt');
-              const oBirthDatePicker = this.byId('BirthDatePicker');
+          this.getNomalPay(this);
 
-              oDetailModel.setProperty('/TargetList', []);
-              oDetailModel.setProperty('/FormData/Zname', '');
-              oDetailModel.setProperty('/FormData/Zbirthday', null);
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const sWerks = this.getSessionProperty('Werks');
+          const mFormData = oViewModel.getProperty('/FormData');
+          const oResult = await Client.getEntitySet(oModel, 'BenefitCodeList', {
+            Cdnum: 'BE0003',
+            Werks: sWerks,
+            Datum: new Date(),
+            Upcod: mFormData.Concode,
+            Upcod2: sSelectKey,
+          });
 
-              if (!oDetailModel.getProperty('/FormData/ZappStatAl') || oDetailModel.getProperty('/FormData/ZappStatAl') === '10') {
-                if (!!oResult[0] && oResult[0].Zcode === 'ME') {
-                  oDetailModel.setProperty('/BenefitRelation', oResult);
-                  this.onTargetDialog();
-                  oRelationTxt.setEditable(false);
-                  oBirthDatePicker.setEditable(false);
-                } else {
-                  oDetailModel.setProperty('/BenefitRelation', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult }));
-                  oDetailModel.setProperty('/FormData/Kdsvh', 'ALL');
-                  oRelationTxt.setEditable(true);
-                  oBirthDatePicker.setEditable(true);
-                }
-              }
+          oViewModel.setProperty('/TargetList', []);
+          oViewModel.setProperty('/FormData/Zname', '');
+          oViewModel.setProperty('/FormData/Zbirthday', null);
+          oViewModel.setProperty('/FormData/Kdsvh', 'ALL');
+
+          let bRelTxt = true;
+          let bBirthPick = true;
+          let aRelation = new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: oResult });
+
+          if (!oViewModel.getProperty('/FormData/ZappStatAl') || oViewModel.getProperty('/FormData/ZappStatAl') === '10') {
+            if (!!oResult[0] && oResult[0].Zcode === 'ME') {
+              aRelation = oResult;
+              this.onTargetDialog();
+              bRelTxt = false;
+              bBirthPick = false;
+            } else {
+              oViewModel.setProperty('/fixRelation', true);
             }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
+
+            oViewModel.setProperty('/relationTxt', bRelTxt);
+            oViewModel.setProperty('/birthDatePicker', bBirthPick);
+            oViewModel.setProperty('/BenefitRelation', aRelation);
+          }
+        } catch (oError) {
+          this.debug('Controller > CongDetail > onCauseChange Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+          oEventSource.close();
+        }
       },
 
       // 대상자 생년월일
       onBirthDate(oEvent) {
-        const oDetailModel = this.getViewModel();
-        const sAddDate = oDetailModel.getProperty('/benefitDate');
+        const oViewModel = this.getViewModel();
+        const sAddDate = oViewModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          oDetailModel.setProperty('/FormData/Conddate', moment(oEvent.getSource().getDateValue()).add('year', sAddDate).toDate());
+          oViewModel.setProperty('/FormData/Conddate', moment(oEvent.getSource().getDateValue()).add('year', sAddDate).toDate());
         }
       },
 
       // 대상자 관계선택시
       onRelationChange(oEvent) {
-        const oDetailModel = this.getViewModel();
-        const sSelectKey = oEvent.getSource().getSelectedKey();
-        const oRelationTxt = this.byId('RelationTxt');
-        const oBirthDatePicker = this.byId('BirthDatePicker');
+        const oViewModel = this.getViewModel();
+        const oEventSource = oEvent.getSource();
+        const sSelectKey = oEventSource.getSelectedKey();
 
-        oDetailModel.setProperty('/FormData/Kdsvh', sSelectKey);
+        oViewModel.setProperty('/FormData/Kdsvh', sSelectKey);
+
+        let bRelTxt = true;
+        let bBirthPick = true;
 
         if (!!sSelectKey && sSelectKey === 'ME') {
           this.onTargetDialog();
-          oRelationTxt.setEditable(false);
-          oBirthDatePicker.setEditable(false);
+          bRelTxt = false;
+          bBirthPick = false;
         } else {
-          oDetailModel.setProperty('/FormData/Zbirthday', null);
-          oDetailModel.setProperty('/FormData/Conddate', null);
-          oDetailModel.setProperty('/FormData/Zname', '');
-          oRelationTxt.setEditable(true);
-          oBirthDatePicker.setEditable(true);
+          oViewModel.setProperty('/FormData/Zbirthday', null);
+          oViewModel.setProperty('/FormData/Conddate', null);
+          oViewModel.setProperty('/FormData/Zname', '');
         }
+
+        oViewModel.setProperty('/relationTxt', bRelTxt);
+        oViewModel.setProperty('/birthDatePicker', bBirthPick);
+        oEventSource.close();
       },
 
       // 증빙상 경조일 선택시
@@ -365,47 +328,45 @@ sap.ui.define(
       },
 
       // 기본급, 지급율 등 받아옴
-      getNomalPay() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const vConcode = oDetailModel.getProperty('/FormData/Concode');
-        const vConresn = oDetailModel.getProperty('/FormData/Conresn');
-        const vConddate = oDetailModel.getProperty('/FormData/Conddate');
-        const sWerks = this.getSessionProperty('Werks');
+      async getNomalPay() {
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
+        const vConcode = mFormData.Concode;
+        const vConresn = mFormData.Conresn;
+        const vConddate = mFormData.Conddate;
 
         if (!vConcode || !vConresn || !vConddate) return;
 
-        oModel.read('/ConExpenseCheckListSet', {
-          filters: [
-            new Filter('Werks', FilterOperator.EQ, sWerks), //
-            new Filter('Concode', FilterOperator.EQ, vConcode),
-            new Filter('Conresn', FilterOperator.EQ, vConresn),
-            new Filter('Conddate', FilterOperator.EQ, vConddate),
-          ],
-          success: (oData) => {
-            if (oData) {
-              const oPay = oData.results[0];
+        try {
+          oViewModel.setProperty('/busy', true);
 
-              oDetailModel.setProperty('/FormData/ZbacBet', oPay.ZbacBet);
-              oDetailModel.setProperty('/FormData/ZbacBetT', oPay.ZbacBetT);
-              oDetailModel.setProperty('/FormData/Payrt', oPay.Payrt);
-              oDetailModel.setProperty('/FormData/PayrtT', oPay.PayrtT);
-              oDetailModel.setProperty('/FormData/ZpayBetT', oPay.ZpayBetT);
-              oDetailModel.setProperty('/FormData/ZpayBet', oPay.ZpayBet);
-              oDetailModel.setProperty('/FormData/Zflower', oPay.Zflower);
-              oDetailModel.setProperty('/FormData/Zemp', oPay.Zemp);
-            }
-          },
-          error: (oError) => {
-            AppUtils.handleError(oError);
-          },
-        });
+          const sWerks = this.getSessionProperty('Werks');
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const [oPay] = await Client.getEntitySet(oModel, 'ConExpenseCheckList', {
+            Werks: sWerks,
+            Concode: vConcode,
+            Conresn: vConresn,
+            Conddate: vConddate,
+          });
+
+          oViewModel.setProperty('/FormData/ZbacBet', oPay.ZbacBet);
+          oViewModel.setProperty('/FormData/ZbacBetT', oPay.ZbacBetT);
+          oViewModel.setProperty('/FormData/Payrt', oPay.Payrt);
+          oViewModel.setProperty('/FormData/PayrtT', oPay.PayrtT);
+          oViewModel.setProperty('/FormData/ZpayBetT', oPay.ZpayBetT);
+          oViewModel.setProperty('/FormData/ZpayBet', oPay.ZpayBet);
+          oViewModel.setProperty('/FormData/Zflower', oPay.Zflower);
+          oViewModel.setProperty('/FormData/Zemp', oPay.Zemp);
+        } catch (oError) {
+          this.debug('Controller > CongDetail > getNomalPay Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       // 대상자 성명 선택시
       async onTargetDialog() {
-        const oDetailModel = this.getViewModel();
-
         // load asynchronous XML fragment
         if (!this.byId('targetSettingsDialog')) {
           Fragment.load({
@@ -415,98 +376,94 @@ sap.ui.define(
           }).then(async (oDialog) => {
             // connect dialog to the root view of this component (models, lifecycle)
             this.getView().addDependent(oDialog);
-            await this.getTargetList();
-
-            const oTargetData = oDetailModel.getProperty('/TargetList');
-
-            if (oTargetData.length === 1 || oDetailModel.getProperty('/FormData/Kdsvh') === 'ME') return;
-
-            if (oTargetData.length === 0) {
-              return MessageBox.alert(this.getBundleText('MSG_03006'));
-            }
-
-            oDialog.open();
           });
-        } else {
-          await this.getTargetList();
+        }
 
-          const oTargetData = oDetailModel.getProperty('/TargetList');
+        this.getTargetList();
+      },
 
-          if (oTargetData.length === 1 || oDetailModel.getProperty('/FormData/Kdsvh') === 'ME') return;
+      // 대상자 리스트 조회
+      async getTargetList() {
+        const oViewModel = this.getViewModel();
 
-          if (oTargetData.length === 0) {
+        try {
+          oViewModel.setProperty('/busy', true);
+
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const mFormData = oViewModel.getProperty('/FormData');
+          const sWerks = this.getSessionProperty('Werks');
+          const oTargetList = await Client.getEntitySet(oModel, 'ConExpenseSupportList', {
+            Werks: sWerks,
+            Concode: mFormData.Concode,
+            Conresn: mFormData.Conresn,
+            Datum: new Date(),
+          });
+
+          if (oTargetList.length === 1) {
+            oViewModel.setData(
+              {
+                FormData: {
+                  Zbirthday: oTargetList[0].Zbirthday,
+                  Kdsvh: oTargetList[0].Kdsvh,
+                  Famtx: oTargetList[0].Atext,
+                  Zname: oTargetList[0].Zname,
+                },
+              },
+              true
+            );
+
+            const sAddDate = oViewModel.getProperty('/benefitDate');
+
+            if (!!sAddDate) {
+              oViewModel.setProperty('/FormData/Conddate', moment(oTargetList[0].Zbirthday).add('year', sAddDate).toDate());
+            }
+          }
+
+          if (_.size(oTargetList) === 1 || oViewModel.getProperty('/FormData/Kdsvh') === 'ME') {
+            oViewModel.setProperty('/fixRelation', false);
+            return;
+          }
+
+          const aChildList = [];
+
+          oTargetList.forEach((e) => {
+            if (!_.isEmpty(oTargetList) && mFormData.Kdsvh === e.Kdsvh) {
+              aChildList.push(e);
+            }
+          });
+
+          oViewModel.setProperty('/TargetList', aChildList);
+          oViewModel.setProperty('/TargetListRowCount', _.size(aChildList));
+
+          oViewModel.setProperty('/fixRelation', true);
+
+          if (_.isEmpty(aChildList)) {
             return MessageBox.alert(this.getBundleText('MSG_03006'));
           }
 
           this.byId('targetSettingsDialog').open();
+        } catch (oError) {
+          this.debug('Controller > CongDetail > getTargetList Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
         }
-      },
-
-      // 대상자 리스트 조회
-      getTargetList() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sWerks = this.getSessionProperty('Werks');
-
-        return new Promise((resolve) => {
-          oModel.read('/ConExpenseSupportListSet', {
-            filters: [
-              new Filter('Werks', FilterOperator.EQ, sWerks), //
-              new Filter('Concode', FilterOperator.EQ, oFormData.Concode),
-              new Filter('Conresn', FilterOperator.EQ, oFormData.Conresn),
-              new Filter('Datum', FilterOperator.EQ, new Date()),
-            ],
-            success: (oData) => {
-              if (oData) {
-                const oTargetList = oData.results;
-                const oChildList = [];
-
-                oTargetList.forEach((e) => {
-                  if (!_.isEmpty(oTargetList) && (!oFormData.Kdsvh || oFormData.Kdsvh === e.Kdsvh)) {
-                    oChildList.push(e);
-                  }
-                });
-
-                if (oChildList.length === 1) {
-                  oDetailModel.setProperty('/FormData/Zbirthday', oChildList[0].Zbirthday);
-                  oDetailModel.setProperty('/FormData/Kdsvh', oChildList[0].Kdsvh);
-                  oDetailModel.setProperty('/FormData/Zname', oChildList[0].Zname);
-
-                  const sAddDate = oDetailModel.getProperty('/benefitDate');
-
-                  if (!!sAddDate) {
-                    oDetailModel.setProperty('/FormData/Conddate', moment(oChildList[0].Zbirthday).add('year', sAddDate).toDate());
-                  }
-                }
-
-                oDetailModel.setProperty('/TargetList', oChildList);
-                oDetailModel.setProperty('/TargetListRowCount', _.size(oChildList));
-              }
-
-              resolve();
-            },
-            error: (oError) => {
-              AppUtils.handleError(oError);
-            },
-          });
-        });
       },
 
       // Dialog 대상자 클릭
       TargetClick(oEvent) {
         const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oDetailModel = this.getViewModel();
-        const oRowData = oDetailModel.getProperty(vPath);
+        const oViewModel = this.getViewModel();
+        const oRowData = oViewModel.getProperty(vPath);
 
-        oDetailModel.setProperty('/FormData/Zbirthday', oRowData.Zbirthday);
-        oDetailModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
-        oDetailModel.setProperty('/FormData/Zname', oRowData.Zname);
+        oViewModel.setProperty('/FormData/Zbirthday', oRowData.Zbirthday);
+        oViewModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
+        oViewModel.setProperty('/FormData/Zname', oRowData.Zname);
 
-        const sAddDate = oDetailModel.getProperty('/benefitDate');
+        const sAddDate = oViewModel.getProperty('/benefitDate');
 
         if (!!sAddDate) {
-          oDetailModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
+          oViewModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
         }
         this.byId('targetSettingsDialog').close();
       },
@@ -517,47 +474,47 @@ sap.ui.define(
       },
 
       checkError() {
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
+        const oViewModel = this.getViewModel();
+        const mFormData = oViewModel.getProperty('/FormData');
 
         // 경조유형
-        if (oFormData.Concode === 'ALL' || !oFormData.Concode) {
+        if (mFormData.Concode === 'ALL' || !mFormData.Concode) {
           MessageBox.alert(this.getBundleText('MSG_02010'));
           return true;
         }
 
         // 경조사유
-        if (oFormData.Conresn === 'ALL' || !oFormData.Conresn) {
+        if (mFormData.Conresn === 'ALL' || !mFormData.Conresn) {
           MessageBox.alert(this.getBundleText('MSG_02011'));
           return true;
         }
 
         // 대상자 관계
-        if (oFormData.Kdsvh === 'ALL' || !oFormData.Kdsvh) {
+        if (mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh) {
           MessageBox.alert(this.getBundleText('MSG_02012'));
           return true;
         }
 
         // 대상자 생년월일
-        if (!oFormData.Zbirthday) {
+        if (!mFormData.Zbirthday) {
           MessageBox.alert(this.getBundleText('MSG_02006'));
           return true;
         }
 
         // 경조일
-        if (!oFormData.Conddate) {
+        if (!mFormData.Conddate) {
           MessageBox.alert(this.getBundleText('MSG_02007'));
           return true;
         }
 
         // 대상자 성명
-        if (!oFormData.Zname) {
+        if (!mFormData.Zname) {
           MessageBox.alert(this.getBundleText('MSG_02008'));
           return true;
         }
 
         // 행사장소
-        if (!oFormData.Zeloc) {
+        if (!mFormData.Zeloc) {
           MessageBox.alert(this.getBundleText('MSG_02009'));
           return true;
         }
@@ -567,63 +524,61 @@ sap.ui.define(
 
       // 재작성
       onRewriteBtn() {
-        const oDetailModel = this.getViewModel();
+        const oViewModel = this.getViewModel();
 
-        oDetailModel.setProperty('/FormData/Appno', '');
-        oDetailModel.setProperty('/FormData/ZappStatAl', '');
+        oViewModel.setProperty('/FormData/Appno', '');
+        oViewModel.setProperty('/FormData/ZappStatAl', '');
         this.settingsAttachTable();
       },
 
       // 임시저장
       onSaveBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sAppno = oFormData.Appno;
-
         if (this.checkError(this)) return;
 
+        // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00103'), // 저장
+            this.getBundleText('LABEL_00118'), // 취소
+          ],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00103')) {
-              try {
-                AppUtils.setAppBusy(true);
+            // 저장
+            if (!vPress || vPress !== this.getBundleText('LABEL_00103')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            try {
+              AppUtils.setAppBusy(true);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/ZappStatAl', '10');
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+              const oViewModel = this.getViewModel();
+              const mFormData = oViewModel.getProperty('/FormData');
 
-                let oSendObject = {};
+              if (!mFormData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'T';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
-
-                // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-
-                await new Promise((resolve, reject) => {
-                  oModel.create('/ConExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(oError);
-                    },
-                  });
-                });
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false);
+                _.chain(mFormData).set('Appno', sAppno).set('ZappStatAl', '10').set('Appdt', new Date()).value();
               }
+
+              // FileUpload
+              await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mFormData,
+                Prcty: 'T',
+                Menid: this.getCurrentMenuId(),
+                Waers: 'KRW',
+              };
+
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
+
+              // {저장}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+            } catch (oError) {
+              this.debug('Controller > CongDetail > onSaveBtn Error', oError);
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -631,57 +586,56 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-        const oFormData = oDetailModel.getProperty('/FormData');
-        const sAppno = oFormData.Appno;
-
         if (this.checkError(this)) return;
 
+        // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00121'), // 신청
+            this.getBundleText('LABEL_00118'), // 취소
+          ],
           onClose: async (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00121')) {
-              try {
-                AppUtils.setAppBusy(true);
+            // 신청
+            if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
+              return;
+            }
 
-                if (!sAppno) {
-                  const sAppno = await Appno.get.call(this);
+            try {
+              AppUtils.setAppBusy(true);
 
-                  oDetailModel.setProperty('/FormData/Appno', sAppno);
-                  oDetailModel.setProperty('/FormData/Appdt', new Date());
-                }
+              const oViewModel = this.getViewModel();
+              const mFormData = oViewModel.getProperty('/FormData');
 
-                let oSendObject = {};
+              if (!mFormData.Appno) {
+                const sAppno = await Appno.get.call(this);
 
-                oSendObject = oFormData;
-                oSendObject.Prcty = 'C';
-                oSendObject.Menid = oDetailModel.getProperty('/menuId');
-                oSendObject.Waers = 'KRW';
-
-                // FileUpload
-                await this.AttachFileAction.uploadFile.call(this, oFormData.Appno, this.getApprovalType());
-                await new Promise((resolve, reject) => {
-                  oModel.create('/ConExpenseApplSet', oSendObject, {
-                    success: () => {
-                      resolve();
-                    },
-                    error: (oError) => {
-                      reject(oError);
-                    },
-                  });
-                });
-
-                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                  onClose: () => {
-                    this.onNavBack();
-                  },
-                });
-              } catch (oError) {
-                AppUtils.handleError(oError);
-              } finally {
-                AppUtils.setAppBusy(false);
+                _.chain(mFormData).set('Appno', sAppno).set('Appdt', new Date()).value();
               }
+
+              // FileUpload
+              await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const mSendObject = {
+                ...mFormData,
+                Prcty: 'C',
+                Menid: this.getCurrentMenuId(),
+                Waers: 'KRW',
+              };
+
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
+
+              // {신청}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
+            } catch (oError) {
+              this.debug('Controller > CongDetail > onApplyBtn Error', oError);
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -689,35 +643,40 @@ sap.ui.define(
 
       // 취소
       onCancelBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-
+        // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
+          // 확인, 취소
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00114')) {
-              AppUtils.setAppBusy(true);
+          onClose: async (vPress) => {
+            // 취소
+            if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
+              return;
+            }
 
-              let oSendObject = {};
+            AppUtils.setAppBusy(true);
 
-              oSendObject = oDetailModel.getProperty('/FormData');
-              oSendObject.Prcty = 'W';
-              oSendObject.Menid = oDetailModel.getProperty('/menuId');
+            try {
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const oViewModel = this.getViewModel();
+              const mSendObject = {
+                ...oViewModel.getProperty('/FormData'),
+                Prcty: 'W',
+                Menid: this.getCurrentMenuId(),
+              };
 
-              oModel.create('/ConExpenseApplSet', oSendObject, {
-                success: () => {
-                  AppUtils.setAppBusy(false);
-                  MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.setAppBusy(false);
-                  AppUtils.handleError(oError);
+              await Client.create(oModel, 'ConExpenseAppl', mSendObject);
+
+              // {취소}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
                 },
               });
+            } catch (oError) {
+              this.debug('Controller > CongDetail > onCancelBtn Error', oError);
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -725,32 +684,37 @@ sap.ui.define(
 
       // 삭제
       onDeleteBtn() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const oDetailModel = this.getViewModel();
-
+        // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
+          // 삭제, 취소
           actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: (vPress) => {
-            if (vPress && vPress === this.getBundleText('LABEL_00110')) {
-              AppUtils.setAppBusy(true);
+          onClose: async (vPress) => {
+            // 삭제
+            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+              return;
+            }
 
-              const sPath = oModel.createKey('/ConExpenseApplSet', {
-                Appno: oDetailModel.getProperty('/FormData/Appno'),
+            AppUtils.setAppBusy(true);
+
+            try {
+              const oViewModel = this.getViewModel();
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+
+              await Client.remove(oModel, 'ConExpenseAppl', {
+                Appno: oViewModel.getProperty('/FormData/Appno'),
               });
 
-              oModel.remove(sPath, {
-                success: () => {
-                  MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                    onClose: () => {
-                      this.onNavBack();
-                    },
-                  });
-                },
-                error: (oError) => {
-                  AppUtils.setAppBusy(false);
-                  AppUtils.handleError(oError);
+              // {삭제}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+                onClose: () => {
+                  this.onNavBack();
                 },
               });
+            } catch (oError) {
+              this.debug('Controller > CongDetail > onDeleteBtn Error', oError);
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -758,16 +722,15 @@ sap.ui.define(
 
       // AttachFileTable Settings
       settingsAttachTable() {
-        const oDetailModel = this.getViewModel();
-        const sStatus = oDetailModel.getProperty('/FormData/ZappStatAl');
-        const sAppno = oDetailModel.getProperty('/FormData/Appno') || '';
+        const oViewModel = this.getViewModel();
+        const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
+        const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
         this.AttachFileAction.setAttachFile(this, {
           Editable: !sStatus || sStatus === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
           Max: 10,
-          // FileTypes: ['jpg', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'bmp', 'txt', 'png'],
         });
       },
     });

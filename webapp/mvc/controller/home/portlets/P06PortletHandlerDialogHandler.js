@@ -61,13 +61,14 @@ sap.ui.define(
         const oMenuModel = AppUtils.getAppComponent().getMenuModel();
         await oMenuModel.getPromise();
 
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasProfileViewAuth = oMenuModel.hasEmployeeProfileViewAuth();
       },
 
-      async openDialog(mPayload) {
+      async openDialog(mPayload, bIsTotal = false) {
         try {
           setTimeout(() => {
             this.setBusy();
+            this.oDialogModel.setProperty('/dialog/isTotal', bIsTotal);
             this.oDialog.open();
           });
 
@@ -81,7 +82,7 @@ sap.ui.define(
             '/dialog/list',
             _.map(aEmployees, (o, i) => ({
               Idx: ++i,
-              Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+              Navigable: this.bHasProfileViewAuth ? 'O' : '',
               ...o,
             }))
           );
@@ -102,7 +103,7 @@ sap.ui.define(
       },
 
       onPressEmployeeRow(oEvent) {
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasProfileViewAuth) {
           return;
         }
 

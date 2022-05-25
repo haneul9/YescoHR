@@ -4,7 +4,7 @@ sap.ui.define(
     'sap/m/InstanceManager',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/UriHandler',
-    'sap/ui/yesco/common/mobile/MobileEmployeeSearchPopoverHandler',
+    'sap/ui/yesco/common/mobile/MobilePhoneNumberListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -19,6 +19,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/DateWeekday',
     'sap/ui/yesco/mvc/model/type/Decimal',
     'sap/ui/yesco/mvc/model/type/Docno',
+    'sap/ui/yesco/mvc/model/type/InputTime',
     'sap/ui/yesco/mvc/model/type/Month',
     'sap/ui/yesco/mvc/model/type/MonthDate',
     'sap/ui/yesco/mvc/model/type/MonthDateWeekday',
@@ -33,7 +34,7 @@ sap.ui.define(
     InstanceManager,
     AppUtils,
     UriHandler,
-    MobileEmployeeSearchPopoverHandler,
+    MobilePhoneNumberListPopoverHandler,
     Client,
     ServiceNames,
     MessageBox,
@@ -84,7 +85,7 @@ sap.ui.define(
           this.oMobileMyPagePopoverHandler = new MobileMyPagePopoverHandler(this);
         });
         setTimeout(() => {
-          this.oMobileEmployeeSearchPopoverHandler = new MobileEmployeeSearchPopoverHandler(this);
+          this.oMobilePhoneNumberListPopoverHandler = new MobilePhoneNumberListPopoverHandler(this);
         });
         setTimeout(() => {
           const sHost = /^localhost/.test(location.hostname) || /^(yeshrsapdev|devhrportal)/.test(location.hostname) ? 'dev' : 'prd';
@@ -201,7 +202,7 @@ sap.ui.define(
         InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
-        this.oMobileEmployeeSearchPopoverHandler.togglePopover(oEvent);
+        this.oMobilePhoneNumberListPopoverHandler.togglePopover(oEvent);
       },
 
       /**

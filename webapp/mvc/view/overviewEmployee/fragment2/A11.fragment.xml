@@ -2,12 +2,6 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}">
-    <layoutData>
-      <grid:GridItemLayoutData gridColumn="span 2" />
-    </layoutData>
-    <custom:Placeholder />
-  </VBox>
   <VBox class="portlet portlet-box" visible="{= !${/contents/A11/busy} }">
     <layoutData>
       <grid:GridItemLayoutData gridColumn="span 2" />
@@ -21,17 +15,23 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="false" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
+      <Button visible="{/contents/A11/hasLink}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_window.svg" iconDensityAware="false" type="Transparent" class="icon-button portlet-link-icon" />
     </HBox>
     <VBox class="portlet-body">
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart"&gt;&lt;/div&gt;'>
+      <core:HTML content='&lt;div id="employee-a11-chart-container" class="column-chart custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
         </core:layoutData>
       </core:HTML>
     </VBox>
+  </VBox>
+  <VBox class="portlet portlet-box" visible="{/contents/A11/busy}">
+    <layoutData>
+      <grid:GridItemLayoutData gridColumn="span 2" />
+    </layoutData>
+    <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

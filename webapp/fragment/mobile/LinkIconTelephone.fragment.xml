@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Link enabled="{= !!${Phone} }" href="tel:{Phone}" class="icon-telephone">
+    <layoutData>
+      <FlexItemData styleClass="icon-link" />
+    </layoutData>
+  </Link>
+</core:FragmentDefinition>

@@ -35,11 +35,11 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, hasLink: true, data: {} },
-            A02: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             A03: { busy: false, hasLink: false, data: { headty: 'D', raw: [] } },
-            A04: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
-            A05: { busy: false, hasLink: true, data: { total: 0, legends: [] } },
+            A04: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
+            A05: { busy: false, hasLink: false, data: { total: 0, legends: [] } },
             A06: { busy: false, hasLink: false, data: { headty: 'E', raw: [] } },
           },
           dialog: {
@@ -71,7 +71,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
 
           if (this.bMobile) {
             this.oPopupHandler = new MobileEmployeeListPopoverHandler(this);
@@ -94,7 +98,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(6).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('PC')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -252,7 +260,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            const oChart = new FusionCharts({
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
@@ -262,24 +270,23 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            FusionCharts.addEventListener('rendered', function () {
-              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
-                  $(this)
+            if (mChartInfo.Target === 'A03' || mChartInfo.Target === 'A06') {
+              oChart.addEventListener('rendered', () => {
+                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => {
+                  $(text)
                     .off('click')
-                    .on('click', function () {
-                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewOnOff').getController();
-                      const oViewModel = oController.getViewModel();
+                    .on('click', () => {
+                      const oViewModel = this.getViewModel();
                       const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
                       const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
                       const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
 
-                      oController.openDetailDialog(mPayload);
+                      this.openDetailDialog(mPayload);
                     })
                     .addClass('active-link');
                 });
-              }
-            });
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);
@@ -374,7 +381,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(ChartsSetting.CHART_TYPE, (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('PC')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > m/overviewOnOff Main > onPressSearch Error', oError);
 

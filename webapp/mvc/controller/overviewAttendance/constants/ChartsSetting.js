@@ -263,10 +263,11 @@ sap.ui.define([], function () {
       },
       scrollcombi2d: {
         chart: {
-          scrollHeight: '5',
+          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? '10' : '4',
+          scrollColor: '#ffffff',
           flatScrollBars: '1',
           scrollShowButtons: '0',
-          scrollColor: '#fefefe',
+          scrollColor: '#ffffff',
           baseFontSize: '14',
           valueFontSize: '14',
           legendItemFontSize: '14',

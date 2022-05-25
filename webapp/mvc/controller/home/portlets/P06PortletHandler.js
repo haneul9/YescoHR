@@ -180,7 +180,7 @@ sap.ui.define(
         if (this.bMobile) {
           this.oEmployeeListPopupHandler.openPopover(mPayload);
         } else {
-          this.oEmployeeListPopupHandler.openDialog(mPayload);
+          this.oEmployeeListPopupHandler.openDialog(mPayload, mEventSourceData.Total === 'Y');
         }
       },
 

@@ -6,7 +6,10 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/overviewEmployee/constants/ChartsSetting',
-    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeListPopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeList1PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeList2PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeList3PopoverHandler',
+    'sap/ui/yesco/mvc/controller/overviewEmployee/mobile/EmployeeList4PopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -15,7 +18,10 @@ sap.ui.define(
     ServiceNames,
     BaseController,
     ChartsSetting,
-    EmployeeListPopoverHandler
+    EmployeeList1PopoverHandler,
+    EmployeeList2PopoverHandler,
+    EmployeeList3PopoverHandler,
+    EmployeeList4PopoverHandler
   ) => {
     'use strict';
 
@@ -39,23 +45,25 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, data: {} },
-            A02: { busy: false, data: mData },
-            A03: { busy: false, data: [] },
-            A04: { busy: false, data: [] },
-            A05: { busy: false, data: {} },
-            A06: { busy: false, data: {} },
-            A07: { busy: false, data: [] },
-            A08: { busy: false, data: [] },
-            A09: { busy: false, data: {} },
-            A10: { busy: false },
-            // A11: { busy: false },
+            A01: { busy: false, hasLink: false, data: {} },
+            A02: { busy: false, hasLink: false, data: mData },
+            A03: { busy: false, hasLink: false, data: [] },
+            A04: { busy: false, hasLink: false, data: [] },
+            A05: { busy: false, hasLink: false, data: {} },
+            A06: { busy: false, hasLink: false, data: {} },
+            A07: { busy: false, hasLink: false, data: [] },
+            A08: { busy: false, hasLink: false, data: [] },
+            A09: { busy: false, hasLink: false, data: {} },
+            A10: { busy: false, hasLink: false },
+            A11: { busy: false, hasLink: false },
           },
           dialog: {
             busy: false,
             rowCount: 0,
             list: [],
           },
+          isDevMobile: false,
+          // isDevMobile: AppUtils.isMobile() && (AppUtils.isLOCAL() || AppUtils.isDEV() || AppUtils.isQAS()),
         };
       },
 
@@ -63,6 +71,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          oViewModel.setProperty('/searchAreaClose', false);
+
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
@@ -80,22 +90,23 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.chain(ChartsSetting.CHART_TYPE)
-            .take(10)
-            .forEach((o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0))
-            .commit();
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('Mobile')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
 
-          this.oEmployeeListPopoverHandler = new EmployeeListPopoverHandler(this); // EmployeeListPopoverHandler.js:64 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'Headty')
+          this.oEmployeeList1PopoverHandler = new EmployeeList1PopoverHandler(this);
+          this.oEmployeeList2PopoverHandler = new EmployeeList2PopoverHandler(this);
+          this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
+          this.oEmployeeList4PopoverHandler = new EmployeeList4PopoverHandler(this);
 
           window.callEmployeeDetail = (sArgs) => {
-            $('#fusioncharts-tooltip-element').css('z-index', 7);
-
             const aProps = ['OData', 'Headty', 'Discod', 'Zyear'];
             const aArgs = _.split(`H,${sArgs}`, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
-            const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
 
-            this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
+            this.callDetail(mPayload);
           };
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onObjectMatched Error', oError);
@@ -107,7 +118,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(10).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('Mobile')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -215,6 +230,7 @@ sap.ui.define(
 
             break;
           case 'mscolumn2d':
+          case 'scrollcolumn2d':
             let fMscolumn2dMaxValues = 0;
             _.chain(mChartSetting)
               // .set(['data', 'chart', 'yAxisMaxValue'], '60')
@@ -257,7 +273,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            const oChart = new FusionCharts({
               id: sChartId,
               type: Chart,
               renderAt: `${sChartId}-container`,
@@ -266,12 +282,61 @@ sap.ui.define(
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
+
+            if (mChartInfo.Target === 'A11') {
+              oChart.addEventListener('rendered', () => {
+                const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#ffffff', stroke: '#dfdfdf' })
+                  .css({ fill: '#ffffff', stroke: '#dfdfdf' });
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#c1c3c8', stroke: '#c1c3c8' })
+                  .css({ fill: '#c1c3c8', stroke: '#c1c3c8' });
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);
 
           oChart.setChartData(mChartSetting, 'json');
           setTimeout(() => oChart.render(), 200);
+        }
+      },
+
+      callDetail(mPayload) {
+        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+
+        this.openDialog({ ...mSearchConditions, ...mPayload });
+      },
+
+      openDialog(mPayload) {
+        const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+        setTimeout(() => {
+          $ChartTooltip.hide();
+        }, 3000);
+
+        switch (mPayload.Headty) {
+          case 'A': // A01 인원현황
+          case 'E': // A06 성별 현황
+          case 'F': // A10 조직별 현황
+            this.oEmployeeList1PopoverHandler.openPopover(mPayload);
+            break;
+          case 'C': // A09 평균 연령
+          case 'D': // A02 세대별 현황
+            this.oEmployeeList2PopoverHandler.openPopover(mPayload);
+            break;
+          case 'G': // A03 유형별 현황
+          case 'H': // A07 직급별 현황
+          case 'I': // A04 직책별 현황
+          case 'J': // A08 직군별 현황
+          case 'K': // A11 임원/팀장 1인당 직원수
+            this.oEmployeeList3PopoverHandler.openPopover(mPayload);
+            break;
+          case 'B': // A05 평균 근속
+            this.oEmployeeList4PopoverHandler.openPopover(mPayload);
+            break;
+          default:
+            break;
         }
       },
 
@@ -306,7 +371,11 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.PA);
           const mFilters = oViewModel.getProperty('/searchConditions');
 
-          _.forEach(_.take(ChartsSetting.CHART_TYPE, 10), (o) => setTimeout(() => this.buildChart(oModel, mFilters, o), 0));
+          _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+            if (o.Device.includes('Mobile')) {
+              this.buildChart(oModel, mFilters, o);
+            }
+          });
         } catch (oError) {
           this.debug('Controller > mobile/m/overviewEmployee Main > onPressSearch Error', oError);
 
@@ -315,10 +384,7 @@ sap.ui.define(
       },
 
       onPressCount(oEvent) {
-        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
-        const mPayload = oEvent.getSource().data();
-
-        this.oEmployeeListPopoverHandler.openPopover({ ...mSearchConditions, ...mPayload });
+        this.callDetail(oEvent.getSource().data());
       },
 
       onPressSearchAreaToggle() {
@@ -333,11 +399,30 @@ sap.ui.define(
       },
 
       reduceViewResource() {
-        this.oEmployeeListPopoverHandler.destroy();
+        this.oEmployeeList1PopoverHandler.destroy();
+        this.oEmployeeList2PopoverHandler.destroy();
+        this.oEmployeeList3PopoverHandler.destroy();
+        this.oEmployeeList4PopoverHandler.destroy();
         Object.values(FusionCharts.items).forEach((oChart) => {
           oChart.dispose();
         });
         return this;
+      },
+
+      onChangeLegendPosition(oEvent) {
+        const sClassName = oEvent.getParameter('value').replace(/\+/, 'p').replace(/\-/, 'm').replace(/\./, 'p');
+        $('#employee-a11-chart-container').toggleClass(['p2p0', 'p1p5', 'p1p0', 'p0p5', 'p0p0', 'm0p5', 'm1p0', 'm1p5', 'm2p0'].map((n) => `legend-translate-y-${n}`).join(' '), false);
+        $('#employee-a11-chart-container').toggleClass(`legend-translate-y-${sClassName}`, true);
+      },
+
+      onChangeScrollHeightCss(oEvent) {
+        const sClassName = oEvent.getParameter('value');
+        $('#employee-a11-chart-container').toggleClass([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => `scroll-h${n}`).join(' '), false);
+        $('#employee-a11-chart-container').toggleClass(`scroll-h${sClassName}`, true);
+      },
+
+      onChangeScrollHeight(oEvent) {
+        FusionCharts('employee-a11-chart').setChartAttribute('scrollHeight', oEvent.getParameter('value'));
       },
 
       /*****************************************************************

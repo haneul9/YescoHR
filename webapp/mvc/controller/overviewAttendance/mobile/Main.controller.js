@@ -38,16 +38,16 @@ sap.ui.define(
             Orgeh: [],
           },
           contents: {
-            A01: { busy: false, Headty: '', data: {} },
-            A02: { busy: false, Headty: '', data: {} },
-            A03: { busy: false, Headty: '', data: {} },
-            A04: { busy: false, Headty: '', data: {} },
-            A05: { busy: false, Headty: '' },
-            A06: { busy: false, Headty: '' },
-            A07: { busy: false, Headty: '' },
-            A08: { busy: false, Headty: '', data: {} },
-            A09: { busy: false, Headty: '', data: {} },
-            A10: { busy: false, Headty: '' },
+            A01: { busy: false, hasLink: false, Headty: '', data: {} },
+            A02: { busy: false, hasLink: false, Headty: '', data: {} },
+            A03: { busy: false, hasLink: false, Headty: '', data: {} },
+            A04: { busy: false, hasLink: false, Headty: '', data: {} },
+            A05: { busy: false, hasLink: false, Headty: '' },
+            A06: { busy: false, hasLink: false, Headty: '' },
+            A07: { busy: false, hasLink: false, Headty: '' },
+            A08: { busy: false, hasLink: false, Headty: '', data: {} },
+            A09: { busy: false, hasLink: false, Headty: '', data: {} },
+            A10: { busy: false, hasLink: false, Headty: '' },
           },
           dialog: {
             busy: false,
@@ -63,6 +63,8 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
+          oViewModel.setProperty('/searchAreaClose', false);
+
           this.setAllBusy(true);
 
           const oCommonModel = this.getModel(ServiceNames.COMMON);
@@ -93,8 +95,6 @@ sap.ui.define(
           this.oEmployeeList3PopoverHandler = new EmployeeList3PopoverHandler(this);
 
           window.callAttendanceDetail = (sArgs) => {
-            $('#fusioncharts-tooltip-element').css('z-index', 7);
-
             const aProps = ['Headty', 'Discod'];
             const aArgs = _.split(sArgs, ',');
             const mPayload = _.zipObject(_.take(aProps, aArgs.length), aArgs);
@@ -111,7 +111,11 @@ sap.ui.define(
       setAllBusy(bBusy) {
         const oViewModel = this.getViewModel();
 
-        _.times(8).forEach((idx) => oViewModel.setProperty(`/contents/A${_.padStart(++idx, 2, '0')}/busy`, bBusy));
+        _.forEach(ChartsSetting.CHART_TYPE, (o) => {
+          if (o.Device.includes('Mobile')) {
+            oViewModel.setProperty(`/contents/${o.Target}/busy`, bBusy);
+          }
+        });
       },
 
       async buildChart(oModel, mFilters, mChartInfo) {
@@ -184,28 +188,6 @@ sap.ui.define(
 
             break;
           case 'mscombi2d':
-            _.chain(mChartSetting)
-              .set(
-                ['categories', 0, 'category', 0],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt }))
-              )
-              .set(['dataset', 0], {
-                seriesName: this.getBundleText('LABEL_28048'), // 당일
-                showValues: '1',
-                color: '#7BB4EB',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt01, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` })),
-              })
-              .set(['dataset', 1], {
-                seriesName: this.getBundleText('LABEL_00196'), // 누적
-                renderAs: 'line',
-                color: '#FFAC4B',
-                data: _.map(aChartDatas, (o) => ({ value: o.Cnt02, link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod02}` })),
-              })
-              .commit();
-
-            this.callFusionChart(mChartInfo, mChartSetting);
-
-            break;
           case 'scrollcombi2d':
             _.chain(mChartSetting)
               .set(
@@ -279,7 +261,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            const oChart = new FusionCharts({
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
@@ -289,24 +271,17 @@ sap.ui.define(
               dataSource: mChartSetting,
             }).render();
 
-            FusionCharts.addEventListener('rendered', function () {
-              if (mChartInfo.Target === 'A06' || mChartInfo.Target === 'A03') {
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each(function (idx) {
-                  $(this)
-                    .off('click')
-                    .on('click', function () {
-                      const oController = sap.ui.getCore().byId('container-ehr---m_overviewAttendance').getController();
-                      const oViewModel = oController.getViewModel();
-                      const sHeadty = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/headty`);
-                      const sDisyear = oViewModel.getProperty(`/contents/${mChartInfo.Target}/data/raw/${idx}/Ttltxt`);
-                      const mPayload = _.zipObject(['Headty', 'Discod', 'Disyear'], [sHeadty, 'all', sDisyear]);
-
-                      oController.callDetail(mPayload);
-                    })
-                    .addClass('active-link');
-                });
-              }
-            });
+            if (mChartInfo.Target === 'A07' || mChartInfo.Target === 'A10') {
+              oChart.addEventListener('rendered', function () {
+                const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#ffffff', stroke: '#dfdfdf' })
+                  .css({ fill: '#ffffff', stroke: '#dfdfdf' });
+                $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(2)`) //
+                  .attr({ height: iHeight, rx: 3, ry: 3, fill: '#c1c3c8', stroke: '#c1c3c8' })
+                  .css({ fill: '#c1c3c8', stroke: '#c1c3c8' });
+              });
+            }
           });
         } else {
           const oChart = FusionCharts(sChartId);
@@ -336,6 +311,11 @@ sap.ui.define(
       },
 
       openDialog(mPayload) {
+        const $ChartTooltip = $('#fusioncharts-tooltip-element').css('z-index', 7);
+        setTimeout(() => {
+          $ChartTooltip.hide();
+        }, 3000);
+
         switch (mPayload.Headty) {
           case 'A': // 현재 근무현황
             this.oEmployeeList1PopoverHandler.openPopover(mPayload);
@@ -356,8 +336,6 @@ sap.ui.define(
           default:
             break;
         }
-
-        $('#fusioncharts-tooltip-element').hide();
       },
 
       /*****************************************************************

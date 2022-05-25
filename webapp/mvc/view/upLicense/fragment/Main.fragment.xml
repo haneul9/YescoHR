@@ -12,7 +12,7 @@
       </HBox>
     </VBox>
     <HBox class="contents" justifyContent="SpaceBetween">
-      <VBox busyIndicatorDelay="0" busy="{/busy}">
+      <VBox width="100%" busyIndicatorDelay="0" busy="{/busy}">
         <IconTabBar class="type-b" expandable="false" selectedKey="{/selectedKey}" select=".onSelectTabBar">
           <items>
             <IconTabFilter text="{i18n>LABEL_39002}" key="A">

@@ -1,6 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
+  <!--
+    MSS 평균근무시간
+    MSS OT근무현황
+    MSS 조직별 OT평균시간
+    MSS 직급별 OT평균시간
+    MSS 주 단위 근무시간 추이
+  -->
   <Popover modal="true" placement="Top" showArrow="false" showHeader="false" horizontalScrolling="false" verticalScrolling="false" resizable="{resizable}" class="half-popover employee-list-popover" busy="{busy}" busyIndicatorDelay="0">
     <content>
       <HBox class="search-field-container">
@@ -11,18 +18,11 @@
           <custom:MobileEmployeeList items="{employees}" photo="Photo" name="Ename" rank="Zzjikgbtx" duty="Zzjikchtx" department="Orgtx" doubleLine="true" itemPress=".navTo">
             <CustomListItem>
               <VBox>
-                <Text text="{i18n>LABEL_28054} : { path: 'Nomtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
-                <Text text="{i18n>LABEL_28062} : { path: 'Holtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+                <Text text="{i18n>LABEL_28054} : { path: 'Nomtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" wrapping="false" />
+                <Text text="{i18n>LABEL_28062} : { path: 'Holtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" wrapping="false" />
               </VBox>
-              <!-- 돋보기 아이콘 -->
-              <Link visible="{= ${Navigable} === 'O' }" class="icon-search" press=".navTo">
-                <customData>
-                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
-                </customData>
-                <layoutData>
-                  <FlexItemData styleClass="icon-link" />
-                </layoutData>
-              </Link>
+              <!-- 개인별근태현황 아이콘 -->
+              <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.LinkIconAttendance" type="XML" />
             </CustomListItem>
           </custom:MobileEmployeeList>
         </content>

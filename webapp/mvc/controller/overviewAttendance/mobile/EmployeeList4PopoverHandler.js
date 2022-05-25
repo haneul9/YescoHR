@@ -1,8 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/model/Filter',
-    'sap/ui/model/FilterOperator',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/mobile/MobileEmployeeListPopoverHandler',
     'sap/ui/yesco/common/odata/Client',
@@ -10,8 +8,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Filter,
-    FilterOperator,
     AppUtils,
     MobileEmployeeListPopoverHandler,
     Client,
@@ -25,8 +21,7 @@ sap.ui.define(
       },
 
       setPropertiesForNavTo(oMenuModel) {
-        this.sProfileMenuUrl = oMenuModel.getEmployeeProfileMenuUrl();
-        this.bHasProfileMenuAuth = oMenuModel.hasEmployeeProfileMenuAuth();
+        this.bHasMssMenuAuth = oMenuModel.hasMssMenuAuth();
       },
 
       async onBeforeOpen() {
@@ -47,7 +42,7 @@ sap.ui.define(
             Datum,
             Bashr: Bashr || 0,
             Addhr: Addhr || 0,
-            Navigable: this.bHasProfileMenuAuth ? 'O' : '',
+            Navigable: this.bHasMssMenuAuth ? 'O' : '',
           }))
         );
 
@@ -61,25 +56,11 @@ sap.ui.define(
       },
 
       onLiveChange(oEvent) {
-        const sValue = $.trim(oEvent.getParameter('newValue'));
-        if (!sValue) {
-          this.clearSearchFilter();
-          return;
-        }
-
-        const aFilters = new Filter({
-          filters: [
-            new Filter('Ename', FilterOperator.Contains, sValue), //
-            new Filter('Pernr', FilterOperator.Contains, sValue),
-          ],
-          and: false,
-        });
-
-        this.setSearchFilter(aFilters);
+        this.filterEmployeeList(oEvent);
       },
 
       navTo(oEvent) {
-        if (!this.bHasProfileMenuAuth) {
+        if (!this.bHasMssMenuAuth) {
           return;
         }
 
@@ -88,8 +69,8 @@ sap.ui.define(
         const oDatum = moment(mRowData.getProperty('Datum'));
         const mParameter = {
           pernr: sPernr,
-          year: oDatum.get('year'),
-          month: oDatum.get('month'),
+          year: oDatum.year(),
+          month: oDatum.month(),
         };
         AppUtils.getAppController().getAppMenu().moveToMenu('mobile/individualWorkState', mParameter);
       },
