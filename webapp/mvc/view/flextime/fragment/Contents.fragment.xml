@@ -23,7 +23,7 @@
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.SummaryTable" type="XML" />
             </VBox>
             <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" class="header-wrap">
+                <HBox justifyContent="SpaceBetween" class="header-wrap top-sticky">
                     <HBox class="header">
                         <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
                     </HBox>

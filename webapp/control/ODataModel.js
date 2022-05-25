@@ -54,6 +54,8 @@ sap.ui.define(
 
         if (_.startsWith(type, 'Edm.Int')) {
           _.set(mData, sKey, _.toNumber(sValue));
+        } else if (_.startsWith(type, 'Edm.Boolean')) {
+          _.set(mData, sKey, sValue);
         } else if (_.isEqual(sValue, 'ALL')) {
           _.set(mData, sKey, _.noop());
         } else if (_.isDate(sValue)) {

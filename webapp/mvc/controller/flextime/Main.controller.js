@@ -49,9 +49,8 @@ sap.ui.define(
             work: { rowCount: 1, list: [{ Beguz: null, Enduz: null }] },
             legal: { rowCount: 1, list: [{ Beguz: null, Enduz: null }] },
             extra: {
-              rowCount: 4,
+              rowCount: 3,
               list: [
-                { Beguz: null, Enduz: null, Sumrow: false },
                 { Beguz: null, Enduz: null, Sumrow: false },
                 { Beguz: null, Enduz: null, Sumrow: false },
                 { Beguz: null, Enduz: null, Sumrow: true },
@@ -116,9 +115,11 @@ sap.ui.define(
             _.chain(aResults)
               .map((o) => ({
                 ..._.omit(o, '__metadata'),
-                Clsdatx: moment(o.Clsda).format('YYYY.MM.DD'),
                 Beguz: this.TimeUtils.nvl(o.Beguz),
                 Enduz: this.TimeUtils.nvl(o.Enduz),
+                Gaptim: _.toNumber(o.Gaptim),
+                Gaptimtx: _.toNumber(o.Gaptim) > 0 ? `+${_.toNumber(o.Gaptim)}` : _.toNumber(o.Gaptim).toString(),
+                Clsdatx: moment(o.Clsda).format('YYYY.MM.DD'),
               }))
               .get(0, { Zyymm: sYearMonth })
               .value(),
@@ -255,7 +256,6 @@ sap.ui.define(
               oViewModel.setProperty('/dialog/extra/list', [
                 { Beguz: _.get(mResult, 'Pbeg1'), Enduz: _.get(mResult, 'Pend1'), Anzb: _.get(mResult, 'Anzb1'), Resn: _.get(mResult, 'Resn1'), Sumrow: false }, //
                 { Beguz: _.get(mResult, 'Pbeg2'), Enduz: _.get(mResult, 'Pend2'), Anzb: _.get(mResult, 'Anzb2'), Resn: _.get(mResult, 'Resn2'), Sumrow: false },
-                { Beguz: _.get(mResult, 'Pbeg3'), Enduz: _.get(mResult, 'Pend3'), Anzb: _.get(mResult, 'Anzb3'), Resn: _.get(mResult, 'Resn3'), Sumrow: false },
                 {
                   Beguz: null,
                   Enduz: null,
@@ -274,7 +274,6 @@ sap.ui.define(
               oViewModel.setProperty('/dialog/legal/list', [{ Beguz: this.TimeUtils.toEdm('1200'), Enduz: this.TimeUtils.toEdm('1300'), Anzb: '1.00', Brk01m: '1.00' }]);
               oViewModel.setProperty('/dialog/extra/list', [
                 { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false }, //
-                { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
                 { Beguz: null, Enduz: null, Anzb: '', Resn: '', Sumrow: false },
                 { Beguz: null, Enduz: null, Anzb: '0', Resn: '', Sumrow: true },
               ]);
@@ -347,8 +346,10 @@ sap.ui.define(
         const oRowBindingContext = oEvent.getSource().getBindingContext();
         const mRowData = oRowBindingContext.getObject();
         const sPath = oRowBindingContext.getPath();
+        const sDiffTime = this.TimeUtils.diff(mRowData.Beguz, mRowData.Enduz);
 
-        _.set(mRowData, 'Anzb', this.TimeUtils.diff(mRowData.Beguz, mRowData.Enduz));
+        _.set(mRowData, 'Anzb', sDiffTime);
+        if (_.isEmpty(sDiffTime)) _.set(mRowData, 'Resn', null);
 
         if (_.startsWith(sPath, '/dialog/extra')) this.calcExtraTimeSum();
       },
@@ -357,7 +358,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aExtraList = oViewModel.getProperty('/dialog/extra/list');
 
-        oViewModel.setProperty('/dialog/extra/list/3/Anzb', _.chain(aExtraList).take(3).mapValues('Anzb').values().compact().sumBy(_.toNumber).toString().value());
+        oViewModel.setProperty('/dialog/extra/list/2/Anzb', _.chain(aExtraList).take(2).mapValues('Anzb').values().compact().sumBy(_.toNumber).toString().value());
       },
 
       setContentsBusy(bContentsBusy = true, vTarget = []) {
@@ -442,25 +443,24 @@ sap.ui.define(
       getBreakInputData() {
         const oViewModel = this.getViewModel();
         const mDialog = oViewModel.getProperty('/dialog');
+        const mLegalTime = _.get(mDialog, ['legal', 'list', 0]);
+        const mExtraTime1 = _.get(mDialog, ['extra', 'list', 0]);
+        const mExtraTime2 = _.get(mDialog, ['extra', 'list', 1]);
 
         const mBreakData = {
           Beguz: _.get(mDialog, ['work', 'list', 0, 'Beguz']),
           Enduz: _.get(mDialog, ['work', 'list', 0, 'Enduz']),
-          Pbeg0: _.get(mDialog, ['legal', 'list', 0, 'Beguz']), // 법정휴게시작
-          Pend0: _.get(mDialog, ['legal', 'list', 0, 'Enduz']), // 법정휴게종료
-          Anzb0: _.get(mDialog, ['legal', 'list', 0, 'Anzb']), // 법정휴게시간
-          Pbeg1: _.get(mDialog, ['extra', 'list', 0, 'Beguz']), // 추가휴게시작1
-          Pend1: _.get(mDialog, ['extra', 'list', 0, 'Enduz']), // 추가휴게종료1
-          Anzb1: _.get(mDialog, ['extra', 'list', 0, 'Anzb']), // 추가휴게시간1
-          Pbeg2: _.get(mDialog, ['extra', 'list', 1, 'Beguz']), // 추가휴게시작2
-          Pend2: _.get(mDialog, ['extra', 'list', 1, 'Enduz']), // 추가휴게종료2
-          Anzb2: _.get(mDialog, ['extra', 'list', 1, 'Anzb']), // 추가휴게시간2
-          Pbeg3: _.get(mDialog, ['extra', 'list', 2, 'Beguz']), // 추가휴게시작3
-          Pend3: _.get(mDialog, ['extra', 'list', 2, 'Enduz']), // 추가휴게종료3
-          Anzb3: _.get(mDialog, ['extra', 'list', 2, 'Anzb']), // 추가휴게시간3
-          Resn1: _.get(mDialog, ['extra', 'list', 0, 'Resn']), // 휴게사유 1
-          Resn2: _.get(mDialog, ['extra', 'list', 1, 'Resn']), // 휴게사유 2
-          Resn3: _.get(mDialog, ['extra', 'list', 2, 'Resn']), // 휴게사유 3
+          Pbeg0: _.get(mLegalTime, 'Beguz'), // 법정휴게시작
+          Pend0: _.get(mLegalTime, 'Enduz'), // 법정휴게종료
+          Anzb0: _.get(mLegalTime, 'Anzb'), // 법정휴게시간
+          Pbeg1: _.get(mExtraTime1, 'Beguz'), // 추가휴게시작1
+          Pend1: _.get(mExtraTime1, 'Enduz'), // 추가휴게종료1
+          Anzb1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? null : _.get(mExtraTime1, 'Anzb'), // 추가휴게시간1
+          Resn1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? null : _.get(mExtraTime1, 'Resn'), // 휴게사유 1
+          Pbeg2: _.get(mExtraTime2, 'Beguz'), // 추가휴게시작2
+          Pend2: _.get(mExtraTime2, 'Enduz'), // 추가휴게종료2
+          Anzb2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? null : _.get(mExtraTime2, 'Anzb'), // 추가휴게시간2
+          Resn2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? null : _.get(mExtraTime2, 'Resn'), // 휴게사유 2
         };
 
         return _.chain(mBreakData).omitBy(_.isEmpty).omitBy(_.isNil).omitBy(_.isNull).value();
@@ -468,7 +468,7 @@ sap.ui.define(
 
       validationBreak() {
         const oViewModel = this.getViewModel();
-        const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 3);
+        const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 2);
 
         if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
           throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
