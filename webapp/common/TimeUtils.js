@@ -50,6 +50,16 @@ sap.ui.define(
 
           return _.isInteger(iMinutesRemainder) ? sSourceMinutes : _.chain(iMinutesRemainder).floor().multiply(iStep).toString().value();
         },
+
+        convert2400Time(mData) {
+          _.forOwn(mData, (v, p) => {
+            if (_.isObject(v) && _.has(v, 'ms') && _.chain(v).get('ms').isEqual(86400000).value()) {
+              _.set(mData, p, 'P00DT24H00M00S');
+            }
+          });
+
+          return mData;
+        },
       };
 
       return TimeUtils;

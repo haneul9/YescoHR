@@ -183,7 +183,7 @@ sap.ui.define(
               row.removeStyleClass('row-select');
             }
 
-            if (mRowData.Offyn === 'X') {
+            if (mRowData.Offyn === 'X' || mRowData.Alldf === true) {
               $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');
             } else {
               $(`#${sTableId}-rowsel${i}`).removeClass('disabled-table-selection');
@@ -199,7 +199,7 @@ sap.ui.define(
 
         if (oEvent.getParameter('selectAll') === true) {
           _.forEach(aDetailsList, (o, i) => {
-            if (o.Offyn === 'X') oTable.removeSelectionInterval(i, i);
+            if (o.Offyn === 'X' || o.Alldf === true) oTable.removeSelectionInterval(i, i);
           });
 
           // $(`#${oTable.getId()}-selall`).removeClass('sapUiTableSelAll').attr('aria-checked', true);
@@ -495,7 +495,12 @@ sap.ui.define(
 
         try {
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
-          const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
+          const aDetails = _.chain(oViewModel.getProperty('/details/list'))
+            .cloneDeep()
+            .map((o) => this.TimeUtils.convert2400Time(o))
+            .value();
+
+          mBreak = this.TimeUtils.convert2400Time(mBreak);
 
           const mResults = await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             ...mSummary,
@@ -534,6 +539,8 @@ sap.ui.define(
               Enduz: this.TimeUtils.nvl(o.Enduz),
             }))
           );
+
+          this.setDetailsTableRowColor();
 
           if (!_.isEmpty(mResults.Errmsg)) {
             MessageBox.error(mResults.Errmsg, {

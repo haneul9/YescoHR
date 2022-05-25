@@ -2,7 +2,7 @@
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <m:Dialog showHeader="false" contentWidth="{= !${/dialog/isTotal} ? '1400px' : '910px' }" contentHeight="570px" draggable="true">
+  <m:Dialog showHeader="false" contentWidth="{= !${/dialog/isTotal} ? '1600px' : '1040px' }" contentHeight="570px" draggable="true">
     <m:content>
       <m:VBox class="hCardBox mb-16-px" visible="{/dialog/busy}">
         <custom:Placeholder />
@@ -21,25 +21,25 @@
             </m:HBox>
           </extension>
           <columns>
-            <Column width="4%" filterProperty="Idx" sortProperty="Idx">
+            <Column width="60px" filterProperty="Idx" sortProperty="Idx">
               <m:Label text="No."/>
               <template>
                 <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="12%" filterProperty="OrgtxD" sortProperty="OrgtxD">
+            <Column width="200px" filterProperty="OrgtxD" sortProperty="OrgtxD">
               <m:Label text="{i18n>LABEL_28034}"/>
               <template>
                 <m:Text text="{OrgtxD}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
+            <Column width="250px" filterProperty="Orgtx" sortProperty="Orgtx">
               <m:Label text="{i18n>LABEL_00224}"/>
               <template>
                 <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Ename" sortProperty="Ename">
+            <Column width="150px" filterProperty="Ename" sortProperty="Ename">
               <m:Label text="{i18n>LABEL_00210}"/>
               <template>
                 <m:Link text="{Ename}" subtle="{= ${Navigable} !== 'O' }" enabled="{= ${Navigable} === 'O' }" press=".onPressEmployeeRow" class="showLine" width="100%" textAlign="Center">
@@ -49,31 +49,34 @@
                 </m:Link>
               </template>
             </Column>
-            <Column width="auto" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
+            <Column width="150px" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
               <m:Label text="{i18n>LABEL_00215}"/>
               <template>
                 <m:Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
+            <Column width="150px" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
               <m:Label text="{i18n>LABEL_00217}"/>
               <template>
                 <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Datum" sortProperty="Datum" visible="{= !${/dialog/isTotal} }">
+            <Column width="100px" filterProperty="Datum" sortProperty="Datum" visible="{= !${/dialog/isTotal} }">
               <m:Label text="{i18n>LABEL_00170}"/>
               <template>
                 <m:Text text="{path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date'}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="auto" filterProperty="Atext" sortProperty="Atext" visible="{= !${/dialog/isTotal} }">
+            <Column width="100px" filterProperty="Atext" sortProperty="Atext" visible="{= !${/dialog/isTotal} }">
               <m:Label text="{i18n>LABEL_04010}"/>
               <template>
                 <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
               </template>
             </Column>
-            <Column width="15%" filterProperty="Atrsn" sortProperty="Atrsn" visible="{= !${/dialog/isTotal} }">
+            <Column filterProperty="Atrsn" sortProperty="Atrsn" visible="{= !${/dialog/isTotal} }">
+              <layoutData>
+                <m:FlexItemData growFactor="1" />
+              </layoutData>
               <m:Label text="{i18n>LABEL_00154}"/>
               <template>
                 <m:Text text="{Atrsn}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
