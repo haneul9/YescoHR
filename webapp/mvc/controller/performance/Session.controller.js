@@ -49,6 +49,7 @@ sap.ui.define(
           department: {
             rowCount: 2,
             list: [],
+            data: []
           },
           dialog: {
             busy: true,
@@ -57,6 +58,12 @@ sap.ui.define(
             gradeTx: '',
             list: [],
           },
+          changeDialog:{
+            busy: true,
+            list: [],
+            item: []
+          },
+          Werks: this.getSessionProperty('Werks')
         };
       },
 
@@ -79,7 +86,7 @@ sap.ui.define(
 
         try {
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          const [aGrades, mDetailData] = await Promise.all([
+          const [aGrades, mDetailData, aDialogGrade] = await Promise.all([
             Client.getEntitySet(oModel, 'AppValueList', { VClass: 'Q', VType: '810' }), //
             Client.deep(oModel, 'AppraisalSesDoc', {
               Menid: this.getCurrentMenuId(),
@@ -87,6 +94,7 @@ sap.ui.define(
               AppraisalApGroupSet: [],
               AppraisalSesDocDetSet: [],
             }),
+            Client.getEntitySet(oModel, 'AppValueList', { VClass: 'Q', VType: '801' }),
           ]);
 
           const mGradeMap = _.reduce(aGrades, (acc, cur) => ({ ...acc, [cur.ValueEid]: cur.ValueText }), {});
@@ -95,6 +103,7 @@ sap.ui.define(
           oViewModel.setProperty('/gradeMap', mGradeMap);
           oViewModel.setProperty('/grade', aGrades);
           oViewModel.setProperty('/gradeEntry', _.take(aGrades, 2));
+          oViewModel.setProperty('/changeDialog/item', aDialogGrade);
 
           const aGroups = _.map(mDetailData.AppraisalApGroupSet.results, (o) => _.omit(o, '__metadata'));
           const aTemplateGrades = _.chain(aGrades)
@@ -243,6 +252,11 @@ sap.ui.define(
           .orderBy(['Osort'], ['asc'])
           .value();
 
+        const aDataByDepart = _.chain(aRawList)
+        .orderBy(['OsortSub'], ['asc'])
+        .groupBy('Zzappun2')
+        .value();
+
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = this.TableUtils.generateSumRow({
           aTableData: aListByDepart,
@@ -260,6 +274,7 @@ sap.ui.define(
 
         oViewModel.setProperty('/department/rowCount', _.chain(aListByDepart).size().add(1).value());
         oViewModel.setProperty('/department/list', _.compact([...aListByDepart, mSumRow]));
+        oViewModel.setProperty('/department/data', aDataByDepart);
       },
 
       orderBy(sPath, aProps, aOrders) {
@@ -612,6 +627,92 @@ sap.ui.define(
         ];
 
         this.TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
+      },
+
+      async pressValue(oEvent){
+        const mRowData = oEvent.getSource().getCustomData()[0].getValue();
+        const sValueEid = oEvent.getSource().getCustomData()[1].getValue();
+        const oView = this.getView();
+        const oViewModel = this.getViewModel();
+        const aDataByDepart = oViewModel.getProperty('/department/data');
+        const aData = _.chain(_.get(aDataByDepart, mRowData.Zzappun2))
+                      .filter((o) => _.isEqual(o.Lfapp, sValueEid))
+                      .cloneDeep()
+                      .value();
+
+        console.log(mRowData, sValueEid);
+        console.log(aData);
+
+        if(mRowData.Sumrow) {
+          return;
+        }
+
+        if (!this.oChangeFappDialog) {
+          this.oChangeFappDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.performance.fragment.session.DialogChangeFapp',
+            controller: this,
+          });
+
+          oView.addDependent(this.oChangeFappDialog);
+        }
+
+        try {
+          oViewModel.setProperty('/changeDialog/busy', true);
+          
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          const aList = await Client.deep(oModel, 'AppraisalSesDoc', {
+              Menid: this.getCurrentMenuId(),
+              Prcty: Constants.PROCESS_TYPE.SEARCH.code,
+              AppraisalApGroupSet: [],
+              AppraisalSesDocDetSet: [],
+              AppraisalSesDocDet2Set: aData
+          });
+
+          oViewModel.setProperty('/changeDialog/list', aList.AppraisalSesDocDet2Set.results);
+          this.oChangeFappDialog.open();
+        } catch (oError) {
+          this.debug('Controller > performance > Session > pressValue Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/changeDialog/busy', false);          
+        }       
+      },
+
+      async onPressChangeFappDialogSave() {
+        const oViewModel = this.getViewModel();
+        const aList = oViewModel.getProperty('/changeDialog/list');
+
+        try {
+          oViewModel.setProperty('/changeDialog/busy', true);
+          
+          const oModel = this.getModel(ServiceNames.APPRAISAL);
+          
+          await Client.deep(oModel, 'AppraisalSesDoc', {
+            Menid: this.getCurrentMenuId(),
+            Prcty: Constants.PROCESS_TYPE.DIALOG_SAVE.code,
+            AppraisalSesDocDet2Set: aList,
+          });
+
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+            onClose: () => {
+                oViewModel.setProperty('/changeDialog/list', []);
+                this.onPressChangeFappDialogClose();
+                this.onObjectMatched();
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > performance > Session > onPressChangeFappDialogSave Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/changeDialog/busy', false);          
+        }   
+      },
+
+      onPressChangeFappDialogClose() {
+        this.oChangeFappDialog.close();
       },
 
       /*****************************************************************

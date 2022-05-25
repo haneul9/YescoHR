@@ -495,7 +495,12 @@ sap.ui.define(
 
         try {
           const mSummary = _.cloneDeep(oViewModel.getProperty('/summary/list/0'));
-          const aDetails = _.cloneDeep(oViewModel.getProperty('/details/list'));
+          const aDetails = _.chain(oViewModel.getProperty('/details/list'))
+            .cloneDeep()
+            .map((o) => this.TimeUtils.convert2400Time(o))
+            .value();
+
+          mBreak = this.TimeUtils.convert2400Time(mBreak);
 
           const mResults = await Client.deep(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             ...mSummary,
