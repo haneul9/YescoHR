@@ -254,24 +254,24 @@ sap.ui.define(
         }
       },
 
-      callFusionChart(mChartInfo, mChartSetting) {
+      callFusionChart({ Target, Chart, ChartWidth, ChartHeight }, mChartSetting) {
         if (_.isEmpty(mChartSetting)) return;
 
-        const sChartId = `attendance-${_.toLower(mChartInfo.Target)}-chart`;
+        const sChartId = `attendance-${_.toLower(Target)}-chart`;
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
             const oChart = new FusionCharts({
               id: sChartId,
-              type: _.replace(mChartInfo.Chart, '-S', ''),
+              type: _.replace(Chart, '-S', ''),
               renderAt: `${sChartId}-container`,
-              width: _.has(mChartInfo, 'ChartWidth') ? mChartInfo.ChartWidth : '100%',
-              height: _.has(mChartInfo, 'ChartHeight') ? mChartInfo.ChartHeight : '100%',
+              width: ChartWidth || '100%',
+              height: ChartHeight || '100%',
               dataFormat: 'json',
               dataSource: mChartSetting,
             }).render();
 
-            if (mChartInfo.Target === 'A07' || mChartInfo.Target === 'A10') {
+            if (Target === 'A07' || Target === 'A10') {
               oChart.addEventListener('rendered', function () {
                 const iHeight = /iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 4;
                 $(`#${sChartId}.fusioncharts-container svg g[class*="-scroller"] rect:nth-child(1)`) //
