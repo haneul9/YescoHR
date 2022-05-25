@@ -63,7 +63,8 @@ sap.ui.define(
             list: [],
             item: []
           },
-          Werks: this.getSessionProperty('Werks')
+          Werks: this.getSessionProperty('Werks'),
+          isChange: (this.getSessionProperty('Werks') === '1000' || this.getSessionProperty('Werks') === '5000') ? true : false
         };
       },
 
@@ -80,7 +81,7 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
-
+        
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
 
