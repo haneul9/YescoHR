@@ -183,7 +183,7 @@ sap.ui.define(
               row.removeStyleClass('row-select');
             }
 
-            if (mRowData.Offyn === 'X' || mRowData.Alldf === 'X') {
+            if (mRowData.Offyn === 'X' || mRowData.Alldf === true) {
               $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');
             } else {
               $(`#${sTableId}-rowsel${i}`).removeClass('disabled-table-selection');
@@ -199,7 +199,7 @@ sap.ui.define(
 
         if (oEvent.getParameter('selectAll') === true) {
           _.forEach(aDetailsList, (o, i) => {
-            if (o.Offyn === 'X' || o.Alldf === 'X') oTable.removeSelectionInterval(i, i);
+            if (o.Offyn === 'X' || o.Alldf === true) oTable.removeSelectionInterval(i, i);
           });
 
           // $(`#${oTable.getId()}-selall`).removeClass('sapUiTableSelAll').attr('aria-checked', true);
