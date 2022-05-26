@@ -274,11 +274,34 @@ sap.ui.define(
               ]);
             }
           })
-          .attachAfterOpen(() => this.setContentsBusy(false, 'Dialog'));
+          .attachAfterOpen(() => this.setContentsBusy(false, 'Dialog'))
+          .attachBeforeClose(() => {
+            const oViewModel = this.getViewModel();
+
+            oViewModel.setProperty('/dialog/work/list', []);
+            oViewModel.setProperty('/dialog/legal/list', []);
+            oViewModel.setProperty('/dialog/extra/list', []);
+
+            this.resetTableTimePicker('flextimeWorkTable');
+            this.resetTableTimePicker('flextimeLegalTable');
+            this.resetTableTimePicker('flextimeExtraTable');
+          });
 
         oView.addDependent(this._oTimeInputDialog);
 
         this.TableUtils.summaryColspan({ oTable: this.byId('flextimeExtraTable'), aHideIndex: [1] });
+      },
+
+      resetTableTimePicker(sTableId) {
+        if (!sTableId) return;
+
+        this.byId(sTableId)
+          .getRows()
+          .forEach((row) => {
+            row.getCells().forEach((cell) => {
+              if (cell instanceof sap.m.TimePicker) cell.setValue(null);
+            });
+          });
       },
 
       async onChangeMonth(oEvent) {

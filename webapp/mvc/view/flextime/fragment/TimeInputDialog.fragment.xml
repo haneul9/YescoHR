@@ -4,7 +4,7 @@
     <m:Dialog title="{i18n>LABEL_40024}" contentWidth="800px" draggable="true">
         <m:content>
             <m:VBox class="dialog-content-table" busyIndicatorDelay="0" busy="{/busy/Dialog}">
-                <Table width="40%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/work/list}" visibleRowCount="{/dialog/work/rowCount}" noData="{i18n>MSG_00001}" visible="{= ${/dialog/targetDates}.length > 1 }">
+                <Table id="flextimeWorkTable" width="40%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/work/list}" visibleRowCount="{/dialog/work/rowCount}" noData="{i18n>MSG_00001}" visible="{= ${/dialog/targetDates}.length > 1 }">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
@@ -27,7 +27,7 @@
                         </Column>
                     </columns>
                 </Table>
-                <Table width="100%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/legal/list}" visibleRowCount="{/dialog/legal/rowCount}" noData="{i18n>MSG_00001}">
+                <Table id="flextimeLegalTable" width="100%" class="sapUiSmallMarginTop" selectionMode="None" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/legal/list}" visibleRowCount="{/dialog/legal/rowCount}" noData="{i18n>MSG_00001}">
                     <extension>
                         <m:HBox class="header-wrap" justifyContent="SpaceBetween">
                             <m:HBox class="header" alignItems="Center">
