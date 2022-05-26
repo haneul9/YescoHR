@@ -69,7 +69,7 @@ sap.ui.define(
           await this.readFlextimeSummary(sZyymm);
           await this.readFlextimeDetails(sZyymm);
 
-          this.setDetailsTableRowColor();
+          this.setDetailsTableStyle();
         } catch (oError) {
           this.debug('Controller > flextime > callbackAppointeeChange Error', oError);
 
@@ -89,8 +89,8 @@ sap.ui.define(
           await this.readFlextimeSummary();
           await this.readFlextimeDetails();
 
-          this.setTableColor();
-          this.setDetailsTableRowColor();
+          this.setSummaryTableStyle();
+          this.setDetailsTableStyle();
           this.initializeInputDialog();
         } catch (oError) {
           this.debug('Controller > flextime > onObjectMatched Error', oError);
@@ -103,24 +103,19 @@ sap.ui.define(
 
       async readFlextimeSummary(sZyymm) {
         try {
+          const oViewModel = this.getViewModel();
           const sYearMonth = _.isEmpty(sZyymm) ? moment().format('YYYYMM') : sZyymm;
+
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             Actty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
             Zyymm: sYearMonth,
           });
 
-          this.getViewModel().setProperty('/summary/rowCount', 1);
-          this.getViewModel().setProperty('/summary/list', [
+          oViewModel.setProperty('/summary/rowCount', 1);
+          oViewModel.setProperty('/summary/list', [
             _.chain(aResults)
-              .map((o) => ({
-                ..._.omit(o, '__metadata'),
-                Beguz: this.TimeUtils.nvl(o.Beguz),
-                Enduz: this.TimeUtils.nvl(o.Enduz),
-                Gaptim: _.toNumber(o.Gaptim),
-                Gaptimtx: _.toNumber(o.Gaptim) > 0 ? `+${_.toNumber(o.Gaptim)}` : _.toNumber(o.Gaptim).toString(),
-                Clsdatx: moment(o.Clsda).format('YYYY.MM.DD'),
-              }))
+              .map((o) => this.handshakeSummaryData(o))
               .get(0, { Zyymm: sYearMonth })
               .value(),
           ]);
@@ -131,16 +126,16 @@ sap.ui.define(
 
       async readFlextimeDetails(sZyymm) {
         try {
+          const oViewModel = this.getViewModel();
           const sYearMonth = _.isEmpty(sZyymm) ? moment().format('YYYYMM') : sZyymm;
-          const mPayload = {
-            Werks: this.getAppointeeProperty('Werks'),
+
+          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeDetail', {
             Pernr: this.getAppointeeProperty('Pernr'),
             Zyymm: sYearMonth,
-          };
-          const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeDetail', { ..._.omit(mPayload, 'Werks') });
+          });
 
-          this.getViewModel().setProperty('/details/rowCount', aResults.length ?? 0);
-          this.getViewModel().setProperty(
+          oViewModel.setProperty('/details/rowCount', aResults.length ?? 0);
+          oViewModel.setProperty(
             '/details/list',
             _.map(aResults, (o) => ({
               ..._.omit(o, '__metadata'),
@@ -156,7 +151,7 @@ sap.ui.define(
         }
       },
 
-      setTableColor() {
+      setSummaryTableStyle() {
         const oSummaryTable = this.byId('flextimeSummaryTable');
 
         setTimeout(() => {
@@ -164,7 +159,7 @@ sap.ui.define(
         }, 100);
       },
 
-      setDetailsTableRowColor() {
+      setDetailsTableStyle() {
         setTimeout(() => {
           const oDetailsTable = this.byId('flextimeDetailsTable');
           const sTableId = oDetailsTable.getId();
@@ -211,7 +206,7 @@ sap.ui.define(
         _.forEach(aDetailsList, (o, i) => _.set(o, 'Checked', _.includes(aSelectedIndices, i)));
         oViewModel.refresh();
 
-        this.setDetailsTableRowColor();
+        this.setDetailsTableStyle();
       },
 
       async initializeInputDialog() {
@@ -295,7 +290,7 @@ sap.ui.define(
           await this.readFlextimeSummary(sZyymm);
           await this.readFlextimeDetails(sZyymm);
 
-          this.setDetailsTableRowColor();
+          this.setDetailsTableStyle();
         } catch (oError) {
           this.debug('Controller > flextime > onChangeMonth Error', oError);
 
@@ -485,6 +480,17 @@ sap.ui.define(
         }
       },
 
+      handshakeSummaryData(mSummaryData) {
+        return {
+          ..._.omit(mSummaryData, ['__metadata', 'AssoFlexTimeBreakSet', 'AssoFlexTimeDetailSet']),
+          Beguz: this.TimeUtils.nvl(mSummaryData.Beguz),
+          Enduz: this.TimeUtils.nvl(mSummaryData.Enduz),
+          Gaptim: _.toNumber(mSummaryData.Gaptim),
+          Gaptimtx: _.toNumber(mSummaryData.Gaptim) > 0 ? `+${_.toNumber(mSummaryData.Gaptim)}` : _.toNumber(mSummaryData.Gaptim).toString(),
+          Clsdatx: moment(mSummaryData.Clsda).format('YYYY.MM.DD'),
+        };
+      },
+
       async createProcess(aDatums = [], mBreak = {}) {
         const oViewModel = this.getViewModel();
 
@@ -522,14 +528,7 @@ sap.ui.define(
                 }),
           });
 
-          oViewModel.setProperty('/summary/list', [
-            {
-              ..._.omit(mResults, ['__metadata', 'AssoFlexTimeBreakSet', 'AssoFlexTimeDetailSet']),
-              Clsdatx: moment(mResults.Clsda).format('YYYY.MM.DD'),
-              Beguz: this.TimeUtils.nvl(mResults.Beguz),
-              Enduz: this.TimeUtils.nvl(mResults.Enduz),
-            },
-          ]);
+          oViewModel.setProperty('/summary/list', [this.handshakeSummaryData(mResults)]);
           oViewModel.setProperty(
             '/details/list',
             _.map(mResults.AssoFlexTimeDetailSet.results, (o) => ({
@@ -540,7 +539,7 @@ sap.ui.define(
             }))
           );
 
-          this.setDetailsTableRowColor();
+          this.setDetailsTableStyle();
 
           if (!_.isEmpty(mResults.Errmsg)) {
             MessageBox.error(mResults.Errmsg, {
