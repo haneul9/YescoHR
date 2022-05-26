@@ -278,12 +278,6 @@ sap.ui.define(
           })
           .attachAfterOpen(() => this.setContentsBusy(false, 'Dialog'))
           .attachBeforeClose(() => {
-            const oViewModel = this.getViewModel();
-
-            oViewModel.setProperty('/dialog/work/list', []);
-            oViewModel.setProperty('/dialog/legal/list', []);
-            oViewModel.setProperty('/dialog/extra/list', []);
-
             this.resetTableTimePicker('flextimeWorkTable');
             this.resetTableTimePicker('flextimeLegalTable');
             this.resetTableTimePicker('flextimeExtraTable');
@@ -301,7 +295,13 @@ sap.ui.define(
           .getRows()
           .forEach((row) => {
             row.getCells().forEach((cell) => {
-              if (cell instanceof sap.m.TimePicker) cell.setValue(null);
+              if (cell instanceof sap.m.TimePicker) {
+                cell.setValue(null);
+              } else if (cell instanceof sap.m.HBox) {
+                cell.getItems().forEach((item) => {
+                  if (item instanceof sap.m.TimePicker) item.setValue(null);
+                });
+              }
             });
           });
       },
