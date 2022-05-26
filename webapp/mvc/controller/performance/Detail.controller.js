@@ -430,7 +430,7 @@ sap.ui.define(
             Type: 'APP1',
             Appno: oViewModel.getProperty('/opposition/Appno'),
             LinkText: this.getBundleText('LABEL_10100'),
-            LinkUrl: 'https://www.google.com',
+            LinkUrl: '/sap/public/bc/ui2/zui5_yescohr/opposition.doc',
             Max: 2,
             // FileTypes: 'jpg,jpeg,pdf,doc,docx,ppt,pptx,xls,xlsx,bmp,png'.split(','),
           });
