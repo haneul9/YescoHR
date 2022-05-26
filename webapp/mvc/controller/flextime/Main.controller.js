@@ -64,6 +64,8 @@ sap.ui.define(
         try {
           this.setContentsBusy(true, ['Summary', 'Details', 'Button']);
 
+          this.resetTableTimePicker('flextimeDetailsTable');
+
           const sZyymm = this.getViewModel().getProperty('/summary/list/0/Zyymm');
 
           await this.readFlextimeSummary(sZyymm);
@@ -307,6 +309,8 @@ sap.ui.define(
       async onChangeMonth(oEvent) {
         try {
           this.setContentsBusy(true, ['Summary', 'Details', 'Button']);
+
+          this.resetTableTimePicker('flextimeDetailsTable');
 
           const sZyymm = oEvent.getParameter('value');
 
