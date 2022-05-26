@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox>
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <VBox class="contents" justifyContent="SpaceBetween">
+            <HBox class="vCardBox" height="80px">
+                <HBox class="form-bar" alignItems="Center">
+                    <Label text="{i18n>LABEL_00345}" />
+                    <DatePicker width="250px" displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/searchConditions/Zyymm}" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                    <Label text="{i18n>LABEL_00237}" />
+                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Input}">
+                        <core:Item text="{Pbtxt}" key="{Werks}" />
+                    </ComboBox>
+                    <Label text="{i18n>LABEL_00224}" />
+                    <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" busyIndicatorDelay="0" busy="{/busy/Input}">
+                        <core:Item text="{Orgtx}" key="{Orgeh}" />
+                    </ComboBox>
+                    <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" busyIndicatorDelay="0" busy="{/busy/Button}" />
+                </HBox>
+            </HBox>
+            <VBox class="vCardBox">
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{i18n>LABEL_00168}" />
+                        <Text text="{i18n>MSG_40003}" class="desc-txt" />
+                    </HBox>
+                    <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}" />
+                </HBox>
+                <HBox>
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.OverviewTable" type="XML" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </Page>
+</core:FragmentDefinition>

@@ -1,6 +1,0 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.flextime.Main"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc">
-    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.Contents" type="XML" />
-</mvc:View>
