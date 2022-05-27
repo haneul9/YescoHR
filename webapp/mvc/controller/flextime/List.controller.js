@@ -22,6 +22,8 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.flextime.List', {
+      sRouteName: null,
+
       initializeModel() {
         return {
           auth: '',
@@ -46,9 +48,11 @@ sap.ui.define(
         };
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter, sRouteName) {
         try {
           this.setContentsBusy(true);
+
+          this.sRouteName = sRouteName;
 
           await this.initializeSearchConditions();
           await this.readFlextimeList();
@@ -169,6 +173,13 @@ sap.ui.define(
         }
 
         oViewModel.refresh();
+      },
+
+      onSelectRow(oEvent) {
+        const sPath = oEvent.getParameters().rowBindingContext.getPath();
+        const mRowData = this.getViewModel().getProperty(sPath);
+
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { pernr: mRowData.Pernr, zyymm: mRowData.Zyymm });
       },
 
       onPressExcelDownload() {

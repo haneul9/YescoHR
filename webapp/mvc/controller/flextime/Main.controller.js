@@ -29,6 +29,7 @@ sap.ui.define(
         return {
           initBeguz: moment('0900', 'hhmm').toDate(),
           initEnduz: moment('1800', 'hhmm').toDate(),
+          isMss: false,
           busy: {
             Button: false,
             Dialog: false,
@@ -63,7 +64,6 @@ sap.ui.define(
       async callbackAppointeeChange() {
         try {
           this.setContentsBusy(true, ['Summary', 'Details', 'Button']);
-
           this.resetTableTimePicker('flextimeDetailsTable');
 
           const sZyymm = this.getViewModel().getProperty('/summary/list/0/Zyymm');
@@ -81,15 +81,21 @@ sap.ui.define(
         }
       },
 
-      async onObjectMatched() {
+      async onObjectMatched(oParameter) {
+        const oViewModel = this.getViewModel();
+
         try {
-          this.getViewModel().setData(this.initializeModel());
           this.setContentsBusy(true);
-
           this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
+          oViewModel.setData(this.initializeModel());
+          oViewModel.setProperty('/isMss', this.isMss());
 
-          await this.readFlextimeSummary();
-          await this.readFlextimeDetails();
+          const { pernr: sPernr, zyymm: sZyymm } = oParameter;
+
+          this.setAppointee(sPernr);
+
+          await this.readFlextimeSummary(sZyymm);
+          await this.readFlextimeDetails(sZyymm);
 
           this.setSummaryTableStyle();
           this.setDetailsTableStyle();
@@ -99,7 +105,30 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
+          AppUtils.setMenuBusy(false);
+          AppUtils.setAppBusy(false);
           this.setContentsBusy(false);
+        }
+      },
+
+      async setAppointee(sPernr) {
+        try {
+          const mSessionData = this.getSessionData();
+
+          if (!sPernr || _.isEqual(_.toNumber(sPernr), _.toNumber(mSessionData.Pernr))) return;
+
+          const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
+            Ename: sPernr,
+          });
+
+          _.chain(mAppointee)
+            .set('Orgtx', mAppointee.Fulln) //
+            .set('Photo', mAppointee.Photo || this.getUnknownAvatarImageURL())
+            .commit();
+
+          AppUtils.getAppComponent().getAppointeeModel().setData(mAppointee, true);
+        } catch (oError) {
+          throw oError;
         }
       },
 
@@ -296,10 +325,10 @@ sap.ui.define(
           .forEach((row) => {
             row.getCells().forEach((cell) => {
               if (cell instanceof sap.m.TimePicker) {
-                cell.setValue(null);
+                cell.setValue('0');
               } else if (cell instanceof sap.m.HBox) {
                 cell.getItems().forEach((item) => {
-                  if (item instanceof sap.m.TimePicker) item.setValue(null);
+                  if (item instanceof sap.m.TimePicker) item.setValue('0');
                 });
               }
             });
@@ -358,7 +387,7 @@ sap.ui.define(
 
         const aConvertTimes = [_.get(aSourceValue, 0), sConvertedMinutesValue];
 
-        // oSource.setValue(_.join(aConvertTimes, ':'));
+        oSource.setValue(_.join(aConvertTimes, ':'));
         oSource.setDateValue(moment(_.join(aConvertTimes, ''), 'hhmm').toDate());
       },
 
@@ -474,15 +503,15 @@ sap.ui.define(
           Enduz: _.get(mDialog, ['work', 'list', 0, 'Enduz']),
           Pbeg0: _.get(mLegalTime, 'Beguz'), // 법정휴게시작
           Pend0: _.get(mLegalTime, 'Enduz'), // 법정휴게종료
-          Anzb0: _.get(mLegalTime, 'Anzb'), // 법정휴게시간
+          Anzb0: _.get(mLegalTime, 'Anzb', '0'), // 법정휴게시간
           Pbeg1: _.get(mExtraTime1, 'Beguz'), // 추가휴게시작1
           Pend1: _.get(mExtraTime1, 'Enduz'), // 추가휴게종료1
-          Anzb1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? null : _.get(mExtraTime1, 'Anzb'), // 추가휴게시간1
-          Resn1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? null : _.get(mExtraTime1, 'Resn'), // 휴게사유 1
+          Anzb1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? '0' : _.get(mExtraTime1, 'Anzb'), // 추가휴게시간1
+          Resn1: _.isEmpty(mExtraTime1.Beguz) || _.isEmpty(mExtraTime1.Enduz) ? '0' : _.get(mExtraTime1, 'Resn'), // 휴게사유 1
           Pbeg2: _.get(mExtraTime2, 'Beguz'), // 추가휴게시작2
           Pend2: _.get(mExtraTime2, 'Enduz'), // 추가휴게종료2
-          Anzb2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? null : _.get(mExtraTime2, 'Anzb'), // 추가휴게시간2
-          Resn2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? null : _.get(mExtraTime2, 'Resn'), // 휴게사유 2
+          Anzb2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? '0' : _.get(mExtraTime2, 'Anzb'), // 추가휴게시간2
+          Resn2: _.isEmpty(mExtraTime2.Beguz) || _.isEmpty(mExtraTime2.Enduz) ? '0' : _.get(mExtraTime2, 'Resn'), // 휴게사유 2
         };
 
         return _.chain(mBreakData).omitBy(_.isEmpty).omitBy(_.isNil).omitBy(_.isNull).value();

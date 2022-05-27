@@ -2,7 +2,7 @@
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <HBox>
-        <table:Table id="flextimeSummaryListTable" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
+        <table:Table id="flextimeSummaryListTable" class="row-link" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" cellClick=".onSelectRow" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
             <table:columns>
                 <table:Column width="3%">
                     <Label text="No." />

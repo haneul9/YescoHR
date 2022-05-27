@@ -28,7 +28,7 @@
                         <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
                     </HBox>
                     <HBox>
-                        <Button text="{i18n>LABEL_40008}" enabled="{= ${/details/list}.length > 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
+                        <Button text="{i18n>LABEL_40008}" visible="{= !${/isMss} }" enabled="{= ${/details/list}.length &gt; 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
                     </HBox>
                 </HBox>
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.DetailsTable" type="XML" />
