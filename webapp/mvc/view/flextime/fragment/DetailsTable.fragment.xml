@@ -2,7 +2,7 @@
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <HBox>
-        <table:Table id="flextimeDetailsTable" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionDetailsTable">
+        <table:Table id="flextimeDetailsTable" width="100%" selectionMode="{= ${/isMss} ? 'None' : 'MultiToggle' }" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionDetailsTable">
             <table:columns>
                 <table:Column width="10%">
                     <Label text="{i18n>LABEL_00170}"/>
@@ -25,25 +25,25 @@
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40004}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
+                        <TimePicker dateValue="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" minutesStep="30" editable="{= !${/isMss} &amp;&amp; ${Offyn} !== 'X' &amp;&amp; !${Alldf} }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40005}"/>
                     <table:template>
-                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" enabled="{= ${Offyn} !== 'X' }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
+                        <TimePicker dateValue="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" minutesStep="30" editable="{= !${/isMss} &amp;&amp; ${Offyn} !== 'X' &amp;&amp; !${Alldf} }" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" busyIndicatorDelay="0" busy="{/busy/Input}" class="sapIcon_Time" change=".onChangeWorktime" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40018}"/>
                     <table:template>
-                        <Input value="{ path: 'Brk01', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <Input value="{ path: 'Brk01', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" editable="{= !${/isMss} &amp;&amp; ${Offyn} !== 'X' &amp;&amp; !${Alldf} }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
                     </table:template>
                 </table:Column>
                 <table:Column width="9%">
                     <Label text="{i18n>LABEL_40019}"/>
                     <table:template>
-                        <Input value="{ path: 'Brk02', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" enabled="{= ${Offyn} !== 'X' }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
+                        <Input value="{ path: 'Brk02', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" editable="{= !${/isMss} &amp;&amp; ${Offyn} !== 'X' &amp;&amp; !${Alldf} }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".helpInput" busyIndicatorDelay="0" busy="{/busy/Input}" />
                     </table:template>
                 </table:Column>
                 <table:Column width="auto">

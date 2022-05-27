@@ -63,7 +63,8 @@ sap.ui.define(
             list: [],
             item: []
           },
-          Werks: this.getSessionProperty('Werks')
+          Werks: this.getSessionProperty('Werks'),
+          isChange: (this.getSessionProperty('Werks') === '1000' || this.getSessionProperty('Werks') === '5000') ? true : false
         };
       },
 
@@ -80,7 +81,7 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
-
+        
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
 
@@ -635,15 +636,19 @@ sap.ui.define(
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const aDataByDepart = oViewModel.getProperty('/department/data');
+        
         const aData = _.chain(_.get(aDataByDepart, mRowData.Zzappun2))
                       .filter((o) => _.isEqual(o.Lfapp, sValueEid))
                       .cloneDeep()
                       .value();
 
-        console.log(mRowData, sValueEid);
-        console.log(aData);
+        const aData2 = _.chain(oViewModel.getProperty('/raw/list'))
+                      .filter((o) => _.isEqual(o.Lfapp, sValueEid))
+                      .cloneDeep()
+                      .value();
 
-        if(mRowData.Sumrow) {
+        // 인원수가 0인 경우 return
+        if(_.isEmpty((mRowData.Sumrow ? aData2 : aData))){
           return;
         }
 
@@ -664,9 +669,7 @@ sap.ui.define(
           const aList = await Client.deep(oModel, 'AppraisalSesDoc', {
               Menid: this.getCurrentMenuId(),
               Prcty: Constants.PROCESS_TYPE.SEARCH.code,
-              AppraisalApGroupSet: [],
-              AppraisalSesDocDetSet: [],
-              AppraisalSesDocDet2Set: aData
+              AppraisalSesDocDet2Set: (mRowData.Sumrow ? aData2 : aData)
           });
 
           oViewModel.setProperty('/changeDialog/list', aList.AppraisalSesDocDet2Set.results);

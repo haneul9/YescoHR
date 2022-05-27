@@ -1257,6 +1257,7 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .vCardBox .header h3.sapMTitle, .header-wrap .header h3.sapMTitle {margin-bottom:0rem}
 .vCardBox .header h3.sapMTitle.sapUiSmallMarginEnd, .header-wrap .header h3.sapMTitle.sapUiSmallMarginEnd {margin-right:5px !important}
 .header-wrap .sapMRbG>.sapMRb, .header-wrap .sapMRbGCol>.sapMRb {margin-right:16px}
+.header-wrap.top-sticky { position: sticky; top: 45px; z-index: 1; background-color: #fff; }
 
 .status-wrap {margin-right:20px}
 .status-wrap .sapMFlexItem {justify-content:flex-start; display:flex; align-items:center; font-weight:500}

@@ -69,21 +69,22 @@
                                 <Label text="{i18n>LABEL_10067}"/>
                             </table:multiLabels>
                             <table:template>
-                                <Text text="{Dept05}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"
-                                      visible="{= ${/Werks} === '2000' ? false : true }" />
-                                <Link
-                                    enabled="true"
-                                    width="100%"
-                                    text="{Dept05}"
-                                    textAlign="Center"
-                                    press=".pressValue"
-                                    visible="{= ${/Werks} === '2000' ? true : false }"
-                                >
-                                    <customData>
-                                        <core:CustomData key="" value="{}" />
-                                        <core:CustomData key="" value="{/grade/2/ValueEid}"/>
-                                    </customData>
-                                </Link>
+                                <HBox direction="Column">
+                                    <Text text="{Dept05}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isChange} }" />
+                                    <Link
+                                        enabled="true"
+                                        width="100%"
+                                        text="{Dept05}"
+                                        textAlign="Center"
+                                        press=".pressValue"
+                                        visible="{= ${/isChange} }"
+                                    >
+                                        <customData>
+                                            <core:CustomData key="" value="{}" />
+                                            <core:CustomData key="" value="{/grade/2/ValueEid}"/>
+                                        </customData>
+                                    </Link>
+                                </HBox>
                             </table:template>
                         </table:Column>
                         <table:Column width="8%">
@@ -101,21 +102,22 @@
                                 <Label text="{i18n>LABEL_10067}"/>
                             </table:multiLabels>
                             <table:template>
-                                <Text text="{Dept07}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" 
-                                      visible="{= ${/Werks} === '2000' ? false : true }"/>
-                                <Link
-                                    enabled="true"
-                                    width="100%"
-                                    text="{Dept07}"
-                                    textAlign="Center"
-                                    press=".pressValue"
-                                    visible="{= ${/Werks} === '2000' ? true : false }"
-                                >
-                                    <customData>
-                                        <core:CustomData key="" value="{}" />
-                                        <core:CustomData key="" value="{/grade/3/ValueEid}"/>
-                                    </customData>
-                                </Link>
+                                <HBox direction="Column">
+                                    <Text text="{Dept07}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isChange} }"/>
+                                    <Link
+                                        enabled="true"
+                                        width="100%"
+                                        text="{Dept07}"
+                                        textAlign="Center"
+                                        press=".pressValue"
+                                        visible="{= ${/isChange} }"
+                                    >
+                                        <customData>
+                                            <core:CustomData key="" value="{}" />
+                                            <core:CustomData key="" value="{/grade/3/ValueEid}"/>
+                                        </customData>
+                                    </Link>
+                                </HBox>
                             </table:template>
                         </table:Column>
                         <table:Column width="8%">
