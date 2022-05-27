@@ -189,7 +189,15 @@ sap.ui.define(
                 'dataset',
                 _.chain(aDataSet)
                   .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .map((o) => ({
+                    seriesname: o.label,
+                    color: o.color,
+                    data: _.map(o.values, (v, i) => ({
+                      ...v, //
+                      showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0,
+                      link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}`,
+                    })),
+                  }))
                   .value()
               )
               .commit();
@@ -229,7 +237,15 @@ sap.ui.define(
                 ['dataset', 0, 'dataset'],
                 _.chain(aDataSet2)
                   .reverse()
-                  .map((o) => ({ seriesname: o.label, color: o.color, data: _.map(o.values, (v, i) => ({ ...v, showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0, link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}` })) }))
+                  .map((o) => ({
+                    seriesname: o.label,
+                    color: o.color,
+                    data: _.map(o.values, (v, i) => ({
+                      ...v, //
+                      showValue: _.gt(v.value, mChartInfo.minDisplayValue) ? 1 : 0,
+                      link: `j-callOnOffDetail-${mChartInfo.Headty},${o.code},${_.get(aChartDatas, [i, 'Ttltxt'])}`,
+                    })),
+                  }))
                   .value()
               )
               .set(['lineset', 0], {
@@ -260,7 +276,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            const oChart = new FusionCharts({
+            const oChart = FusionCharts.getInstance({
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,

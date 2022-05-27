@@ -539,6 +539,7 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 .column-chart [class*="Name-group"] tspan,
 .column-chart [class*="datalabel"] tspan,
 .doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
+html.sap-ios .custom-chart .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
 
 .overviews .statistic-box,
 .overviews .statistic-text,

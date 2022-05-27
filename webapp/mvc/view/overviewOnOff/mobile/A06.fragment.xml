@@ -1,10 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box" visible="{= !${/contents/A06/busy} }" height="400px">
+  <VBox class="portlet portlet-box" visible="{= !${/contents/A06/busy} }" height="420px">
     <HBox class="portlet-header">
       <Title level="H2" text="{i18n>LABEL_28024}" />
-      <Text text="{i18n>LABEL_28023}" class="desc-txt" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -16,6 +15,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
+      <Text text="{i18n>LABEL_28023}" class="desc-txt start" />
       <core:HTML content='&lt;div id="employeeOnOff-a06-chart-container" class="custom-chart"&gt;&lt;/div&gt;'>
         <core:layoutData>
           <FlexItemData growFactor="1" />
@@ -23,7 +23,7 @@
       </core:HTML>
     </VBox>
   </VBox>
-  <VBox class="portlet portlet-box" visible="{/contents/A06/busy}" height="400px">
+  <VBox class="portlet portlet-box" visible="{/contents/A06/busy}" height="420px">
     <custom:Placeholder />
   </VBox>
 </core:FragmentDefinition>

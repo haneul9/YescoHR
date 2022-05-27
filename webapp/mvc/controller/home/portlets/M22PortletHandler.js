@@ -50,7 +50,7 @@ sap.ui.define(
       buildChart() {
         this.oChartPromise = new Promise((resolve) => {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sChartId,
               type: 'mscolumn2d',
               renderAt: `${this.sChartId}-container`,
@@ -78,7 +78,17 @@ sap.ui.define(
                 }),
               },
               events: {
-                rendered: resolve,
+                rendered: () => {
+                  $('#portlet-m22-chart g[class$="-manager-vcanvasLabelGroup"] .fusioncharts-datalabels:nth-child(1) text').each((i, o) => {
+                    const $o = $(o);
+                    $o.attr('x', Number($o.attr('x')) - 3);
+                  });
+                  $('#portlet-m22-chart g[class$="-manager-vcanvasLabelGroup"] .fusioncharts-datalabels:nth-child(2) text').each((i, o) => {
+                    const $o = $(o);
+                    $o.attr('x', Number($o.attr('x')) + 3);
+                  });
+                  resolve();
+                },
               },
             }).render();
           });
@@ -139,35 +149,19 @@ sap.ui.define(
       },
 
       getChartOption() {
-        return {
-          animation: '0',
-          showValues: '1',
-          rotateValues: '0',
-          placeValuesInside: '0',
-          yAxisValueFontSize: '12',
-          yAxisMaxValue: '230',
-          numDivLines: '3',
-          divLineDashed: '0',
+        return FusionCharts.curryChartOptions({
+          chartTopMargin: 15,
+          chartRightMargin: 5,
+          chartLeftMargin: 5,
+          yAxisValueFontSize: 12,
+          yAxisMaxValue: 230,
+          numDivLines: 3,
+          divLineDashed: 0,
           divLineColor: '#eeeeee',
-          maxColWidth: '23',
-          theme: 'ocean',
-          bgColor: 'transparent',
-          baseFontSize: '12',
-          valueFontSize: '12',
-          valueFontColor: '#000000',
-          valueBgColor: '#ffffff',
-          legendItemFontSize: '12',
-          showPlotBorder: '1',
-          plotBorderThickness: '3',
-          plotBorderColor: '#ffffff',
-          chartBottomMargin: '0',
-          drawCustomLegendIcon: '1',
-          toolTipBgColor: '#ffffff',
-          toolTipColor: '#222222',
-          showToolTipShadow: '1',
-          plotcolorintooltip: '1',
-          plottooltext: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value</td></tr></table></div>',
-        };
+          maxColWidth: 20,
+          drawCustomLegendIcon: 1,
+          plotToolText: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value</td></tr></table></div>',
+        });
       },
 
       getChartCategory() {

@@ -62,7 +62,7 @@ sap.ui.define(
             setTimeout(() => {
               this.iChartHeight = $('.portlet-p06-chart-area').height() - $('.portlet-p06-chart-caption').height() - $('.portlet-p06-chart-value').height();
 
-              new FusionCharts({
+              FusionCharts.getInstance({
                 id: this.sChartId,
                 type: 'cylinder',
                 renderAt: `${this.sChartId}-container`,
@@ -127,34 +127,27 @@ sap.ui.define(
       },
 
       getChartOption() {
-        return {
-          baseFontSize: '10',
-          valueFontSize: '14',
-          showValue: '0',
-          lowerLimit: '0',
-          upperLimit: '100',
+        return FusionCharts.curryChartOptions({
+          baseFontSize: 10,
+          showValue: 0,
+          lowerLimit: 0,
+          upperLimit: 100,
           lowerLimitDisplay: '0%',
           upperLimitDisplay: '100%',
           numberSuffix: '%',
           cylHeight: this.iChartHeight - 20,
-          cylYScale: '10',
-          cylFillHoverAlpha: '85',
+          cylYScale: 10,
+          cylFillHoverAlpha: 85,
           cylFillColor: '#30c4ee',
-          chartTopMargin: '10',
-          chartBottomMargin: '10',
-          chartRightMargin: '15',
-          chartLeftMargin: '15',
-          autoScale: '1',
-          manageResize: '1',
-          animation: '1',
-          refreshInstantly: '1',
-          toolTipBgColor: '#ffffff',
-          toolTipColor: '#222222',
-          showToolTipShadow: '1',
-          plotColorInTooltip: '1',
+          chartTopMargin: 10,
+          chartBottomMargin: 10,
+          chartRightMargin: 15,
+          chartLeftMargin: 15,
+          autoScale: 1,
+          manageResize: 1,
+          refreshInstantly: 1,
           plotToolText: AppUtils.getBundleText('LABEL_01122', '$dataValue'), // 출근율: <b>$dataValue%</b>
-          theme: 'ocean',
-        };
+        });
       },
 
       onChangeSelectedDate() {

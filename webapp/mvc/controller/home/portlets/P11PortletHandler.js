@@ -54,12 +54,12 @@ sap.ui.define(
       buildChart() {
         this.oChartPromise = new Promise((resolve) => {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sChartId,
               type: 'angulargauge',
               renderAt: `${this.sChartId}-container`,
               width: '100%',
-              height: '154',
+              height: 154,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getChartOption(),
@@ -132,28 +132,23 @@ sap.ui.define(
       },
 
       getChartOption() {
-        return {
-          showValue: '1',
-          baseFontSize: '12',
-          valueFontSize: '14',
-          showTooltip: '0',
-          gaugeOriginY: '110',
-          gaugeOuterRadius: '75',
-          gaugeInnerRadius: '53',
-          majorTMNumber: '13',
-          majorTMColor: '#333',
-          majorTMHeight: '-2.5',
-          majorTMThickness: '1',
-          tickValueDistance: '5',
-          tickValueStep: '10',
-          showPlotBorder: '0',
-          showGaugeBorder: '0',
-          showPivotBorder: '0',
-          bgColor: 'transparent',
-          pivotRadius: '3',
-          pivotFillColor: '#000',
-          theme: 'ocean',
-        };
+        return FusionCharts.curryChartOptions({
+          gaugeOriginY: 110,
+          gaugeOuterRadius: 75,
+          gaugeInnerRadius: 53,
+          majorTMNumber: 13,
+          majorTMColor: '#333333',
+          majorTMHeight: -2.5,
+          majorTMThickness: 1,
+          tickValueDistance: 5,
+          tickValueStep: 10,
+          showPlotBorder: 0,
+          showGaugeBorder: 0,
+          showPivotBorder: 0,
+          pivotRadius: 3,
+          pivotFillColor: '#000000',
+          showTooltip: 0,
+        });
       },
 
       getChartColorrangeOption(iWTMax, iOTMax) {
@@ -161,12 +156,12 @@ sap.ui.define(
           color: [
             {
               minValue: 0,
-              maxValue: iWTMax,
+              maxValue: Number(iWTMax),
               code: '#34649d', // 기본 근무시간
             },
             {
-              minValue: iWTMax,
-              maxValue: iOTMax,
+              minValue: Number(iWTMax),
+              maxValue: Number(iOTMax),
               code: '#fdde17', // 초과 근무시간
             },
           ],
@@ -175,8 +170,9 @@ sap.ui.define(
 
       getChartDialOption(mPortletData) {
         return {
-          value: mPortletData.Reltm,
-          valueY: 123,
+          showValue: 1,
+          value: Number(mPortletData.Reltm),
+          valueY: 124,
           baseWidth: 4,
           rearExtension: 0,
         };

@@ -240,39 +240,33 @@ sap.ui.define(
 
       // Doughnut Chart Setting
       getDoughnutChartOption() {
-        return {
+        return FusionCharts.curryChartOptions({
           legendPosition: 'right',
-          bgColor: 'transparent',
-          theme: 'ocean',
           plottooltext: `$label $value일`,
-          animation: 1,
+          showZeroPies: 1,
+          labelDistance: -5,
           slicingDistance: 0,
-          smartLineAlpha: 0,
-          captionPadding: 0,
-          chartLeftMargin: 0,
-          chartRightMargin: 0,
-          chartBottomMargin: 0,
-          chartTopMargin: -10,
-          labelFontSize: 12,
-        };
+          chartTopMargin: 10,
+          chartBottomMargin: 10,
+        });
       },
 
       buildDoughChart(aPlanList) {
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseFloat(aPlanList.Cnt01),
-          dPlan: parseFloat(aPlanList.Cnt02),
-          dUnPlan: parseFloat(aPlanList.Cnt03),
-          pUsed: parseFloat(aPlanList.Rte01),
-          pPlan: parseFloat(aPlanList.Rte02),
-          pUnPlan: parseFloat(aPlanList.Rte03),
+          dUsed: parseFloat(aPlanList.Cnt01 || 0),
+          dPlan: parseFloat(aPlanList.Cnt02 || 0),
+          dUnPlan: parseFloat(aPlanList.Cnt03 || 0),
+          pUsed: parseFloat(aPlanList.Rte01 || 0),
+          pPlan: parseFloat(aPlanList.Rte02 || 0),
+          pUnPlan: parseFloat(aPlanList.Rte03 || 0),
         };
 
         oDetailModel.setProperty('/vacationChart', mPlan);
 
         if (!FusionCharts(this.sDoughChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sDoughChartId,
               type: 'doughnut2d',
               renderAt: 'chart-doughnut-container',
@@ -342,12 +336,12 @@ sap.ui.define(
         const oChart = FusionCharts(this.sDoughChartId);
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseFloat(aPlanList.Cnt01),
-          dPlan: parseFloat(aPlanList.Cnt02),
-          dUnPlan: parseFloat(aPlanList.Cnt03),
-          pUsed: parseFloat(aPlanList.Rte01),
-          pPlan: parseFloat(aPlanList.Rte02),
-          pUnPlan: parseFloat(aPlanList.Rte03),
+          dUsed: parseFloat(aPlanList.Cnt01 || 0),
+          dPlan: parseFloat(aPlanList.Cnt02 || 0),
+          dUnPlan: parseFloat(aPlanList.Cnt03 || 0),
+          pUsed: parseFloat(aPlanList.Rte01 || 0),
+          pPlan: parseFloat(aPlanList.Rte02 || 0),
+          pUnPlan: parseFloat(aPlanList.Rte03 || 0),
         };
 
         oDetailModel.setProperty('/vacationChart', mPlan);
@@ -383,27 +377,18 @@ sap.ui.define(
 
       // Combination Chart Setting
       getCombiChartOption() {
-        return {
-          //Cosmetics
-          bgColor: 'transparent',
-          theme: 'ocean',
+        return FusionCharts.curryChartOptions({
           usePlotGradientColor: 0,
           showDivLineSecondaryValue: 0,
           showSecondaryLimits: 0,
           showPlotBorder: 0,
-          baseFontSize: 13,
-          valueFontSize: 13,
-          legendItemFontSize: 13,
           showXAxisLine: 0,
-          animation: 1,
           divLineColor: '#dde1e6',
           divLineDashed: 0,
-          toolTipBgColor: '#ffffff',
-          toolTipColor: '#222222',
-          showToolTipShadow: 1,
-          plotcolorintooltip: 1,
           plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesname-$label</th><td>$value</td></tr></table></div>",
-        };
+          chartTopMargin: 10,
+          chartLeftMargin: 10,
+        });
       },
 
       buildCombiChart(aWorkTypeList) {
@@ -426,12 +411,12 @@ sap.ui.define(
 
         if (!FusionCharts(this.sCombiChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sCombiChartId,
               type: 'mscombidy2d',
               renderAt: 'chart-combination-container',
               width: '100%',
-              height: '300px',
+              height: 300,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getCombiChartOption(),
@@ -443,19 +428,17 @@ sap.ui.define(
                 dataset: [
                   {
                     seriesName: this.getBundleText('LABEL_16005'),
-                    labelFontSize: '13',
                     data: aWorkTypeList.Monuse,
                     color: '#7bb4eb',
                   },
                   {
                     seriesName: this.getBundleText('LABEL_00196'),
-                    labelFontSize: '13',
                     renderAs: 'line',
                     data: aWorkTypeList.Current,
                     color: '#000000',
                     anchorBgColor: '#000000',
-                    anchorRadius: '3',
-                    lineThickness: '1',
+                    anchorRadius: 3,
+                    lineThickness: 1,
                   },
                 ],
               },
@@ -475,19 +458,17 @@ sap.ui.define(
               dataset: [
                 {
                   seriesName: this.getBundleText('LABEL_16005'),
-                  labelFontSize: '13',
                   data: aWorkTypeList.Monuse,
                   color: '#7bb4eb',
                 },
                 {
                   seriesName: this.getBundleText('LABEL_00196'),
-                  labelFontSize: '13',
                   renderAs: 'line',
                   data: aWorkTypeList.Current,
                   color: '#000000',
                   anchorBgColor: '#000000',
-                  anchorRadius: '3',
-                  lineThickness: '1',
+                  anchorRadius: 3,
+                  lineThickness: 1,
                 },
               ],
             },
@@ -537,8 +518,8 @@ sap.ui.define(
                 data: aWorkTypeList.Current,
                 color: '#000000',
                 anchorBgColor: '#000000',
-                anchorRadius: '3',
-                lineThickness: '1',
+                anchorRadius: 3,
+                lineThickness: 1,
               },
             ],
           },
@@ -549,17 +530,12 @@ sap.ui.define(
 
       // WeekWorkTime Chart
       getDialChartOption(iGaugeOriginY) {
-        return {
-          //Cosmetics
-          showValue: 1,
-          baseFontSize: 14,
-          valueFontSize: 14,
-          showTooltip: 0,
+        return FusionCharts.curryChartOptions({
           gaugeOriginY: iGaugeOriginY,
           gaugeOuterRadius: 150,
           gaugeInnerRadius: 110,
           majorTMNumber: 13,
-          majorTMColor: '#333',
+          majorTMColor: '#333333',
           majorTMHeight: -2.5,
           majorTMThickness: 1,
           tickValueDistance: 5,
@@ -567,12 +543,10 @@ sap.ui.define(
           showPlotBorder: 0,
           showGaugeBorder: 0,
           showPivotBorder: 0,
-          bgColor: 'transparent',
           pivotRadius: 3,
-          pivotFillColor: '#000',
-          theme: 'ocean',
-          paletteThemeColor: 'transparent',
-        };
+          pivotFillColor: '#000000',
+          showTooltip: 0,
+        });
       },
 
       buildDialChart(mWorkTypeList) {
@@ -581,19 +555,19 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sDialChartDiv,
-              width: '480px',
-              height: '300px',
+              width: 480,
+              height: 300,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDialChartOption(iGaugeOriginY),
                 colorrange: {
                   color: [
                     {
-                      minvalue: '0',
+                      minvalue: 0,
                       maxvalue: mWorkTypeList.Alwtm,
                       code: '#34649d',
                     },
@@ -607,8 +581,9 @@ sap.ui.define(
                 dials: {
                   dial: [
                     {
+                      showValue: 1,
                       value: mWorkTypeList.Reltm,
-                      valueY: iGaugeOriginY + 13,
+                      valueY: iGaugeOriginY + 14,
                       baseWidth: 4,
                       rearExtension: 0,
                     },
@@ -624,7 +599,7 @@ sap.ui.define(
               colorrange: {
                 color: [
                   {
-                    minvalue: '0',
+                    minvalue: 0,
                     maxvalue: mWorkTypeList.Alwtm,
                     code: '#34649d',
                   },
@@ -638,8 +613,9 @@ sap.ui.define(
               dials: {
                 dial: [
                   {
+                    showValue: 1,
                     value: mWorkTypeList.Reltm,
-                    valueY: iGaugeOriginY + 13,
+                    valueY: iGaugeOriginY + 14,
                     baseWidth: 4,
                     rearExtension: 0,
                   },

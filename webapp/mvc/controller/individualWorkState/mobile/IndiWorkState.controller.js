@@ -217,44 +217,38 @@ sap.ui.define(
 
       // Doughnut Chart Setting
       getDoughnutChartOption() {
-        return {
+        return FusionCharts.curryChartOptions({
           legendPosition: 'right',
-          bgColor: 'transparent',
-          theme: 'ocean',
           plottooltext: `$label $value일`,
-          animation: 1,
+          showZeroPies: 1,
+          labelDistance: -5,
           slicingDistance: 0,
-          smartLineAlpha: 0,
-          captionPadding: 0,
-          chartLeftMargin: 0,
-          chartRightMargin: 0,
-          chartBottomMargin: 15,
-          chartTopMargin: 5,
-          labelFontSize: 12,
-        };
+          chartTopMargin: 10,
+          chartBottomMargin: 10,
+        });
       },
 
       buildDoughChart(aPlanList) {
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseFloat(aPlanList.Cnt01),
-          dPlan: parseFloat(aPlanList.Cnt02),
-          dUnPlan: parseFloat(aPlanList.Cnt03),
-          pUsed: parseFloat(aPlanList.Rte01),
-          pPlan: parseFloat(aPlanList.Rte02),
-          pUnPlan: parseFloat(aPlanList.Rte03),
+          dUsed: parseFloat(aPlanList.Cnt01 || 0),
+          dPlan: parseFloat(aPlanList.Cnt02 || 0),
+          dUnPlan: parseFloat(aPlanList.Cnt03 || 0),
+          pUsed: parseFloat(aPlanList.Rte01 || 0),
+          pPlan: parseFloat(aPlanList.Rte02 || 0),
+          pUnPlan: parseFloat(aPlanList.Rte03 || 0),
         };
 
         oDetailModel.setProperty('/vacationChart', mPlan);
 
         if (!FusionCharts(this.sDoughChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sDoughChartId,
               type: 'doughnut2d',
               renderAt: 'chart-doughnut-container',
               width: '100%',
-              height: '200px',
+              height: 200,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDoughnutChartOption(),
@@ -314,17 +308,17 @@ sap.ui.define(
         }
       },
 
-      // Dough ReRanderring
+      // Dough Rerendering
       setDoughChartData(aPlanList) {
         const oChart = FusionCharts(this.sDoughChartId);
         const oDetailModel = this.getViewModel();
         const mPlan = {
-          dUsed: parseFloat(aPlanList.Cnt01),
-          dPlan: parseFloat(aPlanList.Cnt02),
-          dUnPlan: parseFloat(aPlanList.Cnt03),
-          pUsed: parseFloat(aPlanList.Rte01),
-          pPlan: parseFloat(aPlanList.Rte02),
-          pUnPlan: parseFloat(aPlanList.Rte03),
+          dUsed: parseFloat(aPlanList.Cnt01 || 0),
+          dPlan: parseFloat(aPlanList.Cnt02 || 0),
+          dUnPlan: parseFloat(aPlanList.Cnt03 || 0),
+          pUsed: parseFloat(aPlanList.Rte01 || 0),
+          pPlan: parseFloat(aPlanList.Rte02 || 0),
+          pUnPlan: parseFloat(aPlanList.Rte03 || 0),
         };
 
         oDetailModel.setProperty('/vacationChart', mPlan);
@@ -398,8 +392,8 @@ sap.ui.define(
                 data: aWorkTypeList.Current,
                 color: '#000000',
                 anchorBgColor: '#000000',
-                anchorRadius: '3',
-                lineThickness: '1',
+                anchorRadius: 3,
+                lineThickness: 1,
               },
             ],
           },

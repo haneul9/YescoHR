@@ -249,7 +249,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: sChartId,
               type: _.replace(mChartInfo.Chart, '-S', ''),
               renderAt: `${sChartId}-container`,

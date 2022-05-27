@@ -220,31 +220,16 @@ sap.ui.define(
       },
 
       getDialChartOption() {
-        return {
-          //Cosmetics
-          showValue: 1,
-          toolTipBgColor: '#ffffff',
-          toolTipColor: '#222222',
-          showToolTipShadow: 1,
-          plotcolorintooltip: 1,
-          plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesName-$label</th><td>$value</td></tr></table></div>",
-          baseFontSize: 13,
-          valueFontSize: 13,
-          legendItemFontSize: 13,
-          chartBottomMargin: 0,
+        return FusionCharts.curryChartOptions({
+          yAxisMaxValue: 60,
           divLineColor: '#eeeeee',
           divLineDashed: 0,
           drawCustomLegendIcon: 1,
-          legendIconSides: 1,
-          numDivLines: 3,
-          placeValuesInside: 0,
-          plotBorderColor: '#ffffff',
-          rotateValues: 0,
-          valueBgColor: 'transparent',
-          valueFontColor: '#000000',
-          bgColor: 'transparent',
-          theme: 'ocean',
-        };
+          legendIconSides: 0, // 범례 n각형 아이콘
+          chartTopMargin: 15,
+          chartLeftMargin: 10,
+          plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesName-$label</th><td>$value</td></tr></table></div>",
+        });
       },
 
       buildDialChart(aWorkTimeList = []) {
@@ -275,7 +260,7 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.MSCOLUMN_CHART_ID,
               type: 'mscolumn2d',
               renderAt: 'chart-bar-container',
@@ -293,17 +278,17 @@ sap.ui.define(
                   {
                     seriesname: this.getBundleText('LABEL_32004'), // 법정
                     data: aList.v1,
-                    color: '#5B9BD5',
+                    color: '#007bff',
                   },
                   {
                     seriesname: this.getBundleText('LABEL_01205'), // OT
                     data: aList.v2,
-                    color: '#EE7827',
+                    color: '#fd5f58',
                   },
                   {
                     seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                     data: aList.v3,
-                    color: '#A6A6A6',
+                    color: '#a6a6a6',
                   },
                 ],
               },
@@ -322,17 +307,17 @@ sap.ui.define(
                 {
                   seriesname: this.getBundleText('LABEL_32004'), // 법정
                   data: aList.v1,
-                  color: '#5B9BD5',
+                  color: '#007bff',
                 },
                 {
                   seriesname: this.getBundleText('LABEL_01205'), // OT
                   data: aList.v2,
-                  color: '#EE7827',
+                  color: '#fd5f58',
                 },
                 {
                   seriesname: this.getBundleText('LABEL_32005'), // 초과인원
                   data: aList.v3,
-                  color: '#A6A6A6',
+                  color: '#a6a6a6',
                 },
               ],
             },
@@ -342,31 +327,28 @@ sap.ui.define(
         }
       },
 
-      onOrgClick(oEvent) {
+      async onOrgClick(oEvent) {
         if (!this._pOrgDialog) {
           const oView = this.getView();
-          const oController = this;
 
-          this._pOrgDialog = Fragment.load({
+          this._pOrgDialog = await Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DialogOrgTable',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            oController.TableUtils.adjustRowSpan({
-              oTable: oController.byId(oController.DIALOG_ORG_TABLE_ID),
-              aColIndices: [0, 1, 2, 3, 4, 5],
-              sTheadOrTbody: 'thead',
-              bMultiLabel: true,
-            });
+          });
 
-            return oDialog;
+          oView.addDependent(this._pOrgDialog);
+
+          this.TableUtils.adjustRowSpan({
+            oTable: this.byId(this.DIALOG_ORG_TABLE_ID),
+            aColIndices: [0, 1, 2, 3, 4, 5],
+            sTheadOrTbody: 'thead',
+            bMultiLabel: true,
           });
         }
 
         const oListModel = this.getViewModel();
-        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
-        const oRowData = oListModel.getProperty(vPath);
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime3Nav/results'))
           .filter((e) => {
             return e.Orgtx === oRowData.Orgtx;
@@ -376,34 +358,32 @@ sap.ui.define(
           })
           .value();
 
-        this._pOrgDialog.then(async function (oDialog) {
-          oListModel.setProperty('/detail/dialog/org/list', aDialogList);
-          oListModel.setProperty('/detail/dialog/org/Label1', aDialogList[0].Wktx1);
-          oListModel.setProperty('/detail/dialog/org/Label2', aDialogList[0].Wktx2);
-          oListModel.setProperty('/detail/dialog/org/Label3', aDialogList[0].Wktx3);
-          oListModel.setProperty('/detail/dialog/org/Label4', aDialogList[0].Wktx4);
-          oListModel.setProperty('/detail/dialog/org/Label5', aDialogList[0].Wktx5);
-          oListModel.setProperty('/detail/dialog/org/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
-          oDialog.open();
-        });
+        oListModel.setProperty('/detail/dialog/org/list', aDialogList);
+        oListModel.setProperty('/detail/dialog/org/Label1', aDialogList[0].Wktx1);
+        oListModel.setProperty('/detail/dialog/org/Label2', aDialogList[0].Wktx2);
+        oListModel.setProperty('/detail/dialog/org/Label3', aDialogList[0].Wktx3);
+        oListModel.setProperty('/detail/dialog/org/Label4', aDialogList[0].Wktx4);
+        oListModel.setProperty('/detail/dialog/org/Label5', aDialogList[0].Wktx5);
+        oListModel.setProperty('/detail/dialog/org/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
+
+        this._pOrgDialog.open();
       },
 
-      onPernrClick(oEvent) {
+      async onPernrClick(oEvent) {
         if (!this._pPernrDialog) {
           const oView = this.getView();
 
-          this._pPernrDialog = Fragment.load({
+          this._pPernrDialog = await Fragment.load({
+            id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.worktimeStatus.fragment.DialogPernrTable',
             controller: this,
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
           });
+
+          oView.addDependent(this._pPernrDialog);
         }
 
-        const vPath = oEvent.getSource().getParent().getBindingContext().getPath();
         const oListModel = this.getViewModel();
-        const oRowData = oListModel.getProperty(vPath);
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime4Nav/results'))
           .filter((e) => {
             return e.Pernr === oRowData.Pernr;
@@ -413,11 +393,10 @@ sap.ui.define(
           })
           .value();
 
-        this._pPernrDialog.then(async function (oDialog) {
-          oListModel.setProperty('/detail/dialog/pernr/list', aDialogList);
-          oListModel.setProperty('/detail/dialog/pernr/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
-          oDialog.open();
-        });
+        oListModel.setProperty('/detail/dialog/pernr/list', aDialogList);
+        oListModel.setProperty('/detail/dialog/pernr/rowCount', _.size(aDialogList) > 10 ? 10 : _.size(aDialogList));
+
+        this._pPernrDialog.open();
       },
 
       // Dialog Close

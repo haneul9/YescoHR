@@ -212,6 +212,7 @@ sap.ui.define(
 
             break;
           case 'mscolumn2d':
+          case 'scrollcolumn2d':
             let fMscolumn2dMaxValues = 0;
             _.chain(mChartSetting)
               .set(
@@ -261,7 +262,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            const oChart = new FusionCharts({
+            const oChart = FusionCharts.getInstance({
               id: sChartId,
               type: _.replace(Chart, '-S', ''),
               renderAt: `${sChartId}-container`,

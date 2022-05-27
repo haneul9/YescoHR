@@ -37,31 +37,30 @@ sap.ui.define(
             Bet03: '0',
             Bet04: '0',
             dataSources: {
-              chart: {
-                showLegend: '0',
-                showValues: '0',
-                showLabels: '0',
-                showPercentInTooltip: '0',
-                showToolTipShadow: '0',
-                slicingDistance: '5',
-                formatNumber: '1',
+              chart: FusionCharts.curryChartOptions({
+                pieRadius: '90%',
+                showLegend: 0,
+                showValues: 0,
+                showLabels: 0,
+                showPercentInTooltip: 0,
+                showToolTipShadow: 0,
+                slicingDistance: 5,
+                formatNumber: 1,
                 formatNumberScale: false,
-                decimals: '1',
-                // numberSuffix: '₩',
-                useDataPlotColorForLabels: '1',
-                theme: 'ocean',
+                decimals: 1,
+                useDataPlotColorForLabels: 1,
                 paletteColors: '#7bb4eb,#81daea,#faca74',
-              },
+              }),
               data: [
                 {
                   label: this.getBundleText('LABEL_13051'), // 과세총액
-                  value: '0',
-                  isSliced: '1',
+                  value: 0,
+                  isSliced: 1,
                 },
                 {
                   label: this.getBundleText('LABEL_13052'), // 비과세총액
-                  value: '0',
-                  isSliced: '0',
+                  value: 0,
+                  isSliced: 0,
                 },
               ],
             },
@@ -152,12 +151,12 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: `${this.sRouteName}-${this.CHART_ID}`,
               type: 'pie2d',
               renderAt: `chart-${this.sRouteName}-container`,
-              width: '180',
-              height: '160',
+              width: 180,
+              height: 160,
               dataFormat: 'json',
               dataSource: mDataSource,
             }).render();

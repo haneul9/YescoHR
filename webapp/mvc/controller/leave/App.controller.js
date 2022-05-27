@@ -45,37 +45,18 @@ sap.ui.define(
             leaveType: [],
           },
           summary: {
-            chart: {
+            chart: FusionCharts.curryChartOptions({
               showSum: 1,
-              showValues: 1,
-              rotateValues: 0,
-              placeValuesInside: 0,
               divLineDashed: 0,
               divLineColor: '#eeeeee',
               maxColWidth: 25,
-              staggerLines: '2',
-              theme: 'ocean',
-              bgColor: 'transparent',
-              baseFontSize: '14',
-              valueFontSize: '14',
-              legendItemFontSize: '14',
-              valueFontColor: '#000000',
-              valueBgColor: 'transparent',
-              showPlotBorder: 0,
-              plotBorderThickness: 3,
-              plotBorderColor: '#ffffff',
+              staggerLines: 2,
               drawCustomLegendIcon: 1,
               legendIconSides: 0,
-              chartTopMargin: 4,
-              chartRightMargin: 0,
-              chartBottomMargin: 0,
-              chartLeftMargin: 2,
-              toolTipBgColor: '#ffffff',
-              toolTipColor: '#222222',
-              showToolTipShadow: 1,
-              plotcolorintooltip: 1,
+              chartTopMargin: 10,
+              chartLeftMargin: 10,
               plottooltext: "<div class='fusion-tooltip'><table><tr><th>$seriesname-$label</th><td>$value</td></tr></table></div>",
-            },
+            }),
             categories: [{ category: [] }],
             dataset: [],
           },
@@ -192,7 +173,7 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: `${this.sRouteName}-${this.CHART_LEAVE_ID}`,
               type: 'mscombi2d',
               renderAt: `chart-${this.sRouteName}-container`,
@@ -234,12 +215,12 @@ sap.ui.define(
           const iCurrentMonthIndex = moment(mFilters.Zyymm).month() + 1;
           const mVerticalLineMonth = {
             vline: 'true',
-            lineposition: '0',
+            lineposition: 0,
             color: '#6baa01',
             labelHAlign: 'center',
-            labelPosition: '0',
+            labelPosition: 0,
             // label: 'Selected Month',
-            dashed: '1',
+            dashed: 1,
           };
 
           oViewModel.setProperty(
@@ -253,7 +234,7 @@ sap.ui.define(
           oViewModel.setProperty('/summary/dataset', [
             {
               seriesname: this.getBundleText(this.CHARTS.CUR.label),
-              showValues: '1',
+              showValues: 1,
               color: '#7BB4EB',
               data: _.map(mGroupByOyymm, (v) => ({ value: _.get(v, [0, this.CHARTS.CUR.propPerc], 0) })),
             },

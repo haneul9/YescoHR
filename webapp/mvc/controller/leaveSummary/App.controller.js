@@ -48,20 +48,20 @@ sap.ui.define(
           summary: {
             infoText: this.getBundleText('LABEL_23012', '2021.01.01~2021.12.31'),
             dataSources: {
-              chart: {
-                showLegend: '0',
-                showValues: '0',
-                showLabels: '0',
-                showPercentInTooltip: '0',
-                showToolTipShadow: '0',
-                slicingDistance: '5',
-                formatNumber: '1',
+              chart: FusionCharts.curryChartOptions({
+                pieRadius: '90%',
+                showLegend: 0,
+                showValues: 0,
+                showLabels: 0,
+                showPercentInTooltip: 0,
+                showToolTipShadow: 0,
+                slicingDistance: 5,
+                formatNumber: 1,
                 formatNumberScale: false,
-                decimals: '1',
-                useDataPlotColorForLabels: '1',
-                theme: 'ocean',
+                decimals: 1,
+                useDataPlotColorForLabels: 1,
                 paletteColors: '#5e696e,#ffc02e,#007BFF,#FD5F58',
-              },
+              }),
               data: [
                 {
                   label: this.getBundleText('LABEL_23013'), // 미입력
@@ -193,12 +193,12 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: `${this.sRouteName}-${this.CHART_ID}`,
               type: 'pie2d',
               renderAt: `chart-${this.sRouteName}-container`,
-              width: '180',
-              height: '160',
+              width: 180,
+              height: 160,
               dataFormat: 'json',
               dataSource: mDataSource,
             }).render();

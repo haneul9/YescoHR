@@ -108,17 +108,13 @@ sap.ui.define(
       },
 
       getDialChartOption(iGaugeOriginY) {
-        return {
-          //Cosmetics
-          showValue: 1,
-          baseFontSize: 14,
-          valueFontSize: 14,
+        return FusionCharts.curryChartOptions({
           showTooltip: 0,
           gaugeOriginY: iGaugeOriginY,
           gaugeOuterRadius: 85,
           gaugeInnerRadius: 60,
           majorTMNumber: 13,
-          majorTMColor: '#333',
+          majorTMColor: '#333333',
           majorTMHeight: -2.5,
           majorTMThickness: 1,
           tickValueDistance: 5,
@@ -126,12 +122,9 @@ sap.ui.define(
           showPlotBorder: 0,
           showGaugeBorder: 0,
           showPivotBorder: 0,
-          chartLeftMargin: 0,
-          bgColor: 'transparent',
           pivotRadius: 3,
-          pivotFillColor: '#000',
-          theme: 'ocean',
-        };
+          pivotFillColor: '#000000',
+        });
       },
 
       buildDialChart(aWorkTypeList) {
@@ -140,19 +133,19 @@ sap.ui.define(
 
         if (!oChart) {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sDialChartId,
               type: 'angulargauge',
               renderAt: this.sChartDiv,
-              width: '225px',
-              height: '150px',
+              width: 225,
+              height: 150,
               dataFormat: 'json',
               dataSource: {
                 chart: this.getDialChartOption(iGaugeOriginY),
                 colorrange: {
                   color: [
                     {
-                      minvalue: '0',
+                      minvalue: 0,
                       maxvalue: aWorkTypeList.Alwtm,
                       code: '#34649d',
                     },
@@ -166,8 +159,9 @@ sap.ui.define(
                 dials: {
                   dial: [
                     {
+                      showValue: 1,
                       value: aWorkTypeList.Reltm,
-                      valueY: iGaugeOriginY + 13,
+                      valueY: iGaugeOriginY + 14,
                       baseWidth: 4,
                       rearExtension: 0,
                     },
@@ -183,7 +177,7 @@ sap.ui.define(
               colorrange: {
                 color: [
                   {
-                    minvalue: '0',
+                    minvalue: 0,
                     maxvalue: aWorkTypeList.Alwtm,
                     code: '#34649d',
                   },
@@ -197,8 +191,9 @@ sap.ui.define(
               dials: {
                 dial: [
                   {
+                    showValue: 1,
                     value: aWorkTypeList.Reltm,
-                    valueY: iGaugeOriginY + 13,
+                    valueY: iGaugeOriginY + 14,
                     baseWidth: 4,
                     rearExtension: 0,
                   },

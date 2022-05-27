@@ -206,24 +206,26 @@ sap.ui.define(
 
             break;
           case 'bar2d':
+            let fBar2dMaxValues = 0;
             _.chain(mChartSetting)
-              // .set(['chart', 'yAxisMaxValue'], '120')
               .set(
                 ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` }))
+                _.map(aChartDatas, (o) => {
+                  fBar2dMaxValues = Math.max(fBar2dMaxValues, Number(o.Cnt01));
+                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callEmployeeDetail-${mChartInfo.Headty},${o.Cod01}` };
+                })
               )
               .commit();
+
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fBar2dMaxValues * 1.2);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
             break;
           case 'doughnut2d':
+            const iColorsLength = ChartsSetting.COLORS.length;
             _.chain(mChartSetting)
-              .set(['chart', 'paletteColors'], _.chain(ChartsSetting.COLORS).take(aChartDatas.length).join(',').value())
-              .set(
-                ['data'],
-                _.map(aChartDatas, (o) => ({ label: o.Ttltxt, value: o.Cnt01 }))
-              )
+              .set(['data'], _.map(aChartDatas, (o, i) => ({ label: o.Ttltxt, value: o.Cnt01, color: ChartsSetting.COLORS[i % iColorsLength] })).reverse())
               .commit();
 
             this.callFusionChart(mChartInfo, mChartSetting);
@@ -256,7 +258,7 @@ sap.ui.define(
               })
               .commit();
 
-            mChartSetting.chart.yAxisMaxValue = Math.ceil(fMscolumn2dMaxValues * 1.5);
+            mChartSetting.chart.yAxisMaxValue = Math.ceil(fMscolumn2dMaxValues * 1.2);
 
             this.callFusionChart(mChartInfo, mChartSetting);
 
@@ -273,7 +275,7 @@ sap.ui.define(
 
         if (!FusionCharts(sChartId)) {
           FusionCharts.ready(() => {
-            const oChart = new FusionCharts({
+            const oChart = FusionCharts.getInstance({
               id: sChartId,
               type: Chart,
               renderAt: `${sChartId}-container`,

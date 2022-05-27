@@ -35,8 +35,8 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A04" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A05" type="XML" />
-          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A03" type="XML" /> -->
-          <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A06" type="XML" /> -->
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A03" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A06" type="XML" />
         </VBox>
       </custom:MobileScrollContainer>
     </VBox>

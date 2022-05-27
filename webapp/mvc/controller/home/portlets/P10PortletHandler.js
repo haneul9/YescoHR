@@ -54,7 +54,7 @@ sap.ui.define(
       buildChart() {
         this.oChartPromise = new Promise((resolve) => {
           FusionCharts.ready(() => {
-            new FusionCharts({
+            FusionCharts.getInstance({
               id: this.sChartId,
               type: 'pie2d',
               renderAt: `${this.sChartId}-container`,
@@ -66,8 +66,9 @@ sap.ui.define(
                 data: [
                   {
                     label: AppUtils.getBundleText('MSG_00001'), // No data found.
-                    value: 0,
-                    color: 'transparent',
+                    value: 100,
+                    alpha: 100,
+                    color: '#ffffff',
                   },
                 ],
               },
@@ -89,7 +90,7 @@ sap.ui.define(
       },
 
       transformContentData(aPortletContentData = []) {
-        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#336699', '#67a4ff', '#CCE5FF', '#FCCCD4'];
+        const aColors = ['#f5a369', '#faca74', '#b7c983', '#5ac6b2', '#5aa7c6', '#9a8db7', '#336699', '#67a4ff', '#cce5ff', '#fcccd4'];
         const aSortedData = _.chain(aPortletContentData.AppraisalContDetSet.results)
           .map((o) => _.set(o, 'Fwgt', _.toNumber(o.Fwgt)))
           .orderBy(['Fwgt', 'Z101', 'ElementId'], ['desc', 'asc', 'asc']);
@@ -110,21 +111,24 @@ sap.ui.define(
 
         const iPercSum = _.sumBy(aChartData, 'value');
         if (_.sumBy(aChartData, 'value') !== 100) {
-          aChartData.splice(0, 0, { label: 'N/A', color: '#F7F7F7', value: 100 - iPercSum });
+          aChartData.splice(0, 0, { label: 'N/A', color: '#f7f7f7', value: 100 - iPercSum });
         }
 
-        if (this.oChartPromise) {
-          this.oChartPromise.then(() => {
-            this.setChartData(aChartData);
-          });
-        } else {
-          this.setChartData(aChartData); // 다른 메뉴를 갔다가 되돌아오는 경우
-        }
+        setTimeout(() => {
+          if (this.oChartPromise) {
+            this.oChartPromise.then(() => {
+              this.setChartData(aChartData);
+            });
+          } else {
+            this.setChartData(aChartData); // 다른 메뉴를 갔다가 되돌아오는 경우
+          }
+        }, 300);
 
         return {
           description: `${aPortletContentData.ZzapstsNm}/${aPortletContentData.ZzapstsSubnm}`,
           list: aList,
           listCount: aList.length,
+          aChartData,
         };
       },
 
@@ -132,7 +136,7 @@ sap.ui.define(
         const oChart = FusionCharts(this.sChartId);
         oChart.setChartData(
           {
-            chart: this.getChartOption(),
+            chart: this.getChartOption(1000),
             data: aData,
           },
           'json'
@@ -140,33 +144,24 @@ sap.ui.define(
         oChart.render();
       },
 
-      getChartOption(iAnimateDuration = 1000) {
-        return {
+      getChartOption(iAnimateDuration) {
+        return FusionCharts.curryChartOptions({
+          valueFontSize: 12,
           animateDuration: iAnimateDuration,
-          animateClockwise: '1',
-          startingAngle: '90',
-          valueFontSize: '12',
-          showLegend: '0',
-          showZeroPies: '1',
-          showPercentValues: '1',
-          showPercentInTooltip: '1',
-          showLabels: '0',
-          enableSmartLabels: '0',
-          labelDistance: '-25',
-          useDataPlotColorForLabels: '0',
-          toolTipSepChar: ' ', // 빈 문자를 넣으면 콤마가 들어가므로 공백 문자로 줌
-          decimals: '1',
-          chartTopMargin: '0',
-          chartTopRight: '0',
-          chartTopBottom: '0',
-          chartTopLeft: '0',
-          toolTipBgColor: '#ffffff',
-          toolTipColor: '#222222',
-          showToolTipShadow: '1',
-          plotcolorintooltip: '1',
-          plottooltext: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value%</td></tr></table></div>',
-          theme: 'ocean',
-        };
+          animateClockwise: 1,
+          pieRadius: '80%',
+          startingAngle: 90,
+          showLegend: 0,
+          showZeroPies: 1,
+          showPercentValues: 1,
+          showPercentInTooltip: 1,
+          showLabels: 0,
+          // enableSmartLabels: 0,
+          labelDistance: -5,
+          useDataPlotColorForLabels: 0,
+          decimals: 1,
+          plotToolText: '<div class="fusion-tooltip"><table><tr><th>$label</th><td>$value%</td></tr></table></div>',
+        });
       },
 
       onAfterDragAndDrop() {
