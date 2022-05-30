@@ -531,15 +531,19 @@ div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {w
 
 /* MSS 인원현황 */
 .mobile-mt-15-px {margin-top:15px}
-.led-chart [class*="Label-group"] tspan,
-.bar-chart [class*="Label-group"] tspan,
-.bar-chart [class*="Name-group"] tspan,
-.bar-chart [class*="datalabel"] tspan,
-.column-chart [class*="Label-group"] tspan,
-.column-chart [class*="Name-group"] tspan,
-.column-chart [class*="datalabel"] tspan,
-.doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
-html.sap-ios .custom-chart .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
+
+/* FusionCharts 3.12.2 style start */
+.fusioncharts-3-12-2 .led-chart [class*="Label-group"] tspan,
+.fusioncharts-3-12-2 .bar-chart [class*="Label-group"] tspan,
+.fusioncharts-3-12-2 .bar-chart [class*="Name-group"] tspan,
+.fusioncharts-3-12-2 .bar-chart [class*="datalabel"] tspan,
+.fusioncharts-3-12-2 .column-chart [class*="Label-group"] tspan,
+.fusioncharts-3-12-2 .column-chart [class*="Name-group"] tspan,
+.fusioncharts-3-12-2 .column-chart [class*="datalabel"] tspan,
+.fusioncharts-3-12-2 .doughnut-chart [class*="datalabel"] tspan {font-size:var(--StatisticNumberFontSize)}
+html.sap-ios.fusioncharts-3-12-2 .custom-chart .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
+/* FusionCharts 3.12.2 style end */
+html.sap-ios.fusioncharts-3-18-0 .custom-chart .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,1px); -webkit-transform:translate(0,1px)}
 
 .overviews .statistic-box,
 .overviews .statistic-text,
