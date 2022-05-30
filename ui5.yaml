@@ -1,4 +1,4 @@
-specVersion: '1.0'
+specVersion: "2.6"
 type: application
 metadata:
   name: zui5_yescohr
@@ -9,22 +9,32 @@ server:
       afterMiddleware: compression
       mountPath: /resources
       configuration:
-        baseUri: 'https://sapui5.hana.ondemand.com/1.71.28/resources'
+        baseUri: "https://sapui5.hana.ondemand.com/1.71.28/resources"
     - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
       mountPath: /proxy
       configuration:
-        baseUri: 'https://yeshrsapdev.yescoholdings.com:8443'
+        baseUri: "https://yeshrsapdev.yescoholdings.com:8443"
         username: UI5_MIDDLEWARE_SIMPLE_PROXY_USERNAME
         password: UI5_MIDDLEWARE_SIMPLE_PROXY_PASSWORD
         query:
-          saml2: 'disabled'
-          sap-client: '300'
+          saml2: "disabled"
+          sap-client: "300"
     - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
       mountPath: /sap/public/bc/ui2/zui5_yescohr
       configuration:
-        baseUri: 'https://yeshrsapdev.yescoholdings.com:8443/sap/public/bc/ui2/zui5_yescohr'
+        baseUri: "https://yeshrsapdev.yescoholdings.com:8443/sap/public/bc/ui2/zui5_yescohr"
 resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8
+builder:
+  resources:
+    excludes:
+      - "/webapp/asset/libs/**"
+  componentPreload:
+    excludes:
+      - "sap/ui/yesco/asset/libs/**"
+  minification:
+    excludes:
+      - "sap/ui/yesco/asset/libs/**"

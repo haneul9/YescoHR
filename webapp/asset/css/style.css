@@ -146,7 +146,6 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p03p04 .portlet-members > .sapMHBox:last-child {margin-bottom:0}
 .portlet-p03p04 .portlet-members > .sapMHBox > * {display:flex}
 .portlet-p03p04 .portlet-members > .sapMHBox > .sapMFlexItem + .sapMFlexItem {margin-left:16px}
-.portlet-p03p04 .portlet-members .sapMText {width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal}
 .portlet-p03p04 .portlet-members .members-photo {width:40px; height:40px; border-radius:50%; background-size:cover; background-position:center top; background-repeat:no-repeat}
 .portlet-p03p04 .portlet-members .members-name {width:60px; line-height:40px; font-size:15px; font-weight:700}
 .portlet-p03p04 .portlet-members .members-position {flex-grow:1; max-width:calc(100% - 208px); height:40px}/* 40 + (16 + 60) + calc(100% - 16 - 192) + (16 + 60) */
@@ -157,7 +156,7 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p03p04 .portlet-members .members-status {width:60px; text-align:center !important}
 .portlet-p03p04 .portlet-members.my-members .members-remove {display:none}
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:flex}
-.portlet-p03p04 [data-portlet-members-status] {border:1px solid; border-radius:3px; height:18px; line-height:16px; font-size:12px}
+.portlet-p03p04 [data-portlet-members-status] {border:1px solid; border-radius:3px; line-height:16px; font-size:12px}
 .portlet-p03p04 [data-portlet-members-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-members-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
 .portlet-p03p04 [data-portlet-members-status="2"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 출장중 */
