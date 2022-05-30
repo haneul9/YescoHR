@@ -583,7 +583,7 @@ sap.ui.define(
                     {
                       showValue: 1,
                       value: mWorkTypeList.Reltm,
-                      valueY: iGaugeOriginY + 14,
+                      valueY: iGaugeOriginY + 13,
                       baseWidth: 4,
                       rearExtension: 0,
                     },
@@ -615,7 +615,7 @@ sap.ui.define(
                   {
                     showValue: 1,
                     value: mWorkTypeList.Reltm,
-                    valueY: iGaugeOriginY + 14,
+                    valueY: iGaugeOriginY + 13,
                     baseWidth: 4,
                     rearExtension: 0,
                   },
