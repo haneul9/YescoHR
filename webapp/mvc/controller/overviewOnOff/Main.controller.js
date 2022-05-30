@@ -288,7 +288,8 @@ sap.ui.define(
 
             if (mChartInfo.Target === 'A03' || mChartInfo.Target === 'A06') {
               oChart.addEventListener('rendered', () => {
-                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => {
+                // $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class$="-parentgroup"] > g[class$="-sumlabels"] > g[class$="-sumlabels"] > text`).each((idx, text) => { // 3.12.2
+                $(`#employeeOnOff-${_.toLower(mChartInfo.Target)}-chart g[class*="-manager-sumLabelsLayer"] > text`).each((idx, text) => {
                   $(text)
                     .off('click')
                     .on('click', () => {

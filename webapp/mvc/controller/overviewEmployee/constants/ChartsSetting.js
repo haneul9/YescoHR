@@ -199,6 +199,7 @@ sap.ui.define([], function () {
           scrollColor: '#ffffff',
           animation: 0,
           yAxisNameFontSize: 12,
+          showXAxisLine: 0,
           staggerLines: 2,
           divLineDashed: 0,
           divLineColor: '#eeeeee',

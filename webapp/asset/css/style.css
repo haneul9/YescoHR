@@ -2174,25 +2174,40 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .small-table-input .sapMInputBaseIcon {line-height:1.7rem !important}
 
 .fusioncharts-container svg {background-color:rgba(255,255,255,0) !important}
-.legend-translate-y-p2p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,2px); -webkit-transform:translate(0,2px)}
-.legend-translate-y-p1p5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1.5px); -webkit-transform:translate(0,1.5px)}
-.legend-translate-y-p1p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,1px); -webkit-transform:translate(0,1px)}
-.legend-translate-y-p0p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
-.legend-translate-y-m0p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
-.legend-translate-y-m1p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1px); -webkit-transform:translate(0,-1px)}
-.legend-translate-y-m1p5 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
-.legend-translate-y-m2p0 .fusioncharts-container svg g[class*="-legend"] g[class*="-item"] text {transform:translate(0,-2px); -webkit-transform:translate(0,-2px)}
-.scroll-h0 .fusioncharts-container svg g[class*="-scroller"] rect {height:0 !important}
-.scroll-h1 .fusioncharts-container svg g[class*="-scroller"] rect {height:1px !important}
-.scroll-h2 .fusioncharts-container svg g[class*="-scroller"] rect {height:2px !important}
-.scroll-h3 .fusioncharts-container svg g[class*="-scroller"] rect {height:3px !important}
-.scroll-h4 .fusioncharts-container svg g[class*="-scroller"] rect {height:4px !important}
-.scroll-h5 .fusioncharts-container svg g[class*="-scroller"] rect {height:5px !important}
-.scroll-h6 .fusioncharts-container svg g[class*="-scroller"] rect {height:6px !important}
-.scroll-h7 .fusioncharts-container svg g[class*="-scroller"] rect {height:7px !important}
-.scroll-h8 .fusioncharts-container svg g[class*="-scroller"] rect {height:8px !important}
-.scroll-h9 .fusioncharts-container svg g[class*="-scroller"] rect {height:9px !important}
-.scroll-h10 .fusioncharts-container svg g[class*="-scroller"] rect {height:10px !important}
+.legend-translate-y-p2p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,2px); -webkit-transform:translate(0,2px)}
+.legend-translate-y-p1p5 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,1.5px); -webkit-transform:translate(0,1.5px)}
+.legend-translate-y-p1p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,1px); -webkit-transform:translate(0,1px)}
+.legend-translate-y-p0p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
+.legend-translate-y-m0p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,0); -webkit-transform:translate(0,0)}
+.legend-translate-y-m1p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,-1px); -webkit-transform:translate(0,-1px)}
+.legend-translate-y-m1p5 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,-1.5px); -webkit-transform:translate(0,-1.5px)}
+.legend-translate-y-m2p0 .fusioncharts-container svg g[class$="-legend"] g[class$="-item"] text {transform:translate(0,-2px); -webkit-transform:translate(0,-2px)}
+/* FusionCharts 3.12.2 style start */
+.scroll-h0 .fusioncharts-container svg g[class$="-scroller"] rect {height:0 !important}
+.scroll-h1 .fusioncharts-container svg g[class$="-scroller"] rect {height:1px !important}
+.scroll-h2 .fusioncharts-container svg g[class$="-scroller"] rect {height:2px !important}
+.scroll-h3 .fusioncharts-container svg g[class$="-scroller"] rect {height:3px !important}
+.scroll-h4 .fusioncharts-container svg g[class$="-scroller"] rect {height:4px !important}
+.scroll-h5 .fusioncharts-container svg g[class$="-scroller"] rect {height:5px !important}
+.scroll-h6 .fusioncharts-container svg g[class$="-scroller"] rect {height:6px !important}
+.scroll-h7 .fusioncharts-container svg g[class$="-scroller"] rect {height:7px !important}
+.scroll-h8 .fusioncharts-container svg g[class$="-scroller"] rect {height:8px !important}
+.scroll-h9 .fusioncharts-container svg g[class$="-scroller"] rect {height:9px !important}
+.scroll-h10 .fusioncharts-container svg g[class$="-scroller"] rect {height:10px !important}
+/* FusionCharts 3.12.2 style end */
+/* FusionCharts 3.18.0 style start */
+.scroll-h0 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:0 !important}
+.scroll-h1 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:1px !important}
+.scroll-h2 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:2px !important}
+.scroll-h3 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:3px !important}
+.scroll-h4 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:4px !important}
+.scroll-h5 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:5px !important}
+.scroll-h6 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:6px !important}
+.scroll-h7 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:7px !important}
+.scroll-h8 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:8px !important}
+.scroll-h9 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:9px !important}
+.scroll-h10 .fusioncharts-container svg g[class$="-scrollContainer"] rect {height:10px !important}
+/* FusionCharts 3.18.0 style end */
 #employee-a02-chart-container {height:76px}
 #employee-a06-chart-container {height:76px}
 

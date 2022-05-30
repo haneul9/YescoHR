@@ -170,6 +170,7 @@ sap.ui.define([], function () {
         chart: FusionCharts.curryChartOptions({
           animation: 0,
           yAxisMaxValue: 40,
+          showXAxisLine: 0,
           numDivLines: 3,
           divLineDashed: 0,
           divLineColor: '#eeeeee',
@@ -202,8 +203,7 @@ sap.ui.define([], function () {
         chart: FusionCharts.curryChartOptions({
           scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? 10 : 4,
           scrollColor: '#ffffff',
-          flatScrollBars: 1,
-          scrollShowButtons: 0,
+          showXAxisLine: 0,
           rotateLabels: 1,
           slantLabels: 1,
           divLineDashed: 0,
