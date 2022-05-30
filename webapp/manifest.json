@@ -210,13 +210,13 @@
         { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
 
         { "pattern": "idp", "name": "idp", "target": "idp" },
-        { "pattern": "h/idp", "name": "h/idp", "target": "h/idp" },
         { "pattern": "idp/{sType}/{sYear}", "name": "idp-detail", "target": "idpDetail" },
-        { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
         { "pattern": "m/idp", "name": "m/idp", "target": "m/idp" },
-        { "pattern": "h/idpPry", "name": "h/idpPry", "target": "h/idpPry" },
         { "pattern": "m/idp/{sType}/{sYear}", "name": "m/idp-detail", "target": "idpDetail" },
+        { "pattern": "h/idp", "name": "h/idp", "target": "h/idp" },
         { "pattern": "h/idp/{sType}/{sYear}", "name": "h/idp-detail", "target": "idpDetail" },
+        { "pattern": "h/idpPry", "name": "h/idpPry", "target": "h/idpPry" },
+        { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
 
         { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
         { "pattern": "individualWorkStateView/:pernr:/:year:/:month:", "name": "individualWorkState-view", "target": "individualWorkStateView" },
@@ -456,8 +456,8 @@
         "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
 
         "idp": { "viewId": "idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListE" },
-        "h/idp": { "viewId": "h_idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListH" },
         "m/idp": { "viewId": "m_idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListM" },
+        "h/idp": { "viewId": "h_idp", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListH" },
         "h/idpPry": { "viewId": "h_idpPry", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "ListPryH" },
         "idpDetail": { "viewId": "idpDetail", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Detail" },
         "idpView": { "viewId": "idpView", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Document" },
