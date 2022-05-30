@@ -49,7 +49,7 @@ sap.ui.define(
           department: {
             rowCount: 2,
             list: [],
-            data: []
+            data: [],
           },
           dialog: {
             busy: true,
@@ -58,13 +58,13 @@ sap.ui.define(
             gradeTx: '',
             list: [],
           },
-          changeDialog:{
+          changeDialog: {
             busy: true,
             list: [],
-            item: []
+            item: [],
           },
-          Werks: this.getSessionProperty('Werks'),
-          isChange: (this.getSessionProperty('Werks') === '1000' || this.getSessionProperty('Werks') === '5000') ? true : false
+          Werks: '',
+          isChange: '',
         };
       },
 
@@ -81,11 +81,16 @@ sap.ui.define(
 
       async onObjectMatched() {
         const oViewModel = this.getViewModel();
-        
+
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
 
         try {
+          const sSessionWerks = this.getSessionProperty('Werks');
+
+          oViewModel.setProperty('/Werks', sSessionWerks);
+          oViewModel.setProperty('/isChange', sSessionWerks === '1000' || sSessionWerks === '5000');
+
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const [aGrades, mDetailData, aDialogGrade] = await Promise.all([
             Client.getEntitySet(oModel, 'AppValueList', { VClass: 'Q', VType: '810' }), //
@@ -253,10 +258,7 @@ sap.ui.define(
           .orderBy(['Osort'], ['asc'])
           .value();
 
-        const aDataByDepart = _.chain(aRawList)
-        .orderBy(['OsortSub'], ['asc'])
-        .groupBy('Zzappun2')
-        .value();
+        const aDataByDepart = _.chain(aRawList).orderBy(['OsortSub'], ['asc']).groupBy('Zzappun2').value();
 
         const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
         const mSumRow = this.TableUtils.generateSumRow({
@@ -630,25 +632,25 @@ sap.ui.define(
         this.TableUtils.export({ oTable, aTableData, sFileName, aCustomColumns });
       },
 
-      async pressValue(oEvent){
+      async pressValue(oEvent) {
         const mRowData = oEvent.getSource().getCustomData()[0].getValue();
         const sValueEid = oEvent.getSource().getCustomData()[1].getValue();
         const oView = this.getView();
         const oViewModel = this.getViewModel();
         const aDataByDepart = oViewModel.getProperty('/department/data');
-        
+
         const aData = _.chain(_.get(aDataByDepart, mRowData.Zzappun2))
-                      .filter((o) => _.isEqual(o.Lfapp, sValueEid))
-                      .cloneDeep()
-                      .value();
+          .filter((o) => _.isEqual(o.Lfapp, sValueEid))
+          .cloneDeep()
+          .value();
 
         const aData2 = _.chain(oViewModel.getProperty('/raw/list'))
-                      .filter((o) => _.isEqual(o.Lfapp, sValueEid))
-                      .cloneDeep()
-                      .value();
+          .filter((o) => _.isEqual(o.Lfapp, sValueEid))
+          .cloneDeep()
+          .value();
 
         // 인원수가 0인 경우 return
-        if(_.isEmpty((mRowData.Sumrow ? aData2 : aData))){
+        if (_.isEmpty(mRowData.Sumrow ? aData2 : aData)) {
           return;
         }
 
@@ -664,12 +666,12 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/changeDialog/busy', true);
-          
+
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const aList = await Client.deep(oModel, 'AppraisalSesDoc', {
-              Menid: this.getCurrentMenuId(),
-              Prcty: Constants.PROCESS_TYPE.SEARCH.code,
-              AppraisalSesDocDet2Set: (mRowData.Sumrow ? aData2 : aData)
+            Menid: this.getCurrentMenuId(),
+            Prcty: Constants.PROCESS_TYPE.SEARCH.code,
+            AppraisalSesDocDet2Set: mRowData.Sumrow ? aData2 : aData,
           });
 
           oViewModel.setProperty('/changeDialog/list', aList.AppraisalSesDocDet2Set.results);
@@ -679,8 +681,8 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/changeDialog/busy', false);          
-        }       
+          oViewModel.setProperty('/changeDialog/busy', false);
+        }
       },
 
       async onPressChangeFappDialogSave() {
@@ -689,9 +691,9 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/changeDialog/busy', true);
-          
+
           const oModel = this.getModel(ServiceNames.APPRAISAL);
-          
+
           await Client.deep(oModel, 'AppraisalSesDoc', {
             Menid: this.getCurrentMenuId(),
             Prcty: Constants.PROCESS_TYPE.DIALOG_SAVE.code,
@@ -700,9 +702,9 @@ sap.ui.define(
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103'), {
             onClose: () => {
-                oViewModel.setProperty('/changeDialog/list', []);
-                this.onPressChangeFappDialogClose();
-                this.onObjectMatched();
+              oViewModel.setProperty('/changeDialog/list', []);
+              this.onPressChangeFappDialogClose();
+              this.onObjectMatched();
             },
           });
         } catch (oError) {
@@ -710,8 +712,8 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/changeDialog/busy', false);          
-        }   
+          oViewModel.setProperty('/changeDialog/busy', false);
+        }
       },
 
       onPressChangeFappDialogClose() {
