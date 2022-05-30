@@ -1,20 +1,14 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
-    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
-    Fragment,
-    MessageBox,
     AppUtils,
-    UI5Error,
     Client,
     ServiceNames,
     BaseController
