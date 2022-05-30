@@ -409,7 +409,22 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const aExtraList = oViewModel.getProperty('/dialog/extra/list');
 
-        oViewModel.setProperty('/dialog/extra/list/2/Anzb', _.chain(aExtraList).take(2).mapValues('Anzb').values().compact().sumBy(_.toNumber).toString().value());
+        _.chain(aExtraList)
+          .last() // 마지막 합계 행
+          .set(
+            'Anzb',
+            _.chain(aExtraList)
+              .dropRight() // 마지막 합계 행 제외
+              .mapValues('Anzb')
+              .values()
+              .compact()
+              .sumBy(_.toNumber)
+              .toString()
+              .value()
+          )
+          .commit();
+
+        oViewModel.refresh();
       },
 
       setContentsBusy(bContentsBusy = true, vTarget = []) {
@@ -519,7 +534,7 @@ sap.ui.define(
 
       validationBreak() {
         const oViewModel = this.getViewModel();
-        const aExtraTimes = _.take(oViewModel.getProperty('/dialog/extra/list'), 2);
+        const aExtraTimes = _.dropRight(oViewModel.getProperty('/dialog/extra/list'));
 
         if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
           throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
