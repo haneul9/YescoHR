@@ -87,7 +87,7 @@ sap.ui.define([], function () {
       },
       scrollstackedcolumn2d: {
         chart: FusionCharts.curryChartOptions({
-          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? 10 : 4,
+          scrollHeight: 6,
           scrollColor: '#ffffff',
           showSum: 1,
           showYAxisValues: 0,
@@ -126,7 +126,7 @@ sap.ui.define([], function () {
       },
       scrollmsstackedcolumn2dlinedy: {
         chart: FusionCharts.curryChartOptions({
-          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? 10 : 4,
+          scrollHeight: 6,
           scrollColor: '#ffffff',
           showSum: 1,
           showYAxisValues: 0,

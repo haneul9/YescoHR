@@ -93,7 +93,6 @@ sap.ui.define(
         const oApend = this.oBoxModel.getProperty('/search/Apend');
 
         const oModel = this.oController.getModel(ServiceNames.WORKTIME);
-        const sUrl = 'OnCallChangeApp';
         const mFilters = {
           Menid: this.oController.getCurrentMenuId(),
           Pernr: this.oController.getAppointeeProperty('Pernr'),
@@ -101,7 +100,7 @@ sap.ui.define(
           Apend: moment(oApend).hours(9).toDate(),
         };
 
-        return Client.getEntitySet(oModel, sUrl, mFilters);
+        return Client.getEntitySet(oModel, 'OnCallChangeApp', mFilters);
       },
 
       setRequestListData(aRowData) {
