@@ -25,6 +25,7 @@ sap.ui.define(
           busy: false,
           type: '',
           detailRoute: '',
+          routeName: '',
           listInfo: {
             rowCount: 1,
           },
@@ -43,6 +44,7 @@ sap.ui.define(
 
         oViewModel.setData(this.initializeModel());
         oViewModel.setProperty('/busy', true);
+        oViewModel.setProperty('/routeName', sRouteName);
         this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
 
         try {
@@ -60,6 +62,37 @@ sap.ui.define(
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug(`Controller > ${sRoute} List > onObjectMatched Error`, oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      // 대상자 정보 사원선택시 화면 Refresh
+      async callbackAppointeeChange() {
+        const oModel = this.getModel(ServiceNames.APPRAISAL);
+        const oViewModel = this.getViewModel();
+        const { type: sType, route: sRoute, detail: sDetailRoute } = _.find(Constants.LIST_PAGE, { route: oViewModel.getProperty('/routeName') });
+        const sEmpField = _.isEqual(sType, Constants.APPRAISER_TYPE.ME) ? 'Zzappee' : 'Zzapper';
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          oViewModel.setProperty('/type', sType);
+          oViewModel.setProperty('/detailRoute', sDetailRoute);
+
+          const aRowData = await Client.getEntitySet(oModel, 'AppraisalIdpPeeList', {
+            Prcty: Constants.PROCESS_TYPE.LIST.code,
+            Zzappgb: sType,
+            Menid: this.getCurrentMenuId(),
+            Werks: this.getAppointeeProperty('Werks'),
+            [sEmpField]: this.getAppointeeProperty('Pernr'),
+          });
+
+          this.setTableData({ oViewModel, aRowData });
+        } catch (oError) {
+          this.debug(`Controller > ${sRoute} List > callbackAppointeeChange Error`, oError);
 
           AppUtils.handleError(oError);
         } finally {

@@ -61,6 +61,7 @@ sap.ui.define(
         return {
           busy: false,
           param: {},
+          printContents: [],
           type: '',
           hass: this.isHass(),
           year: moment().format('YYYY'),
@@ -316,6 +317,21 @@ sap.ui.define(
 
       // 증빙
       onPressPrint(oEvent) {
+        const oViewModel = this.getViewModel();
+        const aContents = oViewModel.getProperty('/goals/comp');
+        const mAppointee = oViewModel.getProperty('/appointee');
+
+        oViewModel.setProperty('/printTitle', {
+          year: this.getBundleText('LABEL_36022', moment().year()),
+          emp: `${mAppointee.Ename} ${mAppointee.Zzjikgbt}/${mAppointee.Zzjikcht} ${mAppointee.Orgtx}`,
+        });
+        oViewModel.setProperty('/printContents', [
+          { type: 'label', value1: this.getBundleText('LABEL_36013'), value2: this.getBundleText('LABEL_36014'), value3: this.getBundleText('LABEL_36015'), value4: this.getBundleText('LABEL_36016') },
+          ..._.map(aContents, (e) => {
+            return { ..._.pick(e, ['Z305', 'Fapp', 'Z307', 'Z309', 'Z311', 'Obj0', 'Fwgt']), type: 'content' };
+          }),
+        ]);
+
         if (!this.pJobDialog) {
           const oView = this.getView();
 

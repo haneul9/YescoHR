@@ -1372,15 +1372,15 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid.mobile-reference .sapMVBox .sapMTextArea .sapMTextAreaInner {padding-top:0px !important; padding-bottom:0px !important}
 
 /* 자기개발 */
-.sapUiLayoutCSSGrid.job-print-grid .sapMLabel {writing-mode: vertical-rl; padding: 10px; min-height: 1.625rem; height: 100px;  background-color: #e9e9e9;}
-.sapUiLayoutCSSGrid.job-print-grid .sapMLabel > bdi {height: 100%; text-align: center !important; }
-.sapUiLayoutCSSGrid.job-print-grid .sapMLabel.trans {width: 35px !important; writing-mode: horizontal-tb; }
-.sapUiLayoutCSSGrid.job-print-grid .sapMLabel.trans > bdi {height: auto; }
-.sapUiLayoutCSSGrid.job-print-grid .sapMLabel, .sapUiLayoutCSSGrid.job-print-grid .sapMTextArea { border: 1px solid #bfbfbf; border-radius: 3px; margin: 0 !important;}
-.sapUiLayoutCSSGrid.job-print-grid .sapMTextArea { width: 100%; height: 100%;}
-.sapUiLayoutCSSGrid.job-print-grid .top-box { justify-content: space-between; align-items: flex-end;}
-.sapUiLayoutCSSGrid.job-print-grid .top-box .sapMText { font-size: 16px; justify-content: space-between; align-items: flex-end;}
-.sapUiLayoutCSSGrid.job-print-grid .top-box .sapMVBox.border .sapMText { border: 1px solid #bfbfbf; padding: 5px; height: 100%; text-align: center !important; }
+.job-print-layout .sapMLabel {writing-mode: vertical-rl; padding: 10px; min-height: 1.625rem; height: 100px;  background-color: #e9e9e9;}
+.job-print-layout .sapMLabel > bdi {height: 100%; text-align: center !important; }
+.job-print-layout .sapMLabel.trans {width: 35px !important; writing-mode: horizontal-tb; }
+.job-print-layout .sapMLabel.trans > bdi {height: auto; }
+.job-print-layout .sapMLabel, .sapUiLayoutCSSGrid.job-print-layout .sapMTextArea { border: 1px solid #bfbfbf; border-radius: 3px; margin: 0 !important;}
+.job-print-layout .sapMTextArea { width: 100%; height: 100%;}
+.job-print-layout .top-box { justify-content: space-between; align-items: flex-end;}
+.job-print-layout .top-box .sapMText { font-size: 16px; justify-content: space-between; align-items: flex-end;}
+.job-print-layout .top-box .sapMVBox.border .sapMText { border: 1px solid #bfbfbf; padding: 5px; height: 100%; text-align: center !important; }
 .sapMHBox.header .sapMHBox.apointee {width: 100%; justify-content: end; align-items: end;}
 .sapMHBox.header .sapMHBox.title {width: 100%; justify-content: center; height: 30px; position: fixed;}
 .border-left { border-left: 0 !important; }
