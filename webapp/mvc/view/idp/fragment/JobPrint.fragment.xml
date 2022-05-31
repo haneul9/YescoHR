@@ -1,151 +1,77 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <Dialog id="rejectDialog" showHeader="false" contentWidth="1600px">
+  <Dialog id="rejectDialog" showHeader="false" contentWidth="auto">
     <buttons>
       <Button type="Emphasized" text="{i18n>LABEL_00131}" press=".onPagePrint"/>
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <HBox class="header mb-10-px" height="30px">
       <HBox class="title">
-        <Title level="H3" text="2022 자기개발계획" />
+        <Title level="H3" text="{/printTitle/year}" />
       </HBox>
       <HBox class="apointee">
-        <Text text="홍길동 차장/팀원 인재개발팀" />
+        <Text text="{/printTitle/emp}" />
       </HBox>
     </HBox>
-    <grid:CSSGrid gridTemplateColumns="1fr 20fr" class="job-print-grid" gridGap="5px">
-      <Text text="" />
-      <HBox width="100%">
-        <HBox class="top-box">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-          <Text text="직무역량 : 규정 및 절차 준수" class="bold" />
-          <VBox class="border">
-            <HBox>
-              <Text text="현재수준" />
-              <Text text="X" width="35px" class="border-left" />
-            </HBox>
-            <HBox>
-              <Text text="목표수준" class="border-top" />
-              <Text text="X" width="35px" class="border-left border-top" />
-            </HBox>
+    <VBox class="job-print-layout">
+      <HBox items="{/printContents}">
+        <VBox>
+          <VBox visible="{= ${type} === 'label' }">
+            <Label text="{value1}" wrapping="true" />
+            <Label text="{value2}" wrapping="true" />
+            <Label text="{value3}" wrapping="true" />
+            <Label text="{value4}" wrapping="true" />
           </VBox>
-        </HBox>
-        <HBox class="top-box">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-          <Text text="직무역량 : 규정 및 절차 준수" class="bold" />
-          <VBox class="border">
-            <HBox>
-              <Text text="현재수준" />
-              <Text text="X" width="35px" class="border-left" />
-            </HBox>
-            <HBox>
-              <Text text="목표수준" class="border-top" />
-              <Text text="X" width="35px" class="border-left border-top" />
-            </HBox>
+          <VBox visible="{= ${type} !== 'label' }">
+            <VBox width="100%">
+              <HBox class="top-box">
+                <layoutData>
+                  <FlexItemData growFactor="1" styleClass="mr-10-px" />
+                </layoutData>
+                <Text text="직무역량: {Obj0}" class="bold" />
+                <VBox class="border">
+                  <HBox>
+                    <Text text="{i18n>LABEL_36011}" />
+                    <Text text="{Fwgt}" width="35px" class="border-left" />
+                  </HBox>
+                  <HBox>
+                    <Text text="{i18n>LABEL_36012}" class="border-top" />
+                    <Text text="{Fapp}" width="35px" class="border-left border-top" />
+                  </HBox>
+                </VBox>
+              </HBox>
+              <TextArea value="{Z305}" editable="false">
+                <layoutData>
+                  <FlexItemData growFactor="1" styleClass="mr-10-px" />
+                </layoutData>
+              </TextArea>
+              <TextArea value="{Z307}" editable="false">
+                <layoutData>
+                  <FlexItemData growFactor="1" styleClass="mr-10-px" />
+                </layoutData>
+              </TextArea>
+              <TextArea value="{Z309}" editable="false">
+                <layoutData>
+                  <FlexItemData growFactor="1" styleClass="mr-10-px" />
+                </layoutData>
+              </TextArea>
+              <TextArea value="{Z311}" editable="false">
+                <layoutData>
+                  <FlexItemData growFactor="1" styleClass="mr-10-px" />
+                </layoutData>
+              </TextArea>
+            </VBox>
           </VBox>
-        </HBox>
-        <HBox class="top-box">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-          <Text text="직무역량 : 규정 및 절차 준수" class="bold" />
-          <VBox class="border">
-            <HBox>
-              <Text text="현재수준" />
-              <Text text="X" width="35px" class="border-left" />
-            </HBox>
-            <HBox>
-              <Text text="목표수준" class="border-top" />
-              <Text text="" width="35px" class="border-left border-top" />
-            </HBox>
-          </VBox>
-        </HBox>
+        </VBox>
       </HBox>
-      <Label text="개발계획" wrapping="true" />
       <HBox width="100%">
-        <TextArea value="11111111111111111" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="22222222222222222" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="33333333333333333" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-        </TextArea>
-      </HBox>
-      <Label text="교육과정 및 자기개발활동" wrapping="true" />
-      <HBox width="100%">
-        <TextArea value="44444444444444444" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="55555555555555555" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="66666666666666666" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-        </TextArea>
-      </HBox>
-      <Label text="필요지원사항" />
-      <HBox width="100%">
-        <TextArea value="77777777777777777" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="88888888888888888" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="99999999999999999" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-        </TextArea>
-      </HBox>
-      <Label text="개발결과" />
-      <HBox width="100%">
-        <TextArea value="77777777777777777" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="88888888888888888" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1" styleClass="mr-10-px" />
-          </layoutData>
-        </TextArea>
-        <TextArea value="99999999999999999" editable="false">
-          <layoutData>
-            <FlexItemData growFactor="1"/>
-          </layoutData>
-        </TextArea>
-      </HBox>
-      <Label text="팀장의견" />
-      <HBox width="100%">
+        <Label text="팀장의견" />
         <Label text="개발계획/활동" wrapping="true" class="trans">
           <layoutData>
             <FlexItemData styleClass="mr-5-px" />
           </layoutData>
         </Label>
-        <TextArea value="77777777777777777" editable="false">
+        <TextArea value="{/manage/Z317}" editable="false">
           <layoutData>
             <FlexItemData growFactor="1" styleClass="mr-10-px" />
           </layoutData>
@@ -155,12 +81,12 @@
             <FlexItemData styleClass="mr-5-px" />
           </layoutData>
         </Label>
-        <TextArea value="88888888888888888" editable="false">
+        <TextArea value="{/manage/Z319}" editable="false">
           <layoutData>
             <FlexItemData growFactor="1"/>
           </layoutData>
         </TextArea>
       </HBox>
-    </grid:CSSGrid>
+    </VBox>
   </Dialog>
 </core:FragmentDefinition>
