@@ -24,7 +24,6 @@ sap.ui.define(
 
         try {
           const oModel = this.getUIComponent().getModel(ServiceNames.COMMON);
-          const sUrl = 'GetMenuLv';
           const mPayload = {
             Device: this.bMobile ? 'M' : '',
             GetMenuLv1Nav: [],
@@ -33,7 +32,7 @@ sap.ui.define(
             GetMenuLv4Nav: [],
           };
 
-          const oData = Client.deep(oModel, sUrl, mPayload); // 메뉴 정보 조회
+          const oData = Client.deep(oModel, 'GetMenuLv', mPayload); // 메뉴 정보 조회
 
           this.setData(this.curryData(await oData));
 

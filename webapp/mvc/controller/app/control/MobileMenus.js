@@ -59,7 +59,6 @@ sap.ui.define(
       async saveFavorite({ Menid, Mnid1, Mnid2, Mnid3 }) {
         try {
           const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
-          const sUrl = 'PortletFavoriteMenu';
           const mPayload = {
             Menid: Menid,
             Mnid1: Mnid1,
@@ -68,7 +67,7 @@ sap.ui.define(
             Mobile: 'X',
           };
 
-          await Client.create(oCommonModel, sUrl, mPayload);
+          await Client.create(oCommonModel, 'PortletFavoriteMenu', mPayload);
 
           this.refreshFavorites();
 
@@ -85,12 +84,11 @@ sap.ui.define(
 
       async refreshFavorites() {
         const oCommonModel = this.oAppController.getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletFavoriteMenu';
         const mPayload = {
           Mobile: 'X',
         };
 
-        const aRecentMenus = await Client.getEntitySet(oCommonModel, sUrl, mPayload);
+        const aRecentMenus = await Client.getEntitySet(oCommonModel, 'PortletFavoriteMenu', mPayload);
 
         this.oMenuModel.setRecentMenu(aRecentMenus);
       },

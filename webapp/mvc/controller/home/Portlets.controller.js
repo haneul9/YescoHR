@@ -230,14 +230,13 @@ sap.ui.define(
 
       async readPortletsSetting() {
         const oModel = this.getModel(ServiceNames.COMMON);
-        const sUrl = 'PortletInfo';
         const mPayload = {
           Mode: this.bMobile ? 'M' : 'R',
           PortletInfoTab1Set: [],
           PortletInfoTab2Set: [],
         };
 
-        return Client.deep(oModel, sUrl, mPayload);
+        return Client.deep(oModel, 'PortletInfo', mPayload);
       },
 
       async getPortletsModel({ PortletInfoTab1Set = {}, PortletInfoTab2Set = {} }) {
