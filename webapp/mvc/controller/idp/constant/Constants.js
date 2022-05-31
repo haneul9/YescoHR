@@ -10,6 +10,7 @@ sap.ui.define(
         { type: 'ME', route: 'idp', detail: 'idp-detail', id: 'container-ehr---idp' },
         { type: 'ME', route: 'h/idp', detail: 'h/idp-detail', id: 'container-ehr---h_idp' },
         { type: 'MA', route: 'm/idp', detail: 'm/idp-detail', id: 'container-ehr---m_idp' },
+        { type: 'MA', route: 'h/idpPry', detail: 'h/idpPry-detail', id: 'container-ehr---h_idpPry' },
       ],
 
       TAB: { COMP: 'T01', OPPO: 'T02' },

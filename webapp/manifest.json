@@ -216,6 +216,7 @@
         { "pattern": "h/idp", "name": "h/idp", "target": "h/idp" },
         { "pattern": "h/idp/{sType}/{sYear}", "name": "h/idp-detail", "target": "idpDetail" },
         { "pattern": "h/idpPry", "name": "h/idpPry", "target": "h/idpPry" },
+        { "pattern": "h/idpPry/{sType}/{sYear}", "name": "h/idpPry-detail", "target": "idpDetail" },
         { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
 
         { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
