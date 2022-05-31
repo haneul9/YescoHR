@@ -195,7 +195,7 @@ sap.ui.define([], function () {
       },
       scrollcolumn2d: {
         chart: FusionCharts.curryChartOptions({
-          scrollHeight: /iphone|ipad|ipod/i.test(navigator.userAgent) ? 10 : 4,
+          scrollHeight: 6,
           scrollColor: '#ffffff',
           animation: 0,
           yAxisNameFontSize: 12,
