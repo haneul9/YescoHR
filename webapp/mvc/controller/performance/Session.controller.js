@@ -89,7 +89,7 @@ sap.ui.define(
           const sSessionWerks = this.getSessionProperty('Werks');
 
           oViewModel.setProperty('/Werks', sSessionWerks);
-          oViewModel.setProperty('/isChange', sSessionWerks === '1000' || sSessionWerks === '5000');
+          oViewModel.setProperty('/isChange', sSessionWerks === '1000' || sSessionWerks === '5000' ? true : false);
 
           const oModel = this.getModel(ServiceNames.APPRAISAL);
           const [aGrades, mDetailData, aDialogGrade] = await Promise.all([
