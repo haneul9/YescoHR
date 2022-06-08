@@ -142,7 +142,7 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
             Zyymm: sYearMonth,
           });
-
+console.log(aResults)
           // 현재일 > 마감일자인 경우 조회모드로 변경
           if(moment().format('YYYYMMDD') > moment(aResults.Clsda).format('YYYYMMDD')){
             oViewModel.setProperty('/isMss', true);
