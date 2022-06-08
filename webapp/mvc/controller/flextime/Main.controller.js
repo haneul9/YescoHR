@@ -143,6 +143,11 @@ sap.ui.define(
             Zyymm: sYearMonth,
           });
 
+          // 현재일 > 마감일자인 경우 조회모드로 변경
+          if(moment().format('YYYYMMDD') > moment(aResults.Clsda).format('YYYYMMDD')){
+            oViewModel.setProperty('/isMss', true);
+          }
+
           oViewModel.setProperty('/summary/rowCount', 1);
           oViewModel.setProperty('/summary/list', [
             _.chain(aResults)
@@ -178,7 +183,7 @@ sap.ui.define(
         } catch (oError) {
           throw oError;
         } finally {
-          this.byId('flextimeDetailsTable').clearSelection();
+          this.byId('flextimeDetailsTable').clearSelection(); 
         }
       },
 

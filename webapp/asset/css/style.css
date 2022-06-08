@@ -951,7 +951,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 /*추가 20211101------------------------------------------------------------*/
 body {color:#000; font-weight:bold}
 /*input readonly*/
-.sapMInputBaseReadonly .sapMInputBaseContentWrapper {border:0 !important; background-color:unset !important}
+.sapMInputBaseReadonly .sapMInputBaseContentWrapper {border:0 !important; background-color:unset !important; height: 40px !important;}
 /*input disabled*/
 .sapMInputBaseDisabled .sapMInputBaseContentWrapper,
 .sapMInputBaseDisabled .sapMInputBaseContentWrapper:hover {border-color:var(--BorderColorDisabled) !important; background:#fdfdfd}
