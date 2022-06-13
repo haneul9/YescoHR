@@ -4,7 +4,7 @@
     <HBox>
         <table:Table id="flextimeDetailsTable" width="100%" selectionMode="{= ${/isMss} ? 'None' : 'MultiToggle' }" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionDetailsTable">
             <table:columns>
-                <table:Column width="10%">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_00170}"/>
                     <table:template>
                         <ObjectStatus text="{Datumtx}" state="{= ${Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
@@ -70,10 +70,10 @@
                         <Text text="{ path: 'Brk01m', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="14%">
+                <table:Column width="17%">
                     <Label text="{i18n>LABEL_00163}"/>
                     <table:template>
-                        <ObjectStatus text="{Notes}" state="{= ${Erryn} === 'X' ? 'Error' : 'None' }" class="table-object-status align-start" />
+                        <ObjectStatus text="{Notes}" state="{= ${Erryn} === 'X' ? 'Error' : 'None' }" class="table-object-status align-start" tooltip="{Notes}" />
                     </table:template>
                 </table:Column>
             </table:columns>
