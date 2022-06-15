@@ -39,6 +39,7 @@ sap.ui.define(
           },
           summary: {
             rowCount: 1,
+            Zyymm: "",
             list: [],
           },
           details: {
@@ -137,6 +138,8 @@ sap.ui.define(
           const oViewModel = this.getViewModel();
           const sYearMonth = _.isEmpty(sZyymm) ? moment().format('YYYYMM') : sZyymm;
 
+          oViewModel.setProperty('/summary/Zyymm', sYearMonth);
+
           const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
             Actty: this.sAccty,
             Pernr: this.getAppointeeProperty('Pernr'),
@@ -146,6 +149,8 @@ sap.ui.define(
           // 현재일 > 마감일자인 경우 조회모드로 변경
           if(moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD')){
             oViewModel.setProperty('/isMss', true);
+          } else {
+            oViewModel.setProperty('/isMss', this.isMss());
           }
 
           oViewModel.setProperty('/summary/rowCount', 1);
@@ -345,8 +350,27 @@ sap.ui.define(
           this.setContentsBusy(true, ['Summary', 'Details', 'Button']);
 
           this.resetTableTimePicker('flextimeDetailsTable');
-
+          
+          const oViewModel = this.getViewModel();
           const sZyymm = oEvent.getParameter('value');
+
+          // 2022년 6월 이전 조회 불가능
+          if(sZyymm < "202206"){
+              MessageBox.alert(this.getBundleText('MSG_40004')); // 2022.06 이후부터 선택이 가능합니다.
+              oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
+              this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
+              return;
+          }
+
+          // 현재일 기준 익월까지만 선택 가능
+          const sNextZyymm = moment().add('1', 'months').toDate();
+          const sNextMonth = moment(sNextZyymm).format('YYYYMM');
+          if(sZyymm > sNextMonth){
+              MessageBox.alert(this.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
+              oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
+              this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
+              return;
+          }
 
           await this.readFlextimeSummary(sZyymm);
           await this.readFlextimeDetails(sZyymm);
