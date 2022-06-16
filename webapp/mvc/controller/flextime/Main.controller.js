@@ -208,7 +208,7 @@ sap.ui.define(
           oDetailsTable.getRows().forEach((row, i) => {
             const mRowData = row.getBindingContext().getObject();
 
-            if (mRowData.Erryn === 'X') {
+            if (mRowData.Erryn === 'X' && mRowData.Hrcfm === '') {
               row.addStyleClass('row-error');
             } else {
               row.removeStyleClass('row-error');
