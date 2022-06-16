@@ -76,6 +76,12 @@
                         <ObjectStatus text="{Notes}" state="{= ${Erryn} === 'X' ? 'Error' : 'None' }" class="table-object-status align-start" tooltip="{Notes}" />
                     </table:template>
                 </table:Column>
+                <table:Column width="5%">
+                    <Label text="{i18n>LABEL_40029}"/>
+                    <table:template>
+                        <Text text="{Hrcfm}" width="100%" textAlign="Center" wrapping="false" />
+                    </table:template>
+                </table:Column>
             </table:columns>
         </table:Table>
     </HBox>

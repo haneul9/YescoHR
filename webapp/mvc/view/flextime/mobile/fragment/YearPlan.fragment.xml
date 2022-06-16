@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="section p-10-px font-20-px">
+    <HBox class="title-bar">
+      <Title level="H3" text="{i18n>LABEL_18032}" />
+      <Text text="{i18n>MSG_18001}" class="desc-txt ml-0" />
+    </HBox>
+    <HBox justifyContent="SpaceBetween" class="month-plan-head">
+      <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />
+      <Label text="{/full}" class="font-16-px" />
+      <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextYear" class="icon-button" />
+    </HBox>
+    <grid:CSSGrid class="month-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr" items="{path: '/plans'}">
+      <custom:VBox width="100%" press=".onClickDay" height="{= ${classNames} === 'Day' ? '40px' : '70px' }">
+        <Text width="100%" textAlign="Center" text="{label}" visible="{= ${classNames} === 'Day' }">
+          <customData>
+            <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+          </customData>
+        </Text>
+        <custom:customData>
+          <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+          <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+          <core:CustomData key="stripes" value="{stripes}" writeToDom="true" />
+        </custom:customData>
+        <Label width="100%" textAlign="Center" text="{label}" visible="{= ${classNames} !== 'Day' }" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} &amp;&amp; ${classNames} !== 'Day' }" text="{bTime}" />
+        <Text width="100%" textAlign="Center" visible="{= !!${bTime} &amp;&amp; ${classNames} !== 'Day' }" text="{eTime}" />
+      </custom:VBox>
+    </grid:CSSGrid>
+    <HBox class="box style-02 status-wrap year-plan">
+      <VBox>
+        <Text text="{i18n>LABEL_20006}" class="type01" />
+        <Text text="{i18n>LABEL_20008}" class="type02" />
+        <Text text="{i18n>LABEL_18033}" class="type03" />
+        <Text text="{i18n>LABEL_18034}" class="type04" />
+      </VBox>
+      <VBox>
+        <Text text="{i18n>LABEL_00188}" class="type11" />
+        <Text text="{i18n>LABEL_18038}" class="type12" />
+        <Text text="{i18n>LABEL_18035}" class="type13" />
+      </VBox>
+      <VBox>
+        <Text text="{i18n>LABEL_00182}" class="type21" />
+        <Text text="{i18n>LABEL_00181}" class="type22" />
+      </VBox>
+      <VBox>
+        <Text text="{i18n>LABEL_28055}" class="type31" />
+        <Text text="{i18n>LABEL_00189}" class="type32" />
+        <Text text="{i18n>LABEL_18036}" class="type33" />
+      </VBox>
+      <VBox>
+        <Text text="{i18n>LABEL_23007}" class="type18" />
+        <Text text="{i18n>LABEL_00180}" class="type15" />
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>
