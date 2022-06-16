@@ -10,58 +10,64 @@
                         <DatePicker value="{Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" busyIndicatorDelay="0" busy="{/busy/Input}" change=".onChangeMonth" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40010}"/>
                     <table:template>
                         <Text text="{Caldays}" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40011}"/>
                     <table:template>
                         <Text text="{Wrkdays}" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40012}"/>
                     <table:template>
                         <Text text="{ path: 'Bastim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40013}"/>
                     <table:template>
                         <Text text="{ path: 'Ctrtim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40014}"/>
                     <table:template>
                         <Text text="{ path: 'Daytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40015}"/>
                     <table:template>
                         <ObjectStatus text="{Gaptimtx}" state="{= ${Gaptim} &lt; 0 ? 'Error' : 'Indication05' }" class="table-object-status" />
                     </table:template>
                 </table:Column>
-                <table:Column width="auto">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40016}"/>
                     <table:template>
                         <Text text="{ path: 'Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
                     </table:template>
                 </table:Column>
-                <table:Column width="16%">
+                <table:Column width="auto">
                     <Label text="{i18n>LABEL_00144}"/>
                     <table:template>
                         <ObjectStatus text="{Statxt}" state="{= ${Stacol} === '2' ? 'Error' : 'Indication05' }" class="table-object-status" />
                     </table:template>
                 </table:Column>
-                <table:Column width="12%">
+                <table:Column width="7%">
                     <Label text="{i18n>LABEL_40017}"/>
                     <table:template>
                         <Text text="{Clsdatx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="5%">
+                    <Label text="{i18n>LABEL_40028}"/>
+                    <table:template>
+                        <Text text="{Hrcfm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
                     </table:template>
                 </table:Column>
             </table:columns>
