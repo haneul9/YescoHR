@@ -1,0 +1,61 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <VBox class="vCardBox small MultiBoxmobile">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title level="H2" text="{i18n>LABEL_00173}" />
+    </HBox>
+    <VBox class="section week-Work-summary progressBox">
+      <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="4px" class="weekTimeGrid">
+        <Label text="{i18n>LABEL_40010}"/>
+        <VBox>
+          <Text text="{/summary/list/0/Caldays}" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_40011}" />
+        <VBox>
+          <Text text="{/summary/list/0/Wrkdays}" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_40012}" />
+        <VBox>
+          <Text text="{ path: '/summary/list/0/Bastim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_40013}" />
+        <VBox>
+          <Text text="{ path: '/summary/list/0/Ctrtim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_40014}" />
+        <VBox>
+          <Text text="{ path: '/summary/list/0/Daytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_40015}" />
+        <VBox>
+          <!-- <Text text="{/summary/list/0/Gaptimtx}" width="100%" textAlign="Right" class="{= ${/summary/list/0/Gaptim} &lt; 0 ? 'color-08' : 'color-07' }" /> -->
+          <Text id="Gaptimtx" width="100%" textAlign="Right"
+                text="{ parts: [{path: '/summary/list/0/Gaptimtx'}, {path: '/summary/list/0/Gaptim'}],
+                        formatter: '.formatGaptimtx'
+                      }"/>
+        </VBox>
+        <!-- <HBox justifyContent="SpaceBetween">
+            <HBox />
+            <ObjectStatus text="{/summary/list/0/Gaptimtx}" state="{= ${/summary/list/0/Gaptim} &lt; 0 ? 'Error' : 'Indication05' }" class="table-object-status" />
+        </HBox> -->
+        <Label text="{i18n>LABEL_40016}" />
+        <VBox>
+          <Text text="{ path: '/summary/list/0/Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+        <Label text="{i18n>LABEL_00144}" />
+        <VBox>
+          <!-- <Text text="{ path: '/summary/list/0/Statxt' }" width="100%" textAlign="Right" class="{= ${/summary/list/0/Stacol} === '2' ? 'color-08' : 'color-07' }" /> -->
+          <Text id="Statxt" width="100%" textAlign="Right"
+                text="{ parts: [{path: '/summary/list/0/Statxt'}, {path: '/summary/list/0/Stacol'}],
+                        formatter: '.formatStatxt'
+                      }"/>
+        </VBox>
+        <Label text="{i18n>LABEL_40017}" />
+        <VBox>
+          <Text text="{/summary/list/0/Clsdatx}" width="100%" textAlign="Right" class="color-07" />
+        </VBox>
+      </grid:CSSGrid>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

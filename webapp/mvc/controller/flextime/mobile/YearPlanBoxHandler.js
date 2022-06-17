@@ -5,13 +5,15 @@ sap.ui.define(
       'sap/ui/core/Fragment',
       'sap/ui/yesco/common/odata/Client',
       'sap/ui/yesco/common/odata/ServiceNames',
+      'sap/ui/yesco/control/MessageBox',
     ],
     (
       // prettier 방지용 주석
       BaseObject,
       Fragment,
       Client,
-      ServiceNames
+      ServiceNames,
+      MessageBox
     ) => {
       'use strict';
   
@@ -25,6 +27,7 @@ sap.ui.define(
           const oViewModel = this.oController.getViewModel();
           const oModel = this.oController.getModel(ServiceNames.WORKTIME);
           const sWerks = this.oController.getAppointeeProperty('Werks');
+          const sFull = oViewModel.getProperty('/full').replace('.', '');
           const mPayLoad = {
             Werks: sWerks,
             Pernr: this.sPernr,
@@ -41,12 +44,37 @@ sap.ui.define(
               e.FullDate = e.Tmyea + e.Tmmon + e.Tmday;
             })
           );
+
+          // 선택적근로제 상세내역
+          const aResults = await Client.getEntitySet(oModel, 'FlexTimeDetail', {
+            Pernr: this.sPernr,
+            Zyymm: sFull,
+          });
+
+          oViewModel.setProperty(
+            '/flextime',
+            _.map(aResults, (o) => ({
+              ..._.omit(o, '__metadata'),
+              FullDate: moment(o.Datum).format('YYYYMMDD'),
+              Beguz: this.oController.TimeUtils.nvl(o.Beguz),
+              Enduz: this.oController.TimeUtils.nvl(o.Enduz),
+            }))
+            
+          );
+
           this.makeCalendarControl();
+          await this.oController.readFlextimeSummary(sFull);
         },
         async onPressPrevYear() {
           const oViewModel = this.oController.getViewModel();
           const sFullDa = oViewModel.getProperty('/full').replace('.', '-');
           const sFullDate = moment(sFullDa).subtract(1, 'month').format('YYYY-MM');
+
+          // 2022년 6월 이전 조회 불가능
+          if(sFullDate.replace('-', '') < "202206"){
+              MessageBox.alert(this.oController.getBundleText('MSG_40004')); // 2022.06 이후부터 선택이 가능합니다.
+              return;
+          }
   
           oViewModel.setProperty('/year', moment(sFullDate).format('YYYY'));
           oViewModel.setProperty('/month', moment(sFullDate).format('MM'));
@@ -58,6 +86,14 @@ sap.ui.define(
           const oViewModel = this.oController.getViewModel();
           const sFullDa = oViewModel.getProperty('/full').replace('.', '-');
           const sFullDate = moment(sFullDa).add(1, 'month').format('YYYY-MM');
+
+          // 현재일 기준 익월까지만 선택 가능
+          const sNextZyymm = moment().add('1', 'months').toDate();
+          const sNextMonth = moment(sNextZyymm).format('YYYYMM');
+          if(sFullDate.replace('-', '') > sNextMonth){
+              MessageBox.alert(this.oController.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
+              return;
+          }
   
           oViewModel.setProperty('/year', moment(sFullDate).format('YYYY'));
           oViewModel.setProperty('/month', moment(sFullDate).format('MM'));
@@ -139,6 +175,7 @@ sap.ui.define(
         getActivationDayBody(iDay) {
           const oViewModel = this.oController.getViewModel();
           const oScheduleData = oViewModel.getProperty('/yearPlan');
+          const oFlextimeData = oViewModel.getProperty('/flextime');
           const sYear = oViewModel.getProperty('/year');
           const iMonth = _.subtract(oViewModel.getProperty('/month'), 1);
           const dDate = moment({ y: sYear, M: iMonth, d: iDay });
@@ -162,8 +199,14 @@ sap.ui.define(
           const [oDateObject] = _.filter(oScheduleData, (e) => {
             return e.FullDate === sFormatDate;
           });
+
+          const [oFlextimeObject] = _.filter(oFlextimeData, (e) => {
+            return e.FullDate === sFormatDate;
+          });
   
-          if (!_.isEmpty(oDateObject.Colty)) {
+          if(!_.isEmpty(oFlextimeObject.Erryn)) {
+            sClassNames = 'Type99';
+          } else if (!_.isEmpty(oDateObject.Colty)) {
             sClassNames = oDateObject.Colty;
           }
   

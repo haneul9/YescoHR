@@ -8,6 +8,7 @@
       <custom:MobileScrollContainer horizontal="false" vertical="true">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.EmpInfo" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.YearPlan" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.Summary" type="XML" />
       </custom:MobileScrollContainer>
     </VBox>
   </Page>

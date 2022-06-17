@@ -19,6 +19,8 @@ sap.ui.define(
       'use strict';
   
       return BaseController.extend('sap.ui.yesco.mvc.controller.flextime.mobile.List', {  
+        sAccty: 'E',
+
         initializeModel() {
           return {
             FullYear: '',
@@ -28,7 +30,8 @@ sap.ui.define(
             year: moment().format('YYYY'),
             appointee: {},
             menid: this.getCurrentMenuId(),
-            Hass: this.isHass(),
+            isMss: this.isMss(),
+            isHass: this.isHass(),
             WeekWorkDate: new Date(),
             MonthStrList: [],
             DailyWorkList: [],
@@ -70,6 +73,10 @@ sap.ui.define(
               pUnPlan: 0,
               Month: moment().month() + 1,
             },
+            summary: {
+              list : []
+            },
+            flextime: [],
             busy: false,
           };
         },
@@ -116,15 +123,6 @@ sap.ui.define(
                 .month(sMonth - 1)
                 .format('YYYY.MM')
             );
-            oViewModel.setProperty(
-              '/WeekWorkDate',
-              oParameter.year
-                ? moment()
-                    .year(_.toNumber(sYear))
-                    .month(_.toNumber(sMonth) - 1)
-                    .toDate()
-                : new Date()
-            );
   
             this.YearPlanBoxHandler = new YearPlanBoxHandler({ oController: this, sPernr });
             // this.setMonth();
@@ -163,65 +161,7 @@ sap.ui.define(
           oViewModel.setProperty('/WorkMonths', aMonth);
           oViewModel.setProperty('/WorkMonth', moment().month() + 1);
         },
-  
-        // 근무현황 월 선택
-        async onWorkMonth() {
-          const oViewModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-          const mPayLoad = {
-            Werks: this.getAppointeeProperty('Werks'),
-            Pernr: oViewModel.getProperty('/pernr'),
-            Tmyea: oViewModel.getProperty('/year'),
-            Month: oViewModel.getProperty('/month'),
-          };
-          const aWorkList = await Client.getEntitySet(oModel, 'WorkingStatus', mPayLoad);
-  
-          oViewModel.setProperty('/MonthWorkList', aWorkList);
-  
-          const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mPayLoad);
-  
-          oViewModel.setProperty('/OTWorkList', aOTList);
-        },
-  
-        // 주 52시간 현황 날짜선택
-        async onWeekWorkTime() {
-          const oViewModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-  
-          // 주 52시간 현황
-          const [aWeekTime] = await Client.getEntitySet(oModel, 'WorkLimitStatus', {
-            Werks: this.getAppointeeProperty('Werks'),
-            Pernr: oViewModel.getProperty('/pernr'),
-            Datum: moment(oViewModel.getProperty('/WeekWorkDate')).hours(9).toDate(),
-          });
-  
-          oViewModel.setProperty('/WeekWork/Wkrultx', aWeekTime.Wkrultx);
-          oViewModel.setProperty('/WeekWork/Tottime', parseFloat(aWeekTime.Tottime));
-          oViewModel.setProperty('/WeekWork/Bastime', parseFloat(aWeekTime.Bastime));
-          oViewModel.setProperty('/WeekWork/Ottime', parseFloat(aWeekTime.Ottime));
-          oViewModel.setProperty('/WeekWork/Grp03', parseFloat(aWeekTime.Grp03));
-          oViewModel.setProperty('/WeekWork/Grp01', parseFloat(aWeekTime.Grp01));
-          oViewModel.setProperty('/WeekWork/Grp02', parseFloat(aWeekTime.Grp02));
-          oViewModel.setProperty('/WeekWork/WorkTime', `${this.formatTime(aWeekTime.Beguz)} ~ ${this.formatTime(aWeekTime.Enduz)} (${aWeekTime.Stdaz}${this.getBundleText('LABEL_00330')})`);
-        },
-  
-        // 근태유형별 연간사용현황 Combo
-        async onWorkTypeUse(oEvent) {
-          const oViewModel = this.getViewModel();
-          const oModel = this.getModel(ServiceNames.WORKTIME);
-  
-          // 근태유형 별 연간 사용현황
-          const aWorkTypeList = await Client.getEntitySet(oModel, 'TimeUsageGraph', {
-            Werks: this.getAppointeeProperty('Werks'),
-            Pernr: oViewModel.getProperty('/pernr'),
-            Awart: oEvent.getSource().getSelectedKey(),
-            Tmyea: oViewModel.getProperty('/year'),
-          });
-  
-          // Combination Chart
-          this.setCombiChartData(aWorkTypeList);
-        },
-  
+
         // 년도 선택시 화면전체 년도
         formYear() {
           const oViewModel = this.getViewModel();
@@ -266,57 +206,60 @@ sap.ui.define(
             const sPernr = oViewModel.getProperty('/pernr');
             const sYear = oViewModel.getProperty('/year');
             const sMonth = oViewModel.getProperty('/month');
-            // 근무현황
-            const mTablePayLoad = {
-              Werks: sWerks,
-              Pernr: sPernr,
-              Tmyea: sYear,
-              Month: sMonth,
-            };
-  
-            // 근무현황 -> 근무일수
-            const aWorkList = await Client.getEntitySet(oModel, 'WorkingStatus', mTablePayLoad);
-  
-            oViewModel.setProperty('/MonthWorkList', aWorkList);
-  
-            // 근무현황 -> OT현황
-            const aOTList = await Client.getEntitySet(oModel, 'OvertimeStatus', mTablePayLoad);
-  
-            oViewModel.setProperty('/OTWorkList', aOTList);
-  
-            if (sBeYear !== sYear) {
-              // 휴가계획현황
-              const [aPlanList] = await Client.getEntitySet(oModel, 'LeavePlan', {
-                Werks: sWerks,
-                Pernr: sPernr,
-                Tmyea: sYear,
-              });
-  
-              // Doughnut Chart
-              this.setDoughChartData(aPlanList);
-  
-              // 휴가유형 별 현황
-              const aVacaTypeList = await Client.getEntitySet(oModel, 'AbsQuotaList', {
-                Menid: this.getCurrentMenuId(),
-                Pernr: sPernr,
-              });
-  
-              oViewModel.setProperty('/VacaTypeList', aVacaTypeList);
-  
-              // 일별 근태현황
-              const aDailyList = await Client.getEntitySet(oModel, 'ApprTimeList', {
-                Werks: sWerks,
-                Pernr: sPernr,
-                Tmyea: sYear,
-              });
-  
-              oViewModel.setProperty('/DailyWorkList', aDailyList);
-            }
+            const sFull = oViewModel.getProperty('/full');
+            
+            // 요약
+            // await this.readFlextimeSummary(sFull);
+
           } catch (oError) {
             this.debug(oError);
             AppUtils.handleError(oError);
           } finally {
             oViewModel.setProperty('/busy', false);
+          }
+        },
+        
+        handshakeSummaryData(mSummaryData) {
+          return {
+            ..._.omit(mSummaryData, ['__metadata', 'AssoFlexTimeBreakSet', 'AssoFlexTimeDetailSet']),
+            Beguz: this.TimeUtils.nvl(mSummaryData.Beguz),
+            Enduz: this.TimeUtils.nvl(mSummaryData.Enduz),
+            Gaptim: _.toNumber(mSummaryData.Gaptim),
+            Gaptimtx: _.toNumber(mSummaryData.Gaptim) > 0 ? `+${_.toNumber(mSummaryData.Gaptim)}` : _.toNumber(mSummaryData.Gaptim).toString(),
+            Clsdatx: moment(mSummaryData.Clsda).format('YYYY.MM.DD'),
+          };
+        },
+
+        async readFlextimeSummary(sZyymm) {
+          try {
+            const oViewModel = this.getViewModel();
+            const sYearMonth = _.isEmpty(sZyymm) ? moment().format('YYYYMM') : sZyymm;
+  
+            oViewModel.setProperty('/full ', sYearMonth);
+  
+            const aResults = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'FlexTimeSummary', {
+              Actty: this.sAccty,
+              Pernr: this.getAppointeeProperty('Pernr'),
+              Zyymm: sYearMonth,
+            });
+            
+            oViewModel.setProperty('/summary/rowCount', 1);
+            oViewModel.setProperty('/summary/list', [
+              _.chain(aResults)
+                .map((o) => this.handshakeSummaryData(o))
+                .get(0, { Zyymm: sYearMonth })
+                .value(),
+            ]);
+  
+            // 현재일 > 마감일자인 경우 또는 HR확정='X'인 경우 조회모드로 변경
+            if((moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD')) || oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X'){
+              oViewModel.setProperty('/isMss', true);
+            } else {
+              oViewModel.setProperty('/isMss', this.isMss());
+            }
+  
+          } catch (oError) {
+            throw oError;
           }
         },
         
@@ -337,6 +280,26 @@ sap.ui.define(
         onClickDay(oEvent) {
           this.YearPlanBoxHandler.onClickDay(oEvent);
         },
+
+        formatGaptimtx: function(f1, f2){
+            var oGaptimtx = this.byId('Gaptimtx');
+                oGaptimtx.removeStyleClass('color-07 color-08');
+
+            if(f2 < 0) oGaptimtx.addStyleClass('color-08');
+            else oGaptimtx.addStyleClass('color-07');
+            
+            return f1;
+        },
+
+        formatStatxt: function(f1, f2){
+            var oStatxt = this.byId('Statxt');
+                oStatxt.removeStyleClass('color-07 color-08');
+
+            if(f2 === '2') oStatxt.addStyleClass('color-08');
+            else oStatxt.addStyleClass('color-07');
+            
+            return f1;
+        }
       });
     }
   );
