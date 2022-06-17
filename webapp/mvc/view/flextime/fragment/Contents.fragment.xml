@@ -27,8 +27,10 @@
                     <HBox class="header">
                         <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
                     </HBox>
-                    <HBox>
+                    <HBox class="table-actions">
                         <Button text="{i18n>LABEL_40008}" visible="{= !${/isMss} }" enabled="{= ${/details/list}.length &gt; 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
+                        <Button text="{i18n>LABEL_40032}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRConfirm" />
+                        <Button text="{i18n>LABEL_40033}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRCancel" />
                     </HBox>
                 </HBox>
                 <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.DetailsTable" type="XML" />

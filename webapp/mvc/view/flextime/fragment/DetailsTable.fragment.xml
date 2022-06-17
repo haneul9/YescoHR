@@ -2,7 +2,7 @@
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core">
     <HBox>
-        <table:Table id="flextimeDetailsTable" width="100%" selectionMode="{= ${/isMss} ? 'None' : 'MultiToggle' }" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionDetailsTable">
+        <table:Table id="flextimeDetailsTable" width="100%" selectionMode="{= ${/isHass} ? 'MultiToggle' : ${/isMss} ? 'None' : 'MultiToggle' }" columnHeaderHeight="45" rowHeight="44" rows="{/details/list}" visibleRowCount="{/details/rowCount}" busyIndicatorDelay="0" busy="{/busy/Details}" noData="{i18n>MSG_00001}" rowSelectionChange=".onSelectionDetailsTable">
             <table:columns>
                 <table:Column width="7%">
                     <Label text="{i18n>LABEL_00170}"/>

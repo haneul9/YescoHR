@@ -30,6 +30,7 @@ sap.ui.define(
           initBeguz: moment('0900', 'hhmm').toDate(),
           initEnduz: moment('1800', 'hhmm').toDate(),
           isMss: false,
+          isHass: false,
           busy: {
             Button: false,
             Dialog: false,
@@ -90,6 +91,7 @@ sap.ui.define(
           this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/isMss', this.isMss());
+          oViewModel.setProperty('/isHass', this.isHass());
 
           const { pernr: sPernr, zyymm: sZyymm } = oParameter;
 
@@ -145,14 +147,7 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
             Zyymm: sYearMonth,
           });
-
-          // 현재일 > 마감일자인 경우 조회모드로 변경
-          if(moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD')){
-            oViewModel.setProperty('/isMss', true);
-          } else {
-            oViewModel.setProperty('/isMss', this.isMss());
-          }
-
+          
           oViewModel.setProperty('/summary/rowCount', 1);
           oViewModel.setProperty('/summary/list', [
             _.chain(aResults)
@@ -160,6 +155,14 @@ sap.ui.define(
               .get(0, { Zyymm: sYearMonth })
               .value(),
           ]);
+
+          // 현재일 > 마감일자인 경우 또는 HR확정='X'인 경우 조회모드로 변경
+          if((moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD')) || oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X'){
+            oViewModel.setProperty('/isMss', true);
+          } else {
+            oViewModel.setProperty('/isMss', this.isMss());
+          }
+
         } catch (oError) {
           throw oError;
         }
@@ -653,6 +656,153 @@ sap.ui.define(
           throw oError;
         }
       },
+
+      // onHRConfirm(){
+      //   try {
+      //     this.setContentsBusy(true, ['Input', 'Button']);
+
+      //     const oViewModel = this.getViewModel();
+      //     const aDetailsList = oViewModel.getProperty('/details/list');
+      //     const aSelectedIndices = this.byId('flextimeDetailsTable').getSelectedIndices();
+
+      //     if (aSelectedIndices.length == 0 ) {
+      //         MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40032')); // 확인할 데이터를 선택하여 주십시오.
+      //         this.setContentsBusy(false, ['Input', 'Button']);
+      //         return; 
+      //     }
+
+      //     MessageBox.confirm(this.getBundleText('LABEL_40032', 'LABEL_00103'), {
+      //       // {확인}하시겠습니까?
+      //       onClose: async (sAction) => {
+      //         if (MessageBox.Action.CANCEL === sAction) {
+      //           this.setContentsBusy(false, ['Input', 'Button']);
+      //           return;
+      //         }
+
+      //         const aDatums = this.getViewModel().getProperty('/dialog/targetDates');
+      //         const mBreak = this.getBreakInputData();
+
+      //         await this.createProcess(aDatums, mBreak);
+
+      //         this.byId('flextimeDetailsTable').clearSelection();
+      //         this._oTimeInputDialog.close();
+      //       },
+      //     });
+      //   } catch (oError) {
+      //     this.debug('Controller > flextime > onHRConfirm Error', oError);
+
+      //     this.setContentsBusy(false, ['Input', 'Button']);
+      //     AppUtils.handleError(oError);
+      //   }
+      // },
+
+      onHRConfirm(){
+        try{
+          const oViewModel = this.getViewModel();
+          const aDetailsList = oViewModel.getProperty('/details/list');
+          const aSelectedIndices = this.byId('flextimeDetailsTable').getSelectedIndices();
+
+          if (aSelectedIndices.length == 0 ) {
+              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40032')); // {확인}할 데이터를 선택하여 주십시오.
+              return; 
+          }
+
+          const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
+          const sFlag = _.find(aSelectData, (e) => {
+                  return e.Erryn !== 'X';
+                }) ? 'X' : '';
+
+          if(sFlag == 'X'){
+            MessageBox.alert(this.getBundleText('MSG_40010')); // 선택한 데이터 중 에러가 아닌 데이터가 존재합니다.
+            return;
+          }
+
+          MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_40029'), {
+            // {HR확인} 하시겠습니까?
+            onClose: async (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) {
+                this.setContentsBusy(false, ['Input', 'Button']);
+                return;
+              }
+              this.setContentsBusy(true, ['Input', 'Button']);
+
+              await this.createHRProcess(aSelectData, 'C');
+
+              this.byId('flextimeDetailsTable').clearSelection();
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > flextime > List > onHRConfirm Error', oError);
+
+          this.setContentsBusy(false, ['Input', 'Button']);
+          AppUtils.handleError(oError);
+        } finally {
+          this.setContentsBusy(false, ['Input', 'Button']);
+        }
+      },
+
+      onHRCancel(){
+        try{
+          const oViewModel = this.getViewModel();
+          const aDetailsList = oViewModel.getProperty('/details/list');
+          const aSelectedIndices = this.byId('flextimeDetailsTable').getSelectedIndices();
+
+          if (aSelectedIndices.length == 0 ) {
+              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40033')); // {확인취소}할 데이터를 선택하여 주십시오.
+              return; 
+          }
+
+          const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
+          const sFlag = _.find(aSelectData, (e) => {
+            return e.Hrcfm !== 'X';
+          }) ? 'X' : '';
+
+          if(sFlag == 'X'){
+            MessageBox.alert(this.getBundleText('MSG_40011')); // 선택한 데이터 중 확인 상태가 아닌 데이터가 존재합니다.
+            return;
+          }
+
+          MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_40033'), {
+            // {확인취소}하시겠습니까?
+            onClose: async (sAction) => {
+              if (MessageBox.Action.CANCEL === sAction) {
+                this.setContentsBusy(false, ['Input', 'Button']);
+                return;
+              }
+              this.setContentsBusy(true, ['Input', 'Button']);
+
+              await this.createHRProcess(aSelectData, 'D');
+
+              this.byId('flextimeDetailsTable').clearSelection();              
+            },
+          });
+        } catch (oError) {
+          this.debug('Controller > flextime > List > onHRConfirm Error', oError);
+
+          this.setContentsBusy(false, ['Input', 'Button']);
+          AppUtils.handleError(oError);
+        } finally {
+          this.setContentsBusy(false, ['Input', 'Button']);
+        }
+      },
+
+      // C 확인, D 확인취소
+      async createHRProcess (aData, sPrcty) {
+        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.WORKTIME);
+        try {
+          await Promise.all(_.map(aData, async (o) => Client.create(oModel, 'FlexTimeDetail', { ...o, Prcty: sPrcty })));
+
+          MessageBox.alert(this.getBundleText('MSG_40008', (sPrcty == 'C' ? 'LABEL_40032' : 'LABEL_40033')));  // {확인|확인취소} 처리가 완료되었습니다.
+          this.callbackAppointeeChange(); 
+          this.setContentsBusy(false, ['Input', 'Button']);
+  
+        } catch (oError) {
+          setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
+          throw oError;
+        }
+      },
+
     });
   }
 );

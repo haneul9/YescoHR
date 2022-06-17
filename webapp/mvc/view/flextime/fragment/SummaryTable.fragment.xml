@@ -67,7 +67,16 @@
                 <table:Column width="5%">
                     <Label text="{i18n>LABEL_40028}"/>
                     <table:template>
-                        <Text text="{Hrcfm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                        <!-- <Text text="{Hrcfm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" /> -->
+                        <core:Icon
+                            color="#18b810"
+                            size="14px"
+                            src="sap-icon://accept"
+                            useIconTooltip="false"
+                            width="100%"
+                            visible="{= ${Hrcfm} === 'X' ? true : false }"
+                        >
+                        </core:Icon>
                     </table:template>
                 </table:Column>
             </table:columns>
