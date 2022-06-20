@@ -163,6 +163,13 @@ sap.ui.define(
             oViewModel.setProperty('/isMss', this.isMss());
           }
 
+          // HASS: HR확정='X'인 경우 확인/확인취소 버튼 보이지 않도록 변경
+          if(oViewModel.getProperty('/isHass') && oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X'){
+             oViewModel.setProperty('/isHass', false);
+          } else {
+            oViewModel.setProperty('/isHass', this.isHass());
+          }
+
         } catch (oError) {
           throw oError;
         }
