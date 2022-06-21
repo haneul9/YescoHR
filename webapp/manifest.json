@@ -199,6 +199,7 @@
         { "pattern": "h/flextime", "name": "h/flextime", "target": "h/flextime" },
         { "pattern": "h/flextime/{pernr}/{zyymm}", "name": "h/flextime-detail", "target": "flextime" },
         { "pattern": "mobile/flextime", "name": "mobile/flextime", "target": "mobile/flextime" },
+        { "pattern": "mobile/flextime/{pernr}/{zyymm}", "name": "mobile/flextime-detail", "target": "mobile/flextime-detail" },
 
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
@@ -447,6 +448,7 @@
         "m/flextime": { "viewId": "m_flextime", "viewPath": "sap.ui.yesco.mvc.view.flextime", "viewName": "ListM" },
         "h/flextime": { "viewId": "h_flextime", "viewPath": "sap.ui.yesco.mvc.view.flextime", "viewName": "ListH" },
         "mobile/flextime": { "viewId": "mobile_flextime", "viewPath": "sap.ui.yesco.mvc.view.flextime.mobile", "viewName": "List" },
+        "mobile/flextime-detail": { "viewId": "mobile_flextimeDetail", "viewPath": "sap.ui.yesco.mvc.view.flextime.mobile", "viewName": "Detail" },
 
         "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
         "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },

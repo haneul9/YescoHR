@@ -55,6 +55,18 @@
         <VBox>
           <Text text="{/summary/list/0/Clsdatx}" width="100%" textAlign="Right" class="color-07" />
         </VBox>
+        <Label text="{i18n>LABEL_40028}" />
+        <VBox>
+          <core:Icon
+              color="#18b810"
+              size="14px"
+              src="sap-icon://accept"
+              useIconTooltip="false"
+              width="100%"
+              visible="{= ${/summary/list/0/Hrcfm} === 'X' ? true : false }"
+          >
+          </core:Icon>
+        </VBox>
       </grid:CSSGrid>
     </VBox>
   </VBox>

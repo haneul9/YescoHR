@@ -806,6 +806,11 @@ sap.ui.define(
   
         } catch (oError) {
           setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
+          this.debug('Controller > flextime > List > onHRConfirm Error', oError);
+
+          this.setContentsBusy(false, ['Input', 'Button']);
+          AppUtils.handleError(oError);
+          
           throw oError;
         }
       },

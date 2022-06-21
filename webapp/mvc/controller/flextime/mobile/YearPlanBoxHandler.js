@@ -114,27 +114,35 @@ sap.ui.define(
           const [mSelectedDay] = _.filter(oViewModel.getProperty('/yearPlan'), (e) => {
             return e.FullDate === mSelect.day;
           });
-  
-          if (!mSelectedDay || (!mSelectedDay.Colty && !mSelectedDay.Ottyp)) {
+
+          console.log(mSelectedDay)
+
+          const aFlextimeData = oViewModel.getProperty('/flextime'); 
+          const [mSelectedFlexData] = _.filter(oViewModel.getProperty('/flextime'), (e) => {
+            return e.FullDate === mSelect.day;
+          });
+
+          console.log(mSelectedFlexData)
+
+          if (!mSelectedFlexData) {
             return;
           }
+
+          this.oController.getRouter().navTo('mobile/flextime-detail', { pernr: mSelectedFlexData.Pernr, zyymm: mSelectedFlexData.FullDate});
   
-          oViewModel.setProperty('/YearPlan/detail', mSelectedDay);
-          oViewModel.setProperty('/YearPlan/title', moment(mSelectedDay.FullDate).format('YYYY.MM.DD'));
+          // if (!this.oController._oPopover) {
+          //   const oView = this.oController.getView();
   
-          if (!this.oController._oPopover) {
-            const oView = this.oController.getView();
+          //   this.oController._oPopover = await Fragment.load({
+          //     id: oView.getId(),
+          //     name: 'sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.YearPlanPopover',
+          //     controller: this.oController,
+          //   });
   
-            this.oController._oPopover = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.individualWorkState.mobile.fragment.YearPlanPopover',
-              controller: this.oController,
-            });
+          //   oView.addDependent(this.oController._oPopover);
+          // }
   
-            oView.addDependent(this.oController._oPopover);
-          }
-  
-          this.oController._oPopover.openBy(oEventSource);
+          // this.oController._oPopover.openBy(oEventSource);
         },
   
         makeCalendarControl() {
@@ -204,7 +212,7 @@ sap.ui.define(
             return e.FullDate === sFormatDate;
           });
   
-          if(!_.isEmpty(oFlextimeObject.Erryn)) {
+          if(!_.isEmpty(oFlextimeObject.Notes)) {
             sClassNames = 'Type99';
           } else if (!_.isEmpty(oDateObject.Colty)) {
             sClassNames = oDateObject.Colty;
