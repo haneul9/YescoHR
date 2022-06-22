@@ -11,65 +11,77 @@
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="{i18n>LABEL_00168}" />
+          <!-- <Title level="H2" text="{i18n>LABEL_00168}" /> -->
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_00168}: " />
+              <ObjectStatus text="{/details/list/0/Datumtx}" state="{= ${/details/list/0/Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status font-20-px pl-5-px" />
+            </HBox>
+          </HBox>
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
-            <Label text="{i18n>LABEL_40037}"/>
+            <Label text="{i18n>LABEL_00151}"/>
             <VBox>
-              <ObjectStatus text="{Datumtx}" state="{= ${Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+              <Text text="{/details/list/0/Atext}" width="100%" textAlign="Center" wrapping="false" />
             </VBox>
             <Label text="{i18n>LABEL_40001}"/>
             <HBox>
-                <TimePicker width="100px" dateValue="{ path: '/details/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/details/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeWorktime" >
+                  <customData>
+                    <core:CustomData key="" value="/details/list/0" />
+                  </customData>
+                </TimePicker>
                 <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" dateValue="{ path: '/details/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/details/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeWorktime" >
+                  <customData>
+                    <core:CustomData key="" value="/details/list/0" />
+                  </customData>
+                </TimePicker>
             </HBox>
             <Label text="{i18n>LABEL_40018}"/>
             <HBox>
-                <TimePicker width="100px" dateValue="{ path: '/dialog/legal/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/legal/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onDiffTime" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/legal/list/0" />
+                  </customData>
+                </TimePicker>
                 <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" dateValue="{ path: '/dialog/legal/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/legal/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onDiffTime" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/legal/list/0" />
+                  </customData>
+                </TimePicker>
             </HBox>
             <Label text="{i18n>LABEL_40019}1"/>
             <HBox>
-                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onDiffTime" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/extra/list/0" />
+                  </customData>
+                </TimePicker>
                 <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/0/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onDiffTime" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/extra/list/0" />
+                  </customData>
+                </TimePicker>
             </HBox>
             <Label text="{i18n>LABEL_40019}2"/>
             <HBox>
-                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/1/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/1/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/extra/list/1" />
+                  </customData>
+                </TimePicker>
                 <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/1/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+                <TimePicker width="100px" dateValue="{ path: '/dialog/extra/list/1/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initEnduz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" >
+                  <customData>
+                    <core:CustomData key="" value="/dialog/extra/list/1" />
+                  </customData>
+                </TimePicker>
             </HBox>
           </grid:CSSGrid>          
         </VBox>
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap pt-5">
-          <Title level="H2" text="{i18n>LABEL_40038}" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
-            <Label text="{i18n>LABEL_40020}"/>
-            <VBox>
-              <!-- <Text text="{ path: '/details/list/0/Reltim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" /> -->
-              <ObjectStatus text="{ path: '/details/list/0/Reltim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" state="{= parseFloat(${/details/list/0/Reltim}) > 8 ? 'Indication05' : parseFloat(${/details/list/0/Reltim}) === 8 ? 'None' : 'Error' }" />
-            </VBox>
-            <Label text="{i18n>LABEL_40021}"/>
-            <VBox>
-              <Text text="{ path: '/details/list/0/Paytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
-            </VBox>
-            <Label text="{i18n>LABEL_40022}"/>
-            <VBox>
-              <Text text="{ path: '/details/list/0/Stdazc', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
-            </VBox>
-            <Label text="{i18n>LABEL_40023}"/>
-            <VBox>
-              <Text text="{ path: '/details/list/0/Brk01m', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
-            </VBox>
-            <Label text="{i18n>LABEL_00163}"/>
-            <VBox>
-              <!-- <Text text="{/details/list/0/Notes}" /> -->
-              <ObjectStatus text="{/details/list/0/Notes}" state="{= ${/details/list/0/Erryn} === 'X' ? 'Error' : 'None' }" class="align-start" />
-            </VBox>
-          </grid:CSSGrid>
-        </VBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.DetailSummary" type="XML" />
       </custom:MobileScrollContainer>
     </VBox>
     <footer>

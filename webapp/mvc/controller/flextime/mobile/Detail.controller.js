@@ -271,20 +271,21 @@ sap.ui.define(
         async onChangeWorktime(oEvent) {
           this.onChangeTimeFormat(oEvent);
   
-          try {
-            const mRowData = oEvent.getSource().getBindingContext().getObject();
+          // try {
+          //   const sPath = oEvent.getSource().getCustomData()[0].getValue();
+          //   const mRowData = this.getViewModel().getProperty(sPath);
   
-            if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) return;
+          //   if (_.isEmpty(mRowData.Beguz) || _.isEmpty(mRowData.Enduz)) return;
   
-            this.setContentsBusy(true, ['Input', 'Button']);
+          //   this.setContentsBusy(true, ['Input', 'Button']);
   
-            // call deep
-            await this.createProcess([mRowData.Datum]);
-          } catch (oError) {
-            this.debug('Controller > flextime > onChangeWorktime Error', oError);
+          //   // call deep
+          //   await this.createProcess([mRowData.Datum]);
+          // } catch (oError) {
+          //   this.debug('Controller > flextime > onChangeWorktime Error', oError);
   
-            AppUtils.handleError(oError);
-          }
+          //   AppUtils.handleError(oError);
+          // }
         },
   
         onChangeTimeFormat(oEvent) {
@@ -306,9 +307,10 @@ sap.ui.define(
         onDiffTime(oEvent) {
           this.onChangeTimeFormat(oEvent);
   
-          const oRowBindingContext = oEvent.getSource().getBindingContext();
-          const mRowData = oRowBindingContext.getObject();
-          const sPath = oRowBindingContext.getPath();
+          // const oRowBindingContext = oEvent.getSource().getBindingContext();
+          // const mRowData = oRowBindingContext.getObject();
+          const sPath = oEvent.getSource().getCustomData()[0].getValue();
+          const mRowData = this.getViewModel().getProperty(`${sPath}`);
           const sDiffTime = this.TimeUtils.diff(mRowData.Beguz, mRowData.Enduz);
   
           _.set(mRowData, 'Anzb', sDiffTime);
@@ -434,9 +436,9 @@ sap.ui.define(
           const oViewModel = this.getViewModel();
           const aExtraTimes = _.dropRight(oViewModel.getProperty('/dialog/extra/list'));
   
-          if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
-            throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
-          }
+          // if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
+          //   throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.
+          // }
   
           const aTargetDates = oViewModel.getProperty('/dialog/targetDates');
   
@@ -521,6 +523,17 @@ sap.ui.define(
             setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
             throw oError;
           }
+        },
+
+        formatReltim: function(f1){
+          var oReltim = this.byId('Reltim');
+          oReltim.removeStyleClass('color-06 color-07 color-08');
+
+          if( parseFloat(f1) > 8 ) oReltim.addStyleClass('color-06');
+          else if( parseFloat(f1) === 8 ) oReltim.addStyleClass('color-07')
+          else oReltim.addStyleClass('color-08');
+          
+          return f1;
         },
   
       });

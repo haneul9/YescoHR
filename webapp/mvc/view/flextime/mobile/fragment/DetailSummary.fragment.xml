@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <VBox class="vCardBox small MultiBoxmobile">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title level="H2" text="{i18n>LABEL_40038}" />
+    </HBox>
+    <VBox class="section week-Work-summary progressBox">
+      <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="4px" class="weekTimeGrid">
+        <Label text="{i18n>LABEL_40020}"/>
+		<VBox justifyContent="SpaceBetween">
+			<!-- <HBox /> -->
+			<!-- <Text text="{ path: '/details/list/0/Reltim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" /> -->
+			<Text id="Reltim" width="100%" textAlign="Right" 
+				  text="{ path: '/details/list/0/Reltim', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatter: '.formatReltim' }"
+				  class="font-16-px" />
+		</VBox>
+		<Label text="{i18n>LABEL_40021}"/>
+		<VBox>
+			<Text text="{ path: '/details/list/0/Paytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" />
+		</VBox>
+		<Label text="{i18n>LABEL_40022}"/>
+		<VBox>
+			<Text text="{ path: '/details/list/0/Stdazc', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" />
+		</VBox>
+		<Label text="{i18n>LABEL_40023}"/>
+		<VBox>
+			<Text text="{ path: '/details/list/0/Brk01m', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Right" />
+		</VBox>
+		<Label text="{i18n>LABEL_00163}"/>
+		<!-- <Text text="{/details/list/0/Notes}" /> -->
+		<VBox>
+			<ObjectStatus text="{/details/list/0/Notes}" state="{= ${/details/list/0/Erryn} === 'X' ? 'Error' : 'None' }" class="align-start" />
+		</VBox>		
+      </grid:CSSGrid>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

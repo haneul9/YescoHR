@@ -47,8 +47,8 @@
       </VBox>
       <VBox>
         <Text text="{i18n>LABEL_28055}" class="type31" />
-        <Text text="{i18n>LABEL_00189}" class="type32" />
-        <Text text="{i18n>LABEL_18036}" class="type33" />
+        <!-- <Text text="{i18n>LABEL_00189}" class="type32" />
+        <Text text="{i18n>LABEL_18036}" class="type33" /> -->
       </VBox>
       <VBox>
         <Text text="{i18n>LABEL_23007}" class="type18" />
