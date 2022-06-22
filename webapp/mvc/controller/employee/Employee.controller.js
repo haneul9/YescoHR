@@ -387,6 +387,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/employee/tab/list', aTabMenus);
           oViewModel.setProperty('/employee/tab/menu', aSubMenus);
+          oViewModel.setProperty('/employee/sub', {});
 
           aTabMenus.forEach((data) => {
             this.debug(`Tab ${data.Menu1}`, data);
