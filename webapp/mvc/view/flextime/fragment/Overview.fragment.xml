@@ -5,7 +5,9 @@
         <VBox class="contents-header">
             <HBox justifyContent="SpaceBetween" class="breadcrumbs">
                 <custom:Breadcrumbs />
-                <HBox>
+                <HBox class="button-group">
+                    <Button type="Emphasized" text="{i18n>LABEL_40030}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRConfirm" />
+                    <Button type="Emphasized" text="{i18n>LABEL_40031}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRCancel" />
                     <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
                     <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
                 </HBox>
@@ -41,8 +43,6 @@
                             <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} } {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
                             <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} } {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
                         </HBox>
-                        <Button text="{i18n>LABEL_40030}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRConfirm" />
-                        <Button text="{i18n>LABEL_40031}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRCancel" />
                         <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}" />
                     </HBox>
                 </HBox>
