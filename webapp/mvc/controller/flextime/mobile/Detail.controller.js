@@ -310,7 +310,7 @@ sap.ui.define(
           // const oRowBindingContext = oEvent.getSource().getBindingContext();
           // const mRowData = oRowBindingContext.getObject();
           const sPath = oEvent.getSource().getCustomData()[0].getValue();
-          const mRowData = this.getViewModel().getProperty(`${sPath}`);
+          const mRowData = this.getViewModel().getProperty(x);
           const sDiffTime = this.TimeUtils.diff(mRowData.Beguz, mRowData.Enduz);
   
           _.set(mRowData, 'Anzb', sDiffTime);
