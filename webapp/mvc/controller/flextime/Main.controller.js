@@ -373,14 +373,14 @@ sap.ui.define(
           }
 
           // 현재일 기준 익월까지만 선택 가능
-          const sNextZyymm = moment().add('1', 'months').toDate();
-          const sNextMonth = moment(sNextZyymm).format('YYYYMM');
-          if(sZyymm > sNextMonth){
-              MessageBox.alert(this.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
-              oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
-              this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
-              return;
-          }
+          // const sNextZyymm = moment().add('1', 'months').toDate();
+          // const sNextMonth = moment(sNextZyymm).format('YYYYMM');
+          // if(sZyymm > sNextMonth){
+          //     MessageBox.alert(this.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
+          //     oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
+          //     this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
+          //     return;
+          // }
 
           await this.readFlextimeSummary(sZyymm);
           await this.readFlextimeDetails(sZyymm);

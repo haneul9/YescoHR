@@ -88,12 +88,12 @@ sap.ui.define(
           const sFullDate = moment(sFullDa).add(1, 'month').format('YYYY-MM');
 
           // 현재일 기준 익월까지만 선택 가능
-          const sNextZyymm = moment().add('1', 'months').toDate();
-          const sNextMonth = moment(sNextZyymm).format('YYYYMM');
-          if(sFullDate.replace('-', '') > sNextMonth){
-              MessageBox.alert(this.oController.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
-              return;
-          }
+          // const sNextZyymm = moment().add('1', 'months').toDate();
+          // const sNextMonth = moment(sNextZyymm).format('YYYYMM');
+          // if(sFullDate.replace('-', '') > sNextMonth){
+          //     MessageBox.alert(this.oController.getBundleText('MSG_40005')); // 현재일 기준 익월까지만 선택이 가능합니다.
+          //     return;
+          // }
   
           oViewModel.setProperty('/year', moment(sFullDate).format('YYYY'));
           oViewModel.setProperty('/month', moment(sFullDate).format('MM'));
