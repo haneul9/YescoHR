@@ -95,7 +95,7 @@ sap.ui.define(
 
           const { pernr: sPernr, zyymm: sZyymm } = oParameter;
 
-          this.setAppointee(sPernr);
+          await this.setAppointee(sPernr);
 
           await this.readFlextimeSummary(sZyymm);
           await this.readFlextimeDetails(sZyymm);
