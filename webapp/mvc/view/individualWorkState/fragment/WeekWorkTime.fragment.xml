@@ -12,7 +12,8 @@
         <Label text="today"/>
         <ObjectStatus text="{/WeekWork/Timtx}" state="Indication05" />
         <Text text="{/WeekWork/Wktim}" />
-        <Label text="this week">
+        <!-- <Label text="this week"> -->
+        <Label text="{/WeekWork/Wktext}">
           <layoutData>
             <FlexItemData styleClass="mt-25-px" />
           </layoutData>

@@ -104,6 +104,12 @@ sap.ui.define(
           mPortletData.ButtonText2 = this.getMenuName('workTime');
         }
 
+        if(mPortletData.Wkrul && mPortletData.Wkrul.indexOf("선택") != -1){
+          mPortletData.Wktext = "this month";
+        } else {
+          mPortletData.Wktext = "this week";
+        }
+
         return mPortletData;
       },
 

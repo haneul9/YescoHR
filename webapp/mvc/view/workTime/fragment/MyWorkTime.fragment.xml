@@ -12,8 +12,9 @@
           <Label text="today"/>
           <ObjectStatus text="{/MyWork/Timtx}" state="Indication05" />
           <Text text="{/MyWork/Wktim}" />
-          <Label text="this week" class="mt-10-px"/>
-          <ObjectStatus text="{/MyWork/Reltm} {/MyWork/Reltx}" state="Indication05" />
+          <!-- <Label text="this week" class="mt-10-px"/> -->
+          <Label text="{/MyWork/Text}" class="mt-10-px" />
+          <ObjectStatus text="{/MyWork/Reltm} {/MyWork/Reltx}" state="Indication05" class="font-20-px" />
           <Text text="{/MyWork/Wkrul}" />
         </VBox>
       </HBox>

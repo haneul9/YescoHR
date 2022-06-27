@@ -175,6 +175,13 @@ sap.ui.define(
           const [mWeekTime] = await Client.getEntitySet(oModel, 'WorkingTime', mWeekWorkPayLoad);
 
           this.buildDialChart(mWeekTime);
+
+          if(mWeekTime.Wkrul && mWeekTime.Wkrul.indexOf("선택") != -1){
+            mWeekTime.Wktext = "this month";
+          } else {
+            mWeekTime.Wktext = "this week";
+          }
+
           oViewModel.setProperty('/WeekWork', mWeekTime);
 
           // 근태유형 Combo
@@ -680,6 +687,13 @@ sap.ui.define(
           const [mWeekTime] = await Client.getEntitySet(oModel, 'WorkingTime', mWeekWorkPayLoad);
 
           this.buildDialChart(mWeekTime);
+          
+          if(mWeekTime.Wkrul && mWeekTime.Wkrul.indexOf("선택") != -1){
+            mWeekTime.Wktext = "this month";
+          } else {
+            mWeekTime.Wktext = "this week";
+          }
+          
           oViewModel.setProperty('/WeekWork', mWeekTime);
         } catch (oError) {
           AppUtils.handleError(oError);

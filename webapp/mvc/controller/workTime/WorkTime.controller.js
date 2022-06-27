@@ -60,6 +60,13 @@ sap.ui.define(
           const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
 
           oListModel.setProperty('/MyWork', aMyWork);
+          
+          if(aMyWork.Wkrul && aMyWork.Wkrul.indexOf("선택") != -1){
+            oListModel.setProperty('/MyWork/Text', 'this month');
+          } else {
+            oListModel.setProperty('/MyWork/Text', 'this week');
+          }
+
           this.buildDialChart(aMyWork);
           const mSearch = oListModel.getProperty('/search');
           const mPayLoad = {
@@ -97,6 +104,13 @@ sap.ui.define(
           const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWork);
 
           oListModel.setProperty('/MyWork', aMyWork);
+
+          if(aMyWork.Wkrul && aMyWork.Wkrul.indexOf("선택") != -1){
+            oListModel.setProperty('/MyWork/Text', 'this month');
+          } else {
+            oListModel.setProperty('/MyWork/Text', 'this week');
+          }
+
           this.buildDialChart(aMyWork);
           this.onSearch();
         } catch (oError) {
