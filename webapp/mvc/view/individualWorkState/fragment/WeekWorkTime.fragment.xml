@@ -17,7 +17,7 @@
             <FlexItemData styleClass="mt-25-px" />
           </layoutData>
         </Label>
-        <ObjectStatus text="{/WeekWork/Reltm} {/WeekWork/Reltx}" state="Indication05" />
+        <ObjectStatus text="{/WeekWork/Reltm} {/WeekWork/Reltx}" state="Indication05" class="font-22-px" />
         <Text text="{/WeekWork/Wkrul}" />
       </VBox>
     </HBox>
