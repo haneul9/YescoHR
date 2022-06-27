@@ -118,7 +118,8 @@ sap.ui.define(
         try {
           const mSessionData = this.getSessionData();
 
-          if (!sPernr || _.isEqual(_.toNumber(sPernr), _.toNumber(mSessionData.Pernr))) return;
+          // if (!sPernr || _.isEqual(_.toNumber(sPernr), _.toNumber(mSessionData.Pernr))) return;
+          if(!sPernr) return;
 
           const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
             Ename: sPernr,
