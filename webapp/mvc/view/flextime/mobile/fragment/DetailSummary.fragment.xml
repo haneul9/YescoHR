@@ -32,6 +32,19 @@
 		<VBox>
 			<ObjectStatus text="{/details/list/0/Notes}" state="{= ${/details/list/0/Erryn} === 'X' ? 'Error' : 'None' }" class="align-start" />
 		</VBox>		
+		<Label text="{i18n>LABEL_40029}"/>
+		<VBox>
+			<core:Icon
+				color="#18b810"
+				size="14px"
+				src="sap-icon://accept"
+				useIconTooltip="false"
+				width="100%"
+				visible="{= ${/details/list/0/Hrcfm} === 'X' ? true : false }"
+				class="align-right"
+			>
+			</core:Icon>
+		</VBox>		
       </grid:CSSGrid>
     </VBox>
   </VBox>
