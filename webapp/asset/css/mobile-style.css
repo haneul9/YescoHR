@@ -130,7 +130,7 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80p
 .sapUiSizeCompact .sapMBarRight {height:100%; display:flex; align-items:center}
 .sapMDialogSection {padding:0px 20px}
 .sapMDialog.sapUiPopupWithPadding:not(.sapUiNoContentPadding) .sapMDialogScrollCont {padding:0}
-html.sap-phone .sapMDialog.sapMDialogStretched {border:none; box-shadow:0; border-radius:0; top:auto !important; bottom:61px !important; padding:43px 0px 0}
+html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {border:none; box-shadow:0; border-radius:0; top:auto !important; bottom:61px !important; padding:43px 0px 0}
 .sapMResponsivePopover:not(.sapMRPCalendar) + .sapUiBLy {display:none !important; visibility:hidden !important; background-color:#000; opacity:0.0}
 .sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height:2.5rem; padding-bottom:20px}
 .sapMDialog.full-popover .sapMDialogScroll, .sapMDialog.full-popover .sapMDialogScroll .sapMDialogScrollCont {height:100% !important}
