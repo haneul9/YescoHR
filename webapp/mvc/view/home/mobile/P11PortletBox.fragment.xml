@@ -30,7 +30,8 @@
       </VBox>
       <VBox width="49%">
         <VBox class="portlet-box right-box">
-          <Text text="{i18n>LABEL_01162}" />
+          <!-- <Text text="{i18n>LABEL_01162}" /> -->
+          <Text text="{Wktext}" />
           <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus19" />
           <ObjectStatus text="{Reltx}" state="Indication05" class="portlet-p11-objectstatus15" />
           <Text text="{Wkrul}" class="portlet-p11-text" />
