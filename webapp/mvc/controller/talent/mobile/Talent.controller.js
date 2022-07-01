@@ -115,8 +115,8 @@ sap.ui.define(
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
           const aEntryDataList = await Promise.all([
-            // Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
-            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: sPernr }), //
+            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
+            // Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: sPernr }), //
             ..._.chain('ABCDEFGHIJKLM')
               .split('')
               .map((s) => Client.getEntitySet(oPAModel, 'TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: s }))
