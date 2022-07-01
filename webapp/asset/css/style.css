@@ -156,7 +156,7 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p03p04 .portlet-members .members-status {width:60px; text-align:center !important}
 .portlet-p03p04 .portlet-members.my-members .members-remove {display:none}
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:flex}
-.portlet-p03p04 [data-portlet-members-status] {border:1px solid; border-radius:3px; line-height:16px; font-size:12px}
+.portlet-p03p04 [data-portlet-members-status] {padding:2px 0; border:1px solid; border-radius:3px; line-height:14px; font-size:12px}
 .portlet-p03p04 [data-portlet-members-status=""] {border-color:transparent; color:transparent}
 .portlet-p03p04 [data-portlet-members-status="1"] {border-color:#0e60c7; background-color:transparent; color:#0e60c7}/* 휴가중 */
 .portlet-p03p04 [data-portlet-members-status="2"] {border-color:#8aea8a; background-color:transparent; color:#8aea8a}/* 출장중 */
