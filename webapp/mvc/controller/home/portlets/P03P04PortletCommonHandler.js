@@ -123,6 +123,7 @@ sap.ui.define(
           delete mData.__metadata;
 
           mData.Photo = mData.Photo || sUnknownAvatarImageURL;
+          mData.Flextime = /\d{2}.\d{2}.\d{2}.\d{2}/.test(mData.Atext) && !/09.00.18.00/.test(mData.Atext) ? 'O' : '';
           mData.Navigable = this.bHasProfileViewAuth ? 'O' : '';
         });
 

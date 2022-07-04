@@ -164,6 +164,7 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p03p04 [data-portlet-members-status="4"] {border-color:#c68dff; background-color:transparent; color:#c68dff}/* 파견중 */
 .portlet-p03p04 [data-portlet-members-status="H"] {border-color:#ffca3c; background-color:transparent; color:#ffca3c}/* 휴일 */
 .portlet-p03p04 [data-portlet-members-status="W"] {border-color:#222; background-color:transparent; color:#222}/* 근무중 */
+.portlet-p03p04 [data-portlet-members-flextime="O"] {background-color:#fcf6eb}/* '09:00 18:00' 아닌 경우 */
 .portlet-p05 .sapMListUl .sapMLIB:not(.sapMComboBoxBaseItem) {margin-top:11px}
 .portlet-p05 .sapMListUl .sapMLIB:first-child {margin-top:0}
 .portlet-p06 .portlet-header .sapIcon_Date {width:120px !important}

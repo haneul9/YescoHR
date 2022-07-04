@@ -62,6 +62,7 @@
               <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
                   <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
                 </customData>
               </Text>
             </custom:HBox>
@@ -85,6 +86,7 @@
               <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
                   <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
                 </customData>
               </Text>
               <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button" press=".onPressMyMemberRemove">
