@@ -54,6 +54,8 @@ sap.ui.define(
         const oSiblingPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${this.mSiblingKeys[oPortletData.id]}`);
 
         if (oSiblingPortletHandler) {
+          this.SELECTED_BUTTON = 'ORG';
+
           const oSiblingPortletModel = oSiblingPortletHandler.getPortletModel();
           const iWidth = Math.max(oPortletData.width, oSiblingPortletModel.getProperty('/width'));
           const iHeight = Math.max(oPortletData.height, oSiblingPortletModel.getProperty('/height'));
