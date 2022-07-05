@@ -1,13 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <HBox>
-        <IconTabBar id="profileTabBar" class="type-b" selectedKey="{/employee/tab/selectedKey}" expandable="false" items="{/employee/tab/list}">
-            <layoutData>
-                <FlexItemData growFactor="1"/>
-            </layoutData>
-            <items>
-                <IconTabFilter text="{Menu1}" key="{Menuc1}" />
-            </items>
-        </IconTabBar>
-    </HBox>
+  xmlns:core="sap.ui.core">
+  <IconTabBar id="profileTabBar" class="type-c" expandable="false" selectedKey="{/employee/tab/selectedKey}" items="{/employee/tab/list}" showOverflowSelectList="true">
+    <layoutData>
+      <!-- 탭 컨텐츠 높이가 전체 높이를 다 채우지 못하는 경우 sideNavigation 높이도 탭 컨텐츠의 높이와 같아지는 것을 방지하기 위해 growFactor를 지정함 -->
+      <FlexItemData growFactor="1"/>
+    </layoutData>
+    <items>
+      <IconTabFilter text="{Menu1}" key="{Menuc1}" />
+    </items>
+  </IconTabBar>
 </core:FragmentDefinition>

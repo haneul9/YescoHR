@@ -115,6 +115,17 @@ sap.ui.define(
             this.mapPortletPosition(oPortlet, mActivePortlets, sClosingPortletId);
           });
 
+          if (mActivePortlets.P03 && mActivePortlets.P04) {
+            const PSeq = mActivePortlets.P03.PSeq;
+            mActivePortlets.P03.PSeq = mActivePortlets.P04.PSeq;
+            mActivePortlets.P04.PSeq = PSeq;
+          }
+          if (mActivePortlets.M03 && mActivePortlets.M04) {
+            const PSeq = mActivePortlets.M03.PSeq;
+            mActivePortlets.M03.PSeq = mActivePortlets.M04.PSeq;
+            mActivePortlets.M04.PSeq = PSeq;
+          }
+
           const oPortletsModel = this.getPortletsModel();
           const aPortletData = oPortletsModel.getProperty('/allList').map((mPortletData) => {
             const mData = mActivePortlets[mPortletData.id];

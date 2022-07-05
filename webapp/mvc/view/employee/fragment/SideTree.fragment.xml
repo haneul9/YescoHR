@@ -1,18 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <IconTabFilter text="{i18n>LABEL_00231}" key="tree">
-        <ScrollContainer width="100%" height="{/sideNavigation/treeHeight}" vertical="true" busyIndicatorDelay="0" busy="{= !${/sideNavigation/treeLoaded}}">
-            <Tree id="OrganizationTree" class="employee-tree" mode="SingleSelectMaster" items="{path: '/sideNavigation/treeData'}" selectionChange=".onSelectTreeItem">
-                <layoutData>
-                    <FlexItemData growFactor="1" />
-                </layoutData>
-                <CustomTreeItem>
-                    <HBox>
-                        <Image src="{ref}" alt="icon-employee" width="2rem" visible="{= !!${ref} }" />
-                        <Text text="{Stext}" />
-                    </HBox>
-                </CustomTreeItem>
-            </Tree>
-        </ScrollContainer>
-    </IconTabFilter>
+  xmlns:core="sap.ui.core">
+  <IconTabFilter text="{i18n>LABEL_00231}" key="tree">
+    <ScrollContainer width="100%" height="calc(100% + 1rem)" vertical="true" busyIndicatorDelay="0" busy="{= !${/sideNavigation/treeLoaded}}">
+      <Tree id="OrganizationTree" class="employee-tree" mode="SingleSelectMaster" items="{path: '/sideNavigation/treeData'}" selectionChange=".onSelectTreeItem">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+        <CustomTreeItem>
+          <HBox>
+            <Image src="{ref}" alt="icon-employee" width="2rem" visible="{= !!${ref} }" />
+            <Text text="{Stext}" />
+          </HBox>
+        </CustomTreeItem>
+      </Tree>
+    </ScrollContainer>
+  </IconTabFilter>
 </core:FragmentDefinition>

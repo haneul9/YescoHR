@@ -506,6 +506,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 
 /* 사원프로파일 상세 탭  */
 .profile-detail {padding-right:16px; margin-bottom:20px}
+.profile-detail:last-child {margin-bottom:0}
 .profile-detail h4 {display:block; border-bottom:1px solid #000; margin-bottom:12px; padding-bottom:10px}
 .profile-detail li .sapMText {align-self:self-start; font-size:16px; letter-spacing:-1px}
 .profile-detail li.sapMLIB {border-bottom:0; margin-bottom:16px}

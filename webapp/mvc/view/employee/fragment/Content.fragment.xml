@@ -12,25 +12,23 @@
         </HBox>
       </HBox>
     </VBox>
-    <VBox class="contents">
-      <HBox>
-        <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="{/sideNavigation/height}">
-          <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
-          <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab">
-            <layoutData>
-              <FlexItemData growFactor="1"/>
-            </layoutData>
-            <items>
-              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideList" type="XML" />
-              <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideTree" type="XML" />
-            </items>
-          </IconTabBar>
-        </VBox>
-        <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/employee/busy}">
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
-          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
-        </VBox>
-      </HBox>
-    </VBox>
+    <HBox class="contents">
+      <VBox id="sideBody" class="vCardBox side-navigation expanded sapUiSmallMarginEnd" height="calc(100vh - 161px)">
+        <ToggleButton icon="sap-icon://navigation-left-arrow" press=".onToggleNavigation" class="icon-button toggle-navi" />
+        <IconTabBar selectedKey="{/sideNavigation/selectedKey}" expandable="false" visible="{= ${/sideNavigation/isShow}}" select=".onSelectSideTab" stretchContentHeight="true">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+          <items>
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideList" type="XML" />
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.SideTree" type="XML" />
+          </items>
+        </IconTabBar>
+      </VBox>
+      <VBox id="profileBody" class="main-profile" busyIndicatorDelay="0" busy="{/employee/busy}">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileOverview" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.ProfileTab" type="XML" />
+      </VBox>
+    </HBox>
   </Page>
 </core:FragmentDefinition>

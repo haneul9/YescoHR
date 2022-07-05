@@ -267,7 +267,7 @@ sap.ui.define(
 
       async initialList({ oViewModel, sPernr, sOrgtx, sOrgeh }) {
         try {
-          const oSideBody = this.byId('sideBody');
+          // const oSideBody = this.byId('sideBody');
           const oSideList = this.byId('sideEmployeeList');
           const sSearchText = _.isEmpty(sOrgtx) ? sPernr : sOrgtx;
           const sSearchOrgeh = _.isEmpty(sOrgeh) ? _.noop() : sOrgeh;
@@ -281,16 +281,16 @@ sap.ui.define(
 
           oSideList.getBinding('items').filter([new Filter('Stat2', FilterOperator.EQ, '3')]);
 
-          const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 20);
-          const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
+          // const iSideViewHeight = Math.floor($(document).height() - oSideBody.getParent().$().offset().top - 21);
+          // const iScrollViewHeight = Math.floor($(document).height() - oSideList.getParent().$().offset().top - 36);
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
 
           oViewModel.setProperty(
             '/sideNavigation/search/results',
             _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
-          oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
-          oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
+          // oViewModel.setProperty('/sideNavigation/height', `${iSideViewHeight}px`);
+          // oViewModel.setProperty('/sideNavigation/scrollHeight', `${iScrollViewHeight}px`);
           oViewModel.setProperty('/sideNavigation/busy', false);
 
           if (_.isEqual(sPernr, 'NA')) {
@@ -724,15 +724,15 @@ sap.ui.define(
           const bTreeLoaded = oViewModel.getProperty('/sideNavigation/treeLoaded');
 
           if (!bTreeLoaded && sSelectedKey === 'tree') {
-            const oSideTree = this.byId('OrganizationTree');
+            // const oSideTree = this.byId('OrganizationTree');
             const aReturnTreeData = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'AuthOrgTree', { Datum: moment().hour(9).toDate(), Xpern: 'X' });
             const mConvertedTreeData = this.transformTreeData({ aTreeData: aReturnTreeData, sRootId: '00000000' });
-            const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
+            // const iTreeViewHeight = Math.max(Math.floor($(document).height() - oSideTree.$().offset().top - 35), 500);
 
             this.debug('mConvertedTreeData', mConvertedTreeData);
 
             oViewModel.setProperty('/sideNavigation/treeData', mConvertedTreeData);
-            oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
+            // oViewModel.setProperty('/sideNavigation/treeHeight', `${iTreeViewHeight}px`);
           }
 
           oViewModel.setProperty('/sideNavigation/treeLoaded', true);
