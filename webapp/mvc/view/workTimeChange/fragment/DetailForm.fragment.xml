@@ -72,7 +72,7 @@
           </table:multiLabels>
           <table:template>
             <Text text="{
-                path: 'Beguz',
+                path: 'BeguzB',
                 formatter: '.formatTime'
             }" width="100%" textAlign="Center" />
           </table:template>
@@ -84,7 +84,7 @@
           </table:multiLabels>
           <table:template>
             <Text text="{
-                path: 'Enduz',
+                path: 'EnduzB',
                 formatter: '.formatTime'
             }" width="100%" textAlign="Center" />
           </table:template>
@@ -95,7 +95,7 @@
             <Label text="{i18n>LABEL_27007}" />
           </table:multiLabels>
           <table:template>
-            <Text text="{Abrst}" width="100%" textAlign="Center" />
+            <Text text="{AbrstB}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
         <table:Column width="7%" headerSpan="3">
