@@ -396,7 +396,7 @@ sap.ui.define(
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
             aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty }));
-            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
+            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters, Usrty }));
           });
 
           const bActiveReg = oViewModel.getProperty('/activeReg');
