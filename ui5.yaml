@@ -19,7 +19,7 @@ server:
         password: UI5_MIDDLEWARE_SIMPLE_PROXY_PASSWORD
         query:
           saml2: "disabled"
-          sap-client: "100"
+          sap-client: "300"
     - name: ui5-middleware-simpleproxy
       afterMiddleware: compression
       mountPath: /sap/public/bc/ui2/zui5_yescohr
