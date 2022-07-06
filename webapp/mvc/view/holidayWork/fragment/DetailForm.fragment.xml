@@ -1,0 +1,89 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
+      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <HBox class="button-group">
+        <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{= !${/ZappStatAl} }" press=".onAddDetail" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{= !${/ZappStatAl} }" press=".onDelDetail" />
+      </HBox>
+    </HBox>
+    <table:Table id="holidayWorkTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00209}" />
+          <table:template>
+            <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00210}" />
+          <table:template>
+            <Text text="{Ename}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00215}" />
+          <table:template>
+            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="12%">
+          <Label text="{i18n>LABEL_00227}" />
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_27004}" />
+          <table:template>
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_27005}" />
+          <table:template>
+            <Text text="{ path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_27006}" />
+          <table:template>
+            <Text text="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_41002}" />
+          <table:template>
+            <Text text="{ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_41003}" />
+          <table:template>
+            <Text text="{ path: 'Brktm', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_41004}" />
+          <table:template>
+            <Text text="{Subtytx}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="7%">
+          <Label text="{i18n>LABEL_41005}" />
+          <table:template>
+            <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+        <table:Column width="12%">
+          <Label text="{i18n>LABEL_27008}" />
+          <table:template>
+            <Text text="{Atrsn}" width="100%" textAlign="Center" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>

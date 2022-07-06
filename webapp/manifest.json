@@ -204,6 +204,9 @@
         { "pattern": "healthCare", "name": "healthCare", "target": "healthCare" },
         { "pattern": "healthCare/{oDataKey}", "name": "healthCare-detail", "target": "healthCareDetail" },
 
+        { "pattern": "holidayWork", "name": "holidayWork", "target": "holidayWork" },
+        { "pattern": "holidayWork/{appno}", "name": "holidayWork-detail", "target": "holidayWorkDetail" },
+
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
@@ -452,6 +455,9 @@
 
         "healthCare": { "viewId": "healthCare", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCare" },
         "healthCareDetail": { "viewId": "healthCareDetail", "viewPath": "sap.ui.yesco.mvc.view.healthCare", "viewName": "HealthCareDetail" },
+        
+        "holidayWork": { "viewId": "holidayWork", "viewPath": "sap.ui.yesco.mvc.view.holidayWork", "viewName": "ListE" },
+        "holidayWorkDetail": { "viewId": "holidayWorkDetail", "viewPath": "sap.ui.yesco.mvc.view.holidayWork", "viewName": "Detail" },
 
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },

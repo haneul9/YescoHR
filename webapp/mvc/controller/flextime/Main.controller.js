@@ -40,7 +40,7 @@ sap.ui.define(
           },
           summary: {
             rowCount: 1,
-            Zyymm: "",
+            Zyymm: '',
             list: [],
           },
           details: {
@@ -119,7 +119,7 @@ sap.ui.define(
           const mSessionData = this.getSessionData();
 
           // if (!sPernr || _.isEqual(_.toNumber(sPernr), _.toNumber(mSessionData.Pernr))) return;
-          if(!sPernr) return;
+          if (!sPernr) return;
 
           const [mAppointee] = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'EmpSearchResult', {
             Ename: sPernr,
@@ -148,7 +148,7 @@ sap.ui.define(
             Pernr: this.getAppointeeProperty('Pernr'),
             Zyymm: sYearMonth,
           });
-          
+
           oViewModel.setProperty('/summary/rowCount', 1);
           oViewModel.setProperty('/summary/list', [
             _.chain(aResults)
@@ -158,19 +158,18 @@ sap.ui.define(
           ]);
 
           // 현재일 > 마감일자인 경우 또는 HR확정='X'인 경우 조회모드로 변경
-          if((moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD')) || oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X'){
+          if (moment().format('YYYYMMDD') > moment(aResults[0].Clsda).format('YYYYMMDD') || oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X') {
             oViewModel.setProperty('/isMss', true);
           } else {
             oViewModel.setProperty('/isMss', this.isMss());
           }
 
           // HASS: HR확정='X'인 경우 확인/확인취소 버튼 보이지 않도록 변경
-          if(oViewModel.getProperty('/isHass') && oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X'){
-             oViewModel.setProperty('/isHass', false);
+          if (oViewModel.getProperty('/isHass') && oViewModel.getProperty('/summary/list/0/Hrcfm') === 'X') {
+            oViewModel.setProperty('/isHass', false);
           } else {
             oViewModel.setProperty('/isHass', this.isHass());
           }
-
         } catch (oError) {
           throw oError;
         }
@@ -199,7 +198,7 @@ sap.ui.define(
         } catch (oError) {
           throw oError;
         } finally {
-          this.byId('flextimeDetailsTable').clearSelection(); 
+          this.byId('flextimeDetailsTable').clearSelection();
         }
       },
 
@@ -361,16 +360,16 @@ sap.ui.define(
           this.setContentsBusy(true, ['Summary', 'Details', 'Button']);
 
           this.resetTableTimePicker('flextimeDetailsTable');
-          
+
           const oViewModel = this.getViewModel();
           const sZyymm = oEvent.getParameter('value');
 
           // 2022년 6월 이전 조회 불가능
-          if(sZyymm < "202206"){
-              MessageBox.alert(this.getBundleText('MSG_40004')); // 2022.06 이후부터 선택이 가능합니다.
-              oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
-              this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
-              return;
+          if (sZyymm < '202206') {
+            MessageBox.alert(this.getBundleText('MSG_40004')); // 2022.06 이후부터 선택이 가능합니다.
+            oViewModel.setProperty('/summary/list/0/Zyymm', oViewModel.getProperty('/summary/Zyymm'));
+            this.setContentsBusy(false, ['Summary', 'Details', 'Button']);
+            return;
           }
 
           // 현재일 기준 익월까지만 선택 가능
@@ -676,7 +675,7 @@ sap.ui.define(
       //     if (aSelectedIndices.length == 0 ) {
       //         MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40032')); // 확인할 데이터를 선택하여 주십시오.
       //         this.setContentsBusy(false, ['Input', 'Button']);
-      //         return; 
+      //         return;
       //     }
 
       //     MessageBox.confirm(this.getBundleText('LABEL_40032', 'LABEL_00103'), {
@@ -704,23 +703,25 @@ sap.ui.define(
       //   }
       // },
 
-      onHRConfirm(){
-        try{
+      onHRConfirm() {
+        try {
           const oViewModel = this.getViewModel();
           const aDetailsList = oViewModel.getProperty('/details/list');
           const aSelectedIndices = this.byId('flextimeDetailsTable').getSelectedIndices();
 
-          if (aSelectedIndices.length == 0 ) {
-              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40032')); // {확인}할 데이터를 선택하여 주십시오.
-              return; 
+          if (aSelectedIndices.length == 0) {
+            MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40032')); // {확인}할 데이터를 선택하여 주십시오.
+            return;
           }
 
           const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
           const sFlag = _.find(aSelectData, (e) => {
-                  return e.Erryn !== 'X';
-                }) ? 'X' : '';
+            return e.Erryn !== 'X';
+          })
+            ? 'X'
+            : '';
 
-          if(sFlag == 'X'){
+          if (sFlag == 'X') {
             MessageBox.alert(this.getBundleText('MSG_40010')); // 선택한 데이터 중 에러가 아닌 데이터가 존재합니다.
             return;
           }
@@ -749,23 +750,25 @@ sap.ui.define(
         }
       },
 
-      onHRCancel(){
-        try{
+      onHRCancel() {
+        try {
           const oViewModel = this.getViewModel();
           const aDetailsList = oViewModel.getProperty('/details/list');
           const aSelectedIndices = this.byId('flextimeDetailsTable').getSelectedIndices();
 
-          if (aSelectedIndices.length == 0 ) {
-              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40033')); // {확인취소}할 데이터를 선택하여 주십시오.
-              return; 
+          if (aSelectedIndices.length == 0) {
+            MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40033')); // {확인취소}할 데이터를 선택하여 주십시오.
+            return;
           }
 
           const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
           const sFlag = _.find(aSelectData, (e) => {
             return e.Hrcfm !== 'X';
-          }) ? 'X' : '';
+          })
+            ? 'X'
+            : '';
 
-          if(sFlag == 'X'){
+          if (sFlag == 'X') {
             MessageBox.alert(this.getBundleText('MSG_40011')); // 선택한 데이터 중 확인 상태가 아닌 데이터가 존재합니다.
             return;
           }
@@ -781,7 +784,7 @@ sap.ui.define(
 
               await this.createHRProcess(aSelectData, 'D');
 
-              this.byId('flextimeDetailsTable').clearSelection();              
+              this.byId('flextimeDetailsTable').clearSelection();
             },
           });
         } catch (oError) {
@@ -795,27 +798,25 @@ sap.ui.define(
       },
 
       // C 확인, D 확인취소
-      async createHRProcess (aData, sPrcty) {
+      async createHRProcess(aData, sPrcty) {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
         try {
           await Promise.all(_.map(aData, async (o) => Client.create(oModel, 'FlexTimeDetail', { ...o, Prcty: sPrcty })));
 
-          MessageBox.alert(this.getBundleText('MSG_40008', (sPrcty == 'C' ? 'LABEL_40032' : 'LABEL_40033')));  // {확인|확인취소} 처리가 완료되었습니다.
-          this.callbackAppointeeChange(); 
+          MessageBox.alert(this.getBundleText('MSG_40008', sPrcty == 'C' ? 'LABEL_40032' : 'LABEL_40033')); // {확인|확인취소} 처리가 완료되었습니다.
+          this.callbackAppointeeChange();
           this.setContentsBusy(false, ['Input', 'Button']);
-  
         } catch (oError) {
           setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
           this.debug('Controller > flextime > List > onHRConfirm Error', oError);
 
           this.setContentsBusy(false, ['Input', 'Button']);
           AppUtils.handleError(oError);
-          
+
           throw oError;
         }
       },
-
     });
   }
 );
