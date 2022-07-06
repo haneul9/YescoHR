@@ -1111,13 +1111,14 @@ html.sap-desktop .sapMSegB.type-b .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnS
 .type-c .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected {position:relative; border:1px solid #217aef; border-bottom:0px solid #fff; background-color:#fff}
 .type-c .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected:after {content:""; position:absolute; left:0; right:0; bottom:-1px; width:100%; height:1px; background-color:#fff}
 .type-c .sapMITBVertical.sapMITBFilter>.sapMITBText + .sapMITBContentArrow {display:none}
-.type-c.sapMITB .sapMITHOverflowList .sapMITBScrollContainer {margin-right:3.25rem}
+.type-c.sapMITB .sapMITHOverflowList .sapMITBScrollContainer {margin-right:3.25rem; margin-left:1.5rem}
 .type-c.sapMITB .sapMITHOverflowList.sapMITBNotScrollable .sapMITBScrollContainer {margin:0}
 .type-c.sapMITB .sapMITHOverflowList .sapMITBArrowScrollRightTextOnly {right:1.6rem}
 .type-c .sapMITBArrowScroll {top:0; border-radius:4px; font-weight:700; color:#222; background-color:#def5e3}
 .type-c .sapMITBArrowScroll::before {font-weight:700}
 .type-c .sapMITBScrollable.sapMITBNoScrollBack>.sapMITBArrowScrollLeftTextOnly,
 .type-c .sapMITBScrollable.sapMITBNoScrollForward>.sapMITBArrowScrollRightTextOnly {visibility:visible; color:#aeb3b6; background-color:#efefef; cursor:default}
+.type-c .sapMITH .sapMITBArrowScrollLeftTextOnly {left:0}
 .type-c .sapMITH .sapMBtn.sapMBtnInline {top:0; min-width:auto; border-radius:4px; padding:.75rem .2rem; background-color:#def5e3}
 .type-c .sapMITH .sapMBtn.sapMBtnInline .sapMBtnInner {min-width:auto; background-color:#def5e3 !important}
 .type-c .sapMITH .sapMBtn.sapMBtnInline .sapMBtnIcon {margin-right:0; width:auto}
