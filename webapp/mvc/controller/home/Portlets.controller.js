@@ -314,9 +314,16 @@ sap.ui.define(
           return;
         }
 
-        const aActivateSuccesses = aActivePortlets // prettier 방지용 주석
-          .sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence))
-          .map((mPortletData) => this.activatePortlet(mPortletData, oPortletsModel));
+        const aSortedActivePortlets = aActivePortlets.sort((o1, o2) => o1.position.column * 100 + o1.position.sequence - (o2.position.column * 100 + o2.position.sequence));
+
+        /* 서버에 저장된 portlet 개인화 순서와는 상관없이 팀원현황(부서원)이 항상 선택된 상태가 되도록 portlet 생성 순서를 마지막으로 변경 */
+        const iIndexOfP03 = aSortedActivePortlets.findIndex((mPortletData) => mPortletData.id === 'P03' || mPortletData.id === 'M03');
+        const iIndexOfP04 = aSortedActivePortlets.findIndex((mPortletData) => mPortletData.id === 'P04' || mPortletData.id === 'M04');
+        if (iIndexOfP03 > 0 && iIndexOfP04 > 0) {
+          aSortedActivePortlets.push(aSortedActivePortlets.splice(iIndexOfP03, 1)[0]);
+        }
+
+        const aActivateSuccesses = aSortedActivePortlets.map((mPortletData) => this.activatePortlet(mPortletData, oPortletsModel));
 
         if (aActivateSuccesses.every((bSuccess) => !bSuccess)) {
           this.setPortletsNotFound(this.getBundleText('MSG_01904')); // 개발자가 PortletHandler 로직 설정을 누락하였습니다.

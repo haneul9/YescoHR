@@ -315,6 +315,7 @@ sap.ui.define(
 
         try {
           // 1. 상단 프로필, 탭 메뉴, 주소유형, 시/도
+          const Usrty = this.isMss() ? 'M' : this.isHass() ? 'H' : _.noop();
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
           const [
             aProfileReturnData, //
@@ -334,7 +335,7 @@ sap.ui.define(
           ] = await Promise.all([
             fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
             fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
-            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : _.noop() }),
+            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: Usrty }),
             fCurriedGetEntitySet('CountryCode'),
             fCurriedGetEntitySet('MajorCode'),
             fCurriedGetEntitySet('CertificateCode'),
@@ -394,7 +395,7 @@ sap.ui.define(
 
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
+            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty: Usrty }));
             aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
           });
 
