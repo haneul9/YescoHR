@@ -60,8 +60,8 @@ sap.ui.define(
           const [aMyWork] = await Client.getEntitySet(oModel, 'WorkingTime', mMyWorkPayLoad);
 
           oListModel.setProperty('/MyWork', aMyWork);
-          
-          if(aMyWork.Wkrul && aMyWork.Wkrul.indexOf("선택") != -1){
+
+          if (aMyWork.Wkrul && aMyWork.Wkrul.indexOf('선택') !== -1) {
             oListModel.setProperty('/MyWork/Text', 'this month');
           } else {
             oListModel.setProperty('/MyWork/Text', 'this week');
@@ -105,7 +105,7 @@ sap.ui.define(
 
           oListModel.setProperty('/MyWork', aMyWork);
 
-          if(aMyWork.Wkrul && aMyWork.Wkrul.indexOf("선택") != -1){
+          if (aMyWork.Wkrul && aMyWork.Wkrul.indexOf('선택') !== -1) {
             oListModel.setProperty('/MyWork/Text', 'this month');
           } else {
             oListModel.setProperty('/MyWork/Text', 'this week');

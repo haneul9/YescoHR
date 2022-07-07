@@ -1,18 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <Dialog id="talentDevDialog" title="{i18n>LABEL_41001}" contentWidth="800px" contentHeight="770px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
+  <Dialog id="talentDevDialog" title="{i18n>LABEL_42001}" contentWidth="800px" contentHeight="770px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
     <content>
       <grid:CSSGrid gridTemplateRows="repeat(5, 40px) auto" gridTemplateColumns="1fr 1fr 1fr 2fr" gridGap="1px 0px" class="form-grid">
-        <Label text="{i18n>LABEL_41002}" />
+        <Label text="{i18n>LABEL_42002}" />
         <Text text="{Target}" class="font-bold">
           <layoutData>
             <grid:GridItemLayoutData gridColumn="2 / 5" />
           </layoutData>
         </Text>
-        <Label text="{i18n>LABEL_41003}" />
+        <Label text="{i18n>LABEL_42003}" />
         <Text text="{Gjahr}" />
-        <Label text="{i18n>LABEL_41004}" visible="{= ${File1Hide} !== 'X' }" />
+        <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
         <core:Icon src="sap-icon://attachment" visible="{= ${File1Hide} !== 'X' &amp;&amp; Number(${Appno1}) > 0 }" press=".onPressTalentDevFileIcon" class="align-left">
           <core:customData>
             <core:CustomData key="appno" value="{Appno1}" />
@@ -20,20 +20,20 @@
         </core:Icon>
         <Text text=" " visible="{= ${File1Hide} === 'X' }" />
         <Text text=" " visible="{= ${File1Hide} === 'X' || Number(${Appno1}) === 0 }" />
-        <Label text="{i18n>LABEL_41005}" />
+        <Label text="{i18n>LABEL_42005}" />
         <Text text="{Zseqnrtx}" />
-        <Label text="{i18n>LABEL_41006}" />
+        <Label text="{i18n>LABEL_42006}" />
         <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressTalentDevFileIcon" class="align-left">
           <core:customData>
             <core:CustomData key="appno" value="{Appno2}" />
           </core:customData>
         </core:Icon>
         <Text text=" " visible="{= Number(${Appno2}) === 0 }" />
-        <Label text="{i18n>LABEL_41007}" />
+        <Label text="{i18n>LABEL_42007}" />
         <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-        <Label text="{i18n>LABEL_41008}" />
+        <Label text="{i18n>LABEL_42008}" />
         <Text text="{Modtx}" />
-        <Label text="{i18n>LABEL_41009}" />
+        <Label text="{i18n>LABEL_42009}" />
         <Text text="{Zstattx}">
           <layoutData>
             <grid:GridItemLayoutData gridColumn="2 / 5" />
