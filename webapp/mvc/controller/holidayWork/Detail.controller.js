@@ -98,7 +98,12 @@ sap.ui.define(
             oViewModel.setProperty('/ZappStatAl', mDetail.ZappStatAl);
             oViewModel.setProperty('/form/listMode', 'None');
 
-            this.setTableData({ oViewModel, aRowData: [..._.map(aDetailData, (o) => _.set(o, 'Subtytx', _.chain(aSubtyEntry).find({ Zcode: o.Subty }).get('Ztext').value()))] });
+            this.setTableData({
+              oViewModel,
+              aRowData: _.map(aDetailData, (o) => {
+                return _.set(o, 'Subtytx', _.chain(aSubtyEntry).find({ Zcode: o.Subty }).get('Ztext').value());
+              }),
+            });
             this.initializeApplyInfoBox(mDetail);
             this.initializeApprovalBox(mDetail);
           } else {

@@ -142,9 +142,16 @@ sap.ui.define(
 
         if (!aExportTableRowData.length) return;
 
+        const i9Hours = 9 * 60 * 60 * 1000;
         const oSheet = new Spreadsheet({
           worker: false,
-          dataSource: aExportTableRowData,
+          dataSource: _.map(aExportTableRowData, (o) => {
+            _.forOwn(o, (v, p) => {
+              if (_.isObject(v) && _.has(v, 'ms')) _.set(o, p, moment(v.ms - i9Hours).format('HH:mm'));
+            });
+
+            return o;
+          }),
           fileName: `${sFileName}_${moment().format('YYYYMMDD')}.xlsx`,
           workbook: {
             hierarchyLevel: 'Level',
@@ -171,9 +178,9 @@ sap.ui.define(
         const oTableBinding = oTable.getBinding();
         const oTableBindingContext = oTableBinding.getContext();
         if (oTableBindingContext) {
-          return oTableBindingContext.getProperty(oTableBinding.getPath());
+          return _.cloneDeep(oTableBindingContext.getProperty(oTableBinding.getPath()));
         }
-        return oTableBinding.getModel().getProperty(oTableBinding.getPath());
+        return _.cloneDeep(oTableBinding.getModel().getProperty(oTableBinding.getPath()));
       },
 
       _getEdmType(oColumn) {
