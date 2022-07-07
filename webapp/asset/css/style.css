@@ -54,6 +54,7 @@
 /* 공통 Scroll Bar */
 html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar {width:5px !important; background:transparent !important}
 html:not(.sapUiNativeScrollbars) ::-webkit-scrollbar-thumb {border-radius:2.5px !important; background-color:#c1c3c8 !important}
+html:not(.sapUiNativeScrollbars) textarea::-webkit-scrollbar {height:5px !important}
 
 html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i) {font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif}
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}
@@ -954,7 +955,8 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 /*추가 20211101------------------------------------------------------------*/
 body {color:#000; font-weight:bold}
 /*input readonly*/
-.sapMInputBaseReadonly .sapMInputBaseContentWrapper {border:0 !important; background-color:unset !important; height: 40px !important;}
+.sapMInputBaseReadonly .sapMInputBaseContentWrapper {border:0 !important; background-color:unset !important; height:40px !important}
+.sapMInputBaseReadonly.sapMTextArea .sapMInputBaseContentWrapper {height:100% !important; border:1px solid var(--BorderColorReadonly) !important; cursor:default}
 /*input disabled*/
 .sapMInputBaseDisabled .sapMInputBaseContentWrapper,
 .sapMInputBaseDisabled .sapMInputBaseContentWrapper:hover {border-color:var(--BorderColorDisabled) !important; background:#fdfdfd}
@@ -2382,3 +2384,12 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePage .sapMBar .sapMBarLeft .sapMBtn {min-width:50px; height:2rem}
 .sapMMessagePage .sapMBar .sapMBarMiddle {text-align:center}
 .sapMMessagePage .sapMBar .sapMBarMiddle .sapMBarPH {line-height:2rem}
+
+.emp-profile-talent-dev .sapUiLayoutCSSGrid + .sapMScrollCont {margin-top:30px}
+.emp-profile-talent-dev .sapUiLayoutCSSGrid.form-grid > * {min-height:40px; line-height:40px}
+.emp-profile-talent-dev .sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr {margin-left:2.5rem; height:40px; line-height:30px; font-size:18px; font-weight:700}
+.emp-profile-talent-dev .sapMPanel + .sapMPanel {margin-top:20px}
+.emp-profile-talent-dev .sapMPanelExpandableIcon {top:0; width:30px; height:30px; font-size:12px}
+.emp-profile-talent-dev .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent) {padding:0 5px 0 40px}
+.emp-profile-talent-dev .sapMInputBase.sapMTextArea {margin:0}
+.emp-profile-talent-dev .sapMTextAreaGrow {overflow-x:auto}

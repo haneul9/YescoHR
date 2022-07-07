@@ -1,37 +1,43 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/exceptions/UI5Error',
-    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/FileDataProvider',
     'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/common/Validator',
+    'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
   (
     // prettier 방지용 주석
+    CustomData,
     Fragment,
     CSSGrid,
     Filter,
     FilterOperator,
+    JSONModel,
     Table,
     Appno,
     AppUtils,
-    Client,
     ComboEntry,
-    UI5Error,
-    ServiceNames,
+    FileDataProvider,
     PostcodeDialogHandler,
     Validator,
+    Client,
+    ServiceNames,
+    UI5Error,
     MessageBox,
     BaseController
   ) => {
@@ -114,6 +120,11 @@ sap.ui.define(
         MAJOR: { path: 'majorList', codeKey: 'Zzmajo1', valueKey: 'Zzmajo1tx', fragmentName: 'MajorDialog' },
         CERTIFICATE: { path: 'certificateList', codeKey: 'Cttyp', valueKey: 'Cttyptx', fragmentName: 'CertificateDialog' },
         CERTIFICATE_GRADE: { path: 'certificateGradeList', codeKey: 'Ctgrd', valueKey: 'Ctgrdtx', fragmentName: 'CertificateGradeDialog' },
+      },
+      ICONS: {
+        FILE1: 'sap-icon://attachment',
+        FILE2: 'sap-icon://attachment',
+        RESOL: 'sap-icon://comment',
       },
 
       initializeModel() {
@@ -539,17 +550,50 @@ sap.ui.define(
               const oTable = new Table({
                 width: '100%',
                 columnHeaderHeight: 45,
-                rowHeight: 45,
+                rowHeight: 44,
                 enableSelectAll: false,
                 selectionMode: { path: `${sTableDataPath}/selectionMode` },
                 visibleRowCount: { path: `${sTableDataPath}/rowCount` },
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
-              aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({ width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%` });
+              // 인재육성위원회 row click
+              if (menuKey === 'M020') {
+                oTable.attachCellClick((oEvent) => {
+                  const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
+                  this.openTalentDevDialog(mRowData);
+                });
+              }
 
-                oTable.addColumn(oColumn.setLabel(new sap.m.Label({ text: head.Header })).setTemplate(new sap.m.Text({ width: '100%', textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align, text: { path: `Value${_.padStart(index + 1, 2, '0')}` } })));
+              aVisibleHeaders.forEach((head, index) => {
+                const oColumn = new sap.ui.table.Column({
+                  width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                  label: new sap.m.Label({ text: head.Header }),
+                });
+
+                const sValueFieldName = `Value${_.padStart(index + 1, 2, 0)}`;
+                let oColumnTemplate;
+                if (menuKey === 'M020' && ['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
+                  // 인재육성위원회 icon column
+                  oColumnTemplate = new sap.ui.core.Icon({
+                    src: this.ICONS[head.Fieldname],
+                    visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
+                  });
+                  if (head.Fieldname !== 'RESOL') {
+                    oColumnTemplate
+                      .addCustomData(new CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
+                      .attachPress(this.onPressTalentDevFileIcon.bind(this));
+                  }
+                  oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);
+                } else {
+                  oColumnTemplate = new sap.m.Text({
+                    width: '100%', //
+                    textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                    text: { path: sValueFieldName },
+                  });
+                }
+
+                oTable.addColumn(oColumn.setTemplate(oColumnTemplate));
               });
 
               oSubVBox.addItem(oTable);
@@ -627,6 +671,46 @@ sap.ui.define(
 
         oSelectDialog.open();
         AppUtils.setAppBusy(false);
+      },
+
+      openTalentDevDialog({ Pernr, Value01, Value06 }) {
+        const oView = this.getView();
+
+        AppUtils.setAppBusy(true);
+
+        setTimeout(async () => {
+          if (!this._pTalentDevDialog) {
+            this._pTalentDevDialog = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.employee.fragment.TalentDevDialog',
+              controller: this,
+            });
+
+            const oTalentDevDialogModel = new JSONModel({});
+            this.setViewModel(oTalentDevDialogModel, 'talentDev');
+
+            this._pTalentDevDialog //
+              .setModel(oTalentDevDialogModel)
+              .bindElement('/')
+              .attachAfterClose(() => {
+                setTimeout(() => {
+                  this.getViewModel('talentDev').setProperty('/', null);
+                });
+              });
+
+            oView.addDependent(this._pTalentDevDialog);
+          }
+
+          setTimeout(async () => {
+            const oModel = this.getModel(ServiceNames.TALENT);
+            const mFilters = { Pernr, Gjahr: Value01, Mdate: moment(Value06).hour(9).toDate() };
+            const aTalentDevData = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
+            this.getViewModel('talentDev').setProperty('/', aTalentDevData[0]);
+            AppUtils.setAppBusy(false);
+          });
+
+          this._pTalentDevDialog.open();
+        }, 100);
       },
 
       async refreshTableContents({ oViewModel, sMenuKey }) {
@@ -1408,6 +1492,16 @@ sap.ui.define(
 
         oViewModel.setProperty('/employee/dialog/form/Pstlz', sPostcode);
         oViewModel.setProperty('/employee/dialog/form/Zzaddr1', sFullAddr);
+      },
+
+      onTalentDevDialogClose() {
+        AppUtils.setAppBusy(false);
+        this._pTalentDevDialog.close();
+      },
+
+      async onPressTalentDevFileIcon(oEvent) {
+        const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
+        this.AttachFileAction.openFileLink(mFile.Fileuri);
       },
 
       /*****************************************************************

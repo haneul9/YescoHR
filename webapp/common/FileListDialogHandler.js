@@ -4,7 +4,6 @@ sap.ui.define(
     'sap/ui/base/Object',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
-    'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileDataProvider',
   ],
   (
@@ -12,7 +11,6 @@ sap.ui.define(
     BaseObject,
     Fragment,
     JSONModel,
-    AppUtils,
     FileDataProvider
   ) => {
     'use strict';
