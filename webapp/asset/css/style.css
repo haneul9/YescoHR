@@ -2392,4 +2392,4 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .emp-profile-talent-dev .sapMPanelExpandableIcon {top:0; width:30px; height:30px; font-size:12px}
 .emp-profile-talent-dev .sapMDialogSection .sapMPanelContent:not(.sapMPanelBGTransparent) {padding:0 5px 0 40px}
 .emp-profile-talent-dev .sapMInputBase.sapMTextArea {margin:0}
-.emp-profile-talent-dev .sapMTextAreaGrow {overflow-x:auto}
+.emp-profile-talent-dev .sapMTextAreaGrow {overflow-x:auto; cursor:default}

@@ -1,17 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <Dialog id="talentDevDialog" title="{i18n>LABEL_42001}" contentWidth="800px" contentHeight="770px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
+  <Dialog id="talentDevDialog" title="{i18n>LABEL_42001} ({Gjahr}{i18n>LABEL_42002} {Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="770px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
     <content>
-      <grid:CSSGrid gridTemplateRows="repeat(5, 40px) auto" gridTemplateColumns="1fr 1fr 1fr 2fr" gridGap="1px 0px" class="form-grid">
-        <Label text="{i18n>LABEL_42002}" />
-        <Text text="{Target}" class="font-bold">
+      <grid:CSSGrid gridTemplateRows="repeat(5, 40px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="1px 0px" class="form-grid">
+        <Image src="{Photo}" mode="Background">
           <layoutData>
-            <grid:GridItemLayoutData gridColumn="2 / 5" />
+            <grid:GridItemLayoutData gridRow="1 / 6" />
           </layoutData>
-        </Text>
-        <Label text="{i18n>LABEL_42003}" />
-        <Text text="{Gjahr}" />
+        </Image>
+        <Label text="{Target}">
+          <layoutData>
+            <grid:GridItemLayoutData gridColumn="2 / 6" />
+          </layoutData>
+        </Label>
+        <Label text="{i18n>LABEL_42006}" />
+        <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressTalentDevFileIcon" class="align-left">
+          <core:customData>
+            <core:CustomData key="appno" value="{Appno2}" />
+          </core:customData>
+        </core:Icon>
+        <Text text=" " visible="{= Number(${Appno2}) === 0 }" />
         <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
         <core:Icon src="sap-icon://attachment" visible="{= ${File1Hide} !== 'X' &amp;&amp; Number(${Appno1}) > 0 }" press=".onPressTalentDevFileIcon" class="align-left">
           <core:customData>
@@ -21,35 +30,32 @@
         <Text text=" " visible="{= ${File1Hide} === 'X' }" />
         <Text text=" " visible="{= ${File1Hide} === 'X' || Number(${Appno1}) === 0 }" />
         <Label text="{i18n>LABEL_42005}" />
-        <Text text="{Zseqnrtx}" />
-        <Label text="{i18n>LABEL_42006}" />
-        <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressTalentDevFileIcon" class="align-left">
-          <core:customData>
-            <core:CustomData key="appno" value="{Appno2}" />
-          </core:customData>
-        </core:Icon>
-        <Text text=" " visible="{= Number(${Appno2}) === 0 }" />
+        <Text text="{Zstattx}" />
         <Label text="{i18n>LABEL_42007}" />
-        <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+        <Text text="{Nottx}" />
         <Label text="{i18n>LABEL_42008}" />
-        <Text text="{Modtx}" />
-        <Label text="{i18n>LABEL_42009}" />
-        <Text text="{Zstattx}">
+        <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }">
           <layoutData>
-            <grid:GridItemLayoutData gridColumn="2 / 5" />
+            <grid:GridItemLayoutData gridColumn="3 / 6" />
+          </layoutData>
+        </Text>
+        <Label text="{i18n>LABEL_42009}" />
+        <Text text="{Modtx}">
+          <layoutData>
+            <grid:GridItemLayoutData gridColumn="3 / 6" />
           </layoutData>
         </Text>
       </grid:CSSGrid>
       <ScrollContainer height="520px" horizontal="false" vertical="true">
         <content>
           <Panel expandable="true" expanded="true" headerText="{Title1}">
-            <TextArea rows="5" growing="true" growingMaxLines="4" maxLength="10000" value="{Desc1}" wrapping="Off" width="100%" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc1}" wrapping="Off" width="100%" />
           </Panel>
           <Panel expandable="true" expanded="true" headerText="{Title2}">
-            <TextArea rows="5" growing="true" growingMaxLines="4" maxLength="10000" value="{Desc2}" wrapping="Off" width="100%" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc2}" wrapping="Off" width="100%" />
           </Panel>
           <Panel expandable="true" expanded="true" headerText="{Title3}">
-            <TextArea rows="5" growing="true" growingMaxLines="4" maxLength="10000" value="{Desc3}" wrapping="Off" width="100%" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc3}" wrapping="Off" width="100%" />
           </Panel>
         </content>
       </ScrollContainer>
