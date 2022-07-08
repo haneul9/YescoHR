@@ -146,11 +146,9 @@ sap.ui.define(
         const oSheet = new Spreadsheet({
           worker: false,
           dataSource: _.map(aExportTableRowData, (o) => {
-            _.forOwn(o, (v, p) => {
+            return _.forOwn(o, (v, p) => {
               if (_.isObject(v) && _.has(v, 'ms')) _.set(o, p, moment(v.ms - i9Hours).format('HH:mm'));
             });
-
-            return o;
           }),
           fileName: `${sFileName}_${moment().format('YYYYMMDD')}.xlsx`,
           workbook: {
