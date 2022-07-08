@@ -118,7 +118,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/Total', mMyDriveRecord);
 
-          const aTableList = await this.getFriveRecord();
+          const aTableList = await this.getDriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
@@ -151,7 +151,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/Total', mMyDriveRecord);
 
-          const aTableList = await this.getFriveRecord();
+          const aTableList = await this.getDriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
@@ -196,7 +196,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/Total', mMyDriveRecord);
 
-          const aTableList = await this.getFriveRecord();
+          const aTableList = await this.getDriveRecord();
           const oTable = this.byId(this.DRIVE_TABLE_ID);
 
           oViewModel.setProperty('/listInfo', {
@@ -225,7 +225,7 @@ sap.ui.define(
       },
 
       // 운행기록
-      async getFriveRecord() {
+      async getDriveRecord() {
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const mSearch = this.getViewModel().getProperty('/search');
         const mPayLoad = {
