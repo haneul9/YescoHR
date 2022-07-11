@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -10,7 +9,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     AppUtils,
     Client,
     ServiceNames,
@@ -25,21 +23,11 @@ sap.ui.define(
       initializeModel() {
         return {
           busy: false,
-          Data: [],
-          UseList: [
-            { Zcode: 'A', Ztext: this.getBundleText('LABEL_34013') }, // 출퇴근
-            { Zcode: 'B', Ztext: this.getBundleText('LABEL_34014') }, // 업무
-          ],
-          Total: {},
-          mMyDriveRecord: {},
-          dialog: {},
-          maxDate: moment().toDate(),
           search: {
-            date: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
-            secondDate: moment().hours(9).toDate(),
-            driveDate: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
-            driveSecondDate: moment().hours(9).toDate(),
+            Zyymm: moment().format('YYYYMM'),
           },
+          Total: {},
+          list: [],
           listInfo: {
             rowCount: 1,
             totalCount: 0,
@@ -48,63 +36,11 @@ sap.ui.define(
             approveCount: 0,
             rejectCount: 0,
             completeCount: 0,
+            visibleStatus: 'X',
+            Title: this.getBundleText('LABEL_34005'), // 운행기록
+            infoMessage: this.getBundleText('MSG_34002'),
           },
         };
-      },
-
-      registTimeFormat(date, time) {
-        return date && time ? `${moment(date).format('YYYY.MM.DD')} / ${moment(time.ms).subtract(9, 'h').format('HH:mm')}` : '';
-      },
-
-      // 총 주행거리
-      totalMileage(value = '') {
-        if (!value) {
-          return;
-        }
-
-        return `${this.TextUtils.toCurrency(parseFloat(_.replace(_.replace(value, ' km', ''), ',', '')))} km`;
-      },
-
-      // 주행거리
-      mileage(value = '') {
-        if (!value) {
-          return;
-        }
-
-        if (_.includes(value, '.')) {
-          const sReVal = value.replace(/['.']{3}/g, '.');
-          const iIndex = sReVal.indexOf('.');
-
-          value = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
-        } else {
-          value = this.TextUtils.toCurrency(value.slice(0, 11));
-        }
-
-        return value;
-      },
-
-      // 주행거리
-      getMileage(oEvent) {
-        const oDetailModel = this.getViewModel();
-        const sPath = oEvent.getSource().getBinding('value').getPath();
-        let sValue = oEvent
-          .getParameter('value')
-          .trim()
-          .replace(/[^\d'.']/g, '');
-        const sPropVal = _.clone(sValue);
-
-        if (_.includes(sValue, '.')) {
-          const sReVal = sValue.replace(/['.']{3}/g, '.');
-          const iIndex = sReVal.indexOf('.');
-
-          sValue = this.TextUtils.toCurrency(sReVal.split('.')[0].slice(0, 11)) + sReVal.slice(iIndex, iIndex + 4);
-        } else {
-          sValue = this.TextUtils.toCurrency(sValue.slice(0, 11));
-        }
-
-        // oEvent.getSource().setMaxLength(6);
-        oDetailModel.setProperty(sPath, sPropVal);
-        oEvent.getSource().setValue(sValue);
       },
 
       async onObjectMatched() {
@@ -112,27 +48,12 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/busy', true);
-          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'DrivingRecordAppl')));
 
-          const [mMyDriveRecord] = await this.getMyRecord();
-
-          oViewModel.setProperty('/Total', mMyDriveRecord);
-
-          const aTableList = await this.getDriveRecord();
-          const oTable = this.byId(this.DRIVE_TABLE_ID);
-
-          oViewModel.setProperty('/listInfo', {
-            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-            visibleStatus: 'X',
-            Title: this.getBundleText('LABEL_34005'), // 운행기록
-          });
-          oViewModel.setProperty(
-            '/List',
-            _.map(aTableList, (e) => {
-              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
-            })
-          );
+          this.retrieveTotalDriveRecord();
+          this.retrieveDriveRecord();
         } catch (oError) {
+          this.debug('Controller > driveRecord App > onObjectMatched Error', oError);
+
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
@@ -145,44 +66,36 @@ sap.ui.define(
 
         try {
           oViewModel.setProperty('/busy', true);
-          oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'DrivingRecordAppl')));
 
-          const [mMyDriveRecord] = await this.getMyRecord();
-
-          oViewModel.setProperty('/Total', mMyDriveRecord);
-
-          const aTableList = await this.getDriveRecord();
-          const oTable = this.byId(this.DRIVE_TABLE_ID);
-
-          oViewModel.setProperty('/listInfo', {
-            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-            visibleStatus: 'X',
-            Title: this.getBundleText('LABEL_34005'), // 운행기록
-          });
-          oViewModel.setProperty(
-            '/List',
-            _.map(aTableList, (e) => {
-              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
-            })
-          );
+          this.retrieveTotalDriveRecord();
+          this.retrieveDriveRecord();
         } catch (oError) {
+          this.debug('Controller > driveRecord App > callbackAppointeeChange Error', oError);
+
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
       },
 
-      onClick() {
-        const oViewModel = this.getViewModel();
-        const mAppointee = this.getAppointeeData();
+      onChangeMileageFormat(oEvent) {
+        this.TextUtils.liveChangeCurrency(oEvent);
+      },
 
-        this.openDialog({
-          New: 'O',
-          Datum: moment().toDate(),
-          Devty: 'A',
-          Carno: oViewModel.getProperty('/Total/Carno'),
-          Regpr: mAppointee.Pernr,
-          RegprZzjikgb: `${mAppointee.Ename} ${mAppointee.Zzjikgbt}`,
+      onPressSave() {
+        AppUtils.setAppBusy(true);
+
+        // {저장}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+          actions: [this.getBundleText('LABEL_00103'), MessageBox.Action.CANCEL],
+          onClose: (sAction) => {
+            if (!sAction || sAction === MessageBox.Action.CANCEL) {
+              AppUtils.setAppBusy(false);
+              return;
+            }
+
+            this.createProcess();
+          },
         });
       },
 
@@ -192,196 +105,122 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const [mMyDriveRecord] = await this.getMyRecord();
-
-          oViewModel.setProperty('/Total', mMyDriveRecord);
-
-          const aTableList = await this.getDriveRecord();
-          const oTable = this.byId(this.DRIVE_TABLE_ID);
-
-          oViewModel.setProperty('/listInfo', {
-            ...this.TableUtils.count({ oTable, aRowData: aTableList }),
-            visibleStatus: 'X',
-            Title: this.getBundleText('LABEL_34005'), // 운행기록
-          });
-          oViewModel.setProperty(
-            '/List',
-            _.map(aTableList, (e) => {
-              return { ...e, Endkm: _.toString(_.add(parseFloat(e.Begkm), parseFloat(e.Drvkm))), Begkm: _.toString(parseFloat(e.Begkm)), Drvkm: _.toString(parseFloat(e.Drvkm)) };
-            })
-          );
+          this.retrieveDriveRecord();
         } catch (oError) {
+          this.debug('Controller > driveRecord App > onSearch Error', oError);
+
           AppUtils.handleError(oError);
         } finally {
           oViewModel.setProperty('/busy', false);
         }
       },
 
-      // 차량운행기록부 현황
-      async getMyRecord() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-
-        return await Client.getEntitySet(oModel, 'DrivingRecordMain', { Pernr: this.getAppointeeProperty('Pernr') });
-      },
-
-      // 운행기록
-      async getDriveRecord() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
-        const mSearch = this.getViewModel().getProperty('/search');
-        const mPayLoad = {
-          Pernr: this.getAppointeeProperty('Pernr'),
-          RegdtBegda: moment(mSearch.driveDate).hours(9).toDate(),
-          RegdtEndda: moment(mSearch.driveSecondDate).hours(9).toDate(),
-          DatumBegda: moment(mSearch.date).hours(9).toDate(),
-          DatumEndda: moment(mSearch.secondDate).hours(9).toDate(),
-          Prcty: 'L',
-        };
-
-        return await Client.getEntitySet(oModel, 'DrivingRecordAppl', mPayLoad);
-      },
-
-      onSelectRow(oEvent) {
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
-        const oViewModel = this.getViewModel();
-        const mRowData = oViewModel.getProperty(vPath);
-
-        this.openDialog(mRowData);
-      },
-
-      openDialog(mRowData = {}) {
-        const oViewModel = this.getViewModel();
-        const oView = this.getView();
-
-        setTimeout(() => {
-          if (!this._pDetailDialog) {
-            this._pDetailDialog = Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.driveRecord.fragment.DetailDialog',
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
-            });
-          }
-
-          this._pDetailDialog.then(function (oDialog) {
-            oViewModel.setProperty('/dialog', mRowData);
-            oDialog.open();
-          });
-        }, 100);
-      },
-
-      // Dialog Close
-      onDialogClose(oEvent) {
-        oEvent.getSource().getParent().close();
-      },
-
-      checkError() {
-        const oViewModel = this.getViewModel();
-        const mDialogData = oViewModel.getProperty('/dialog');
-
-        if (!mDialogData.Drvkm || mDialogData.Drvkm === '0') {
-          // 주행거리를 입력하세요.
-          MessageBox.alert(this.getBundleText('MSG_34001'));
-          return true;
-        }
-
-        return false;
-      },
-
-      // 등록
-      onRegistBtn() {
-        if (this.checkError()) return;
-
-        // {등록}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00106'), {
-          // 등록, 취소
-          actions: [this.getBundleText('LABEL_00106'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            // 등록
-            if (!vPress || vPress !== this.getBundleText('LABEL_00106')) {
-              return;
-            }
-
-            const oViewModel = this.getViewModel();
-
-            try {
-              AppUtils.setAppBusy(true);
-
-              const mDialogData = oViewModel.getProperty('/dialog');
-              let oSendObject = {
-                ...mDialogData,
-                Prcty: 'C',
-              };
-
-              const oModel = this.getModel(ServiceNames.BENEFIT);
-
-              await Client.create(oModel, 'DrivingRecordAppl', oSendObject);
-
-              // {등록}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00106'), {
-                onClose: () => {
-                  this.byId('detailDialog').close();
-                  this.onSearch();
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-            } finally {
-              AppUtils.setAppBusy(false);
-            }
-          },
-        });
-      },
-
-      // 삭제
-      onDeleteBtn() {
-        // {삭제}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            // 삭제
-            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
-              return;
-            }
-
-            AppUtils.setAppBusy(true);
-
-            try {
-              const oViewModel = this.getViewModel();
-              const oModel = this.getModel(ServiceNames.BENEFIT);
-
-              // await Client.remove(oModel, 'DrivingRecordAppl', { Seqnr: oViewModel.getProperty('/dialog/Seqnr') });
-              const mDialogData = oViewModel.getProperty('/dialog');
-              let oSendObject = {
-                ...mDialogData,
-                Prcty: 'X',
-              };
-
-              await Client.create(oModel, 'DrivingRecordAppl', oSendObject);
-
-              // {삭제}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                onClose: () => {
-                  this.byId('detailDialog').close();
-                  this.onSearch();
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-            } finally {
-              AppUtils.setAppBusy(false);
-            }
-          },
-        });
-      },
-
       onPressExcelDownload() {
         const oTable = this.byId(this.DRIVE_TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_34001'); // {차량운행기록부}_목록
+        const aTableData = _.cloneDeep(this.getViewModel().getProperty('/list'));
 
-        this.TableUtils.export({ oTable, sFileName });
+        this.TableUtils.export({
+          oTable,
+          sFileName,
+          aTableData: _.map(aTableData, (o) => ({
+            ...o,
+            Drvkma: this.TextUtils.toCurrency(o.Drvkma),
+            Drvkmb: this.TextUtils.toCurrency(o.Drvkmb),
+            Drvkm: this.TextUtils.toCurrency(o.Drvkm),
+            Begkm: this.TextUtils.toCurrency(o.Begkm),
+            Endkm: this.TextUtils.toCurrency(o.Endkm),
+          })),
+        });
+      },
+
+      // 차량운행기록부 현황
+      async retrieveTotalDriveRecord() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const [mMyDriveRecord] = await Client.getEntitySet(oModel, 'DrivingRecordMain', { Pernr: this.getAppointeeProperty('Pernr') });
+
+          oViewModel.setProperty('/Total', _.omit(mMyDriveRecord, '__metadata'));
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      // 운행기록
+      async retrieveDriveRecord() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const oTable = this.byId(this.DRIVE_TABLE_ID);
+          const sZyymm = this.getViewModel().getProperty('/search/Zyymm');
+          const aRowData = await Client.getEntitySet(oModel, 'DrivingRecordAppl', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Zyymm: sZyymm,
+          });
+
+          // this.getTempArray().forEach((o) => aRowData.push(o));
+
+          const oListInfo = oViewModel.getProperty('/listInfo');
+
+          oViewModel.setProperty('/listInfo', {
+            ...oListInfo,
+            ...this.TableUtils.count({ oTable, aRowData }),
+          });
+          oViewModel.setProperty(
+            '/list',
+            _.map(aRowData, (o) => _.omit(o, ['__metadata', 'DrivingRecordNav']))
+          );
+        } catch (oError) {
+          throw oError;
+        }
+      },
+
+      async createProcess() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          await Client.deep(this.getModel(ServiceNames.BENEFIT), 'DrivingRecordAppl', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr'),
+            Zyymm: oViewModel.getProperty('/search/Zyymm'),
+            DrivingRecordNav: _.cloneDeep(oViewModel.getProperty('/list')),
+          });
+
+          // {저장}되었습니다.
+          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103'), {
+            onClose: () => this.onSearch(),
+          });
+        } catch (oError) {
+          this.debug('Controller > driveRecord Detail > createProcess Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false);
+        }
+      },
+
+      getTempArray() {
+        const sZyymm = this.getViewModel().getProperty('/search/Zyymm');
+        const aWeekday = ['일', '월', '화', '수', '목', '금', '토'];
+
+        return Array.from({ length: moment(sZyymm).daysInMonth() }, (x, i) => {
+          const dCurDate = moment(sZyymm).startOf('month').add(i, 'days');
+          return {
+            Datum: dCurDate.toDate(), //
+            Offyn: dCurDate.day() % 6 === 0 ? 'X' : '',
+            Daytx: aWeekday[dCurDate.day()],
+            Carno: '12가 3456',
+            Drvkma: null,
+            Drvkmb: null,
+            Drvkm: '20.00',
+            Begkm: '10000.00',
+            Endkm: '10020.00',
+          };
+        });
       },
     });
   }

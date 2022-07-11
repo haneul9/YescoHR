@@ -49,7 +49,7 @@ sap.ui.define(
 
         if (typeof oValue === 'number' || oValue instanceof Number || typeof oValue === 'string' || oValue instanceof String) {
           // return (oValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          return new Intl.NumberFormat('ko-KR').format(oValue);
+          return new Intl.NumberFormat('ko-KR').format(oValue.toString().replace(/,/g, ''));
         }
 
         throw new FormatException(`Don't know how to format Currency to ${sTargetType}`);
