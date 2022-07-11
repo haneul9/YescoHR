@@ -261,9 +261,10 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const oCheck = await Client.deep(oModel, 'OtWorkApply', mSendObject);
 
-        _.map(oCheck.OtWorkNav.results, async (e, i) => {
-          oViewModel.setProperty(`/detail/list/${i}/Notes`, e.Notes);
-        });
+        oViewModel.setProperty(
+          '/detail/list',
+          _.map(oCheck.OtWorkNav.results, (o) => _.omit(o, ['__metadata', 'OtWorkNav']))
+        );
 
         if (!!oCheck.Retmsg) {
           oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
@@ -362,9 +363,10 @@ sap.ui.define(
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const oCheck = await Client.deep(oModel, 'OtWorkApply', mSendObject);
 
-          _.map(oCheck.OtWorkNav.results, async (e, i) => {
-            oViewModel.setProperty(`/detail/list/${i}/Notes`, e.Notes);
-          });
+          oViewModel.setProperty(
+            '/detail/list',
+            _.map(oCheck.OtWorkNav.results, (o) => _.omit(o, ['__metadata', 'OtWorkNav']))
+          );
 
           if (!!oCheck.Retmsg) {
             oCheck.Retmsg = _.replace(oCheck.Retmsg, '\\n', '\n');
