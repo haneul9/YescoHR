@@ -91,7 +91,6 @@ sap.ui.define(
         try {
           if (sAppno) {
             const oModel = this.getModel(ServiceNames.WORKTIME);
-            const aSubtyEntry = oViewModel.getProperty('/dialog/subtyEntry');
             const aDetailData = await Client.getEntitySet(oModel, 'OtWorkApply2', { Appno: sAppno });
             const mDetail = aDetailData[0] ?? {};
 
@@ -100,9 +99,7 @@ sap.ui.define(
 
             this.setTableData({
               oViewModel,
-              aRowData: _.map(aDetailData, (o) => {
-                return _.set(o, 'Subtytx', _.chain(aSubtyEntry).find({ Zcode: o.Subty }).get('Ztext').value());
-              }),
+              aRowData: _.map(aDetailData, (o) => _.omit(o, ['__metadata', 'OtWorkNav2'])),
             });
             this.initializeApplyInfoBox(mDetail);
             this.initializeApprovalBox(mDetail);
@@ -355,11 +352,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const aFormList = _.chain(oViewModel.getProperty('/form/list'))
           .cloneDeep()
-          .map((o) => {
-            delete o.Subtytx;
-
-            return this.TimeUtils.convert2400Time(o);
-          })
+          .map((o) => this.TimeUtils.convert2400Time(o))
           .value();
 
         const mCheckResult = await Client.deep(oModel, 'OtWorkApply2', {
@@ -404,11 +397,7 @@ sap.ui.define(
 
           const aFormList = _.chain(oViewModel.getProperty('/form/list'))
             .cloneDeep()
-            .map((o) => {
-              delete o.Subtytx;
-
-              return this.TimeUtils.convert2400Time(o);
-            })
+            .map((o) => this.TimeUtils.convert2400Time(o))
             .value();
 
           const mResults = await Client.deep(this.getModel(ServiceNames.WORKTIME), 'OtWorkApply2', {
