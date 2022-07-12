@@ -79,7 +79,12 @@ sap.ui.define(
       },
 
       onChangeMileageFormat(oEvent) {
-        this.TextUtils.liveChangeCurrency(oEvent);
+        const oEventSource = oEvent.getSource();
+        const sPath = oEventSource.getBinding('value').getPath();
+        const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
+
+        oEventSource.setValue(this.TextUtils.toCurrency(sValue));
+        oEventSource.getModel().setProperty(sPath, sValue);
       },
 
       onPressSave() {
@@ -105,6 +110,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
+          this.retrieveTotalDriveRecord();
           this.retrieveMonthlyDriveRecord();
         } catch (oError) {
           this.debug('Controller > driveRecord App > onSearch Error', oError);
