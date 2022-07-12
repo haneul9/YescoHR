@@ -50,7 +50,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           this.retrieveTotalDriveRecord();
-          this.retrieveDriveRecord();
+          this.retrieveMonthlyDriveRecord();
         } catch (oError) {
           this.debug('Controller > driveRecord App > onObjectMatched Error', oError);
 
@@ -68,7 +68,7 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           this.retrieveTotalDriveRecord();
-          this.retrieveDriveRecord();
+          this.retrieveMonthlyDriveRecord();
         } catch (oError) {
           this.debug('Controller > driveRecord App > callbackAppointeeChange Error', oError);
 
@@ -105,7 +105,7 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          this.retrieveDriveRecord();
+          this.retrieveMonthlyDriveRecord();
         } catch (oError) {
           this.debug('Controller > driveRecord App > onSearch Error', oError);
 
@@ -149,7 +149,7 @@ sap.ui.define(
       },
 
       // 운행기록
-      async retrieveDriveRecord() {
+      async retrieveMonthlyDriveRecord() {
         const oViewModel = this.getViewModel();
 
         try {
@@ -162,6 +162,7 @@ sap.ui.define(
             Zyymm: sZyymm,
           });
 
+          // @TEST code
           // this.getTempArray().forEach((o) => aRowData.push(o));
 
           const oListInfo = oViewModel.getProperty('/listInfo');

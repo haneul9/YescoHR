@@ -186,6 +186,15 @@ sap.ui.define(
 
           this.pHolidayWorkTimeDialog.attachBeforeOpen(async () => {
             oViewModel.setProperty('/dialog/grid', { Datum: moment().hours(9).toDate() });
+            oViewModel.setProperty('/dialog/list', [
+              {
+                Pernr: this.getAppointeeProperty('Pernr'),
+                Ename: this.getAppointeeProperty('Ename'),
+                Zzjikgbt: this.getAppointeeProperty('Zzjikgbt'),
+                Zzjikcht: this.getAppointeeProperty('Zzjikcht'),
+                Orgtx: this.getAppointeeProperty('Orgtx'),
+              },
+            ]);
 
             this.retrieveTargetEmployee();
           });
