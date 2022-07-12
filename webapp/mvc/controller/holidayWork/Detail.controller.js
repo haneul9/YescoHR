@@ -91,7 +91,6 @@ sap.ui.define(
         try {
           if (sAppno) {
             const oModel = this.getModel(ServiceNames.WORKTIME);
-            const aSubtyEntry = oViewModel.getProperty('/dialog/subtyEntry');
             const aDetailData = await Client.getEntitySet(oModel, 'OtWorkApply2', { Appno: sAppno });
             const mDetail = aDetailData[0] ?? {};
 
@@ -100,9 +99,7 @@ sap.ui.define(
 
             this.setTableData({
               oViewModel,
-              aRowData: _.map(aDetailData, (o) => {
-                return _.set(o, 'Subtytx', _.chain(aSubtyEntry).find({ Zcode: o.Subty }).get('Ztext').value());
-              }),
+              aRowData: _.map(aDetailData, (o) => _.omit(o, ['__metadata', 'OtWorkNav2'])),
             });
             this.initializeApplyInfoBox(mDetail);
             this.initializeApprovalBox(mDetail);
@@ -186,6 +183,15 @@ sap.ui.define(
 
           this.pHolidayWorkTimeDialog.attachBeforeOpen(async () => {
             oViewModel.setProperty('/dialog/grid', { Datum: moment().hours(9).toDate() });
+            oViewModel.setProperty('/dialog/list', [
+              {
+                Pernr: this.getAppointeeProperty('Pernr'),
+                Ename: this.getAppointeeProperty('Ename'),
+                Zzjikgbt: this.getAppointeeProperty('Zzjikgbt'),
+                Zzjikcht: this.getAppointeeProperty('Zzjikcht'),
+                Orgtx: this.getAppointeeProperty('Orgtx'),
+              },
+            ]);
 
             this.retrieveTargetEmployee();
           });
@@ -346,11 +352,7 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.WORKTIME);
         const aFormList = _.chain(oViewModel.getProperty('/form/list'))
           .cloneDeep()
-          .map((o) => {
-            delete o.Subtytx;
-
-            return this.TimeUtils.convert2400Time(o);
-          })
+          .map((o) => this.TimeUtils.convert2400Time(o))
           .value();
 
         const mCheckResult = await Client.deep(oModel, 'OtWorkApply2', {
@@ -395,11 +397,7 @@ sap.ui.define(
 
           const aFormList = _.chain(oViewModel.getProperty('/form/list'))
             .cloneDeep()
-            .map((o) => {
-              delete o.Subtytx;
-
-              return this.TimeUtils.convert2400Time(o);
-            })
+            .map((o) => this.TimeUtils.convert2400Time(o))
             .value();
 
           const mResults = await Client.deep(this.getModel(ServiceNames.WORKTIME), 'OtWorkApply2', {
@@ -524,7 +522,9 @@ sap.ui.define(
         this.onChangeWorkTime();
       },
 
-      onChangeWorkTime() {
+      onChangeWorkTime(oEvent) {
+        this.step30Minute(oEvent);
+
         const oViewModel = this.getViewModel();
         const mInputData = oViewModel.getProperty('/dialog/grid');
 
@@ -538,7 +538,9 @@ sap.ui.define(
         this.calcWorkTime();
       },
 
-      onChangeBreakTime() {
+      onChangeBreakTime(oEvent) {
+        this.step30Minute(oEvent);
+
         const oViewModel = this.getViewModel();
         const mInputData = oViewModel.getProperty('/dialog/grid');
 
@@ -549,6 +551,22 @@ sap.ui.define(
         if (_.isObject(mInputData.Pdbeg) && _.isObject(mInputData.Pdend) && mInputData.Pdbeg.ms >= mInputData.Pdend.ms) return;
 
         this.calcWorkTime();
+      },
+
+      step30Minute(oEvent) {
+        const oSource = oEvent.getSource();
+        const aSourceValue = _.split(oSource.getValue(), ':');
+
+        if (aSourceValue.length !== 2) return;
+
+        const sConvertedMinutesValue = this.TimeUtils.stepMinutes(_.get(aSourceValue, 1));
+
+        if (aSourceValue[1] === sConvertedMinutesValue) return;
+
+        const aConvertTimes = [_.get(aSourceValue, 0), sConvertedMinutesValue];
+
+        oSource.setValue(_.join(aConvertTimes, ':'));
+        oSource.setDateValue(moment(_.join(aConvertTimes, ''), 'hhmm').toDate());
       },
 
       onDialogAdd() {

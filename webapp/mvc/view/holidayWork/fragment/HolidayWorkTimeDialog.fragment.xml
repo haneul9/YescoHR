@@ -17,9 +17,9 @@
           </HBox>
           <Label text="{i18n>LABEL_27009}"/>
           <HBox>
-            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="5" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" />
+            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" />
             <Text text="~" class="mx-5-px" />
-            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="5" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" />
+            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" />
             <Input value="{ path: '/dialog/grid/Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" editable="false" class="ml-10-px" />
           </HBox>
           <Label text="{i18n>LABEL_41006}"/>
@@ -32,9 +32,9 @@
           </HBox>
           <Label text="{i18n>LABEL_41003}"/>
           <HBox>
-            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Pdbeg', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="5" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" />
+            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Pdbeg', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" />
             <Text text="~" class="mx-5-px" />
-            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Pdend', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="5" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" />
+            <TimePicker width="120px" dateValue="{ path: '/dialog/grid/Pdend', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" />
             <Input value="{ path: '/dialog/grid/Brktm', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" editable="false" class="ml-10-px" />
           </HBox>
           <Label text="{i18n>LABEL_41007}"/>
