@@ -206,6 +206,8 @@
 
         { "pattern": "holidayWork", "name": "holidayWork", "target": "holidayWork" },
         { "pattern": "holidayWork/{appno}", "name": "holidayWork-detail", "target": "holidayWorkDetail" },
+        { "pattern": "mobile/holidayWork", "name": "mobile/holidayWork", "target": "mobile/holidayWork" },
+        { "pattern": "mobile/holidayWork/{appno}", "name": "mobile/holidayWork-detail", "target": "mobile/holidayWork-detail" },
 
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
@@ -460,6 +462,8 @@
         
         "holidayWork": { "viewId": "holidayWork", "viewPath": "sap.ui.yesco.mvc.view.holidayWork", "viewName": "ListE" },
         "holidayWorkDetail": { "viewId": "holidayWorkDetail", "viewPath": "sap.ui.yesco.mvc.view.holidayWork", "viewName": "Detail" },
+        "mobile/holidayWork": { "viewId": "mobile_holidayWork", "viewPath": "sap.ui.yesco.mvc.view.holidayWork.mobile", "viewName": "List" },
+        "mobile/holidayWork-detail": { "viewId": "mobile_holidayWorkDetail", "viewPath": "sap.ui.yesco.mvc.view.holidayWork.mobile", "viewName": "Detail" },
 
         "housingLoan": { "viewId": "housingLoan", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoan" },
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },

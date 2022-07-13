@@ -3,7 +3,10 @@
   xmlns:core="sap.ui.core">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <HBox class="title">
+        <Title level="H2" text="{i18n>LABEL_00129}" />
+        <Text text="{i18n>MSG_27012}" class="desc-txt" />
+      </HBox>
       <HBox class="button-group">
         <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{/Fixed}" press=".onAddDetail" />
         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{/Fixed}" press=".onDelDetail" />

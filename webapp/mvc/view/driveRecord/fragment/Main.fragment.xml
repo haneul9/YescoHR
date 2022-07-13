@@ -7,7 +7,7 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox class="button-group">
-            <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onClick" />
+            <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onPressSave" />
             <Button icon="sap-icon://print" press=".onPagePrint" text="{i18n>LABEL_00131}" />
             <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" />
           </HBox>

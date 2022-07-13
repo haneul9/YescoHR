@@ -9,7 +9,7 @@
       }"/>
     </table:rowSettingsTemplate>
     <table:columns>
-      <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
+      <table:Column width="4%" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
         <Label text="{i18n>LABEL_00144}"/>
         <table:template>
           <Text text="{
@@ -22,7 +22,7 @@
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Pernr" filterProperty="Pernr">
+      <table:Column width="6%" sortProperty="Pernr" filterProperty="Pernr">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
           <Text text="{
@@ -31,7 +31,7 @@
           }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
+      <table:Column width="6%" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
@@ -52,10 +52,7 @@
       <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
         <Label text="{i18n>LABEL_27004}"/>
         <table:template>
-          <Text text="{
-              path: 'Datum',
-              type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
@@ -70,10 +67,22 @@
           <Text text="{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" width="100%" textAlign="Center" />
         </table:template>
       </table:Column>
-      <table:Column width="auto" sortProperty="Abrst" filterProperty="Abrst">
+      <table:Column width="4%" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_27007}"/>
         <table:template>
           <Text text="{ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Subtytx" filterProperty="Subtytx">
+        <Label text="{i18n>LABEL_41007}"/>
+        <table:template>
+          <Text text="{Subtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+        </table:template>
+      </table:Column>
+      <table:Column width="auto" sortProperty="Subda" filterProperty="Subda">
+        <Label text="{i18n>LABEL_41005}"/>
+        <table:template>
+          <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Apename" filterProperty="Apename">

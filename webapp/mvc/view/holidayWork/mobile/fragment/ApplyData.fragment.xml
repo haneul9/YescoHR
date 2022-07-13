@@ -1,0 +1,88 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <HBox class="table-toolbar">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_41010}" />
+    </HBox>
+    <HBox class="table-actions" visible="{= !${/ZappStatAl} }">
+      <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn"/>
+    </HBox>
+  </HBox>
+  <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+    <Label text="{i18n>LABEL_27004}"/>
+    <VBox>
+      <custom:DatePicker width="100%" dateValue="{ path: '/dialog/grid/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" visible="{= !${/ZappStatAl} }" />
+      <Text text="{ path: '/dialog/grid/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" visible="{= ${/ZappStatAl} ? true : false }" />
+    </VBox>
+    <Label text="{i18n>LABEL_27009}" />
+    <HBox>
+        <TimePicker width="100px" dateValue="{ path: '/dialog/grid/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" visible="{= !${/ZappStatAl} }" />
+        <Text text="~" class="mx-5-px" visible="{= !${/ZappStatAl} }" />
+        <TimePicker width="100px" dateValue="{ path: '/dialog/grid/Enduz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time required" change=".onChangeWorkTime" visible="{= !${/ZappStatAl} }" />
+        <Text text="{ path: '/dialog/grid/Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } } ~ { path: '/dialog/grid/Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" class="font-bold" visible="{= ${/ZappStatAl} ? true : false }" />
+    </HBox>
+    <Label text="{i18n>LABEL_41003}"/>
+    <HBox>
+      <TimePicker width="100px" dateValue="{ path: '/dialog/grid/Pdbeg', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initBeguz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" visible="{= !${/ZappStatAl} }" />
+      <Text text="~" class="mx-5-px" visible="{= !${/ZappStatAl} }" />
+      <TimePicker width="100px" dateValue="{ path: '/dialog/grid/Pdend', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/dialog/initEnduz}" minutesStep="30" placeholder="HH:mm" valueFormat="HH:mm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeBreakTime" visible="{= !${/ZappStatAl} }" />
+      <Text text="{ path: '/dialog/grid/Pdbeg', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } } ~ { path: '/dialog/grid/Pdend', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" visible="{= ${/ZappStatAl} ? true : false }" />
+    </HBox>
+    <Label text="{i18n>LABEL_41006}" />
+    <VBox>
+      <Input width="100%" value="{/dialog/grid/Atrsn}" class="required" visible="{= !${/ZappStatAl} }">
+        <layoutData>
+            <FlexItemData growFactor="1" />
+        </layoutData>
+      </Input>
+      <Text text="{/dialog/grid/Atrsn}" visible="{= ${/ZappStatAl} ? true : false }" />
+    </VBox>
+    <Label text="{i18n>LABEL_41011}" />
+    <VBox>
+      <Text text="{ path: '/dialog/grid/Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' } / { path: '/dialog/grid/Brktm', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" />
+    </VBox>
+    <Label text="{i18n>LABEL_41007}" />
+    <VBox>
+        <ComboBox width="100%" class="required" selectedKey="{/dialog/grid/Subty}" enabled="{/dialog/enableSubty}" items="{ path: '/dialog/subtyEntry', templateShareable: false, filters: [{path: 'visible', operator: 'EQ', value1: 'X'}] }" visible="{= !${/ZappStatAl} }">
+            <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+        <Text text="{/dialog/grid/Subtytx}" visible="{= ${/ZappStatAl} ? true : false }" />
+    </VBox>
+    <Label text="{i18n>LABEL_41005}" />
+    <HBox>
+        <custom:DatePicker width="100%" minDate="{/dialog/grid/Datum}" dateValue="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" visible="{= !${/ZappStatAl} }" />
+        <Text text="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" visible="{= ${/ZappStatAl} ? true : false }" />
+    </HBox>
+  </grid:CSSGrid>
+
+  <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_00129}" />
+    </HBox>
+    <HBox class="table-actions">
+    <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
+    </HBox>
+  </HBox>
+  <List id="DetailList" items="{ path: '/form/list' }" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false" visible="{= !${/ZappStatAl} }">
+    <CustomListItem type="Active">
+      <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
+        <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="6px 10px">
+          <grid:layoutData>
+            <FlexItemData growFactor="1" />
+          </grid:layoutData>
+          <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
+          <Text text="{Atrsn}" />
+          <Text 
+                text="
+                { path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }
+                ~{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }
+                ({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" 
+          />
+          <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' } {Subtytx}" />
+        </grid:CSSGrid>
+      </HBox>
+    </CustomListItem>
+  </List>
+</core:FragmentDefinition>
