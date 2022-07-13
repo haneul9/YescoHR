@@ -523,7 +523,7 @@ sap.ui.define(
       },
 
       onChangeWorkTime(oEvent) {
-        this.step30Minute(oEvent);
+        if (oEvent) this.step30Minute(oEvent);
 
         const oViewModel = this.getViewModel();
         const mInputData = oViewModel.getProperty('/dialog/grid');
