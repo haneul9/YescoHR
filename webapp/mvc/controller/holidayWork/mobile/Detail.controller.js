@@ -62,7 +62,7 @@ sap.ui.define(
               ],
               grid: {},
               listMode: 'None',
-              list: [],
+              list: [{Pernr: this.getAppointeeProperty('Pernr')}],
               rowCount: 1,
             },
             ApplyInfo: {},
@@ -77,7 +77,6 @@ sap.ui.define(
           oViewModel.setData(this.initializeModel());
           oViewModel.setProperty('/Appno', oParameter.appno === 'n' ? null : oParameter.appno);
           oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
-          oViewModel.setProperty('/list', [{Pernr: this.getAppointeeProperty('Pernr')}]);
   
           this.loadPage();
         },
@@ -329,16 +328,16 @@ sap.ui.define(
             return true;
           }
   
-          if (
-            _.chain(aTargets)
-              .filter((o) => !_.isEmpty(o.Pernr))
-              .size()
-              .isEqual(0)
-              .value()
-          ) {
-            MessageBox.alert(this.getBundleText('MSG_41002')); // 대상자를 등록하세요.
-            return true;
-          }
+          // if (
+          //   _.chain(aTargets)
+          //     .filter((o) => !_.isEmpty(o.Pernr))
+          //     .size()
+          //     .isEqual(0)
+          //     .value()
+          // ) {
+          //   MessageBox.alert(this.getBundleText('MSG_41002')); // 대상자를 등록하세요.
+          //   return true;
+          // }
   
           return false;
         },
@@ -431,6 +430,14 @@ sap.ui.define(
         },
   
         onPressApproval() {
+          const oViewModel = this.getViewModel();
+          if (oViewModel.getProperty('/form/list').length === 0) {
+            const sMessage = this.getBundleText('MSG_04009') + '\n' + this.getBundleText('MSG_04010');
+            // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
+            MessageBox.error(sMessage);
+            return;
+          }
+
           AppUtils.setAppBusy(true);
   
           // {신청}하시겠습니까?
@@ -545,7 +552,6 @@ sap.ui.define(
           oViewModel.setProperty('/dialog/grid/Abrst', null);
           oViewModel.setProperty('/dialog/grid/Brktm', null);
   
-          if (_.isEmpty(mInputData.Datum)) return;
           if (_.isEmpty(mInputData.Beguz) || _.isEmpty(mInputData.Enduz)) return;
           if (_.isObject(mInputData.Beguz) && _.isObject(mInputData.Enduz) && mInputData.Beguz.ms >= mInputData.Enduz.ms) return;
   
