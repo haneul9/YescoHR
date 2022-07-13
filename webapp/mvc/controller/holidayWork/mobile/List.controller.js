@@ -145,7 +145,7 @@ sap.ui.define(
           const oRowData = this.getViewModel().getProperty(vPath);
   
           if (isNaN(oRowData.Appno)) return;
-  console.log(oRowData);
+  
           oViewModel.setProperty('/parameter/rowData', [oRowData]);
           this.getRouter().navTo('mobile/holidayWork-detail', { appno: _.isEqual(oRowData.Appno, '00000000000000') ? 'n' : oRowData.Appno });
         },
