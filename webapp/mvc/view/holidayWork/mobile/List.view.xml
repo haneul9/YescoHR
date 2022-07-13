@@ -24,7 +24,7 @@
                 text="
                 { path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }~{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" 
               />
-              <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' } {Subtytx}" />
+              <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date', formatter: '.formatSubda' } {Subtytx}" />
               <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
                 <customData>
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />

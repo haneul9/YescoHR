@@ -167,6 +167,10 @@ sap.ui.define(
         onChangeIndication(sValue) {
           return sValue === 'A' ? 'Indication05' : sValue === 'B' ? 'Indication03' : 'Indication04';
         },
+
+        formatSubda(fVal){
+          return fVal.substring(2);
+        }
       });
     }
   );
