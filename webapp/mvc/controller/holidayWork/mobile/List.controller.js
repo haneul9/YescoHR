@@ -169,7 +169,7 @@ sap.ui.define(
         },
 
         formatSubda(fVal){
-          return fVal.substring(2);
+          return fVal.substring(5);
         }
       });
     }
