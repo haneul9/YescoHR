@@ -1,0 +1,86 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="employeeTable" class="row-link" rows="{/employee/listInfo/rows}" width="100%" visibleRowCount="{/employee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Employee}" noData="{i18n>MSG_00001}" cellClick=".onSelectEmployeeTableRow">
+    <rowSettingsTemplate>
+      <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
+    </rowSettingsTemplate>
+    <columns>
+      <Column sortProperty="Name1" filterProperty="Name1">
+        <m:Label text="{i18n>LABEL_00237}" />
+        <template>
+          <m:Text text="{Name1}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column sortProperty="Orgtx" filterProperty="Orgtx">
+        <m:Label text="{i18n>LABEL_00224}" />
+        <template>
+          <m:Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column sortProperty="Target" filterProperty="Target">
+        <m:Label text="{i18n>LABEL_43002}" />
+        <template>
+          <m:HBox alignItems="Center">
+            <m:Image src="{Photo}" mode="Background" width="38px" height="38px" class="member-photo mr-0h-rem">
+              <m:layoutData>
+                <m:FlexItemData maxHeight="38px" minHeight="38px" />
+              </m:layoutData>
+            </m:Image>
+            <m:Text text="{Target}" wrapping="false" />
+          </m:HBox>
+        </template>
+      </Column>
+      <Column width="100px" sortProperty="Gjahr" filterProperty="Gjahr">
+        <m:Label text="{i18n>LABEL_43003}" />
+        <template>
+          <m:Text text="{Gjahr}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="100px" sortProperty="Zseqnrtx" filterProperty="Zseqnrtx">
+        <m:Label text="{i18n>LABEL_43004}" />
+        <template>
+          <m:Text text="{Zseqnrtx}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="150px" sortProperty="Zstattx" filterProperty="Zstattx">
+        <m:Label text="{i18n>LABEL_43009}" />
+        <template>
+          <m:Text text="{Zstattx}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="150px" visible="{= ${/employee/auth/AuthFiles} === 'X' }">
+        <m:Label text="{i18n>LABEL_43010}" />
+        <template>
+          <m:HBox width="100%" justifyContent="Center" alignItems="Center">
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload">
+              <core:customData>
+                <core:CustomData key="appno" value="{Appno1}" />
+              </core:customData>
+            </core:Icon>
+            <core:Icon src="sap-icon://upload-to-cloud" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" />
+          </m:HBox>
+        </template>
+      </Column>
+      <Column width="150px">
+        <m:Label text="{i18n>LABEL_43011}" />
+        <template>
+          <m:HBox width="100%" justifyContent="Center" alignItems="Center">
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload">
+              <core:customData>
+                <core:CustomData key="appno" value="{Appno2}" />
+              </core:customData>
+            </core:Icon>
+            <core:Icon src="sap-icon://upload-to-cloud" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" />
+          </m:HBox>
+        </template>
+      </Column>
+      <Column width="150px">
+        <m:Label text="{i18n>LABEL_43012}" />
+        <template>
+          <core:Icon src="sap-icon://comment" width="100%" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
+</core:FragmentDefinition>

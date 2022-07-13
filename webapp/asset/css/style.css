@@ -212,6 +212,7 @@ html[lang="en"] .portlet-p06 .portlet-header .sapIcon_Date {width:140px !importa
 .sapMBtn.portlet-btn.color-04 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(4) .sapMFlexItem {background-color:rgba(229, 169, 56, .1)}
 .sapMBtn.portlet-btn.color-05 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(5) .sapMFlexItem {background-color:rgba(13, 181, 150, .1)}
 .sapMBtn.portlet-btn.color-06 .sapMBtnDefault, .portlet-p07 .sapUiLayoutCSSGrid .sapUiLayoutCSSGridItem:nth-child(6) .sapMFlexItem {background-color:rgba(17, 128, 174, .1)}
+
 .portlet-p08 .sapMSegB,
 .portlet-p08 .sapMSegB .sapMSegBBtn {width:auto !important}
 .portlet-p08 .sapMSegB .sapMSegBBtn:nth-child(1) {min-width:60px}
@@ -843,8 +844,9 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiIcon[data-status="Z65"] {color:var(--BorderColorError) !important}
 .sapUiIcon[data-status="Z60"] {color:var(--BorderColorFocus) !important}
 
-.sapMText[data-number="posiNum"] {color: #0450fb !important;}
-.sapMText[data-number="negaNum"] {color: #ff384b !important;}
+.sapMText[data-number="posiNum"] {color:#0450fb !important}
+.sapMText[data-number="negaNum"] {color:#ff384b !important}
+.sapMText[data-talent-dev-incomplete="O"] {color:#fd5f58; font-weight:700}
 
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="Header"] {background-color:#e0e0e0}
 .sapUiLayoutCSSGrid .sapMFlexBox[data-style="None"] {background-color:#707070}
@@ -1913,12 +1915,6 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapUiSizeCompact .sapMBtn.portlet-btn {min-width:100%}
 .sapUiSizeCompact .sapMBtn.portlet-btn.blank .sapMBtnInner {border:1px dashed #dde1e6; background-color:#fff; font-size:12px}
 .sapMBtn.portlet-btn[class*=color] .sapMBtnInner {border:0}
-.sapMBtn.portlet-btn.color-01 .sapMBtnDefault {background-color:rgba(241, 123, 39, .1)}
-.sapMBtn.portlet-btn.color-02 .sapMBtnDefault {background-color:rgba(19, 184, 214, .1)}
-.sapMBtn.portlet-btn.color-03 .sapMBtnDefault {background-color:rgba(109, 91, 151, .1)}
-.sapMBtn.portlet-btn.color-04 .sapMBtnDefault {background-color:rgba(229, 169, 56, .1)}
-.sapMBtn.portlet-btn.color-05 .sapMBtnDefault {background-color:rgba(13, 181, 150, .1)}
-.sapMBtn.portlet-btn.color-06 .sapMBtnDefault {background-color:rgba(17, 128, 174, .1)}
 
 .portlet-suggested-menu .sapMBtnInner {border-radius:8px; font-weight:500}
 .sapUiSizeCompact .sapMBtn.portlet-suggested-menu {min-width:100%}
@@ -2186,6 +2182,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .color-06 {color:#2f88ff}
 .color-07 {color:#0c1f6b}
 .color-08 {color:#ff5252 !important}
+.color-09 {color:#007bff}
 .letter-spacing-xs {letter-spacing:-0.6px}
 .letter-spacing-sm {letter-spacing:-0.3px}
 .normal {font-weight:500}

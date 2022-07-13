@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <HBox class="form-bar" alignItems="Center">
+    <Label text="{i18n>LABEL_00237}" />
+    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" width="150px">
+      <core:Item text="{Pbtxt}" key="{Werks}" />
+    </ComboBox>
+    <Label text="{i18n>LABEL_00224}" />
+    <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" width="200px">
+      <core:Item text="{Orgtx}" key="{Orgeh}" />
+    </ComboBox>
+    <Label text="{i18n>LABEL_43002}" />
+    <Input value="{/searchConditions/Ename}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onEmployeeSearchOpen" width="150px" />
+    <Label text="{i18n>LABEL_43003}" />
+    <ComboBox items="{/entry/Gjahr}" selectedKey="{/searchConditions/Gjahr}" width="100px">
+      <core:Item text="{Gjahrtx}" key="{Gjahr}" />
+    </ComboBox>
+    <Label text="{i18n>LABEL_43004}" />
+    <ComboBox items="{/entry/Zseqnr}" selectedKey="{/searchConditions/Zseqnr}" width="100px">
+      <core:Item text="{Zseqnrtx}" key="{Zseqnr}" />
+    </ComboBox>
+    <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" busy="{/busy/Button}" busyIndicatorDelay="0" />
+  </HBox>
+</core:FragmentDefinition>
