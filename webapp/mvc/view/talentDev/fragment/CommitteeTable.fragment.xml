@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="committeeTable" class="row-link" rows="{/committee/listInfo/rows}" width="100%" visibleRowCount="{/committee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Committee}" noData="{i18n>MSG_00001}" cellClick=".onSelectCommitteeTableRow">
+    <rowSettingsTemplate>
+      <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
+    </rowSettingsTemplate>
+    <columns>
+      <Column width="150px" sortProperty="Name1" filterProperty="Name1">
+        <m:Label text="{i18n>LABEL_00237}" />
+        <template>
+          <m:Text text="{Name1}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="100px" sortProperty="Gjahr" filterProperty="Gjahr">
+        <m:Label text="{i18n>LABEL_43003}" />
+        <template>
+          <m:Text text="{Gjahr}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="100px" sortProperty="Zseqnrtx" filterProperty="Zseqnrtx">
+        <m:Label text="{i18n>LABEL_43004}" />
+        <template>
+          <m:Text text="{Zseqnrtx}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="auto" sortProperty="Ztitle">
+        <m:Label text="{i18n>LABEL_43005}" />
+        <template>
+          <m:Text text="{Ztitle}" textAlign="Left" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="150px" sortProperty="Mdate" filterProperty="Mdate">
+        <m:Label text="{i18n>LABEL_43006}" />
+        <template>
+          <m:Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="150px" sortProperty="Compcnttx" filterProperty="Compcnttx">
+        <m:Label text="{i18n>LABEL_43007}" />
+        <template>
+          <m:Text text="{Compcnttx}" textAlign="Center" width="100%" wrapping="false" class="color-09" />
+        </template>
+      </Column>
+      <Column width="150px" sortProperty="Incompcnttx" filterProperty="Incompcnttx">
+        <m:Label text="{i18n>LABEL_43008}" />
+        <template>
+          <m:Text text="{Incompcnttx}" textAlign="Center" width="100%" wrapping="false">
+            <m:customData>
+              <core:CustomData key="talent-dev-incomplete" value="{= ${Incompcnt} > 0 ? 'O' : '' }" writeToDom="true" />
+            </m:customData>
+          </m:Text>
+        </template>
+      </Column>
+      <Column width="150px" sortProperty="Zstattx" filterProperty="Zstattx">
+        <m:Label text="{i18n>LABEL_43009}" />
+        <template>
+          <m:Text text="{Zstattx}" textAlign="Center" width="100%" wrapping="false" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
+</core:FragmentDefinition>

@@ -351,6 +351,8 @@
         { "pattern": "m/worktimeStatus", "name": "m/WorktimeStatus", "target": "m/worktimeStatus" },
         { "pattern": "m/worktimeStatus/{oDataKey}", "name": "m/worktimeStatus-detail", "target": "m/worktimeStatusDetail" },
 
+        { "pattern": "m/talentDev", "name": "m/talentDev", "target": "m/talentDev" },
+
         { "pattern": "sampleComponents", "name": "sampleComponents", "target": "sampleComponents" },
         { "pattern": "sampleTimeline", "name": "sampleTimeline", "target": "sampleTimeline" },
         { "pattern": "sampleNinebox", "name": "sampleNinebox", "target": "sampleNinebox" },
@@ -586,6 +588,8 @@
 
         "m/worktimeStatus": { "viewId": "m_worktimeStatus", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatus" },
         "m/worktimeStatusDetail": { "viewId": "m_worktimeStatusDetail", "viewPath": "sap.ui.yesco.mvc.view.worktimeStatus", "viewName": "WorktimeStatusDetail" },
+
+        "m/talentDev": { "viewId": "m_talentDev", "viewPath": "sap.ui.yesco.mvc.view.talentDev", "viewName": "Main" },
 
         "sampleComponents": { "viewId": "sampleComponents", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Components", "title": "Components" },
         "sampleTimeline": { "viewId": "sampleTimeline", "viewPath": "sap.ui.yesco.mvc.view.zample", "viewName": "Timeline", "title": "Timeline" },

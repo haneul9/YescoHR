@@ -582,7 +582,7 @@ sap.ui.define(
                   if (head.Fieldname !== 'RESOL') {
                     oColumnTemplate
                       .addCustomData(new CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
-                      .attachPress(this.onPressTalentDevFileIcon.bind(this));
+                      .attachPress(this.onPressTalentDevFileDownload.bind(this));
                   }
                   oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);
                 } else {
@@ -1499,7 +1499,7 @@ sap.ui.define(
         this._pTalentDevDialog.close();
       },
 
-      async onPressTalentDevFileIcon(oEvent) {
+      async onPressTalentDevFileDownload(oEvent) {
         const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
         this.AttachFileAction.openFileLink(mFile.Fileuri);
       },
