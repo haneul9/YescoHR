@@ -24,31 +24,31 @@
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34003}"/>
         <table:template>
-          <Input maxLength="11" value="{ path: 'Drvkma', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".onChangeMileageFormat" />
+          <Input maxLength="11" value="{ path: 'Drvkma', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" liveChange=".onChangeMileageFormat" />
         </table:template>
       </table:Column>
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34004}"/>
         <table:template>
-          <Input maxLength="11" value="{ path: 'Drvkmb', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".onChangeMileageFormat"/>
+          <Input maxLength="11" value="{ path: 'Drvkmb', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" liveChange=".onChangeMileageFormat"/>
         </table:template>
       </table:Column>
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34007}"/>
         <table:template>
-          <Text text="{ path: 'Drvkm', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ path: 'Drvkm', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34008}"/>
         <table:template>
-          <Text text="{ path: 'Begkm', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ path: 'Begkm', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34010}"/>
         <table:template>
-          <Text text="{ path: 'Endkm', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ path: 'Endkm', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
         </table:template>
       </table:Column>
       <table:Column width="20%" sortProperty="Zbigo" filterProperty="Zbigo">

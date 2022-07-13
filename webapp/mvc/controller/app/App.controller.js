@@ -20,6 +20,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/Decimal',
     'sap/ui/yesco/mvc/model/type/Docno',
     'sap/ui/yesco/mvc/model/type/InputTime',
+    'sap/ui/yesco/mvc/model/type/Mileage',
     'sap/ui/yesco/mvc/model/type/Month',
     'sap/ui/yesco/mvc/model/type/MonthDate',
     'sap/ui/yesco/mvc/model/type/MonthDateWeekday',
