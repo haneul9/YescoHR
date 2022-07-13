@@ -44,15 +44,11 @@ sap.ui.define(
 
       _toString(oValue, sTargetType) {
         if (!oValue) {
-          return '';
+          return '0';
         }
 
         if (typeof oValue === 'number' || oValue instanceof Number || typeof oValue === 'string' || oValue instanceof String) {
           // return (oValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          if (_.toNumber(oValue.toString().replace(/,/g, '')) === 0) {
-            return '';
-          }
-
           return new Intl.NumberFormat('ko-KR').format(oValue.toString().replace(/,/g, ''));
         }
 
