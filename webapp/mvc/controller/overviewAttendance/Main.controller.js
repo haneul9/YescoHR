@@ -424,7 +424,7 @@ sap.ui.define(
           oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
           oViewModel.setProperty('/searchConditions/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
         } catch (oError) {
-          this.debug('Controller > m/overviewAttendance Main > onPressSearch Error', oError);
+          this.debug('Controller > m/overviewAttendance Main > onChangeWerks Error', oError);
 
           AppUtils.handleError(oError);
         }
