@@ -36,7 +36,8 @@ sap.ui.define(
         return {
           busy: false,
           search: {
-            Zyymm: moment().format('YYYYMM'),
+            Datum: moment().hours(9).toDate(),
+            Werks: '',
             Orgeh: '',
             Qtaty: '',
           },
@@ -66,7 +67,6 @@ sap.ui.define(
           list: [],
           dialog: {
             busy: false,
-            title: '',
             rowCount: 1,
             list: [],
           },
@@ -76,7 +76,7 @@ sap.ui.define(
       onBeforeShow() {
         this.TableUtils.adjustRowSpan({
           oTable: this.byId(this.TABLE_ID),
-          aColIndices: [0, 1],
+          aColIndices: [0, 1, 2, 3, 4],
           sTheadOrTbody: 'thead',
         });
       },
@@ -90,19 +90,24 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const [aDepartment, aLeaveType] = await Promise.all([
-            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'MssOrgehList', { Pernr: this.getAppointeeProperty('Pernr') }),
-            Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'QtatyCodeList'), //
+          const mAppointeeData = this.getAppointeeData();
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const [aPersaEntry, aOrgehEntry, aLeaveType] = await Promise.all([
+            Client.getEntitySet(oCommonModel, 'PersAreaList', { Pernr: mAppointeeData.Pernr }), //
+            Client.getEntitySet(oCommonModel, 'DashboardOrgList', { Werks: mAppointeeData.Werks, Pernr: mAppointeeData.Pernr }),
+            Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'QtatyCodeList'),
           ]);
 
-          oViewModel.setProperty('/entry/department', aDepartment ?? []);
+          oViewModel.setProperty('/entry/Werks', aPersaEntry);
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
           oViewModel.setProperty('/entry/leaveType', aLeaveType ?? []);
 
-          const sOrgeh = _.get(aDepartment, [0, 'Orgeh'], _.noop());
           const sQtaty = _.get(aLeaveType, [0, 'Zcode'], _.noop());
+          const sOrgeh = _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']);
 
-          oViewModel.setProperty('/search/Orgeh', sOrgeh);
           oViewModel.setProperty('/search/Qtaty', sQtaty);
+          oViewModel.setProperty('/search/Werks', mAppointeeData.Werks);
+          oViewModel.setProperty('/search/Orgeh', sOrgeh);
 
           if (!_.isEmpty(sOrgeh) && !_.isEmpty(sQtaty)) this.onPressSearch();
         } catch (oError) {
@@ -116,28 +121,9 @@ sap.ui.define(
 
       setTableData({ oViewModel, aRowData }) {
         const oTable = this.byId(this.TABLE_ID);
-        const sSumLabel = this.getBundleText('LABEL_00172'); // 합계
-        const mSumRow = this.TableUtils.generateSumRow({
-          aTableData: aRowData,
-          mSumField: { Orgtx: sSumLabel },
-          vCalcProps: ['Empcnt', ..._.times(12, (i) => `Inw${_.padStart(i + 1, 2, '0')}`)],
-        });
 
-        const iTotalLength = aRowData.length;
-        oViewModel.setProperty(
-          '/list',
-          _.isEmpty(mSumRow)
-            ? []
-            : [
-                ...aRowData,
-                _.forEach(mSumRow, (v, p) => {
-                  if (_.startsWith(p, 'Inw')) {
-                    _.set(mSumRow, p, _.chain(v).divide(iTotalLength).floor(2).value());
-                  }
-                }),
-              ]
-        );
-        oViewModel.setProperty('/listInfo/rowCount', aRowData.length + 1);
+        oViewModel.setProperty('/list', aRowData);
+        oViewModel.setProperty('/listInfo/rowCount', _.size(aRowData));
 
         setTimeout(() => {
           this.TableUtils.setColorColumn({ oTable, bHasSumRow: true, mColorMap: { 7: 'bgType02', 13: 'bgType02' } });
@@ -157,7 +143,7 @@ sap.ui.define(
 
             this.TableUtils.adjustRowSpan({
               oTable: this.byId(this.PERSONAL_TABLE_ID),
-              aColIndices: [0, 1, 2, 3, 4, 5, 6, 11],
+              aColIndices: [0, 1, 2, 3, 4, 5, 6, 7],
               sTheadOrTbody: 'thead',
             });
 
@@ -192,6 +178,25 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
+      async onChangeWerks() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const mAppointeeData = this.getAppointeeData();
+          const aOrgehEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'DashboardOrgList', {
+            Werks: oViewModel.getProperty('/search/Werks'),
+            Pernr: mAppointeeData.Pernr,
+          });
+
+          oViewModel.setProperty('/entry/Orgeh', aOrgehEntry);
+          oViewModel.setProperty('/search/Orgeh', _.some(aOrgehEntry, (o) => o.Orgeh === mAppointeeData.Orgeh) ? mAppointeeData.Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']));
+        } catch (oError) {
+          this.debug('Controller > leave App > onChangeWerks Error', oError);
+
+          AppUtils.handleError(oError);
+        }
+      },
+
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
@@ -265,32 +270,37 @@ sap.ui.define(
         this.pPersonalDialog.then((oDialog) => oDialog.close());
       },
 
+      onPressDialogRowEname(oEvent) {
+        const sHost = window.location.href.split('#')[0];
+        const mRowData = oEvent.getSource().getParent().getBindingContext().getObject();
+        const sPernr = mRowData.Pernr;
+        const dDatum = moment(mRowData.Datum);
+
+        if (!sPernr) return;
+
+        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${dDatum.year()}/${dDatum.month()}`, '_blank', 'width=1400,height=800');
+      },
+
       async onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const oControl = oEvent.getSource();
-        const mControlParam = oEvent.getParameters();
-        const sFldcd = oControl.getColumns()[mControlParam.columnIndex].data('field');
-        const mRowData = oControl.getRows()[mControlParam.rowIndex].getBindingContext().getObject();
-
-        if (mRowData.Sumrow || _.isEmpty(sFldcd)) return;
 
         try {
           oViewModel.setProperty('/dialog/busy', true);
 
+          const mSearch = oViewModel.getProperty('/search');
+          const mRowData = oEvent.getParameter('rowBindingContext').getObject();
+
           const aDetailRow = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), 'LeaveUseDetail', {
-            ..._.pick(mRowData, ['Zyymm', 'Orgeh', 'Qtaty']),
-            Fldcd: sFldcd,
+            ..._.omit(mSearch, 'Orgeh'),
+            Orgeh: mRowData.Orgeh,
           });
 
-          if (_.isEmpty(aDetailRow)) throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 조회할 수 없습니다.
+          if (_.isEmpty(aDetailRow)) throw new UI5Error({ message: this.getBundleText('MSG_00034') }); // 조회할 수 없습니다.
 
-          const aLeaveType = oViewModel.getProperty('/entry/leaveType');
-
-          oViewModel.setProperty('/dialog/title', _.find(aLeaveType, { Zcode: mRowData.Qtaty }).Ztext ?? '');
           oViewModel.setProperty('/dialog/rowCount', Math.min(6, aDetailRow.length || 1));
           oViewModel.setProperty(
             '/dialog/list',
-            _.map(aDetailRow, (o, i) => ({ Idx: i + 1, ...o }))
+            _.map(aDetailRow, (o, i) => ({ Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '', ...o }))
           );
 
           this.openPersonalDialog();
@@ -304,8 +314,15 @@ sap.ui.define(
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('leaveTable');
+        const oTable = this.byId(this.TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16021'); // {휴가부서별현황}_목록
+
+        this.TableUtils.export({ oTable, sFileName });
+      },
+
+      onPressPersonalExcelDownload() {
+        const oTable = this.byId(this.PERSONAL_TABLE_ID);
+        const sFileName = this.getBundleText('LABEL_00282', 'LABEL_16029'); // {개인별휴가사용현황}_목록
 
         this.TableUtils.export({ oTable, sFileName });
       },

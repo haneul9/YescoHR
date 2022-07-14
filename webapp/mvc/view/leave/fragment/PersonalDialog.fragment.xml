@@ -1,38 +1,48 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <m:Dialog title="{/dialog/title} {i18n>LABEL_16012}" contentWidth="1100px" contentHeight="380px">
+  <m:Dialog showHeader="false" contentWidth="1100px" contentHeight="455px">
     <m:content>
-      <Table id="leaveByPersonalTable" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}">
+      <Table id="leaveByPersonalTable" class="fixed-bottom-row-table" width="100%" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}">
+        <extension>
+          <m:HBox class="header-wrap" justifyContent="SpaceBetween">
+            <m:HBox class="header" alignItems="Center">
+              <m:Title level="H3" text="{i18n>LABEL_16029}" class="sapUiSmallMarginEnd" />
+            </m:HBox>
+            <m:HBox>
+              <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressPersonalExcelDownload" />
+            </m:HBox>
+          </m:HBox>
+        </extension>
         <columns>
-          <Column width="5%" filterProperty="Idx" sortProperty="Idx">
+          <Column width="4%">
             <multiLabels>
               <m:Label text="No."/>
               <m:Label text="No."/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Idx', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Idx', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="7%" filterProperty="Pernr" sortProperty="Pernr">
+          <Column width="18%">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_00209}"/>
-              <m:Label text="{i18n>LABEL_00209}"/>
+              <m:Label text="{i18n>LABEL_00224}"/>
+              <m:Label text="{i18n>LABEL_00224}"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
+              <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="7%" filterProperty="Ename" sortProperty="Ename">
+          <Column width="8%">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00210}"/>
               <m:Label text="{i18n>LABEL_00210}"/>
             </multiLabels>
             <template>
-              <m:Text text="{Ename}" width="100%" textAlign="Center" />
+              <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressDialogRowEname" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
+          <Column width="8%">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00215}"/>
               <m:Label text="{i18n>LABEL_00215}"/>
@@ -41,7 +51,7 @@
               <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
+          <Column width="8%">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00217}"/>
               <m:Label text="{i18n>LABEL_00217}"/>
@@ -50,67 +60,49 @@
               <m:Text text="{Zzjikcht}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column filterProperty="Orgtx" sortProperty="Orgtx">
+          <Column width="auto">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_00227}"/>
-              <m:Label text="{i18n>LABEL_00227}"/>
+              <m:Label text="{i18n>LABEL_16023}"/>
+              <m:Label text="{i18n>LABEL_16023}"/>
             </multiLabels>
             <template>
-              <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Crecnt" sortProperty="Crecnt">
+          <Column width="auto">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_16013}"/>
-              <m:Label text="{i18n>LABEL_16013}"/>
+              <m:Label text="{i18n>LABEL_16024}"/>
+              <m:Label text="{i18n>LABEL_16024}"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Crecnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Usecnt1', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Usecnt1" sortProperty="Usecnt1" headerSpan="2">
+          <Column width="auto">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_16014}"/>
-              <m:Label text="{i18n>LABEL_16017}"/>
+              <m:Label text="{i18n>LABEL_16025}"/>
+              <m:Label text="{i18n>LABEL_16025}"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Usecnt1', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Userte1', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Userte1" sortProperty="Userte1">
+          <Column width="auto" headerSpan="2">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_16014}"/>
-              <m:Label text="&#37;"/>
+              <m:Label text="{i18n>LABEL_16026}"/>
+              <m:Label text="{i18n>LABEL_16027}"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Userte1', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Usecnt2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%" filterProperty="Usecnt2" sortProperty="Usecnt2" headerSpan="2">
+          <Column width="auto">
             <multiLabels>
-              <m:Label text="{i18n>LABEL_16015}"/>
-              <m:Label text="{i18n>LABEL_16017}"/>
+              <m:Label text="{i18n>LABEL_16026}"/>
+              <m:Label text="{i18n>LABEL_16028}"/>
             </multiLabels>
             <template>
-              <m:Text text="{ path: 'Usecnt2', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
-            </template>
-          </Column>
-          <Column width="8%" filterProperty="Userte2" sortProperty="Userte2">
-            <multiLabels>
-              <m:Label text="{i18n>LABEL_16015}"/>
-              <m:Label text="&#37;"/>
-            </multiLabels>
-            <template>
-              <m:Text text="{ path: 'Userte2', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" />
-            </template>
-          </Column>
-          <Column width="8%" filterProperty="Balcnt" sortProperty="Balcnt">
-            <multiLabels>
-              <m:Label text="{i18n>LABEL_16016}"/>
-              <m:Label text="{i18n>LABEL_16016}"/>
-            </multiLabels>
-            <template>
-              <m:Text text="{ path: 'Balcnt', type: 'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" />
+              <m:Text text="{ path: 'Userte2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
         </columns>
