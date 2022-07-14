@@ -2406,3 +2406,4 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper {vertical-align:baseline}
 .emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input {padding:0 0 0 11px !important}
 .emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input[readonly] {padding:0 0 0 0 !important}
+.emp-profile-talent-dev .font-bold::before {line-height:35px; vertical-align:middle; font-weight:700}

@@ -13,7 +13,7 @@
         </HBox>
       </HBox>
     </VBox>
-    <VBox class="contents">
+    <VBox class="contents emp-profile-talent-dev">
       <HBox class="vCardBox" height="80px">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.SearchConditions" type="XML" />
       </HBox>

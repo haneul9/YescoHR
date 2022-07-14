@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileDataProvider',
     'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/talentDev/TalentDevDialogHandler',
@@ -14,6 +15,7 @@ sap.ui.define(
     AppUtils,
     FileDataProvider,
     Client,
+    ServiceManager,
     ServiceNames,
     BaseController,
     TalentDevDialogHandler
@@ -130,6 +132,9 @@ sap.ui.define(
           this.setComboEntry(oViewModel, '/entry/Orgeh', aOrgehEntry);
           this.setComboEntry(oViewModel, '/entry/Gjahr', aGjahrEntry);
           this.setComboEntry(oViewModel, '/entry/Zseqnr', aZseqnrEntry);
+
+          // File upload URL
+          oViewModel.setProperty('/uploadUrl', `${ServiceManager.getServiceUrl(ServiceNames.COMMON)}/FileUploadSet`);
         } catch (oError) {
           this.debug('Controller > talentDev > initializeSearchConditions Error', oError);
 
