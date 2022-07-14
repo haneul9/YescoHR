@@ -65,12 +65,12 @@
               <u:xhrSettings>
               </u:xhrSettings>
             </u:FileUploader> -->
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload" size="22px" hoverColor="#007bff" class="font-bold">
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno1}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" size="22px" hoverColor="#007bff" class="font-bold" />
+            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
           </m:HBox>
         </template>
       </Column>
@@ -78,19 +78,19 @@
         <m:Label text="{i18n>LABEL_43011}" />
         <template>
           <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" size="22px" hoverColor="#007bff" class="font-bold">
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno2}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" size="22px" hoverColor="#007bff" class="font-bold" />
+            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
           </m:HBox>
         </template>
       </Column>
       <Column width="150px">
         <m:Label text="{i18n>LABEL_43012}" />
         <template>
-          <core:Icon src="sap-icon://comment" size="22px" width="100%" visible="{= ${Desc} === 'X' }" />
+          <core:Icon src="sap-icon://comment" size="20px" width="100%" visible="{= ${Desc} === 'X' }" />
         </template>
       </Column>
     </columns>
