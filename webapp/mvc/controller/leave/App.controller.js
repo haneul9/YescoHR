@@ -130,27 +130,26 @@ sap.ui.define(
         }, 100);
       },
 
-      openPersonalDialog() {
+      async openPersonalDialog() {
         const oView = this.getView();
 
         if (!this.pPersonalDialog) {
-          this.pPersonalDialog = Fragment.load({
+          this.pPersonalDialog = await Fragment.load({
             id: oView.getId(),
             name: this.PERSONAL_DIALOG_ID,
             controller: this,
-          }).then((oDialog) => {
-            oView.addDependent(oDialog);
+          });
 
-            this.TableUtils.adjustRowSpan({
-              oTable: this.byId(this.PERSONAL_TABLE_ID),
-              aColIndices: [0, 1, 2, 3, 4, 5, 6, 7],
-              sTheadOrTbody: 'thead',
-            });
+          oView.addDependent(this.pPersonalDialog);
 
-            return oDialog;
+          this.TableUtils.adjustRowSpan({
+            oTable: this.byId(this.PERSONAL_TABLE_ID),
+            aColIndices: [0, 1, 2, 3, 4, 5, 6, 7],
+            sTheadOrTbody: 'thead',
           });
         }
-        this.pPersonalDialog.then((oDialog) => oDialog.open());
+
+        this.pPersonalDialog.open();
       },
 
       buildChart() {
@@ -204,6 +203,9 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const mFilters = oViewModel.getProperty('/search');
+
+          _.set(mFilters, 'Datum', this.DateUtils.parse(mFilters.Datum));
+
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
           const [aSummary, aRowData] = await Promise.all([
             fCurried('LeaveUseHistory', { ...mFilters }), //
@@ -267,7 +269,9 @@ sap.ui.define(
       },
 
       onPressPersonalDialogClose() {
-        this.pPersonalDialog.then((oDialog) => oDialog.close());
+        this.pPersonalDialog.close();
+        this.pPersonalDialog.destroy();
+        this.pPersonalDialog = null;
       },
 
       onPressDialogRowEname(oEvent) {
@@ -297,7 +301,7 @@ sap.ui.define(
 
           if (_.isEmpty(aDetailRow)) throw new UI5Error({ message: this.getBundleText('MSG_00034') }); // 조회할 수 없습니다.
 
-          oViewModel.setProperty('/dialog/rowCount', Math.min(6, aDetailRow.length || 1));
+          oViewModel.setProperty('/dialog/rowCount', Math.min(10, aDetailRow.length || 1));
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailRow, (o, i) => ({ Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '', ...o }))
