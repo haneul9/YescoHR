@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <m:Dialog showHeader="false" contentWidth="1100px" contentHeight="512px">
+  <m:Dialog showHeader="false" contentWidth="1100px">
     <m:content>
       <Table id="leaveByPersonalTable" class="fixed-bottom-row-table" width="100%" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}">
         <extension>

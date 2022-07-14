@@ -130,27 +130,26 @@ sap.ui.define(
         }, 100);
       },
 
-      openPersonalDialog() {
+      async openPersonalDialog() {
         const oView = this.getView();
 
         if (!this.pPersonalDialog) {
-          this.pPersonalDialog = Fragment.load({
+          this.pPersonalDialog = await Fragment.load({
             id: oView.getId(),
             name: this.PERSONAL_DIALOG_ID,
             controller: this,
-          }).then((oDialog) => {
-            oView.addDependent(oDialog);
+          });
 
-            this.TableUtils.adjustRowSpan({
-              oTable: this.byId(this.PERSONAL_TABLE_ID),
-              aColIndices: [0, 1, 2, 3, 4, 5, 6, 7],
-              sTheadOrTbody: 'thead',
-            });
+          oView.addDependent(this.pPersonalDialog);
 
-            return oDialog;
+          this.TableUtils.adjustRowSpan({
+            oTable: this.byId(this.PERSONAL_TABLE_ID),
+            aColIndices: [0, 1, 2, 3, 4, 5, 6, 7],
+            sTheadOrTbody: 'thead',
           });
         }
-        this.pPersonalDialog.then((oDialog) => oDialog.open());
+
+        this.pPersonalDialog.open();
       },
 
       buildChart() {
@@ -270,7 +269,9 @@ sap.ui.define(
       },
 
       onPressPersonalDialogClose() {
-        this.pPersonalDialog.then((oDialog) => oDialog.close());
+        this.pPersonalDialog.close();
+        this.pPersonalDialog.destroy();
+        this.pPersonalDialog = null;
       },
 
       onPressDialogRowEname(oEvent) {
