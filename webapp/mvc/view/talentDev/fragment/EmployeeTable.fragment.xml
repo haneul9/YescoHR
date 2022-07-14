@@ -53,12 +53,12 @@
         <m:Label text="{i18n>LABEL_43010}" />
         <template>
           <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload">
+            <core:Icon src="sap-icon://attachment" size="24px" hoverColor="#007bff" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno1}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://upload-to-cloud" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" />
+            <core:Icon src="sap-icon://add-document" size="24px" hoverColor="#007bff" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" />
           </m:HBox>
         </template>
       </Column>
@@ -66,19 +66,19 @@
         <m:Label text="{i18n>LABEL_43011}" />
         <template>
           <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload">
+            <core:Icon src="sap-icon://attachment" size="24px" hoverColor="#007bff" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno2}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://upload-to-cloud" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" />
+            <core:Icon src="sap-icon://add-document" size="24px" hoverColor="#007bff" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" />
           </m:HBox>
         </template>
       </Column>
       <Column width="150px">
         <m:Label text="{i18n>LABEL_43012}" />
         <template>
-          <core:Icon src="sap-icon://comment" width="100%" />
+          <core:Icon src="sap-icon://comment" size="24px" width="100%" visible="{= ${Desc} === 'X' }" />
         </template>
       </Column>
     </columns>

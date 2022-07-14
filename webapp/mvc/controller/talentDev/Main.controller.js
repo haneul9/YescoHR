@@ -116,7 +116,7 @@ sap.ui.define(
             Client.getEntitySet(oTalentModel, 'TalentDevAuth'),
           ]);
 
-          oViewModel.setProperty('/employee/auth', mAuth);
+          oViewModel.setProperty('/employee/auth', _.chain(mAuth).omit('__metadata').value());
           oViewModel.setProperty('/searchConditions', {
             Werks: sParamWerks,
             Orgeh: _.some(aOrgehEntry, (o) => o.Orgeh === Orgeh) ? Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']),
@@ -179,17 +179,22 @@ sap.ui.define(
           const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', mPayload);
 
           if (Mode === '1') {
-            const aCommitteeList = _.map(aData.TalentDevCommitteeSet.results, (o) => _.chain(o).omit('__metadata').value());
+            const aCommitteeList = _.map(aData.TalentDevCommitteeSet.results, (o) =>
+              _.chain(o)
+                .omit('__metadata')
+                .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
+                .value()
+            );
             const mCommitteeCount = _.chain(aCommitteeList)
               .map('Zstat')
               .countBy()
-              .defaults({ ['']: 0, ['1']: 0, ['2']: 0 })
+              .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
               .value();
             oViewModel.setProperty('/committee/listInfo', {
               rows: aCommitteeList,
               rowCount: Math.min(Math.max(aCommitteeList.length, 1), 3),
               totalCount: aCommitteeList.length,
-              readyCount: mCommitteeCount[''],
+              readyCount: mCommitteeCount['0'],
               progressCount: mCommitteeCount['1'],
               completeCount: mCommitteeCount['2'],
             });
@@ -197,18 +202,23 @@ sap.ui.define(
             this.mSelectedCommitteeData = aCommitteeList[0] || {};
           }
 
-          const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) => _.chain(o).omit('__metadata').value());
+          const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) =>
+            _.chain(o)
+              .omit('__metadata')
+              .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
+              .value()
+          );
           const mEmployeeCount = _.chain(aEmployeeList)
             .map('Zstat')
             .countBy()
-            .defaults({ ['']: 0, ['1']: 0, ['2']: 0 })
+            .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
             .value();
           const sInfoMessage = Mode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
           oViewModel.setProperty('/employee/listInfo', {
             rows: aEmployeeList,
             rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
             totalCount: aEmployeeList.length,
-            readyCount: mEmployeeCount[''],
+            readyCount: mEmployeeCount['0'],
             progressCount: mEmployeeCount['1'],
             completeCount: mEmployeeCount['2'],
             infoMessage: sInfoMessage,
@@ -312,7 +322,7 @@ sap.ui.define(
           const AuthChange = this.getViewModel().getProperty('/employee/auth/AuthChange');
           this.oTalentDevDialogHandler //
             .setCallback(async () => {
-              await this.retrieve(this.mSelectedCommitteeData);
+              await this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
             })
             .openDialog({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange });
         });

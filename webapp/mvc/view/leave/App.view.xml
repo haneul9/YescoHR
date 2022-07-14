@@ -16,13 +16,17 @@
     <VBox class="contents">
       <VBox class="vCardBox">
         <HBox class="form-bar" alignItems="Center">
-          <Label text="{i18n>LABEL_00328}" />
-          <DatePicker value="{/search/Zyymm}" displayFormat="yyyy.MM" valueFormat="yyyyMM" />
-          <Label text="{i18n>LABEL_00227}" />
-          <ComboBox selectedKey="{/search/Orgeh}" items="{/entry/department}">
+          <Label text="{i18n>LABEL_28001}" />
+          <custom:DatePicker dateValue="{ path: '/search/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" />
+          <Label text="{i18n>LABEL_00237}" />
+          <ComboBox items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+            <core:Item key="{Werks}" text="{Pbtxt}" />
+          </ComboBox>
+          <Label text="{i18n>LABEL_00224}" />
+          <ComboBox items="{/entry/Orgeh}" selectedKey="{/search/Orgeh}">
             <core:Item key="{Orgeh}" text="{Orgtx}" />
           </ComboBox>
-          <Label text="{i18n>LABEL_16001}" />
+          <Label text="{i18n>LABEL_32002}" />
           <ComboBox selectedKey="{/search/Qtaty}" items="{/entry/leaveType}">
             <core:Item key="{Zcode}" text="{Ztext}" />
           </ComboBox>
