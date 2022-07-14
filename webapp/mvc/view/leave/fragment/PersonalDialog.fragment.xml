@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core">
   <m:Dialog showHeader="false" contentWidth="1100px">
     <m:content>
-      <Table id="leaveByPersonalTable" class="fixed-bottom-row-table" width="100%" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}">
+      <Table id="leaveByPersonalTable" class="fixed-bottom-row-table" width="100%" selectionMode="None" fixedBottomRowCount="1" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" sort=".onDetailTableSort" filter=".onDetailTableFilter">
         <extension>
           <m:HBox class="header-wrap" justifyContent="SpaceBetween">
             <m:HBox class="header" alignItems="Center">
@@ -24,7 +24,7 @@
               <m:Text text="{ path: 'Idx', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="18%">
+          <Column width="18%" sortProperty="OrgtxSort" filterProperty="OrgtxFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00224}"/>
               <m:Label text="{i18n>LABEL_00224}"/>
@@ -33,7 +33,7 @@
               <m:Text text="{Orgtx}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%">
+          <Column width="8%" sortProperty="EnameSort" filterProperty="EnameFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00210}"/>
               <m:Label text="{i18n>LABEL_00210}"/>
@@ -42,7 +42,7 @@
               <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressDialogRowEname" />
             </template>
           </Column>
-          <Column width="8%">
+          <Column width="8%" sortProperty="ZzjikgbtSort" filterProperty="ZzjikgbtFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00215}"/>
               <m:Label text="{i18n>LABEL_00215}"/>
@@ -51,7 +51,7 @@
               <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="8%">
+          <Column width="8%" sortProperty="ZzjikchtSort" filterProperty="ZzjikchtFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00217}"/>
               <m:Label text="{i18n>LABEL_00217}"/>
@@ -60,7 +60,7 @@
               <m:Text text="{Zzjikcht}" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="auto">
+          <Column width="auto" sortProperty="CrecntSort" filterProperty="CrecntFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_16023}"/>
               <m:Label text="{i18n>LABEL_16023}"/>
@@ -69,7 +69,7 @@
               <m:Text text="{ path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="auto">
+          <Column width="auto" sortProperty="Usecnt1Sort" filterProperty="Usecnt1Filter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_16024}"/>
               <m:Label text="{i18n>LABEL_16024}"/>
@@ -78,7 +78,7 @@
               <m:Text text="{ path: 'Usecnt1', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="auto">
+          <Column width="auto" sortProperty="Userte1Sort" filterProperty="Userte1Filter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_16025}"/>
               <m:Label text="{i18n>LABEL_16025}"/>
@@ -87,7 +87,7 @@
               <m:Text text="{ path: 'Userte1', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="auto" headerSpan="2">
+          <Column width="auto" sortProperty="Usecnt2Sort" filterProperty="Usecnt2Filter" headerSpan="2">
             <multiLabels>
               <m:Label text="{i18n>LABEL_16026}"/>
               <m:Label text="{i18n>LABEL_16027}"/>
@@ -96,7 +96,7 @@
               <m:Text text="{ path: 'Usecnt2', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" />
             </template>
           </Column>
-          <Column width="auto">
+          <Column width="auto" sortProperty="Userte2Sort" filterProperty="Userte2Filter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_16026}"/>
               <m:Label text="{i18n>LABEL_16028}"/>
