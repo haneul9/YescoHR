@@ -52,7 +52,7 @@
     </VBox>
     <Label text="{i18n>LABEL_41005}" />
     <HBox>
-        <custom:DatePicker width="100%" minDate="{/dialog/grid/Datum}" dateValue="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" visible="{= !${/ZappStatAl} }" />
+        <custom:DatePicker width="100%" dateValue="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" visible="{= !${/ZappStatAl} }" />
         <Text text="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" visible="{= ${/ZappStatAl} ? true : false }" />
     </HBox>
   </grid:CSSGrid>
