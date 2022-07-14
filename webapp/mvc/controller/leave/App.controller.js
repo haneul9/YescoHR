@@ -300,7 +300,7 @@ sap.ui.define(
 
           if (_.isEmpty(aDetailRow)) throw new UI5Error({ message: this.getBundleText('MSG_00034') }); // 조회할 수 없습니다.
 
-          oViewModel.setProperty('/dialog/rowCount', Math.min(6, aDetailRow.length || 1));
+          oViewModel.setProperty('/dialog/rowCount', Math.min(10, aDetailRow.length || 1));
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailRow, (o, i) => ({ Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '', ...o }))
