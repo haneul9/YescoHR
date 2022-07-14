@@ -204,6 +204,9 @@ sap.ui.define(
           oViewModel.setProperty('/busy', true);
 
           const mFilters = oViewModel.getProperty('/search');
+
+          _.set(mFilters, 'Datum', this.DateUtils.parse(mFilters.Datum));
+
           const fCurried = Client.getEntitySet(this.getModel(ServiceNames.WORKTIME));
           const [aSummary, aRowData] = await Promise.all([
             fCurried('LeaveUseHistory', { ...mFilters }), //
