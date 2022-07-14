@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:unified="sap.ui.unified">
+  xmlns:u="sap.ui.unified">
   <Table id="employeeTable" class="row-link" rows="{/employee/listInfo/rows}" width="100%" visibleRowCount="{/employee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Employee}" noData="{i18n>MSG_00001}" cellClick=".onSelectEmployeeTableRow">
     <rowSettingsTemplate>
       <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
@@ -54,20 +54,23 @@
         <m:Label text="{i18n>LABEL_43010}" />
         <template>
           <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <!-- <unified:FileUploader buttonOnly="true" fileType="" icon="sap-icon://add-document" iconOnly="true" maximumFileSize="" name="" sendXHR="true" style="Transparent" uploadOnChange="true" uploadUrl="{/uploadUrl}">
-              <unified:headerParameters>
-              </unified:headerParameters>
-              <unified:parameters>
-              </unified:parameters>
-              <unified:xhrSettings>
-              </unified:xhrSettings>
-            </unified:FileUploader> -->
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload" size="22px" hoverColor="#007bff" class="font-bold">
+            <!-- <u:FileUploader uploadOnChange="true" uploadUrl="{/uploadUrl}" icon="sap-icon://add-document" iconOnly="true" buttonOnly="true" sendXHR="true" style="Transparent" fileType="ppt,pptx,doc,docx,xls,xlsx,jpg,jpeg,bmp,gif,png,txt,pdf">
+              <u:headerParameters>
+                <u:FileUploaderParameter name="" value="">
+                    
+                </u:FileUploaderParameter>
+              </u:headerParameters>
+              <u:parameters>
+              </u:parameters>
+              <u:xhrSettings>
+              </u:xhrSettings>
+            </u:FileUploader> -->
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno1}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" size="22px" hoverColor="#007bff" class="font-bold" />
+            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
           </m:HBox>
         </template>
       </Column>
@@ -75,19 +78,19 @@
         <m:Label text="{i18n>LABEL_43011}" />
         <template>
           <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" size="22px" hoverColor="#007bff" class="font-bold">
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
               <core:customData>
                 <core:CustomData key="appno" value="{Appno2}" />
               </core:customData>
             </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" size="22px" hoverColor="#007bff" class="font-bold" />
+            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
           </m:HBox>
         </template>
       </Column>
       <Column width="150px">
         <m:Label text="{i18n>LABEL_43012}" />
         <template>
-          <core:Icon src="sap-icon://comment" size="22px" width="100%" visible="{= ${Desc} === 'X' }" />
+          <core:Icon src="sap-icon://comment" size="20px" width="100%" visible="{= ${Desc} === 'X' }" />
         </template>
       </Column>
     </columns>

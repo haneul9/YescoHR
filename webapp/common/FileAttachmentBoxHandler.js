@@ -236,7 +236,7 @@ sap.ui.define(
             resolve();
           }
 
-          const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', AppUtils.getAppComponent());
+          const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV');
           const oUploadModel = new ODataModel(sServiceUrl, { json: true, loadMetadataAsync: true, refreshAfterChange: false });
           const sUploadUrl = `${sServiceUrl}/FileUploadSet/`;
           const sApptp = oBoxModel.getProperty('/settings/apptp');

@@ -338,7 +338,31 @@ sap.ui.define(
         this.AttachFileAction.openFileLink(mFile.Fileuri);
       },
 
-      onPressFileUpload() {},
+      onPressFileUpload(oEvent) {
+        const oFileUploader = oEvent.getSource();
+        const [mSelectedFile] = oEvent.getParameter('files'); // FileList object(Array가 아님)
+
+        if (!mSelectedFile) {
+          return;
+        }
+
+        const mFile = {
+          Zfilename: mSelectedFile.name,
+          Type: mSelectedFile.type,
+          Zbinkey: String(parseInt(Math.random() * 100000000000000)),
+          Seqnr: 1,
+        };
+
+        oFileUploader.clear();
+        oFileUploader.setValue('');
+
+        // slug: [oEvent.getSource().data('appno'), 9095, encodeURI(mFile.Zfilename)].join('|');
+        // Zfilename, type
+        // file.Zfilename = file.name;
+        // file.Type = file.type;
+        // file.Zbinkey = String(parseInt(Math.random() * 100000000000000));
+        // file.Seqnr = 1;
+      },
 
       onPressFileDelete() {},
 

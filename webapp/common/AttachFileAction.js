@@ -315,7 +315,7 @@ sap.ui.define(
        */
       uploadFile(Appno, Type, sId) {
         const sIdPath = !!sId ? `${sId}--` : '';
-        const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV', this.getOwnerComponent());
+        const sServiceUrl = ServiceManager.getServiceUrl('ZHR_COMMON_SRV');
         const oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, undefined, undefined, undefined, undefined, undefined, false);
         const Attachbox = this.byId(`${sIdPath}ATTACHBOX`);
         const JSonModel = !!sId ? Attachbox.getModel(sId) : Attachbox.getModel();
