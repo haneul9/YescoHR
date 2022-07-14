@@ -673,7 +673,7 @@ sap.ui.define(
         AppUtils.setAppBusy(false);
       },
 
-      openTalentDevDialog({ Pernr, Value01, Value06 }) {
+      openTalentDevDialog({ Pernr, Value01, Value06, Value07 }) {
         const oView = this.getView();
 
         AppUtils.setAppBusy(true);
@@ -703,7 +703,7 @@ sap.ui.define(
 
           setTimeout(async () => {
             const oModel = this.getModel(ServiceNames.TALENT);
-            const mFilters = { Pernr, Gjahr: Value01, Mdate: moment(Value06).hour(9).toDate() };
+            const mFilters = { Pernr, Gjahr: Value01, Mdate: moment(Value06).hour(9).toDate(), Zseqnr: Value07 };
             const aTalentDevData = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
             this.getViewModel('talentDev').setProperty('/', aTalentDevData[0]);
             AppUtils.setAppBusy(false);
