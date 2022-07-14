@@ -45,7 +45,7 @@
           </HBox>
           <Label text="{i18n>LABEL_41005}"/>
           <HBox>
-            <custom:DatePicker width="260px" minDate="{/dialog/grid/Datum}" dateValue="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+            <custom:DatePicker width="260px" dateValue="{ path: '/dialog/grid/Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
           </HBox>
         </grid:CSSGrid>
       </VBox>
