@@ -14,9 +14,11 @@ sap.ui.define(
      */
     return Float.extend('sap.ui.yesco.mvc.model.type.Decimal', {
       formatValue() {
-        const dValue = Float.prototype.formatValue.apply(this, arguments);
+        let dValue = Float.prototype.formatValue.apply(this, arguments);
 
-        return _.isEqual(_.toNumber(dValue), 0) ? '' : _.chain(dValue).toNumber().toString().value();
+        if (dValue) dValue = dValue.replace(/,/g, '');
+
+        return _.isEqual(_.toNumber(dValue), 0) ? '' : new Intl.NumberFormat('ko-KR').format(_.chain(dValue).toNumber().toString().value());
       },
     });
   }
