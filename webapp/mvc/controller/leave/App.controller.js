@@ -285,6 +285,31 @@ sap.ui.define(
         window.open(`${sHost}#/individualWorkStateView/${sPernr}/${dDatum.year()}/${dDatum.month()}`, '_blank', 'width=1400,height=800');
       },
 
+      onDetailTableSort(oEvent) {
+        const oViewModel = this.getViewModel();
+        const aDialogList = oViewModel.getProperty('/dialog/list');
+        const sSortOrder = oEvent.getParameter('sortOrder'); // "Descending", "Ascending"
+        const sSortProperty = oEvent.getParameter('column').getProperty('sortProperty');
+
+        _.chain(aDialogList)
+          .find({ Orgeh: '99999999' })
+          .set(sSortProperty, sSortOrder === 'Descending' ? 0 : 'Z')
+          .commit();
+
+        oViewModel.refresh(true);
+      },
+
+      onDetailTableFilter(oEvent) {
+        const oViewModel = this.getViewModel();
+        const aDialogList = oViewModel.getProperty('/dialog/list');
+        const sFilterValue = oEvent.getParameter('value');
+        const sFilterProperty = oEvent.getParameter('column').getProperty('filterProperty');
+
+        _.chain(aDialogList).find({ Orgeh: '99999999' }).set(sFilterProperty, sFilterValue).commit();
+
+        oViewModel.refresh(true);
+      },
+
       async onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
 
@@ -304,7 +329,28 @@ sap.ui.define(
           oViewModel.setProperty('/dialog/rowCount', Math.min(10, aDetailRow.length || 1));
           oViewModel.setProperty(
             '/dialog/list',
-            _.map(aDetailRow, (o, i) => ({ Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '', ...o }))
+            _.map(aDetailRow, (o, i) => ({
+              ...o,
+              Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '',
+              OrgtxSort: o.Orgtx,
+              OrgtxFilter: o.Orgtx,
+              EnameSort: o.Ename,
+              EnameFilter: o.Ename,
+              ZzjikgbtSort: o.Zzjikgbt,
+              ZzjikgbtFilter: o.Zzjikgbt,
+              ZzjikchtSort: o.Zzjikcht,
+              ZzjikchtFilter: o.Zzjikcht,
+              CrecntSort: o.Crecnt === '0.0' ? '0.01' : o.Crecnt,
+              CrecntFilter: o.Crecnt,
+              Usecnt1Sort: o.Usecnt1 === '0.0' ? '0.01' : o.Usecnt1,
+              Usecnt1Filter: o.Usecnt1,
+              Userte1Sort: o.Userte1 === '0.0' ? '0.01' : o.Userte1,
+              Userte1Filter: o.Userte1,
+              Usecnt2Sort: o.Usecnt2 === '0.0' ? '0.01' : o.Usecnt2,
+              Usecnt2Filter: o.Usecnt2,
+              Userte2Sort: o.Userte2 === '0.0' ? '0.01' : o.Userte2,
+              Userte2Filter: o.Userte2,
+            }))
           );
 
           this.openPersonalDialog();
