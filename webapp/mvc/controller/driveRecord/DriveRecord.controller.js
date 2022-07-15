@@ -80,11 +80,12 @@ sap.ui.define(
 
       onChangeMileageFormat(oEvent) {
         const oEventSource = oEvent.getSource();
-        const sPath = oEventSource.getBinding('value').getPath();
+        const oValueBinding = oEventSource.getBinding('value');
+        const sPath = `${oValueBinding.getContext().getPath()}/${oValueBinding.getPath()}`;
         const sValue = oEvent.getParameter('value').trim().replace(/[^\d]/g, '');
 
         oEventSource.setValue(this.TextUtils.toCurrency(sValue));
-        oEventSource.getModel().setProperty(sPath, sValue);
+        oEventSource.getModel().setProperty(sPath, sValue || 0);
       },
 
       onPressSave() {
