@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:u="sap.ui.unified">
+  <HBox class="file-updown-icon-group">
+    <u:FileUploader visible="{Visible/Upload}" uploadUrl="{Request/UploadUrl}" fileType="{Request/FileTypes}" change=".onUploaderChange" typeMissmatch=".onTypeMissmatch" uploadComplete=".onUploadComplete" tooltip="{i18n>LABEL_00243}" icon="sap-icon://add-document" iconOnly="true" buttonOnly="true" sendXHR="true" useMultipart="false" style="Transparent" width="100%">
+      <u:headerParameters>
+        <u:FileUploaderParameter name="x-csrf-token" value="{Request/CsrfToken}" />
+        <u:FileUploaderParameter name="slug" value="{Request/Appno}|{Request/Zworktyp}|{Request/EncodedFilename}" />
+        <u:FileUploaderParameter name="Accept" value="application/json" />
+      </u:headerParameters>
+      <u:parameters>
+        <u:FileUploaderParameter name="Zfilename" value="{Request/Zfilename}" />
+        <u:FileUploaderParameter name="Type" value="{Request/Type}" />
+        <u:FileUploaderParameter name="Zbinkey" value="{Request/Zbinkey}" />
+        <u:FileUploaderParameter name="Seqnr" value="1" />
+      </u:parameters>
+    </u:FileUploader>
+    <core:Icon src="sap-icon://attachment" visible="{Visible/Download}" press=".onPressFileDownload" tooltip="{i18n>LABEL_00244}" hoverColor="#007bff" />
+    <core:Icon src="sap-icon://delete" visible="{Visible/Remove}" press=".onPressFileRemove" tooltip="{i18n>LABEL_00110}" color="#fd5f58" />
+  </HBox>
+</core:FragmentDefinition>

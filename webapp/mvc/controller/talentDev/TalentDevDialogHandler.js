@@ -75,28 +75,76 @@ sap.ui.define(
           oView.addDependent(this.oDialog);
         }
 
-        setTimeout(async () => {
-          try {
-            const [mPopupData] = await Client.getEntitySet(this.oController.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Pernr, Gjahr, Mdate, Zseqnr });
-            const mOriginal = {
-              ..._.chain(mPopupData)
-                .omit('__metadata')
-                .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
-                .set('Completed', mPopupData.Zstat === '2')
-                .value(),
-              FileupChk,
-              AuthChange,
-            };
-            this.oDialogModel.setProperty('/Original', mOriginal);
-            this.oDialogModel.setProperty('/Detail', { ...mOriginal });
-            this.oDialog.open();
-          } catch (oError) {
-            AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > openDialog Error', oError);
-            AppUtils.handleError(oError);
-          } finally {
-            this.setBusy(false);
+        this.initParams = { Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange };
+
+        this.retrieveDetailData(this.initParams);
+      },
+
+      async retrieveDetailData({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange }) {
+        try {
+          const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.oController.getFileConfig();
+          const [mPopupData] = await Client.getEntitySet(this.oController.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Pernr, Gjahr, Mdate, Zseqnr });
+          const [
+            bUploaded1, //
+            bUploaded2,
+            bFile1Hide,
+            bUploadAuth,
+            bEditAuth,
+            bViewMode,
+          ] = [
+            Number(mPopupData.Appno1) > 0, //
+            Number(mPopupData.Appno2) > 0,
+            mPopupData.File1Hide === 'X',
+            FileupChk === 'X',
+            AuthChange === 'X',
+            mPopupData.Zstat === '2',
+          ];
+          const mOriginal = {
+            ..._.chain(mPopupData)
+              .omit('__metadata')
+              .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
+              .set('ViewMode', mPopupData.Zstat === '2')
+              .merge({
+                // 심리분석보고서
+                Attachment1: {
+                  ...mPopupData,
+                  Visible: {
+                    Upload: !bUploaded1 && bUploadAuth && bEditAuth && !bViewMode && !bFile1Hide,
+                    Download: bUploaded1 && !bFile1Hide,
+                    Remove: bUploaded1 && bUploadAuth && bEditAuth && !bViewMode && !bFile1Hide,
+                  },
+                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: mPopupData.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                  AppnoName: 'Appno1',
+                },
+                // 통합리포트
+                Attachment2: {
+                  ...mPopupData,
+                  Visible: {
+                    Upload: !bUploaded2 && bUploadAuth && bEditAuth && !bViewMode,
+                    Download: bUploaded2,
+                    Remove: bUploaded2 && bUploadAuth && bEditAuth && !bViewMode,
+                  },
+                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: mPopupData.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                  AppnoName: 'Appno2',
+                },
+              })
+              .value(),
+            FileupChk,
+            AuthChange,
+          };
+          const bForceEditMode = this.oDialogModel.getProperty('/Detail/ViewMode') === false;
+          this.oDialogModel.setProperty('/Original', mOriginal);
+          this.oDialogModel.setProperty('/Detail', { ...mOriginal });
+          if (bForceEditMode) {
+            this.onPressEdit();
           }
-        });
+          this.oDialog.open();
+        } catch (oError) {
+          AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > openDialog Error', oError);
+          AppUtils.handleError(oError);
+        } finally {
+          this.setBusy(false);
+        }
       },
 
       onPressPhoto(oEvent) {
@@ -106,23 +154,83 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${Pernr}/M`, '_blank', 'width=1400,height=800');
       },
 
+      async onUploaderChange(oEvent) {
+        this.setBusy();
+        const bSuccess = await this.oController.uploadFile(oEvent);
+        if (!bSuccess) {
+          this.setBusy(false);
+        }
+      },
+
+      onTypeMissmatch(oEvent) {
+        this.oController.onTypeMissmatch(oEvent);
+      },
+
+      async onUploadComplete(oEvent) {
+        await this.oController.updateFileData(oEvent, async () => {
+          this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
+          await this.retrieveDetailData(this.initParams);
+        });
+
+        this.setBusy(false);
+      },
+
       onPressFileDownload(oEvent) {
         this.oController.onPressFileDownload(oEvent);
       },
 
-      onPressFileUpload(oEvent) {
-        this.oController.onPressFileUpload(oEvent);
-      },
+      async onPressFileRemove(oEvent) {
+        this.setBusy();
 
-      onPressFileDelete(oEvent) {
-        this.oController.onPressFileDelete(oEvent);
+        await this.oController.removeFile(oEvent, async () => {
+          this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
+          await this.retrieveDetailData(this.initParams);
+        });
+
+        this.setBusy(false);
       },
 
       onPressEdit() {
-        this.oDialogModel.setProperty('/Detail/Completed', false);
+        const { Appno1, Appno2, File1Hide, FileupChk, AuthChange } = this.oDialogModel.getProperty('/Detail');
+        const [
+          bUploaded1, //
+          bUploaded2,
+          bFile1Hide,
+          bUploadAuth,
+          bEditAuth,
+        ] = [
+          Number(Appno1) > 0, //
+          Number(Appno2) > 0,
+          File1Hide === 'X',
+          FileupChk === 'X',
+          AuthChange === 'X',
+        ];
+        const [
+          bVisibleUpload1, //
+          bVisibleRemove1,
+          bVisibleUpload2,
+          bVisibleRemove2,
+        ] = [
+          !bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide, //
+          bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide,
+          !bUploaded2 && bUploadAuth && bEditAuth,
+          bUploaded2 && bUploadAuth && bEditAuth,
+        ];
+        this.oDialogModel.setProperty('/Original/ViewMode', false);
+        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Upload', bVisibleUpload1);
+        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Remove', bVisibleRemove1);
+        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Upload', bVisibleUpload2);
+        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Remove', bVisibleRemove2);
+        this.oDialogModel.setProperty('/Detail/ViewMode', false);
+        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Upload', bVisibleUpload1);
+        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Remove', bVisibleRemove1);
+        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Upload', bVisibleUpload2);
+        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Remove', bVisibleRemove2);
       },
 
       onPressSave() {
+        this.setBusy();
+
         const sMessageCode = 'LABEL_00103'; // 저장
         const sYes = this.oController.getBundleText(sMessageCode);
 
@@ -134,6 +242,7 @@ sap.ui.define(
           ],
           onClose: (sAction) => {
             if (sAction !== sYes) {
+              this.setBusy(false);
               return;
             }
 
@@ -145,10 +254,12 @@ sap.ui.define(
       },
 
       onPressComplete() {
+        this.setBusy();
+
         const sMessageCode = 'LABEL_00117'; // 완료
         const sYes = this.oController.getBundleText(sMessageCode);
 
-        // {sMessageCode}하시겠습니까?
+        // {완료}하시겠습니까?
         MessageBox.confirm(this.oController.getBundleText('MSG_00006', sMessageCode), {
           actions: [
             sYes,
@@ -156,6 +267,7 @@ sap.ui.define(
           ],
           onClose: (sAction) => {
             if (sAction !== sYes) {
+              this.setBusy(false);
               return;
             }
 
@@ -166,11 +278,10 @@ sap.ui.define(
       },
 
       async saveData(sMessageCode) {
-        this.setBusy();
         try {
           await Client.create(this.oController.getModel(ServiceNames.TALENT), 'TalentDevDetail', { ...this.oDialogModel.getProperty('/Detail') });
 
-          // {sMessageCode}되었습니다.
+          // {저장|완료}되었습니다.
           MessageBox.alert(this.oController.getBundleText('MSG_00007', sMessageCode), {
             onClose: () => {
               this.fnCallback();

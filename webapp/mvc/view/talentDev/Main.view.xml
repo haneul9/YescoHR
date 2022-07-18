@@ -13,15 +13,15 @@
         </HBox>
       </HBox>
     </VBox>
-    <VBox class="contents emp-profile-talent-dev">
+    <VBox class="contents">
       <HBox class="vCardBox" height="80px">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.SearchConditions" type="XML" />
       </HBox>
-      <VBox class="vCardBox">
+      <VBox class="vCardBox emp-profile-talent-dev">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.CommitteeTableHeader" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.CommitteeTable" type="XML" />
       </VBox>
-      <VBox class="vCardBox">
+      <VBox class="vCardBox emp-profile-talent-dev">
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.EmployeeTableHeader" type="XML" />
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.talentDev.fragment.EmployeeTable" type="XML" />
       </VBox>

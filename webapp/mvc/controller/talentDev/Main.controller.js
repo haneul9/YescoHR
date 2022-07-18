@@ -2,21 +2,25 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/model/odata/ODataModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileDataProvider',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
     'sap/ui/yesco/mvc/controller/talentDev/TalentDevDialogHandler',
   ],
   (
     // prettier 방지용 주석
+    ODataModel,
     AppUtils,
     FileDataProvider,
     Client,
     ServiceManager,
     ServiceNames,
+    MessageBox,
     BaseController,
     TalentDevDialogHandler
   ) => {
@@ -24,8 +28,10 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.talentDev.Main', {
       mSelectedCommitteeData: null,
+      sFileWorkType: '9050',
 
       initializeModel() {
+        const ServiceUrl = ServiceManager.getServiceUrl(ServiceNames.COMMON);
         return {
           busy: {
             Werks: false,
@@ -75,6 +81,13 @@ sap.ui.define(
               retrieval: false,
               change: false,
             },
+          },
+          fileConfig: {
+            ServiceUrl,
+            UploadUrl: `${ServiceUrl}/FileUploadSet`,
+            FileTypes: 'ppt,pptx,doc,docx,xls,xlsx,jpg,jpeg,bmp,gif,png,txt,pdf',
+            Zworktyp: 9050,
+            Zfileseq: 1,
           },
         };
       },
@@ -132,9 +145,6 @@ sap.ui.define(
           this.setComboEntry(oViewModel, '/entry/Orgeh', aOrgehEntry);
           this.setComboEntry(oViewModel, '/entry/Gjahr', aGjahrEntry);
           this.setComboEntry(oViewModel, '/entry/Zseqnr', aZseqnrEntry);
-
-          // File upload URL
-          oViewModel.setProperty('/uploadUrl', `${ServiceManager.getServiceUrl(ServiceNames.COMMON)}/FileUploadSet`);
         } catch (oError) {
           this.debug('Controller > talentDev > initializeSearchConditions Error', oError);
 
@@ -166,6 +176,10 @@ sap.ui.define(
         }
 
         oViewModel.refresh();
+      },
+
+      getFileConfig() {
+        return { ...this.getViewModel().getProperty('/fileConfig') };
       },
 
       async retrieve(mPayload) {
@@ -207,10 +221,35 @@ sap.ui.define(
             this.mSelectedCommitteeData = aCommitteeList[0] || {};
           }
 
+          const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
           const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) =>
             _.chain(o)
               .omit('__metadata')
               .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
+              .merge({
+                // 심리분석보고서
+                Attachment1: {
+                  ...o,
+                  Visible: {
+                    Upload: Number(o.Appno1) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                    Download: Number(o.Appno1) > 0,
+                    Remove: Number(o.Appno1) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                  },
+                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                  AppnoName: 'Appno1',
+                },
+                // 통합리포트
+                Attachment2: {
+                  ...o,
+                  Visible: {
+                    Upload: Number(o.Appno2) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                    Download: Number(o.Appno2) > 0,
+                    Remove: Number(o.Appno2) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                  },
+                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                  AppnoName: 'Appno2',
+                },
+              })
               .value()
           );
           const mEmployeeCount = _.chain(aEmployeeList)
@@ -288,11 +327,11 @@ sap.ui.define(
         oViewModel.setProperty('/searchConditions/Ename', Ename);
       },
 
-      async onPressSearch() {
+      onPressSearch() {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
         const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
-        await this.retrieve({ ...mSearchConditions, Mode: '1' });
+        this.retrieve({ ...mSearchConditions, Mode: '1' });
       },
 
       onPressCommitteeExcelDownload() {
@@ -313,58 +352,188 @@ sap.ui.define(
         this.setContentsBusy(false, 'Button');
       },
 
-      async onSelectCommitteeTableRow(oEvent) {
+      onSelectCommitteeTableRow(oEvent) {
+        this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
+
         const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
         this.mSelectedCommitteeData = { ...mRowData, Mode: '2' };
-        await this.retrieve(this.mSelectedCommitteeData);
+        this.retrieve({ ...this.mSelectedCommitteeData }); // Client에서 payload를 변조시키므로 복사하여 보냄
       },
 
-      async onSelectEmployeeTableRow(oEvent) {
+      onSelectEmployeeTableRow(oEvent) {
+        const oCellControl = oEvent.getParameter('cellControl');
+        if (oCellControl.isA('sap.m.HBox') && oCellControl.hasStyleClass('file-updown-icon-group')) {
+          return;
+        }
+
         const { Pernr, Gjahr, Zseqnr, FileupChk } = oEvent.getParameter('rowBindingContext').getProperty();
         const { Mdate } = this.mSelectedCommitteeData;
 
         setTimeout(() => {
           const AuthChange = this.getViewModel().getProperty('/employee/auth/AuthChange');
           this.oTalentDevDialogHandler //
-            .setCallback(async () => {
-              await this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+            .setCallback(() => {
+              this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
             })
             .openDialog({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange });
         });
       },
 
-      async onPressFileDownload(oEvent) {
-        const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
-        this.AttachFileAction.openFileLink(mFile.Fileuri);
+      async onUploaderChange(oEvent) {
+        this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
+
+        const bSuccess = await this.uploadFile(oEvent);
+        if (!bSuccess) {
+          this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
+        }
       },
 
-      onPressFileUpload(oEvent) {
-        const oFileUploader = oEvent.getSource();
+      async uploadFile(oEvent) {
         const [mSelectedFile] = oEvent.getParameter('files'); // FileList object(Array가 아님)
-
         if (!mSelectedFile) {
+          return false;
+        }
+
+        const oFileUploader = oEvent.getSource();
+        const { Request } = oFileUploader.getBindingContext().getProperty();
+
+        if (!Number(Request.Appno)) {
+          try {
+            const [{ Appno }] = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'CreateTalentNo');
+
+            Request.Appno = Appno;
+          } catch (oError) {
+            this.debug('Controller > talentDev > uploadFile > CreateTalentNo Error', oError);
+
+            AppUtils.handleError(oError);
+
+            return false;
+          }
+        }
+
+        Request.CsrfToken = await this.getCsrfToken(Request.ServiceUrl);
+        Request.EncodedFilename = encodeURIComponent(mSelectedFile.name);
+        Request.Zfilename = mSelectedFile.name;
+        Request.Type = mSelectedFile.type;
+        Request.Zbinkey = String(parseInt(Math.random() * 100000000000000));
+
+        oFileUploader.getModel().refresh();
+        oFileUploader.upload();
+
+        return true;
+      },
+
+      async getCsrfToken(sServiceUrl) {
+        const oUploadModel = new ODataModel(sServiceUrl, { json: true, loadMetadataAsync: true, refreshAfterChange: false });
+        oUploadModel.refreshSecurityToken();
+
+        return oUploadModel._createRequest().headers['x-csrf-token'];
+      },
+
+      onTypeMissmatch(oEvent) {
+        const sSupportedFileTypes = (oEvent.getSource().getFileType() || []).join(', ');
+        MessageBox.alert(this.getBundleText('MSG_43004', oEvent.getParameter('fileType'), sSupportedFileTypes)); // 선택된 파일은 업로드가 불가한 확장자({0})를 가지고 있습니다.\n\n업로드 가능 확장자 :\n{1}
+      },
+
+      async onUploadComplete(oEvent) {
+        await this.updateFileData(oEvent, () => {
+          this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+        });
+
+        this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
+      },
+
+      async updateFileData(oEvent, fnCallback) {
+        const sResponseRaw = oEvent.getParameter('responseRaw');
+        if (!sResponseRaw) {
+          MessageBox.alert(this.getBundleText('MSG_00041')); // 파일 업로드에 실패하였습니다.
           return;
         }
 
-        const mFile = {
-          Zfilename: mSelectedFile.name,
-          Type: mSelectedFile.type,
-          Zbinkey: String(parseInt(Math.random() * 100000000000000)),
-          Seqnr: 1,
-        };
+        const mResponse = JSON.parse(sResponseRaw);
+        if (mResponse.EError) {
+          MessageBox.alert(mResponse.EError);
+          return;
+        }
 
-        oFileUploader.clear();
-        oFileUploader.setValue('');
+        try {
+          const { Gjahr, Pernr, Zseqnr, Werks, Mdate, Request, AppnoName } = oEvent.getSource().getBindingContext().getProperty();
 
-        // slug: [oEvent.getSource().data('appno'), 9095, encodeURI(mFile.Zfilename)].join('|');
-        // Zfilename, type
-        // file.Zfilename = file.name;
-        // file.Type = file.type;
-        // file.Zbinkey = String(parseInt(Math.random() * 100000000000000));
-        // file.Seqnr = 1;
+          await Client.create(this.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Mode: 'U', Gjahr, Pernr, Zseqnr, Werks, Mdate, [AppnoName]: Request.Appno });
+
+          // {업로드}되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00243'), {
+            onClose: fnCallback,
+          });
+        } catch (oError) {
+          AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
+          AppUtils.handleError(oError);
+        }
       },
 
-      onPressFileDelete() {},
+      async onPressFileDownload(oEvent) {
+        const { Appno, Zworktyp } = oEvent.getSource().getBindingContext().getProperty().Request;
+        const mFile = await FileDataProvider.readData(Appno, Zworktyp);
+
+        this.AttachFileAction.openFileLink(mFile.Fileuri);
+      },
+
+      async onPressFileRemove(oEvent) {
+        this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
+
+        await this.removeFile(oEvent, () => {
+          this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+        });
+
+        this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
+      },
+
+      async removeFile(oEvent, fnCallback) {
+        const { Gjahr, Pernr, Zseqnr, Werks, Mdate, Request, AppnoName } = oEvent.getSource().getBindingContext().getProperty();
+        const { Appno, Zworktyp, Zfileseq } = Request;
+        const sMessageCode = 'LABEL_00110'; // 삭제
+
+        const bGoOn = await new Promise((resolve) => {
+          const sYes = this.getBundleText(sMessageCode);
+
+          // {삭제}하시겠습니까?
+          MessageBox.confirm(this.getBundleText('MSG_00006', sMessageCode), {
+            actions: [
+              sYes,
+              this.getBundleText('LABEL_00118'), // 취소
+            ],
+            onClose: (sAction) => {
+              resolve(sAction === sYes);
+            },
+          });
+        });
+
+        if (!bGoOn) {
+          return;
+        }
+
+        try {
+          // 컨텐츠 서버 파일 삭제
+          await Client.remove(this.getModel(ServiceNames.COMMON), 'FileList', { Appno, Zworktyp, Zfileseq });
+        } catch (oError) {
+          AppUtils.debug('Controller > talentDev > onPressFileRemove FileListSet Error', oError);
+          AppUtils.handleError(oError);
+          return;
+        }
+
+        try {
+          // 파일 정보 삭제
+          await Client.create(this.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Mode: 'D', Gjahr, Pernr, Zseqnr, Werks, Mdate, [AppnoName]: Appno });
+
+          // {삭제}되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_00007', sMessageCode), {
+            onClose: fnCallback,
+          });
+        } catch (oError) {
+          AppUtils.debug('Controller > talentDev > onPressFileRemove TalentDevDetailSet Error', oError);
+          AppUtils.handleError(oError);
+        }
+      },
 
       rowHighlight(sValue) {
         const vValue = !parseInt(sValue, 10) ? sValue : parseInt(sValue, 10);

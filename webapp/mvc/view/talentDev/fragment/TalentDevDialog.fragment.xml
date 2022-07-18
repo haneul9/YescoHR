@@ -20,42 +20,22 @@
           </Label>
 
           <Label text="{i18n>LABEL_42006}" />
-          <HBox width="100%" height="100%" alignItems="Center">
+          <HBox>
             <layoutData>
               <grid:GridItemLayoutData gridColumn="3 / 4" />
             </layoutData>
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${/Detail/Appno2}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{/Detail/Appno2}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://delete" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; Number(${/Detail/Appno2}) > 0 }" press=".onPressFileDelete" size="20px" color="#fd5f58" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{/Detail/Appno2}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/FileupChk} === 'X' &amp;&amp; Number(${/Detail/Appno2}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment2}" />
           </HBox>
-          <Label text="{i18n>LABEL_42004}" visible="{= ${/Detail/FileupChk} === 'X' &amp;&amp; ${/Detail/File1Hide} !== 'X' }" />
-          <HBox width="100%" height="100%" alignItems="Center">
+          <Label text="{i18n>LABEL_42004}" visible="{= ${/Detail/File1Hide} !== 'X' }" />
+          <HBox>
             <layoutData>
               <grid:GridItemLayoutData gridColumn="5 / 6" />
             </layoutData>
-            <core:Icon src="sap-icon://attachment" visible="{= ${/Detail/FileupChk} === 'X' &amp;&amp; ${/Detail/File1Hide} !== 'X' &amp;&amp; Number(${/Detail/Appno1}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{/Detail/Appno1}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://delete" visible="{= ${/Detail/FileupChk} === 'X' &amp;&amp; ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/File1Hide} !== 'X' &amp;&amp; Number(${/Detail/Appno1}) > 0 }" press=".onPressFileDelete" size="20px" color="#fd5f58" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{/Detail/Appno1}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${/Detail/FileupChk} === 'X' &amp;&amp; ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/FileupChk} === 'X' &amp;&amp; ${/Detail/File1Hide} !== 'X' &amp;&amp; Number(${/Detail/Appno1}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment1}" />
           </HBox>
 
           <Label text="{i18n>LABEL_42005}" />
-          <ComboBox items="{/ZstatEntry}" selectedKey="{/Detail/Zstat}" width="100px" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" visible="{= ${/Detail/AuthChange} === 'X' }">
+          <ComboBox items="{/ZstatEntry}" selectedKey="{/Detail/Zstat}" width="100px" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }">
             <layoutData>
               <grid:GridItemLayoutData gridColumn="3 / 6" />
             </layoutData>
@@ -82,22 +62,22 @@
           </layoutData>
           <content>
             <Panel expandable="true" expanded="true" headerText="{/Detail/Title1}">
-              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc1}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" />
+              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc1}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
             </Panel>
             <Panel expandable="true" expanded="true" headerText="{/Detail/Title2}">
-              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc2}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" />
+              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc2}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
             </Panel>
             <Panel expandable="true" expanded="true" headerText="{/Detail/Title3}">
-              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc3}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" />
+              <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc3}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
             </Panel>
           </content>
         </ScrollContainer>
       </VBox>
     </content>
     <buttons>
-      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onPressEdit" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/Completed} }" />
-      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onPressSave" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" />
-      <Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onPressComplete" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/Completed} }" />
+      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onPressEdit" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/ViewMode} }" />
+      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onPressSave" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
+      <Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onPressComplete" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
       <Button text="{i18n>LABEL_00115}" press=".onPressDialogClose" class="cancel" />
     </buttons>
   </Dialog>

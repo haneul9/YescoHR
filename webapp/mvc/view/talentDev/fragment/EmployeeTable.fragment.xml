@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
-  xmlns:core="sap.ui.core"
-  xmlns:u="sap.ui.unified">
+  xmlns:core="sap.ui.core">
   <Table id="employeeTable" class="row-link" rows="{/employee/listInfo/rows}" width="100%" visibleRowCount="{/employee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Employee}" noData="{i18n>MSG_00001}" cellClick=".onSelectEmployeeTableRow">
     <rowSettingsTemplate>
       <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
@@ -50,41 +49,16 @@
           <m:Text text="{Zstattx}" textAlign="Center" width="100%" wrapping="false" />
         </template>
       </Column>
-      <Column width="150px" visible="{= ${/employee/auth/AuthFiles} === 'X' }">
-        <m:Label text="{i18n>LABEL_43010}" />
-        <template>
-          <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <!-- <u:FileUploader uploadOnChange="true" uploadUrl="{/uploadUrl}" icon="sap-icon://add-document" iconOnly="true" buttonOnly="true" sendXHR="true" style="Transparent" fileType="ppt,pptx,doc,docx,xls,xlsx,jpg,jpeg,bmp,gif,png,txt,pdf">
-              <u:headerParameters>
-                <u:FileUploaderParameter name="" value="">
-                    
-                </u:FileUploaderParameter>
-              </u:headerParameters>
-              <u:parameters>
-              </u:parameters>
-              <u:xhrSettings>
-              </u:xhrSettings>
-            </u:FileUploader> -->
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno1}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{Appno1}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno1}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
-          </m:HBox>
-        </template>
-      </Column>
       <Column width="150px">
         <m:Label text="{i18n>LABEL_43011}" />
         <template>
-          <m:HBox width="100%" justifyContent="Center" alignItems="Center">
-            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" size="20px" hoverColor="#007bff" class="font-bold">
-              <core:customData>
-                <core:CustomData key="appno" value="{Appno2}" />
-              </core:customData>
-            </core:Icon>
-            <core:Icon src="sap-icon://add-document" visible="{= ${FileupChk} === 'X' &amp;&amp; Number(${Appno2}) === 0 }" press=".onPressFileUpload" size="20px" hoverColor="#007bff" class="font-bold" />
-          </m:HBox>
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{Attachment2}" />
+        </template>
+      </Column>
+      <Column width="150px" visible="{= ${/employee/auth/AuthFiles} === 'X' }">
+        <m:Label text="{i18n>LABEL_43010}" />
+        <template>
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{Attachment1}" />
         </template>
       </Column>
       <Column width="150px">
