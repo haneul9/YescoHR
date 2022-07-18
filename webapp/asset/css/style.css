@@ -2295,8 +2295,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .boardroom-grid > .sapMFlexBox.expanded {grid-row:span 2; grid-column:span 2}
 .boardroom-grid > .sapMFlexBox.expanded .legend-wrap * {font-size:14px}
 
-.lead-row-color-table .sapUiTableCtrlRowScroll:not(.sapUiTableCHT) > tbody > tr:first-child { background-color: #fffdbe; }
-.lead-row-color-table .sapUiTableCtrlRowScroll:not(.sapUiTableCHT) > tbody > tr:first-child > td .sapMText { font-weight: 700; }
+.lead-row-color-table .sapUiTableCtrlRowFixed > tbody > tr:first-child { background-color: #fbface; }
+.lead-row-color-table .sapUiTableCtrlRowFixed > tbody > tr:first-child > td .sapMText { font-weight: 700; }
 .fixed-bottom-row-table .sapUiTableCtrlRowFixedBottom > tbody > tr:first-child > td .sapMText { font-weight: 700; }
 
 @media screen and (max-width:884px) {

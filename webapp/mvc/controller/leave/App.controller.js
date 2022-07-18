@@ -330,26 +330,10 @@ sap.ui.define(
           oViewModel.setProperty(
             '/dialog/list',
             _.map(aDetailRow, (o, i) => ({
-              ...o,
+              ..._.omit(o, '__metadata'),
               Idx: i + 1 < _.size(aDetailRow) ? i + 1 : '',
-              OrgtxSort: o.Orgtx,
-              OrgtxFilter: o.Orgtx,
-              EnameSort: o.Ename,
-              EnameFilter: o.Ename,
-              ZzjikgbtSort: o.Zzjikgbt,
-              ZzjikgbtFilter: o.Zzjikgbt,
-              ZzjikchtSort: o.Zzjikcht,
-              ZzjikchtFilter: o.Zzjikcht,
-              CrecntSort: o.Crecnt === '0.0' ? '0.01' : o.Crecnt,
-              CrecntFilter: o.Crecnt,
-              Usecnt1Sort: o.Usecnt1 === '0.0' ? '0.01' : o.Usecnt1,
-              Usecnt1Filter: o.Usecnt1,
-              Userte1Sort: o.Userte1 === '0.0' ? '0.01' : o.Userte1,
-              Userte1Filter: o.Userte1,
-              Usecnt2Sort: o.Usecnt2 === '0.0' ? '0.01' : o.Usecnt2,
-              Usecnt2Filter: o.Usecnt2,
-              Userte2Sort: o.Userte2 === '0.0' ? '0.01' : o.Userte2,
-              Userte2Filter: o.Userte2,
+              ...this.generateSortFields(o),
+              ...this.generateFilterFields(o),
             }))
           );
 
@@ -361,6 +345,23 @@ sap.ui.define(
         } finally {
           oViewModel.setProperty('/dialog/busy', false);
         }
+      },
+
+      generateSortFields(mData) {
+        return _.chain(mData)
+          .cloneDeep()
+          .pick(['Orgtx', 'Ename', 'Zzjikgbt', 'Zzjikcht', 'Crecnt', 'Usecnt1', 'Userte1', 'Usecnt2', 'Userte2'])
+          .mapKeys((v, k) => `${k}Sort`)
+          .mapValues((v) => (v === '0.0' ? '0.01' : v))
+          .value();
+      },
+
+      generateFilterFields(mData) {
+        return _.chain(mData)
+          .cloneDeep()
+          .pick(['Orgtx', 'Ename', 'Zzjikgbt', 'Zzjikcht', 'Crecnt', 'Usecnt1', 'Userte1', 'Usecnt2', 'Userte2'])
+          .mapKeys((v, k) => `${k}Filter`)
+          .value();
       },
 
       onPressExcelDownload() {
