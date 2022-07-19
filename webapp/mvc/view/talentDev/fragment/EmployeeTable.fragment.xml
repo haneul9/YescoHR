@@ -22,7 +22,7 @@
         <m:Label text="{i18n>LABEL_43002}" />
         <template>
           <m:HBox alignItems="Center">
-            <m:Image src="{Photo}" mode="Background" width="38px" height="38px" class="member-photo mr-0h-rem">
+            <m:Image src="{Photo}" mode="Background" width="38px" height="38px" class="member-photo mr-0h-rem ml-1-rem">
               <m:layoutData>
                 <m:FlexItemData maxHeight="38px" minHeight="38px" />
               </m:layoutData>

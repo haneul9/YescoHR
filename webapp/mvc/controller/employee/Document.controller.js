@@ -4,8 +4,9 @@ sap.ui.define(
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/AppUtils',
-    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/FileDataProvider',
+    'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
   ],
@@ -14,8 +15,9 @@ sap.ui.define(
     CSSGrid,
     Table,
     AppUtils,
-    Client,
     ComboEntry,
+    FileDataProvider,
+    Client,
     ServiceNames,
     BaseController
   ) => {
@@ -27,6 +29,11 @@ sap.ui.define(
       SUB_TYPE: {
         TABLE: '5',
         GRID: '6',
+      },
+      ICONS: {
+        FILE1: 'sap-icon://attachment',
+        FILE2: 'sap-icon://attachment',
+        RESOL: 'sap-icon://comment',
       },
 
       initializeModel() {
@@ -228,8 +235,8 @@ sap.ui.define(
 
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
-            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
+            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
+            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
           });
 
           aSubMenus.forEach((data) => {
@@ -338,11 +345,36 @@ sap.ui.define(
               }).bindRows(`${sTableDataPath}/data`);
 
               aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({ width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%` });
+                const oColumn = new sap.ui.table.Column({
+                  width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                  label: new sap.m.Label({ text: head.Header }),
+                });
 
-                oColumn.setLabel(new sap.m.Label({ text: head.Header }));
-                oColumn.setTemplate(new sap.m.Text({ width: '100%', textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align, text: { path: `Value${_.padStart(index + 1, 2, '0')}` } }));
-                oTable.addColumn(oColumn);
+                const sValueFieldName = `Value${_.padStart(index + 1, 2, 0)}`;
+                let oColumnTemplate;
+                if (menuKey === 'M020' && ['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
+                  // 인재육성위원회 icon column
+                  oColumnTemplate = new sap.ui.core.Icon({
+                    src: this.ICONS[head.Fieldname],
+                    visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
+                    size: '20px',
+                  });
+                  if (head.Fieldname !== 'RESOL') {
+                    oColumnTemplate
+                      .setHoverColor('#007bff')
+                      .addCustomData(new sap.ui.core.CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
+                      .attachPress(this.onPressTalentDevFileDownload.bind(this));
+                  }
+                  oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);
+                } else {
+                  oColumnTemplate = new sap.m.Text({
+                    width: '100%', //
+                    textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                    text: { path: sValueFieldName },
+                  });
+                }
+
+                oTable.addColumn(oColumn.setTemplate(oColumnTemplate));
               });
 
               oSubVBox.addItem(oTable);
@@ -350,13 +382,11 @@ sap.ui.define(
               const oCSSGrid = new CSSGrid({ gridTemplateColumns: '1fr 3fr 1fr 3fr', gridGap: '1px 0px' }).addStyleClass('form-grid');
 
               mMenu.header.forEach((head, index) => {
-                oCSSGrid.addItem(new sap.m.Label({ text: head.Header }));
-                oCSSGrid.addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
+                oCSSGrid.addItem(new sap.m.Label({ text: head.Header })).addItem(new sap.m.Input({ value: mMenu.data[index], editable: false }));
               });
 
               if (mMenu.header.length % 2 === 1) {
-                oCSSGrid.addItem(new sap.m.Label({ text: '' }));
-                oCSSGrid.addItem(new sap.m.Input({ value: '', editable: false }));
+                oCSSGrid.addItem(new sap.m.Label({ text: '' })).addItem(new sap.m.Input({ value: '', editable: false }));
               }
 
               oSubVBox.addItem(oCSSGrid);
@@ -367,6 +397,11 @@ sap.ui.define(
 
           oTabContainer.addContent(oWrapperVBox);
         });
+      },
+
+      async onPressTalentDevFileDownload(oEvent) {
+        const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
+        this.AttachFileAction.openFileLink(mFile.Fileuri);
       },
 
       /*****************************************************************

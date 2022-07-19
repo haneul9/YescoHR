@@ -1,7 +1,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
@@ -22,7 +21,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    CustomData,
     Fragment,
     CSSGrid,
     Filter,
@@ -557,8 +555,8 @@ sap.ui.define(
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
-              // 인재육성위원회 row click
               if (menuKey === 'M020') {
+                // 인재육성위원회 row click
                 oTable.attachCellClick((oEvent) => {
                   const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
                   this.openTalentDevDialog(mRowData);
@@ -578,10 +576,12 @@ sap.ui.define(
                   oColumnTemplate = new sap.ui.core.Icon({
                     src: this.ICONS[head.Fieldname],
                     visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
+                    size: '20px',
                   });
                   if (head.Fieldname !== 'RESOL') {
                     oColumnTemplate
-                      .addCustomData(new CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
+                      .setHoverColor('#007bff')
+                      .addCustomData(new sap.ui.core.CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
                       .attachPress(this.onPressTalentDevFileDownload.bind(this));
                   }
                   oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);

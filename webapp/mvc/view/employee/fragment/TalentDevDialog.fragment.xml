@@ -3,8 +3,8 @@
   xmlns:grid="sap.ui.layout.cssgrid">
   <Dialog id="talentDevDialog" title="{i18n>LABEL_42001} ({Gjahr}{i18n>LABEL_42002} {Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="780px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
     <content>
-      <HBox class="customBox py-15-px">
-        <grid:CSSGrid gridTemplateRows="repeat(5, 35px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="0">
+      <HBox class="vCardBox sapUiMediumMarginBottom py-15-px">
+        <grid:CSSGrid gridTemplateRows="repeat(5, 36px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="0">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
@@ -19,14 +19,14 @@
             </layoutData>
           </Label>
           <Label text="{i18n>LABEL_42006}" />
-          <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressTalentDevFileDownload" class="align-left">
+          <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressTalentDevFileDownload" size="20px" class="align-left" hoverColor="#007bff">
             <core:customData>
               <core:CustomData key="appno" value="{Appno2}" />
             </core:customData>
           </core:Icon>
           <Text text=" " visible="{= Number(${Appno2}) === 0 }" />
           <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
-          <core:Icon src="sap-icon://attachment" visible="{= ${File1Hide} !== 'X' &amp;&amp; Number(${Appno1}) > 0 }" press=".onPressTalentDevFileDownload" class="align-left">
+          <core:Icon src="sap-icon://attachment" visible="{= ${File1Hide} !== 'X' &amp;&amp; Number(${Appno1}) > 0 }" press=".onPressTalentDevFileDownload" size="20px" class="align-left" hoverColor="#007bff">
             <core:customData>
               <core:CustomData key="appno" value="{Appno1}" />
             </core:customData>
@@ -51,7 +51,7 @@
           </Text>
         </grid:CSSGrid>
       </HBox>
-      <VBox class="customBox py-20-px">
+      <VBox class="vCardBox py-20-px">
         <ScrollContainer height="500px" horizontal="false" vertical="true">
           <layoutData>
             <FlexItemData growFactor="1" />

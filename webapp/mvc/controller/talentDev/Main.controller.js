@@ -104,7 +104,7 @@ sap.ui.define(
           await this.initializeSearchConditions();
 
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          await this.retrieve({ ...mSearchConditions, Mode: '1' });
+          this.retrieve({ ...mSearchConditions, Mode: '1' });
         } catch (oError) {
           this.debug('Controller > talentDev > onObjectMatched Error', oError);
 
@@ -141,6 +141,11 @@ sap.ui.define(
             Zseqnr: _.get(aZseqnrEntry, [0, 'Zseqnr']),
           });
 
+          const sChoiceText = AppUtils.getBundleText('LABEL_00268');
+          aOrgehEntry.unshift({ Orgeh: '', Orgtx: sChoiceText });
+          aGjahrEntry.unshift({ Gjahr: '', Gjahrtx: sChoiceText });
+          aZseqnrEntry.unshift({ Zseqnr: '', Zseqnrtx: sChoiceText });
+
           this.setComboEntry(oViewModel, '/entry/Werks', aPersaEntry);
           this.setComboEntry(oViewModel, '/entry/Orgeh', aOrgehEntry);
           this.setComboEntry(oViewModel, '/entry/Gjahr', aGjahrEntry);
@@ -157,7 +162,7 @@ sap.ui.define(
       setComboEntry(oViewModel, sPath, aEntry) {
         oViewModel.setProperty(
           sPath,
-          _.map(aEntry, (o) => _.chain(o).omit('__metadata').omitBy(_.isNil).omitBy(_.isEmpty).value())
+          _.map(aEntry, (o) => _.chain(o).omit('__metadata').value())
         );
       },
 
@@ -182,22 +187,40 @@ sap.ui.define(
         return { ...this.getViewModel().getProperty('/fileConfig') };
       },
 
+      /**
+       * Mode 1 : 최초 조회 조건으로 인재육성위원회 및 대상자 테이블 모두 조회
+       * Mode 2 : 인재육성위원회 행을 선택한 경우 해당 대상자 테이블 조회
+       *
+       * 팝업 데이터가 저장/완료된 경우 인재육성위원회 및 대상자 테이블 개별 갱신
+       *   => 인재육성위원회 테이블의 선택된 행을 유지하면서 해당 대상자 테이블이 조회되어야하므로 개별 갱신함
+       * Mode 11 : 인재육성위원회 테이블만 갱신
+       * Mode 2 : 대상자 테이블만 갱신
+       *
+       * @param {*} mPayload
+       */
       async retrieve(mPayload) {
         const { Mode, Ztitle, Gjahr, Zseqnrtx } = mPayload;
         const oViewModel = this.getViewModel();
 
-        this.byId('committeeTable').clearSelection();
-        this.byId('employeeTable').clearSelection();
-
         try {
           if (Mode === '1') {
-            mPayload.TalentDevCommitteeSet = [];
+            this.byId('committeeTable').clearSelection();
+            this.byId('employeeTable').clearSelection();
+          } else if (Mode === '2') {
+            this.byId('employeeTable').clearSelection();
           }
-          mPayload.TalentDevTargetSet = [];
-
-          const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', mPayload);
-
           if (Mode === '1') {
+            mPayload.TalentDevCommitteeSet = [];
+            mPayload.TalentDevTargetSet = [];
+          } else if (Mode === '11') {
+            mPayload.TalentDevCommitteeSet = [];
+          } else if (Mode === '2') {
+            mPayload.TalentDevTargetSet = [];
+          }
+
+          const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', { ...mPayload, Mode: Mode.substring(0, 1) });
+
+          if (Mode === '1' || Mode === '11') {
             const aCommitteeList = _.map(aData.TalentDevCommitteeSet.results, (o) =>
               _.chain(o)
                 .omit('__metadata')
@@ -218,55 +241,59 @@ sap.ui.define(
               completeCount: mCommitteeCount['2'],
             });
 
-            this.mSelectedCommitteeData = aCommitteeList[0] || {};
+            if (Mode === '1') {
+              this.mSelectedCommitteeData = aCommitteeList[0] || {};
+            }
           }
 
-          const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
-          const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) =>
-            _.chain(o)
-              .omit('__metadata')
-              .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
-              .merge({
-                // 심리분석보고서
-                Attachment1: {
-                  ...o,
-                  Visible: {
-                    Upload: Number(o.Appno1) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
-                    Download: Number(o.Appno1) > 0,
-                    Remove: Number(o.Appno1) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+          if (Mode === '1' || Mode === '2') {
+            const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
+            const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) =>
+              _.chain(o)
+                .omit('__metadata')
+                .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
+                .merge({
+                  // 심리분석보고서
+                  Attachment1: {
+                    ...o,
+                    Visible: {
+                      Upload: Number(o.Appno1) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                      Download: Number(o.Appno1) > 0,
+                      Remove: Number(o.Appno1) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                    },
+                    Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                    AppnoName: 'Appno1',
                   },
-                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                  AppnoName: 'Appno1',
-                },
-                // 통합리포트
-                Attachment2: {
-                  ...o,
-                  Visible: {
-                    Upload: Number(o.Appno2) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
-                    Download: Number(o.Appno2) > 0,
-                    Remove: Number(o.Appno2) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                  // 통합리포트
+                  Attachment2: {
+                    ...o,
+                    Visible: {
+                      Upload: Number(o.Appno2) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                      Download: Number(o.Appno2) > 0,
+                      Remove: Number(o.Appno2) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
+                    },
+                    Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
+                    AppnoName: 'Appno2',
                   },
-                  Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                  AppnoName: 'Appno2',
-                },
-              })
-              .value()
-          );
-          const mEmployeeCount = _.chain(aEmployeeList)
-            .map('Zstat')
-            .countBy()
-            .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
-            .value();
-          const sInfoMessage = Mode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
-          oViewModel.setProperty('/employee/listInfo', {
-            rows: aEmployeeList,
-            rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
-            totalCount: aEmployeeList.length,
-            readyCount: mEmployeeCount['0'],
-            progressCount: mEmployeeCount['1'],
-            completeCount: mEmployeeCount['2'],
-            infoMessage: sInfoMessage,
-          });
+                })
+                .value()
+            );
+            const mEmployeeCount = _.chain(aEmployeeList)
+              .map('Zstat')
+              .countBy()
+              .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
+              .value();
+            const sInfoMessage = Mode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
+            oViewModel.setProperty('/employee/listInfo', {
+              rows: aEmployeeList,
+              rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
+              totalCount: aEmployeeList.length,
+              readyCount: mEmployeeCount['0'],
+              progressCount: mEmployeeCount['1'],
+              completeCount: mEmployeeCount['2'],
+              infoMessage: sInfoMessage,
+            });
+          }
         } catch (oError) {
           this.debug('Controller > talentDev > retrieve Error', oError);
 
@@ -305,7 +332,7 @@ sap.ui.define(
       },
 
       getEmployeeSearchDialogOnLoadSearch() {
-        return false;
+        return true;
       },
 
       getEmployeeSearchDialogCustomOptions() {
@@ -355,9 +382,8 @@ sap.ui.define(
       onSelectCommitteeTableRow(oEvent) {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
-        const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
-        this.mSelectedCommitteeData = { ...mRowData, Mode: '2' };
-        this.retrieve({ ...this.mSelectedCommitteeData }); // Client에서 payload를 변조시키므로 복사하여 보냄
+        this.mSelectedCommitteeData = { ...oEvent.getParameter('rowBindingContext').getProperty() }; // Client에서 payload를 변조시키므로 복사하여 보냄
+        this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
       },
 
       onSelectEmployeeTableRow(oEvent) {
@@ -373,7 +399,9 @@ sap.ui.define(
           const AuthChange = this.getViewModel().getProperty('/employee/auth/AuthChange');
           this.oTalentDevDialogHandler //
             .setCallback(() => {
-              this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+              const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
+              this.retrieve({ ...mSearchConditions, Mode: '11' }); // 인재육성위원회만 갱신
+              this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' }); // 대상자 갱신
             })
             .openDialog({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange });
         });
@@ -439,8 +467,6 @@ sap.ui.define(
         await this.updateFileData(oEvent, () => {
           this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
         });
-
-        this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
       },
 
       async updateFileData(oEvent, fnCallback) {
@@ -484,8 +510,6 @@ sap.ui.define(
         await this.removeFile(oEvent, () => {
           this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
         });
-
-        this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
       },
 
       async removeFile(oEvent, fnCallback) {
@@ -540,7 +564,7 @@ sap.ui.define(
 
         switch (vValue) {
           case 1:
-            return sap.ui.core.IndicationColor.Indication02;
+            return sap.ui.core.IndicationColor.Indication03;
           case 2:
             return sap.ui.core.IndicationColor.Indication05;
           default:
