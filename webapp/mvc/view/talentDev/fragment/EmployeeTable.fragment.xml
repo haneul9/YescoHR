@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <Table id="employeeTable" class="row-link" rows="{/employee/listInfo/rows}" width="100%" visibleRowCount="{/employee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Employee}" noData="{i18n>MSG_00001}" cellClick=".onSelectEmployeeTableRow">
+  <Table id="employeeTable" class="row-link" rows="{/employee/listInfo/rows}" width="100%" visibleRowCount="{/employee/listInfo/totalCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Employee}" noData="{i18n>MSG_00001}" cellClick=".onSelectEmployeeTableRow">
     <rowSettingsTemplate>
       <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
     </rowSettingsTemplate>

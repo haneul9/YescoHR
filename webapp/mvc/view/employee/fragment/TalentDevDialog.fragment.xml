@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <Dialog id="talentDevDialog" title="{i18n>LABEL_42001} ({Gjahr}{i18n>LABEL_42002} {Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="780px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
+  <Dialog id="employeeTalentDevDialog" title="{i18n>LABEL_42001} ({Gjahr}{i18n>LABEL_42002} {Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="780px" draggable="true" horizontalScrolling="false" verticalScrolling="false" class="emp-profile-talent-dev">
     <content>
       <HBox class="vCardBox sapUiMediumMarginBottom py-15-px">
         <grid:CSSGrid gridTemplateRows="repeat(5, 36px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="0">

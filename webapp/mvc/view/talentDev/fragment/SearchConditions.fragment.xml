@@ -1,5 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <HBox class="form-bar" alignItems="Center">
     <Label text="{i18n>LABEL_00237}" />
     <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" width="150px">
@@ -10,7 +11,7 @@
       <core:Item text="{Orgtx}" key="{Orgeh}" />
     </ComboBox>
     <Label text="{i18n>LABEL_43002}" />
-    <Input value="{/searchConditions/Ename}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onEmployeeSearchOpen" width="150px" />
+    <custom:ClearableInput key="{/searchConditions/Pernr}" value="{/searchConditions/Ename}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onEmployeeSearchOpen" width="150px" />
     <Label text="{i18n>LABEL_43003}" />
     <ComboBox items="{/entry/Gjahr}" selectedKey="{/searchConditions/Gjahr}" width="100px">
       <core:Item text="{Gjahrtx}" key="{Gjahr}" />

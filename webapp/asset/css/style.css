@@ -2415,22 +2415,34 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .emp-profile-talent-dev .file-updown-icon-group {align-items:center}
 .emp-profile-talent-dev .file-updown-icon-group > .sapMFlexItem {height:100%}
 .emp-profile-talent-dev .file-updown-icon-group > .sapMFlexItem:not(.sapUiHiddenPlaceholder) + .sapMFlexItem {margin-left:10px}
-.emp-profile-talent-dev .file-updown-icon-group .sapUiIcon::before {font-size:20px}
+.emp-profile-talent-dev .file-updown-icon-group .sapUiIcon {margin-right:0}
+/* .emp-profile-talent-dev .file-updown-icon-group .sapUiIcon::before {font-size:20px} */
+.emp-profile-talent-dev .file-updown-icon-group .sapUiIcon {margin-right:0}
 .emp-profile-talent-dev .file-updown-icon-group .sapMFlexItem > .sapUiIcon {vertical-align:middle}
+.emp-profile-talent-dev .file-updown-icon-group .sapMBtn {width:auto; min-width:auto; height:36px}
+.emp-profile-talent-dev .file-updown-icon-group .sapMBtn .sapMBtnInner {min-width:auto; background:transparent !important}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup div, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup form {height:36px; line-height:36px}
-.emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn {width:auto; min-width:auto; height:36px}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapMBtnTransparent {min-width:auto; border:0; background:transparent !important}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapUiIcon {margin-right:0; width:auto; height:22px; line-height:22px}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn:hover .sapUiIcon::before {color:#007bff !important}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupInputMask {height:0}
 
-.emp-profile-talent-dev .sapUiTable .file-updown-icon-group {justify-content:center; width:100%; height:44px}
+.emp-profile-talent-dev .sapUiTable .file-updown-icon-group {justify-content:center; width:100%}
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group > .sapMFlexItem {width:100%; text-align:center}
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group > .sapMFlexItem:not(.sapUiHiddenPlaceholder) + .sapMFlexItem {margin-left:0}
-.emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiIcon {height:44px; line-height:44px}
+/* .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiIcon {height:44px; line-height:44px} */
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup,
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup div,
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup form,
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn,
 .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapMBtnTransparent,
-.emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapUiIcon::before {line-height:44px; font-size:20px}
+.emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapUiIcon::before {line-height:44px}
+/* .emp-profile-talent-dev .sapUiTable .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapUiIcon::before {line-height:44px; font-size:20px} */
+
+.sap-icon-delete .sapUiIcon:hover::before, .sap-icon-delete .sapUiIcon::before {color:#fd5f58}
+
+.custom-clearable-input {display:flex}
+.custom-clearable-input.sapMInputBaseHasEndIcons .sapMInputBaseInner,
+.custom-clearable-input.sapMInputBaseHasBeginIcons .sapMInputBaseInner {width:calc(100% - 4.25rem)}
+.custom-clearable-input .sapMInputDescriptionWrapper {box-sizing:border-box; width:auto !important; padding-left:10px; height:36px}
+.custom-clearable-input .sapMInputDescriptionWrapper .sapMInputDescriptionText {padding:0 10px; line-height:36px; background-color:#ebf5fe}

@@ -15,7 +15,9 @@
         <u:FileUploaderParameter name="Seqnr" value="1" />
       </u:parameters>
     </u:FileUploader>
-    <core:Icon src="sap-icon://attachment" visible="{Visible/Download}" press=".onPressFileDownload" tooltip="{i18n>LABEL_00244}" hoverColor="#007bff" />
-    <core:Icon src="sap-icon://delete" visible="{Visible/Remove}" press=".onPressFileRemove" tooltip="{i18n>LABEL_00110}" color="#fd5f58" />
+    <!-- <core:Icon src="sap-icon://attachment" visible="{Visible/Download}" press=".onPressFileDownload" tooltip="{i18n>LABEL_00244}" hoverColor="#007bff" /> -->
+    <Button type="Transparent" icon="sap-icon://attachment" press=".onPressFileDownload" visible="{Visible/Download}" tooltip="{i18n>LABEL_00244}" />
+    <!-- <core:Icon src="sap-icon://delete" visible="{Visible/Remove}" press=".onPressFileRemove" tooltip="{i18n>LABEL_00110}" color="#fd5f58" /> -->
+    <Button type="Transparent" icon="sap-icon://delete" press=".onPressFileRemove" visible="{Visible/Remove}" tooltip="{i18n>LABEL_00110}" class="sap-icon-delete" />
   </HBox>
 </core:FragmentDefinition>

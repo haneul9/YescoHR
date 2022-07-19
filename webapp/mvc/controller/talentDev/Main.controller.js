@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/export/library',
     'sap/ui/model/odata/ODataModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileDataProvider',
@@ -14,6 +15,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    exportLibrary,
     ODataModel,
     AppUtils,
     FileDataProvider,
@@ -108,6 +110,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > talentDev > onObjectMatched Error', oError);
 
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setContentsBusy(false);
@@ -153,6 +158,9 @@ sap.ui.define(
         } catch (oError) {
           this.debug('Controller > talentDev > initializeSearchConditions Error', oError);
 
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setContentsBusy(false, ['Orgeh', 'Gjahr', 'Zseqnr', 'Button']);
@@ -253,12 +261,14 @@ sap.ui.define(
                 .omit('__metadata')
                 .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
                 .merge({
+                  DescFlag: o.Desc === 'X' ? 'O' : '', // 엑셀 다운로드용
                   // 심리분석보고서
                   Attachment1: {
                     ...o,
                     Visible: {
                       Upload: Number(o.Appno1) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                       Download: Number(o.Appno1) > 0,
+                      DownloadFlag: Number(o.Appno1) > 0 ? 'O' : '', // 엑셀 다운로드용
                       Remove: Number(o.Appno1) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                     },
                     Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
@@ -270,6 +280,7 @@ sap.ui.define(
                     Visible: {
                       Upload: Number(o.Appno2) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                       Download: Number(o.Appno2) > 0,
+                      DownloadFlag: Number(o.Appno2) > 0 ? 'O' : '', // 엑셀 다운로드용
                       Remove: Number(o.Appno2) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                     },
                     Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
@@ -308,6 +319,9 @@ sap.ui.define(
           oViewModel.setProperty('/committee/listInfo', mInitData);
           oViewModel.setProperty('/employee/listInfo', { ...mInitData, infoMessage: this.getBundleText('MSG_43001') }); // 조회 조건에 따른 대상자입니다.
 
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setContentsBusy(false, ['Button', 'Committee', 'Employee']);
@@ -372,18 +386,35 @@ sap.ui.define(
 
       onPressEmployeeExcelDownload() {
         this.setContentsBusy(true, 'Button');
+
+        const [TRUE, FALSE] = ['true', 'false'];
         const oTable = this.byId('employeeTable');
         const sFileName = `${this.getBundleText('LABEL_43001')}_${this.getBundleText('LABEL_43002')}`; // 인재육성위원회_대상자
+        const aCustomColumns = [
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_00237'), property: 'Name1' }, // 인사영역
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_00224'), property: 'Orgtx' }, // 부서
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43002'), property: 'Target' }, // 대상자
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43003'), property: 'Gjahr' }, // 대상년도
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43004'), property: 'Zseqnrtx' }, // 차수
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43009'), property: 'Zstattx' }, // 진행상태
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43011'), property: 'Attachment2/Visible/DownloadFlag' }, // 통합리포트
+          { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43012'), property: 'DescFlag' }, // 논의사항
+        ];
 
-        this.TableUtils.export({ oTable, sFileName });
+        if (this.getViewModel().getProperty('/employee/auth/AuthFiles') === 'X') {
+          aCustomColumns.splice(7, 0, { type: exportLibrary.EdmType.String, label: this.getBundleText('LABEL_43010'), property: 'Attachment1/Visible/DownloadFlag' }); // 심리분석보고서
+        }
+
+        this.TableUtils.export({ oTable, sFileName, aCustomColumns });
         this.setContentsBusy(false, 'Button');
       },
 
       onSelectCommitteeTableRow(oEvent) {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
+        const { Pernr } = this.getViewModel().getProperty('/searchConditions');
         this.mSelectedCommitteeData = { ...oEvent.getParameter('rowBindingContext').getProperty() }; // Client에서 payload를 변조시키므로 복사하여 보냄
-        this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+        this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
       },
 
       onSelectEmployeeTableRow(oEvent) {
@@ -401,7 +432,7 @@ sap.ui.define(
             .setCallback(() => {
               const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
               this.retrieve({ ...mSearchConditions, Mode: '11' }); // 인재육성위원회만 갱신
-              this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' }); // 대상자 갱신
+              this.retrieve({ ...this.mSelectedCommitteeData, Pernr: mSearchConditions.Pernr, Mode: '2' }); // 대상자 갱신
             })
             .openDialog({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange });
         });
@@ -433,6 +464,9 @@ sap.ui.define(
           } catch (oError) {
             this.debug('Controller > talentDev > uploadFile > CreateTalentNo Error', oError);
 
+            if (oError instanceof UI5Error) {
+              oError.code = oError.LEVEL.INFORMATION;
+            }
             AppUtils.handleError(oError);
 
             return false;
@@ -465,7 +499,8 @@ sap.ui.define(
 
       async onUploadComplete(oEvent) {
         await this.updateFileData(oEvent, () => {
-          this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+          const { Pernr } = this.getViewModel().getProperty('/searchConditions');
+          this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
         });
       },
 
@@ -493,6 +528,10 @@ sap.ui.define(
           });
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         }
       },
@@ -508,7 +547,8 @@ sap.ui.define(
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
         await this.removeFile(oEvent, () => {
-          this.retrieve({ ...this.mSelectedCommitteeData, Mode: '2' });
+          const { Pernr } = this.getViewModel().getProperty('/searchConditions');
+          this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
         });
       },
 
@@ -541,6 +581,10 @@ sap.ui.define(
           await Client.remove(this.getModel(ServiceNames.COMMON), 'FileList', { Appno, Zworktyp, Zfileseq });
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > onPressFileRemove FileListSet Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
           return;
         }
@@ -555,6 +599,10 @@ sap.ui.define(
           });
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > onPressFileRemove TalentDevDetailSet Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         }
       },

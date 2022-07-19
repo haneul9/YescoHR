@@ -66,6 +66,9 @@ sap.ui.define(
           this.oDialog //
             .setModel(this.oDialogModel)
             .bindElement('/')
+            .attachAfterOpen(() => {
+              [...this.oDialog.getButtons()].pop().$().focus();
+            })
             .attachAfterClose(() => {
               setTimeout(() => {
                 this.oDialogModel.setProperty('/Detail', null);
@@ -141,6 +144,10 @@ sap.ui.define(
           this.oDialog.open();
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > openDialog Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
@@ -290,6 +297,10 @@ sap.ui.define(
           });
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > saveData Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
