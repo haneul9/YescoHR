@@ -2391,9 +2391,10 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .sapMMessagePage .sapMBar .sapMBarMiddle {text-align:center}
 .sapMMessagePage .sapMBar .sapMBarMiddle .sapMBarPH {line-height:2rem}
 
+/* MSS 인재육성위원회 */
 .emp-profile-talent-dev .customBox + .customBox {margin-top:20px}
-.emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:35px; line-height:35px}
-.emp-profile-talent-dev .sapUiLayoutCSSGrid .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:35px}
+.emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:36px; line-height:36px}
+.emp-profile-talent-dev .sapUiLayoutCSSGrid .sapMLabel.sapUiSelectable.sapUiLayoutCSSGridItem {min-height:36px}
 .emp-profile-talent-dev .sapUiLayoutCSSGrid .sapMImg {margin:10px 0}
 .emp-profile-talent-dev .sapMScrollCont {margin-right:-5px; padding-right:5px}
 .emp-profile-talent-dev .sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr {margin:3px 0 13px 48px; height:26px; line-height:30px; font-size:18px; font-weight:700; background:linear-gradient(transparent 75%, #d0ecff 25%) no-repeat}
@@ -2404,21 +2405,20 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .emp-profile-talent-dev .sapMInputBase.sapMTextArea .sapMTextAreaInner,
 .emp-profile-talent-dev .sapMInputBase.sapMTextArea .sapMTextAreaMirror {padding:5px 10px}
 .emp-profile-talent-dev .sapMTextAreaGrow {overflow-x:auto; cursor:default}
-.emp-profile-talent-dev .sapMInputBase:not(.sapMTextArea) {height:32px !important}
-.emp-profile-talent-dev .sapMInputBaseIcon {line-height:28px !important}
-.emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper {vertical-align:baseline}
-.emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input {padding:0 0 0 11px !important}
-.emp-profile-talent-dev .sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input[readonly] {padding:0 0 0 0 !important}
-.emp-profile-talent-dev .font-bold::before {line-height:35px; vertical-align:middle; font-weight:700}
-
+.emp-profile-talent-dev .status-combobox.sapMInputBase:not(.sapMTextArea) {height:36px !important}
+.emp-profile-talent-dev .status-combobox.sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper {height:30px !important; line-height:26px}
+.emp-profile-talent-dev .status-combobox.sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input {padding:0 0 0 11px !important}
+.emp-profile-talent-dev .status-combobox.sapMInputBaseHasEndIcons .sapMInputBaseContentWrapper input[readonly] {padding:0 0 0 0 !important}
+.emp-profile-talent-dev .status-combobox .sapMInputBaseIcon {line-height:28px !important}
+.emp-profile-talent-dev .font-bold::before {line-height:36px; vertical-align:middle; font-weight:700}
 
 .emp-profile-talent-dev .file-updown-icon-group {align-items:center}
 .emp-profile-talent-dev .file-updown-icon-group > .sapMFlexItem {height:100%}
 .emp-profile-talent-dev .file-updown-icon-group > .sapMFlexItem:not(.sapUiHiddenPlaceholder) + .sapMFlexItem {margin-left:10px}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiIcon::before {font-size:20px}
 .emp-profile-talent-dev .file-updown-icon-group .sapMFlexItem > .sapUiIcon {vertical-align:middle}
-.emp-profile-talent-dev .file-updown-icon-group .sapUiFup, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup div, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup form {height:35px; line-height:35px}
-.emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn {width:auto; min-width:auto; height:35px}
+.emp-profile-talent-dev .file-updown-icon-group .sapUiFup, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup div, .emp-profile-talent-dev .file-updown-icon-group .sapUiFup form {height:36px; line-height:36px}
+.emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn {width:auto; min-width:auto; height:36px}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapMBtnTransparent {min-width:auto; border:0; background:transparent !important}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn .sapUiIcon {margin-right:0; width:auto; height:22px; line-height:22px}
 .emp-profile-talent-dev .file-updown-icon-group .sapUiFup .sapUiFupGroup .sapMBtn:hover .sapUiIcon::before {color:#007bff !important}

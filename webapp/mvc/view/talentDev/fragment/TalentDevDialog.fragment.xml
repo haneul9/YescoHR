@@ -4,7 +4,7 @@
   <Dialog title="{i18n>LABEL_42001} ({/Detail/Gjahr}{i18n>LABEL_42002} {/Detail/Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="780px" draggable="true" horizontalScrolling="false" verticalScrolling="false" busy="{busy}" busyIndicatorDelay="0" class="emp-profile-talent-dev">
     <content>
       <HBox class="vCardBox sapUiMediumMarginBottom py-15-px">
-        <grid:CSSGrid gridTemplateRows="repeat(5, 35px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="0">
+        <grid:CSSGrid gridTemplateRows="repeat(5, 36px)" gridTemplateColumns="repeat(5, 1fr)" gridGap="0">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
@@ -35,7 +35,7 @@
           </HBox>
 
           <Label text="{i18n>LABEL_42005}" />
-          <ComboBox items="{/ZstatEntry}" selectedKey="{/Detail/Zstat}" width="100px" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }">
+          <ComboBox items="{/ZstatEntry}" selectedKey="{/Detail/Zstat}" width="100px" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" class="status-combobox">
             <layoutData>
               <grid:GridItemLayoutData gridColumn="3 / 6" />
             </layoutData>
