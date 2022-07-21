@@ -51,8 +51,8 @@
           </Text>
         </grid:CSSGrid>
       </HBox>
-      <VBox class="vCardBox py-20-px">
-        <ScrollContainer height="500px" horizontal="false" vertical="true">
+      <VBox class="vCardBox py-20-px" height="calc(100% - 232px)">
+        <ScrollContainer height="100%" horizontal="false" vertical="true">
           <layoutData>
             <FlexItemData growFactor="1" />
           </layoutData>

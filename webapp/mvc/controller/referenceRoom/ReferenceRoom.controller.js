@@ -724,7 +724,7 @@ sap.ui.define(
             error: (oError) => {
               this.debug(`Error: ${oError}`);
 
-              // 파일 업로드에 실패하였습니다.
+              // 파일 업로드를 실패하였습니다.
               reject({ code: 'E', message: this.getBundleText('MSG_00041') });
             },
           });

@@ -1,7 +1,9 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
@@ -12,7 +14,9 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    Fragment,
     CSSGrid,
+    JSONModel,
     Table,
     AppUtils,
     ComboEntry,
@@ -344,6 +348,14 @@ sap.ui.define(
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
+              if (menuKey === 'M020') {
+                // 인재육성위원회 row click
+                oTable.attachCellClick((oEvent) => {
+                  const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
+                  this.openTalentDevDialog(mRowData);
+                });
+              }
+
               aVisibleHeaders.forEach((head, index) => {
                 const oColumn = new sap.ui.table.Column({
                   width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
@@ -397,6 +409,51 @@ sap.ui.define(
 
           oTabContainer.addContent(oWrapperVBox);
         });
+      },
+
+      openTalentDevDialog({ Pernr, Value01, Value06, Value07 }) {
+        const oView = this.getView();
+
+        AppUtils.setAppBusy(true);
+
+        setTimeout(async () => {
+          if (!this._pTalentDevDialog) {
+            this._pTalentDevDialog = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.mvc.view.employee.fragment.TalentDevDialog',
+              controller: this,
+            });
+
+            const oTalentDevDialogModel = new JSONModel({});
+            this.setViewModel(oTalentDevDialogModel, 'talentDev');
+
+            this._pTalentDevDialog //
+              .setModel(oTalentDevDialogModel)
+              .bindElement('/')
+              .attachAfterClose(() => {
+                setTimeout(() => {
+                  this.getViewModel('talentDev').setProperty('/', null);
+                });
+              });
+
+            oView.addDependent(this._pTalentDevDialog);
+          }
+
+          setTimeout(async () => {
+            const oModel = this.getModel(ServiceNames.TALENT);
+            const mFilters = { Pernr, Gjahr: Value01, Mdate: moment(Value06).hour(9).toDate(), Zseqnr: Value07 };
+            const aTalentDevData = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
+            this.getViewModel('talentDev').setProperty('/', aTalentDevData[0]);
+            AppUtils.setAppBusy(false);
+          });
+
+          this._pTalentDevDialog.open();
+        }, 100);
+      },
+
+      onTalentDevDialogClose() {
+        AppUtils.setAppBusy(false);
+        this._pTalentDevDialog.close();
       },
 
       async onPressTalentDevFileDownload(oEvent) {

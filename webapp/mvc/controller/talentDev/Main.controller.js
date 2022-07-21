@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/model/odata/ODataModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/FileDataProvider',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -19,6 +20,7 @@ sap.ui.define(
     ODataModel,
     AppUtils,
     FileDataProvider,
+    UI5Error,
     Client,
     ServiceManager,
     ServiceNames,
@@ -222,7 +224,7 @@ sap.ui.define(
             mPayload.TalentDevTargetSet = [];
           } else if (Mode === '11') {
             mPayload.TalentDevCommitteeSet = [];
-          } else if (Mode === '2') {
+          } else if (Mode === '2' || Mode === '21') {
             mPayload.TalentDevTargetSet = [];
           }
 
@@ -256,15 +258,15 @@ sap.ui.define(
 
           if (Mode === '1' || Mode === '2') {
             const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
-            const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) =>
-              _.chain(o)
+            const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) => {
+              const { Gjahr, Pernr, Zseqnr, Werks, Mdate } = o;
+              return _.chain(o)
                 .omit('__metadata')
                 .update('Zstat', (sZstat) => (_.chain(sZstat).parseInt().isNaN().value() ? '0' : sZstat))
                 .merge({
                   DescFlag: o.Desc === 'X' ? 'O' : '', // 엑셀 다운로드용
                   // 심리분석보고서
                   Attachment1: {
-                    ...o,
                     Visible: {
                       Upload: Number(o.Appno1) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                       Download: Number(o.Appno1) > 0,
@@ -272,11 +274,10 @@ sap.ui.define(
                       Remove: Number(o.Appno1) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                     },
                     Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                    AppnoName: 'Appno1',
+                    Keys: { AppnoName: 'Appno1', Gjahr, Pernr, Zseqnr, Werks, Mdate },
                   },
                   // 통합리포트
                   Attachment2: {
-                    ...o,
                     Visible: {
                       Upload: Number(o.Appno2) === 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                       Download: Number(o.Appno2) > 0,
@@ -284,11 +285,11 @@ sap.ui.define(
                       Remove: Number(o.Appno2) > 0 && o.FileupChk === 'X' && o.Zstat !== '2',
                     },
                     Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: o.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                    AppnoName: 'Appno2',
+                    Keys: { AppnoName: 'Appno2', Gjahr, Pernr, Zseqnr, Werks, Mdate },
                   },
                 })
-                .value()
-            );
+                .value();
+            });
             const mEmployeeCount = _.chain(aEmployeeList)
               .map('Zstat')
               .countBy()
@@ -387,7 +388,6 @@ sap.ui.define(
       onPressEmployeeExcelDownload() {
         this.setContentsBusy(true, 'Button');
 
-        const [TRUE, FALSE] = ['true', 'false'];
         const oTable = this.byId('employeeTable');
         const sFileName = `${this.getBundleText('LABEL_43001')}_${this.getBundleText('LABEL_43002')}`; // 인재육성위원회_대상자
         const aCustomColumns = [
@@ -438,6 +438,21 @@ sap.ui.define(
         });
       },
 
+      /**
+       * 설정에 없는 파일 확장자가 선택된 경우 발생하는 event
+       *
+       * @param {*} oEvent
+       */
+      onTypeMissmatch(oEvent) {
+        const sSupportedFileTypes = (oEvent.getSource().getFileType() || []).join(', ');
+        MessageBox.alert(this.getBundleText('MSG_43004', oEvent.getParameter('fileType'), sSupportedFileTypes)); // 선택된 파일은 업로드가 불가한 확장자({0})를 가지고 있습니다.\n\n업로드 가능 확장자 :\n{1}
+      },
+
+      /**
+       * FileUploader 파일 선택시 발생하는 event
+       *
+       * @param {*} oEvent
+       */
       async onUploaderChange(oEvent) {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
@@ -492,11 +507,11 @@ sap.ui.define(
         return oUploadModel._createRequest().headers['x-csrf-token'];
       },
 
-      onTypeMissmatch(oEvent) {
-        const sSupportedFileTypes = (oEvent.getSource().getFileType() || []).join(', ');
-        MessageBox.alert(this.getBundleText('MSG_43004', oEvent.getParameter('fileType'), sSupportedFileTypes)); // 선택된 파일은 업로드가 불가한 확장자({0})를 가지고 있습니다.\n\n업로드 가능 확장자 :\n{1}
-      },
-
+      /**
+       * Upload 완료 후 발생하는 event, upload 실패시에도 발생
+       *
+       * @param {*} oEvent
+       */
       async onUploadComplete(oEvent) {
         await this.updateFileData(oEvent, () => {
           const { Pernr } = this.getViewModel().getProperty('/searchConditions');
@@ -507,24 +522,54 @@ sap.ui.define(
       async updateFileData(oEvent, fnCallback) {
         const sResponseRaw = oEvent.getParameter('responseRaw');
         if (!sResponseRaw) {
-          MessageBox.alert(this.getBundleText('MSG_00041')); // 파일 업로드에 실패하였습니다.
+          MessageBox.alert(this.getBundleText('MSG_00041')); // 파일 업로드를 실패하였습니다.
           return;
         }
 
-        const mResponse = JSON.parse(sResponseRaw);
-        if (mResponse.EError) {
-          MessageBox.alert(mResponse.EError);
+        const iStatusCode = oEvent.getParameter('status');
+        if (iStatusCode !== 200 && iStatusCode !== 201) {
+          try {
+            const aMessages = [this.getBundleText('MSG_00041')]; // 파일 업로드를 실패하였습니다.
+            const sResponseHtmlPreTag = $.parseHTML(sResponseRaw).filter((ele) => ele.nodeName === 'PRE');
+            if (sResponseHtmlPreTag.length) {
+              aMessages.push(sResponseHtmlPreTag[0].textContent.split(/at/)[0].trim());
+            }
+            MessageBox.alert(aMessages.join('\n\n'));
+          } catch (oError) {
+            AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
+
+            if (oError instanceof UI5Error) {
+              oError.code = oError.LEVEL.INFORMATION;
+            }
+            AppUtils.handleError(oError);
+          }
           return;
         }
+        // try {
+        //   const mResponse = JSON.parse(sResponseRaw);
+        //   if (mResponse.EError) {
+        //     MessageBox.alert(mResponse.EError);
+        //     return;
+        //   }
+        // } catch (oError) {
+        //   if (oError instanceof UI5Error) {
+        //     oError.code = oError.LEVEL.INFORMATION;
+        //   }
+        //   AppUtils.handleError(oError);
+        //   return;
+        // }
 
         try {
-          const { Gjahr, Pernr, Zseqnr, Werks, Mdate, Request, AppnoName } = oEvent.getSource().getBindingContext().getProperty();
+          const { Request, Keys } = oEvent.getSource().getBindingContext().getProperty();
+          const { AppnoName, Gjahr, Pernr, Zseqnr, Werks, Mdate } = Keys;
 
           await Client.create(this.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Mode: 'U', Gjahr, Pernr, Zseqnr, Werks, Mdate, [AppnoName]: Request.Appno });
 
           // {업로드}되었습니다.
           MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00243'), {
-            onClose: fnCallback,
+            onClose: () => {
+              fnCallback(Request.Appno);
+            },
           });
         } catch (oError) {
           AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
@@ -553,8 +598,9 @@ sap.ui.define(
       },
 
       async removeFile(oEvent, fnCallback) {
-        const { Gjahr, Pernr, Zseqnr, Werks, Mdate, Request, AppnoName } = oEvent.getSource().getBindingContext().getProperty();
+        const { Request, Keys } = oEvent.getSource().getBindingContext().getProperty();
         const { Appno, Zworktyp, Zfileseq } = Request;
+        const { AppnoName, Gjahr, Pernr, Zseqnr, Werks, Mdate } = Keys;
         const sMessageCode = 'LABEL_00110'; // 삭제
 
         const bGoOn = await new Promise((resolve) => {
