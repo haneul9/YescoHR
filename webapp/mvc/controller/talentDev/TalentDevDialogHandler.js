@@ -69,7 +69,7 @@ sap.ui.define(
             .setModel(this.oDialogModel)
             .bindElement('/')
             .attachAfterOpen(() => {
-              this.oDialog.getButtons()[0].$().focus();
+              [...this.oDialog.getButtons()].pop().$().focus();
             })
             .attachAfterClose(() => {
               setTimeout(() => {

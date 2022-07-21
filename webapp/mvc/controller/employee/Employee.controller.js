@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/FlexItemData',
     'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
@@ -21,6 +22,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    FlexItemData,
     Fragment,
     CSSGrid,
     Filter,
@@ -557,10 +559,12 @@ sap.ui.define(
 
               if (menuKey === 'M020') {
                 // 인재육성위원회 row click
-                oTable.attachCellClick((oEvent) => {
-                  const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
-                  this.openTalentDevDialog(mRowData);
-                });
+                oTable //
+                  .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
+                  .attachCellClick((oEvent) => {
+                    const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
+                    this.openTalentDevDialog(mRowData);
+                  });
               }
 
               aVisibleHeaders.forEach((head, index) => {
@@ -576,7 +580,6 @@ sap.ui.define(
                   oColumnTemplate = new sap.ui.core.Icon({
                     src: this.ICONS[head.Fieldname],
                     visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
-                    size: '20px',
                   });
                   if (head.Fieldname !== 'RESOL') {
                     oColumnTemplate
