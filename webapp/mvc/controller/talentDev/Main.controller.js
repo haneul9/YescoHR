@@ -469,13 +469,13 @@ sap.ui.define(
         }
 
         const oFileUploader = oEvent.getSource();
-        const { Request } = oFileUploader.getBindingContext().getProperty();
+        const mRequest = oFileUploader.getBindingContext().getProperty('Request');
 
-        if (!Number(Request.Appno)) {
+        if (!Number(mRequest.Appno)) {
           try {
             const [{ Appno }] = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'CreateTalentNo');
 
-            Request.Appno = Appno;
+            mRequest.Appno = Appno;
           } catch (oError) {
             this.debug('Controller > talentDev > uploadFile > CreateTalentNo Error', oError);
 
@@ -488,11 +488,11 @@ sap.ui.define(
           }
         }
 
-        Request.CsrfToken = await this.getCsrfToken(Request.ServiceUrl);
-        Request.EncodedFilename = encodeURIComponent(mSelectedFile.name);
-        Request.Zfilename = mSelectedFile.name;
-        Request.Type = mSelectedFile.type;
-        Request.Zbinkey = String(parseInt(Math.random() * 100000000000000));
+        mRequest.CsrfToken = await this.getCsrfToken(mRequest.ServiceUrl);
+        mRequest.EncodedFilename = encodeURIComponent(mSelectedFile.name);
+        mRequest.Zfilename = mSelectedFile.name;
+        mRequest.Type = mSelectedFile.type;
+        mRequest.Zbinkey = String(parseInt(Math.random() * 100000000000000));
 
         oFileUploader.getModel().refresh();
         oFileUploader.upload();
@@ -582,7 +582,7 @@ sap.ui.define(
       },
 
       async onPressFileDownload(oEvent) {
-        const { Appno, Zworktyp } = oEvent.getSource().getBindingContext().getProperty().Request;
+        const { Appno, Zworktyp } = oEvent.getSource().getBindingContext().getProperty('Request');
         const mFile = await FileDataProvider.readData(Appno, Zworktyp);
 
         this.AttachFileAction.openFileLink(mFile.Fileuri);

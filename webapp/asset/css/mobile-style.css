@@ -560,3 +560,13 @@ html.sap-ios.fusioncharts-3-18-0 .custom-chart .fusioncharts-container svg g[cla
 
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken {border:none; background-color:transparent}
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken .sapMTokenIcon::before {content:''}
+
+.emp-profile-talent-dev .sapUiLayoutCSSGrid {padding:9px 16px}
+.emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:40px; line-height:40px; font-size:16px}
+.emp-profile-talent-dev .sapMScrollCont {margin-right:0; padding-right:0}
+.emp-profile-talent-dev .sapMScrollCont .sapMPanel {padding:0 16px}
+.emp-profile-talent-dev .sapMScrollCont .sapMPanelWrappingDiv {border:0; padding:0}
+.emp-profile-talent-dev .sapMPanel + .sapMPanel {margin-top:10px}
+.emp-profile-talent-dev .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMMessageDialog .sapMDialogScrollCont {padding:0}
+
+.sapMIBar.sapMBar .sapMBarChild.nav-back-in-popover {height:48px; width:32px; min-width:32px; flex-grow:0; margin-left:10px}

@@ -77,6 +77,10 @@ sap.ui.define(
         return this;
       },
 
+      getMobileHomeButton() {
+        return this.getAppController().byId('mobile-basis-home');
+      },
+
       /**
        * @public
        */

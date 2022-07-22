@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <Popover placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{/busy}" busyIndicatorDelay="0" modal="true">
+    <customHeader>
+      <Bar>
+        <contentLeft>
+          <Button type="Back" press=".onPressDialogClose" class="nav-back-in-popover" />
+        </contentLeft>
+        <contentMiddle>
+          <Title text="{i18n>LABEL_42001}" />
+        </contentMiddle>
+      </Bar>
+    </customHeader>
+    <content>
+      <VBox class="contents">
+        <VBox class="wrap" binding="{/header}">
+          <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px">
+            <VBox justifyContent="Center" alignItems="Center">
+              <layoutData>
+                <grid:GridItemLayoutData gridRow="span 2" />
+              </layoutData>
+              <Image src="{profilePath}" class="member-photo" mode="Background" width="88px" height="88px" />
+            </VBox>
+            <HBox justifyContent="SpaceBetween">
+              <Label text="{name}" class="name" />
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${chief}}" />
+            </HBox>
+            <grid:CSSGrid items="{path: 'baseInfo'}" gridTemplateColumns="1fr">
+              <Label text="{data}">
+                <customData>
+                  <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
+                </customData>
+              </Label>
+            </grid:CSSGrid>
+          </grid:CSSGrid>
+        </VBox>
+        <VBox class="emp-profile-talent-dev" height="100%" binding="{/detail}">
+          <layoutData>
+            <FlexItemData maxHeight="calc(100% - 112px)" />
+          </layoutData>
+          <grid:CSSGrid gridAutoRows="40px" gridTemplateColumns="2fr 3fr" gridGap="1px 8px">
+            <Label text="{i18n>LABEL_43003}" />
+            <Text text="{Gjahr}{i18n>LABEL_42002} ({Zseqnrtx}{i18n>LABEL_42003})" />
+            <Label text="{i18n>LABEL_42005}" />
+            <Text text="{Zstattx}" />
+            <Label text="{i18n>LABEL_42008}" />
+            <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+            <Label text="{i18n>LABEL_42006}" />
+            <core:Icon src="sap-icon://attachment" visible="{= Number(${Appno2}) > 0 }" press=".onPressFileDownload" class="align-left" hoverColor="#007bff">
+              <core:customData>
+                <core:CustomData key="appno" value="{Appno2}" />
+              </core:customData>
+            </core:Icon>
+            <Text text=" " visible="{= Number(${Appno2}) === 0 }" />
+            <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
+            <core:Icon src="sap-icon://attachment" visible="{= ${File1Hide} !== 'X' &amp;&amp; Number(${Appno1}) > 0 }" press=".onPressFileDownload" class="align-left" hoverColor="#007bff">
+              <core:customData>
+                <core:CustomData key="appno" value="{Appno1}" />
+              </core:customData>
+            </core:Icon>
+          </grid:CSSGrid>
+          <ScrollContainer height="100%" horizontal="false" vertical="true">
+            <layoutData>
+              <FlexItemData maxHeight="calc(100% - 222px)" />
+            </layoutData>
+            <content>
+              <Panel expandable="true" expanded="true" headerText="{Title1}">
+                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc1}" width="100%" editable="false" />
+              </Panel>
+              <Panel expandable="true" expanded="true" headerText="{Title2}">
+                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc2}" width="100%" editable="false" />
+              </Panel>
+              <Panel expandable="true" expanded="true" headerText="{Title3}">
+                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc3}" width="100%" editable="false" />
+              </Panel>
+            </content>
+          </ScrollContainer>
+        </VBox>
+      </VBox>
+    </content>
+  </Popover>
+</core:FragmentDefinition>

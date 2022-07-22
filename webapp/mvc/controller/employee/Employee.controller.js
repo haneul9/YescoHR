@@ -6,12 +6,10 @@ sap.ui.define(
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
-    'sap/ui/model/json/JSONModel',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/Appno',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
-    'sap/ui/yesco/common/FileDataProvider',
     'sap/ui/yesco/common/PostcodeDialogHandler',
     'sap/ui/yesco/common/Validator',
     'sap/ui/yesco/common/odata/Client',
@@ -19,6 +17,7 @@ sap.ui.define(
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/talentDev/employeeView/TalentDevDialogHandler',
   ],
   (
     // prettier 방지용 주석
@@ -27,19 +26,18 @@ sap.ui.define(
     CSSGrid,
     Filter,
     FilterOperator,
-    JSONModel,
     Table,
     Appno,
     AppUtils,
     ComboEntry,
-    FileDataProvider,
     PostcodeDialogHandler,
     Validator,
     Client,
     ServiceNames,
     UI5Error,
     MessageBox,
-    BaseController
+    BaseController,
+    TalentDevDialogHandler
   ) => {
     'use strict';
 
@@ -565,6 +563,8 @@ sap.ui.define(
                     const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
                     this.openTalentDevDialog(mRowData);
                   });
+
+                this.oTalentDevDialogHandler = new TalentDevDialogHandler(this);
               }
 
               aVisibleHeaders.forEach((head, index) => {
@@ -674,46 +674,6 @@ sap.ui.define(
 
         oSelectDialog.open();
         AppUtils.setAppBusy(false);
-      },
-
-      openTalentDevDialog({ Pernr, Value01, Value06, Value07 }) {
-        const oView = this.getView();
-
-        AppUtils.setAppBusy(true);
-
-        setTimeout(async () => {
-          if (!this._pTalentDevDialog) {
-            this._pTalentDevDialog = await Fragment.load({
-              id: oView.getId(),
-              name: 'sap.ui.yesco.mvc.view.employee.fragment.TalentDevDialog',
-              controller: this,
-            });
-
-            const oTalentDevDialogModel = new JSONModel({});
-            this.setViewModel(oTalentDevDialogModel, 'talentDev');
-
-            this._pTalentDevDialog //
-              .setModel(oTalentDevDialogModel)
-              .bindElement('/')
-              .attachAfterClose(() => {
-                setTimeout(() => {
-                  this.getViewModel('talentDev').setProperty('/', null);
-                });
-              });
-
-            oView.addDependent(this._pTalentDevDialog);
-          }
-
-          setTimeout(async () => {
-            const oModel = this.getModel(ServiceNames.TALENT);
-            const mFilters = { Pernr, Gjahr: Value01, Mdate: moment(Value06).hour(9).toDate(), Zseqnr: Value07 };
-            const aTalentDevData = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
-            this.getViewModel('talentDev').setProperty('/', aTalentDevData[0]);
-            AppUtils.setAppBusy(false);
-          });
-
-          this._pTalentDevDialog.open();
-        }, 100);
       },
 
       async refreshTableContents({ oViewModel, sMenuKey }) {
@@ -1497,14 +1457,12 @@ sap.ui.define(
         oViewModel.setProperty('/employee/dialog/form/Zzaddr1', sFullAddr);
       },
 
-      onTalentDevDialogClose() {
-        AppUtils.setAppBusy(false);
-        this._pTalentDevDialog.close();
+      openTalentDevDialog(mRowData) {
+        this.oTalentDevDialogHandler.openDialog(mRowData); // { Pernr, Gjahr, Mdate, Zseqnr }
       },
 
       async onPressTalentDevFileDownload(oEvent) {
-        const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
-        this.AttachFileAction.openFileLink(mFile.Fileuri);
+        this.oTalentDevDialogHandler.onPressFileDownload(oEvent);
       },
 
       /*****************************************************************

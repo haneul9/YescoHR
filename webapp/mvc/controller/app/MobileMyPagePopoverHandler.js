@@ -148,7 +148,7 @@ sap.ui.define(
         if (this.oMyPagePopover.isOpen()) {
           this.onPopoverClose();
         } else {
-          this.oMyPagePopover.openBy(this.oController.byId('mobile-basis-mypage'));
+          this.oMyPagePopover.openBy(AppUtils.getMobileHomeButton());
           this.setBusy(false);
         }
       },

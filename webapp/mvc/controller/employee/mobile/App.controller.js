@@ -14,6 +14,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/talentDev/employeeView/MobileTalentDevPopoverHandler',
   ],
   (
     // prettier 방지용 주석
@@ -29,7 +30,8 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
-    BaseController
+    BaseController,
+    MobileTalentDevPopoverHandler
   ) => {
     'use strict';
 
@@ -180,12 +182,20 @@ sap.ui.define(
                 }
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.gridTemplate = _.get(this.LIST_GRID_TEMPLATE, o.Menuc, mSubMenu.gridTemplate);
-                mSubMenu.data.push({
-                  contents: _.chain(o)
-                    .pickBy((v, p) => _.startsWith(p, 'Value') && !_.isEmpty(v))
-                    .map((v) => ({ valueTxt: v }))
-                    .value(),
-                });
+                if (aTabMenus[index].Menuc1 === 'M020') {
+                  // 인재육성위원회
+                  mSubMenu.data.push({
+                    contents: [{ valueTxt: o.Value01 }, { valueTxt: o.Value02 }],
+                    popoverParams: { Pernr: o.Pernr, Gjahr: o.Value01.replace(/\D/g, ''), Mdate: o.Value06, Zseqnr: o.Value07 },
+                  });
+                } else {
+                  mSubMenu.data.push({
+                    contents: _.chain(o)
+                      .pickBy((v, p) => _.startsWith(p, 'Value') && !_.isEmpty(v))
+                      .map((v) => ({ valueTxt: v }))
+                      .value(),
+                  });
+                }
               }
             });
           });
@@ -251,11 +261,25 @@ sap.ui.define(
               const oList = new List({
                 noDataText: this.getBundleText('MSG_00001'),
                 items: {
-                  path: `${sTableDataPath}/data`,
+                  path: `data`,
                   templateShareable: false,
-                  template: new CustomListItem().addContent(oListCSSGrid),
+                  template: new CustomListItem({
+                    content: oListCSSGrid,
+                    type: menuKey === 'M020' ? 'Active' : 'Inactive',
+                  }),
                 },
-              });
+              }).bindElement(sTableDataPath);
+
+              if (menuKey === 'M020') {
+                oList.attachItemPress((oEvent) => {
+                  const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
+                  const mHeaderData = this.getViewModel().getProperty('/header');
+
+                  this.oMobileTalentDevPopoverHandler.openDialog(mHeaderData, mRowData);
+                });
+
+                this.oMobileTalentDevPopoverHandler = new MobileTalentDevPopoverHandler(this);
+              }
 
               oSubVBox.addItem(oList);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
