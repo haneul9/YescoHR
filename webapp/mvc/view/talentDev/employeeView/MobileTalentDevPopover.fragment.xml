@@ -62,7 +62,7 @@
           </grid:CSSGrid>
           <ScrollContainer height="100%" horizontal="false" vertical="true">
             <layoutData>
-              <FlexItemData maxHeight="calc(100% - 222px)" />
+              <FlexItemData maxHeight="calc(100% - 227px)" />
             </layoutData>
             <content>
               <Panel expandable="true" expanded="true" headerText="{Title1}">
