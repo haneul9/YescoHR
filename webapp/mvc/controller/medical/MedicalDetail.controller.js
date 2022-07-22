@@ -889,11 +889,12 @@ sap.ui.define(
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
-              if (iAddBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
-                return true;
-              }
+              // 2022-07-22 금액 체크로직 삭제
+              // if (iAddBet02 < iActCost) {
+              //   // 비급여 추가한도를 초과했을경우
+              //   MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+              //   return true;
+              // }
             }
           }
         }
@@ -1082,11 +1083,12 @@ sap.ui.define(
             } else {
               const iAddBet02 = parseInt(sAddBet02);
 
-              if (iAddBet02 < iActCost) {
-                // 비급여 추가한도를 초과했을경우
-                MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
-                oViewModel.setProperty('/DialogLimit', true);
-              }
+              // 2022-07-22 금액 체크 로직 삭제
+              // if (iAddBet02 < iActCost) {
+              //   // 비급여 추가한도를 초과했을경우
+              //   MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
+              //   oViewModel.setProperty('/DialogLimit', true);
+              // }
             }
           }
         }
