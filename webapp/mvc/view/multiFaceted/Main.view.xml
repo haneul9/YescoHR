@@ -1,0 +1,26 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.multiFaceted.Main"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <HBox class="vCardBox" height="80px">
+        <HBox class="form-bar" alignItems="Center">
+          <Label text="{i18n>LABEL_43002}" />
+          <custom:ClearableInput key="{/filter/Pernr}" value="{/filter/Ename}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onEmployeeSearchOpen" width="150px" />
+          <Label text="{i18n>LABEL_43003}" />
+          <Input type="Number" maxLength="4" value="{/filter/Gjahr}" width="150px" />
+          <Button text="{i18n>LABEL_00244}" icon="sap-icon://download" iconDensityAware="false" press=".onPressDownload" busy="{/busy/Button}" busyIndicatorDelay="0" />
+        </HBox>
+      </HBox>
+    </VBox>
+  </Page>
+</mvc:View>
