@@ -64,7 +64,7 @@
       <Column width="150px">
         <m:Label text="{i18n>LABEL_43012}" />
         <template>
-          <core:Icon src="sap-icon://comment" size="20px" width="100%" visible="{= ${Desc} === 'X' }" />
+          <core:Icon src="sap-icon://comment" width="100%" visible="{= ${Desc} === 'X' }" />
         </template>
       </Column>
     </columns>

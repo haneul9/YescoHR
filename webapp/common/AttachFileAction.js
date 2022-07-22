@@ -188,15 +188,17 @@ sap.ui.define(
        * 첨부파일 링크 Click
        */
       onFileLink(oEvent) {
-        var vFileInfo = oEvent.getSource().getBindingContext().getProperty();
-
-        if (!vFileInfo) return;
-
-        window.open(vFileInfo.Fileuri, '_blank');
+        const mFileData = oEvent.getSource().getBindingContext().getProperty();
+        if (!mFileData) {
+          return;
+        }
+        window.open(mFileData.Fileuri, '_blank');
       },
 
       openFileLink(sUrl) {
-        if (_.isEmpty(sUrl)) return;
+        if (_.isEmpty(sUrl)) {
+          return;
+        }
         window.open(sUrl, '_blank');
       },
 
@@ -276,7 +278,10 @@ sap.ui.define(
         const Datas = { Data: [] };
 
         oModel.read('/FileListSet', {
-          filters: [new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno), new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.getApprovalType())],
+          filters: [
+            new sap.ui.model.Filter('Appno', sap.ui.model.FilterOperator.EQ, oTableRowData.Appno),
+            new sap.ui.model.Filter('Zworktyp', sap.ui.model.FilterOperator.EQ, oController.getApprovalType()),
+          ],
           success: (data) => {
             if (data && data.results.length) {
               data.results.forEach((elem) => {
@@ -370,7 +375,7 @@ sap.ui.define(
                 error: (oError) => {
                   this.debug(`Error: ${oError}`);
 
-                  // 파일 업로드에 실패하였습니다.
+                  // 파일 업로드를 실패하였습니다.
                   reject({ code: 'E', message: this.getBundleText('MSG_00041') });
                 },
                 complete: () => {
@@ -416,7 +421,7 @@ sap.ui.define(
               error: (oError) => {
                 this.debug(`Error: ${oError}`);
 
-                // 파일 업로드에 실패하였습니다.
+                // 파일 업로드를 실패하였습니다.
                 reject({ code: 'E', message: this.getBundleText('MSG_00041') });
               },
             });

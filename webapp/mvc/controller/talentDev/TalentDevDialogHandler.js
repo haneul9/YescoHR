@@ -5,6 +5,7 @@ sap.ui.define(
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/Debuggable',
+    'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
@@ -15,6 +16,7 @@ sap.ui.define(
     JSONModel,
     AppUtils,
     Debuggable,
+    UI5Error,
     Client,
     ServiceNames,
     MessageBox
@@ -71,6 +73,7 @@ sap.ui.define(
             })
             .attachAfterClose(() => {
               setTimeout(() => {
+                this.oDialogModel.setProperty('/Original', null);
                 this.oDialogModel.setProperty('/Detail', null);
               });
             });
@@ -110,25 +113,23 @@ sap.ui.define(
               .merge({
                 // 심리분석보고서
                 Attachment1: {
-                  ...mPopupData,
                   Visible: {
                     Upload: !bUploaded1 && bUploadAuth && bEditAuth && !bViewMode && !bFile1Hide,
                     Download: bUploaded1 && !bFile1Hide,
                     Remove: bUploaded1 && bUploadAuth && bEditAuth && !bViewMode && !bFile1Hide,
                   },
                   Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: mPopupData.Appno1, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                  AppnoName: 'Appno1',
+                  Keys: { AppnoName: 'Appno1', Gjahr, Pernr, Zseqnr, Werks: mPopupData.Werks, Mdate },
                 },
                 // 통합리포트
                 Attachment2: {
-                  ...mPopupData,
                   Visible: {
                     Upload: !bUploaded2 && bUploadAuth && bEditAuth && !bViewMode,
                     Download: bUploaded2,
                     Remove: bUploaded2 && bUploadAuth && bEditAuth && !bViewMode,
                   },
                   Request: { ServiceUrl, UploadUrl, FileTypes, CsrfToken: null, Appno: mPopupData.Appno2, Zworktyp, Zfilename: null, EncodedFilename: null, Zbinkey: null, Zfileseq },
-                  AppnoName: 'Appno2',
+                  Keys: { AppnoName: 'Appno2', Gjahr, Pernr, Zseqnr, Werks: mPopupData.Werks, Mdate },
                 },
               })
               .value(),
@@ -161,6 +162,20 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${Pernr}/M`, '_blank', 'width=1400,height=800');
       },
 
+      /**
+       * 설정에 없는 파일 확장자가 선택된 경우 발생하는 event
+       *
+       * @param {*} oEvent
+       */
+      onTypeMissmatch(oEvent) {
+        this.oController.onTypeMissmatch(oEvent);
+      },
+
+      /**
+       * FileUploader 파일 선택시 발생하는 event
+       *
+       * @param {*} oEvent
+       */
       async onUploaderChange(oEvent) {
         this.setBusy();
         const bSuccess = await this.oController.uploadFile(oEvent);
@@ -169,14 +184,20 @@ sap.ui.define(
         }
       },
 
-      onTypeMissmatch(oEvent) {
-        this.oController.onTypeMissmatch(oEvent);
-      },
-
+      /**
+       * Upload 완료 후 발생하는 event, upload 실패시에도 발생
+       *
+       * @param {*} oEvent
+       */
       async onUploadComplete(oEvent) {
-        await this.oController.updateFileData(oEvent, async () => {
+        const sAppnoName = oEvent.getSource().getBindingContext().getProperty('Keys/AppnoName'); // Appno1 or Appno2
+
+        await this.oController.updateFileData(oEvent, (sAppno) => {
           this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
-          await this.retrieveDetailData(this.initParams);
+          // await this.retrieveDetailData(this.initParams);
+          this.oDialogModel.setProperty(`/Detail/${sAppnoName}`, sAppno);
+          this.oDialogModel.setProperty(`/Original/${sAppnoName}`, sAppno);
+          this.displayFileIcons(this.oDialogModel.getProperty('/Detail'));
         });
 
         this.setBusy(false);
@@ -189,50 +210,23 @@ sap.ui.define(
       async onPressFileRemove(oEvent) {
         this.setBusy();
 
-        await this.oController.removeFile(oEvent, async () => {
+        const sAppnoName = oEvent.getSource().getBindingContext().getProperty('Keys/AppnoName'); // Appno1 or Appno2
+
+        await this.oController.removeFile(oEvent, () => {
           this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
-          await this.retrieveDetailData(this.initParams);
+          // this.retrieveDetailData(this.initParams);
+          this.oDialogModel.setProperty(`/Detail/${sAppnoName}`, '0');
+          this.oDialogModel.setProperty(`/Original/${sAppnoName}`, '0');
+          this.displayFileIcons(this.oDialogModel.getProperty('/Detail'));
         });
 
         this.setBusy(false);
       },
 
       onPressEdit() {
-        const { Appno1, Appno2, File1Hide, FileupChk, AuthChange } = this.oDialogModel.getProperty('/Detail');
-        const [
-          bUploaded1, //
-          bUploaded2,
-          bFile1Hide,
-          bUploadAuth,
-          bEditAuth,
-        ] = [
-          Number(Appno1) > 0, //
-          Number(Appno2) > 0,
-          File1Hide === 'X',
-          FileupChk === 'X',
-          AuthChange === 'X',
-        ];
-        const [
-          bVisibleUpload1, //
-          bVisibleRemove1,
-          bVisibleUpload2,
-          bVisibleRemove2,
-        ] = [
-          !bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide, //
-          bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide,
-          !bUploaded2 && bUploadAuth && bEditAuth,
-          bUploaded2 && bUploadAuth && bEditAuth,
-        ];
         this.oDialogModel.setProperty('/Original/ViewMode', false);
-        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Upload', bVisibleUpload1);
-        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Remove', bVisibleRemove1);
-        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Upload', bVisibleUpload2);
-        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Remove', bVisibleRemove2);
         this.oDialogModel.setProperty('/Detail/ViewMode', false);
-        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Upload', bVisibleUpload1);
-        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Remove', bVisibleRemove1);
-        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Upload', bVisibleUpload2);
-        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Remove', bVisibleRemove2);
+        this.displayFileIcons(this.oDialogModel.getProperty('/Detail'));
       },
 
       onPressSave() {
@@ -305,6 +299,49 @@ sap.ui.define(
         } finally {
           this.setBusy(false);
         }
+      },
+
+      displayFileIcons({ Appno1, Appno2, File1Hide, FileupChk, AuthChange }) {
+        const [
+          bUploaded1, // 심리분석보고서 첨부파일 존재 여부
+          bUploaded2, // 통합리포트 첨부파일 존재 여부
+          bFile1Hide, // 심리분석보고서 첨부파일 조회 권한 여부
+          bUploadAuth, // 첨부파일 업로드 권한 여부
+          bEditAuth, // 인재육성위원회 항목 작성/수정 권한 여부
+        ] = [
+          Number(Appno1) > 0, //
+          Number(Appno2) > 0,
+          File1Hide === 'X',
+          FileupChk === 'X',
+          AuthChange === 'X',
+        ];
+        const [
+          bVisibleUpload1, // 심리분석보고서 업로드 아이콘 보임 여부
+          bVisibleDownload1, // 심리분석보고서 다운로드 아이콘 보임 여부
+          bVisibleRemove1, // 심리분석보고서 삭제 아이콘 보임 여부
+          bVisibleUpload2, // 통합리포트 업로드 아이콘 보임 여부
+          bVisibleDownload2, // 통합리포트 다운로드 아이콘 보임 여부
+          bVisibleRemove2, // 통합리포트 삭제 아이콘 보임 여부
+        ] = [
+          !bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide, //
+          bUploaded1 && !bFile1Hide,
+          bUploaded1 && bUploadAuth && bEditAuth && !bFile1Hide,
+          !bUploaded2 && bUploadAuth && bEditAuth,
+          bUploaded2,
+          bUploaded2 && bUploadAuth && bEditAuth,
+        ];
+        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Upload', bVisibleUpload1);
+        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Download', bVisibleDownload1);
+        this.oDialogModel.setProperty('/Original/Attachment1/Visible/Remove', bVisibleRemove1);
+        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Upload', bVisibleUpload2);
+        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Download', bVisibleDownload2);
+        this.oDialogModel.setProperty('/Original/Attachment2/Visible/Remove', bVisibleRemove2);
+        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Upload', bVisibleUpload1);
+        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Download', bVisibleDownload1);
+        this.oDialogModel.setProperty('/Detail/Attachment1/Visible/Remove', bVisibleRemove1);
+        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Upload', bVisibleUpload2);
+        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Download', bVisibleDownload2);
+        this.oDialogModel.setProperty('/Detail/Attachment2/Visible/Remove', bVisibleRemove2);
       },
 
       onPressDialogClose() {

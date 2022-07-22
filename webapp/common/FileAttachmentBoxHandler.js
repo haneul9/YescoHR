@@ -312,7 +312,7 @@ sap.ui.define(
             error: (oError) => {
               AppUtils.debug(`${sUploadUrl} error.`, oError);
 
-              const sMessage1 = AppUtils.getBundleText('MSG_00041'); // 파일 업로드에 실패하였습니다.
+              const sMessage1 = AppUtils.getBundleText('MSG_00041'); // 파일 업로드를 실패하였습니다.
               const sMessage2 = AppUtils.getBundleText('MSG_00052', mFile.Zfilename); // 파일명 : {0}
 
               reject({ code: 'E', message: `${sMessage1}\n\n${sMessage2}` });
