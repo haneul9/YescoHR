@@ -280,6 +280,38 @@ sap.ui.define(
 
       async saveData(sMessageCode) {
         try {
+          const bComplete = this.oDialogModel.getProperty('/Detail/Mode') === 'C';
+          const bDivisionManager = this.oDialogModel.getProperty('/Detail/Setrc') === 'X';
+          if (bComplete && bDivisionManager) {
+            const [sEmailSend, sEmailNotSend, sCancel] = [
+              this.oController.getBundleText('LABEL_00114'), // 확인
+              this.oController.getBundleText('LABEL_43016'), // 확인(메일 미발송)
+              this.oController.getBundleText('LABEL_00118'), // 취소
+            ];
+            const bGoOn = await new Promise((resolve) => {
+              // 완료 처리에 의해 대상자의 부문장에게 알림 메일이 발송됩니다.
+              MessageBox.confirm(this.oController.getBundleText('MSG_43005'), {
+                actions: [sEmailSend, sEmailNotSend, sCancel],
+                styleClass: 'w-450-px',
+                onClose: (sAction) => {
+                  if (sAction === sEmailSend) {
+                    this.oDialogModel.setProperty('/Detail/Mailc', 'X');
+                    resolve(true);
+                  } else if (sAction === sEmailNotSend) {
+                    this.oDialogModel.setProperty('/Detail/Mailc', '');
+                    resolve(true);
+                  } else if (sAction === sCancel) {
+                    this.oDialogModel.setProperty('/Detail/Mailc', '');
+                    resolve(false);
+                  }
+                },
+              });
+            });
+            if (!bGoOn) {
+              return;
+            }
+          }
+
           await Client.create(this.oController.getModel(ServiceNames.TALENT), 'TalentDevDetail', { ...this.oDialogModel.getProperty('/Detail') });
 
           // {저장|완료}되었습니다.

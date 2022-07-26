@@ -224,7 +224,7 @@ sap.ui.define(
             mPayload.TalentDevTargetSet = [];
           } else if (Mode === '11') {
             mPayload.TalentDevCommitteeSet = [];
-          } else if (Mode === '2' || Mode === '21') {
+          } else if (Mode === '2') {
             mPayload.TalentDevTargetSet = [];
           }
 

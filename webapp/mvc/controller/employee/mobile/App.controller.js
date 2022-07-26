@@ -95,6 +95,7 @@ sap.ui.define(
           const oViewModelData = oViewModel.getData();
           const fCurriedPA = Client.getEntitySet(this.getModel(ServiceNames.PA));
           const mFilters = { Pernr: sPernr, Mobile: 'X' };
+          const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
 
           // 1. 상단 프로필, 탭 메뉴
           const [
@@ -102,7 +103,7 @@ sap.ui.define(
             aMenuReturnData,
           ] = await Promise.all([
             fCurriedPA('EmpProfileHeaderNew', mFilters), //
-            fCurriedPA('EmpProfileMenu', { ..._.pick(mFilters, 'Pernr'), Usrty: this.isMss() ? 'M' : this.isHass() ? 'H' : '' }),
+            fCurriedPA('EmpProfileMenu', { ..._.pick(mFilters, 'Pernr'), Usrty: sUsrty }),
           ]);
 
           // 상단 프로필 Set
@@ -143,8 +144,8 @@ sap.ui.define(
 
             _.set(oViewModelData, ['sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(fCurriedPA('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters }));
-            aContentRequests.push(fCurriedPA('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters }));
+            aHeaderRequests.push(fCurriedPA('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
+            aContentRequests.push(fCurriedPA('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
           });
 
           _.forEach(aSubMenus, (data) => {
