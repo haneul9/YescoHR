@@ -352,11 +352,14 @@ sap.ui.define(
           return parseInt(acc) + parseInt(cur);
         });
 
-        _.chain(oViewModel.getProperty('/FormData'))
-          // prettier 방지
-          .set('Apbet', String(iAmount))
-          .set('Apcnt', String(aSumAmount.length))
-          .commit();
+        // _.chain(oViewModel.getProperty('/FormData'))
+        //   // prettier 방지
+        //   .set('Apbet', String(iAmount))
+        //   .set('Apcnt', String(aSumAmount.length))
+        //   .commit();
+
+        oViewModel.setProperty('/FormData/Apbet', String(iAmount));
+        oViewModel.setProperty('/FormData/Apcnt', String(aSumAmount.length));
       },
 
       // 상세내역 No
