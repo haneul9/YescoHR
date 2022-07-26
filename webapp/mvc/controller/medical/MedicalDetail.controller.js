@@ -953,7 +953,23 @@ sap.ui.define(
             aDetail.push(e);
           });
 
-          await this.checkedDialogData(aHisList);
+          // 2022-07-22 비급여 한도금액(추가) 메세지 처리 로직 추가 - Errmsg 필드에 메세지가 리턴된 경우 비급여 필드(Bet02) 데이터 변경 + 합계 재계산
+          const aData = await this.checkedDialogData(aHisList);
+          const aMedItem = _.find(aData.MedExpenseItemSet.results, { Line: 'X' });
+          if(!_.isEmpty(aMedItem.Errmsg)){
+            MessageBox.alert(aMedItem.Errmsg);
+            
+            oViewModel.setProperty('/DialogData/Bet02', aMedItem.Bet02);
+
+            const iBet01 = mDialogData.Bet01 ? parseInt(mDialogData.Bet01.trim().replace(/[^\d]/g, '')) : 0;
+            const iBet02 = mDialogData.Bet02 ? parseInt(mDialogData.Bet02.trim().replace(/[^\d]/g, '')) : 0;
+
+            oViewModel.setProperty('/DialogData/Bettot', String(iBet01 + iBet02));
+            oViewModel.setProperty('/DialogData/Appno2', '');
+            oViewModel.setProperty('/DialogData/isNew', true);
+
+            return;
+          }
 
           const oTable = this.byId('medHisTable');
 
@@ -1015,7 +1031,23 @@ sap.ui.define(
             aDetail.push(e);
           });
 
-          await this.checkedDialogData(aDetail);
+          // 2022-07-22 비급여 한도금액(추가) 메세지 처리 로직 추가 - Errmsg 필드에 메세지가 리턴된 경우 비급여 필드(Bet02) 데이터 변경 + 합계 재계산
+          // await this.checkedDialogData(aDetail);
+          const aData = await this.checkedDialogData(aDetail);
+          const aMedItem = _.find(aData.MedExpenseItemSet.results, { Line: 'X' });
+          if(!_.isEmpty(aMedItem.Errmsg)){
+            MessageBox.alert(aMedItem.Errmsg);
+            
+            oViewModel.setProperty('/DialogData/Bet02', aMedItem.Bet02);
+
+            const iBet01 = mDialogData.Bet01 ? parseInt(mDialogData.Bet01.trim().replace(/[^\d]/g, '')) : 0;
+            const iBet02 = mDialogData.Bet02 ? parseInt(mDialogData.Bet02.trim().replace(/[^\d]/g, '')) : 0;
+
+            oViewModel.setProperty('/DialogData/Bettot', String(iBet01 + iBet02));
+
+            return;
+          }
+
           await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
           oViewModel.setProperty('/HisList', aDetail);
