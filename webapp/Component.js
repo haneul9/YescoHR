@@ -301,8 +301,13 @@ sap.ui.define(
 
             oView.setVisible(false);
 
+            const bIsAtHome = sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
             setTimeout(() => {
-              const bIsAtHome = sRouteName === 'ehrHome' || sRouteName === 'ehrMobileHome';
+              if (this.bIsMobile) {
+                AppUtils.getAppController().toggleMobileBasisButtonsImage(bIsAtHome ? 'home' : '');
+              }
+            });
+            setTimeout(() => {
               this.getAppModel().setProperty('/isAtHome', bIsAtHome);
 
               if (bIsAtHome) {

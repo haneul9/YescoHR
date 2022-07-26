@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/InstanceManager',
+    'sap/ui/core/routing/HashChanger',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/UriHandler',
     'sap/ui/yesco/common/mobile/MobilePhoneNumberListPopoverHandler',
@@ -33,6 +34,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     InstanceManager,
+    HashChanger,
     AppUtils,
     UriHandler,
     MobilePhoneNumberListPopoverHandler,
@@ -108,6 +110,8 @@ sap.ui.define(
         this.oAppMenu.closeMenuLayer();
 
         if (this.bMobile) {
+          this.toggleMobileBasisButtonsImage('home');
+
           InstanceManager.closeAllPopovers();
         }
 
@@ -173,6 +177,8 @@ sap.ui.define(
         oEvent.cancelBubble();
 
         if (this.bMobile) {
+          this.toggleMobileBasisButtonsImage('notification');
+
           InstanceManager.closeAllPopovers();
           this.oAppMenu.closeMenuLayer();
         }
@@ -190,6 +196,8 @@ sap.ui.define(
        * My Page : 모바일 하단 5버튼
        */
       onPressMobileMyPagePopoverToggle() {
+        this.toggleMobileBasisButtonsImage('mypage');
+
         InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
@@ -200,6 +208,8 @@ sap.ui.define(
        * 검색 : 모바일 하단 5버튼
        */
       onPressMobileSearchPopoverToggle(oEvent) {
+        this.toggleMobileBasisButtonsImage('search');
+
         InstanceManager.closeAllPopovers();
         this.oAppMenu.closeMenuLayer();
 
@@ -211,9 +221,35 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent
        */
       onPressMobileMenuPopoverToggle(oEvent) {
-        InstanceManager.closeAllPopovers();
+        this.toggleMobileBasisButtonsImage('menu');
 
+        InstanceManager.closeAllPopovers();
         this.oAppMenu.toggleMenuLayer(oEvent);
+      },
+
+      toggleMobileBasisButtonsImage(sId) {
+        setTimeout(() => {
+          const oButton = this.byId(`mobile-basis-${sId}`); // 메뉴 이동시 버튼의 hover 이미지를 제거하기 위해 Component.js 에서 sId를 빈 값으로 넘기는 경우가 있음
+          if (oButton) {
+            const sIcon = oButton.getIcon();
+            if (sIcon.endsWith('_hover1.svg')) {
+              if (sId === 'home' && HashChanger.getInstance().getHash() === 'mobile') {
+                return;
+              }
+              oButton.setIcon(this.getImageURL(`icon_m_${sId}1.svg`));
+              return;
+            }
+            oButton.setIcon(this.getImageURL(`icon_m_${sId}_hover1.svg`));
+          }
+          const aBasisButtonIds = ['mypage', 'notification', 'home', 'search', 'menu'];
+          aBasisButtonIds
+            .filter((s) => s !== sId)
+            .forEach((s) => {
+              setTimeout(() => {
+                this.byId(`mobile-basis-${s}`).setIcon(this.getImageURL(`icon_m_${s}1.svg`));
+              });
+            });
+        });
       },
 
       /**

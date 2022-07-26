@@ -64,18 +64,18 @@
       <core:CustomData key="background" value="{appModel>/homebarBackground}" writeToDom="true" />
     </customData>
     <HBox width="100%" justifyContent="SpaceAround" class="footer-menu">
-      <Button id="mobile-basis-mypage" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_employee.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMyPagePopoverToggle" tooltip="{i18n>LABEL_01005}" />
+      <Button id="mobile-basis-mypage" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_mypage1.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMyPagePopoverToggle" tooltip="{i18n>LABEL_01005}" />
       <HBox alignItems="Center" class="notification-wrapper" tooltip="{i18n>LABEL_01002}">
-        <Button id="mobile-basis-notification" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_notice.svg" iconDensityAware="false" class="icon-button" press=".onPressNotificationPopoverToggle" />
+        <Button id="mobile-basis-notification" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_notification1.svg" iconDensityAware="false" class="icon-button" press=".onPressNotificationPopoverToggle" />
         <custom:PressableLabel text="{notificationModel>/unreadCount}" visible="{= !!${notificationModel>/showUnreadCount} }" class="notification-count display-none" press=".onPressNotificationPopoverToggle" displayOnly="true" textAlign="Center">
           <custom:layoutData>
             <FlexItemData styleClass="unread-count" />
           </custom:layoutData>
         </custom:PressableLabel>
       </HBox>
-      <Button id="mobile-basis-home" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_home.svg" iconDensityAware="false" class="icon-button" press=".navToHome" tooltip="{i18n>LABEL_01006}" />
-      <Button id="mobile-basis-search" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_search.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileSearchPopoverToggle" tooltip="{i18n>LABEL_01007}" />
-      <Button id="mobile-basis-menu" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_gnb.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMenuPopoverToggle" tooltip="{i18n>LABEL_01008}" />
+      <Button id="mobile-basis-home" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_home_hover1.svg" iconDensityAware="false" class="icon-button" press=".navToHome" tooltip="{i18n>LABEL_01006}" />
+      <Button id="mobile-basis-search" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_search1.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileSearchPopoverToggle" tooltip="{i18n>LABEL_01007}" />
+      <Button id="mobile-basis-menu" type="Transparent" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_m_menu1.svg" iconDensityAware="false" class="icon-button" press=".onPressMobileMenuPopoverToggle" tooltip="{i18n>LABEL_01008}" />
     </HBox>
   </OverflowToolbar>
 </mvc:View>
