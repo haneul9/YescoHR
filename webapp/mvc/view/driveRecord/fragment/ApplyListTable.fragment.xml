@@ -12,7 +12,7 @@
       <table:Column width="6%">
         <Label text="{i18n>LABEL_00350}"/>
         <table:template>
-          <ObjectStatus text="{Daytx}" state="{= ${Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
+          <ObjectStatus text="{Daytx}" state="{= ${Offyn} === 'X' || ${Leave} === 'X' ? 'Error' : 'None'}" class="table-object-status" />
         </table:template>
       </table:Column>
       <table:Column width="12%">
