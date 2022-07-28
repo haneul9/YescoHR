@@ -24,13 +24,13 @@
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34003}"/>
         <table:template>
-          <Input maxLength="11" value="{ path: 'Drvkma', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" liveChange=".onChangeMileageFormat" />
+          <Input maxLength="11" value="{ path: 'Drvkma', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" editable="{= ${Leave} !== 'X' }" liveChange=".onChangeMileageFormat" />
         </table:template>
       </table:Column>
       <table:Column width="auto">
         <Label text="{i18n>LABEL_34004}"/>
         <table:template>
-          <Input maxLength="11" value="{ path: 'Drvkmb', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" liveChange=".onChangeMileageFormat"/>
+          <Input maxLength="11" value="{ path: 'Drvkmb', type: 'sap.ui.yesco.mvc.model.type.Mileage' }" editable="{= ${Leave} !== 'X' }" liveChange=".onChangeMileageFormat"/>
         </table:template>
       </table:Column>
       <table:Column width="auto">
@@ -54,7 +54,7 @@
       <table:Column width="20%" sortProperty="Zbigo" filterProperty="Zbigo">
         <Label text="{i18n>LABEL_00163}"/>
         <table:template>
-          <Input maxLength="100" value="{Bigo}" />
+          <Input maxLength="100" value="{Bigo}" editable="{= ${Leave} !== 'X' }" />
         </table:template>
       </table:Column>
     </table:columns>
