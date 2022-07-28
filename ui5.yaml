@@ -31,10 +31,10 @@ resources:
 builder:
   resources:
     excludes:
-      - "/webapp/asset/libs/**"
+      - "asset/libs/**"
   componentPreload:
     excludes:
-      - "sap/ui/yesco/asset/libs/**"
+      - "asset/libs/**"
   minification:
     excludes:
-      - "sap/ui/yesco/asset/libs/**"
+      - "asset/libs/**"
