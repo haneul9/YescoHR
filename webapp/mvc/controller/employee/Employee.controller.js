@@ -472,6 +472,8 @@ sap.ui.define(
         Object.keys(aSubMenu).forEach((menuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
           const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+          oTabContainer.destroyContent();
+
           let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
