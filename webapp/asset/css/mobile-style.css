@@ -560,6 +560,7 @@ html.sap-ios.fusioncharts-3-18-0 .custom-chart .fusioncharts-container svg g[cla
 
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken {border:none; background-color:transparent}
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken .sapMTokenIcon::before {content:''}
+.sapMMultiComboBox.mobile-single-combo .sapMTokenText {max-width: 100% !important;}
 
 .emp-profile-talent-dev .sapUiLayoutCSSGrid {padding:9px 16px 14px 16px}
 .emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:40px; line-height:40px; font-size:16px}
