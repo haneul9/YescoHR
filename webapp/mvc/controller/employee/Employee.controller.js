@@ -471,10 +471,12 @@ sap.ui.define(
         const aProfileTabItems = this.byId('profileTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
-        Object.keys(aSubMenu).forEach((sMenuKey) => {
-          const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
-          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
-          let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
+        Object.keys(aSubMenu).forEach((menuKey) => {
+          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
+          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+          oTabContainer.destroyContent();
+
+          let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
 
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
