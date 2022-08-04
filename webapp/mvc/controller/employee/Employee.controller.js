@@ -1102,7 +1102,7 @@ sap.ui.define(
           if (!_.isEmpty(mFilters.Prcty)) {
             throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00060') }); // 신청중인 데이터는 중복신청이 불가합니다.
           } else {
-            delete mFilters.Prcty;
+            delete mFilters.Prcty;   
           }
 
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
