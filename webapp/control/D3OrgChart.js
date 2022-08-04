@@ -18,10 +18,10 @@ sap.ui.define(
     return Control.extend('sap.ui.yesco.control.D3OrgChart', {
       metadata: {
         properties: {
-          title: { type: 'String', group: 'Misc', defaultValue: '화상조직도' },
-          extendNode: { type: 'String', group: 'Misc', defaultValue: '' },
-          layout: { type: 'String', group: 'Misc', defaultValue: 'top' },
-          compact: { type: 'Boolean', group: 'Misc', defaultValue: false },
+          title: { type: 'string', group: 'Misc', defaultValue: '{i18n>LABEL_12001}' },
+          extendNode: { type: 'string', group: 'Misc', defaultValue: '' },
+          layout: { type: 'string', group: 'Misc', defaultValue: 'top' },
+          compact: { type: 'boolean', group: 'Misc', defaultValue: false },
         },
         aggregations: {
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
@@ -29,7 +29,7 @@ sap.ui.define(
         defaultAggregation: 'items',
       },
 
-      createChart: function () {
+      createChart() {
         const oChartLayout = new sap.m.VBox({ height: '100%', alignItems: FlexAlignItems.Center, justifyContent: FlexJustifyContent.Center });
         const oChartFlexBox = new sap.m.FlexBox({ width: `${$(document).width()}px`, height: '100%', alignItems: FlexAlignItems.Center });
 
@@ -39,15 +39,14 @@ sap.ui.define(
         return oChartLayout;
       },
 
-      getChart: function () {
+      getChart() {
         return this.oD3Chart;
       },
 
-      renderer: function (oRm, oControl) {
+      renderer(oRm, oControl) {
         const layout = oControl.createChart();
 
-        oRm.write('<div');
-        oRm.write(' style="height: 100%;"');
+        oRm.write('<div style="height:100%"');
         oRm.writeControlData(layout);
         oRm.writeClasses();
         oRm.write('>');
@@ -56,10 +55,10 @@ sap.ui.define(
         oRm.write('</div>');
       },
 
-      onAfterRendering: function () {
+      onAfterRendering() {
         const mItems = this.getItems();
         const iSvgHeightPadding = AppUtils.isMobile() ? 276 : 10;
-        let aChartData = [];
+        const aChartData = [];
 
         mItems.forEach((item) => {
           aChartData.push({ ...item.mProperties });
@@ -67,15 +66,15 @@ sap.ui.define(
 
         this.oD3Chart = null;
         this.oD3Chart = new d3.OrgChart()
-          .container('#' + this.sParentId)
+          .container(`#${this.sParentId}`)
           .svgHeight(window.innerHeight - iSvgHeightPadding)
           .data(aChartData)
           .layout(this.getLayout())
           .compact(this.getCompact())
           .setActiveNodeCentered(true)
-          .nodeWidth(() => 350)
+          .nodeWidth(() => 360)
+          .nodeHeight(() => 191)
           .initialZoom(0.8)
-          .nodeHeight(() => 170)
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 25)
           .compactMarginPair(() => 80)
@@ -89,25 +88,72 @@ sap.ui.define(
             }
           })
           .nodeContent(function (o) {
-            const sJikgbtlLabel = _.isEmpty(o.data.Ename) ? '' : '직급';
-            const sIpdatLabel = _.isEmpty(o.data.Ename) ? '' : '입사일';
-            const sTenureLabel = _.isEmpty(o.data.Ename) ? '' : '현부서재임기간';
-
-            return `
-            <div class="org-container" style="height: ${o.height}px;">
-              <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
-              <div class="image" style="grid-row: 2 / 6;margin-left: 10px;margin-top: 10px;">
-                  <img src="${o.data.Photo}" loading="lazy" />
-              </div>
-              <div class="name">${o.data.Ename}</div>
-              <div class="label">${sJikgbtlLabel}</div>
-              <div class="content">${o.data.Jikgbtl}</div>
-              <div class="label">${sIpdatLabel}</div>
-              <div class="content">${o.data.Ipdat}</div>
-              <div class="label">${sTenureLabel}</div>
-              <div class="content">${o.data.Tenure}</div>
-            </div>
-            `;
+            const sSuccessionDisplay = o.data.Scspln ? '' : ' display-none';
+            const bSuccessionPlanOnly = o.data.Scspln && !(o.data.CpPernr || '').replace(/0+/, '') ? ' only' : '';
+            return `<div class="org-container">
+  <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
+  <div class="grid employee-information">
+    <div class="photo"><span style="background-image:url('${o.data.Photo}')" /></div>
+    <div class="name">${o.data.Ename}</div>
+    <div class="spacer"></div>
+    <div class="label">${o.data.JikgbtlLabel}</div>
+    <div class="content">${o.data.Jikgbtl}</div>
+    <div class="spacer"></div>
+    <div class="label">${o.data.IpdatLabel}</div>
+    <div class="content">${o.data.Ipdat}</div>
+    <div class="spacer"></div>
+    <div class="label">${o.data.TenureLabel}</div>
+    <div class="content">${o.data.Tenure}</div>
+  </div>
+  <div class="grid succession succession-plan${sSuccessionDisplay}${bSuccessionPlanOnly}">
+    <div class="dummy"></div>
+    <div class="label">${o.data.ScsplnLabel}</div>
+    <div class="content">${o.data.Scspln}</div>
+    <div class="spacer"></div>
+    <div class="label">${o.data.ScspntLabel}</div>
+    <div class="content">${o.data.Scspnt}</div>
+  </div>
+  <div class="grid succession successor">
+    <div class="photo"><span style="background-image:url('${o.data.CpPhoto}')" /></div>
+    <div class="label">${o.data.Cand1stLabel}</div>
+    <div class="content">${o.data.Cand1st1}</div>
+    <div class="spacer" style="line-height:3px"></div>
+    <div class="content" style="text-align:right">${o.data.Cand1st2}</div>
+    <div class="content">${o.data.Cand1st3}</div>
+    <div class="spacer"></div>
+    <div class="label">${o.data.CandpntLabel}</div>
+    <div class="content">${o.data.Candpnt}</div>
+  </div>
+  <div class="bottom level${o.data.ZorgLevl}"></div>
+</div>`;
+            //             return `<div class="org-container" style="height:${o.height}px">
+            //   <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
+            //   <div class="photo"><span style="background-image:url('${o.data.Photo}')" /></div>
+            //   <div class="name">${o.data.Ename}</div>
+            //   <div class="label">${o.data.JikgbtlLabel}</div>
+            //   <div class="content">${o.data.Jikgbtl}</div>
+            //   <div class="label">${o.data.IpdatLabel}</div>
+            //   <div class="content">${o.data.Ipdat}</div>
+            //   <div class="label">${o.data.TenureLabel}</div>
+            //   <div class="content">${o.data.Tenure}</div>
+            //   <div class="divider"></div>
+            //   <div class="succession succession-plan${sSuccessionDisplay}${bSuccessionPlanOnly}">
+            //     <div class="dummy"></div>
+            //     <div class="label">${o.data.ScsplnLabel}</div>
+            //     <div class="content">${o.data.Scspln}</div>
+            //     <div class="label">${o.data.ScspntLabel}</div>
+            //     <div class="content">${o.data.Scspnt}</div>
+            //   </div>
+            //   <div class="succession successor">
+            //     <div class="successor-photo"><span style="background-image:url('${o.data.CpPhoto}')" /></div>
+            //     <div class="label">${o.data.Cand1stLabel}</div>
+            //     <div class="content">${o.data.Cand1st1}</div>
+            //     <div class="low-content" style="text-align:right">${o.data.Cand1st2}</div>
+            //     <div class="low-content">${o.data.Cand1st3}</div>
+            //     <div class="label">${o.data.CandpntLabel}</div>
+            //     <div class="content">${o.data.Candpnt}</div>
+            //   </div>
+            // </div>`;
           })
           .onNodeClick(function (event, sNodeId) {
             const oDesktop = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder');
@@ -115,22 +161,28 @@ sap.ui.define(
             const oViewModel = oDesktop ? oDesktop.getModel() : oMobile.getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
             const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/employee', 'mobile/m/employee-org'];
+            const $element = $(event.srcElement);
+            const bTitle = $element.hasClass('title');
+            const oRouter = AppUtils.getAppComponent().getRouter();
 
             oViewModel.setProperty('/extendNode', sNodeId);
 
             if (!sPernr) {
-              if ([...event.srcElement.classList].includes('title')) {
-                AppUtils.getAppComponent()
-                  .getRouter()
-                  .navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+              if (bTitle) {
+                oRouter.navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               }
             } else {
-              if ([...event.srcElement.classList].includes('title')) {
-                AppUtils.getAppComponent()
-                  .getRouter()
-                  .navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+              if (bTitle) {
+                oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+              } else if ($element.hasClass('succession') || $element.parents('.succession').length) {
+                const sHost = window.location.href.split('#')[0];
+                const Pernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
+
+                if (Pernr) {
+                  window.open(`${sHost}#/employeeView/${Pernr}/M`, '_blank', 'width=1400,height=800');
+                }
               } else {
-                AppUtils.getAppComponent().getRouter().navTo(aRoutePath[0], { pernr: sPernr });
+                oRouter.navTo(aRoutePath[0], { pernr: sPernr });
               }
             }
           })

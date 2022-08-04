@@ -920,19 +920,44 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .organization-legend .sapMLabel[data-level="35"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#ffb764; position:absolute}
 .organization-legend .sapMLabel[data-level="40"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#c1a7ff; position:absolute}
 .organization-legend .sapMLabel[data-level="50"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#d0c0a6; position:absolute}
-.org-container {display:grid; grid-template-rows:40px 45px 25px 25px 25px; grid-template-columns:100px 1fr 1fr; column-gap:10px; border-radius:8px; background-color:white; border:1px solid lightgray; overflow:hidden}
-.org-container .title {grid-column:1 / 4; font-size:17px; font-weight:bold; text-align:center; background-color:#959ba3; color:#222; line-height:40px}
+
+.org-container {position:relative; box-sizing:border-box; height:100%; border:1px solid #d3d3d3; border-radius:8px; background-color:#fff; overflow:hidden}
+.org-container div {box-sizing:border-box}
+.org-container .title {width:100%; line-height:40px; text-align:center; font-size:17px; font-weight:bold; color:#222; background-color:#959ba3}
 .org-container .title.level10 {background-color:#65b8ff}
 .org-container .title.level20 {background-color:#a6e2a0}
 .org-container .title.level30 {background-color:#ffe479}
 .org-container .title.level35 {background-color:#e06500}
 .org-container .title.level40 {background-color:#c1a7ff}
 .org-container .title.level50 {background-color:#d0c0a6}
-.org-container .image {grid-row:2 / 6; margin-left:10px; margin-top:10px}
-.org-container .image>img {width:81px; height:auto}
-.org-container .name {grid-column:2 / 4; font-size:14px; font-weight:bold; line-height:45px}
-.org-container .label, .org-container .content {font-size:12px; line-height:20px}
-.org-container .label {font-weight:bold}
+.org-container .bottom {position:absolute; bottom:0; width:100%; height:14px; background-color:#959ba3}
+.org-container .bottom.level10 {background-color:#65b8ff}
+.org-container .bottom.level20 {background-color:#a6e2a0}
+.org-container .bottom.level30 {background-color:#ffe479}
+.org-container .bottom.level35 {background-color:#e06500}
+.org-container .bottom.level40 {background-color:#c1a7ff}
+.org-container .bottom.level50 {background-color:#d0c0a6}
+.org-container .grid {display:grid; column-gap:12px; margin:0 12px}
+.org-container .grid .label, .org-container .grid .content, .org-container .grid .spacer {font-size:12px; line-height:13px}
+.org-container .grid .label {font-weight:bold}
+.org-container .employee-information {grid-template-rows:15px 36px 12px 12px 12px 12px 12px; grid-template-columns:100px 1fr 1fr; margin:12px}
+.org-container .employee-information .spacer {grid-column:2 / 4}
+.org-container .employee-information .photo {grid-row:1 / 8}
+.org-container .employee-information .photo>span {display:inline-block; width:100%; height:111px; background-size:cover; background-position:center top; background-repeat:no-repeat}
+.org-container .employee-information .name {grid-column:2 / 4; line-height:16px; font-size:15px; font-weight:bold}
+.org-container .succession {grid-template-columns:100px 95px auto; padding:12px 0 11px 0; background-color:#deebf7}
+.org-container .succession .spacer {grid-column:2 / 4}
+.org-container .succession-plan {grid-template-rows:12px 12px 12px; border-radius:8px 8px 0 0}
+.org-container .succession-plan.only {border-radius:8px}
+.org-container .succession-plan .dummy {grid-row:1 / 4}
+.org-container .successor {grid-template-rows:12px 6px 12px 12px 12px; border-top:1px solid #d3d3d3; border-radius:0 0 8px 8px}
+.org-container .successor .photo {grid-row:1 / 6; display:flex; justify-content:flex-end; align-items:center}
+.org-container .successor .photo>span {width:54px; height:54px; border-radius:50%; background-size:cover; background-position:center top; background-repeat:no-repeat}
+.org-container .succession.display-none,
+.org-container .succession.display-none+.successor,
+.org-container .succession-plan.only+.successor,
+.org-chart-container[data-succession=off] .org-container .succession {display:none}
+.org-chart-container[data-succession=on] .org-container .employee-information {grid-template-columns:100px 95px auto}
 
 .bgType01 {background-color:#e9f7ae}
 .bgType02 {background-color:#aad2fc}
@@ -947,12 +972,15 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .bgType11 {background-color:#fffbcf}
 .bgType12 {background-color:#d0f2ff}
 
-.node-button-div {display:inline-block !important; margin-left:-4px}
+.node-button-div {display:inline-block !important}
 .org-chart-container > div {height:100%}
-.org-chart-container[data-layout=left] .node-button-div > div {border-radius:50% !important; width:100% !important; height:100% !important; padding:0 !important; background-color:#fff !important; border:1px solid #ccc !important; font-size:10px !important; margin:auto !important}
-.org-chart-container[data-layout=left] .node-button-div > div > div {margin-top:3px !important; text-align:center}
-.org-chart-container[data-layout=top] .node-button-div > div {border-radius:50% !important; width:100% !important; height:100% !important; padding:0 !important; background-color:#fff !important; border:1px solid #ccc !important; font-size:10px !important; margin:auto !important}
-.org-chart-container[data-layout=top] .node-button-div > div > div {text-align:center; font-size:35px !important}
+.org-chart-container[data-layout=left] .node-button-div > div,
+.org-chart-container[data-layout=top] .node-button-div > div {margin:5px 0 0 4px !important; width:30px !important; height:30px !important; border:1px solid #ccc !important; border-radius:50% !important; padding:0 !important; font-size:10px !important; background-color:#fff !important}
+.org-chart-container[data-layout=top] .node-button-div > div > div,
+.org-chart-container[data-layout=left] .node-button-div > div > div {text-align:center; font-size:35px !important}
+.org-chart-container[data-layout=top] .node-button-div > div > div[style*="10px"] {line-height:32px !important}
+.org-chart-container[data-layout=top] .node-button-div > div > div[style*="-20px"] {line-height:37px !important}
+.org-chart-container[data-layout=left] .node-button-div > div > div[style*="-10px"] {line-height:45px !important}
 
 .signature-pad {border:1px solid #b7b7b7}
 /* -- DEVELOPER Temporary style */
@@ -1425,7 +1453,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 
 .sapUiLayoutCSSGrid.form-grid.border-bottom-0px {border-bottom:0px solid #f5f5f5}
 .sapUiLayoutCSSGrid.form-grid {border-top:1px solid #f5f5f5; border-bottom:1px solid #f5f5f5; padding-top:0px; background-color:#f5f5f5 !important}
-.sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:50px; align-self:center; background:#fff}
+.sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:44px; align-self:center; background:#fff}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex; padding-top:0px; min-height:50px !important}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex}
 .listFileDialog {min-height:85px !important; max-height:230px !important}
@@ -1460,7 +1488,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid .sapMObjStatus {align-self:center}
 .sapUiLayoutCSSGrid.form-grid .sapMInputBase:not(.sapMTextArea), .sapUiLayoutCSSGrid.form-grid .sapMCb {align-self:center}
 .sapUiLayoutCSSGrid.form-grid .sapMInputDescriptionWrapper {width:auto !important}
-.sapUiLayoutCSSGrid.form-grid .sapMInputBaseReadonly .sapMInputBaseContentWrapper {height:100%}
+.sapUiLayoutCSSGrid.form-grid .sapMInputBaseReadonly .sapMInputBaseContentWrapper {height:100% !important}
 .sapUiLayoutCSSGrid.form-grid .sapMLnk, .sapUiLayoutCSSGrid.form-grid .sapMBtn {align-self:center}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexItem + .sapMFlexItem > .sapMBtn {margin-left:10px}
 .sapUiLayoutCSSGrid.form-grid .sapUiTinyMarginEnd {margin-right:0.5rem !important}
@@ -1563,6 +1591,11 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .main-profile.expanded {width:100%}
 .main-profile .sapMITBContent {padding-bottom:0}
 .main-profile .sapMITBContent .customBox.sapUiMediumMarginBottom:last-child {margin-bottom:0 !important}
+/* .main-profile .cell-bg .sapUiTableCell {position:relative}
+.main-profile .cell-bg .sapUiTableCellInner {position:absolute; top:0; right:0; bottom:0; left:0; padding:0}
+.main-profile .cell-bg .sapUiTableCellInner span {display:flex; justify-content:center; align-items:center; height:100%}
+.main-profile .cell-bg .sapUiTableCellInner span[data-bg="O"] {background-color:#deebf7} */
+.main-profile .cell-bg .sapUiTableCell.successor {background-color:#deebf7}
 
 .lineItem-wrap:after {content:""; display:inline-block; height:2px; position:absolute; left:10%; right:10%; top:50%; background:linear-gradient(to right, #f5ec95, 50%, #70cf8d); z-index:1}
 .lineItem {z-index:2; align-self:center; display:flex; justify-content:center; align-content:center}

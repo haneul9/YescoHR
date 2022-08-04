@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/FlexItemData',
+    'sap/ui/core/CustomData',
     'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/model/Filter',
@@ -22,6 +23,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     FlexItemData,
+    CustomData,
     Fragment,
     CSSGrid,
     Filter,
@@ -373,7 +375,7 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/gradeList', new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx', aEntries: aTestGradeList }));
           oViewModel.setProperty('/employee/dialog/techtyList', new ComboEntry({ codeKey: 'Techty', valueKey: 'Techtytx', aEntries: aTechtyList }));
           oViewModel.setProperty('/employee/dialog/techgdList', new ComboEntry({ codeKey: 'Techgd', valueKey: 'Techgdtx', aEntries: aTechgdList }));
-          //End Dialog Combo entry set
+          // End Dialog Combo entry set
 
           // 상단 프로필 Set
           const { Pturl, Actty, ...oReturnData } = aProfileReturnData[0];
@@ -386,7 +388,7 @@ sap.ui.define(
           oViewModel.setProperty('/showPDFButton', _.isEqual(Actty, 'X'));
           oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
-          //End 상단 프로필 Set
+          // End 상단 프로필 Set
 
           // 탭 메뉴 Set
           const aTabMenus = _.chain(aMenuReturnData)
@@ -421,20 +423,20 @@ sap.ui.define(
               data: [],
             });
           });
-          //End 탭 메뉴 Set
+          // End 탭 메뉴 Set
 
           // 2. Sub 영역 조회[header, contents]
-          const aHeaderReturnData = await Promise.all(aHeaderRequests);
-          const aContentReturnData = await Promise.all(aContentRequests);
+          const aHeaderReturnData = Promise.all(aHeaderRequests);
+          const aContentReturnData = Promise.all(aContentRequests);
 
           // Header 영역 Set
-          aHeaderReturnData.forEach((headers, index) => {
+          (await aHeaderReturnData).forEach((headers, index) => {
             headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
           });
-          //End Header 영역 Set
+          // End Header 영역 Set
 
           // Contents 영역 Set
-          aContentReturnData.forEach((content, index) => {
+          (await aContentReturnData).forEach((content, index) => {
             content.forEach((o) => {
               let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
@@ -447,7 +449,7 @@ sap.ui.define(
               mSubMenu.rowCount = mSubMenu.data.length;
             });
           });
-          //End Contents 영역 Set
+          // End Contents 영역 Set
 
           oViewModel.setData(oViewModelData);
 
@@ -469,16 +471,16 @@ sap.ui.define(
         const aProfileTabItems = this.byId('profileTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
-        Object.keys(aSubMenu).forEach((menuKey) => {
-          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
-          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
-          let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
+        Object.keys(aSubMenu).forEach((sMenuKey) => {
+          const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
+          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
+          let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
 
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
             oParentBox.removeItem(oWrapperVBox);
           } else {
-            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: true });
+            oWrapperVBox = new sap.m.VBox({ id: `sub${sMenuKey}`, visible: true });
           }
 
           /**
@@ -486,8 +488,8 @@ sap.ui.define(
            *      - 주소|학력|자격|어학 테이블의 경우 CRUD가 추가된다.
            * OMenu.type: '6'  Grid
            */
-          Object.keys(aSubMenuContents).forEach((key) => {
-            const mMenu = _.get(aSubMenuContents, key);
+          Object.keys(aSubMenuContents).forEach((sKey) => {
+            const mMenu = _.get(aSubMenuContents, sKey);
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' }).addStyleClass('table-toolbar');
 
@@ -504,28 +506,28 @@ sap.ui.define(
                   new sap.m.Button({
                     icon: 'sap-icon://add',
                     text: this.getBundleText('LABEL_00106'), // 등록
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
+                    customData: [new CustomData({ key: 'code', value: mMenu.code })],
                     press: this.onPressRegTable.bind(this),
                   }).addStyleClass('icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://edit',
                     text: this.getBundleText('LABEL_00108'), // 수정
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
-                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
+                    customData: [new CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + sMenuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressModifyTable.bind(this),
                   }).addStyleClass('icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://less',
                     text: this.getBundleText('LABEL_00110'), // 삭제
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
-                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
+                    customData: [new CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + sMenuKey + '/contents/' + mMenu.code + '/data}.length }',
                     press: this.onPressDeleteTable.bind(this),
                   }).addStyleClass('icon-button'),
                   new sap.m.Button({
                     icon: 'sap-icon://cancel',
                     text: this.getBundleText('LABEL_00122'), // 신청취소
-                    customData: [new sap.ui.core.CustomData({ key: 'code', value: mMenu.code })],
-                    enabled: '{= !!${/employee/sub/' + menuKey + '/contents/' + mMenu.code + '/data}.length }',
+                    customData: [new CustomData({ key: 'code', value: mMenu.code })],
+                    enabled: '{= !!${/employee/sub/' + sMenuKey + '/contents/' + mMenu.code + '/data}.length }',
                     visible: !_.isEqual(mMenu.code, this.CRUD_TABLES.ADDRESS.key),
                     press: this.onPressCancelTable.bind(this),
                   }).addStyleClass('icon-button'),
@@ -543,7 +545,7 @@ sap.ui.define(
              *  2. Grid - 6
              */
             if (mMenu.type === this.SUB_TYPE.TABLE) {
-              const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
+              const sTableDataPath = `/employee/sub/${sMenuKey}/contents/${sKey}`;
               const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
               const oTable = new Table({
                 width: '100%',
@@ -555,7 +557,7 @@ sap.ui.define(
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
-              if (menuKey === 'M020') {
+              if (sMenuKey === 'M020') {
                 // 인재육성위원회 row click
                 oTable //
                   .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
@@ -565,39 +567,103 @@ sap.ui.define(
                   });
 
                 this.oTalentDevDialogHandler = new TalentDevDialogHandler(this);
-              }
 
-              aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({
-                  width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
-                  label: new sap.m.Label({ text: head.Header }),
-                });
-
-                const sValueFieldName = `Value${_.padStart(index + 1, 2, 0)}`;
-                let oColumnTemplate;
-                if (menuKey === 'M020' && ['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
-                  // 인재육성위원회 icon column
-                  oColumnTemplate = new sap.ui.core.Icon({
-                    src: this.ICONS[head.Fieldname],
-                    visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
-                  });
-                  if (head.Fieldname !== 'RESOL') {
-                    oColumnTemplate
-                      .setHoverColor('#007bff')
-                      .addCustomData(new sap.ui.core.CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
-                      .attachPress(this.onPressTalentDevFileDownload.bind(this));
+                // 인재육성위원회 tab
+                aVisibleHeaders.forEach((head, index) => {
+                  const sValueField = `{Value${_.padStart(index + 1, 2, 0)}}`;
+                  let oColumnTemplate;
+                  if (['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
+                    // icon column
+                    oColumnTemplate = new sap.ui.core.Icon({
+                      src: this.ICONS[head.Fieldname],
+                      visible: head.Fieldname === 'RESOL' ? `{= \$${sValueField} === "X" }` : `{= Number(\$${sValueField}) > 0 }`,
+                    });
+                    if (head.Fieldname !== 'RESOL') {
+                      oColumnTemplate
+                        .setHoverColor('#007bff')
+                        .addCustomData(new CustomData({ key: 'appno', value: `${sValueField}` })) //
+                        .attachPress(this.onPressTalentDevFileDownload.bind(this));
+                    }
+                  } else {
+                    // text column
+                    oColumnTemplate = new sap.m.Text({
+                      width: '100%', //
+                      textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                      text: sValueField,
+                    });
                   }
-                  oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);
-                } else {
-                  oColumnTemplate = new sap.m.Text({
+                  oTable.addColumn(
+                    new sap.ui.table.Column({
+                      width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                      label: new sap.m.Label({ text: head.Header }),
+                      hAlign: sap.ui.core.HorizontalAlign.Center,
+                      template: oColumnTemplate,
+                    })
+                  );
+                });
+              } else if (sMenuKey === 'M030') {
+                oTable.addStyleClass('cell-bg');
+
+                // Succession tab
+                const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
+                const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
+                aVisibleHeaders.forEach((head, index) => {
+                  const oColumnTemplate = new sap.m.Text({
                     width: '100%', //
                     textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
-                    text: { path: sValueFieldName },
+                    text: {
+                      path: `Value${_.padStart(index + 1, 2, 0)}`,
+                      formatter: function (sValue) {
+                        return (sValue || '').replace(/,/g, '\n');
+                      },
+                    },
                   });
-                }
+                  if ((sKey === 'S031' && index > 4) || (sKey === 'S032' && index > 0 && index < 5)) {
+                    oColumnTemplate.addCustomData(new CustomData({ key: 'bg', value: '{= ${Value10} === "X" ? "O" : "X" }', writeToDom: true }));
+                  }
+                  const oColumn = new sap.ui.table.Column({
+                    width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                    multiLabels: [new sap.m.Label({ text: head.Header }), new sap.m.Label({ text: aSecondHeader[index].Header })],
+                    headerSpan: aHeaderSpan[index],
+                    template: oColumnTemplate,
+                  });
+                  oTable.addColumn(oColumn);
+                });
 
-                oTable.addColumn(oColumn.setTemplate(oColumnTemplate));
-              });
+                oTable.addEventDelegate(
+                  {
+                    onAfterRendering() {
+                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('successor', true);
+                    },
+                  },
+                  oTable
+                );
+                this.TableUtils.adjustRowSpan({
+                  oTable,
+                  aColIndices: [0],
+                  sTheadOrTbody: 'thead',
+                });
+                this.TableUtils.adjustRowSpan({
+                  oTable,
+                  aColIndices: [0, 1, 2, 3, 4],
+                  sTheadOrTbody: 'tbody',
+                });
+              } else {
+                aVisibleHeaders.forEach((head, index) => {
+                  const oColumnTemplate = new sap.m.Text({
+                    width: '100%', //
+                    textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                    text: `{Value${_.padStart(index + 1, 2, 0)}}`,
+                  });
+                  oTable.addColumn(
+                    new sap.ui.table.Column({
+                      width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                      label: new sap.m.Label({ text: head.Header }),
+                      template: oColumnTemplate,
+                    })
+                  );
+                });
+              }
 
               oSubVBox.addItem(oTable);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
@@ -676,13 +742,12 @@ sap.ui.define(
         AppUtils.setAppBusy(false);
       },
 
-      async refreshTableContents({ oViewModel, sMenuKey }) {
+      async refreshTableContents({ oViewModel, sKey }) {
         try {
-          const mMenuInfo = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sMenuKey });
-          const sSubTablePath = `/employee/sub/${mMenuInfo.Menuc1}/contents/${mMenuInfo.Menuc2}`;
-          const mFilters = { Pernr: mMenuInfo.Pernr, Menuc: mMenuInfo.Menuc1 };
-          const aReturnContents = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmpProfileContentsTab', mFilters);
-          const aTableData = _.filter(aReturnContents, { Menuc: mMenuInfo.Menuc2 });
+          const { Pernr, Menuc1 } = _.find(oViewModel.getProperty('/employee/tab/menu'), { Menuc2: sKey });
+          const aReturnContents = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'EmpProfileContentsTab', { Pernr, Menuc: Menuc1 });
+          const aTableData = _.filter(aReturnContents, { Menuc: sKey });
+          const sSubTablePath = `/employee/sub/${Menuc1}/contents/${sKey}`;
 
           oViewModel.setProperty(`${sSubTablePath}/data`, aTableData);
           oViewModel.setProperty(`${sSubTablePath}/rowCount`, aTableData.length);
@@ -930,7 +995,7 @@ sap.ui.define(
 
           const mFieldValue = oViewModel.getProperty('/employee/dialog/form');
           const sAction = oViewModel.getProperty('/employee/dialog/action');
-          const sMenuKey = oViewModel.getProperty('/employee/dialog/subKey');
+          const sKey = oViewModel.getProperty('/employee/dialog/subKey');
           const sPrcty = sAction === 'A' ? 'C' : 'U';
           let sActionText = oViewModel.getProperty('/employee/dialog/actionText');
           let mInputData = {};
@@ -938,7 +1003,7 @@ sap.ui.define(
           let sOdataEntity = '';
           let sAppno = '';
 
-          switch (sMenuKey) {
+          switch (sKey) {
             case this.CRUD_TABLES.ADDRESS.key:
               sOdataEntity = this.CRUD_TABLES.ADDRESS.odata;
               aFieldProperties = this.CRUD_TABLES.ADDRESS.valid;
@@ -1059,7 +1124,7 @@ sap.ui.define(
               MessageBox.success(this.getBundleText('MSG_00007', sActionText), {
                 onClose: () => {
                   oViewModel.setProperty('/employee/dialog/activeButton', true);
-                  this.refreshTableContents({ oViewModel, sMenuKey });
+                  this.refreshTableContents({ oViewModel, sKey });
                   this.onInputFormDialogClose();
                 },
               });
@@ -1082,7 +1147,7 @@ sap.ui.define(
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
-        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const sTablePath = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
         const sActionTextCode = !_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key) ? 'LABEL_00343' : 'LABEL_00108';
 
         if (aSelectedIndices.length !== 1) {
@@ -1091,7 +1156,7 @@ sap.ui.define(
         }
 
         try {
-          const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+          const mTableInfo = this.CRUD_TABLES[_.upperCase(sTablePath)];
           const aFields = mTableInfo.pk;
           const sOdataEntity = mTableInfo.odata;
           const sLabel = this.getBundleText(mTableInfo.label);
@@ -1110,7 +1175,7 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/file/originFile', []);
           oViewModel.setProperty('/employee/dialog/file/newFile', []);
 
-          switch (sMenuKey) {
+          switch (sTablePath) {
             case this.CRUD_TABLES.ADDRESS.path:
               mFilters.Begda = this.DateUtils.parse(mFilters.Begda);
 
@@ -1176,7 +1241,7 @@ sap.ui.define(
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
-        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const sTablePath = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
         const sActionTextCode = !_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key) ? 'LABEL_00344' : 'LABEL_00110';
 
         if (aSelectedIndices.length !== 1) {
@@ -1184,7 +1249,7 @@ sap.ui.define(
           return;
         }
 
-        const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+        const mTableInfo = this.CRUD_TABLES[_.upperCase(sTablePath)];
         const aFields = mTableInfo.pk;
         const sOdataEntity = mTableInfo.odata;
         const mPayload = this.getTableRowData({ oViewModel, oTable, aSelectedIndices, aFields });
@@ -1202,7 +1267,7 @@ sap.ui.define(
           onClose: async (sAction) => {
             if (!!sAction && sAction !== MessageBox.Action.CANCEL) {
               try {
-                switch (sMenuKey) {
+                switch (sTablePath) {
                   case this.CRUD_TABLES.ADDRESS.path:
                     mPayload.Begda = this.DateUtils.parse(mPayload.Begda);
 
@@ -1227,7 +1292,7 @@ sap.ui.define(
                 }
 
                 oTable.clearSelection();
-                this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
+                this.refreshTableContents({ oViewModel, sKey: sSelectedMenuCode });
 
                 MessageBox.success(this.getBundleText('MSG_00007', sActionTextCode)); // {삭제}되었습니다.
               } catch (oError) {
@@ -1248,8 +1313,8 @@ sap.ui.define(
         const oTable = oControl.getParent().getParent().getParent().getItems()[1];
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
-        const sMenuKey = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
-        const mTableInfo = this.CRUD_TABLES[_.upperCase(sMenuKey)];
+        const sTablePath = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
+        const mTableInfo = this.CRUD_TABLES[_.upperCase(sTablePath)];
         const aFields = mTableInfo.pk;
         const sOdataEntity = mTableInfo.odata;
         let mPayload = {};
@@ -1277,7 +1342,7 @@ sap.ui.define(
           onClose: async (sAction) => {
             if (!!sAction && sAction !== MessageBox.Action.CANCEL) {
               try {
-                switch (sMenuKey) {
+                switch (sTablePath) {
                   case this.CRUD_TABLES.EDUCATION.path:
                   case this.CRUD_TABLES.ADDRESS.path:
                   case this.CRUD_TABLES.LANGUAGE.path:
@@ -1295,7 +1360,7 @@ sap.ui.define(
                 await Client.remove(this.getModel(ServiceNames.PA), sOdataEntity, mPayload);
 
                 oTable.clearSelection();
-                this.refreshTableContents({ oViewModel, sMenuKey: sSelectedMenuCode });
+                this.refreshTableContents({ oViewModel, sKey: sSelectedMenuCode });
 
                 MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00122')); // {신청취소}되었습니다.
               } catch (oError) {

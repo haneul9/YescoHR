@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/FlexItemData',
+    'sap/ui/core/CustomData',
     'sap/ui/layout/cssgrid/CSSGrid',
     'sap/ui/table/Table',
     'sap/ui/yesco/common/AppUtils',
@@ -9,17 +10,20 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/mvc/controller/talentDev/TalentDevDialogHandler',
   ],
   (
     // prettier 방지용 주석
     FlexItemData,
+    CustomData,
     CSSGrid,
     Table,
     AppUtils,
     ComboEntry,
     Client,
     ServiceNames,
-    BaseController
+    BaseController,
+    TalentDevDialogHandler
   ) => {
     'use strict';
 
@@ -302,16 +306,16 @@ sap.ui.define(
         const aProfileTabItems = this.byId('profileTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/employee/sub');
 
-        Object.keys(aSubMenu).forEach((menuKey) => {
-          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
-          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
-          let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
+        Object.keys(aSubMenu).forEach((sMenuKey) => {
+          const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
+          const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
+          let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
 
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
             oParentBox.removeItem(oWrapperVBox);
           } else {
-            oWrapperVBox = new sap.m.VBox({ id: `sub${menuKey}`, visible: true });
+            oWrapperVBox = new sap.m.VBox({ id: `sub${sMenuKey}`, visible: true });
           }
 
           /**
@@ -319,8 +323,8 @@ sap.ui.define(
            *      - 주소 테이블의 경우 CRUD가 추가된다.
            * OMenu.type: '6'  Grid
            */
-          Object.keys(aSubMenuContents).forEach((key) => {
-            const mMenu = _.get(aSubMenuContents, key);
+          Object.keys(aSubMenuContents).forEach((sKey) => {
+            const mMenu = _.get(aSubMenuContents, sKey);
             const oSubVBox = new sap.m.VBox().addStyleClass('customBox sapUiMediumMarginBottom');
             const oSubHBox = new sap.m.HBox({ justifyContent: 'SpaceBetween' }).addStyleClass('table-toolbar');
 
@@ -332,7 +336,7 @@ sap.ui.define(
 
             // Content (Table|Grid)
             if (mMenu.type === this.SUB_TYPE.TABLE) {
-              const sTableDataPath = `/employee/sub/${menuKey}/contents/${key}`;
+              const sTableDataPath = `/employee/sub/${sMenuKey}/contents/${sKey}`;
               const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
               const oTable = new Table({
                 width: '100%',
@@ -344,7 +348,7 @@ sap.ui.define(
                 noData: this.getBundleText('MSG_00001'),
               }).bindRows(`${sTableDataPath}/data`);
 
-              if (menuKey === 'M020') {
+              if (sMenuKey === 'M020') {
                 // 인재육성위원회 row click
                 oTable //
                   .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
@@ -354,39 +358,103 @@ sap.ui.define(
                   });
 
                 this.oTalentDevDialogHandler = new TalentDevDialogHandler(this);
-              }
 
-              aVisibleHeaders.forEach((head, index) => {
-                const oColumn = new sap.ui.table.Column({
-                  width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
-                  label: new sap.m.Label({ text: head.Header }),
-                });
-
-                const sValueFieldName = `Value${_.padStart(index + 1, 2, 0)}`;
-                let oColumnTemplate;
-                if (menuKey === 'M020' && ['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
-                  // 인재육성위원회 icon column
-                  oColumnTemplate = new sap.ui.core.Icon({
-                    src: this.ICONS[head.Fieldname],
-                    visible: head.Fieldname === 'RESOL' ? `{= \${${sValueFieldName}} === "X" }` : `{= Number(\${${sValueFieldName}}) > 0 }`,
-                  });
-                  if (head.Fieldname !== 'RESOL') {
-                    oColumnTemplate
-                      .setHoverColor('#007bff')
-                      .addCustomData(new sap.ui.core.CustomData({ key: 'appno', value: `{${sValueFieldName}}` })) //
-                      .attachPress(this.onPressTalentDevFileDownload.bind(this));
+                // 인재육성위원회 tab
+                aVisibleHeaders.forEach((head, index) => {
+                  const sValueField = `{Value${_.padStart(index + 1, 2, 0)}}`;
+                  let oColumnTemplate;
+                  if (['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
+                    // icon column
+                    oColumnTemplate = new sap.ui.core.Icon({
+                      src: this.ICONS[head.Fieldname],
+                      visible: head.Fieldname === 'RESOL' ? `{= \$${sValueField} === "X" }` : `{= Number(\$${sValueField}) > 0 }`,
+                    });
+                    if (head.Fieldname !== 'RESOL') {
+                      oColumnTemplate
+                        .setHoverColor('#007bff')
+                        .addCustomData(new CustomData({ key: 'appno', value: `${sValueField}` })) //
+                        .attachPress(this.onPressTalentDevFileDownload.bind(this));
+                    }
+                  } else {
+                    // text column
+                    oColumnTemplate = new sap.m.Text({
+                      width: '100%', //
+                      textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                      text: sValueField,
+                    });
                   }
-                  oColumn.setHAlign(sap.ui.core.HorizontalAlign.Center);
-                } else {
-                  oColumnTemplate = new sap.m.Text({
+                  oTable.addColumn(
+                    new sap.ui.table.Column({
+                      width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                      label: new sap.m.Label({ text: head.Header }),
+                      hAlign: sap.ui.core.HorizontalAlign.Center,
+                      template: oColumnTemplate,
+                    })
+                  );
+                });
+              } else if (sMenuKey === 'M030') {
+                oTable.addStyleClass('cell-bg');
+
+                // Succession tab
+                const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
+                const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
+                aVisibleHeaders.forEach((head, index) => {
+                  const oColumnTemplate = new sap.m.Text({
                     width: '100%', //
                     textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
-                    text: { path: sValueFieldName },
+                    text: {
+                      path: `Value${_.padStart(index + 1, 2, 0)}`,
+                      formatter: function (sValue) {
+                        return (sValue || '').replace(/,/g, '\n');
+                      },
+                    },
                   });
-                }
+                  if ((sKey === 'S031' && index > 4) || (sKey === 'S032' && index > 0 && index < 5)) {
+                    oColumnTemplate.addCustomData(new CustomData({ key: 'bg', value: '{= ${Value10} === "X" ? "O" : "X" }', writeToDom: true }));
+                  }
+                  const oColumn = new sap.ui.table.Column({
+                    width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                    multiLabels: [new sap.m.Label({ text: head.Header }), new sap.m.Label({ text: aSecondHeader[index].Header })],
+                    headerSpan: aHeaderSpan[index],
+                    template: oColumnTemplate,
+                  });
+                  oTable.addColumn(oColumn);
+                });
 
-                oTable.addColumn(oColumn.setTemplate(oColumnTemplate));
-              });
+                oTable.addEventDelegate(
+                  {
+                    onAfterRendering() {
+                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('successor', true);
+                    },
+                  },
+                  oTable
+                );
+                this.TableUtils.adjustRowSpan({
+                  oTable,
+                  aColIndices: [0],
+                  sTheadOrTbody: 'thead',
+                });
+                this.TableUtils.adjustRowSpan({
+                  oTable,
+                  aColIndices: [0, 1, 2, 3, 4],
+                  sTheadOrTbody: 'tbody',
+                });
+              } else {
+                aVisibleHeaders.forEach((head, index) => {
+                  const oColumnTemplate = new sap.m.Text({
+                    width: '100%', //
+                    textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+                    text: `{Value${_.padStart(index + 1, 2, 0)}}`,
+                  });
+                  oTable.addColumn(
+                    new sap.ui.table.Column({
+                      width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+                      label: new sap.m.Label({ text: head.Header }),
+                      template: oColumnTemplate,
+                    })
+                  );
+                });
+              }
 
               oSubVBox.addItem(oTable);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {

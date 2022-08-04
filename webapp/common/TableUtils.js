@@ -217,9 +217,9 @@ sap.ui.define(
 
       /**
        * @param {object} o = {
-       *   table: sap.ui.table.Table instance
-       *   colIndices: rowspan을 적용할 zero-base column index array, 행선택용 checkbox 컬럼 미포함
-       *   theadOrTbody: 'thead' or 'tbody'
+       *   oTable: sap.ui.table.Table instance
+       *   aColIndices: rowspan을 적용할 zero-base column index array, 행선택용 checkbox 컬럼 미포함
+       *   sTheadOrTbody: 'thead' or 'tbody'
        * }
        */
       adjustRowSpan({ oTable, aColIndices, sTheadOrTbody, bMultiLabel = false }) {
@@ -233,26 +233,23 @@ sap.ui.define(
             aColIndices.forEach((colIndex) => {
               const sId = `#${oTable.getId()}-${sTarget}${sTableId} tbody>tr td:nth-child(${colIndex + 1}):visible`;
               const aTDs = $(sId).get();
-              let oPrevTD = aTDs.shift();
+              let $p = $(aTDs.shift());
 
               aTDs.forEach((oTD) => {
-                const $p = $(oPrevTD);
                 const $c = $(oTD);
-
                 if ($c.text() === $p.text()) {
                   $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
                   $c.hide();
                 } else {
-                  oPrevTD = oTD;
+                  $p = $c;
                 }
               });
 
               $(sId)
                 .get()
                 .forEach((oTD) => {
-                  $(oTD)
-                    .find('span')
-                    .text(_.split($(oTD).text(), '--', 1));
+                  const $c = $(oTD);
+                  $c.find('span').text(() => _.split($c.text(), '--', 1));
                 });
             });
           },

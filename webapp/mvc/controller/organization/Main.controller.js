@@ -38,8 +38,9 @@ sap.ui.define(
           if (_.isEmpty(this.getViewModel())) {
             const fCurriedPA = Client.getEntitySet(this.getModel(ServiceNames.PA));
             const mAppointee = this.getAppointeeData();
-            const [aWerks, aOrgLevel, aReturnData] = await Promise.all([
+            const [aWerks, [{ Auth }], aOrgLevel, aReturnData] = await Promise.all([
               Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr }), //
+              Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'SuccessionAuth'), // 승계 정보 조회 권한
               fCurriedPA('Orglevel'),
               fCurriedPA('EmployeeOrgTree', {
                 Menid: this.getCurrentMenuId(),
@@ -48,17 +49,14 @@ sap.ui.define(
               }),
             ]);
 
-            const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
             const oViewModel = new JSONModel({
               extendNode: '',
-              compact: false,
               layout: 'top',
+              compact: false,
+              successionOn: false,
+              successionAuth: Auth,
               orgLevel: aOrgLevel ?? [],
-              orgList: _.map(aReturnData, (o) => ({
-                ...o,
-                Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
-                Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
-              })),
+              orgList: this.getOrgList(aReturnData),
               entry: {
                 Werks: _.map(aWerks, (o) => _.omit(o, '__metadata')),
               },
@@ -81,37 +79,26 @@ sap.ui.define(
           const sExtendNode = oViewModel.getProperty('/extendNode') || _.noop();
           this.oD3Chart = new D3OrgChart({
             extendNode: sExtendNode,
-            items: {
-              path: '/orgList',
-              template: new D3OrgChartItem({
-                nodeId: '{Objid}',
-                parentNodeId: '{Upobjid}',
-                Stdat: '{Stdat}',
-                Stext: '{Stext}',
-                Pernr: '{Pernr}',
-                Ename: '{Ename}',
-                Ipdat: '{Ipdat}',
-                Photo: '{Photo}',
-                Botxt: '{Botxt}',
-                Jikgbtl: '{Jikgbtl}',
-                ZorgLevl: '{ZorgLevl}',
-                Tenure: '{Tenure}',
-              }),
-            },
+            items: this.getChartItems(),
           });
 
           this.chartHolder.addItem(this.oD3Chart);
 
+          const bSuccessionOn = oViewModel.getProperty('/successionOn');
           const bCompact = oViewModel.getProperty('/compact');
-          const sLayout = oViewModel.getProperty('/layout');
+          const sLayout = oViewModel.getProperty('/layout') || 'top';
 
-          if (_.isEqual(sLayout, 'left') && bCompact) {
-            setTimeout(() => this.oD3Chart.getChart().layout('left').compact(true).render().fit(), 200);
-          } else if (_.isEqual(sLayout, 'left') && !bCompact) {
-            setTimeout(() => this.oD3Chart.getChart().layout('left').render().fit(), 200);
-          } else if (!_.isEqual(sLayout, 'left') && bCompact) {
-            setTimeout(() => this.oD3Chart.getChart().compact(true).render().fit(), 200);
-          }
+          setTimeout(
+            () =>
+              this.oD3Chart
+                .getChart()
+                .layout(sLayout)
+                .compact(bCompact)
+                .nodeHeight(() => (bSuccessionOn ? 340 : 191))
+                .render()
+                .fit(),
+            200
+          );
 
           if (!_.isEmpty(aThirdLevelNodeIds)) {
             setTimeout(() => {
@@ -152,6 +139,15 @@ sap.ui.define(
         oChart.compact(!bCompact).render().fit();
       },
 
+      onPressSuccessionBtn() {
+        const oViewModel = this.getViewModel();
+        const oChart = this.oD3Chart.getChart();
+        const bSuccessionOn = !oViewModel.getProperty('/successionOn');
+
+        oViewModel.setProperty('/successionOn', bSuccessionOn);
+        oChart.nodeHeight(() => (bSuccessionOn ? 340 : 191)).render();
+      },
+
       async onChangeWerks() {
         const oViewModel = this.getViewModel();
 
@@ -166,15 +162,7 @@ sap.ui.define(
             Stdat: moment().hour(9).toDate(),
           });
 
-          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
-          oViewModel.setProperty(
-            '/orgList',
-            _.map(aReturnData, (o) => ({
-              ...o,
-              Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
-              Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
-            }))
-          );
+          oViewModel.setProperty('/orgList', this.getOrgList(aReturnData));
 
           const sLayout = oViewModel.getProperty('/layout');
           const bCompact = oViewModel.getProperty('/compact');
@@ -183,23 +171,7 @@ sap.ui.define(
             extendNode: null,
             layout: sLayout,
             compact: bCompact,
-            items: {
-              path: '/orgList',
-              template: new D3OrgChartItem({
-                nodeId: '{Objid}',
-                parentNodeId: '{Upobjid}',
-                Stdat: '{Stdat}',
-                Stext: '{Stext}',
-                Pernr: '{Pernr}',
-                Ename: '{Ename}',
-                Ipdat: '{Ipdat}',
-                Photo: '{Photo}',
-                Botxt: '{Botxt}',
-                Jikgbtl: '{Jikgbtl}',
-                ZorgLevl: '{ZorgLevl}',
-                Tenure: '{Tenure}',
-              }),
-            },
+            items: this.getChartItems(),
           });
 
           this.chartHolder.addItem(this.oD3Chart);
@@ -232,6 +204,57 @@ sap.ui.define(
       /*****************************************************************
        * ! Call oData
        *****************************************************************/
+
+      getOrgList(aReturnData) {
+        const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
+        return _.map(aReturnData, (o) => ({
+          ...o,
+          Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,
+          Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
+          JikgbtlLabel: this.getBundleText('LABEL_00215'), // 직급
+          IpdatLabel: this.getBundleText('LABEL_00235'), // 입사일
+          TenureLabel: this.getBundleText('LABEL_12008'), // 현부서 재임기간
+          ScsplnLabel: this.getBundleText('LABEL_12101'), // 승계 계획(차년도)
+          ScspntLabel: this.getBundleText('LABEL_12102'), // 승계 예정시점
+          Cand1stLabel: this.getBundleText('LABEL_12103'), // 승계 후보자(1순위)
+          CandpntLabel: this.getBundleText('LABEL_12104'), // 승계 가능시점
+        }));
+      },
+
+      getChartItems() {
+        return {
+          path: '/orgList',
+          template: new D3OrgChartItem({
+            nodeId: '{Objid}',
+            parentNodeId: '{Upobjid}',
+            Stdat: '{Stdat}',
+            Stext: '{Stext}',
+            Pernr: '{Pernr}',
+            Ename: '{Ename}',
+            IpdatLabel: '{IpdatLabel}',
+            Ipdat: '{Ipdat}',
+            Photo: '{Photo}',
+            Botxt: '{Botxt}',
+            JikgbtlLabel: '{JikgbtlLabel}',
+            Jikgbtl: '{Jikgbtl}',
+            ZorgLevl: '{ZorgLevl}',
+            TenureLabel: '{TenureLabel}',
+            Tenure: '{Tenure}',
+            ScsplnLabel: '{ScsplnLabel}', // 승계 계획(차년도)
+            Scspln: '{Scspln}',
+            ScspntLabel: '{ScspntLabel}', // 승계 예정시점
+            Scspnt: '{Scspnt}',
+            Cand1stLabel: '{Cand1stLabel}', // 승계 후보자(1순위)
+            Cand1st1: '{Cand1st1}', // 승계후보자(1순위)_성명/직급
+            Cand1st2: '{Cand1st2}', // 승계후보자(1순위)_인사영역
+            Cand1st3: '{Cand1st3}', // 승계후보자(1순위)_포지션
+            CandpntLabel: '{CandpntLabel}', // 승계 가능시점
+            Candpnt: '{Candpnt}',
+            CpPernr: '{CpPernr}',
+            CpPhoto: '{CpPhoto}',
+          }),
+        };
+      },
     });
   }
 );
