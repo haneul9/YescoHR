@@ -73,7 +73,7 @@ sap.ui.define(
           .compact(this.getCompact())
           .setActiveNodeCentered(true)
           .nodeWidth(() => 360)
-          .nodeHeight(() => 191)
+          .nodeHeight(() => 178)
           .initialZoom(0.8)
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 25)
@@ -124,36 +124,7 @@ sap.ui.define(
     <div class="label">${o.data.CandpntLabel}</div>
     <div class="content">${o.data.Candpnt}</div>
   </div>
-  <div class="bottom level${o.data.ZorgLevl}"></div>
 </div>`;
-            //             return `<div class="org-container" style="height:${o.height}px">
-            //   <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
-            //   <div class="photo"><span style="background-image:url('${o.data.Photo}')" /></div>
-            //   <div class="name">${o.data.Ename}</div>
-            //   <div class="label">${o.data.JikgbtlLabel}</div>
-            //   <div class="content">${o.data.Jikgbtl}</div>
-            //   <div class="label">${o.data.IpdatLabel}</div>
-            //   <div class="content">${o.data.Ipdat}</div>
-            //   <div class="label">${o.data.TenureLabel}</div>
-            //   <div class="content">${o.data.Tenure}</div>
-            //   <div class="divider"></div>
-            //   <div class="succession succession-plan${sSuccessionDisplay}${bSuccessionPlanOnly}">
-            //     <div class="dummy"></div>
-            //     <div class="label">${o.data.ScsplnLabel}</div>
-            //     <div class="content">${o.data.Scspln}</div>
-            //     <div class="label">${o.data.ScspntLabel}</div>
-            //     <div class="content">${o.data.Scspnt}</div>
-            //   </div>
-            //   <div class="succession successor">
-            //     <div class="successor-photo"><span style="background-image:url('${o.data.CpPhoto}')" /></div>
-            //     <div class="label">${o.data.Cand1stLabel}</div>
-            //     <div class="content">${o.data.Cand1st1}</div>
-            //     <div class="low-content" style="text-align:right">${o.data.Cand1st2}</div>
-            //     <div class="low-content">${o.data.Cand1st3}</div>
-            //     <div class="label">${o.data.CandpntLabel}</div>
-            //     <div class="content">${o.data.Candpnt}</div>
-            //   </div>
-            // </div>`;
           })
           .onNodeClick(function (event, sNodeId) {
             const oDesktop = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder');
@@ -174,15 +145,22 @@ sap.ui.define(
             } else {
               if (bTitle) {
                 oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
-              } else if ($element.hasClass('succession') || $element.parents('.succession').length) {
-                const sHost = window.location.href.split('#')[0];
-                const Pernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
-
-                if (Pernr) {
-                  window.open(`${sHost}#/employeeView/${Pernr}/M`, '_blank', 'width=1400,height=800');
-                }
               } else {
-                oRouter.navTo(aRoutePath[0], { pernr: sPernr });
+                if ($element.hasClass('succession') || $element.parents('.succession').length) {
+                  const sCpPernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
+                  if (!sCpPernr) {
+                    return;
+                  }
+
+                  if (AppUtils.isMobile()) {
+                    oRouter.navTo(aRoutePath[0], { pernr: sCpPernr });
+                  } else {
+                    const sHost = window.location.href.split('#')[0];
+                    window.open(`${sHost}#/employeeView/${sCpPernr}/M`, '_blank', 'width=1400,height=800');
+                  }
+                } else {
+                  oRouter.navTo(aRoutePath[0], { pernr: sPernr });
+                }
               }
             }
           })

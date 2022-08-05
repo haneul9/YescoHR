@@ -12,8 +12,7 @@
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </Select>
           <Button type="Emphasized" text="{= ${/layout} === 'left' ? ${i18n>LABEL_12002} : ${i18n>LABEL_12003} }" press=".onPressSwapBtn" width="175px" />
-          <Button type="Emphasized" text="{= ${/compact} ? ${i18n>LABEL_12004} : ${i18n>LABEL_12005} }" press=".onPressCompactBtn" width="175px" />
-          <Button type="Emphasized" text="{= ${/successionOn} ? ${i18n>LABEL_12007} : ${i18n>LABEL_12006} }" press=".onPressSuccessionBtn" width="175px" visible="{= ${/successionAuth} === 'X' }" />
+          <Button type="Emphasized" text="{= ${/compact} ? ${i18n>LABEL_12004} : ${i18n>LABEL_12005} }" press=".onPressCompactBtn" width="175px" id="compactButton" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
           <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
         </HBox>

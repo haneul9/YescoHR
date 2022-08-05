@@ -1,0 +1,152 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog id="talentCompareDialog" title="인재검색" contentWidth="1600px">
+    <beginButton>
+      <Button type="Emphasized" text="확인" press=".onPressCompareDialogClose" />
+    </beginButton>
+    <content>
+      <VBox>
+        <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block">
+          <l:BlockLayout id="BlockLayout" background="{/selectedBackground}">
+            <l:BlockLayoutRow content="{/compare/row1}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox visible="{= ${type} === 'text' }">
+                  <Image src="{Picurl}" height="100px" press=".onPressDialogPic" />
+                  <Text text="{Value01}" />
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row2}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row3}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row4}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row5}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox>
+                  <VBox items="{path: 'data', templateShareable: false}" visible="{= ${type} === 'label' }">
+                    <Text text="{value}">
+                      <customData>
+                        <core:CustomData key="type" value="{type}" writeToDom="true" />
+                      </customData>
+                    </Text>
+                  </VBox>
+                  <HBox justifyContent="SpaceBetween" alignItems="Center" visible="{= ${type} !== 'label' }">
+                    <VBox items="{path: 'data', templateShareable: false}">
+                      <Text text="{value}">
+                        <customData>
+                          <core:CustomData key="type" value="{type}" writeToDom="true" />
+                        </customData>
+                      </Text>
+                    </VBox>
+                    <Image src="/sap/public/bc/ui2/zui5_yescohr/images/compare_chart{block9}.svg" />
+                  </HBox>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row6}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row7}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+            <l:BlockLayoutRow content="{/compare/row8}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row9}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row10}" scrollable="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox items="{path: 'data', templateShareable: false}">
+                  <Text text="{value}">
+                    <customData>
+                      <core:CustomData key="type" value="{type}" writeToDom="true" />
+                    </customData>
+                  </Text>
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+
+            <l:BlockLayoutRow content="{/compare/row11}" scrollable="{/compare/scroll}" visible="{/compare/scroll}">
+              <l:BlockLayoutCell>
+                <VBox>
+                  <Label text="" />
+                </VBox>
+              </l:BlockLayoutCell>
+            </l:BlockLayoutRow>
+          </l:BlockLayout>
+        </l:VerticalLayout>
+      </VBox>
+    </content>
+  </Dialog>
+</core:FragmentDefinition>

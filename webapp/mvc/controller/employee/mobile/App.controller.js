@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/m/Title',
     'sap/m/VBox',
     'sap/ui/layout/cssgrid/CSSGrid',
+    'sap/ui/layout/cssgrid/GridItemLayoutData',
     'sap/ui/yesco/control/MobileScrollContainer',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -26,6 +27,7 @@ sap.ui.define(
     Title,
     VBox,
     CSSGrid,
+    GridItemLayoutData,
     MobileScrollContainer,
     AppUtils,
     Client,
@@ -58,6 +60,8 @@ sap.ui.define(
         EDU1: '1fr 1fr', // 교육
         JOBC: '1fr 1fr', // 직무경력
         JOBL: '1fr 1fr', // 직무이력
+        S031: '3fr 5fr', // 승계 후보자 선정 결과 (본인)
+        S032: '3fr 5fr', // 승계 후보자 선정 결과 (후임자)
       },
 
       initializeModel() {
@@ -183,12 +187,37 @@ sap.ui.define(
                 }
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.gridTemplate = _.get(this.LIST_GRID_TEMPLATE, o.Menuc, mSubMenu.gridTemplate);
+
                 if (aTabMenus[index].Menuc1 === 'M020') {
                   // 인재육성위원회
                   mSubMenu.data.push({
                     contents: [{ valueTxt: o.Value01 }, { valueTxt: o.Value02 }],
                     popoverParams: { Pernr: o.Pernr, Gjahr: o.Value01.replace(/\D/g, ''), Mdate: o.Value06, Zseqnr: o.Value07 },
                   });
+                } else if (aTabMenus[index].Menuc1 === 'M030') {
+                  // 승계 대상 포지션 정보 (Value01 ~ Value05), 승계 후보자 정보 (Value06 ~ Value09)
+                  const aSuccessionData = _.chain(o)
+                    .pickBy((v, p) => _.startsWith(p, 'Value') && _.toNumber(p.substring(5)) < 10)
+                    .map((v) => ({ valueTxt: v }))
+                    .value();
+
+                  const contents = [
+                    { succession: aSuccessionData, gridRowEnd: 2, bg: o.Menuc === 'S032' && o.Value10 === 'X' },
+                    { succession: aSuccessionData.splice(5), gridRowEnd: 'auto', bg: o.Menuc === 'S031' && o.Value10 === 'X' },
+                  ]; // arrays in array
+                  const sSuccessionTarget = aSuccessionData.map(({ valueTxt }) => valueTxt).join();
+
+                  const iLength = mSubMenu.data.length;
+                  const mPrevContents = iLength > 0 ? mSubMenu.data[iLength - 1].contents : [{ succession: [] }]; // 승계 대상 포지션 정보가 이전 행과 동일한지 비교하기 위한 용도
+                  const sPrevSuccessionTarget = mPrevContents[0].succession.map(({ valueTxt }) => valueTxt).join();
+
+                  if (sSuccessionTarget !== sPrevSuccessionTarget) {
+                    // 신규 승계 대상 포지션 정보행 시작
+                    mSubMenu.data.push({ contents });
+                  } else {
+                    mPrevContents[0].gridRowEnd++;
+                    mPrevContents.push(contents[1]);
+                  }
                 } else {
                   mSubMenu.data.push({
                     contents: _.chain(o)
@@ -221,16 +250,16 @@ sap.ui.define(
         const aTabItems = this.byId('employeeTabBar').getItems();
         const aSubMenu = oViewModel.getProperty('/sub');
 
-        Object.keys(aSubMenu).forEach((menuKey) => {
-          const aSubMenuContents = _.get(aSubMenu, [menuKey, 'contents']);
-          const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), menuKey));
+        Object.keys(aSubMenu).forEach((sMenuKey) => {
+          const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
+          const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
           const oScrollContainer = new MobileScrollContainer({ horizontal: false, vertical: true });
-          let oWrapperVBox = sap.ui.getCore().byId(`sub${menuKey}`);
+          let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
 
           if (oWrapperVBox) {
             oWrapperVBox.destroyItems();
           } else {
-            oWrapperVBox = new VBox({ id: `sub${menuKey}`, visible: true });
+            oWrapperVBox = new VBox({ id: `sub${sMenuKey}`, visible: true });
           }
 
           /**
@@ -238,8 +267,8 @@ sap.ui.define(
            *      - 주소 테이블의 경우 CRUD가 추가된다.
            * OMenu.type: '6'  Grid
            */
-          Object.keys(aSubMenuContents).forEach((key) => {
-            const mMenu = _.get(aSubMenuContents, key);
+          Object.keys(aSubMenuContents).forEach((sKey) => {
+            const mMenu = _.get(aSubMenuContents, sKey);
             const oSubVBox = new VBox().addStyleClass('profile-detail');
 
             this.debug(`Sub ${mMenu.title}`, mMenu);
@@ -249,29 +278,30 @@ sap.ui.define(
 
             // Content (Table|Grid)
             if (mMenu.type === this.SUB_TYPE.TABLE) {
-              const sTableDataPath = `/sub/${menuKey}/contents/${key}`;
+              const sTableDataPath = `/sub/${sMenuKey}/contents/${sKey}`;
+              const oGridItemTemplate = sMenuKey !== 'M030' ? new Text({ text: '{valueTxt}' }) : this.getSuccessionTemplate();
               const oListCSSGrid = new CSSGrid({
-                gridGap: '1px 8px',
+                gridGap: sMenuKey !== 'M030' ? '1px 8px' : '1px',
                 gridTemplateColumns: { path: `${sTableDataPath}/gridTemplate` },
                 items: {
                   path: 'contents',
                   templateShareable: false,
-                  template: new Text({ text: '{valueTxt}' }),
+                  template: oGridItemTemplate,
                 },
               });
               const oList = new List({
                 noDataText: this.getBundleText('MSG_00001'),
                 items: {
-                  path: `data`,
+                  path: 'data',
                   templateShareable: false,
                   template: new CustomListItem({
                     content: oListCSSGrid,
-                    type: menuKey === 'M020' ? 'Active' : 'Inactive',
+                    type: sMenuKey === 'M020' ? 'Active' : 'Inactive',
                   }),
                 },
               }).bindElement(sTableDataPath);
 
-              if (menuKey === 'M020') {
+              if (sMenuKey === 'M020') {
                 oList.attachItemPress((oEvent) => {
                   const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
                   const mHeaderData = this.getViewModel().getProperty('/header');
@@ -280,6 +310,8 @@ sap.ui.define(
                 });
 
                 this.oMobileTalentDevPopoverHandler = new MobileTalentDevPopoverHandler(this);
+              } else if (sMenuKey === 'M030') {
+                oListCSSGrid.addStyleClass('succession-grid');
               }
 
               oSubVBox.addItem(oList);
@@ -300,6 +332,32 @@ sap.ui.define(
           oScrollContainer.addContent(oWrapperVBox);
           oTabContainer.addContent(oScrollContainer);
         });
+      },
+
+      getSuccessionTemplate() {
+        const oVBox = new VBox({
+          items: {
+            path: 'succession',
+            templateShareable: false,
+            template: new Text({ text: '{valueTxt}' }),
+          },
+        });
+        oVBox.addEventDelegate(
+          {
+            onBeforeRendering() {
+              const mProperties = this.getBindingContext().getProperty();
+              if (mProperties.gridRowEnd !== 'auto') {
+                this.setLayoutData(new GridItemLayoutData({ gridRow: '1 / {gridRowEnd}' }));
+              }
+              this.addStyleClass('succession');
+              if (mProperties.bg) {
+                this.addStyleClass('succession-bg-color');
+              }
+            },
+          },
+          oVBox
+        );
+        return oVBox;
       },
     });
   }

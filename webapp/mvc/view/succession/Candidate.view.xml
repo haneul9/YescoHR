@@ -1,0 +1,22 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.succession.Candidate"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page title="{i18n>LABEL_45001}" showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button type="Emphasized" text="{i18n>LABEL_45002}" press=".onPressCompare" />
+          <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
+          <Button text="{i18n>LABEL_00132}" icon="sap-icon://sys-help" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.SearchConditions" type="XML" />
+      <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.SearchResults" type="XML" /> -->
+    </VBox>
+  </Page>
+</mvc:View>

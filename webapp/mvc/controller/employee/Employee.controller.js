@@ -604,8 +604,6 @@ sap.ui.define(
                   );
                 });
               } else if (sMenuKey === 'M030') {
-                oTable.addStyleClass('cell-bg');
-
                 // Succession tab
                 const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
                 const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
@@ -635,7 +633,7 @@ sap.ui.define(
                 oTable.addEventDelegate(
                   {
                     onAfterRendering() {
-                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('successor', true);
+                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('succession-bg-color', true);
                     },
                   },
                   oTable

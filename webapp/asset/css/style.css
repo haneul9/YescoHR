@@ -1453,7 +1453,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 
 .sapUiLayoutCSSGrid.form-grid.border-bottom-0px {border-bottom:0px solid #f5f5f5}
 .sapUiLayoutCSSGrid.form-grid {border-top:1px solid #f5f5f5; border-bottom:1px solid #f5f5f5; padding-top:0px; background-color:#f5f5f5 !important}
-.sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:44px; align-self:center; background:#fff}
+.sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:50px; align-self:center; background:#fff}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem {display:flex; padding-top:0px; min-height:50px !important}
 .sapUiLayoutCSSGrid.form-grid .sapMFlexBox .sapMFlexItem .sapMText {display:flex}
 .listFileDialog {min-height:85px !important; max-height:230px !important}
@@ -1591,11 +1591,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .main-profile.expanded {width:100%}
 .main-profile .sapMITBContent {padding-bottom:0}
 .main-profile .sapMITBContent .customBox.sapUiMediumMarginBottom:last-child {margin-bottom:0 !important}
-/* .main-profile .cell-bg .sapUiTableCell {position:relative}
-.main-profile .cell-bg .sapUiTableCellInner {position:absolute; top:0; right:0; bottom:0; left:0; padding:0}
-.main-profile .cell-bg .sapUiTableCellInner span {display:flex; justify-content:center; align-items:center; height:100%}
-.main-profile .cell-bg .sapUiTableCellInner span[data-bg="O"] {background-color:#deebf7} */
-.main-profile .cell-bg .sapUiTableCell.successor {background-color:#deebf7}
+.main-profile .succession-bg-color {background-color:#deebf7}
 
 .lineItem-wrap:after {content:""; display:inline-block; height:2px; position:absolute; left:10%; right:10%; top:50%; background:linear-gradient(to right, #f5ec95, 50%, #70cf8d); z-index:1}
 .lineItem {z-index:2; align-self:center; display:flex; justify-content:center; align-content:center}

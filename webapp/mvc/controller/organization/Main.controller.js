@@ -49,12 +49,25 @@ sap.ui.define(
               }),
             ]);
 
+            setTimeout(() => {
+              if (Auth === 'X') {
+                const oCompactButton = this.byId('compactButton');
+                const oHBox = oCompactButton.getParent();
+                const oSuccessionButton = new sap.m.Button({
+                  type: 'Emphasized',
+                  width: '175px',
+                  text: '{= ${/successionOn} ? ${i18n>LABEL_12007} : ${i18n>LABEL_12006} }', // Succession Off : Succession On
+                  press: this.onPressSuccessionBtn.bind(this),
+                });
+                oHBox.insertItem(oSuccessionButton, oHBox.indexOfItem(oCompactButton) + 1);
+              }
+            });
+
             const oViewModel = new JSONModel({
               extendNode: '',
               layout: 'top',
               compact: false,
               successionOn: false,
-              successionAuth: Auth,
               orgLevel: aOrgLevel ?? [],
               orgList: this.getOrgList(aReturnData),
               entry: {
@@ -94,7 +107,7 @@ sap.ui.define(
                 .getChart()
                 .layout(sLayout)
                 .compact(bCompact)
-                .nodeHeight(() => (bSuccessionOn ? 340 : 191))
+                .nodeHeight(() => (bSuccessionOn ? 328 : 178))
                 .render()
                 .fit(),
             200
@@ -145,7 +158,7 @@ sap.ui.define(
         const bSuccessionOn = !oViewModel.getProperty('/successionOn');
 
         oViewModel.setProperty('/successionOn', bSuccessionOn);
-        oChart.nodeHeight(() => (bSuccessionOn ? 340 : 191)).render();
+        oChart.nodeHeight(() => (bSuccessionOn ? 328 : 178)).render();
       },
 
       async onChangeWerks() {
@@ -161,6 +174,11 @@ sap.ui.define(
             Werks: sWerks,
             Stdat: moment().hour(9).toDate(),
           });
+
+          if (_.isEmpty(aReturnData)) {
+            oViewModel.setProperty('/orgList', []);
+            return;
+          }
 
           oViewModel.setProperty('/orgList', this.getOrgList(aReturnData));
 
@@ -213,11 +231,11 @@ sap.ui.define(
           Ipdat: _.isDate(o.Ipdat) ? moment(o.Ipdat).format('YYYY.MM.DD') : '',
           JikgbtlLabel: this.getBundleText('LABEL_00215'), // 직급
           IpdatLabel: this.getBundleText('LABEL_00235'), // 입사일
-          TenureLabel: this.getBundleText('LABEL_12008'), // 현부서 재임기간
-          ScsplnLabel: this.getBundleText('LABEL_12101'), // 승계 계획(차년도)
-          ScspntLabel: this.getBundleText('LABEL_12102'), // 승계 예정시점
-          Cand1stLabel: this.getBundleText('LABEL_12103'), // 승계 후보자(1순위)
-          CandpntLabel: this.getBundleText('LABEL_12104'), // 승계 가능시점
+          TenureLabel: this.getBundleText('LABEL_12101'), // 현부서 재임기간
+          ScsplnLabel: this.getBundleText('LABEL_12102'), // 승계 계획(차년도)
+          ScspntLabel: this.getBundleText('LABEL_12103'), // 승계 예정시점
+          Cand1stLabel: this.getBundleText('LABEL_12104'), // 승계 후보자(1순위)
+          CandpntLabel: this.getBundleText('LABEL_12105'), // 승계 가능시점
         }));
       },
 

@@ -514,6 +514,10 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) {height:40px !important}
 .profile-detail .sapMInputBase.sapMInputBaseReadonly:not(.sapMTextArea) input, .profile-detail .sapMLabel {padding-top:0 !important; padding-bottom:0 !important; font-size:16px; font-weight:500 !important}
 .profile-detail .sapMInput.sapMInputBaseReadonly>div>input {padding-left:0 !important}
+.profile-detail .succession-grid {border:1px solid #ebeef2; background-color:#ebeef2}
+.profile-detail .succession {padding:10px; background-color:#fff}
+.profile-detail .succession-bg-color {background-color:#deebf7}
+.profile-detail .succession .sapMText {word-break:keep-all}
 
 .talent-list {padding-left:20px; padding-right:20px}
 
