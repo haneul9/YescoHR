@@ -142,7 +142,9 @@ sap.ui.define(
             Werks: _.map(aEntryDataList[0], (o) => _.omit(o, '__metadata')),
             ..._.chain('ABCDEFGHIJKLM')
               .split('')
-              .map((s, i) => ({ [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[++i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }) }))
+              .map((s, i) => ({
+                [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[++i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }),
+              }))
               .reduce((acc, cur) => ({ ...acc, ...cur }), {})
               .value(),
           });
@@ -257,21 +259,20 @@ sap.ui.define(
       },
 
       onPairValue(oEvent) {
-        const oViewModel = this.getViewModel();
         const oControl = oEvent.getSource();
-        const sValue = oControl.getSelectedKey();
+        const oViewModel = this.getViewModel();
         const sTargetProp = oControl.data('target');
-        const sTargetValue = oViewModel.getProperty(`/search/${sTargetProp}`);
-
-        if (_.isEmpty(sTargetValue) || sValue > sTargetValue) {
-          oViewModel.setProperty(`/search/${sTargetProp}`, oControl.getSelectedKey());
-        }
+        const sValue = oControl.getSelectedKey();
+        const iValue = Number(sValue || 0);
+        const iTargetValue = Number(oViewModel.getProperty(`/search/${sTargetProp}`) || 0);
 
         if (_.isEmpty(sValue)) {
           oViewModel.setProperty(`/search/${sTargetProp}`, '');
+        } else if (iTargetValue === 0 || iValue > iTargetValue) {
+          oViewModel.setProperty(`/search/${sTargetProp}`, sValue);
         }
 
-        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
+        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, sValue));
       },
 
       async onChangeSearchCondition() {
@@ -473,7 +474,16 @@ sap.ui.define(
 
         try {
           const mSearch = _.cloneDeep(oViewModel.getProperty('/search'));
-          _.chain(mSearch).set('Freetx', _.chain(mSearch.Freetx).replace(/ /g, '').replace(/[,]/g, '/').value()).set('Cttyp', _.compact(mSearch.Cttyp)).set('Jobgr', _.compact(mSearch.Jobgr)).set('Major', _.compact(mSearch.Major)).set('Schcd', _.compact(mSearch.Schcd)).set('Slabs', _.compact(mSearch.Slabs)).set('Zzjikch', _.compact(mSearch.Zzjikch)).set('Zzjikgb', _.compact(mSearch.Zzjikgb)).commit();
+          _.chain(mSearch)
+            .set('Freetx', _.chain(mSearch.Freetx).replace(/ /g, '').replace(/[,]/g, '/').value())
+            .set('Cttyp', _.compact(mSearch.Cttyp))
+            .set('Jobgr', _.compact(mSearch.Jobgr))
+            .set('Major', _.compact(mSearch.Major))
+            .set('Schcd', _.compact(mSearch.Schcd))
+            .set('Slabs', _.compact(mSearch.Slabs))
+            .set('Zzjikch', _.compact(mSearch.Zzjikch))
+            .set('Zzjikgb', _.compact(mSearch.Zzjikgb))
+            .commit();
 
           const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Command', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx', 'Command');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
@@ -533,9 +543,9 @@ sap.ui.define(
       },
 
       onToggleExpand(oEvent) {
-        const bState = oEvent.getParameter('state');
+        const bPressed = oEvent.getParameter('pressed');
 
-        if (bState) {
+        if (bPressed) {
           this.showComplexSearch();
         } else {
           this.showSimpleSearch();

@@ -20,8 +20,9 @@
       </ComboBox>
       <Button text="{i18n>LABEL_00101}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressSearch" />
       <Button text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_reset.png" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
-      <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" />
-      <Label class="pl-0" text="{i18n>LABEL_35004}" />
+      <!-- <Switch state="{= ${/search/Prcty} === 'B' }" customTextOn=" " customTextOff=" " enabled="{= !${/result/busy} }" change=".onToggleExpand" /> -->
+      <!-- <Label class="pl-0" text="{i18n>LABEL_35004}" /> -->
+      <ToggleButton text="{i18n>LABEL_35004}" press=".onToggleExpand" pressed="{= ${/search/Prcty} === 'B' }" icon="{= ${/search/Prcty} === 'B' ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }" iconDensityAware="false" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="repeat(4, 1fr 3fr)" gridGap="8px" class="search-filter" id="searchFilterBody">
       <HBox justifyContent="End" alignItems="Center">

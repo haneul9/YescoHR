@@ -198,7 +198,7 @@ sap.ui.define(
                   // 승계 대상 포지션 정보 (Value01 ~ Value05), 승계 후보자 정보 (Value06 ~ Value09)
                   const aSuccessionData = _.chain(o)
                     .pickBy((v, p) => _.startsWith(p, 'Value') && _.toNumber(p.substring(5)) < 10)
-                    .map((v) => ({ valueTxt: v }))
+                    .map((v) => ({ valueTxt: v.replace(/,/g, '\n') }))
                     .value();
 
                   const contents = [

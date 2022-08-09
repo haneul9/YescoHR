@@ -28,32 +28,38 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.succession.Candidate', {
+      CODES1: 'ABEGJKMNO'.split(''),
+      CODES2: 'CDFHIL'.split(''), // 조회시 Werks 필요
+
       initializeModel() {
         return {
-          busy: false,
+          busy: true,
           entry: {
-            Werks: [],
-            A: [],
-            B: [],
-            C: [],
-            D: [],
-            E: [],
-            F: [],
-            G: [],
-            H: [],
-            I: [],
-            J: [],
-            K: [],
-            L: [],
-            M: [],
+            Werks: [], // 인사영역
+            A: [], // 직무 1~4
+            B: [], // 직책
+            C: [], // 성과평가등급(3개년평균)
+            D: [], // 역량진단등급(3개년평균)
+            E: [], // 다면진단등급
+            F: [], // 외국어1~3
+            G: [], // 외국어수준
+            H: [], // 전공
+            I: [], // 자격증
+            J: [], // 직군
+            K: [], // 직급
+            L: [], // 학교
+            M: [], // 학력
+            N: [], // 나이
+            O: [], // 성별
+            P: [], // 기간
           },
-          saved: {
+          plan: {
             busy: false,
-            Schtl: '',
-            selectedCondition: 'ALL',
+            selected: '',
             entry: [],
           },
           search: {
+            showFilter: true,
             Command: 'AND',
             Werks: '',
             Freetx: '',
@@ -87,7 +93,12 @@ sap.ui.define(
             SyearFr4: '',
             SyearTo4: '',
           },
-          result: {
+          candidateListInfo: {
+            busy: false,
+            totalCount: 0,
+            list: [],
+          },
+          searchResultListInfo: {
             busy: false,
             totalCount: 0,
             list: [],
@@ -116,44 +127,41 @@ sap.ui.define(
         try {
           oViewModel.setSizeLimit(2000);
           oViewModel.setData(this.initializeModel());
-          oViewModel.setProperty('/busy', true);
 
-          this.getEntrySearchCondition();
-          oViewModel.setProperty('/saved/selectedCondition', 'ALL');
-
-          const oPAModel = this.getModel(ServiceNames.PA);
-          const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
+          const oCommonModel = this.getModel(ServiceNames.COMMON);
+          const oTalentModel = this.getModel(ServiceNames.TALENT);
           const aEntryDataList = await Promise.all([
-            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
-            // Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: sPernr }), //
-            ..._.chain('ABCDEFGHIJKLM')
-              .split('')
-              .map((s) => Client.getEntitySet(oPAModel, 'TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: s }))
-              .value(),
+            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks: sWerks }), //
+            Client.getEntitySet(oCommonModel, 'PersAreaList'),
+            ...this.CODES1.map((s) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Mode: s })),
+            ...this.CODES2.map((s) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks: sWerks, Mode: s })),
           ]);
 
-          const aIncludeResetEntry = ['D', 'I', 'J', 'K', 'L', 'M'];
-          const aNumberCodeEntry = ['D', 'M'];
+          const aIncludeResetEntry = ['D', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
+          const aNumberCodeEntry = ['N'];
+          const sYear = this.getBundleText('LABEL_00252'); // 년
 
-          oViewModel.setProperty('/search/Werks', this.getAppointeeProperty('Werks'));
-          oViewModel.setProperty('/fieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.PA, 'TalentSearch'), this.getEntityLimit(ServiceNames.PA, 'TalentSearchCondition')));
+          oViewModel.setProperty('/search/Werks', sWerks);
+          oViewModel.setProperty('/search/WerksEtc', sWerks);
+          oViewModel.setProperty('/plan/entry', this.convertSearchConditionEntry({ aEntries: aEntryDataList.shift(), bContainReset: false, bNumberCode: false }));
           oViewModel.setProperty('/entry', {
-            Werks: _.map(aEntryDataList[0], (o) => _.omit(o, '__metadata')),
-            ..._.chain('ABCDEFGHIJKLM')
-              .split('')
+            Werks: _.map(aEntryDataList.shift(), (o) => _.omit(o, '__metadata')),
+            ...this.CODES1.concat(this.CODES2)
               .map((s, i) => ({
-                [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[++i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }),
+                [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }),
               }))
-              .reduce((acc, cur) => ({ ...acc, ...cur }), {})
-              .value(),
+              .reduce((acc, cur) => ({ ...acc, ...cur }), {}),
           });
+          oViewModel.setProperty(
+            '/entry/P',
+            _.times(25, (i) => ({ Zcode: i + 1, Ztext: `${i + 1}${sYear}` }))
+          );
         } catch (oError) {
-          this.debug('Controller > Talent > onObjectMatched Error', oError);
+          this.debug('Controller > Candidate > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.byId('searchFilterBody').removeStyleClass('expanded');
           oViewModel.setProperty('/busy', false);
         }
       },
@@ -163,6 +171,132 @@ sap.ui.define(
           .map((o) => ({ ..._.omit(o, '__metadata'), Zcode: bNumberCode ? _.toNumber(o.Zcode) : _.trim(o.Zcode) }))
           .thru((arr) => (bContainReset ? [{ Zcode: '', Ztext: '' }, ...arr] : arr))
           .value();
+      },
+
+      async onChangeWerks() {
+        const oViewModel = this.getViewModel();
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const sWerks = oViewModel.getProperty('/search/Werks');
+
+          const oTalentModel = this.getModel(ServiceNames.TALENT);
+          const aEntryDataList = await Promise.all([
+            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks: sWerks }), //
+            ...this.CODES2.map((s) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks: sWerks, Mode: s })),
+          ]);
+
+          const aIncludeResetEntry = ['D', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
+          const aNumberCodeEntry = ['N'];
+
+          oViewModel.setProperty('/plan/entry', this.convertSearchConditionEntry({ aEntries: aEntryDataList.shift(), bContainReset: false, bNumberCode: false }));
+          _.chain(this.CODES2)
+            .map((s, i) => ({
+              [s]: this.convertSearchConditionEntry({ aEntries: aEntryDataList[i], bContainReset: _.includes(aIncludeResetEntry, s), bNumberCode: _.includes(aNumberCodeEntry, s) }),
+            }))
+            .reduce((acc, cur) => ({ ...acc, ...cur }), {})
+            .forEach((m, k) => {
+              oViewModel.setProperty(`/entry/${k}`, m);
+            })
+            .value();
+        } catch (oError) {
+          this.debug('Controller > Candidate > onChangeWerks Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async onChangePlan() {
+        const oViewModel = this.getViewModel();
+
+        try {
+          const sSelectedPlan = oViewModel.getProperty('/plan/selected');
+          if (_.isEmpty(sSelectedPlan)) {
+            return;
+          }
+
+          oViewModel.setProperty('/busy', true);
+
+          await this.readSearchCondition(sSelectedPlan);
+        } catch (oError) {
+          this.debug('Controller > Candidate > onChangePlan Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
+      },
+
+      async readSearchCondition(sSelectedPlan) {
+        const [mSearchCondition] = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'SuccessionSearchCondition', {
+          Plans: sSelectedPlan,
+        });
+
+        this.getViewModel().setProperty('/search', {
+          ..._.chain(mSearchCondition) //
+            .omit('__metadata')
+            .set('Jobgr', _.isEmpty(mSearchCondition.Jobgr) ? [] : _.split(mSearchCondition.Jobgr, '|'))
+            .set('Zzjikgb', _.isEmpty(mSearchCondition.Zzjikgb) ? [] : _.split(mSearchCondition.Zzjikgb, '|'))
+            .set('Zzjikch', _.isEmpty(mSearchCondition.Zzjikch) ? [] : _.split(mSearchCondition.Zzjikch, '|'))
+            .set('Schcd', _.isEmpty(mSearchCondition.Schcd) ? [] : _.split(mSearchCondition.Schcd, '|'))
+            .set('Major', _.isEmpty(mSearchCondition.Major) ? [] : _.split(mSearchCondition.Major, '|'))
+            .set('Slabs', _.isEmpty(mSearchCondition.Slabs) ? [] : _.split(mSearchCondition.Slabs, '|'))
+            .set('Cttyp', _.isEmpty(mSearchCondition.Cttyp) ? [] : _.split(mSearchCondition.Cttyp, '|'))
+            .set('Stell1', _.isEmpty(mSearchCondition.Stell1) ? [] : _.split(mSearchCondition.Stell1, '|'))
+            .set('Stell2', _.isEmpty(mSearchCondition.Stell2) ? [] : _.split(mSearchCondition.Stell2, '|'))
+            .set('Stell3', _.isEmpty(mSearchCondition.Stell3) ? [] : _.split(mSearchCondition.Stell3, '|'))
+            .set('Stell4', _.isEmpty(mSearchCondition.Stell4) ? [] : _.split(mSearchCondition.Stell4, '|'))
+            .set('PformGrad', _.isEmpty(mSearchCondition.PformGrad) ? [] : _.split(mSearchCondition.PformGrad, '|'))
+            .set('QualiLv', _.isEmpty(mSearchCondition.QualiLv) ? [] : _.split(mSearchCondition.QualiLv, '|'))
+            .set('DignoGrad', _.isEmpty(mSearchCondition.DignoGrad) ? [] : _.split(mSearchCondition.DignoGrad, '|'))
+            .value(),
+        });
+      },
+
+      async onPressCompare() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
+        try {
+          const oTalentList = this.byId('talentList');
+          const aSelectedContexts = oTalentList.getSelectedContexts();
+
+          if (aSelectedContexts.length < 2) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35011') }); // 프로파일 비교할 데이터를 선택하여 주십시오.
+
+          const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
+          const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
+
+          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
+          oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
+          oViewModel.setProperty(
+            '/compare/row1',
+            _.concat(
+              { type: 'label' },
+              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl, Value01: o.Value01 }))
+            )
+          );
+          oViewModel.setProperty('/compare/row2', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35013', sTargetProp: 'Value02' })); // 기본정보
+          oViewModel.setProperty('/compare/row3', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_00222', sTargetProp: 'Value04' })); // 직무
+          oViewModel.setProperty('/compare/row4', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35016', sTargetProp: 'Value05' })); // 학력
+          oViewModel.setProperty('/compare/row5', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35014', sTargetProp: 'Value06', bEvaluation: true })); // 평가이력
+          oViewModel.setProperty('/compare/row6', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35015', sTargetProp: 'Value03' })); // 사내경력
+          oViewModel.setProperty('/compare/row7', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35017', sTargetProp: 'Value09' })); // 사외경력
+          oViewModel.setProperty('/compare/row8', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35018', sTargetProp: 'Value08' })); // 외국어
+          oViewModel.setProperty('/compare/row9', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35019', sTargetProp: 'Value10' })); // 포상
+          oViewModel.setProperty('/compare/row10', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35020', sTargetProp: 'Value11' })); // 징계
+          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
+
+          this.onCompareDialog();
+        } catch (oError) {
+          this.debug('Controller > Candidate > onPressCompare Error', oError);
+
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.setProperty('/busy', false);
+        }
       },
 
       convertCompareRow({ aCompareResults, sLabelCode, sTargetProp, bEvaluation = false }) {
@@ -210,151 +344,44 @@ sap.ui.define(
         this.oTalentCompareDialog.open();
       },
 
-      async onPressCompare() {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/busy', true);
-
-        try {
-          const oTalentList = this.byId('talentList');
-          const aSelectedContexts = oTalentList.getSelectedContexts();
-
-          if (aSelectedContexts.length < 2) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35011') }); // 프로파일 비교할 데이터를 선택하여 주십시오.
-
-          const aPernr = _.map(aSelectedContexts, (o) => _.get(o.getObject(), 'Pernr'));
-          const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
-
-          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
-          oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
-          oViewModel.setProperty(
-            '/compare/row1',
-            _.concat(
-              { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl, Value01: o.Value01 }))
-            )
-          );
-          oViewModel.setProperty('/compare/row2', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35013', sTargetProp: 'Value02' })); // 기본정보
-          oViewModel.setProperty('/compare/row3', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_00222', sTargetProp: 'Value04' })); // 직무
-          oViewModel.setProperty('/compare/row4', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35016', sTargetProp: 'Value05' })); // 학력
-          oViewModel.setProperty('/compare/row5', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35014', sTargetProp: 'Value06', bEvaluation: true })); // 평가이력
-          oViewModel.setProperty('/compare/row6', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35015', sTargetProp: 'Value03' })); // 사내경력
-          oViewModel.setProperty('/compare/row7', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35017', sTargetProp: 'Value09' })); // 사외경력
-          oViewModel.setProperty('/compare/row8', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35018', sTargetProp: 'Value08' })); // 외국어
-          oViewModel.setProperty('/compare/row9', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35019', sTargetProp: 'Value10' })); // 포상
-          oViewModel.setProperty('/compare/row10', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35020', sTargetProp: 'Value11' })); // 징계
-          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
-
-          this.onCompareDialog();
-        } catch (oError) {
-          this.debug('Controller > Talent > onPressCompare Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
-      },
-
       onPressCompareDialogClose() {
         this.oTalentCompareDialog.close();
       },
 
       onPairValue(oEvent) {
-        const oViewModel = this.getViewModel();
         const oControl = oEvent.getSource();
-        const sValue = oControl.getSelectedKey();
+        const oViewModel = this.getViewModel();
         const sTargetProp = oControl.data('target');
-        const sTargetValue = oViewModel.getProperty(`/search/${sTargetProp}`);
-
-        if (_.isEmpty(sTargetValue) || sValue > sTargetValue) {
-          oViewModel.setProperty(`/search/${sTargetProp}`, oControl.getSelectedKey());
-        }
+        const sValue = oControl.getSelectedKey();
+        const iValue = Number(sValue || 0);
+        const iTargetValue = Number(oViewModel.getProperty(`/search/${sTargetProp}`) || 0);
 
         if (_.isEmpty(sValue)) {
           oViewModel.setProperty(`/search/${sTargetProp}`, '');
+        } else if (iTargetValue === 0 || iValue > iTargetValue) {
+          oViewModel.setProperty(`/search/${sTargetProp}`, sValue);
         }
 
-        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, oControl.getSelectedKey()));
-      },
-
-      async onChangeSearchCondition() {
-        const oViewModel = this.getViewModel();
-
-        try {
-          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
-
-          if (sSelectedCondition === 'ALL') return;
-
-          oViewModel.setProperty('/busy', true);
-
-          this.showComplexSearch();
-          await this.readSearchCondition(sSelectedCondition);
-        } catch (oError) {
-          this.debug('Controller > Talent > onChangeSearchCondition Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        oControl.getParent().getItems()[2].getBinding('items').filter(new Filter('Zcode', FilterOperator.GE, sValue));
       },
 
       onChangeQuali(oEvent) {
-        const oViewModel = this.getViewModel();
         const sSeq = oEvent.getSource().data('seq');
 
-        oViewModel.setProperty(`/search/Langlv${sSeq}`, '');
+        this.getViewModel().setProperty(`/search/Langlv${sSeq}`, '');
       },
 
       onChangeStell(oEvent) {
-        const oViewModel = this.getViewModel();
         const sSeq = oEvent.getSource().data('seq');
+        const oViewModel = this.getViewModel();
 
         oViewModel.setProperty(`/search/SyearFr${sSeq}`, '');
         oViewModel.setProperty(`/search/SyearTo${sSeq}`, '');
       },
 
-      onPressDeleteSearchCondition() {
-        if (this.getViewModel().getProperty('/saved/selectedCondition') === 'ALL') return;
-
-        MessageBox.confirm(this.getBundleText('MSG_35010'), {
-          // 검색조건을 삭제하시겠습니까?
-          onClose: (sAction) => {
-            if (MessageBox.Action.CANCEL === sAction) return;
-
-            this.deleteConditionsProcess();
-          },
-        });
-      },
-
-      async deleteConditionsProcess() {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/busy', true);
-
-        try {
-          const sSelectedCondition = oViewModel.getProperty('/saved/selectedCondition');
-
-          await Client.remove(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
-            Pernr: this.getAppointeeProperty('Pernr'),
-            Schtl: sSelectedCondition,
-          });
-
-          await this.getEntrySearchCondition();
-
-          this.resetComplexSearch();
-
-          MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00110')); // {삭제}되었습니다.
-        } catch (oError) {
-          this.debug('Controller > Talent > onPressDeleteSearchCondition Error', oError);
-
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
-      },
-
       onPressSaveConditions() {
-        MessageBox.confirm(this.getBundleText('MSG_35008'), {
-          // 검색조건을 저장하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_45003'), {
+          // 현재 포지션의 기본 검색조건으로 저장하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -369,20 +396,24 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
-          const sConditionSubject = oViewModel.getProperty('/saved/Schtl');
+          this.validateSearchConditions();
 
-          this.validSearchConditions();
-          if (_.isEmpty(sConditionSubject)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35009') }); // 검색조건명을 입력하여 주십시오.
+          const sSelectedPlan = oViewModel.getProperty('/plan/selected');
+          if (_.isEmpty(sSelectedPlan)) {
+            MessageBox.information(this.getBundleText('MSG_45002')); // 대상 포지션을 선택하세요.
+            this.byId('successionPlan').focus();
+            return;
+          }
 
           await this.createSearchCondition();
 
           await this.getEntrySearchCondition();
 
-          oViewModel.setProperty('/saved/selectedCondition', sConditionSubject);
+          oViewModel.setProperty('/saved/selectedCondition', sSelectedPlan);
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
         } catch (oError) {
-          this.debug('Controller > Talent > saveConditionsProcess Error', oError);
+          this.debug('Controller > Candidate > saveConditionsProcess Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -390,54 +421,62 @@ sap.ui.define(
         }
       },
 
-      async readSearchCondition(sSelectedCondition) {
+      validateSearchConditions() {
         const oViewModel = this.getViewModel();
+        const mSearch = oViewModel.getProperty('/search');
 
-        try {
-          const [mSearchCondition] = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
-            Pernr: this.getAppointeeProperty('Pernr'),
-            Schtl: sSelectedCondition,
-          });
-
-          const mSearch = oViewModel.getProperty('/search');
-
-          oViewModel.setProperty('/saved/Schtl', mSearchCondition.Schtl);
-          oViewModel.setProperty('/search', {
-            ...mSearch,
-            ..._.chain(mSearchCondition) //
-              .omit(['__metadata', 'Pernr', 'Schtl'])
-              .set('Jobgr', _.isEmpty(mSearchCondition.Jobgr) ? [] : _.split(mSearchCondition.Jobgr, '|'))
-              .set('Zzjikgb', _.isEmpty(mSearchCondition.Zzjikgb) ? [] : _.split(mSearchCondition.Zzjikgb, '|'))
-              .set('Zzjikch', _.isEmpty(mSearchCondition.Zzjikch) ? [] : _.split(mSearchCondition.Zzjikch, '|'))
-              .set('Schcd', _.isEmpty(mSearchCondition.Schcd) ? [] : _.split(mSearchCondition.Schcd, '|'))
-              .set('Major', _.isEmpty(mSearchCondition.Major) ? [] : _.split(mSearchCondition.Major, '|'))
-              .set('Slabs', _.isEmpty(mSearchCondition.Slabs) ? [] : _.split(mSearchCondition.Slabs, '|'))
-              .set('Cttyp', _.isEmpty(mSearchCondition.Cttyp) ? [] : _.split(mSearchCondition.Cttyp, '|'))
-              .set('Stell1', mSearchCondition.Stell1 === '00000000' ? '' : mSearchCondition.Stell1)
-              .set('Stell2', mSearchCondition.Stell2 === '00000000' ? '' : mSearchCondition.Stell2)
-              .set('Stell3', mSearchCondition.Stell3 === '00000000' ? '' : mSearchCondition.Stell3)
-              .set('Stell4', mSearchCondition.Stell4 === '00000000' ? '' : mSearchCondition.Stell4)
-              .value(),
-          });
-        } catch (oError) {
-          throw oError;
+        if (_.chain(mSearch).pick(['Stell1', 'Stell2', 'Stell3', 'Stell4', 'Zzjikch', 'PformGrad', 'QualiLv', 'DignoGrad', 'DignoRank']).omitBy(_.isEmpty).isEmpty().value()) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35007') }); // 최소 1개의 필수요건을 입력하시기 바랍니다.
+        }
+        if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
+        }
+        if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
+        }
+        if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.
+        }
+        if (!_.isEmpty(mSearch.Quali3) && _.isEmpty(mSearch.Langlv3)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35003', 'LABEL_35009', '3') }); // {외국어}{3} 값을 입력하여 주십시오.
+        }
+        if (!_.isEmpty(mSearch.Stell1) && (_.isEmpty(mSearch.SyearFr1) || _.isEmpty(mSearch.SyearTo1))) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35004', '1') }); // 직무기간{1}의 시작/종료값을 모두 입력하여 주십시오.
+        }
+        if (_.toNumber(mSearch.SyearFr1) > _.toNumber(mSearch.SyearTo1)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35005', '1') }); // 직무기간{1} 입력값의 최소값이 최대값보다 큽니다.
+        }
+        if (!_.isEmpty(mSearch.Stell2) && (_.isEmpty(mSearch.SyearFr2) || _.isEmpty(mSearch.SyearTo2))) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35004', '2') }); // 직무기간{2}의 시작/종료값을 모두 입력하여 주십시오.
+        }
+        if (_.toNumber(mSearch.SyearFr2) > _.toNumber(mSearch.SyearTo2)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35005', '2') }); // 직무기간{2} 입력값의 최소값이 최대값보다 큽니다.
+        }
+        if (!_.isEmpty(mSearch.Stell3) && (_.isEmpty(mSearch.SyearFr3) || _.isEmpty(mSearch.SyearTo3))) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35004', '3') }); // 직무기간{3}의 시작/종료값을 모두 입력하여 주십시오.
+        }
+        if (_.toNumber(mSearch.SyearFr3) > _.toNumber(mSearch.SyearTo3)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35005', '3') }); // 직무기간{3} 입력값의 최소값이 최대값보다 큽니다.
+        }
+        if (!_.isEmpty(mSearch.Stell4) && (_.isEmpty(mSearch.SyearFr4) || _.isEmpty(mSearch.SyearTo4))) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35004', '4') }); // 직무기간{4}의 시작/종료값을 모두 입력하여 주십시오.
+        }
+        if (_.toNumber(mSearch.SyearFr4) > _.toNumber(mSearch.SyearTo4)) {
+          throw new UI5Error({ code: 'I', message: this.getBundleText('MSG_35005', '4') }); // 직무기간{4} 입력값의 최소값이 최대값보다 큽니다.
         }
       },
 
       async createSearchCondition() {
         const oViewModel = this.getViewModel();
 
-        oViewModel.setProperty('/saved/busy', true);
+        oViewModel.setProperty('/plan/busy', true);
 
         try {
           const mSearch = oViewModel.getProperty('/search');
-          const mSchtl = oViewModel.getProperty('/saved/Schtl');
 
-          await Client.create(this.getModel(ServiceNames.PA), 'TalentSearchCondition', {
-            Pernr: this.getAppointeeProperty('Pernr'),
-            Schtl: mSchtl,
+          await Client.create(this.getModel(ServiceNames.TALENT), 'SuccessionSearchCondition', {
             ..._.chain(mSearch)
-              .omit(['Freetx', 'Prcty'])
+              // .omit(['Freetx', 'Prcty'])
               .tap((obj) => {
                 _.chain(obj)
                   .forEach((v, p) => {
@@ -450,7 +489,7 @@ sap.ui.define(
         } catch (oError) {
           throw oError;
         } finally {
-          setTimeout(() => oViewModel.setProperty('/saved/busy', false), 200);
+          setTimeout(() => oViewModel.setProperty('/plan/busy', false), 200);
         }
       },
 
@@ -501,86 +540,22 @@ sap.ui.define(
         }
       },
 
-      validSearchConditions() {
-        const oViewModel = this.getViewModel();
-        const mSearch = oViewModel.getProperty('/search');
-
-        if (mSearch.Prcty === 'A') {
-          if (_.isEmpty(mSearch.Freetx)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35006') }); // 검색어를 입력하여 주십시오.
-        } else {
-          if (_.chain(mSearch).omit(['Prcty', 'Werks']).omitBy(_.isEmpty).isEmpty().value()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35007') }); // 검색조건을 입력하여 주십시오.
-          if (_.toNumber(mSearch.EeageFr) > _.toNumber(mSearch.EeageTo)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35002') }); // 나이 입력값의 최소값이 최대값보다 큽니다.
-          if (!_.isEmpty(mSearch.Quali1) && _.isEmpty(mSearch.Langlv1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '1') }); // {외국어}{1} 값을 입력하여 주십시오.
-          if (!_.isEmpty(mSearch.Quali2) && _.isEmpty(mSearch.Langlv2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '2') }); // {외국어}{2} 값을 입력하여 주십시오.
-          if (!_.isEmpty(mSearch.Quali3) && _.isEmpty(mSearch.Langlv3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35003', 'LABEL_35009', '3') }); // {외국어}{3} 값을 입력하여 주십시오.
-          if (!_.isEmpty(mSearch.Stell1) && (_.isEmpty(mSearch.SyearFr1) || _.isEmpty(mSearch.SyearTo1))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '1') }); // 직무기간{1}의 시작/종료값을 모두 입력하여 주십시오.
-          if (_.toNumber(mSearch.SyearFr1) > _.toNumber(mSearch.SyearTo1)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '1') }); // 직무기간{1} 입력값의 최소값이 최대값보다 큽니다.
-          if (!_.isEmpty(mSearch.Stell2) && (_.isEmpty(mSearch.SyearFr2) || _.isEmpty(mSearch.SyearTo2))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '2') }); // 직무기간{2}의 시작/종료값을 모두 입력하여 주십시오.
-          if (_.toNumber(mSearch.SyearFr2) > _.toNumber(mSearch.SyearTo2)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '2') }); // 직무기간{2} 입력값의 최소값이 최대값보다 큽니다.
-          if (!_.isEmpty(mSearch.Stell3) && (_.isEmpty(mSearch.SyearFr3) || _.isEmpty(mSearch.SyearTo3))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '3') }); // 직무기간{3}의 시작/종료값을 모두 입력하여 주십시오.
-          if (_.toNumber(mSearch.SyearFr3) > _.toNumber(mSearch.SyearTo3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '3') }); // 직무기간{3} 입력값의 최소값이 최대값보다 큽니다.
-          if (!_.isEmpty(mSearch.Stell4) && (_.isEmpty(mSearch.SyearFr4) || _.isEmpty(mSearch.SyearTo4))) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35004', '4') }); // 직무기간{4}의 시작/종료값을 모두 입력하여 주십시오.
-          if (_.toNumber(mSearch.SyearFr4) > _.toNumber(mSearch.SyearTo4)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_35005', '4') }); // 직무기간{4} 입력값의 최소값이 최대값보다 큽니다.
-        }
-      },
-
       async onPressSearch() {
         const oViewModel = this.getViewModel();
 
         try {
-          this.validSearchConditions();
+          this.validateSearchConditions();
 
           oViewModel.setProperty('/result/busy', true);
 
           await this.readTalentSearch();
         } catch (oError) {
-          this.debug('Controller > Talent > onObjectMatched Error', oError);
+          this.debug('Controller > Candidate > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
           setTimeout(() => oViewModel.setProperty('/result/busy', false), 200);
           setTimeout(() => this.byId('talentList').removeSelections(), 300);
-        }
-      },
-
-      onToggleExpand(oEvent) {
-        const bState = oEvent.getParameter('state');
-
-        if (bState) {
-          this.showComplexSearch();
-        } else {
-          this.showSimpleSearch();
-        }
-      },
-
-      showSimpleSearch() {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/search/Prcty', 'A');
-        this.byId('searchFilterBody').removeStyleClass('expanded');
-        this.resetComplexSearch();
-
-        this.clearSearchResults();
-      },
-
-      showComplexSearch() {
-        this.getViewModel().setProperty('/search/Prcty', 'B');
-        this.byId('searchFilterBody').addStyleClass('expanded');
-        this.resetSimpleSearch();
-
-        this.clearSearchResults();
-      },
-
-      onPressConditionReset() {
-        const oViewModel = this.getViewModel();
-        const sPrcty = oViewModel.getProperty('/search/Prcty');
-
-        this.clearSearchResults();
-
-        if (sPrcty === 'A') {
-          this.resetSimpleSearch();
-        } else {
-          this.resetComplexSearch();
         }
       },
 
@@ -614,19 +589,11 @@ sap.ui.define(
         window.open(`${sHost}#/employeeView/${sPernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
       },
 
-      resetSimpleSearch() {
-        const oViewModel = this.getViewModel();
-
-        oViewModel.setProperty('/search/Freetx', '');
-        oViewModel.setProperty('/search/Command', 'AND');
-      },
-
-      resetComplexSearch() {
+      resetSearchConditions() {
         const oViewModel = this.getViewModel();
         const mSearch = oViewModel.getProperty('/search');
 
-        oViewModel.setProperty('/saved/selectedCondition', 'ALL');
-        oViewModel.setProperty('/saved/Schtl', '');
+        oViewModel.setProperty('/plan/selected', 'ALL');
         oViewModel.setProperty(
           '/search',
           _.chain(mSearch)

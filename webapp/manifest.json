@@ -316,6 +316,10 @@
         { "pattern": "mobile/m/talent", "name": "mobile/m/talent", "target": "mobile/m/talent" },
         { "pattern": "mobile/m/talent/{pernrs}", "name": "mobile/m/talent-compare", "target": "mobile/m/talentCompare" },
 
+        { "pattern": "m/scsnCandidate", "name": "m/scsnCandidate", "target": "m/scsnCandidate" },
+        { "pattern": "mobile/m/scsnCandidate", "name": "mobile/m/scsnCandidate", "target": "mobile/m/scsnCandidate" },
+        { "pattern": "mobile/m/scsnCandidate/{pernrs}", "name": "mobile/m/scsnCandidate-compare", "target": "mobile/m/scsnCandidateCompare" },
+
         { "pattern": "teamCalendar", "name": "teamCalendar", "target": "teamCalendar" },
         { "pattern": "m/teamCalendar", "name": "m/teamCalendar", "target": "m/teamCalendar" },
         { "pattern": "h/teamCalendar", "name": "h/teamCalendar", "target": "h/teamCalendar" },
@@ -561,6 +565,10 @@
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
         "mobile/m/talentCompare": { "viewId": "mobile_m_talentCompare", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Compare" },
 
+        "m/scsnCandidate": { "viewId": "m_scsnCandidate", "viewPath": "sap.ui.yesco.mvc.view.succession", "viewName": "Candidate" },
+        "mobile/m/scsnCandidate": { "viewId": "mobile_m_scsnCandidate", "viewPath": "sap.ui.yesco.mvc.view.succession.mobile", "viewName": "Candidate" },
+        "mobile/m/scsnCandidateCompare": { "viewId": "mobile_m_scsnCandidateCompare", "viewPath": "sap.ui.yesco.mvc.view.succession.mobile", "viewName": "CandidateCompare" },
+
         "teamCalendar": { "viewId": "teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainE" },
         "m/teamCalendar": { "viewId": "m_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainM" },
         "h/teamCalendar": { "viewId": "h_teamCalendar", "viewPath": "sap.ui.yesco.mvc.view.teamCalendar", "viewName": "MainH" },
@@ -584,7 +592,7 @@
         "workTime": { "viewId": "workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTime" },
         "workTimeDetail": { "viewId": "workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime", "viewName": "WorkTimeDetail" },
         "mobile/workTime": { "viewId": "mobile_workTime", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTime" },
-        "mobile/workTimeDetail": { "viewId": "mobile_orkTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTimeDetail" },
+        "mobile/workTimeDetail": { "viewId": "mobile_workTimeDetail", "viewPath": "sap.ui.yesco.mvc.view.workTime.mobile", "viewName": "WorkTimeDetail" },
 
         "h/workTimeChange": { "viewId": "h_workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChangeH" },
         "workTimeChange": { "viewId": "workTimeChange", "viewPath": "sap.ui.yesco.mvc.view.workTimeChange", "viewName": "WorkTimeChange" },

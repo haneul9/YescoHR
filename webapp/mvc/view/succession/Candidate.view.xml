@@ -16,7 +16,8 @@
     </VBox>
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.SearchConditions" type="XML" />
-      <!-- <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.SearchResults" type="XML" /> -->
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.CandidateTable" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.succession.fragment.SearchResultTable" type="XML" />
     </VBox>
   </Page>
 </mvc:View>

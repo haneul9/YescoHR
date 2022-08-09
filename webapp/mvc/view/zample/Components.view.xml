@@ -648,6 +648,11 @@
               <Label text="type=&quot;Number&quot; value=&quot;\&#123; path: '/percent2', type: 'sap.ui.yesco.mvc.model.type.Percent' \&#125;&quot;" />
               <Text text="{/percent2}" />
             </HBox>
+            <HBox class="sapUiSmallMarginTop" alignItems="Center">
+              <custom:NumberInput width="200px" maxLength="3" value="{/percent2}" />
+              <Label text="type=&quot;Number&quot; value=&quot;\&#123;/percent2\&#125;&quot;" />
+              <Text text="{/percent2}" />
+            </HBox>
           </VBox>
         </HBox>
         <HBox class="sapUiResponsiveMargin" width="auto">

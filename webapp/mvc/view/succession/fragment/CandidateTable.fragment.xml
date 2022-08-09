@@ -1,0 +1,217 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <m:VBox class="vCardBox" visible="{/candidateListInfo/busy}">
+    <custom:Placeholder />
+  </m:VBox>
+  <m:VBox class="vCardBox" visible="{= !${/candidateListInfo/busy} }">
+    <m:HBox class="table-toolbar" justifyContent="SpaceBetween">
+      <m:HBox class="title">
+        <m:Title text="{i18n>LABEL_00204}" level="H4" />
+        <m:Text text="total {/candidateListInfo/totalCount}" class="total-txt" />
+        <m:Text text="{i18n>MSG_45001}" class="desc-txt" />
+      </m:HBox>
+      <m:HBox class="status-wrap">
+        <m:ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
+        <m:ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+        <m:ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
+      </m:HBox>
+    </m:HBox>
+    <Table rows="{/candidateListInfo/list}" visibleRowCount="3" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="116">
+      <columns>
+        <Column width="50px" filterProperty="Kurzt" sortProperty="Kurzt">
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45401}" />
+            <m:Label text="{i18n>LABEL_45401}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column width="300px" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45402}" />
+            <m:Label text="{i18n>LABEL_45402}" />
+          </multiLabels>
+          <template>
+            <m:VBox height="100%">
+              <m:HBox height="100%" alignItems="Center">
+                <m:Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
+                <m:VBox>
+                  <m:Title text="{Linetx1}" wrapping="true"/>
+                  <m:Text text="{Linetx2}" />
+                  <m:Text text="{Linetx3}" />
+                  <m:Text text="{Linetx4}" />
+                  <m:Text text="{Linetx5}" />
+                </m:VBox>
+              </m:HBox>
+            </m:VBox>
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45407}" />
+            <m:Label text="{i18n>LABEL_45407}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_00222}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_00217}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45403}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45404}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45405}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45406}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_35009}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_00289}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_00318}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_45406}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00218}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00215}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00288}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_35016}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_35008}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00331}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+        <Column>
+          <multiLabels>
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_45406}" />
+          </multiLabels>
+          <template>
+            <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+          </template>
+        </Column>
+      </columns>
+    </Table>
+  </m:VBox>
+</core:FragmentDefinition>
