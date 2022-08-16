@@ -125,6 +125,12 @@ sap.ui.define(
 
         if (sViewKey === 'N' || !sViewKey) {
           const mSessionData = this.getSessionData();
+          const oModel = this.getModel(ServiceNames.PA);
+          const mData = await Client.getEntitySet(oModel, 'CertificateAppl', { // 2022-08-16 대상자 주소 정보
+            Prcty: 'A',
+            Menid: this.getCurrentMenuId(),
+            Pernr: this.getAppointeeProperty('Pernr')
+          });
 
           oDetailModel.setProperty('/FormData', {
             Reqnt: '1',
@@ -134,6 +140,9 @@ sap.ui.define(
             Recty: 'ALL',
             Appernr: mSessionData.Pernr,
             Iyear: moment().format('yyyy'),
+            Pstlzf: mData[0] ? mData[0].Pstlzf : '',
+            Addf1: mData[0] ? mData[0].Addf1 : '',
+            Addf2: mData[0] ? mData[0].Addf2 : ''
           });
 
           oDetailModel.setProperty('/ApplyInfo', {

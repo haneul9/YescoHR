@@ -115,8 +115,8 @@ sap.ui.define(
           const sPernr = this.getAppointeeProperty('Pernr');
           const sWerks = this.getAppointeeProperty('Werks');
           const aEntryDataList = await Promise.all([
-            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
-            // Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: sPernr }), //
+            // Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'PersAreaList', { Pernr: sPernr }), //
+            Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: sPernr }), //
             ..._.chain('ABCDEFGHIJKLM')
               .split('')
               .map((s) => Client.getEntitySet(oPAModel, 'TalentSearchCodeList', { Werks: sWerks, Pernr: sPernr, Schfld: s }))
@@ -479,12 +479,15 @@ sap.ui.define(
           const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Command', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx', 'Command');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
+          const mIcon = {'1000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg', '2000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg', 
+                         '3000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg', '4000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg'};
+
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
 
           oViewModel.setProperty('/result/totalCount', aSearchResults.length);
           oViewModel.setProperty(
             '/result/list',
-            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? sUnknownAvatarImageURL : o.PicUrl }))
+            _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? sUnknownAvatarImageURL : o.PicUrl, Icon: mIcon[o.Werks] }))
           );
         } catch (oError) {
           throw oError;

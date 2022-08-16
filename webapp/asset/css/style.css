@@ -1752,7 +1752,8 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .talent-list.sapFGridList .sapFGLI .sapFGLIWrapperc {box-shadow:0 2px 4px rgba(0, 0, 0, .16)}
 .talent-list.sapFGridList .sapFGLI .sapFGLIWrapper .sapFGLIToolbar + .sapMLIBContent {height:auto}
 .talent-list.sapFGridList .sapMFlexItemAlignAuto {display:inherit}
-.talent-list.sapFGridList .sapMImg {width:76px !important; height:100px !important; margin-right:10px !important}
+/* .talent-list.sapFGridList .sapMImg {width:76px !important; height:100px !important; margin-right:10px !important} */
+.talent-list.sapFGridList .talent-list-PicUrl {width:76px !important; height:100px !important; margin-right:10px !important}
 .talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {margin-bottom:8px; font-size:14px; font-weight:700}
 .talent-list.sapFGridList .sapMLabel, .talent-list.sapFGridList .sapMText {font-size:11px; font-weight:400}
 .talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication01 {background:#27c840}
@@ -2306,7 +2307,8 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
     .search-filter .sapMInputBase {width:100% !important}
     
     .talent-list .sapMListUl {grid-gap:10px !important}
-    .talent-list.sapFGridList .sapMImg {width:69px !important; height:90px !important; margin-right:10px !important}
+    /* .talent-list.sapFGridList .sapMImg {width:69px !important; height:90px !important; margin-right:10px !important} */
+    .talent-list.sapFGridList .talent-list-PicUrl {width:69px !important; height:90px !important; margin-right:10px !important}
     .talent-list .sapUiTinyMargin {margin:16px !important}
     .talent-list.sapFGridList .sapMFlexItemAlignAuto {line-height:15px}
     .talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {font-size:16px; margin-bottom:12px}

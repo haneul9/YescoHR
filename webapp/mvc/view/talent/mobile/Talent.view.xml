@@ -66,13 +66,19 @@
           <f:GridListItem highlight="{ColtyState}">
             <VBox height="100%">
               <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
-                <VBox>
-                  <Title text="{Linetx1}" wrapping="true"/>
-                  <Text text="{Linetx2}" />
-                  <Text text="{Linetx3}" />
-                  <Text text="{Linetx4}" />
-                  <Text text="{Linetx5}" />
+                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" />
+                <VBox width="calc(100% - 100px)">
+                  <!-- <Title text="{Linetx1}" wrapping="true"/> -->
+                  <FlexBox alignContent="SpaceBetween" justifyContent="SpaceBetween" class="pt-4-px" width="100%">
+                    <items>
+                        <Title text="{Linetx1}" wrapping="true"/>
+                        <Image src="{Icon}" height="15px" class="pr-10-px" />
+                    </items>
+                  </FlexBox>
+                  <Text text="{= ${Linetx2} === '' ? '\n' : ${Linetx2}}" />
+                  <Text text="{= ${Linetx3} === '' ? '\n' : ${Linetx3}}" />
+                  <Text text="{= ${Linetx4} === '' ? '\n' : ${Linetx4}}" />
+                  <Text text="{= ${Linetx5} === '' ? '\n' : ${Linetx5}}" />
                 </VBox>
               </HBox>
             </VBox>
