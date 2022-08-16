@@ -5,7 +5,7 @@
     <HBox alignItems="Center" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_00129}" />
     </HBox>
-    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid form-search">
       <Label text="{i18n>LABEL_17011}" />
       <VBox>
         <ComboBox items="{/CertiType}" selectedKey="{/FormData/Certy}" editable="{= !${/FormData/ZappStatAl} }" class="required">
