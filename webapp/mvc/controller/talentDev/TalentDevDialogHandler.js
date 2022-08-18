@@ -193,7 +193,7 @@ sap.ui.define(
         const sAppnoName = oEvent.getSource().getBindingContext().getProperty('Keys/AppnoName'); // Appno1 or Appno2
 
         await this.oController.updateFileData(oEvent, (sAppno) => {
-          this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
+          this.oController.retrieve('2');
           // await this.retrieveDetailData(this.initParams);
           this.oDialogModel.setProperty(`/Detail/${sAppnoName}`, sAppno);
           this.oDialogModel.setProperty(`/Original/${sAppnoName}`, sAppno);
@@ -213,7 +213,7 @@ sap.ui.define(
         const sAppnoName = oEvent.getSource().getBindingContext().getProperty('Keys/AppnoName'); // Appno1 or Appno2
 
         await this.oController.removeFile(oEvent, () => {
-          this.oController.retrieve({ ...this.oController.mSelectedCommitteeData, Mode: '2' });
+          this.oController.retrieve('2');
           // this.retrieveDetailData(this.initParams);
           this.oDialogModel.setProperty(`/Detail/${sAppnoName}`, '0');
           this.oDialogModel.setProperty(`/Original/${sAppnoName}`, '0');

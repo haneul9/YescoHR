@@ -107,8 +107,7 @@ sap.ui.define(
 
           await this.initializeSearchConditions();
 
-          const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          this.retrieve({ ...mSearchConditions, Mode: '1' });
+          this.retrieve('1');
         } catch (oError) {
           this.debug('Controller > talentDev > onObjectMatched Error', oError);
 
@@ -208,29 +207,36 @@ sap.ui.define(
        *
        * @param {*} mPayload
        */
-      async retrieve(mPayload) {
-        const { Mode, Ztitle, Gjahr, Zseqnrtx } = mPayload;
+      async retrieve(sMode) {
         const oViewModel = this.getViewModel();
+        const mSearchConditions = oViewModel.getProperty('/searchConditions');
+        const mPayload =
+          sMode === '2'
+            ? _.isEmpty(this.mSelectedCommitteeData)
+              ? { ...mSearchConditions, Mode: '1' }
+              : { ...this.mSelectedCommitteeData, Pernr: mSearchConditions.Pernr, Mode: sMode }
+            : { ...mSearchConditions, Mode: sMode.charAt(0) };
 
         try {
-          if (Mode === '1') {
+          if (sMode === '1') {
+            this.mSelectedCommitteeData = null;
             this.byId('committeeTable').clearSelection();
             this.byId('employeeTable').clearSelection();
-          } else if (Mode === '2') {
+          } else if (sMode === '2') {
             this.byId('employeeTable').clearSelection();
           }
-          if (Mode === '1') {
+          if (sMode === '1') {
             mPayload.TalentDevCommitteeSet = [];
             mPayload.TalentDevTargetSet = [];
-          } else if (Mode === '11') {
+          } else if (sMode === '11') {
             mPayload.TalentDevCommitteeSet = [];
-          } else if (Mode === '2') {
+          } else if (sMode === '2') {
             mPayload.TalentDevTargetSet = [];
           }
 
-          const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', { ...mPayload, Mode: Mode.substring(0, 1) });
+          const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', { ...mPayload });
 
-          if (Mode === '1' || Mode === '11') {
+          if (sMode === '1' || sMode === '11') {
             const aCommitteeList = _.map(aData.TalentDevCommitteeSet.results, (o) =>
               _.chain(o)
                 .omit('__metadata')
@@ -250,13 +256,9 @@ sap.ui.define(
               progressCount: mCommitteeCount['1'],
               completeCount: mCommitteeCount['2'],
             });
-
-            if (Mode === '1') {
-              this.mSelectedCommitteeData = aCommitteeList[0] || {};
-            }
           }
 
-          if (Mode === '1' || Mode === '2') {
+          if (sMode === '1' || sMode === '2') {
             const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
             const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) => {
               const { Gjahr, Pernr, Zseqnr, Werks, Mdate } = o;
@@ -295,7 +297,8 @@ sap.ui.define(
               .countBy()
               .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
               .value();
-            const sInfoMessage = Mode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
+            const { Ztitle, Gjahr, Zseqnrtx } = mPayload;
+            const sInfoMessage = sMode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
             oViewModel.setProperty('/employee/listInfo', {
               rows: aEmployeeList,
               rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
@@ -329,7 +332,7 @@ sap.ui.define(
         }
       },
 
-      async onChangeWerks() {
+      onChangeWerks() {
         this.setContentsBusy(true, ['Orgeh', 'Gjahr', 'Zseqnr', 'Button']);
 
         const oViewModel = this.getViewModel();
@@ -372,8 +375,7 @@ sap.ui.define(
       onPressSearch() {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
-        const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
-        this.retrieve({ ...mSearchConditions, Mode: '1' });
+        this.retrieve('1');
       },
 
       onPressCommitteeExcelDownload() {
@@ -410,11 +412,18 @@ sap.ui.define(
       },
 
       onSelectCommitteeTableRow(oEvent) {
+        const oTable = oEvent.getSource();
+        const iRowIndex = oEvent.getParameter('rowIndex');
+        setTimeout(() => {
+          if (!oTable.getSelectedIndices().length) {
+            oTable.setSelectedIndex(iRowIndex);
+          }
+        }, 100);
+
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
-        const { Pernr } = this.getViewModel().getProperty('/searchConditions');
-        this.mSelectedCommitteeData = { ...oEvent.getParameter('rowBindingContext').getProperty() }; // Client에서 payload를 변조시키므로 복사하여 보냄
-        this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
+        this.mSelectedCommitteeData = oEvent.getParameter('rowBindingContext').getProperty();
+        this.retrieve('2');
       },
 
       onSelectEmployeeTableRow(oEvent) {
@@ -423,16 +432,14 @@ sap.ui.define(
           return;
         }
 
-        const { Pernr, Gjahr, Zseqnr, FileupChk } = oEvent.getParameter('rowBindingContext').getProperty();
-        const { Mdate } = this.mSelectedCommitteeData;
+        const { Pernr, Gjahr, Mdate, Zseqnr, FileupChk } = oEvent.getParameter('rowBindingContext').getProperty();
 
         setTimeout(() => {
           const AuthChange = this.getViewModel().getProperty('/employee/auth/AuthChange');
           this.oTalentDevDialogHandler //
             .setCallback(() => {
-              const mSearchConditions = this.getViewModel().getProperty('/searchConditions');
-              this.retrieve({ ...mSearchConditions, Mode: '11' }); // 인재육성위원회만 갱신
-              this.retrieve({ ...this.mSelectedCommitteeData, Pernr: mSearchConditions.Pernr, Mode: '2' }); // 대상자 갱신
+              this.retrieve('11'); // 인재육성위원회 테이블만 갱신
+              this.retrieve('2'); // 대상자 테이블만 갱신
             })
             .openDialog({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange });
         });
@@ -514,8 +521,7 @@ sap.ui.define(
        */
       async onUploadComplete(oEvent) {
         await this.updateFileData(oEvent, () => {
-          const { Pernr } = this.getViewModel().getProperty('/searchConditions');
-          this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
+          this.retrieve('2');
         });
       },
 
@@ -592,8 +598,7 @@ sap.ui.define(
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
 
         await this.removeFile(oEvent, () => {
-          const { Pernr } = this.getViewModel().getProperty('/searchConditions');
-          this.retrieve({ ...this.mSelectedCommitteeData, Pernr, Mode: '2' });
+          this.retrieve('2');
         });
       },
 

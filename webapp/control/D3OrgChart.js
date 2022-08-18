@@ -22,6 +22,7 @@ sap.ui.define(
           extendNode: { type: 'string', group: 'Misc', defaultValue: '' },
           layout: { type: 'string', group: 'Misc', defaultValue: 'top' },
           compact: { type: 'boolean', group: 'Misc', defaultValue: false },
+          extraHeight: { type: 'int', group: 'Misc', defaultValue: 0 },
         },
         aggregations: {
           items: { type: 'sap.ui.yesco.control.D3OrgChartItem', multiple: true, singularName: 'item' },
@@ -73,7 +74,7 @@ sap.ui.define(
           .compact(this.getCompact())
           .setActiveNodeCentered(true)
           .nodeWidth(() => 360)
-          .nodeHeight(() => 178)
+          .nodeHeight(() => 178 + this.getExtraHeight())
           .initialZoom(0.8)
           .childrenMargin(() => 40)
           .compactMarginBetween(() => 25)
@@ -131,7 +132,7 @@ sap.ui.define(
             const oMobile = sap.ui.getCore().byId('container-ehr---mobile_m_organization--ChartHolder');
             const oViewModel = oDesktop ? oDesktop.getModel() : oMobile.getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
-            const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/employee', 'mobile/m/employee-org'];
+            const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/m/employee-detail', 'mobile/m/employee-org'];
             const $element = $(event.srcElement);
             const bTitle = $element.hasClass('title');
             const oRouter = AppUtils.getAppComponent().getRouter();
@@ -146,20 +147,20 @@ sap.ui.define(
               if (bTitle) {
                 oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
               } else {
+                let vPernr;
                 if ($element.hasClass('succession') || $element.parents('.succession').length) {
-                  const sCpPernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
-                  if (!sCpPernr) {
+                  vPernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
+                  if (!vPernr) {
                     return;
                   }
-
-                  if (AppUtils.isMobile()) {
-                    oRouter.navTo(aRoutePath[0], { pernr: sCpPernr });
-                  } else {
-                    const sHost = window.location.href.split('#')[0];
-                    window.open(`${sHost}#/employeeView/${sCpPernr}/M`, '_blank', 'width=1400,height=800');
-                  }
                 } else {
-                  oRouter.navTo(aRoutePath[0], { pernr: sPernr });
+                  vPernr = sPernr;
+                }
+                if (AppUtils.isMobile()) {
+                  oRouter.navTo(aRoutePath[0], { pernr: vPernr });
+                } else {
+                  const sHost = window.location.href.split('#')[0];
+                  window.open(`${sHost}#/employeeView/${vPernr}/M`, '_blank', 'width=1400,height=800');
                 }
               }
             }

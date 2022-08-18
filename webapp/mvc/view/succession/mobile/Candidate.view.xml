@@ -1,15 +1,15 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.talent.mobile.Talent"
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.succession.mobile.Candidate"
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:f="sap.f"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mvc="sap.ui.core.mvc">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <VBox class="contents mobile-mss-talent-list">
-      <VBox class="search-area">
+  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack">
+    <VBox class="contents mobile-mss-candidate-list">
+      <VBox class="search-area" binding="{/searchBar}">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:SingleComboBox width="100%" selectedKey="{/search/Werks}" items="{/entry/Werks}">
+          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{ path: '/entries/Werks', templateShareable: true }">
             <custom:layoutData>
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </custom:layoutData>
@@ -21,52 +21,75 @@
             </layoutData>
           </Button>
         </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:SingleComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" selectionChange=".onChangeSearchCondition">
+        <HBox justifyContent="SpaceBetween" alignItems="Center">
+          <custom:SingleComboBox width="100%" selectedKey="{Plans}" items="{/entries/Plans}" selectionChange=".onChangePlans">
             <custom:layoutData>
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </custom:layoutData>
-            <core:Item key="{Zcode}" text="{Ztext}" />
+            <core:Item key="{Plans}" text="{Planstx}" />
           </custom:SingleComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
+          <!-- <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
             <layoutData>
               <FlexItemData minWidth="33%" maxWidth="33%" />
             </layoutData>
-          </Button>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center">
-          <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
-            <layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </layoutData>
-          </SearchField>
-          <ComboBox selectedKey="{/search/Command}" class="sapUiTinyMarginBegin">
-            <layoutData>
-              <FlexItemData minWidth="35%" maxWidth="35%" />
-            </layoutData>
-            <items>
-              <core:Item text="AND" key="AND" />
-              <core:Item text="OR" key="OR" />
-            </items>
-          </ComboBox>
+          </Button> -->
         </HBox>
       </VBox>
-      <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <HBox class="header">
-          <Title level="H3" text="{i18n>LABEL_35003}" class="sapUiSmallMarginEnd" />
-          <Text text="total {/result/totalCount}" />
-        </HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" visible="{/listInfo/Popover}" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
-      </HBox>
       <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
-        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
+        <HBox justifyContent="SpaceBetween" class="header-wrap" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
+          <VBox>
+            <HBox class="header">
+              <Title level="H3" text="{i18n>LABEL_45401}" class="sapUiSmallMarginEnd" />
+            </HBox>
+            <Text text="{i18n>MSG_45013}" class="desc-txt start" />
+          </VBox>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+            <layoutData>
+              <FlexItemData alignSelf="Start" />
+            </layoutData>
+          </Image>
+        </HBox>
+        <f:GridList id="candidateList" mode="MultiSelect" items="{/candidate/listInfo/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
           <f:customLayout>
             <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
           </f:customLayout>
           <f:GridListItem highlight="{ColtyState}">
             <VBox height="100%">
               <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPic" />
+                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPhoto" />
+                <VBox>
+                  <Title text="{Linetx1}" wrapping="true"/>
+                  <Text text="{Linetx2}" />
+                  <Text text="{Linetx3}" />
+                  <Text text="{Linetx4}" />
+                  <Text text="{Linetx5}" />
+                </VBox>
+              </HBox>
+            </VBox>
+          </f:GridListItem>
+        </f:GridList>
+        <HBox justifyContent="SpaceBetween" class="header-wrap">
+          <VBox>
+            <HBox class="header">
+              <Title level="H3" text="{i18n>LABEL_00204}" class="sapUiSmallMarginEnd" />
+              <Text text="total {/searchResult/listInfo/totalCount}" />
+            </HBox>
+            <Text text="{i18n>MSG_45014}" class="desc-txt start" />
+          </VBox>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+            <layoutData>
+              <FlexItemData alignSelf="Start" />
+            </layoutData>
+          </Image>
+        </HBox>
+        <f:GridList id="searchResultList" mode="MultiSelect" items="{/searchResult/listInfo/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/searchResult/listInfo/totalCount} > 0 }">
+          <f:customLayout>
+            <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
+          </f:customLayout>
+          <f:GridListItem highlight="{ColtyState}">
+            <VBox height="100%">
+              <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
+                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPhoto" />
                 <VBox>
                   <Title text="{Linetx1}" wrapping="true"/>
                   <Text text="{Linetx2}" />

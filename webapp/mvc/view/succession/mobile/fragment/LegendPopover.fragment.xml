@@ -1,7 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Popover contentWidth="120px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="status-popover">
+  <Popover contentWidth="160px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="status-popover">
     <VBox class="status-wrap">
+      <ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+      <ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+      <ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+      <ObjectStatus text="{i18n>LABEL_WERKS_4000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
       <ObjectStatus text="{i18n>LABEL_35010}" icon="sap-icon://circle-task-2" state="Indication03" />
       <ObjectStatus text="{i18n>LABEL_35011}" icon="sap-icon://circle-task-2" state="Indication04" />
       <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />

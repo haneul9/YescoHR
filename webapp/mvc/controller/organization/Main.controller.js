@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/D3OrgChart',
     'sap/ui/yesco/control/D3OrgChartItem',
   ],
@@ -16,6 +17,7 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
+    MessageBox,
     D3OrgChart,
     D3OrgChartItem
   ) => {
@@ -48,6 +50,10 @@ sap.ui.define(
                 Stdat: moment().hour(9).toDate(),
               }),
             ]);
+
+            if (_.isEmpty(aReturnData)) {
+              MessageBox.information(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
+            }
 
             setTimeout(() => {
               if (Auth === 'X') {
@@ -90,28 +96,19 @@ sap.ui.define(
 
           const oViewModel = this.getViewModel();
           const sExtendNode = oViewModel.getProperty('/extendNode') || _.noop();
+          const sLayout = oViewModel.getProperty('/layout') || 'top';
+          const bCompact = oViewModel.getProperty('/compact');
+          const bSuccessionOn = oViewModel.getProperty('/successionOn');
+
           this.oD3Chart = new D3OrgChart({
             extendNode: sExtendNode,
+            layout: sLayout,
+            compact: bCompact,
+            extraHeight: bSuccessionOn ? 150 : 0,
             items: this.getChartItems(),
           });
 
           this.chartHolder.addItem(this.oD3Chart);
-
-          const bSuccessionOn = oViewModel.getProperty('/successionOn');
-          const bCompact = oViewModel.getProperty('/compact');
-          const sLayout = oViewModel.getProperty('/layout') || 'top';
-
-          setTimeout(
-            () =>
-              this.oD3Chart
-                .getChart()
-                .layout(sLayout)
-                .compact(bCompact)
-                .nodeHeight(() => (bSuccessionOn ? 328 : 178))
-                .render()
-                .fit(),
-            200
-          );
 
           if (!_.isEmpty(aThirdLevelNodeIds)) {
             setTimeout(() => {
@@ -121,6 +118,8 @@ sap.ui.define(
 
               oChartControl.render().fit();
             }, 300);
+          } else {
+            setTimeout(() => this.oD3Chart.getChart().render().fit(), 200);
           }
         } catch (oError) {
           this.debug('Controller > organization Main > onObjectMatched Error', oError);
@@ -176,19 +175,20 @@ sap.ui.define(
           });
 
           if (_.isEmpty(aReturnData)) {
-            oViewModel.setProperty('/orgList', []);
-            return;
+            MessageBox.information(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
           }
 
           oViewModel.setProperty('/orgList', this.getOrgList(aReturnData));
 
           const sLayout = oViewModel.getProperty('/layout');
           const bCompact = oViewModel.getProperty('/compact');
+          const bSuccessionOn = oViewModel.getProperty('/successionOn');
 
           this.oD3Chart = new D3OrgChart({
             extendNode: null,
             layout: sLayout,
             compact: bCompact,
+            extraHeight: bSuccessionOn ? 150 : 0,
             items: this.getChartItems(),
           });
 
@@ -225,6 +225,37 @@ sap.ui.define(
 
       getOrgList(aReturnData) {
         const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
+        if (_.isEmpty(aReturnData)) {
+          return [
+            {
+              Photo: sUnknownAvatarImageURL,
+              Stdat: '',
+              Stext: '',
+              Pernr: '',
+              Ename: '',
+              IpdatLabel: this.getBundleText('LABEL_00235'), // 입사일
+              Ipdat: '',
+              Botxt: '',
+              JikgbtlLabel: this.getBundleText('LABEL_00215'), // 직급
+              Jikgbtl: '',
+              ZorgLevl: '',
+              TenureLabel: this.getBundleText('LABEL_12101'), // 현부서 재임기간
+              Tenure: '',
+              ScsplnLabel: this.getBundleText('LABEL_12102'), // 승계 계획(차년도)
+              Scspln: '',
+              ScspntLabel: this.getBundleText('LABEL_12103'), // 승계 예정시점
+              Scspnt: '',
+              Cand1stLabel: this.getBundleText('LABEL_12104'), // 승계 후보자(1순위)
+              Cand1st1: '',
+              Cand1st2: '',
+              Cand1st3: '',
+              CandpntLabel: this.getBundleText('LABEL_12105'), // 승계 가능시점
+              Candpnt: '',
+              CpPernr: '',
+              CpPhoto: '',
+            },
+          ];
+        }
         return _.map(aReturnData, (o) => ({
           ...o,
           Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo,

@@ -346,7 +346,7 @@ sap.ui.define(
           ] = await Promise.all([
             fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
             fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
-            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: Usrty }),
+            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty }),
             fCurriedGetEntitySet('CountryCode'),
             fCurriedGetEntitySet('MajorCode'),
             fCurriedGetEntitySet('CertificateCode'),
@@ -441,7 +441,7 @@ sap.ui.define(
               let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
-                _.times(mSubMenu.header.length, (d) => mSubMenu.data.push(o[`Value${_.padStart(++d, 2, '0')}`]));
+                _.times(mSubMenu.header.length, (i) => mSubMenu.data.push(o[`Value${_.padStart(i + 1, 2, '0')}`]));
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.data.push(o);
               }
@@ -604,6 +604,8 @@ sap.ui.define(
                   );
                 });
               } else if (sMenuKey === 'M030') {
+                oTable.addStyleClass('cell-bg');
+
                 // Succession tab
                 const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
                 const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);

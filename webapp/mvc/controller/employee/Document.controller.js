@@ -126,10 +126,12 @@ sap.ui.define(
       },
 
       onObjectMatched(oParameter) {
+        sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
+
         const oViewModel = this.getViewModel();
         const sRoute = this.getRouter().getHashChanger().getHash();
         const mSessionData = this.getAppointeeData();
-        const sUsrty = _.defaultTo(oParameter.usrty, '');
+        const Usrty = _.defaultTo(oParameter.usrty, '');
         let sPernr = oParameter.pernr || mSessionData.Pernr;
         let sOrgtx = _.replace(oParameter.orgtx, /--/g, '/') ?? _.noop();
         let sOrgeh = oParameter.orgeh ?? _.noop();
@@ -154,10 +156,10 @@ sap.ui.define(
           oViewModel.setProperty('/sideNavigation/search/searchText', sOrgtx);
         }
 
-        if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr, sUsrty });
+        if (!_.isEqual(sPernr, 'NA')) this.loadProfile({ oViewModel, sPernr, Usrty });
       },
 
-      async loadProfile({ oViewModel, sPernr, sUsrty }) {
+      async loadProfile({ oViewModel, sPernr, Usrty }) {
         const oViewModelData = oViewModel.getData();
         const oModel = this.getModel(ServiceNames.PA);
         let mFilters = {};
@@ -185,7 +187,7 @@ sap.ui.define(
           ] = await Promise.all([
             fCurriedGetEntitySet('EmpProfileHeaderNew', mFilters),
             fCurriedGetEntitySet('EmpProfileMilestone', mFilters),
-            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty: sUsrty }),
+            fCurriedGetEntitySet('EmpProfileMenu', { ...mFilters, Usrty }),
             fCurriedGetEntitySet('CountryCode'),
             fCurriedGetEntitySet('MajorCode'),
             fCurriedGetEntitySet('CertificateCode'),
@@ -210,7 +212,7 @@ sap.ui.define(
           oViewModel.setProperty('/employee/dialog/schoolTypeList', new ComboEntry({ codeKey: 'Slart', valueKey: 'Stext', aEntries: aSchoolTypeList }));
           oViewModel.setProperty('/employee/dialog/languageTypeList', new ComboEntry({ codeKey: 'Quali', valueKey: 'Qualitx', aEntries: aLanguageTypeList }));
           oViewModel.setProperty('/employee/dialog/gradeList', new ComboEntry({ codeKey: 'Eamgr', valueKey: 'Eamgrtx', aEntries: aTestGradeList }));
-          //End Dialog Combo entry set
+          // End Dialog Combo entry set
 
           // 상단 프로필 Set
           const { Pturl, ...oReturnData } = aProfileReturnData[0];
@@ -222,7 +224,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/employee/header/profilePath', _.isEmpty(Pturl) ? this.getUnknownAvatarImageURL() : Pturl);
           oViewModel.setProperty('/employee/header/baseInfo', aConvertData);
-          //End 상단 프로필 Set
+          // End 상단 프로필 Set
 
           // 탭 메뉴 Set
           const aTabMenus = _.chain(aMenuReturnData)
@@ -239,8 +241,8 @@ sap.ui.define(
 
             _.set(oViewModelData, ['employee', 'sub', data.Menuc1], { contents: {} });
 
-            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
-            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters, Usrty: sUsrty }));
+            aHeaderRequests.push(fCurriedGetEntitySet('EmpProfileHeaderTab', { Menuc: data.Menuc1, ...mFilters, Usrty }));
+            aContentRequests.push(fCurriedGetEntitySet('EmpProfileContentsTab', { Menuc: data.Menuc1, ...mFilters, Usrty }));
           });
 
           aSubMenus.forEach((data) => {
@@ -255,28 +257,25 @@ sap.ui.define(
               data: [],
             });
           });
-          //End 탭 메뉴 Set
+          // End 탭 메뉴 Set
 
           // 2. Sub 영역 조회[header, contents]
-          const aHeaderReturnData = await Promise.all(aHeaderRequests);
-          const aContentReturnData = await Promise.all(aContentRequests);
+          const aHeaderReturnData = Promise.all(aHeaderRequests);
+          const aContentReturnData = Promise.all(aContentRequests);
 
           // Header 영역 Set
-          aHeaderReturnData.forEach((headers, index) => {
+          (await aHeaderReturnData).forEach((headers, index) => {
             headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
           });
-          //End Header 영역 Set
+          // End Header 영역 Set
 
           // Contents 영역 Set
-          aContentReturnData.forEach((content, index) => {
+          (await aContentReturnData).forEach((content, index) => {
             content.forEach((o) => {
               let mSubMenu = _.get(oViewModelData, ['employee', 'sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
-                for (let i = 1; i <= mSubMenu.header.length; i++) {
-                  let sKey = `Value${_.padStart(i, 2, '0')}`;
-                  mSubMenu.data.push(o[sKey]);
-                }
+                _.times(mSubMenu.header.length, (i) => mSubMenu.data.push(o[`Value${_.padStart(i + 1, 2, '0')}`]));
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.data.push(o);
               }
@@ -284,7 +283,7 @@ sap.ui.define(
               mSubMenu.rowCount = mSubMenu.data.length;
             });
           });
-          //End Contents 영역 Set
+          // End Contents 영역 Set
 
           oViewModel.setData(oViewModelData);
 
@@ -295,7 +294,6 @@ sap.ui.define(
 
           AppUtils.handleError(oError);
         } finally {
-          sap.ui.getCore().byId('container-ehr---app--appMenuToolbar').setVisible(false);
           oViewModel.setProperty('/employee/busy', false);
         }
       },
@@ -309,6 +307,8 @@ sap.ui.define(
         Object.keys(aSubMenu).forEach((sMenuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
           const oTabContainer = _.find(aProfileTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
+          oTabContainer.destroyContent();
+
           let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
 
           if (oWrapperVBox) {
@@ -334,7 +334,11 @@ sap.ui.define(
             oSubHBox.addItem(new sap.m.Title({ level: 'H2', text: mMenu.title }));
             oSubVBox.addItem(oSubHBox);
 
-            // Content (Table|Grid)
+            /**
+             * Build Contents
+             *  1. Table - 5
+             *  2. Grid - 6
+             */
             if (mMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/employee/sub/${sMenuKey}/contents/${sKey}`;
               const aVisibleHeaders = _.filter(mMenu.header, { Invisible: false });
@@ -424,7 +428,7 @@ sap.ui.define(
                 oTable.addEventDelegate(
                   {
                     onAfterRendering() {
-                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('successor', true);
+                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('succession-bg-color', true);
                     },
                   },
                   oTable

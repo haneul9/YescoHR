@@ -233,15 +233,15 @@ sap.ui.define(
             aColIndices.forEach((colIndex) => {
               const sId = `#${oTable.getId()}-${sTarget}${sTableId} tbody>tr td:nth-child(${colIndex + 1}):visible`;
               const aTDs = $(sId).get();
-              let $p = $(aTDs.shift());
+              let $pTD = $(aTDs.shift());
 
               aTDs.forEach((oTD) => {
-                const $c = $(oTD);
-                if ($c.text() === $p.text()) {
-                  $p.attr('rowspan', Number($p.attr('rowspan') || 1) + 1);
-                  $c.hide();
+                const $cTD = $(oTD);
+                if ($cTD.text() === $pTD.text()) {
+                  $pTD.attr('rowspan', Number($pTD.attr('rowspan') || 1) + 1);
+                  $cTD.hide();
                 } else {
-                  $p = $c;
+                  $pTD = $cTD;
                 }
               });
 
@@ -254,6 +254,31 @@ sap.ui.define(
             });
           },
         });
+      },
+      /**
+       * sap.ui.table.Column의 headerSpan 속성을 적용할 경우 버그가 있어 강제로 colspan을 적용함
+       * 버그 : colspan 대상이 되는 column들 중 visible이 false인 column이 포함되면 해당 컬럼 앞에서 span이 잘림
+       */
+      adjustHeaderColSpan(oTable) {
+        oTable.addEventDelegate(
+          {
+            onAfterRendering() {
+              const aTDs = $(`#${this.getId()}-header tbody tr:first td:visible`).get();
+              let $pTD = $(aTDs.shift());
+
+              aTDs.forEach((cTD) => {
+                const $cTD = $(cTD);
+                if ($cTD.text() === $pTD.text()) {
+                  $pTD.attr('colspan', Number($pTD.attr('colspan') || 1) + 1);
+                  $cTD.hide();
+                } else {
+                  $pTD = $cTD;
+                }
+              });
+            },
+          },
+          oTable
+        );
       },
       /**
        * @param  {Array} aTableData - 대상목록

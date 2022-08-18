@@ -488,7 +488,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents.mobile-mss-employee-card-list > .sapMFlexItem + .sapMFlexItem + .sapMFlexBoxScroll {margin-top:16px; height:calc(100% - 111px)}
 .contents.mobile-mss-employee-card-list .employee-card-list {padding:0 11px 0 16px}
 .contents.mobile-mss-employee-card-list .employee-card-list li:last-child {margin-bottom:0}
-.contents.mobile-mss-talent-list .talent-list ul {padding-top:2px; margin-bottom:5px}
+.contents.mobile-mss-talent-list .talent-list ul,
+.contents.mobile-mss-candidate-list .talent-list ul {padding-top:2px; margin-bottom:5px}
 
 .contents .list-wrap li {min-height:56px; padding:12px 6px 12px 16px; margin-bottom:8px; border:1px solid #e6e6ea; border-radius:8px; box-shadow:0px 2px 2px rgb(0 0 0 / 5%)}
 .contents .list-wrap li:last-child {margin-bottom:0}

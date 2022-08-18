@@ -25,7 +25,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.succession.Candidate', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.succession.mobile.Candidate', {
       CODE_KEYS1: 'ABEGJKMNO'.split(''),
       CODE_KEYS2: 'CDFHIL'.split(''), // 조회시 Werks 필요
       COMPANY_ICON: {
@@ -190,14 +190,14 @@ sap.ui.define(
           oViewModel.setSizeLimit(2000);
           oViewModel.setData(this.initializeModel());
 
-          const oCandidateTable = this.byId('candidateTable');
-          const oSearchResultTable = this.byId('searchResultTable');
-          this.TableUtils.adjustRowSpan({ oTable: oCandidateTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
-          this.TableUtils.adjustRowSpan({ oTable: oSearchResultTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
-          this.TableUtils.adjustHeaderColSpan(oCandidateTable);
-          this.TableUtils.adjustHeaderColSpan(oSearchResultTable);
-          this.setTableCellStyle(oCandidateTable);
-          this.setTableCellStyle(oSearchResultTable);
+          // const oCandidateTable = this.byId('candidateTable');
+          // const oSearchResultTable = this.byId('searchResultTable');
+          // this.TableUtils.adjustRowSpan({ oTable: oCandidateTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
+          // this.TableUtils.adjustRowSpan({ oTable: oSearchResultTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
+          // this.TableUtils.adjustHeaderColSpan(oCandidateTable);
+          // this.TableUtils.adjustHeaderColSpan(oSearchResultTable);
+          // this.setTableCellStyle(oCandidateTable);
+          // this.setTableCellStyle(oSearchResultTable);
 
           const Werks = this.getAppointeeProperty('Werks');
           const oCommonModel = this.getModel(ServiceNames.COMMON);
@@ -230,7 +230,7 @@ sap.ui.define(
             oViewModel.setProperty(`/entries/${sCodeKey}`, this.convertSearchConditionEntry({ aEntries: aEntries[iIndex], bContainReset, bNumberCode }));
           });
         } catch (oError) {
-          this.debug('Controller > Candidate > onObjectMatched Error', oError);
+          this.debug('Controller > Mobile Candidate > onObjectMatched Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
@@ -343,6 +343,34 @@ sap.ui.define(
         } finally {
           this.setBusy(false);
         }
+      },
+
+      async onPressDetailConditionsDialog() {
+        if (!this.oDetailConditionsDialog) {
+          const oView = this.getView();
+
+          this.oDetailConditionsDialog = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.succession.mobile.fragment.DetailConditionsDialog',
+            controller: this,
+          });
+
+          this.oDetailConditionsDialog.attachAfterOpen(() => {
+            setTimeout(() => {
+              $('.sapMTokenizer').each(function () {
+                $(this).scrollLeft(0);
+              });
+            }, 200);
+          });
+
+          oView.addDependent(this.oDetailConditionsDialog);
+        }
+
+        this.oDetailConditionsDialog.open();
+      },
+
+      onPressDetailClose() {
+        this.oDetailConditionsDialog.close();
       },
 
       async onPressSearch() {
@@ -543,6 +571,24 @@ sap.ui.define(
         oViewModel.setProperty('/candidate', this.getInitListInfo());
         oViewModel.setProperty('/searchResult', this.getInitListInfo());
         oViewModel.setProperty('/visibleColumn', this.getInitVisibleColumn());
+      },
+
+      async onPressLegend(oEvent) {
+        const oControl = oEvent.getSource();
+
+        if (!this.oLegendPopover) {
+          const oView = this.getView();
+
+          this.oLegendPopover = await Fragment.load({
+            id: oView.getId(),
+            name: 'sap.ui.yesco.mvc.view.succession.mobile.fragment.LegendPopover',
+            controller: this,
+          });
+
+          oView.addDependent(this.oLegendPopover);
+        }
+
+        this.oLegendPopover.openBy(oControl);
       },
 
       onSelectCheckBox(oEvent) {

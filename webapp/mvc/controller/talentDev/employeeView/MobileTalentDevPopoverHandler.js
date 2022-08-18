@@ -63,10 +63,12 @@ sap.ui.define(
         setTimeout(async () => {
           const oModel = this.oController.getModel(ServiceNames.TALENT);
           const mFilters = { Pernr, Gjahr, Mdate: moment(Mdate).hour(9).toDate(), Zseqnr };
-          const aTalentDevData = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
+          const [mTalentDevData = {}] = await Client.getEntitySet(oModel, 'TalentDevDetail', mFilters);
 
           this.oPopoverModel.setProperty('/header', mHeaderData);
-          this.oPopoverModel.setProperty('/detail', aTalentDevData[0]);
+          this.oPopoverModel.setProperty('/detail', mTalentDevData);
+
+          this.retrieveFileData(mTalentDevData);
 
           this.setBusy(false);
         });
@@ -74,9 +76,19 @@ sap.ui.define(
         this.oPopover.openBy(AppUtils.getMobileHomeButton());
       },
 
-      async onPressFileDownload(oEvent) {
-        const mFile = await FileDataProvider.readData(oEvent.getSource().data('appno'), 9050);
-        this.oController.AttachFileAction.openFileLink(mFile.Fileuri);
+      retrieveFileData({ Appno1, Appno2 }) {
+        if (Number(Appno1) > 0) {
+          setTimeout(async () => {
+            const { Fileuri, Zfilename } = await FileDataProvider.readData(Appno1, 9050);
+            this.oPopoverModel.setProperty('/detail/File1', Fileuri.replace(/\d+\?/, `${Zfilename}?`));
+          });
+        }
+        if (Number(Appno2) > 0) {
+          setTimeout(async () => {
+            const { Fileuri, Zfilename } = await FileDataProvider.readData(Appno2, 9050);
+            this.oPopoverModel.setProperty('/detail/File2', Fileuri.replace(/\d+\?/, `${Zfilename}?`));
+          });
+        }
       },
 
       onPressDialogClose() {
