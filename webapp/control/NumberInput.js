@@ -26,7 +26,19 @@ sap.ui.define(['sap/m/Input'], function (Input) {
 
       this.attachBrowserEvent('keydown', (oEvent) => {
         const iMaxLength = oEvent.target.maxLength;
-        if ((iMaxLength && oEvent.target.value.length >= iMaxLength) || !allowedKeyCodes[oEvent.which || oEvent.keyCode]) {
+        // if ((iMaxLength && oEvent.target.value.length >= iMaxLength) || !allowedKeyCodes[oEvent.which || oEvent.keyCode]) {
+        //   oEvent.preventDefault();
+        //   oEvent.stopImmediatePropagation();
+        // }
+
+        if((iMaxLength && oEvent.target.value.length >= iMaxLength) && !allowedKeyCodes[oEvent.which || oEvent.keyCode]){
+          oEvent.preventDefault();
+          oEvent.stopImmediatePropagation();
+          return;
+        }
+
+        if(!allowedKeyCodes[oEvent.which || oEvent.keyCode]){
+          if(oEvent.keyCode >= 48 && oEvent.keyCode <= 57) return;
           oEvent.preventDefault();
           oEvent.stopImmediatePropagation();
         }
