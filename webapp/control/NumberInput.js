@@ -38,7 +38,7 @@ sap.ui.define(['sap/m/Input'], function (Input) {
         }
 
         if(!allowedKeyCodes[oEvent.which || oEvent.keyCode]){
-          if(oEvent.keyCode >= 48 && oEvent.keyCode <= 57) return;
+          if((oEvent.keyCode >= 48 && oEvent.keyCode <= 57) || (oEvent.keyCode >= 96 && oEvent.keyCode <= 105)) return;
           oEvent.preventDefault();
           oEvent.stopImmediatePropagation();
         }
