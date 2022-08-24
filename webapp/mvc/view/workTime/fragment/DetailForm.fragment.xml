@@ -32,13 +32,13 @@
             <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="12%">
+        <table:Column width="11%">
           <Label text="{i18n>LABEL_00227}" />
           <table:template>
             <Text text="{Orgtx}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="7%">
+        <table:Column width="8%">
           <Label text="{i18n>LABEL_27004}" />
           <table:template>
             <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" />
