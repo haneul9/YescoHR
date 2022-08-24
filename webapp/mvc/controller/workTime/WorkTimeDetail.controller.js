@@ -335,14 +335,16 @@ sap.ui.define(
 
       // Dialog 저장
       async onDialogSavBtn() {
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/busy', true);
+
         if (this.checkError()) {
+          oViewModel.setProperty('/busy', false);
           return;
         }
 
-        const oViewModel = this.getViewModel();
         try {
-          oViewModel.setProperty('/busy', true);
-
           _.set(oViewModel.getProperty('/DialogData'), 'Beguz', oViewModel.getProperty('/DialogData/Beguz').replace(':', ''));
           _.set(oViewModel.getProperty('/DialogData'), 'Enduz', oViewModel.getProperty('/DialogData/Enduz').replace(':', ''));
 
@@ -626,7 +628,11 @@ sap.ui.define(
               });
             })
             .find((e) => {
-              return moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD') && e.Beguz === mDialogData.Beguz.replace(':', '') && e.Enduz === mDialogData.Enduz.replace(':', '');
+              return (
+                moment(e.Datum).format('YYYY.MM.DD') === moment(mDialogData.Datum).format('YYYY.MM.DD') &&
+                e.Beguz === mDialogData.Beguz.replace(':', '') &&
+                e.Enduz === mDialogData.Enduz.replace(':', '')
+              );
             })
             .value() ||
           _.chain(aFilter)
