@@ -62,7 +62,7 @@ sap.ui.define(
                 const oSuccessionButton = new sap.m.Button({
                   type: 'Emphasized',
                   width: '175px',
-                  text: '{= ${/successionOn} ? ${i18n>LABEL_12007} : ${i18n>LABEL_12006} }', // Succession Off : Succession On
+                  text: '{= ${/successionOn} ? ${i18n>LABEL_12007} : ${i18n>LABEL_12006} }', // 후임자 Off : 후임자 On
                   press: this.onPressSuccessionBtn.bind(this),
                 });
                 oHBox.insertItem(oSuccessionButton, oHBox.indexOfItem(oCompactButton) + 1);

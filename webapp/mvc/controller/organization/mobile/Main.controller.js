@@ -6,6 +6,7 @@ sap.ui.define(
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
+    'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/control/D3OrgChart',
     'sap/ui/yesco/control/D3OrgChartItem',
   ],
@@ -16,6 +17,7 @@ sap.ui.define(
     AppUtils,
     Client,
     ServiceNames,
+    MessageBox,
     D3OrgChart,
     D3OrgChartItem
   ) => {
@@ -49,6 +51,10 @@ sap.ui.define(
               }),
             ]);
 
+            if (_.isEmpty(aReturnData)) {
+              MessageBox.information(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
+            }
+
             setTimeout(() => {
               if (Auth === 'X') {
                 const oCompactButton = this.byId('compactButton');
@@ -56,7 +62,7 @@ sap.ui.define(
                 const oSuccessionButton = new sap.m.Button({
                   type: 'Emphasized',
                   width: '175px',
-                  text: '{= ${/successionOn} ? ${i18n>LABEL_12013} : ${i18n>LABEL_12012} }', // Basic : Succession
+                  text: '{= ${/successionOn} ? ${i18n>LABEL_12013} : ${i18n>LABEL_12012} }', // 후임자 Off : 후임자 On
                   press: this.onPressSuccessionBtn.bind(this),
                 });
                 oOverflowToolbar.insertContent(oSuccessionButton, oOverflowToolbar.indexOfContent(oCompactButton) + 1);
@@ -197,11 +203,11 @@ sap.ui.define(
               .value();
 
             setTimeout(() => {
-              const oChart = this.oD3Chart.getChart();
+              const oChartControl = this.oD3Chart.getChart();
 
-              aThirdLevelNodeIds.forEach((d) => oChart.setExpanded(d));
+              aThirdLevelNodeIds.forEach((d) => oChartControl.setExpanded(d));
 
-              oChart.render().fit();
+              oChartControl.render().fit();
             }, 200);
           }
         } catch (oError) {

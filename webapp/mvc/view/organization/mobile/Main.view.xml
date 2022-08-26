@@ -19,6 +19,7 @@
       <FlexBox id="ChartHolder" class="org-chart-container mt-1-px" width="100%" height="100%" alignItems="Start" justifyContent="Center" busyIndicatorDelay="0">
         <customData>
           <core:CustomData key="layout" value="{/layout}" writeToDom="true" />
+          <core:CustomData key="succession" value="{= !!${/successionOn} ? 'on' : 'off' }" writeToDom="true" />
         </customData>
       </FlexBox>
     </VBox>

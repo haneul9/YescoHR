@@ -923,7 +923,7 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .organization-legend .sapMLabel[data-level="40"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#c1a7ff; position:absolute}
 .organization-legend .sapMLabel[data-level="50"]::before {content:""; width:14px; height:14px; border-radius:50%; background-color:#d0c0a6; position:absolute}
 
-.org-container {position:relative; box-sizing:border-box; height:100%; border:1px solid #d3d3d3; border-radius:8px; background-color:#fff; overflow:hidden}
+.org-container {box-sizing:border-box; height:100%; border:1px solid #d3d3d3; border-radius:8px; background-color:#fff; overflow:hidden}
 .org-container div {box-sizing:border-box}
 .org-container .title {width:100%; height:40px; line-height:40px; text-align:center; font-size:17px; font-weight:bold; color:#222; background-color:#959ba3}
 .org-container .title.level10 {background-color:#65b8ff}
@@ -932,13 +932,6 @@ h4.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .org-container .title.level35 {background-color:#e06500}
 .org-container .title.level40 {background-color:#c1a7ff}
 .org-container .title.level50 {background-color:#d0c0a6}
-.org-container .bottom {position:absolute; bottom:0; width:100%; height:14px; background-color:#959ba3}
-.org-container .bottom.level10 {background-color:#65b8ff}
-.org-container .bottom.level20 {background-color:#a6e2a0}
-.org-container .bottom.level30 {background-color:#ffe479}
-.org-container .bottom.level35 {background-color:#e06500}
-.org-container .bottom.level40 {background-color:#c1a7ff}
-.org-container .bottom.level50 {background-color:#d0c0a6}
 .org-container .grid {display:grid; column-gap:12px; margin:0 12px}
 .org-container .grid .label, .org-container .grid .content, .org-container .grid .spacer {font-size:12px; line-height:13px}
 .org-container .grid .label {font-weight:bold}
