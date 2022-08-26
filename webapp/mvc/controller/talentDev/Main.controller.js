@@ -63,7 +63,7 @@ sap.ui.define(
           },
           committee: {
             listInfo: {
-              rows: [],
+              list: [],
               rowCount: 1,
               totalCount: 0,
               readyCount: 0,
@@ -73,7 +73,7 @@ sap.ui.define(
           },
           employee: {
             listInfo: {
-              rows: [],
+              list: [],
               rowCount: 1,
               totalCount: 0,
               readyCount: 0,
@@ -107,7 +107,7 @@ sap.ui.define(
 
           await this.initializeSearchConditions();
 
-          this.retrieve('1');
+          this.retrieve('1', true);
         } catch (oError) {
           this.debug('Controller > talentDev > onObjectMatched Error', oError);
 
@@ -140,7 +140,8 @@ sap.ui.define(
           oViewModel.setProperty('/employee/auth', _.chain(mAuth).omit('__metadata').value());
           oViewModel.setProperty('/searchConditions', {
             Werks: sParamWerks,
-            Orgeh: _.some(aOrgehEntry, (o) => o.Orgeh === Orgeh) ? Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']),
+            // Orgeh: _.some(aOrgehEntry, (o) => o.Orgeh === Orgeh) ? Orgeh : _.get(aOrgehEntry, [0, 'Orgeh']),
+            Orgeh: 'ALL',
             Pernr: '',
             Ename: '',
             Gjahr: sGjahr,
@@ -148,14 +149,25 @@ sap.ui.define(
           });
 
           const sChoiceText = AppUtils.getBundleText('LABEL_00268');
-          aOrgehEntry.unshift({ Orgeh: '', Orgtx: sChoiceText });
-          aGjahrEntry.unshift({ Gjahr: '', Gjahrtx: sChoiceText });
-          aZseqnrEntry.unshift({ Zseqnr: '', Zseqnrtx: sChoiceText });
+          aOrgehEntry.unshift({ Orgeh: 'ALL', Orgtx: sChoiceText });
+          aGjahrEntry.unshift({ Gjahr: 'ALL', Gjahrtx: sChoiceText });
+          aZseqnrEntry.unshift({ Zseqnr: 'ALL', Zseqnrtx: sChoiceText });
 
           this.setComboEntry(oViewModel, '/entry/Werks', aPersaEntry);
           this.setComboEntry(oViewModel, '/entry/Orgeh', aOrgehEntry);
           this.setComboEntry(oViewModel, '/entry/Gjahr', aGjahrEntry);
           this.setComboEntry(oViewModel, '/entry/Zseqnr', aZseqnrEntry);
+
+          const mInitData = {
+            list: [],
+            rowCount: 1,
+            totalCount: 0,
+            readyCount: 0,
+            progressCount: 0,
+            completeCount: 0,
+          };
+          oViewModel.setProperty('/committee/listInfo', mInitData);
+          oViewModel.setProperty('/employee/listInfo', { ...mInitData, infoMessage: '' });
         } catch (oError) {
           this.debug('Controller > talentDev > initializeSearchConditions Error', oError);
 
@@ -192,10 +204,6 @@ sap.ui.define(
         oViewModel.refresh();
       },
 
-      getFileConfig() {
-        return { ...this.getViewModel().getProperty('/fileConfig') };
-      },
-
       /**
        * Mode 1 : 최초 조회 조건으로 인재육성위원회 및 대상자 테이블 모두 조회
        * Mode 2 : 인재육성위원회 행을 선택한 경우 해당 대상자 테이블 조회
@@ -205,11 +213,12 @@ sap.ui.define(
        * Mode 11 : 인재육성위원회 테이블만 갱신
        * Mode 2 : 대상자 테이블만 갱신
        *
-       * @param {*} mPayload
+       * @param {string} sMode
+       * @param {boolean} bOnloadSearch
        */
-      async retrieve(sMode) {
+      async retrieve(sMode, bOnloadSearch = false) {
         const oViewModel = this.getViewModel();
-        const mSearchConditions = oViewModel.getProperty('/searchConditions');
+        const mSearchConditions = this.getSearchConditions(oViewModel);
         const mPayload =
           sMode === '2'
             ? _.isEmpty(this.mSelectedCommitteeData)
@@ -249,7 +258,7 @@ sap.ui.define(
               .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
               .value();
             oViewModel.setProperty('/committee/listInfo', {
-              rows: aCommitteeList,
+              list: aCommitteeList,
               rowCount: Math.min(Math.max(aCommitteeList.length, 1), 3),
               totalCount: aCommitteeList.length,
               readyCount: mCommitteeCount['0'],
@@ -259,7 +268,7 @@ sap.ui.define(
           }
 
           if (sMode === '1' || sMode === '2') {
-            const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
+            const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig(oViewModel);
             const aEmployeeList = _.map(aData.TalentDevTargetSet.results, (o) => {
               const { Gjahr, Pernr, Zseqnr, Werks, Mdate } = o;
               return _.chain(o)
@@ -298,9 +307,9 @@ sap.ui.define(
               .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
               .value();
             const { Ztitle, Gjahr, Zseqnrtx } = mPayload;
-            const sInfoMessage = sMode === '2' ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
+            const sInfoMessage = sMode === '2' && Ztitle ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
             oViewModel.setProperty('/employee/listInfo', {
-              rows: aEmployeeList,
+              list: aEmployeeList,
               rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
               totalCount: aEmployeeList.length,
               readyCount: mEmployeeCount['0'],
@@ -313,7 +322,7 @@ sap.ui.define(
           this.debug('Controller > talentDev > retrieve Error', oError);
 
           const mInitData = {
-            rows: [],
+            list: [],
             rowCount: 1,
             totalCount: 0,
             readyCount: 0,
@@ -323,6 +332,9 @@ sap.ui.define(
           oViewModel.setProperty('/committee/listInfo', mInitData);
           oViewModel.setProperty('/employee/listInfo', { ...mInitData, infoMessage: this.getBundleText('MSG_43001') }); // 조회 조건에 따른 대상자입니다.
 
+          if (bOnloadSearch && oError.code === 'A') {
+            return;
+          }
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
           }
@@ -332,6 +344,19 @@ sap.ui.define(
         }
       },
 
+      getSearchConditions(oViewModel) {
+        return _.chain(oViewModel.getProperty('/searchConditions'))
+          .cloneDeep()
+          .update('Orgeh', (sOrgeh) => (sOrgeh === 'ALL' ? '' : sOrgeh))
+          .update('Gjahr', (sGjahr) => (sGjahr === 'ALL' ? '' : sGjahr))
+          .update('Zseqnr', (sZseqnr) => (sZseqnr === 'ALL' ? '' : sZseqnr))
+          .value();
+      },
+
+      getFileConfig(oViewModel) {
+        return { ...oViewModel.getProperty('/fileConfig') };
+      },
+
       onChangeWerks() {
         this.setContentsBusy(true, ['Orgeh', 'Gjahr', 'Zseqnr', 'Button']);
 
@@ -339,6 +364,30 @@ sap.ui.define(
         const sWerks = oViewModel.getProperty('/searchConditions/Werks');
 
         this.initializeSearchConditions(sWerks);
+      },
+
+      async onChangeGjahr() {
+        this.setContentsBusy(true, ['Zseqnr', 'Button']);
+
+        try {
+          const oViewModel = this.getViewModel();
+          const { Werks, Gjahr } = oViewModel.getProperty('/searchConditions');
+
+          const aZseqnrEntry = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'GetZseqnrList', { Werks, Gjahr });
+
+          oViewModel.setProperty('/searchConditions/Zseqnr', 'ALL');
+          aZseqnrEntry.unshift({ Zseqnr: 'ALL', Zseqnrtx: this.getBundleText('LABEL_00268') });
+          this.setComboEntry(oViewModel, '/entry/Zseqnr', aZseqnrEntry);
+        } catch (oError) {
+          this.debug('Controller > talentDev > onChangeGjahr Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
+          AppUtils.handleError(oError);
+        } finally {
+          this.setContentsBusy(false, ['Zseqnr', 'Button']);
+        }
       },
 
       onEmployeeSearchOpen() {
@@ -374,6 +423,7 @@ sap.ui.define(
 
       onPressSearch() {
         this.setContentsBusy(true, ['Button', 'Committee', 'Employee']);
+        this.bSearchButtonClick = true;
 
         this.retrieve('1');
       },
@@ -542,7 +592,7 @@ sap.ui.define(
             }
             MessageBox.alert(aMessages.join('\n\n'));
           } catch (oError) {
-            AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
+            this.debug('Controller > talentDev > updateFileData Error', oError);
 
             if (oError instanceof UI5Error) {
               oError.code = oError.LEVEL.INFORMATION;
@@ -578,7 +628,7 @@ sap.ui.define(
             },
           });
         } catch (oError) {
-          AppUtils.debug('Controller > talentDev > updateFileData Error', oError);
+          this.debug('Controller > talentDev > updateFileData Error', oError);
 
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
@@ -631,7 +681,7 @@ sap.ui.define(
           // 컨텐츠 서버 파일 삭제
           await Client.remove(this.getModel(ServiceNames.COMMON), 'FileList', { Appno, Zworktyp, Zfileseq });
         } catch (oError) {
-          AppUtils.debug('Controller > talentDev > onPressFileRemove FileListSet Error', oError);
+          this.debug('Controller > talentDev > onPressFileRemove FileListSet Error', oError);
 
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
@@ -649,7 +699,7 @@ sap.ui.define(
             onClose: fnCallback,
           });
         } catch (oError) {
-          AppUtils.debug('Controller > talentDev > onPressFileRemove TalentDevDetailSet Error', oError);
+          this.debug('Controller > talentDev > onPressFileRemove TalentDevDetailSet Error', oError);
 
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;

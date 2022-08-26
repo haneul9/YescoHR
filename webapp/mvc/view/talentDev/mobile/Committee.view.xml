@@ -1,0 +1,61 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.talentDev.mobile.Committee"
+  xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <HBox class="search-area row-3" binding="{/searchConditions}">
+        <VBox width="67%" height="100%">
+          <layoutData>
+            <FlexItemData maxWidth="67%" />
+          </layoutData>
+          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{/entry/Werks}" selectionFinish=".onChangeWerks">
+            <core:Item key="{Werks}" text="{Pbtxt}" />
+          </custom:SingleComboBox>
+          <custom:SingleComboBox width="100%" selectedKey="{Gjahr}" items="{/entry/Gjahr}" class="sapUiTinyMarginTop">
+            <core:Item key="{Gjahr}" text="{Gjahrtx}" />
+          </custom:SingleComboBox>
+          <custom:SingleComboBox width="100%" selectedKey="{Zseqnr}" items="{/entry/Zseqnr}" class="sapUiTinyMarginTop">
+            <core:Item key="{Zseqnr}" text="{Zseqnrtx}" />
+          </custom:SingleComboBox>
+        </VBox>
+        <VBox width="33%" height="100%" class="pl-8-px">
+          <layoutData>
+            <FlexItemData growFactor="1" maxWidth="33%" />
+          </layoutData>
+          <Button press=".onPressSearch" busy="{/busy/Button}" busyIndicatorDelay="0" text="{i18n>LABEL_00100}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" />
+        </VBox>
+      </HBox>
+      <HBox justifyContent="SpaceBetween" class="header-wrap">
+        <HBox class="header">
+          <Title level="H3" text="{i18n>LABEL_43001}" class="sapUiSmallMarginEnd" />
+          <Text text="total {/committee/listInfo/totalCount}" />
+        </HBox>
+        <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
+      </HBox>
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <List items="{/committee/listInfo/list}" busy="{/busy/Committee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-committee">
+          <CustomListItem type="Active" press=".onPressCommitteeListItem">
+            <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr" gridGap="6px 0">
+              <Text text="{Name1}" width="100%" />
+              <Text text="{Gjahr}{i18n>LABEL_42002}" width="100%" textAlign="Center" />
+              <Text text="{Zseqnrtx}{i18n>LABEL_42003}" width="100%" textAlign="Right" />
+              <Text text="{Ztitle}" class="subject">
+                <layoutData>
+                  <grid:GridItemLayoutData gridColumn="span 3" />
+                </layoutData>
+              </Text>
+              <!-- <ObjectStatus class="list-item-status" icon="sap-icon://circle-task-2" state="{= ${Zstat} === '2' ? 'Indication05' : (${Zstat} === '1' ? 'Indication02' : 'None') }" /> -->
+              <!-- <Text text="{i18n>LABEL_43018} {Incompcnttx}" /> -->
+              <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" />
+              <Text text="{i18n>LABEL_43017} {Compcnttx}" textAlign="Center" />
+              <ObjectStatus text="{Zstattx}" class="list-item-status" state="{= ${Zstat} === '2' ? 'Indication05' : (${Zstat} === '1' ? 'Indication02' : 'None') }" />
+            </grid:CSSGrid>
+          </CustomListItem>
+        </List>
+      </custom:MobileScrollContainer>
+    </VBox>
+  </Page>
+</mvc:View>

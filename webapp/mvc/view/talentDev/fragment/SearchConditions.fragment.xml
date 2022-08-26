@@ -13,7 +13,7 @@
     <Label text="{i18n>LABEL_43002}" />
     <custom:ClearableInput key="{/searchConditions/Pernr}" value="{/searchConditions/Ename}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onEmployeeSearchOpen" width="200px" />
     <Label text="{i18n>LABEL_43003}" />
-    <ComboBox items="{/entry/Gjahr}" selectedKey="{/searchConditions/Gjahr}" width="100px">
+    <ComboBox items="{/entry/Gjahr}" selectedKey="{/searchConditions/Gjahr}" width="100px" change=".onChangeGjahr">
       <core:Item text="{Gjahrtx}" key="{Gjahr}" />
     </ComboBox>
     <Label text="{i18n>LABEL_43004}" />

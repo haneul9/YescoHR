@@ -10,7 +10,7 @@
           <Title level="H3" text="{i18n>LABEL_35002}" />
         </HBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" height="calc(100% - 37px)">
         <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block" busyIndicatorDelay="0" busy="{/busy}">
           <l:BlockLayout id="BlockLayout" background="Mixed" content="{/compare/data}">
             <l:BlockLayoutRow scrollable="true" rowColorSet="{colorSet}">

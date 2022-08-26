@@ -35,18 +35,34 @@ sap.ui.define(
         4000: AppUtils.getImageURL('icon_YI.svg'),
         5000: AppUtils.getImageURL('icon_YH.svg'),
       },
+      LABEL: {
+        Ess1: AppUtils.getBundleText('LABEL_00222'), // 직무
+        Ess2: AppUtils.getBundleText('LABEL_00217'), // 직책
+        Ess3: AppUtils.getBundleText('LABEL_45404'), // 성과
+        Ess4: AppUtils.getBundleText('LABEL_45405'), // 역량
+        Ess5: AppUtils.getBundleText('LABEL_45406'), // 다면진단
+        Pre1: AppUtils.getBundleText('LABEL_45202'), // 외국어
+        Pre2: AppUtils.getBundleText('LABEL_00289'), // 전공
+        Pre3: AppUtils.getBundleText('LABEL_00318'), // 자격증
+        Etc1: AppUtils.getBundleText('LABEL_00218'), // 직군
+        Etc2: AppUtils.getBundleText('LABEL_00215'), // 직급
+        Etc3: AppUtils.getBundleText('LABEL_45302'), // 현직책
+        Etc4: AppUtils.getBundleText('LABEL_00288'), // 학교
+        Etc5: AppUtils.getBundleText('LABEL_45303'), // 학력
+        Etc6: AppUtils.getBundleText('LABEL_45304'), // 나이(만)
+        Etc7: AppUtils.getBundleText('LABEL_00331'), // 성별
+      },
 
       initializeModel() {
         return {
           busy: true,
+          isLoaded: false,
           searchBar: {
             busy: false,
-            showSearchConditions: true,
             Werks: '',
             Plans: '',
           },
           searchConditions: this.getInitSearchConditions(),
-          visibleColumn: this.getInitVisibleColumn(),
           candidate: this.getInitListInfo(),
           searchResult: this.getInitListInfo(),
           entries: {
@@ -135,78 +151,34 @@ sap.ui.define(
         return {
           listInfo: {
             busy: false,
-            expand: true,
-            rowCount: 0,
             totalCount: 0,
             list: [],
           },
         };
       },
 
-      getInitVisibleColumn() {
-        return {
-          Ess1: false,
-          Ess2: false,
-          Ess3: false,
-          Ess4: false,
-          Ess5: false,
-          Esstot: false,
-          Ess1Span: 0,
-          Ess2Span: 0,
-          Ess3Span: 0,
-          Ess4Span: 0,
-          Ess5Span: 0,
-          Pre1: false,
-          Pre2: false,
-          Pre3: false,
-          Pretot: false,
-          Pre1Span: 0,
-          Pre2Span: 0,
-          Pre3Span: 0,
-          Etc1: false,
-          Etc2: false,
-          Etc3: false,
-          Etc4: false,
-          Etc5: false,
-          Etc6: false,
-          Etc7: false,
-          Etctot: false,
-          Etc1Span: 0,
-          Etc2Span: 0,
-          Etc3Span: 0,
-          Etc4Span: 0,
-          Etc5Span: 0,
-          Etc6Span: 0,
-          Etc7Span: 0,
-        };
-      },
-
       async onObjectMatched() {
-        this.setFieldLengthData();
-
         const oViewModel = this.getViewModel();
+
+        const bIsLoaded = oViewModel.getProperty('/isLoaded');
+        if (bIsLoaded) {
+          return;
+        }
+
+        this.setFieldLengthData();
 
         try {
           oViewModel.setSizeLimit(2000);
           oViewModel.setData(this.initializeModel());
 
-          // const oCandidateTable = this.byId('candidateTable');
-          // const oSearchResultTable = this.byId('searchResultTable');
-          // this.TableUtils.adjustRowSpan({ oTable: oCandidateTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
-          // this.TableUtils.adjustRowSpan({ oTable: oSearchResultTable, aColIndices: [0, 1, 2], sTheadOrTbody: 'thead' });
-          // this.TableUtils.adjustHeaderColSpan(oCandidateTable);
-          // this.TableUtils.adjustHeaderColSpan(oSearchResultTable);
-          // this.setTableCellStyle(oCandidateTable);
-          // this.setTableCellStyle(oSearchResultTable);
-
-          const Werks = this.getAppointeeProperty('Werks');
+          const sSessionWerks = this.getAppointeeProperty('Werks');
           const oCommonModel = this.getModel(ServiceNames.COMMON);
           const oTalentModel = this.getModel(ServiceNames.TALENT);
           const aEntries = await Promise.all([
             Client.getEntitySet(oCommonModel, 'PersAreaList'),
-            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks }), //
+            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks: sSessionWerks }), //
             ..._.map(this.CODE_KEYS1, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Mode })),
-            ..._.map(this.CODE_KEYS2, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks, Mode })),
+            ..._.map(this.CODE_KEYS2, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks: sSessionWerks, Mode })),
           ]);
 
           const aNoValueEntries = ['F', 'G', 'N', 'O'];
@@ -214,12 +186,13 @@ sap.ui.define(
           const sYear = this.getBundleText('LABEL_00252'); // 년
           const aYears = _.concat(
             [{ Zcode: '', Ztext: '' }],
-            _.times(25, (i) => ({ Zcode: i + 1, Ztext: `${i + 1}${sYear}` }))
+            _.times(26, (i) => ({ Zcode: i, Ztext: `${i}${sYear}` }))
           );
           const aWerks = _.map(aEntries.shift(), (m) => _.omit(m, '__metadata'));
+          const sWerks = _.filter(aWerks, (m) => m.Werks === sSessionWerks).length > 0 ? sSessionWerks : (aWerks[0] || {}).Werks;
           const aPlans = this.convertSearchConditionEntry({ aEntries: aEntries.shift() });
 
-          oViewModel.setProperty('/searchBar/Werks', Werks);
+          oViewModel.setProperty('/searchBar/Werks', sWerks);
           oViewModel.setProperty('/entries/Werks', aWerks);
           oViewModel.setProperty('/entries/Plans', aPlans);
           oViewModel.setProperty('/entries/P', aYears);
@@ -235,6 +208,14 @@ sap.ui.define(
           AppUtils.handleError(oError);
         } finally {
           this.setBusy(false);
+
+          this.getView().addEventDelegate({
+            onBeforeHide: (oEvent) => {
+              if (!_.endsWith(oEvent.toId, 'employee') && !_.endsWith(oEvent.toId, 'talentCompare')) {
+                oViewModel.setProperty('/isLoaded', false);
+              }
+            },
+          });
         }
       },
 
@@ -243,24 +224,6 @@ sap.ui.define(
           .map((o) => ({ ..._.omit(o, '__metadata'), Zcode: bNumberCode ? _.toNumber(o.Zcode) : _.trim(o.Zcode) }))
           .thru((arr) => (bContainReset ? [{ Zcode: '', Ztext: '' }, ...arr] : arr))
           .value();
-      },
-
-      setTableCellStyle(oTable) {
-        oTable.addEventDelegate(
-          {
-            onAfterRendering() {
-              const $Table = this.$();
-              $Table.find('.sapMLabel.header-mandatory').parents('.sapUiTableHeaderCell').toggleClass('header-mandatory', true);
-              $Table.find('.sapMLabel.header-preference').parents('.sapUiTableHeaderCell').toggleClass('header-preference', true);
-              $Table.find('.sapMLabel.header-etc').parents('.sapUiTableHeaderCell').toggleClass('header-etc', true);
-              $Table.find('.sapMLabel.header-total').parents('.sapUiTableHeaderCell').toggleClass('header-total', true);
-              $Table.find('.sapMLabel.header-subtotal').parents('.sapUiTableHeaderCell').toggleClass('header-subtotal', true);
-              $Table.find('.sapMText.cell-total').parents('.sapUiTableDataCell').toggleClass('cell-total', true);
-              $Table.find('.sapMText.cell-subtotal').parents('.sapUiTableDataCell').toggleClass('cell-subtotal', true);
-            },
-          },
-          oTable
-        );
       },
 
       async onChangeWerks() {
@@ -289,11 +252,11 @@ sap.ui.define(
 
           this.resetAll();
         } catch (oError) {
-          this.debug('Controller > Candidate > onChangeWerks Error', oError);
+          this.debug('Controller > Mobile Candidate > onChangeWerks Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy(false);
+          setTimeout(() => this.setBusy(false), 500);
         }
       },
 
@@ -311,8 +274,10 @@ sap.ui.define(
             Plans: sPlans,
           });
 
-          oViewModel.setProperty('/searchConditions', {
-            ..._.chain(mSavedSearchConditions) //
+          oViewModel.setProperty(
+            '/searchConditions',
+            _.chain(mSavedSearchConditions)
+              .cloneDeep()
               .omit('__metadata')
               .set('Werks', _.isEmpty(mSavedSearchConditions.Werks) ? [oViewModel.getProperty('/searchBar/Werks')] : _.split(mSavedSearchConditions.Werks, '|'))
               .set('Stell1', _.isEmpty(mSavedSearchConditions.Stell1) ? [] : _.split(mSavedSearchConditions.Stell1, '|'))
@@ -330,18 +295,29 @@ sap.ui.define(
               .set('PrZzjikch', _.isEmpty(mSavedSearchConditions.PrZzjikch) ? [] : _.split(mSavedSearchConditions.PrZzjikch, '|'))
               .set('Schcd', _.isEmpty(mSavedSearchConditions.Schcd) ? [] : _.split(mSavedSearchConditions.Schcd, '|'))
               .set('Slabs', _.isEmpty(mSavedSearchConditions.Slabs) ? [] : _.split(mSavedSearchConditions.Slabs, '|'))
-              .value(),
-          });
-          oViewModel.setProperty('/candidate', this.getInitListInfo());
-          oViewModel.setProperty('/searchResult', this.getInitListInfo());
-          oViewModel.setProperty('/visibleColumn', this.getInitVisibleColumn());
-          oViewModel.setProperty('/searchBar/showSearchConditions', true);
+              .value()
+          );
+
+          const bEmpty = _.chain(mSavedSearchConditions)
+            .cloneDeep()
+            .omit(['__metadata', 'Plans'])
+            .omitBy((v) => !v)
+            .isEmpty()
+            .value();
+          if (bEmpty) {
+            oViewModel.setProperty('/candidate', this.getInitListInfo());
+            oViewModel.setProperty('/searchResult', this.getInitListInfo());
+
+            this.onPressDetailConditionsDialog();
+          } else {
+            this.onPressSearch();
+          }
         } catch (oError) {
-          this.debug('Controller > Candidate > onChangePlans Error', oError);
+          this.debug('Controller > Mobile Candidate > onChangePlans Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy(false);
+          setTimeout(() => this.setBusy(false), 500);
         }
       },
 
@@ -375,19 +351,17 @@ sap.ui.define(
 
       async onPressSearch() {
         this.setBusy();
-        this.setTableBusy();
 
         try {
           this.validateSearchConditions();
 
           await this.readCandidateSearch();
         } catch (oError) {
-          this.debug('Controller > Candidate > onPressSearch Error', oError);
+          this.debug('Controller > Mobile Candidate > onPressSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy(false);
-          this.setTableBusy(false);
+          setTimeout(() => this.setBusy(false), 500);
         }
       },
 
@@ -477,22 +451,17 @@ sap.ui.define(
         const aCandidates = this.getFiltered(aResults, (m) => m.Cpchk === 'X');
         const aSearchResults = this.getFiltered(aResults, (m) => m.Cpchk !== 'X');
 
-        oViewModel.setProperty('/visibleColumn', this.getVisibleColumn(mSearchConditions));
         oViewModel.setProperty('/candidate/listInfo/list', aCandidates); // 승계후보자
-        oViewModel.setProperty('/candidate/listInfo/rowCount', Math.min(3, aCandidates.length));
         oViewModel.setProperty('/candidate/listInfo/totalCount', aCandidates.length);
         oViewModel.setProperty('/searchResult/listInfo/list', aSearchResults); // 검색결과
-        oViewModel.setProperty('/searchResult/listInfo/rowCount', Math.min(6, aSearchResults.length));
         oViewModel.setProperty('/searchResult/listInfo/totalCount', aSearchResults.length);
 
         if (!aResults.length) {
           MessageBox.information(this.getBundleText('MSG_00062')); // 검색결과가 없습니다.
-
-          this.getViewModel().setProperty('/searchBar/showSearchConditions', true);
         } else {
-          this.getViewModel().setProperty('/searchBar/showSearchConditions', false);
-
-          // TODO 검색결과 table height 계산해서 rowCount 조절
+          if (this.oDetailConditionsDialog) {
+            this.oDetailConditionsDialog.close();
+          }
         }
       },
 
@@ -500,53 +469,45 @@ sap.ui.define(
         const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
         return _.chain(aResults)
           .filter(fnPredicate)
-          .map((m) => ({ ..._.omit(m, '__metadata'), ColtyState: m.Colty, PicUrl: _.trim(m.PicUrl) || sUnknownAvatarImageURL, Chckd: '', Icon: this.COMPANY_ICON[m.Werks] }))
+          .map((m) => ({
+            ..._.omit(m, '__metadata'),
+            ColtyState: m.Colty,
+            PicUrl: _.trim(m.PicUrl) || sUnknownAvatarImageURL,
+            Chckd: '',
+            Icon: this.COMPANY_ICON[m.Werks],
+            Linetx1: m.Linetx1.replace(/\s/, '\n'),
+            Linetx6: this.getBundleText(
+              'LABEL_45502',
+              m.Esstot,
+              _.chain(m)
+                .pick('Ess1,Ess2,Ess3,Ess4,Ess5'.split(','))
+                .pickBy((v) => v === '○')
+                .map((v, k) => this.LABEL[k])
+                .join(',')
+                .value() || '-'
+            ),
+            Linetx7: this.getBundleText(
+              'LABEL_45503',
+              m.Pretot,
+              _.chain(m)
+                .pick('Pre1,Pre2,Pre3'.split(','))
+                .pickBy((v) => v === '○')
+                .map((v, k) => this.LABEL[k])
+                .join(',')
+                .value() || '-'
+            ),
+            Linetx8: this.getBundleText(
+              'LABEL_45504',
+              m.Etctot,
+              _.chain(m)
+                .pick('Etc1,Etc2,Etc3,Etc4,Etc5,Etc6,Etc7'.split(','))
+                .pickBy((v) => v === '○')
+                .map((v, k) => this.LABEL[k])
+                .join(',')
+                .value() || '-'
+            ),
+          }))
           .value();
-      },
-
-      getVisibleColumn(m) {
-        const [Ess1, Ess2, Ess3, Ess4, Ess5, Pre1, Pre2, Pre3, Etc1, Etc2, Etc3, Etc4, Etc5, Etc6, Etc7] = [
-          m.Stell1.length + m.Stell2.length + m.Stell3.length + m.Stell4.length > 0,
-          !!m.Zzjikch.length,
-          !!m.PformGrad.length,
-          !!m.QualiLv.length,
-          !!m.DignoGrad.length,
-          m.Quali1.length + m.Quali2.length + m.Quali3.length > 0,
-          !!m.Major.length,
-          !!m.Cttyp.length,
-          !!m.Jobgr.length,
-          !!m.Zzjikgb.length,
-          !!m.PrZzjikch.length,
-          !!m.Schcd.length,
-          !!m.Slabs.length,
-          !!m.EeageFr.length,
-          !!m.Gesch.length,
-        ];
-        const [Esstot, Pretot, Etctot] = [
-          Ess1 || Ess2 || Ess3 || Ess4 || Ess5, //
-          Pre1 || Pre2 || Pre3,
-          Etc1 || Etc2 || Etc3 || Etc4 || Etc5 || Etc6 || Etc7,
-        ];
-        return {
-          Ess1,
-          Ess2,
-          Ess3,
-          Ess4,
-          Ess5,
-          Esstot,
-          Pre1,
-          Pre2,
-          Pre3,
-          Pretot,
-          Etc1,
-          Etc2,
-          Etc3,
-          Etc4,
-          Etc5,
-          Etc6,
-          Etc7,
-          Etctot,
-        };
       },
 
       onPressResetAll() {
@@ -566,11 +527,9 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const mSearchConditions = oViewModel.getProperty('/searchConditions');
 
-        // oViewModel.setProperty('/searchBar/Plans', '');
         oViewModel.setProperty('/searchConditions', this.getInitSearchConditions(mSearchConditions.Werks));
         oViewModel.setProperty('/candidate', this.getInitListInfo());
         oViewModel.setProperty('/searchResult', this.getInitListInfo());
-        oViewModel.setProperty('/visibleColumn', this.getInitVisibleColumn());
       },
 
       async onPressLegend(oEvent) {
@@ -612,93 +571,21 @@ sap.ui.define(
             .filter((m) => m.Chckd === 'X')
             .map((m) => m.Pernr)
             .value();
-          const aPernr = _.chain(aCandidates).concat(aSearchResults).uniq().value();
+          const sPernr = _.chain(aCandidates).concat(aSearchResults).uniq().join('|').value();
 
-          if (aPernr.length < 2) {
+          if (sPernr.length < 2) {
             this.throwError('MSG_45010'); // 프로파일을 비교할 대상자를 선택하세요.
           }
 
-          const aCompareResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearchComparison', { Pernr: aPernr });
-
-          const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
-          oViewModel.setProperty('/compare/scroll', aCompareResults.length > 3);
-          oViewModel.setProperty(
-            '/compare/row1',
-            _.concat(
-              { type: 'label' },
-              _.map(aCompareResults, (o) => ({ type: 'text', Pernr: o.Pernr, Picurl: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl, Value01: o.Value01 }))
-            )
-          );
-          oViewModel.setProperty('/compare/row2', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35013', sTargetProp: 'Value02' })); // 기본정보
-          oViewModel.setProperty('/compare/row3', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_00222', sTargetProp: 'Value04' })); // 직무
-          oViewModel.setProperty('/compare/row4', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35016', sTargetProp: 'Value05' })); // 학력
-          oViewModel.setProperty('/compare/row5', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35014', sTargetProp: 'Value06', bEvaluation: true })); // 평가이력
-          oViewModel.setProperty('/compare/row6', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35015', sTargetProp: 'Value03' })); // 사내경력
-          oViewModel.setProperty('/compare/row7', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35017', sTargetProp: 'Value09' })); // 사외경력
-          oViewModel.setProperty('/compare/row8', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35018', sTargetProp: 'Value08' })); // 외국어
-          oViewModel.setProperty('/compare/row9', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35019', sTargetProp: 'Value10' })); // 포상
-          oViewModel.setProperty('/compare/row10', this.convertCompareRow({ aCompareResults, sLabelCode: 'LABEL_35020', sTargetProp: 'Value11' })); // 징계
-          oViewModel.setProperty('/compare/row11', _.times(aCompareResults.length + 1).map(_.stubObject));
-
-          this.onCompareDialog();
+          oViewModel.setProperty('/isLoaded', true);
+          this.getRouter().navTo('mobile/m/talent-compare', { pernrs: sPernr });
         } catch (oError) {
-          this.debug('Controller > Candidate > onPressCompare Error', oError);
+          this.debug('Controller > Mobile Candidate > onPressCompare Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy(false);
+          setTimeout(() => this.setBusy(false), 500);
         }
-      },
-
-      convertCompareRow({ aCompareResults, sLabelCode, sTargetProp, bEvaluation = false }) {
-        return _.concat(
-          { type: bEvaluation ? 'label' : null, data: [{ type: 'label', value: this.getBundleText(sLabelCode) }] },
-          _.map(aCompareResults, (o) => ({
-            block9: bEvaluation ? _.toNumber(o.Value07) : null,
-            data: _.chain(o)
-              .get(sTargetProp)
-              .split('<br>')
-              .map((d) => ({ type: 'text', value: d }))
-              .value(),
-          }))
-        );
-      },
-
-      async onCompareDialog() {
-        if (!this.oCompareDialog) {
-          const oView = this.getView();
-
-          this.oCompareDialog = await Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.mvc.view.succession.fragment.CompareDialog',
-            controller: this,
-          });
-
-          oView.addDependent(this.oCompareDialog);
-
-          this.oCompareDialog.attachAfterOpen(() => {
-            const sBlockId = this.byId('BlockLayout').getId();
-            const $lastBlock = $(`#${sBlockId} > div:last`);
-
-            $lastBlock.off('scroll touchmove mousewheel');
-            $lastBlock.on('scroll touchmove mousewheel', function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-
-              const iScrollLeft = $(this).scrollLeft();
-
-              $(`#${sBlockId} > div:not(:last)`).each(function () {
-                $(this).scrollLeft(iScrollLeft);
-              });
-            });
-          });
-        }
-
-        this.oCompareDialog.open();
-      },
-
-      onPressCompareDialogClose() {
-        this.oCompareDialog.close();
       },
 
       onSelectionChangeStell(oEvent) {
@@ -765,11 +652,11 @@ sap.ui.define(
 
           MessageBox.success(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
         } catch (oError) {
-          this.debug('Controller > Candidate > saveSearchConditions Error', oError);
+          this.debug('Controller > Mobile Candidate > saveSearchConditions Error', oError);
 
           AppUtils.handleError(oError);
         } finally {
-          this.setBusy(false);
+          setTimeout(() => this.setBusy(false), 500);
         }
       },
 
@@ -795,35 +682,22 @@ sap.ui.define(
       },
 
       onPressPhoto(oEvent) {
-        const mRowData = oEvent.getSource().getParent().getParent().getParent().getBindingContext().getObject();
+        const mRowData = oEvent.getSource().getBindingContext().getObject();
 
-        this.openEmployeePop(mRowData.Pernr);
+        this.navEmployee(mRowData.Pernr);
       },
 
-      onPressDialogPhoto(oEvent) {
-        const mRowData = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
-
-        this.openEmployeePop(mRowData.Pernr);
-      },
-
-      openEmployeePop(sPernr) {
+      navEmployee(sPernr) {
         if (!sPernr) {
           return;
         }
 
-        const sHost = window.location.href.split('#')[0];
-        const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
-
-        window.open(`${sHost}#/employeeView/${sPernr}/${sUsrty}`, '_blank', 'width=1400,height=800');
+        this.getViewModel().setProperty('/isLoaded', true);
+        this.getRouter().navTo('mobile/m/employee-detail', { pernr: sPernr });
       },
 
       setBusy(bBusy = true) {
         setTimeout(() => this.getViewModel().setProperty('/busy', bBusy), bBusy ? 0 : 200);
-      },
-
-      setTableBusy(bBusy = true) {
-        setTimeout(() => this.getViewModel().setProperty('/candidate/listInfo/busy', bBusy), bBusy ? 0 : 200);
-        setTimeout(() => this.getViewModel().setProperty('/searchResult/listInfo/busy', bBusy), bBusy ? 0 : 200);
       },
 
       setFieldLengthData() {

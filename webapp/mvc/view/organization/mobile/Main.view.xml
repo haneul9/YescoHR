@@ -25,8 +25,8 @@
     </VBox>
     <footer class="wrap">
       <OverflowToolbar>
-        <Button type="Emphasized" text="{= ${/layout} === 'left' ? ${i18n>LABEL_12008} : ${i18n>LABEL_12009} }" press=".onPressSwapBtn" width="30%" />
-        <Button type="Emphasized" text="{= ${/compact} ? ${i18n>LABEL_12010} : ${i18n>LABEL_12011} }" press=".onPressCompactBtn" width="30%" id="compactButton" />
+        <Button type="Emphasized" text="{i18n>LABEL_12008}" press=".onPressSwapBtn" width="30%" />
+        <Button type="Emphasized" text="{i18n>LABEL_12011}" press=".onPressCompactBtn" width="30%" id="compactButton" />
       </OverflowToolbar>
     </footer>
   </Page>

@@ -104,7 +104,7 @@ sap.ui.define(
             extendNode: sExtendNode,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 150 : 0,
+            extraHeight: bSuccessionOn ? 85 : 0,
             items: this.getChartItems(),
           });
 
@@ -133,20 +133,23 @@ sap.ui.define(
       /*****************************************************************
        * ! Event handler
        *****************************************************************/
-      onPressSwapBtn() {
+      onPressSwapBtn(oEvent) {
         const oViewModel = this.getViewModel();
         const oChart = this.oD3Chart.getChart();
-        const sLayout = this.LAYOUT[oChart.layout()];
+        const sCurrentLayout = oChart.layout();
+        const sSwapLayout = this.LAYOUT[sCurrentLayout];
 
-        oViewModel.setProperty('/layout', sLayout);
-        oChart.layout(sLayout).render().fit();
+        oEvent.getSource().setText(sSwapLayout === 'left' ? this.getBundleText('LABEL_12002') : this.getBundleText('LABEL_12003')); // Horizontal View : Vertical View
+        oViewModel.setProperty('/layout', sSwapLayout);
+        oChart.layout(sSwapLayout).render().fit();
       },
 
-      onPressCompactBtn() {
+      onPressCompactBtn(oEvent) {
         const oViewModel = this.getViewModel();
         const oChart = this.oD3Chart.getChart();
         const bCompact = oChart.compact();
 
+        oEvent.getSource().setText(bCompact ? this.getBundleText('LABEL_12005') : this.getBundleText('LABEL_12004')); // Compact View : Spread View
         oViewModel.setProperty('/compact', !bCompact);
         oChart.compact(!bCompact).render().fit();
       },
@@ -157,7 +160,7 @@ sap.ui.define(
         const bSuccessionOn = !oViewModel.getProperty('/successionOn');
 
         oViewModel.setProperty('/successionOn', bSuccessionOn);
-        oChart.nodeHeight(() => (bSuccessionOn ? 328 : 178)).render();
+        oChart.nodeHeight(() => (bSuccessionOn ? 290 : 178)).render();
       },
 
       async onChangeWerks() {
@@ -188,7 +191,7 @@ sap.ui.define(
             extendNode: null,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 150 : 0,
+            extraHeight: bSuccessionOn ? 85 : 0,
             items: this.getChartItems(),
           });
 
@@ -241,15 +244,15 @@ sap.ui.define(
               ZorgLevl: '',
               TenureLabel: this.getBundleText('LABEL_12101'), // 현부서 재임기간
               Tenure: '',
-              ScsplnLabel: this.getBundleText('LABEL_12102'), // 승계 계획(차년도)
+              ScsplnLabel: this.getBundleText('LABEL_12102'), // 차년도 승계계획
               Scspln: '',
-              ScspntLabel: this.getBundleText('LABEL_12103'), // 승계 예정시점
+              ScspntLabel: this.getBundleText('LABEL_12103'), // 예정시점
               Scspnt: '',
-              Cand1stLabel: this.getBundleText('LABEL_12104'), // 승계 후보자(1순위)
+              Cand1stLabel: this.getBundleText('LABEL_12104'), // 후보자(1순위)
               Cand1st1: '',
               Cand1st2: '',
               Cand1st3: '',
-              CandpntLabel: this.getBundleText('LABEL_12105'), // 승계 가능시점
+              CandpntLabel: this.getBundleText('LABEL_12105'), // 가능시점
               Candpnt: '',
               CpPernr: '',
               CpPhoto: '',
@@ -263,10 +266,10 @@ sap.ui.define(
           JikgbtlLabel: this.getBundleText('LABEL_00215'), // 직급
           IpdatLabel: this.getBundleText('LABEL_00235'), // 입사일
           TenureLabel: this.getBundleText('LABEL_12101'), // 현부서 재임기간
-          ScsplnLabel: this.getBundleText('LABEL_12102'), // 승계 계획(차년도)
-          ScspntLabel: this.getBundleText('LABEL_12103'), // 승계 예정시점
-          Cand1stLabel: this.getBundleText('LABEL_12104'), // 승계 후보자(1순위)
-          CandpntLabel: this.getBundleText('LABEL_12105'), // 승계 가능시점
+          ScsplnLabel: this.getBundleText('LABEL_12102'), // 차년도 승계계획
+          ScspntLabel: this.getBundleText('LABEL_12103'), // 예정시점
+          Cand1stLabel: this.getBundleText('LABEL_12104'), // 후보자(1순위)
+          CandpntLabel: this.getBundleText('LABEL_12105'), // 가능시점
         }));
       },
 
@@ -289,15 +292,15 @@ sap.ui.define(
             ZorgLevl: '{ZorgLevl}',
             TenureLabel: '{TenureLabel}',
             Tenure: '{Tenure}',
-            ScsplnLabel: '{ScsplnLabel}', // 승계 계획(차년도)
+            ScsplnLabel: '{ScsplnLabel}', // 차년도 승계계획
             Scspln: '{Scspln}',
-            ScspntLabel: '{ScspntLabel}', // 승계 예정시점
+            ScspntLabel: '{ScspntLabel}', // 예정시점
             Scspnt: '{Scspnt}',
-            Cand1stLabel: '{Cand1stLabel}', // 승계 후보자(1순위)
+            Cand1stLabel: '{Cand1stLabel}', // 후보자(1순위)
             Cand1st1: '{Cand1st1}', // 승계후보자(1순위)_성명/직급
             Cand1st2: '{Cand1st2}', // 승계후보자(1순위)_인사영역
             Cand1st3: '{Cand1st3}', // 승계후보자(1순위)_포지션
-            CandpntLabel: '{CandpntLabel}', // 승계 가능시점
+            CandpntLabel: '{CandpntLabel}', // 가능시점
             Candpnt: '{Candpnt}',
             CpPernr: '{CpPernr}',
             CpPhoto: '{CpPhoto}',

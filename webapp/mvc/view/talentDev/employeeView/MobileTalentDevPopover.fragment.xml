@@ -1,11 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
+  <!-- Mobile MSS 인재육성위원회 메뉴 - 인재육성위원회 목록 - 대상자 목록 - 상세 popup -->
+  <!-- Mobile MSS 사원프로파일 메뉴 - 인재육성위원회 tab - 상세 popup -->
   <Popover placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{/busy}" busyIndicatorDelay="0" modal="true">
     <customHeader>
       <Bar>
         <contentLeft>
-          <Button type="Back" press=".onPressDialogClose" class="nav-back-in-popover" />
+          <Button type="Back" press=".onPressPopoverClose" class="nav-back-in-popover" />
         </contentLeft>
         <contentMiddle>
           <Title text="{i18n>LABEL_42001}" />
@@ -35,48 +37,49 @@
             </grid:CSSGrid>
           </grid:CSSGrid>
         </VBox>
-        <VBox class="emp-profile-talent-dev" height="100%" binding="{/detail}">
+        <ScrollContainer height="100%" horizontal="false" vertical="true">
           <layoutData>
-            <FlexItemData maxHeight="calc(100% - 112px)" />
+            <FlexItemData styleClass="emp-profile-talent-dev" />
           </layoutData>
-          <grid:CSSGrid gridAutoRows="40px" gridTemplateColumns="2fr 3fr" gridGap="1px 8px">
-            <Label text="{i18n>LABEL_43003}" />
-            <Text text="{Gjahr}{i18n>LABEL_42002} ({Zseqnrtx}{i18n>LABEL_42003})" />
-            <Label text="{i18n>LABEL_42005}" />
-            <Text text="{Zstattx}" />
-            <Label text="{i18n>LABEL_42008}" />
-            <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-            <Label text="{i18n>LABEL_42006}" />
-            <Link href="{File2}" visible="{= !!${File2} }" subtle="true" target="_blank" width="1rem">
-              <customData>
-                <core:CustomData key="download-icon-content" value="" writeToDom="true" />
-              </customData>
-            </Link>
-            <Text text=" " visible="{= !${File2} }" />
-            <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
-            <Link href="{File1}" visible="{= !!${File1} &amp;&amp; ${File1Hide} !== 'X' }" subtle="true" target="_blank" width="1rem">
-              <customData>
-                <core:CustomData key="download-icon-content" value="" writeToDom="true" />
-              </customData>
-            </Link>
-          </grid:CSSGrid>
-          <ScrollContainer height="100%" horizontal="false" vertical="true">
-            <layoutData>
-              <FlexItemData maxHeight="calc(100% - 227px)" />
-            </layoutData>
-            <content>
-              <Panel expandable="true" expanded="true" headerText="{Title1}">
-                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc1}" width="100%" editable="false" />
-              </Panel>
-              <Panel expandable="true" expanded="true" headerText="{Title2}">
-                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc2}" width="100%" editable="false" />
-              </Panel>
-              <Panel expandable="true" expanded="true" headerText="{Title3}">
-                <TextArea rows="5" growing="true" maxLength="10000" value="{Desc3}" width="100%" editable="false" />
-              </Panel>
-            </content>
-          </ScrollContainer>
-        </VBox>
+          <VBox binding="{/detail}">
+            <grid:CSSGrid gridAutoRows="40px" gridTemplateColumns="2fr 3fr">
+              <Label text="{i18n>LABEL_43003}" />
+              <FlexBox>
+                <Text text="{Gjahr}{i18n>LABEL_42002} ({Zseqnrtx}{i18n>LABEL_42003})" />
+              </FlexBox>
+              <Label text="{i18n>LABEL_42005}" />
+              <FlexBox>
+                <Text text="{Zstattx}" />
+              </FlexBox>
+              <Label text="{i18n>LABEL_42008}" />
+              <FlexBox>
+                <Text text="{ path: 'Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              </FlexBox>
+              <Label text="{i18n>LABEL_42006}" />
+              <FlexBox>
+                <Link href="{File2}" visible="{= !!${File2} }" subtle="true" target="_blank" width="1rem">
+                  <customData>
+                    <core:CustomData key="download-icon-content" value="" writeToDom="true" />
+                  </customData>
+                </Link>
+              </FlexBox>
+              <Label text="{i18n>LABEL_42004}" visible="{= ${File1Hide} !== 'X' }" />
+              <FlexBox visible="{= ${File1Hide} !== 'X' }" class="bg-white">
+                <Link href="{File1}" visible="{= !!${File1} }" subtle="true" target="_blank" width="1rem">
+                  <customData>
+                    <core:CustomData key="download-icon-content" value="" writeToDom="true" />
+                  </customData>
+                </Link>
+              </FlexBox>
+            </grid:CSSGrid>
+            <Title level="H4" text="{Title1}" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc1}" width="100%" editable="false" />
+            <Title level="H4" text="{Title2}" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc2}" width="100%" editable="false" />
+            <Title level="H4" text="{Title3}" />
+            <TextArea rows="5" growing="true" maxLength="10000" value="{Desc3}" width="100%" editable="false" />
+          </VBox>
+        </ScrollContainer>
       </VBox>
     </content>
   </Popover>

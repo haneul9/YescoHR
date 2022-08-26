@@ -22,12 +22,12 @@
         <m:Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
         <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
         <m:Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/>
-        <m:ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-        <m:ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-        <m:ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
+        <m:ObjectStatus text="{i18n>LABEL_45006}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
+        <m:ObjectStatus text="{i18n>LABEL_45007}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+        <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://circle-task-2" state="Indication05" />
       </m:HBox>
     </m:HBox>
-    <Table id="searchResultTable" rows="{/searchResult/listInfo/list}" visibleRowCount="{/searchResult/listInfo/rowCount}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="123" class="scsn-candidates-table">
+    <Table id="searchResultTable" rows="{/searchResult/listInfo/list}" visibleRowCount="{/searchResult/listInfo/rowCount}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="127" class="scsn-candidates">
       <columns>
         <Column width="50px">
           <multiLabels>
@@ -38,7 +38,7 @@
             <m:Text text="{Number}" width="100%" textAlign="Center" wrapping="false" />
           </template>
         </Column>
-        <Column width="310px">
+        <Column width="320px">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45403}" />
             <m:Label text="{i18n>LABEL_45403}" />
@@ -163,7 +163,7 @@
         <Column visible="{/visibleColumn/Pre1}" sortProperty="Pre1" filterProperty="Pre1">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45201}" class="header-preference" />
-            <m:Label text="{i18n>LABEL_35009}" class="header-preference" />
+            <m:Label text="{i18n>LABEL_45202}" class="header-preference" />
           </multiLabels>
           <template>
             <m:Text text="{Pre1}" width="100%" textAlign="Center" wrapping="false">
@@ -263,7 +263,7 @@
         <Column visible="{/visibleColumn/Etc5}" sortProperty="Etc5" filterProperty="Etc5">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_35016}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45303}" class="header-etc" />
           </multiLabels>
           <template>
             <m:Text text="{Etc5}" width="100%" textAlign="Center" wrapping="false">
@@ -276,7 +276,7 @@
         <Column visible="{/visibleColumn/Etc6}" sortProperty="Etc6" filterProperty="Etc6">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_35008}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45304}" class="header-etc" />
           </multiLabels>
           <template>
             <m:Text text="{Etc6}" width="100%" textAlign="Center" wrapping="false">

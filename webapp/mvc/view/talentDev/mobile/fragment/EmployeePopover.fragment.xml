@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Popover placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{/busy/Employee}" busyIndicatorDelay="0" modal="true">
+    <customHeader>
+      <Bar>
+        <contentLeft>
+          <Button type="Back" press=".onPressPopoverClose" class="nav-back-in-popover" />
+        </contentLeft>
+        <contentMiddle>
+          <Title text="{i18n>LABEL_43001} {i18n>LABEL_43002}" />
+        </contentMiddle>
+      </Bar>
+    </customHeader>
+    <content>
+      <VBox class="contents">
+        <HBox justifyContent="SpaceBetween" class="header-wrap">
+          <VBox>
+            <HBox class="header">
+              <Title level="H3" text="{i18n>LABEL_43002}" class="sapUiSmallMarginEnd" />
+              <Text text="total {/employee/listInfo/totalCount}" />
+            </HBox>
+            <Text text="{/employee/listInfo/infoMessage}" class="desc-txt start" />
+          </VBox>
+          <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+            <layoutData>
+              <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
+            </layoutData>
+          </Image>
+        </HBox>
+        <custom:MobileScrollContainer horizontal="false" vertical="true">
+          <List items="{/employee/listInfo/list}" busy="{/busy/Employee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-employee">
+            <CustomListItem type="Active" press=".onPressEmployeeListItem">
+              <grid:CSSGrid gridTemplateColumns="46px auto" gridTemplateRows="20px 20px" gridGap="6px 16px">
+                <Image src="{Photo}" mode="Background" class="photo">
+                  <layoutData>
+                    <grid:GridItemLayoutData gridRow="span 2" />
+                  </layoutData>
+                </Image>
+                <HBox justifyContent="SpaceBetween">
+                  <Title text="{Target}" wrapping="true" />
+                  <Image src="{Icon}" class="company-icon" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                  <Text text="{Orgtx}" />
+                  <ObjectStatus text="{Zstattx}" class="list-item-status" state="{= ${Zstat} === '2' ? 'Indication05' : (${Zstat} === '1' ? 'Indication02' : 'None') }" />
+                </HBox>
+              </grid:CSSGrid>
+            </CustomListItem>
+          </List>
+        </custom:MobileScrollContainer>
+      </VBox>
+    </content>
+  </Popover>
+</core:FragmentDefinition>

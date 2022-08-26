@@ -3,7 +3,7 @@
 @import url("style.css");
 
 html, body {max-width:884px} /* Samsung Galaxy Fold2 */
-html.sap-ios ::-webkit-scrollbar {width:0 !important}
+/* html.sap-ios ::-webkit-scrollbar {width:0 !important} */
 
 /* MOBILE */
 .mobile-only {display:inherit !important}
@@ -12,7 +12,7 @@ html.sap-ios ::-webkit-scrollbar {width:0 !important}
 .sapMPage > section {height:calc(100% - 56px)}
 .sapMPage.sapMPageWithFooter > section {height:calc(100% - 136px)}
 .sapMPage.sapMPageWithFooter[data-form-style="retrieval"] > section {height:calc(100% - 56px)}
-.sapMScrollCont {padding:0px}
+.sapMScrollCont {padding:0px; scrollbar-gutter:stable both-edges}
 .sapMScrollCont .sapMScrollCont {padding:0px 20px 0 0}
 .sapUiSizeCompact .sapMPageWithFooter.sapMPageFloatingFooter>section, .sapUiSizeCompact .sapMPageWithHeader>section {padding-top:56px}
 
@@ -132,7 +132,7 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80p
 .sapMDialog.sapUiPopupWithPadding:not(.sapUiNoContentPadding) .sapMDialogScrollCont {padding:0}
 html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {border:none; box-shadow:0; border-radius:0; top:auto !important; bottom:61px !important; padding:43px 0px 0}
 .sapMResponsivePopover:not(.sapMRPCalendar) + .sapUiBLy {display:none !important; visibility:hidden !important; background-color:#000; opacity:0.0}
-.sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height:2.5rem; padding-bottom:20px}
+.sapUiSizeCompact.sapMDialog>.sapMDialogSection, .sapUiSizeCompact .sapMDialog>.sapMDialogSection {min-height:2.5rem; padding-bottom:20px; scrollbar-gutter:stable both-edges}
 .sapMDialog.full-popover .sapMDialogScroll, .sapMDialog.full-popover .sapMDialogScroll .sapMDialogScrollCont {height:100% !important}
 .sapMPopover.full-popover.sapMPopoverWithoutBar .sapMPopoverCont, .sapMPopover.full-popover .sapMIBar.sapMHeader-CTX {padding:0px}
 .sapMPopover.full-popover {top:0 !important; right:0 !important; bottom:61px !important; left:0 !important; box-shadow:none}
@@ -178,7 +178,6 @@ html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {bo
 .sapMITBTextOnly .sapMITBFilterDefault>.sapMITBText {font-size:1rem !important; color:#000222; font-weight:700}
 .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected>.sapMITBText {color:#1e7db3}
 .sapMITBHead .sapMITBFilter .sapMITBSelected>.sapMITBContentArrow {height:0 !important}
-.sapMPopover.full-popover .sapMDialogScroll .sapMDialogScrollCont .favorites-menu-list {height:200px}
 .sapMPopover.full-popover .sapMITB {height:100%}
 .sapMPopover.full-popover .sapMITBContainerContent {height:calc(100% - 103px); padding-right:20px; overflow-y:auto}
 .sapMITH .sapMITBArrowScrollLeftTextOnly.sapMITBArrowScrollLeftInLine,
@@ -191,9 +190,11 @@ html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {bo
 .menu-list .sapMLnk {display:flex; justify-content:space-between; align-items:center; padding-left:0; padding-right:10px; font-size:1rem; font-weight:600}
 .menu-list .sapMITBText {font-size:1rem !important}
 .sapMToggleBtnPressed:not(.sapMBtnDisabled) {color:#6c757d; border-color:transparent; background:#fff !important}
-.sapUiSizeCompact .favorites-menu-list {position:absolute; bottom:0; background-color:#f4f5f7; border-top:8px solid #ebeef2; padding:20px 10px 20px 20px}
-.sapUiSizeCompact .favorites-menu-list .sapMScrollCont {padding-right:10px}
-.sapUiSizeCompact .favorites-menu-list .menu-link-button {margin:0 6px 2px 0; height:32px; padding-left:20px; padding-right:20px; border:1px solid #d6dbe2; border-radius:20px; line-height:32px; font-size:14px; font-weight:500; color:var(--FontColorNormal) !important; background-color:#fff}
+.sapUiSizeCompact .favorites-menu-list {position:absolute; bottom:0; height:200px; border-top:8px solid #ebeef2; padding:17px 0 9px 12px; background-color:#f4f5f7}
+.sapUiSizeCompact .favorites-menu-list .sapMScrollCont {overflow-y:auto !important}
+.sapUiSizeCompact .favorites-menu-list .sapMScrollCont .sapMScrollContScroll {padding-right:12px}
+.sapUiSizeCompact .favorites-menu-list .sapMScrollCont .sapMFlexItem {height:40px}
+.sapUiSizeCompact .favorites-menu-list .menu-link-button {margin:3px; height:32px; padding-left:20px; padding-right:20px; border:1px solid #d6dbe2; border-radius:20px; line-height:32px; font-size:14px; font-weight:500; color:var(--FontColorNormal) !important; background-color:#fff}
 
 /* sapMDialog  */
 .sapMDialog .sapMPanel>.sapMPanelHdr, .sapMPanelWrappingDiv, .sapMPanelWrappingDivTb {height:auto; line-height:inherit; padding:14px 16px; border-bottom:1px solid #edf0f5; background-color:#fff; font-size:20px}
@@ -232,7 +233,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {bo
 .sapMPopover.half-popover.employee-list-popover * {box-sizing:border-box}
 .sapMPopover.half-popover.employee-list-popover .search-field-container {padding:0 20px}
 .sapMPopover.half-popover.employee-list-popover .search-field-container .sapMFlexItem {flex-grow:1 !important}
-.sapMPopover.half-popover.employee-list-popover .search-field-container .sapMSFR:after {line-height:38px; font-size:17px; font-weight:700; color:#484c50}
+.sapMPopover.half-popover.employee-list-popover .search-field-container .sapMSFR:after {line-height:38px; font-size:18px; font-weight:700; color:#484c50}
 .sapMPopover.half-popover.employee-list-popover .sapMScrollCont {margin-top:15px; width:100% !important; height:calc(100% - 55px) !important}
 .sapMPopover.half-popover.employee-list-popover .employee-list li {background-color:#f4f5f7}
 
@@ -377,6 +378,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched:not(.sapMTimePickerDropDown)  {bo
 .sapUiLayoutCSSGrid.complex-search .sapMBtnInner.sapMBtnText {border-radius:20px}
 .sapUiLayoutCSSGrid.complex-search .sapMInputBaseIcon {line-height:2.4rem !important}
 .sapUiLayoutCSSGrid.complex-search .sapMLabel {min-height:30px}
+.sapUiLayoutCSSGrid.complex-search .sapUiLayoutCSSGridItem + .sapUiLayoutCSSGridItem.sapMLabel {margin-top:.5rem}
+.sapUiLayoutCSSGrid.complex-search .sapUiLayoutCSSGridItem + .sapUiLayoutCSSGridItem.sapMLabel {margin-top:.5rem}
 
 .sapUiLayoutCSSGrid.form-grid {background-color:transparent !important; border-top:none; border-bottom:none}
 .sapUiLayoutCSSGrid.form-grid > * {height:100%; min-height:48px}
@@ -471,6 +474,7 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents > .search-box.search-box-expanded + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 180px)}
 .contents > .search-area {overflow:hidden}
 .contents > .search-area + .sapMFlexBoxScroll {box-sizing:border-box; margin-top:20px}
+.contents > .search-area + .sapMFlexBoxScroll .header-wrap {height:auto; padding:10px}
 .contents > .search-area.row-0 {height:0; padding:0; border-bottom:none}
 .contents > .search-area.row-1 {height:68px}
 .contents > .search-area.row-2 {height:116px}
@@ -485,11 +489,11 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents > .search-area.row-5 + .sapMFlexBoxScroll {height:calc(100% - 280px)}
 .contents > .search-area + .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 226px)}
 .contents.mobile-mss-employee-card-list .sapMSegB {padding:0}
-.contents.mobile-mss-employee-card-list > .sapMFlexItem + .sapMFlexItem + .sapMFlexBoxScroll {margin-top:16px; height:calc(100% - 111px)}
-.contents.mobile-mss-employee-card-list .employee-card-list {padding:0 11px 0 16px}
+.contents.mobile-mss-employee-card-list > .sapMFlexBoxScroll {margin-top:16px; height:calc(100% - 111px)}
+.contents.mobile-mss-employee-card-list .employee-card-list {padding:0 16px}
 .contents.mobile-mss-employee-card-list .employee-card-list li:last-child {margin-bottom:0}
 .contents.mobile-mss-talent-list .talent-list ul,
-.contents.mobile-mss-candidate-list .talent-list ul {padding-top:2px; margin-bottom:5px}
+.contents.mobile-mss-candidate-list .talent-list ul {padding:2px 12px; margin-bottom:5px}
 
 .contents .list-wrap li {min-height:56px; padding:12px 6px 12px 16px; margin-bottom:8px; border:1px solid #e6e6ea; border-radius:8px; box-shadow:0px 2px 2px rgb(0 0 0 / 5%)}
 .contents .list-wrap li:last-child {margin-bottom:0}
@@ -565,14 +569,71 @@ html.sap-ios.fusioncharts-3-18-0 .custom-chart .fusioncharts-container svg g[cla
 
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken {border:none; background-color:transparent}
 .sapMMultiComboBox.mobile-single-combo .sapMTokenizer .sapMToken .sapMTokenIcon::before {content:''}
-.sapMMultiComboBox.mobile-single-combo .sapMTokenText {max-width: 100% !important;}
+.sapMMultiComboBox.mobile-single-combo .sapMTokenText {max-width:100% !important}
 
+/* MSS 인재육성위원회 - 대상자 - 상세 popup, MSS 사원프로파일 - 인재육성위원회 tab - 상세 popup */
 .emp-profile-talent-dev .sapUiLayoutCSSGrid {padding:9px 16px 14px 16px}
-.emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:40px; line-height:40px; font-size:16px}
+.emp-profile-talent-dev .sapUiLayoutCSSGrid > * {min-height:40px; line-height:41px; font-size:16px}
 .emp-profile-talent-dev .sapMScrollCont {margin-right:0; padding-right:0}
-.emp-profile-talent-dev .sapMScrollCont .sapMPanel {padding:0 16px}
-.emp-profile-talent-dev .sapMScrollCont .sapMPanelWrappingDiv {border:0; padding:0}
-.emp-profile-talent-dev .sapMPanel + .sapMPanel {margin-top:20px}
-.emp-profile-talent-dev .sapMPanelContent:not(.sapMPanelBGTransparent), .sapMMessageDialog .sapMDialogScrollCont {padding:0}
+
+.sapMPopover .emp-profile-talent-dev.sapMFlexBoxScroll {box-sizing:border-box; height:calc(100% - 82px); padding:20px 0 15px}
+.sapMPopover .emp-profile-talent-dev.sapMFlexBoxScroll .sapMScrollCont {border-top:8px solid #ebeef2}
+.sapMPopover .emp-profile-talent-dev.sapMFlexBoxScroll .sapMScrollContScroll {padding:0 20px 10px 20px}
+.sapMPopover .emp-profile-talent-dev .sapUiLayoutCSSGrid {margin:10px 0; border:0; padding:0}
+.sapMPopover .emp-profile-talent-dev .sapUiLayoutCSSGrid .sapMLabel bdi {padding-left:0}
+.sapMPopover .emp-profile-talent-dev .sapUiLayoutCSSGrid .bg-white {background-color:#fff}
+.sapMPopover .emp-profile-talent-dev .sapUiLayoutCSSGrid .sapMLnk {line-height:44px}
+.sapMPopover .emp-profile-talent-dev h4.sapMTitle {display:block; margin-top:20px; margin-bottom:5px; border-bottom:1px solid #000; padding-bottom:10px}
+.sapMPopover .emp-profile-talent-dev .sapMInputBase.sapMInputBaseReadonly {height:auto !important}
+.sapMPopover .emp-profile-talent-dev .sapMInputBaseReadonlyWrapper {border:0 !important}
+.sapMPopover .emp-profile-talent-dev .sapMInputBaseReadonlyWrapper .sapMTextAreaMirror {min-height:auto !important; padding:5px 0 !important}
+.sapMPopover .emp-profile-talent-dev .sapMInputBaseReadonlyWrapper .sapMTextAreaInner {padding:5px 0}
+/* Comment 영역만 ScrollContainer 적용시
+.sapMPopover .emp-profile-talent-dev .profile-detail h4.sapMTitle {margin-top:0}
+.sapMPopover .emp-profile-talent-dev .profile-detail .sapMInputBase.sapMTextArea + .sapMTitle {margin-top:20px}
+.sapMPopover .emp-profile-talent-dev .profile-detail .sapMInputBase.sapMInputBaseReadonly {height:auto !important}
+.sapMPopover .emp-profile-talent-dev .profile-detail .sapMInputBaseReadonlyWrapper {border:0 !important}
+.sapMPopover .emp-profile-talent-dev .profile-detail .sapMTextAreaMirror {min-height:auto !important}
+.sapMPopover .emp-profile-talent-dev .profile-detail .sapMTextAreaInner {padding:5px 0}
+*/
 
 .sapMIBar.sapMBar .sapMBarChild.nav-back-in-popover {height:48px; width:32px; min-width:32px; flex-grow:0; margin-left:10px}
+
+.sapUiSizeCompact .sapMDialog.talent-detail-conditions-dialog>footer {padding:20px 16px}
+.sapUiSizeCompact .sapMDialog.talent-detail-conditions-dialog>footer .sapMFooter-CTX {background-color:transparent}
+.sapUiSizeCompact .sapMDialog.candidate-detail-conditions-dialog>footer {padding:20px 16px}
+.sapUiSizeCompact .sapMDialog.candidate-detail-conditions-dialog>footer .sapMFooter-CTX {background-color:transparent}
+
+/* 승계후보자검색 */
+.sapMDialog.candidate-detail-conditions-dialog .sapMMultiComboBox.sapMMultiComboBoxHasToken {max-width:calc(90vw - 20px) !important}
+.sapMDialog.candidate-detail-conditions-dialog .sapMMultiComboBox.sapMMultiComboBoxHasToken .sapMTokenizer {max-width:calc(100% - 32px) !important; width:calc(100% - 32px)}
+.sapMDialog.candidate-detail-conditions-dialog .sapMMultiComboBox.sapMMultiComboBoxHasToken .sapMTokenizer + .sapMInputBaseInner {width:0 !important; min-width:0; padding:0 !important}
+.sapMDialog.candidate-detail-conditions-dialog .two-fields .sapMFlexItem,
+.sapMDialog.candidate-detail-conditions-dialog .two-fields-with-between .sapMFlexItem:nth-child(1),
+.sapMDialog.candidate-detail-conditions-dialog .two-fields-with-between .sapMFlexItem:nth-child(3) {width:calc(50% - 10px)}
+.sapMDialog.candidate-detail-conditions-dialog .two-fields-with-between .sapMFlexItem:nth-child(2) {width:20px; text-align:center}
+
+.contents > .search-area + .sapMFlexBoxScroll .scsn-candidates + .header-wrap {margin-top:32px}
+.scsn-candidates .sapFCard[data-selected-card="X"] {background-color:#e8eff6}
+.scsn-candidates .sapFCard .sapMTitle {margin-top:4px; margin-bottom:0}
+.scsn-candidates .sapFCard .sapMHBox[data-color-type]>.sapMFlexItem {height:141px}
+.scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem.sapMVBox .company-icon {top:3px; right:34px}
+
+/* 인재육성위원회 */
+.contents .list-wrap.talent-dev-committee li {padding-right:16px}
+.contents .list-wrap.talent-dev-committee li .list-item-status {width:100%; text-align:right}
+.contents .list-wrap.talent-dev-employee li {padding:16px}
+
+.list-item-status {margin:auto}
+.list-item-status .sapMObjStatusText {line-height:1.45}
+.list-item-status .sapMObjStatusIcon {padding:0}
+.list-item-status .sapMObjStatusIcon>.sapUiIcon {line-height:1rem}
+
+.full-popover .contents .header-wrap {height:66px; padding-bottom:20px}
+.full-popover .contents .header-wrap + .sapMFlexBoxScroll {height:calc(100% - 66px)}
+
+.talent-dev-employee .sapUiLayoutCSSGrid {position:relative}
+.talent-dev-employee .photo {width:46px; height:46px; border-radius:50%; background-size:cover; background-position:center top; background-repeat:no-repeat}
+.talent-dev-employee .sapMTitle {line-height:20px; font-size:14px; font-weight:700}
+.talent-dev-employee .sapMText {line-height:20px}
+.talent-dev-employee .company-icon {margin-top:2px}

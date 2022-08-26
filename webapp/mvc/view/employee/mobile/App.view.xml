@@ -17,7 +17,7 @@
             <Label text="{/header/name}" class="name" />
             <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
           </HBox>
-          <grid:CSSGrid items="{path: '/header/baseInfo'}" gridTemplateColumns="1fr">
+          <grid:CSSGrid items="{/header/baseInfo}" gridTemplateColumns="1fr">
             <Label text="{data}">
               <customData>
                 <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />

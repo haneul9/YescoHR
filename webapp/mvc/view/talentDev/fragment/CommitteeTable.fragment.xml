@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <Table id="committeeTable" class="row-link" rows="{/committee/listInfo/rows}" width="100%" visibleRowCount="{/committee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Committee}" noData="{i18n>MSG_00001}" cellClick=".onSelectCommitteeTableRow">
+  <Table id="committeeTable" class="row-link" rows="{/committee/listInfo/list}" width="100%" visibleRowCount="{/committee/listInfo/rowCount}" selectionMode="Single" selectionBehavior="RowOnly" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy/Committee}" noData="{i18n>MSG_00001}" cellClick=".onSelectCommitteeTableRow">
     <rowSettingsTemplate>
       <RowSettings highlight="{ path: 'Zstat', formatter: '.rowHighlight' }" />
     </rowSettingsTemplate>

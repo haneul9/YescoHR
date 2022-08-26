@@ -93,47 +93,50 @@ sap.ui.define(
             const bSuccessionPlanOnly = o.data.Scspln && !(o.data.CpPernr || '').replace(/0+/, '') ? ' only' : '';
             return `<div class="org-container">
   <div class="title level${o.data.ZorgLevl}">${o.data.Stext}</div>
-  <div class="grid employee-information">
-    <div class="photo"><span style="background-image:url('${o.data.Photo}')" /></div>
-    <div class="name">${o.data.Ename}</div>
-    <div class="spacer"></div>
-    <div class="label">${o.data.JikgbtlLabel}</div>
-    <div class="content">${o.data.Jikgbtl}</div>
-    <div class="spacer"></div>
-    <div class="label">${o.data.IpdatLabel}</div>
-    <div class="content">${o.data.Ipdat}</div>
-    <div class="spacer"></div>
-    <div class="label">${o.data.TenureLabel}</div>
-    <div class="content">${o.data.Tenure}</div>
+  <div class="employee-information flex">
+    <span class="photo" style="background-image:url('${o.data.Photo}')"></span>
+    <div class="grid">
+      <span class="label name">${o.data.Ename}</span>
+      <span class="spacer"></span>
+      <span class="label">${o.data.JikgbtlLabel}</span>
+      <span class="content">${o.data.Jikgbtl}</span>
+      <span class="label">${o.data.IpdatLabel}</span>
+      <span class="content">${o.data.Ipdat}</span>
+      <span class="label">${o.data.TenureLabel}</span>
+      <span class="content">${o.data.Tenure}</span>
+    </div>
   </div>
-  <div class="grid succession succession-plan${sSuccessionDisplay}${bSuccessionPlanOnly}">
-    <div class="dummy"></div>
-    <div class="label">${o.data.ScsplnLabel}</div>
-    <div class="content">${o.data.Scspln}</div>
-    <div class="spacer"></div>
-    <div class="label">${o.data.ScspntLabel}</div>
-    <div class="content">${o.data.Scspnt}</div>
-  </div>
-  <div class="grid succession successor">
-    <div class="photo"><span style="background-image:url('${o.data.CpPhoto}')" /></div>
-    <div class="label">${o.data.Cand1stLabel}</div>
-    <div class="content">${o.data.Cand1st1}</div>
-    <div class="spacer" style="line-height:3px"></div>
-    <div class="content" style="text-align:right">${o.data.Cand1st2}</div>
-    <div class="content">${o.data.Cand1st3}</div>
-    <div class="spacer"></div>
-    <div class="label">${o.data.CandpntLabel}</div>
-    <div class="content">${o.data.Candpnt}</div>
+  <div class="succession-information${sSuccessionDisplay}">
+    <div class="succession-plan flex${bSuccessionPlanOnly}">
+      <span class="spacer"></span>
+      <span class="label">${o.data.ScsplnLabel}</span>
+      <span class="content">${o.data.Scspln}</span>
+      <span class="spacer"></span>
+      <span class="label">${o.data.ScspntLabel}</span>
+      <span class="content">${o.data.Scspnt}</span>
+      <span class="spacer"></span>
+    </div>
+    <div class="successor flex">
+      <span class="photo" style="background-image:url('${o.data.CpPhoto}')"></span>
+      <div class="grid">
+        <span class="label">${o.data.Cand1stLabel}</span>
+        <span class="content">${o.data.Cand1st1}</span>
+        <span class="label">${o.data.Cand1st2}</span>
+        <span class="content">${o.data.Cand1st3}</span>
+        <span class="label">${o.data.CandpntLabel}</span>
+        <span class="content">${o.data.Candpnt}</span>
+      </div>
+    </div>
   </div>
 </div>`;
           })
-          .onNodeClick(function (event, sNodeId) {
+          .onNodeClick(function (oEvent, sNodeId) {
             const oDesktop = sap.ui.getCore().byId('container-ehr---m_organization--ChartHolder');
             const oMobile = sap.ui.getCore().byId('container-ehr---mobile_m_organization--ChartHolder');
             const oViewModel = oDesktop ? oDesktop.getModel() : oMobile.getModel();
             const sPernr = _.find(this.data, { nodeId: sNodeId }).Pernr;
             const aRoutePath = oDesktop ? ['employee', 'employee'] : ['mobile/m/employee-detail', 'mobile/m/employee-org'];
-            const $element = $(event.srcElement);
+            const $element = $(oEvent.srcElement);
             const bTitle = $element.hasClass('title');
             const oRouter = AppUtils.getAppComponent().getRouter();
 
@@ -141,11 +144,11 @@ sap.ui.define(
 
             if (!sPernr) {
               if (bTitle) {
-                oRouter.navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                oRouter.navTo(aRoutePath[1], { pernr: 'NA', orgeh: sNodeId, orgtx: _.replace(oEvent.srcElement.textContent, /\//g, '--') });
               }
             } else {
               if (bTitle) {
-                oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(event.srcElement.textContent, /\//g, '--') });
+                oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(oEvent.srcElement.textContent, /\//g, '--') });
               } else {
                 let vPernr;
                 if ($element.hasClass('succession') || $element.parents('.succession').length) {

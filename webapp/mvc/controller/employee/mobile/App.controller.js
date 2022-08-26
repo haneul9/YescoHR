@@ -306,7 +306,7 @@ sap.ui.define(
                   const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
                   const mHeaderData = this.getViewModel().getProperty('/header');
 
-                  this.oMobileTalentDevPopoverHandler.openDialog(mHeaderData, mRowData);
+                  this.oMobileTalentDevPopoverHandler.openPopover(mHeaderData, mRowData);
                 });
 
                 this.oMobileTalentDevPopoverHandler = new MobileTalentDevPopoverHandler(this);

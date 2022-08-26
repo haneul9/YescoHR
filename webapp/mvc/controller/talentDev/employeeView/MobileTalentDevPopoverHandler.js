@@ -36,7 +36,7 @@ sap.ui.define(
         };
       },
 
-      async openDialog(mHeaderData, { Pernr, Gjahr, Mdate, Zseqnr }) {
+      async openPopover(mHeaderData, { Pernr, Gjahr, Mdate, Zseqnr }) {
         const oView = this.oController.getView();
 
         this.setBusy();
@@ -91,14 +91,12 @@ sap.ui.define(
         }
       },
 
-      onPressDialogClose() {
+      onPressPopoverClose() {
         this.oPopover.close();
       },
 
       setBusy(bBusy = true) {
-        setTimeout(() => {
-          this.oPopoverModel.setProperty('/busy', bBusy);
-        });
+        setTimeout(() => this.oPopoverModel.setProperty('/busy', bBusy));
         return this;
       },
     });

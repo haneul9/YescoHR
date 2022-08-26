@@ -7,6 +7,7 @@ sap.ui.define(
     'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/odata/Client',
+    'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
   ],
@@ -18,6 +19,7 @@ sap.ui.define(
     Debuggable,
     UI5Error,
     Client,
+    ServiceManager,
     ServiceNames,
     MessageBox
   ) => {
@@ -36,6 +38,17 @@ sap.ui.define(
           busy: true,
           Detail: {},
           ZstatEntry: [],
+        };
+      },
+
+      getFileConfig() {
+        const ServiceUrl = ServiceManager.getServiceUrl(ServiceNames.COMMON);
+        return {
+          ServiceUrl,
+          UploadUrl: `${ServiceUrl}/FileUploadSet`,
+          FileTypes: 'ppt,pptx,doc,docx,xls,xlsx,jpg,jpeg,bmp,gif,png,txt,pdf',
+          Zworktyp: 9050,
+          Zfileseq: 1,
         };
       },
 
@@ -88,7 +101,7 @@ sap.ui.define(
 
       async retrieveDetailData({ Pernr, Gjahr, Mdate, Zseqnr, FileupChk, AuthChange }) {
         try {
-          const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.oController.getFileConfig();
+          const { ServiceUrl, UploadUrl, FileTypes, Zworktyp, Zfileseq } = this.getFileConfig();
           const [mPopupData] = await Client.getEntitySet(this.oController.getModel(ServiceNames.TALENT), 'TalentDevDetail', { Pernr, Gjahr, Mdate, Zseqnr });
           const [
             bUploaded1, //
@@ -144,7 +157,7 @@ sap.ui.define(
           }
           this.oDialog.open();
         } catch (oError) {
-          AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > openDialog Error', oError);
+          this.debug('Controller > talentDev > TalentDevDialogHandler > openDialog Error', oError);
 
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;
@@ -322,7 +335,7 @@ sap.ui.define(
             },
           });
         } catch (oError) {
-          AppUtils.debug('Controller > talentDev > TalentDevDialogHandler > saveData Error', oError);
+          this.debug('Controller > talentDev > TalentDevDialogHandler > saveData Error', oError);
 
           if (oError instanceof UI5Error) {
             oError.code = oError.LEVEL.INFORMATION;

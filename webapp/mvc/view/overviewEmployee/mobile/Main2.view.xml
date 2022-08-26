@@ -75,7 +75,7 @@
           <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
         </VBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="sapUiNativeScrollbars px-12-px">
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="px-12-px">
         <VBox class="overviews row-310-px mb-11-px">
           <!-- 인원현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.mobile.A01" type="XML" />

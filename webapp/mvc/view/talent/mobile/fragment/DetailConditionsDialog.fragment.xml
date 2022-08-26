@@ -2,7 +2,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:core="sap.ui.core">
-  <Dialog title="{i18n>LABEL_35021}" contentHeight="60%" horizontalScrolling="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0">
+  <Dialog title="{i18n>LABEL_35021}" contentHeight="60%" horizontalScrolling="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" class="talent-detail-conditions-dialog">
     <buttons>
       <Button text="{i18n>LABEL_00115}" class="flex-grow1 cancel" press=".onPressDetailClose" />
       <Button type="Emphasized" text="{i18n>LABEL_00101}" class="flex-grow2" press=".onPressDetailSearch" />
@@ -11,12 +11,12 @@
       <VBox class="section">
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_35006}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <Input maxLength="{/fieldLimit/Schtl}" value="{/saved/Schtl}" placeholder="{i18n>LABEL_00101}" />
             <Button text="{i18n>LABEL_35007}" class="sapUiTinyMarginBegin" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_SearchSave.svg" iconDensityAware="false" press=".onPressSaveConditions" />
           </HBox>
           <Label text="{i18n>LABEL_00218}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Jobgr}" items="{ path: '/entry/A', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -25,7 +25,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00215}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Zzjikgb}" items="{ path: '/entry/B', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -34,7 +34,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00217}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Zzjikch}" items="{ path: '/entry/C', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -43,7 +43,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35008}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox selectedKey="{/search/EeageFr}" items="{ path: '/entry/D', templateShareable: false }" selectionChange=".onPairValue">
               <custom:customData>
                 <core:CustomData key="target" value="EeageTo" />
@@ -56,7 +56,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00288}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Schcd}" items="{ path: '/entry/E', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -65,7 +65,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00289}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Major}" items="{ path: '/entry/F', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -74,7 +74,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35016}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Slabs}" items="{ path: '/entry/G', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -83,7 +83,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00318}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <MultiComboBox width="100%" selectedKeys="{/search/Cttyp}" items="{ path: '/entry/H', templateShareable: false }">
               <layoutData>
                 <FlexItemData growFactor="1" />
@@ -92,7 +92,7 @@
             </MultiComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}1" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Quali1}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <custom:layoutData>
                 <FlexItemData minWidth="50%" maxWidth="50%" />
@@ -107,7 +107,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}2" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Quali2}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <custom:layoutData>
                 <FlexItemData minWidth="50%" maxWidth="50%" />
@@ -122,7 +122,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_35009}3" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Quali3}" items="{ path: '/entry/I', templateShareable: false }" selectionChange=".onChangeQuali">
               <custom:layoutData>
                 <FlexItemData minWidth="50%" maxWidth="50%" />
@@ -137,7 +137,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00331}" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Gesch}" items="{ path: '/entry/K', templateShareable: false }">
               <custom:layoutData>
                 <FlexItemData growFactor="1" />
@@ -146,7 +146,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}1" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Stell1}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <custom:layoutData>
                 <FlexItemData growFactor="1" />
@@ -158,7 +158,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}1" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox id="SyearFr1" selectedKey="{/search/SyearFr1}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell1} }" selectionChange=".onPairValue">
               <custom:customData>
                 <core:CustomData key="target" value="SyearTo1" />
@@ -171,7 +171,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}2" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Stell2}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <custom:layoutData>
                 <FlexItemData growFactor="2" />
@@ -183,7 +183,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}2" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox id="SyearFr2" selectedKey="{/search/SyearFr2}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell2} }" selectionChange=".onPairValue">
               <custom:customData>
                 <core:CustomData key="target" value="SyearTo2" />
@@ -196,7 +196,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}3" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Stell3}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <custom:layoutData>
                 <FlexItemData growFactor="1" />
@@ -208,7 +208,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}3" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox id="SyearFr3" selectedKey="{/search/SyearFr3}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell3} }" selectionChange=".onPairValue">
               <custom:customData>
                 <core:CustomData key="target" value="SyearTo3" />
@@ -221,7 +221,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00222}4" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox width="100%" selectedKey="{/search/Stell4}" items="{ path: '/entry/L', templateShareable: false }" selectionChange=".onChangeStell">
               <custom:layoutData>
                 <FlexItemData growFactor="1" />
@@ -233,7 +233,7 @@
             </custom:SingleComboBox>
           </HBox>
           <Label text="{i18n>LABEL_00150}4" />
-          <HBox class="sapUiTinyMarginBottom" alignItems="Center">
+          <HBox alignItems="Center">
             <custom:SingleComboBox id="SyearFr4" selectedKey="{/search/SyearFr4}" items="{ path: '/entry/M', templateShareable: false }" enabled="{= !!${/search/Stell4} }" selectionChange=".onPairValue">
               <custom:customData>
                 <core:CustomData key="target" value="SyearTo4" />

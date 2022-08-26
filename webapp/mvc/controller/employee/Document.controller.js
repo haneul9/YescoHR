@@ -10,7 +10,7 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
-    'sap/ui/yesco/mvc/controller/talentDev/TalentDevDialogHandler',
+    'sap/ui/yesco/mvc/controller/talentDev/employeeView/TalentDevDialogHandler',
   ],
   (
     // prettier 방지용 주석

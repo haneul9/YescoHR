@@ -2,40 +2,32 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:f="sap.f"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mvc="sap.ui.core.mvc">
-  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack">
-    <VBox class="contents mobile-mss-candidate-list">
-      <VBox class="search-area" binding="{/searchBar}">
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{ path: '/entries/Werks', templateShareable: true }">
-            <custom:layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </custom:layoutData>
+  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" busy="{/busy}" busyIndicatorDelay="0">
+    <VBox class="contents">
+      <HBox class="search-area row-2" binding="{/searchBar}">
+        <VBox width="67%" height="100%">
+          <layoutData>
+            <FlexItemData maxWidth="67%" />
+          </layoutData>
+          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{ path: '/entries/Werks', templateShareable: false }" selectionFinish=".onChangeWerks">
             <core:Item key="{Werks}" text="{Pbtxt}" />
           </custom:SingleComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
-            <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
-            </layoutData>
-          </Button>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center">
-          <custom:SingleComboBox width="100%" selectedKey="{Plans}" items="{/entries/Plans}" selectionChange=".onChangePlans">
-            <custom:layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </custom:layoutData>
+          <custom:SingleComboBox width="100%" selectedKey="{Plans}" items="{/entries/Plans}" selectionFinish=".onChangePlans" class="sapUiTinyMarginTop">
             <core:Item key="{Plans}" text="{Planstx}" />
           </custom:SingleComboBox>
-          <!-- <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
-            <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
-            </layoutData>
-          </Button> -->
-        </HBox>
-      </VBox>
-      <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
+        </VBox>
+        <VBox width="33%" height="100%" class="pl-8-px">
+          <layoutData>
+            <FlexItemData growFactor="1" maxWidth="33%" />
+          </layoutData>
+          <Button press=".onPressDetailConditionsDialog" text="{i18n>LABEL_00203}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" />
+          <!-- <Button press=".onPressConditionReset" text="{i18n>LABEL_35005}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" class="sapUiTinyMarginTop" /> -->
+          <!-- <Button press=".onPressSearch" text="{i18n>LABEL_00101}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" class="sapUiTinyMarginTop" /> -->
+        </VBox>
+      </HBox>
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="px-12-px">
         <HBox justifyContent="SpaceBetween" class="header-wrap" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
           <VBox>
             <HBox class="header">
@@ -43,31 +35,58 @@
             </HBox>
             <Text text="{i18n>MSG_45013}" class="desc-txt start" />
           </VBox>
-          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+          <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
             <layoutData>
-              <FlexItemData alignSelf="Start" />
+              <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
             </layoutData>
           </Image>
         </HBox>
-        <f:GridList id="candidateList" mode="MultiSelect" items="{/candidate/listInfo/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
-          <f:customLayout>
-            <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
-          </f:customLayout>
-          <f:GridListItem highlight="{ColtyState}">
-            <VBox height="100%">
-              <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPhoto" />
+        <VBox id="candidateList" items="{/candidate/listInfo/list}" class="scsn-candidates" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
+          <f:Card>
+            <f:customData>
+              <core:CustomData key="selected-card" value="{Chckd}" writeToDom="true" />
+            </f:customData>
+            <f:content>
+              <HBox>
+                <customData>
+                  <core:CustomData key="color-type" value="{ColtyState}" writeToDom="true" />
+                </customData>
                 <VBox>
-                  <Title text="{Linetx1}" wrapping="true"/>
+                  <Image src="{PicUrl}" press=".onPressPhoto">
+                    <layoutData>
+                      <FlexItemData styleClass="photo" />
+                    </layoutData>
+                  </Image>
+                  <Text text="{Linetx1}" textAlign="Center" width="100%" class="name" />
+                </VBox>
+                <VBox>
+                  <Image src="{Icon}">
+                    <layoutData>
+                      <FlexItemData styleClass="company-icon" />
+                    </layoutData>
+                  </Image>
+                  <CheckBox selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
+                    <layoutData>
+                      <FlexItemData styleClass="compare-target-checkbox" />
+                    </layoutData>
+                  </CheckBox>
                   <Text text="{Linetx2}" />
                   <Text text="{Linetx3}" />
                   <Text text="{Linetx4}" />
-                  <Text text="{Linetx5}" />
+                  <Text text="">
+                    <layoutData>
+                      <FlexItemData styleClass="h-10-px" />
+                    </layoutData>
+                  </Text>
+                  <Text text="{i18n>LABEL_45501}" />
+                  <Text text="{Linetx6}" class="ml-13-px" />
+                  <Text text="{Linetx7}" class="ml-13-px" />
+                  <Text text="{Linetx8}" class="ml-13-px" />
                 </VBox>
               </HBox>
-            </VBox>
-          </f:GridListItem>
-        </f:GridList>
+            </f:content>
+          </f:Card>
+        </VBox>
         <HBox justifyContent="SpaceBetween" class="header-wrap">
           <VBox>
             <HBox class="header">
@@ -76,31 +95,58 @@
             </HBox>
             <Text text="{i18n>MSG_45014}" class="desc-txt start" />
           </VBox>
-          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+          <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
             <layoutData>
-              <FlexItemData alignSelf="Start" />
+              <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
             </layoutData>
           </Image>
         </HBox>
-        <f:GridList id="searchResultList" mode="MultiSelect" items="{/searchResult/listInfo/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/searchResult/listInfo/totalCount} > 0 }">
-          <f:customLayout>
-            <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
-          </f:customLayout>
-          <f:GridListItem highlight="{ColtyState}">
-            <VBox height="100%">
-              <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd" press=".onPressPhoto" />
+        <VBox id="searchResultList" items="{/searchResult/listInfo/list}" class="scsn-candidates" visible="{= ${/searchResult/listInfo/totalCount} > 0 }">
+          <f:Card>
+            <f:customData>
+              <core:CustomData key="selected-card" value="{Chckd}" writeToDom="true" />
+            </f:customData>
+            <f:content>
+              <HBox>
+                <customData>
+                  <core:CustomData key="color-type" value="{ColtyState}" writeToDom="true" />
+                </customData>
                 <VBox>
-                  <Title text="{Linetx1}" wrapping="true"/>
+                  <Image src="{PicUrl}" press=".onPressPhoto">
+                    <layoutData>
+                      <FlexItemData styleClass="photo" />
+                    </layoutData>
+                  </Image>
+                  <Text text="{Linetx1}" textAlign="Center" width="100%" class="name" />
+                </VBox>
+                <VBox>
+                  <Image src="{Icon}">
+                    <layoutData>
+                      <FlexItemData styleClass="company-icon" />
+                    </layoutData>
+                  </Image>
+                  <CheckBox selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
+                    <layoutData>
+                      <FlexItemData styleClass="compare-target-checkbox" />
+                    </layoutData>
+                  </CheckBox>
                   <Text text="{Linetx2}" />
                   <Text text="{Linetx3}" />
                   <Text text="{Linetx4}" />
-                  <Text text="{Linetx5}" />
+                  <Text text="">
+                    <layoutData>
+                      <FlexItemData styleClass="h-10-px" />
+                    </layoutData>
+                  </Text>
+                  <Text text="{i18n>LABEL_45501}" />
+                  <Text text="{Linetx6}" class="ml-13-px" />
+                  <Text text="{Linetx7}" class="ml-13-px" />
+                  <Text text="{Linetx8}" class="ml-13-px" />
                 </VBox>
               </HBox>
-            </VBox>
-          </f:GridListItem>
-        </f:GridList>
+            </f:content>
+          </f:Card>
+        </VBox>
       </custom:MobileScrollContainer>
     </VBox>
     <footer class="wrap">

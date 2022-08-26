@@ -199,14 +199,14 @@ sap.ui.define(
           this.setTableCellStyle(oCandidateTable);
           this.setTableCellStyle(oSearchResultTable);
 
-          const Werks = this.getAppointeeProperty('Werks');
+          const sSessionWerks = this.getAppointeeProperty('Werks');
           const oCommonModel = this.getModel(ServiceNames.COMMON);
           const oTalentModel = this.getModel(ServiceNames.TALENT);
           const aEntries = await Promise.all([
             Client.getEntitySet(oCommonModel, 'PersAreaList'),
-            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks }), //
+            Client.getEntitySet(oTalentModel, 'SuccessionPlansList', { Werks: sSessionWerks }), //
             ..._.map(this.CODE_KEYS1, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Mode })),
-            ..._.map(this.CODE_KEYS2, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks, Mode })),
+            ..._.map(this.CODE_KEYS2, (Mode) => Client.getEntitySet(oTalentModel, 'SuccessionCodeList', { Werks: sSessionWerks, Mode })),
           ]);
 
           const aNoValueEntries = ['F', 'G', 'N', 'O'];
@@ -214,12 +214,13 @@ sap.ui.define(
           const sYear = this.getBundleText('LABEL_00252'); // 년
           const aYears = _.concat(
             [{ Zcode: '', Ztext: '' }],
-            _.times(25, (i) => ({ Zcode: i + 1, Ztext: `${i + 1}${sYear}` }))
+            _.times(26, (i) => ({ Zcode: i, Ztext: `${i}${sYear}` }))
           );
           const aWerks = _.map(aEntries.shift(), (m) => _.omit(m, '__metadata'));
+          const sWerks = _.filter(aWerks, (m) => m.Werks === sSessionWerks).length > 0 ? sSessionWerks : (aWerks[0] || {}).Werks;
           const aPlans = this.convertSearchConditionEntry({ aEntries: aEntries.shift() });
 
-          oViewModel.setProperty('/searchBar/Werks', Werks);
+          oViewModel.setProperty('/searchBar/Werks', sWerks);
           oViewModel.setProperty('/entries/Werks', aWerks);
           oViewModel.setProperty('/entries/Plans', aPlans);
           oViewModel.setProperty('/entries/P', aYears);

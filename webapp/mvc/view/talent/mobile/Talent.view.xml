@@ -61,18 +61,17 @@
       <custom:MobileScrollContainer excludeBottomSelector=".sapMPageFooter" horizontal="false" vertical="true">
         <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
           <f:customLayout>
-            <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="20px" />
+            <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="10px" />
           </f:customLayout>
           <f:GridListItem highlight="{ColtyState}">
             <VBox height="100%">
               <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
                 <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" />
-                <VBox width="calc(100% - 100px)">
-                  <!-- <Title text="{Linetx1}" wrapping="true"/> -->
-                  <FlexBox alignContent="SpaceBetween" justifyContent="SpaceBetween" class="pt-4-px" width="100%">
+                <VBox width="100%">
+                  <FlexBox width="calc(100% - 27px)" alignContent="SpaceBetween" justifyContent="SpaceBetween" class="talent-list-emp-name">
                     <items>
-                        <Title text="{Linetx1}" wrapping="true"/>
-                        <Image src="{Icon}" height="15px" class="pr-10-px" />
+                      <Title text="{Linetx1}" wrapping="true"/>
+                      <Image src="{Icon}" height="15px" class="pr-10-px" />
                     </items>
                   </FlexBox>
                   <Text text="{= ${Linetx2} === '' ? '\n' : ${Linetx2}}" />

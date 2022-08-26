@@ -1,22 +1,28 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid">
-  <!-- PC MSS 인재육성위원회 메뉴 - 대상자 목록 - 상세 popup -->
   <Dialog title="{i18n>LABEL_42001} ({/Detail/Gjahr}{i18n>LABEL_42002} {/Detail/Zseqnrtx}{i18n>LABEL_42003})" contentWidth="800px" contentHeight="780px" draggable="true" horizontalScrolling="false" verticalScrolling="false" busy="{busy}" busyIndicatorDelay="0" class="emp-profile-talent-dev">
     <content>
       <HBox class="vCardBox head-box">
         <Image src="{/Detail/Photo}" mode="Background" press=".onPressPhoto" />
         <grid:CSSGrid gridTemplateRows="repeat(5, 36px)" gridTemplateColumns="repeat(4, 1fr)" gridGap="1px 0">
-          <Title level="H5" text="{/Detail/Target}">
+          <FlexBox>
             <layoutData>
               <grid:GridItemLayoutData gridColumn="span 4" />
             </layoutData>
-          </Title>
+            <Title level="H5" text="{/Detail/Target}" />
+          </FlexBox>
 
           <Label text="{i18n>LABEL_42006}" />
-          <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment2}" />
-          <Label text="{i18n>LABEL_42004}" visible="{= ${/Detail/File1Hide} !== 'X' }" />
-          <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment1}" />
+          <FlexBox>
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment2}" />
+          </FlexBox>
+          <FlexBox>
+            <Label text="{i18n>LABEL_42004}" visible="{= ${/Detail/File1Hide} !== 'X' }" />
+          </FlexBox>
+          <FlexBox>
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.SingleFileUploader" type="XML" binding="{/Detail/Attachment1}" />
+          </FlexBox>
 
           <Label text="{i18n>LABEL_42005}" />
           <FlexBox>
@@ -29,26 +35,31 @@
           </FlexBox>
 
           <Label text="{i18n>LABEL_42008}" />
-          <Text text="{ path: '/Detail/Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+          <FlexBox>
+            <Text text="{ path: '/Detail/Mdate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+          </FlexBox>
           <Label text="{i18n>LABEL_42007}" />
-          <Text text="{/Detail/Nottx}" />
+          <FlexBox>
+            <Text text="{/Detail/Nottx}" />
+          </FlexBox>
 
           <Label text="{i18n>LABEL_42009}" />
-          <Text text="{/Detail/Modtx}">
+          <FlexBox>
             <layoutData>
               <grid:GridItemLayoutData gridColumn="span 3" />
             </layoutData>
-          </Text>
+            <Text text="{/Detail/Modtx}" />
+          </FlexBox>
         </grid:CSSGrid>
       </HBox>
       <VBox class="vCardBox" height="calc(100% - 253px)">
         <ScrollContainer height="100%" horizontal="false" vertical="true">
           <content>
-            <Title level="H5" text="{/Detail/Title1}" />
+            <Title level="H5" text="{Title1}" />
             <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc1}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
-            <Title level="H5" text="{/Detail/Title2}" />
+            <Title level="H5" text="{Title2}" />
             <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc2}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
-            <Title level="H5" text="{/Detail/Title3}" />
+            <Title level="H5" text="{Title3}" />
             <TextArea rows="5" growing="true" maxLength="10000" value="{/Detail/Desc3}" width="100%" editable="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
           </content>
         </ScrollContainer>
