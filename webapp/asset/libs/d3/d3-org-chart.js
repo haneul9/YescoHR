@@ -625,6 +625,7 @@
           });
     }
     onButtonClick(t, e) {
+      t.stopPropagation();
       this.getChartState().setActiveNodeCentered && ((e.data._centered = !0), (e.data._centeredWithDescendants = !0)), e.children ? ((e._children = e.children), (e.children = null), this.setExpansionFlagToChildren(e, !1)) : ((e.children = e._children), (e._children = null), e.children && e.children.forEach(({ data: t }) => (t._expanded = !0))), this.update(e);
     }
     setExpansionFlagToChildren({ data: t, children: e, _children: a }, n) {
