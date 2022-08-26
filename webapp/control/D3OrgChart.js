@@ -151,7 +151,7 @@ sap.ui.define(
                 oRouter.navTo(aRoutePath[1], { pernr: sPernr, orgeh: sNodeId, orgtx: _.replace(oEvent.srcElement.textContent, /\//g, '--') });
               } else {
                 let vPernr;
-                if ($element.hasClass('succession') || $element.parents('.succession').length) {
+                if ($element.hasClass('succession-information') || $element.parents('.succession-information').length) {
                   vPernr = (_.find(this.data, { nodeId: sNodeId }).CpPernr || '').replace(/0+/, '');
                   if (!vPernr) {
                     return;

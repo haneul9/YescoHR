@@ -104,7 +104,7 @@ sap.ui.define(
             extendNode: sExtendNode,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 85 : 0,
+            extraHeight: bSuccessionOn ? 115 : 0,
             items: this.getChartItems(),
           });
 
@@ -191,7 +191,7 @@ sap.ui.define(
             extendNode: null,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 85 : 0,
+            extraHeight: bSuccessionOn ? 115 : 0,
             items: this.getChartItems(),
           });
 
