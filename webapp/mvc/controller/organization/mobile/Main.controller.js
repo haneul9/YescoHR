@@ -25,6 +25,10 @@ sap.ui.define(
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.organization.mobile.Main', {
       LAYOUT: { top: 'left', left: 'top' },
+      CARD_HEIGHT: {
+        BASE: 178,
+        EXTRA: 112,
+      },
 
       async onBeforeShow() {
         this.chartHolder = this.byId('ChartHolder');
@@ -104,7 +108,7 @@ sap.ui.define(
             extendNode: sExtendNode,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 85 : 0,
+            extraHeight: bSuccessionOn ? this.CARD_HEIGHT.EXTRA : 0,
             items: this.getChartItems(),
           });
 
@@ -160,7 +164,7 @@ sap.ui.define(
         const bSuccessionOn = !oViewModel.getProperty('/successionOn');
 
         oViewModel.setProperty('/successionOn', bSuccessionOn);
-        oChart.nodeHeight(() => (bSuccessionOn ? 290 : 178)).render();
+        oChart.nodeHeight(() => (bSuccessionOn ? this.CARD_HEIGHT.BASE + this.CARD_HEIGHT.EXTRA : this.CARD_HEIGHT.BASE)).render();
       },
 
       async onChangeWerks(oEvent) {
@@ -191,7 +195,7 @@ sap.ui.define(
             extendNode: null,
             layout: sLayout,
             compact: bCompact,
-            extraHeight: bSuccessionOn ? 85 : 0,
+            extraHeight: bSuccessionOn ? this.CARD_HEIGHT.EXTRA : 0,
             items: this.getChartItems(),
           });
 

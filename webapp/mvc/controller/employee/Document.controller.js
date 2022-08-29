@@ -354,10 +354,10 @@ sap.ui.define(
 
               if (sMenuKey === 'M020') {
                 // 인재육성위원회 tab
-                this.setTalentDevTabContents(oTable, aVisibleHeaders);
+                this.setTalentDevTabContents(sKey, oTable, aVisibleHeaders);
               } else if (sMenuKey === 'M030') {
                 // Succession tab
-                this.setSuccessionTabContents(oTable, aVisibleHeaders);
+                this.setSuccessionTabContents(sKey, oTable, aVisibleHeaders);
               } else {
                 aVisibleHeaders.forEach((head, index) => {
                   const oColumnTemplate = new sap.m.Text({
@@ -397,7 +397,7 @@ sap.ui.define(
         });
       },
 
-      setTalentDevTabContents(oTable, aVisibleHeaders) {
+      setTalentDevTabContents(sKey, oTable, aVisibleHeaders) {
         // 인재육성위원회 row click
         oTable //
           .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
@@ -443,7 +443,7 @@ sap.ui.define(
         });
       },
 
-      setSuccessionTabContents(oTable, aVisibleHeaders) {
+      setSuccessionTabContents(sKey, oTable, aVisibleHeaders) {
         oTable.addStyleClass('cell-bg');
 
         // Succession tab

@@ -651,6 +651,8 @@ sap.ui.define(
       },
 
       setSuccessionTabContentsNew(sKey, oTable, aVisibleHeaders) {
+        const oHBox = new sap.m.HBox();
+
         const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
         const sSuccessionTitle = aVisibleHeaders[1]; // 승계 대상
         const sSuccessorNominee = aSecondHeader[0]; // 승계 후보자
