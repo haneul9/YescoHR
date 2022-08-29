@@ -35,16 +35,16 @@
     </m:HBox>
     <Table id="candidateTable" rows="{/candidate/listInfo/list}" visibleRowCount="{/candidate/listInfo/rowCount}" visible="{/candidate/listInfo/expand}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="127" class="scsn-candidates">
       <columns>
-        <Column width="50px">
+        <Column width="50px" hAlign="Center">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45402}" />
             <m:Label text="{i18n>LABEL_45402}" />
           </multiLabels>
           <template>
-            <m:Text text="{Number}" width="100%" textAlign="Center" wrapping="false" />
+            <m:Text text="{Number}" wrapping="false" />
           </template>
         </Column>
-        <Column width="320px">
+        <Column width="340px">
           <multiLabels>
             <m:Label text="{i18n>LABEL_45403}" />
             <m:Label text="{i18n>LABEL_45403}" />
@@ -83,235 +83,175 @@
             </f:Card>
           </template>
         </Column>
-        <Column sortProperty="Alltot" filterProperty="Alltot">
+        <Column sortProperty="Alltot" filterProperty="Alltot" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45408}" class="header-total" />
-            <m:Label text="{i18n>LABEL_45408}" class="header-total" />
+            <m:Label text="{i18n>LABEL_45408}" />
+            <m:Label text="{i18n>LABEL_45408}" />
           </multiLabels>
           <template>
-            <m:Text text="{Alltot}" width="100%" textAlign="Center" wrapping="false" class="cell-total" />
+            <m:Text text="{Alltot}" wrapping="false" class="cell-total" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Ess1}" sortProperty="Ess1" filterProperty="Ess1">
+        <Column visible="{/visibleColumn/Ess1}" sortProperty="Ess1" filterProperty="Ess1" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_00222}" class="header-mandatory" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_00222}" />
           </multiLabels>
           <template>
-            <m:Text text="{Ess1}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Ess1}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Ess1} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Ess2}" sortProperty="Ess2" filterProperty="Ess2">
+        <Column visible="{/visibleColumn/Ess2}" sortProperty="Ess2" filterProperty="Ess2" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_00217}" class="header-mandatory" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_00217}" />
           </multiLabels>
           <template>
-            <m:Text text="{Ess2}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Ess2}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Ess2} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Ess3}" sortProperty="Ess3" filterProperty="Ess3">
+        <Column visible="{/visibleColumn/Ess3}" sortProperty="Ess3" filterProperty="Ess3" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_45404}" class="header-mandatory" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45404}" />
           </multiLabels>
           <template>
-            <m:Text text="{Ess3}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Ess3}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Ess3} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Ess4}" sortProperty="Ess4" filterProperty="Ess4">
+        <Column visible="{/visibleColumn/Ess4}" sortProperty="Ess4" filterProperty="Ess4" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_45405}" class="header-mandatory" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45405}" />
           </multiLabels>
           <template>
-            <m:Text text="{Ess4}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Ess4}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Ess4} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Ess5}" sortProperty="Ess5" filterProperty="Ess5">
+        <Column visible="{/visibleColumn/Ess5}" sortProperty="Ess5" filterProperty="Ess5" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_45406}" class="header-mandatory" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45406}" />
           </multiLabels>
           <template>
-            <m:Text text="{Ess5}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Ess5}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Ess5} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Esstot}" sortProperty="Esstot" filterProperty="Esstot">
+        <Column visible="{/visibleColumn/Esstot}" sortProperty="Esstot" filterProperty="Esstot" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45101}" class="header-mandatory" />
-            <m:Label text="{i18n>LABEL_45407}" class="header-subtotal" />
+            <m:Label text="{i18n>LABEL_45101}" />
+            <m:Label text="{i18n>LABEL_45407}" />
           </multiLabels>
           <template>
-            <m:Text text="{Esstot}" width="100%" textAlign="Center" wrapping="false" class="cell-subtotal" />
+            <m:Text text="{Esstot}" wrapping="false" class="cell-subtotal" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Pre1}" sortProperty="Pre1" filterProperty="Pre1">
+        <Column visible="{/visibleColumn/Pre1}" sortProperty="Pre1" filterProperty="Pre1" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45201}" class="header-preference" />
-            <m:Label text="{i18n>LABEL_45202}" class="header-preference" />
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_45202}" />
           </multiLabels>
           <template>
-            <m:Text text="{Pre1}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Pre1}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Pre1} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Pre2}" sortProperty="Pre2" filterProperty="Pre2">
+        <Column visible="{/visibleColumn/Pre2}" sortProperty="Pre2" filterProperty="Pre2" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45201}" class="header-preference" />
-            <m:Label text="{i18n>LABEL_00289}" class="header-preference" />
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_00289}" />
           </multiLabels>
           <template>
-            <m:Text text="{Pre2}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Pre2}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Pre2} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Pre3}" sortProperty="Pre3" filterProperty="Pre3">
+        <Column visible="{/visibleColumn/Pre3}" sortProperty="Pre3" filterProperty="Pre3" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45201}" class="header-preference" />
-            <m:Label text="{i18n>LABEL_00318}" class="header-preference" />
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_00318}" />
           </multiLabels>
           <template>
-            <m:Text text="{Pre3}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Pre3}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Pre3} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Pretot}" sortProperty="Pretot" filterProperty="Pretot">
+        <Column visible="{/visibleColumn/Pretot}" sortProperty="Pretot" filterProperty="Pretot" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45201}" class="header-preference" />
-            <m:Label text="{i18n>LABEL_45407}" class="header-subtotal" />
+            <m:Label text="{i18n>LABEL_45201}" />
+            <m:Label text="{i18n>LABEL_45407}" />
           </multiLabels>
           <template>
-            <m:Text text="{Pretot}" width="100%" textAlign="Center" wrapping="false" class="cell-subtotal" />
+            <m:Text text="{Pretot}" wrapping="false" class="cell-subtotal" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc1}" sortProperty="Etc1" filterProperty="Etc1">
+        <Column visible="{/visibleColumn/Etc1}" sortProperty="Etc1" filterProperty="Etc1" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_00218}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00218}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc1}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc1}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc1} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc2}" sortProperty="Etc2" filterProperty="Etc2">
+        <Column visible="{/visibleColumn/Etc2}" sortProperty="Etc2" filterProperty="Etc2" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_00215}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00215}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc2}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc2}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc2} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc3}" sortProperty="Etc3" filterProperty="Etc3">
+        <Column visible="{/visibleColumn/Etc3}" sortProperty="Etc3" filterProperty="Etc3" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_45302}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_45302}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc3}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc3}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc3} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc4}" sortProperty="Etc4" filterProperty="Etc4">
+        <Column visible="{/visibleColumn/Etc4}" sortProperty="Etc4" filterProperty="Etc4" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_00288}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00288}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc4}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc4}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc4} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc5}" sortProperty="Etc5" filterProperty="Etc5">
+        <Column visible="{/visibleColumn/Etc5}" sortProperty="Etc5" filterProperty="Etc5" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_45303}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_45303}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc5}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc5}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc5} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc6}" sortProperty="Etc6" filterProperty="Etc6">
+        <Column visible="{/visibleColumn/Etc6}" sortProperty="Etc6" filterProperty="Etc6" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_45304}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_45304}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc6}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc6}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc6} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etc7}" sortProperty="Etc7" filterProperty="Etc7">
+        <Column visible="{/visibleColumn/Etc7}" sortProperty="Etc7" filterProperty="Etc7" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_00331}" class="header-etc" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_00331}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etc7}" width="100%" textAlign="Center" wrapping="false">
-              <m:customData>
-                <core:CustomData key="cell-style" value="{Etc7}" writeToDom="true" />
-              </m:customData>
-            </m:Text>
+            <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_check_bold.svg" width="30px" visible="{= ${Etc7} === '○' }" />
           </template>
         </Column>
-        <Column visible="{/visibleColumn/Etctot}" sortProperty="Etctot" filterProperty="Etctot">
+        <Column visible="{/visibleColumn/Etctot}" sortProperty="Etctot" filterProperty="Etctot" hAlign="Center">
           <multiLabels>
-            <m:Label text="{i18n>LABEL_45301}" class="header-etc" />
-            <m:Label text="{i18n>LABEL_45407}" class="header-subtotal" />
+            <m:Label text="{i18n>LABEL_45301}" />
+            <m:Label text="{i18n>LABEL_45407}" />
           </multiLabels>
           <template>
-            <m:Text text="{Etctot}" width="100%" textAlign="Center" wrapping="false" class="cell-subtotal" />
+            <m:Text text="{Etctot}" wrapping="false" class="cell-subtotal" />
           </template>
         </Column>
       </columns>

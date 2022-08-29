@@ -306,8 +306,7 @@ sap.ui.define(
               .countBy()
               .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
               .value();
-            const { Ztitle, Gjahr, Zseqnrtx } = mPayload;
-            const sInfoMessage = sMode === '2' && Ztitle ? this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx) : this.getBundleText('MSG_43001'); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
+            const sInfoMessage = sMode === '2' && mPayload.Ztitle ? this.getBundleText('MSG_43002', mPayload.Ztitle) : this.getBundleText('MSG_43001'); // {0} 대상자 입니다. : 조회 조건에 따른 대상자입니다.
             oViewModel.setProperty('/employee/listInfo', {
               list: aEmployeeList,
               rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),
@@ -371,7 +370,7 @@ sap.ui.define(
 
         try {
           const oViewModel = this.getViewModel();
-          const { Werks, Gjahr } = oViewModel.getProperty('/searchConditions');
+          const { Werks, Gjahr } = this.getSearchConditions(oViewModel);
 
           const aZseqnrEntry = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'GetZseqnrList', { Werks, Gjahr });
 
@@ -404,7 +403,7 @@ sap.ui.define(
 
       getEmployeeSearchDialogCustomOptions() {
         const oViewModel = this.getViewModel();
-        const { Werks, Orgeh } = oViewModel.getProperty('/searchConditions');
+        const { Werks, Orgeh } = this.getSearchConditions(oViewModel);
         const aOrgehEntry = oViewModel.getProperty('/entry/Orgeh');
         return {
           searchConditions: {

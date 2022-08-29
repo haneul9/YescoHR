@@ -560,96 +560,11 @@ sap.ui.define(
               }).bindRows(`${sTableDataPath}/data`);
 
               if (sMenuKey === 'M020') {
-                // 인재육성위원회 row click
-                oTable //
-                  .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
-                  .attachCellClick((oEvent) => {
-                    const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
-                    this.openTalentDevDialog(mRowData);
-                  });
-
-                this.oTalentDevDialogHandler = new TalentDevDialogHandler(this);
-
                 // 인재육성위원회 tab
-                aVisibleHeaders.forEach((head, index) => {
-                  const sValueField = `{Value${_.padStart(index + 1, 2, 0)}}`;
-                  let oColumnTemplate;
-                  if (['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
-                    // icon column
-                    oColumnTemplate = new sap.ui.core.Icon({
-                      src: this.ICONS[head.Fieldname],
-                      visible: head.Fieldname === 'RESOL' ? `{= \$${sValueField} === "X" }` : `{= Number(\$${sValueField}) > 0 }`,
-                    });
-                    if (head.Fieldname !== 'RESOL') {
-                      oColumnTemplate
-                        .setHoverColor('#007bff')
-                        .addCustomData(new CustomData({ key: 'appno', value: `${sValueField}` })) //
-                        .attachPress(this.onPressTalentDevFileDownload.bind(this));
-                    }
-                  } else {
-                    // text column
-                    oColumnTemplate = new sap.m.Text({
-                      width: '100%', //
-                      textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
-                      text: sValueField,
-                    });
-                  }
-                  oTable.addColumn(
-                    new sap.ui.table.Column({
-                      width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
-                      label: new sap.m.Label({ text: head.Header }),
-                      hAlign: sap.ui.core.HorizontalAlign.Center,
-                      template: oColumnTemplate,
-                    })
-                  );
-                });
+                this.setTalentDevTabContents(sKey, oTable, aVisibleHeaders);
               } else if (sMenuKey === 'M030') {
-                oTable.addStyleClass('cell-bg');
-
                 // Succession tab
-                const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
-                const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
-                aVisibleHeaders.forEach((head, index) => {
-                  const oColumnTemplate = new sap.m.Text({
-                    width: '100%', //
-                    textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
-                    text: {
-                      path: `Value${_.padStart(index + 1, 2, 0)}`,
-                      formatter: function (sValue) {
-                        return (sValue || '').replace(/,/g, '\n');
-                      },
-                    },
-                  });
-                  if ((sKey === 'S031' && index > 4) || (sKey === 'S032' && index > 0 && index < 5)) {
-                    oColumnTemplate.addCustomData(new CustomData({ key: 'bg', value: '{= ${Value10} === "X" ? "O" : "X" }', writeToDom: true }));
-                  }
-                  const oColumn = new sap.ui.table.Column({
-                    width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
-                    multiLabels: [new sap.m.Label({ text: head.Header }), new sap.m.Label({ text: aSecondHeader[index].Header })],
-                    headerSpan: aHeaderSpan[index],
-                    template: oColumnTemplate,
-                  });
-                  oTable.addColumn(oColumn);
-                });
-
-                oTable.addEventDelegate(
-                  {
-                    onAfterRendering() {
-                      this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('succession-bg-color', true);
-                    },
-                  },
-                  oTable
-                );
-                this.TableUtils.adjustRowSpan({
-                  oTable,
-                  aColIndices: [0],
-                  sTheadOrTbody: 'thead',
-                });
-                this.TableUtils.adjustRowSpan({
-                  oTable,
-                  aColIndices: [0, 1, 2, 3, 4],
-                  sTheadOrTbody: 'tbody',
-                });
+                this.setSuccessionTabContents(sKey, oTable, aVisibleHeaders);
               } else {
                 aVisibleHeaders.forEach((head, index) => {
                   const oColumnTemplate = new sap.m.Text({
@@ -686,6 +601,132 @@ sap.ui.define(
           });
 
           oTabContainer.addContent(oWrapperVBox);
+        });
+      },
+
+      setTalentDevTabContents(sKey, oTable, aVisibleHeaders) {
+        // 인재육성위원회 row click
+        oTable //
+          .setLayoutData(new FlexItemData({ styleClass: 'emp-profile-talent-dev' }))
+          .attachCellClick((oEvent) => {
+            const mRowData = oEvent.getParameter('rowBindingContext').getProperty();
+            this.openTalentDevDialog(mRowData);
+          });
+
+        this.oTalentDevDialogHandler = new TalentDevDialogHandler(this);
+
+        // 인재육성위원회 tab
+        aVisibleHeaders.forEach((head, index) => {
+          const sValueField = `{Value${_.padStart(index + 1, 2, 0)}}`;
+          let oColumnTemplate;
+          if (['FILE1', 'FILE2', 'RESOL'].includes(head.Fieldname)) {
+            // icon column
+            oColumnTemplate = new sap.ui.core.Icon({
+              src: this.ICONS[head.Fieldname],
+              visible: head.Fieldname === 'RESOL' ? `{= \$${sValueField} === "X" }` : `{= Number(\$${sValueField}) > 0 }`,
+            });
+            if (head.Fieldname !== 'RESOL') {
+              oColumnTemplate
+                .setHoverColor('#007bff')
+                .addCustomData(new CustomData({ key: 'appno', value: `${sValueField}` })) //
+                .attachPress(this.onPressTalentDevFileDownload.bind(this));
+            }
+          } else {
+            // text column
+            oColumnTemplate = new sap.m.Text({
+              width: '100%', //
+              textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+              text: sValueField,
+            });
+          }
+          oTable.addColumn(
+            new sap.ui.table.Column({
+              width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+              label: new sap.m.Label({ text: head.Header }),
+              hAlign: sap.ui.core.HorizontalAlign.Center,
+              template: oColumnTemplate,
+            })
+          );
+        });
+      },
+
+      setSuccessionTabContentsNew(sKey, oTable, aVisibleHeaders) {
+        const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
+        const sSuccessionTitle = aVisibleHeaders[1]; // 승계 대상
+        const sSuccessorNominee = aSecondHeader[0]; // 승계 후보자
+
+        // Succession tab
+        const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
+        aVisibleHeaders.forEach((head, index) => {
+          const oColumnTemplate = new sap.m.Text({
+            width: '100%', //
+            textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+            text: {
+              path: `Value${_.padStart(index + 1, 2, 0)}`,
+              formatter: function (sValue) {
+                return (sValue || '').replace(/,/g, '\n');
+              },
+            },
+          });
+          if ((sKey === 'S031' && index > 4) || (sKey === 'S032' && index > 0 && index < 5)) {
+            oColumnTemplate.addCustomData(new CustomData({ key: 'bg', value: '{= ${Value10} === "X" ? "O" : "X" }', writeToDom: true }));
+          }
+          const oColumn = new sap.ui.table.Column({
+            width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+            multiLabels: [new sap.m.Label({ text: head.Header }), new sap.m.Label({ text: aSecondHeader[index].Header })],
+            headerSpan: aHeaderSpan[index],
+            template: oColumnTemplate,
+          });
+          oTable.addColumn(oColumn);
+        });
+      },
+
+      setSuccessionTabContents(sKey, oTable, aVisibleHeaders) {
+        oTable.addStyleClass('cell-bg');
+
+        // Succession tab
+        const aHeaderSpan = [1, 4, 1, 1, 1, 4, 1, 1, 1];
+        const aSecondHeader = aVisibleHeaders.splice(aVisibleHeaders.length / 2);
+        aVisibleHeaders.forEach((head, index) => {
+          const oColumnTemplate = new sap.m.Text({
+            width: '100%', //
+            textAlign: _.isEmpty(head.Align) ? 'Center' : head.Align,
+            text: {
+              path: `Value${_.padStart(index + 1, 2, 0)}`,
+              formatter: function (sValue) {
+                return (sValue || '').replace(/,/g, '\n');
+              },
+            },
+          });
+          if ((sKey === 'S031' && index > 4) || (sKey === 'S032' && index > 0 && index < 5)) {
+            oColumnTemplate.addCustomData(new CustomData({ key: 'bg', value: '{= ${Value10} === "X" ? "O" : "X" }', writeToDom: true }));
+          }
+          const oColumn = new sap.ui.table.Column({
+            width: _.isEqual(head.Width, '000') ? 'auto' : `${_.toNumber(head.Width)}%`,
+            multiLabels: [new sap.m.Label({ text: head.Header }), new sap.m.Label({ text: aSecondHeader[index].Header })],
+            headerSpan: aHeaderSpan[index],
+            template: oColumnTemplate,
+          });
+          oTable.addColumn(oColumn);
+        });
+
+        oTable.addEventDelegate(
+          {
+            onAfterRendering() {
+              this.$().find('[data-bg="O"]').parents('.sapUiTableCell').toggleClass('succession-bg-color', true);
+            },
+          },
+          oTable
+        );
+        this.TableUtils.adjustRowSpan({
+          oTable,
+          aColIndices: [0],
+          sTheadOrTbody: 'thead',
+        });
+        this.TableUtils.adjustRowSpan({
+          oTable,
+          aColIndices: [0, 1, 2, 3, 4],
+          sTheadOrTbody: 'tbody',
         });
       },
 

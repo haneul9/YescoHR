@@ -1776,16 +1776,11 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .scsn-search-filter-box .sapMTextMaxWidth {padding:0 4px}
 .scsn-search-filter-box .search-filter-language .sapMFlexItem {flex-grow:1; max-width:calc(50% - 4px)}
 
-.scsn-candidates .sapUiTableHeaderCell.header-mandatory {background-color:#fff3bf}
-.scsn-candidates .sapUiTableHeaderCell.header-preference {background-color:#e9fac8}
-.scsn-candidates .sapUiTableHeaderCell.header-etc {background-color:#fff}
-.scsn-candidates .sapUiTableHeaderCell.header-total {background-color:#ffe066}
-.scsn-candidates .sapUiTableHeaderCell.header-subtotal {background-color:#ffec99}
-.scsn-candidates .sapUiTableDataCell.cell-total {background-color:#ffec99}
-.scsn-candidates .sapUiTableDataCell.cell-subtotal {background-color:#fff3bf}
+.scsn-candidates .sapUiTableDataCell.cell-total,
+.scsn-candidates .sapUiTableDataCell.cell-subtotal {background-color:#fbfcfd}
+.scsn-candidates .sapUiTableDataCell.cell-total .sapMText {font-size:24px; font-weight:700; color:#007bff}
+.scsn-candidates .sapUiTableDataCell.cell-subtotal .sapMText {font-size:24px; font-weight:500; color:#007bff}
 .scsn-candidates .sapUiTableDataCell {position:relative}
-.scsn-candidates .sapUiTableDataCell .sapMText[data-cell-style="○"] {position:absolute; top:0; right:0; bottom:0; left:0; line-height:123px; background-color:#a5d8ff}
-.scsn-candidates .sapUiTableDataCell .sapMText[data-cell-style=""] {position:absolute; top:0; right:0; bottom:0; left:0; line-height:123px; background-color:#f7f7f7}
 .scsn-candidates .sapFCard {margin:2px 0 4px 0; border-radius:8px 0 0 8px; border:none; box-shadow:0 2px 4px rgb(0 0 0 / 16%)}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type] {align-items:center; height:100%; border-right:3px solid transparent; padding:10px}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="1"] {border-right-color:#27c840}

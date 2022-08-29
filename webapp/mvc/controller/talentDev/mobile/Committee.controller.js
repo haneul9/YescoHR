@@ -118,9 +118,9 @@ sap.ui.define(
           _.forEach(aZseqnrEntry, (m) => (m.Zseqnrtx = `${m.Zseqnrtx}${AppUtils.getBundleText('LABEL_42003')}`)); // 차
 
           const sChoiceText = AppUtils.getBundleText('LABEL_00268');
-          // aOrgehEntry.unshift({ Orgeh: '', Orgtx: sChoiceText });
-          aGjahrEntry.unshift({ Gjahr: '', Gjahrtx: sChoiceText });
-          aZseqnrEntry.unshift({ Zseqnr: '', Zseqnrtx: sChoiceText });
+          // aOrgehEntry.unshift({ Orgeh: 'ALL', Orgtx: sChoiceText });
+          aGjahrEntry.unshift({ Gjahr: 'ALL', Gjahrtx: sChoiceText });
+          aZseqnrEntry.unshift({ Zseqnr: 'ALL', Zseqnrtx: sChoiceText });
 
           this.setComboEntry(oViewModel, '/entry/Werks', aPersaEntry);
           // this.setComboEntry(oViewModel, '/entry/Orgeh', aOrgehEntry);
@@ -175,7 +175,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         try {
-          const mSearchConditions = oViewModel.getProperty('/searchConditions');
+          const mSearchConditions = this.getSearchConditions(oViewModel);
           const mPayload = { ...mSearchConditions, Mode: '1', TalentDevCommitteeSet: [] };
           const aData = await Client.deep(this.getModel(ServiceNames.TALENT), 'TalentDev', mPayload);
 
@@ -222,6 +222,15 @@ sap.ui.define(
         }
       },
 
+      getSearchConditions(oViewModel) {
+        return _.chain(oViewModel.getProperty('/searchConditions'))
+          .cloneDeep()
+          .update('Orgeh', (sOrgeh) => (sOrgeh === 'ALL' ? '' : sOrgeh))
+          .update('Gjahr', (sGjahr) => (sGjahr === 'ALL' ? '' : sGjahr))
+          .update('Zseqnr', (sZseqnr) => (sZseqnr === 'ALL' ? '' : sZseqnr))
+          .value();
+      },
+
       onChangeWerks() {
         this.setContentsBusy(true, ['Orgeh', 'Gjahr', 'Zseqnr', 'Button']);
 
@@ -229,6 +238,30 @@ sap.ui.define(
         const sWerks = oViewModel.getProperty('/searchConditions/Werks');
 
         this.initializeSearchConditions(sWerks);
+      },
+
+      async onChangeGjahr() {
+        this.setContentsBusy(true, ['Zseqnr', 'Button']);
+
+        try {
+          const oViewModel = this.getViewModel();
+          const { Werks, Gjahr } = this.getSearchConditions(oViewModel);
+
+          const aZseqnrEntry = await Client.getEntitySet(this.getModel(ServiceNames.TALENT), 'GetZseqnrList', { Werks, Gjahr });
+
+          oViewModel.setProperty('/searchConditions/Zseqnr', 'ALL');
+          aZseqnrEntry.unshift({ Zseqnr: 'ALL', Zseqnrtx: this.getBundleText('LABEL_00268') });
+          this.setComboEntry(oViewModel, '/entry/Zseqnr', aZseqnrEntry);
+        } catch (oError) {
+          this.debug('Controller > talentDev > onChangeGjahr Error', oError);
+
+          if (oError instanceof UI5Error) {
+            oError.code = oError.LEVEL.INFORMATION;
+          }
+          AppUtils.handleError(oError);
+        } finally {
+          this.setContentsBusy(false, ['Zseqnr', 'Button']);
+        }
       },
 
       onEmployeeSearchOpen() {
@@ -245,7 +278,7 @@ sap.ui.define(
 
       getEmployeeSearchDialogCustomOptions() {
         const oViewModel = this.getViewModel();
-        const { Werks, Orgeh } = oViewModel.getProperty('/searchConditions');
+        const { Werks, Orgeh } = this.getSearchConditions(oViewModel);
         const aOrgehEntry = oViewModel.getProperty('/entry/Orgeh');
         return {
           searchConditions: {

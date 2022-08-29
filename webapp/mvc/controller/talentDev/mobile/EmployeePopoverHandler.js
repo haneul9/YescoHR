@@ -164,8 +164,7 @@ sap.ui.define(
             .countBy()
             .defaults({ ['0']: 0, ['1']: 0, ['2']: 0 })
             .value();
-          const { Ztitle, Gjahr, Zseqnrtx } = mPayload;
-          const sInfoMessage = this.getBundleText('MSG_43002', Ztitle, Gjahr, Zseqnrtx); // {0} {1}년 {3}차 대상자 입니다. : 조회 조건에 따른 대상자입니다.
+          const sInfoMessage = this.getBundleText('MSG_43002', mPayload.Ztitle); // {0} 대상자 입니다. : 조회 조건에 따른 대상자입니다.
           this.oPopoverModel.setProperty('/employee/listInfo', {
             list: aEmployeeList,
             rowCount: Math.min(Math.max(aEmployeeList.length, 1), 10),

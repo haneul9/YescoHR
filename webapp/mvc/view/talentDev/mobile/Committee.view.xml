@@ -14,7 +14,7 @@
           <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{/entry/Werks}" selectionFinish=".onChangeWerks">
             <core:Item key="{Werks}" text="{Pbtxt}" />
           </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" selectedKey="{Gjahr}" items="{/entry/Gjahr}" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" selectedKey="{Gjahr}" items="{/entry/Gjahr}" class="sapUiTinyMarginTop" selectionFinish=".onChangeGjahr">
             <core:Item key="{Gjahr}" text="{Gjahrtx}" />
           </custom:SingleComboBox>
           <custom:SingleComboBox width="100%" selectedKey="{Zseqnr}" items="{/entry/Zseqnr}" class="sapUiTinyMarginTop">
