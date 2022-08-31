@@ -62,7 +62,7 @@
                     </m:layoutData>
                   </m:Image>
                   <m:VBox>
-                    <m:Title text="{Linetx1}" wrapping="true"/>
+                    <m:Title text="{Linetx1}" wrapping="true" />
                     <m:Image src="{Icon}">
                       <m:layoutData>
                         <m:FlexItemData styleClass="company-icon" />

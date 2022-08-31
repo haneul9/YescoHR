@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core">
+  <VBox width="100%" items="{ path: 'data', templateShareable: true }">
+    <HBox width="100%">
+      <f:Card class="succession-card">
+        <f:layoutData>
+          <FlexItemData styleClass="succession-position" />
+        </f:layoutData>
+        <f:content>
+          <HBox>
+            <Image src="{Photo01}" mode="Background">
+              <layoutData>
+                <FlexItemData styleClass="photo" />
+              </layoutData>
+            </Image>
+            <VBox>
+              <HBox justifyContent="SpaceBetween" alignItems="Center" class="name">
+                <Title text="{Value02}" />
+                <Image src="{Icon}" />
+              </HBox>
+              <Text text="{Value03}" />
+              <HBox>
+                <Text text="{Ntxpln}" />
+                <Text text="{Value04}" />
+              </HBox>
+              <HBox>
+                <Text text="{Tscspnt}" />
+                <Text text="{Value05}" />
+              </HBox>
+            </VBox>
+          </HBox>
+        </f:content>
+      </f:Card>
+      <VBox items="{ path: 'nominees', templateShareable: true }" class="succession-nominees">
+        <HBox alignItems="Center" class="succession-card">
+          <customData>
+            <core:CustomData key="bg" value="{Value10}" writeToDom="true" />
+          </customData>
+          <Text text="{Value06}" />
+          <Image src="{Photo02}" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="photo" />
+            </layoutData>
+          </Image>
+          <Text text="{Value07}" />
+          <Text text="{Value08}">
+            <layoutData>
+              <FlexItemData growFactor="1" />
+            </layoutData>
+          </Text>
+          <Text text="{Value09}" />
+        </HBox>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>
