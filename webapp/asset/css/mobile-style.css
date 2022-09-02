@@ -637,3 +637,33 @@ html.sap-ios.fusioncharts-3-18-0 .custom-chart .fusioncharts-container svg g[cla
 .talent-dev-employee .sapMTitle {line-height:20px; font-size:14px; font-weight:700}
 .talent-dev-employee .sapMText {line-height:20px}
 .talent-dev-employee .company-icon {margin-top:2px}
+
+/* 사원프로파일 Succession tab */
+.profile-detail .succession-tab-contents > .sapMFlexItem {padding-bottom:20px}
+.profile-detail .succession-tab-contents > .sapMFlexItem + .sapMFlexItem {border-top:1px solid #000; padding-top:20px}
+.profile-detail .succession-position + .succession-nominees {margin-top:20px}
+.profile-detail .succession-position > .sapMTitle, .profile-detail .succession-nominees > .sapMTitle {margin-bottom:4px; font-size:16px; font-weight:700}
+.profile-detail .succession-card {border-radius:8px; border:1px solid #dbdbdb; background-color:#fff; box-shadow:1px 1px 3px rgb(0 0 0 / 0%)}
+.profile-detail .succession-card.no-data {border:0; padding:8px}
+.profile-detail .succession-card.no-data .sapMFlexItem {width:100%; text-align:center}
+.profile-detail .succession-card.no-data .sapMTitle {font-size:14px; font-weight:700}
+.profile-detail .succession-card[data-bg="X"] {background-color:#f8f8f8}
+.profile-detail .succession-card .photo .sapMImg {display:inline-block; background-size:cover; background-position:center top; background-repeat:no-repeat}
+.profile-detail .succession-position .succession-card {padding:14px}
+.profile-detail .succession-nominees .succession-card {padding:10px}
+.profile-detail .succession-position .succession-card.sapFCard {height:106px}
+.profile-detail .succession-position .succession-card .photo .sapMImg {width:60px; height:74.53px}
+.profile-detail .succession-nominees .succession-card .photo .sapMImg {width:30px; height:30px; border-radius:50%}
+.profile-detail .succession-position .succession-card .photo + .sapMVBox {width:calc(100% - 60px); padding-left:20px}
+.profile-detail .succession-position .succession-card .name ~ .sapMFlexItem {box-sizing:border-box; margin-top:2px; height:16px; line-height:16px}
+.profile-detail .succession-position .succession-card .with-label .sapMFlexItem:nth-child(1) .sapMText {width:100px; font-weight:700}
+.profile-detail .succession-position .succession-card .with-label .sapMFlexItem:nth-child(2) .sapMText {font-weight:500}
+.profile-detail .succession-position .succession-card .sapMTitle {font-size:16px; font-weight:700}
+.profile-detail .succession-position .succession-card .sapMText {line-height:16px; font-size:14px}
+.profile-detail .succession-nominees .succession-card + .succession-card {margin-top:10px}
+.profile-detail .succession-nominees .succession-card .sapMFlexItem .sapMText {font-size:14px; font-weight:700}
+.profile-detail .succession-nominees .succession-card > .sapMFlexItem:nth-child(1) {width:20px; text-align:center}
+.profile-detail .succession-nominees .succession-card > .sapMFlexItem:nth-child(2) {width:50px; text-align:center}
+.profile-detail .succession-nominees .succession-card > .sapMFlexItem:nth-child(3) {width:100px}
+.profile-detail .succession-nominees .succession-card > .sapMFlexItem:nth-child(4) {line-height:23px; font-weight:700}
+.profile-detail .succession-nominees .succession-card > .sapMFlexItem > .sapMText {line-height:30px; font-weight:700}

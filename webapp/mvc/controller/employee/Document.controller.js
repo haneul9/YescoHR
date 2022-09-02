@@ -289,17 +289,14 @@ sap.ui.define(
           (await aHeaderReturnData).forEach((headers, index) => {
             const sTabCode = aTabMenus[index].Menuc1;
             if (sTabCode === 'M030') {
-              const [mHeader1, mHeader2, mHeader3, mHeader4] = [
-                _.find(headers, { Fieldname: 'HEADER1_1' }),
-                _.find(headers, { Fieldname: 'HEADER2_1' }),
-                _.find(headers, { Fieldname: 'NTXPLN' }),
-                _.find(headers, { Fieldname: 'TSCSPNT' }),
-              ];
               _.chain(oViewModelData)
-                .set(['employee', 'sub', sTabCode, 'contents', mHeader1.Menuc, 'Header1_1'], mHeader1.Header) // 승계 대상
-                .set(['employee', 'sub', sTabCode, 'contents', mHeader2.Menuc, 'Header2_1'], mHeader2.Header) // 승계 후보자
-                .set(['employee', 'sub', sTabCode, 'contents', mHeader3.Menuc, 'Ntxpln'], mHeader3.Header) // 차년도 계획
-                .set(['employee', 'sub', sTabCode, 'contents', mHeader4.Menuc, 'Tscspnt'], mHeader4.Header) // 승계예정시점
+                .get(['employee', 'sub', sTabCode, 'contents'])
+                .defaultsDeep(
+                  _.chain(headers) //
+                    .filter((mHeader) => _.includes(['HEADER1_1', 'HEADER2_1', 'NTXPLN', 'TSCSPNT'], mHeader.Fieldname))
+                    .reduce((acc, { Menuc, Fieldname, Header }) => _.defaultsDeep(acc, { [Menuc]: { label: { [Fieldname]: Header } } }), {})
+                    .value()
+                )
                 .value();
             } else {
               headers.forEach((o, i) => _.set(oViewModelData, ['employee', 'sub', sTabCode, 'contents', o.Menuc, 'header', i], o));
@@ -317,9 +314,9 @@ sap.ui.define(
                 _.times(mSubMenu.header.length, (i) => mSubMenu.data.push(o[`Value${_.padStart(i + 1, 2, '0')}`]));
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 if (sTabCode === 'M030') {
-                  const aPositionFields = 'Value01,Value02,Value03,Value04,Value05,Value11,Photo01'.split(/,/);
-                  const aNomineeFields = 'Value06,Value07,Value08,Value09,Value10,Value12,Photo02'.split(/,/);
-                  const mNomineeData = _.chain(o).pick(aNomineeFields).set('Icon', this.COMPANY_ICON[o.Value12]).value();
+                  const aPositionFields = 'Value01,Value02,Value03,Value04,Value05,Value10,Value11,Value13,Photo01'.split(/,/);
+                  const aNomineeFields = 'Value06,Value07,Value08,Value09,Value10,Value12,Value14,Photo02'.split(/,/);
+                  const mNomineeData = _.chain(o).pick(aNomineeFields).set('Icon2', this.COMPANY_ICON[o.Value12]).set('Box', o.Menuc).value();
                   const sPositionKey = [o.Value01, o.Value02].join();
                   const mPositionData = mSubMenu.map[sPositionKey];
                   if (mPositionData) {
@@ -327,9 +324,10 @@ sap.ui.define(
                   } else {
                     const mData = _.chain(o) //
                       .pick(aPositionFields)
-                      .set('Icon', this.COMPANY_ICON[o.Value11])
-                      .set('Ntxpln', mSubMenu.Ntxpln) // 차년도 계획
-                      .set('Tscspnt', mSubMenu.Tscspnt) // 승계예정시점
+                      .set('Icon1', this.COMPANY_ICON[o.Value11])
+                      .set('Box', o.Menuc) // S031 or S032
+                      .set('Ntxpln', mSubMenu.label.NTXPLN) // 차년도 계획
+                      .set('Tscspnt', mSubMenu.label.TSCSPNT) // 승계예정시점
                       .set('nominees', [mNomineeData])
                       .value();
                     mSubMenu.data.push(mData);
@@ -527,11 +525,11 @@ sap.ui.define(
             width: '100%',
             items: [
               new sap.m.Title({
-                text: '{Header1_1}',
+                text: '{label/HEADER1_1}',
                 layoutData: new FlexItemData({ styleClass: 'succession-position' }),
               }), // 승계 대상
               new sap.m.Title({
-                text: '{Header2_1}',
+                text: '{label/HEADER2_1}',
                 layoutData: new FlexItemData({ styleClass: 'succession-nominees' }),
               }), // 승계 후보자
             ],

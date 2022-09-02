@@ -8,8 +8,8 @@ sap.ui.define(
     'sap/m/Text',
     'sap/m/Title',
     'sap/m/VBox',
+    'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
-    'sap/ui/layout/cssgrid/GridItemLayoutData',
     'sap/ui/yesco/control/MobileScrollContainer',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
@@ -26,8 +26,8 @@ sap.ui.define(
     Text,
     Title,
     VBox,
+    Fragment,
     CSSGrid,
-    GridItemLayoutData,
     MobileScrollContainer,
     AppUtils,
     Client,
@@ -62,6 +62,13 @@ sap.ui.define(
         JOBL: '1fr 1fr', // 직무이력
         S031: '3fr 5fr', // 승계 후보자 선정 결과 (본인)
         S032: '3fr 5fr', // 승계 후보자 선정 결과 (후임자)
+      },
+      COMPANY_ICON: {
+        1000: AppUtils.getImageURL('icon_YH.svg'),
+        2000: AppUtils.getImageURL('icon_YS.svg'),
+        3000: AppUtils.getImageURL('icon_HS.svg'),
+        4000: AppUtils.getImageURL('icon_YI.svg'),
+        5000: AppUtils.getImageURL('icon_YH.svg'),
       },
 
       initializeModel() {
@@ -153,15 +160,27 @@ sap.ui.define(
           });
 
           _.forEach(aSubMenus, (data) => {
-            _.set(oViewModelData, ['sub', data.Menuc1, 'contents', data.Menuc2], {
-              type: data.Child,
-              title: data.Menu2,
-              code: data.Menuc2,
-              sort: data.Sorts,
-              gridTemplate: '2fr 3fr',
-              header: [],
-              data: [],
-            });
+            let mContentData;
+            if (data.Menuc1 === 'M030') {
+              mContentData = {
+                type: data.Child,
+                title: data.Menu2,
+                code: data.Menuc2,
+                data: [],
+                map: {},
+              };
+            } else {
+              mContentData = {
+                type: data.Child,
+                title: data.Menu2,
+                code: data.Menuc2,
+                sort: data.Sorts,
+                gridTemplate: '2fr 3fr',
+                header: [],
+                data: [],
+              };
+            }
+            _.set(oViewModelData, ['sub', data.Menuc1, 'contents', data.Menuc2], mContentData);
           });
           //End 탭 메뉴 Set
 
@@ -171,14 +190,28 @@ sap.ui.define(
 
           // Header 영역 Set
           aHeaderReturnData.forEach((headers, index) => {
-            headers.forEach((o, i) => _.set(oViewModelData, ['sub', aTabMenus[index].Menuc1, 'contents', o.Menuc, 'header', i], o));
+            const sTabCode = aTabMenus[index].Menuc1;
+            if (sTabCode === 'M030') {
+              _.chain(oViewModelData)
+                .get(['sub', sTabCode, 'contents'])
+                .defaultsDeep(
+                  _.chain(headers) //
+                    .filter((mHeader) => _.includes(['HEADER1_1', 'HEADER2_1', 'NTXPLN', 'TSCSPNT'], mHeader.Fieldname))
+                    .reduce((acc, { Menuc, Fieldname, Header }) => _.defaultsDeep(acc, { [Menuc]: { label: { [Fieldname]: Header } } }), {})
+                    .value()
+                )
+                .value();
+            } else {
+              headers.forEach((o, i) => _.set(oViewModelData, ['sub', sTabCode, 'contents', o.Menuc, 'header', i], o));
+            }
           });
           //End Header 영역 Set
 
           // Contents 영역 Set
           aContentReturnData.forEach((content, index) => {
+            const sTabCode = aTabMenus[index].Menuc1;
             content.forEach((o) => {
-              let mSubMenu = _.get(oViewModelData, ['sub', aTabMenus[index].Menuc1, 'contents', o.Menuc]);
+              let mSubMenu = _.get(oViewModelData, ['sub', sTabCode, 'contents', o.Menuc]);
 
               if (mSubMenu.type === this.SUB_TYPE.GRID) {
                 for (let i = 1; i <= mSubMenu.header.length; i++) {
@@ -188,35 +221,33 @@ sap.ui.define(
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 mSubMenu.gridTemplate = _.get(this.LIST_GRID_TEMPLATE, o.Menuc, mSubMenu.gridTemplate);
 
-                if (aTabMenus[index].Menuc1 === 'M020') {
+                if (sTabCode === 'M020') {
                   // 인재육성위원회
                   mSubMenu.data.push({
                     contents: [{ valueTxt: o.Value01 }, { valueTxt: o.Value02 }],
                     popoverParams: { Pernr: o.Pernr, Gjahr: o.Value01.replace(/\D/g, ''), Mdate: o.Value06, Zseqnr: o.Value07 },
                   });
-                } else if (aTabMenus[index].Menuc1 === 'M030') {
-                  // 승계 대상 포지션 정보 (Value01 ~ Value05), 승계 후보자 정보 (Value06 ~ Value09)
-                  const aSuccessionData = _.chain(o)
-                    .pickBy((v, p) => _.startsWith(p, 'Value') && _.toNumber(p.substring(5)) < 10)
-                    .map((v) => ({ valueTxt: v.replace(/,/g, '\n') }))
-                    .value();
-
-                  const contents = [
-                    { succession: aSuccessionData, gridRowEnd: 2, bg: o.Menuc === 'S032' && o.Value10 === 'X' },
-                    { succession: aSuccessionData.splice(5), gridRowEnd: 'auto', bg: o.Menuc === 'S031' && o.Value10 === 'X' },
-                  ]; // arrays in array
-                  const sSuccessionTarget = aSuccessionData.map(({ valueTxt }) => valueTxt).join();
-
-                  const iLength = mSubMenu.data.length;
-                  const mPrevContents = iLength > 0 ? mSubMenu.data[iLength - 1].contents : [{ succession: [] }]; // 승계 대상 포지션 정보가 이전 행과 동일한지 비교하기 위한 용도
-                  const sPrevSuccessionTarget = mPrevContents[0].succession.map(({ valueTxt }) => valueTxt).join();
-
-                  if (sSuccessionTarget !== sPrevSuccessionTarget) {
-                    // 신규 승계 대상 포지션 정보행 시작
-                    mSubMenu.data.push({ contents });
+                } else if (sTabCode === 'M030') {
+                  const aPositionFields = 'Value01,Value02,Value03,Value04,Value05,Value10,Value11,Value13,Photo01'.split(/,/);
+                  const aNomineeFields = 'Value06,Value07,Value08,Value09,Value10,Value12,Value14,Photo02'.split(/,/);
+                  const mNomineeData = _.chain(o).pick(aNomineeFields).set('Icon2', this.COMPANY_ICON[o.Value12]).set('Box', o.Menuc).value();
+                  const sPositionKey = [o.Value01, o.Value02].join();
+                  const mPositionData = mSubMenu.map[sPositionKey];
+                  if (mPositionData) {
+                    mPositionData.nominees.push(mNomineeData);
                   } else {
-                    mPrevContents[0].gridRowEnd++;
-                    mPrevContents.push(contents[1]);
+                    const mData = _.chain(o) //
+                      .pick(aPositionFields)
+                      .set('Icon1', this.COMPANY_ICON[o.Value11])
+                      .set('Box', o.Menuc) // S031 or S032
+                      .set('Header1_1', mSubMenu.label.HEADER1_1) //
+                      .set('Header2_1', mSubMenu.label.HEADER2_1) //
+                      .set('Ntxpln', mSubMenu.label.NTXPLN) // 차년도 계획
+                      .set('Tscspnt', mSubMenu.label.TSCSPNT) // 승계예정시점
+                      .set('nominees', [mNomineeData])
+                      .value();
+                    mSubMenu.data.push(mData);
+                    mSubMenu.map[sPositionKey] = mData;
                   }
                 } else {
                   mSubMenu.data.push({
@@ -279,42 +310,52 @@ sap.ui.define(
             // Content (Table|Grid)
             if (mMenu.type === this.SUB_TYPE.TABLE) {
               const sTableDataPath = `/sub/${sMenuKey}/contents/${sKey}`;
-              const oGridItemTemplate = sMenuKey !== 'M030' ? new Text({ text: '{valueTxt}' }) : this.getSuccessionTemplate();
-              const oListCSSGrid = new CSSGrid({
-                gridGap: sMenuKey !== 'M030' ? '1px 8px' : '1px',
-                gridTemplateColumns: { path: `${sTableDataPath}/gridTemplate` },
-                items: {
-                  path: 'contents',
-                  templateShareable: false,
-                  template: oGridItemTemplate,
-                },
-              });
-              const oList = new List({
-                noDataText: this.getBundleText('MSG_00001'),
-                items: {
-                  path: 'data',
-                  templateShareable: false,
-                  template: new CustomListItem({
-                    content: oListCSSGrid,
-                    type: sMenuKey === 'M020' ? 'Active' : 'Inactive',
-                  }),
-                },
-              }).bindElement(sTableDataPath);
+              if (sMenuKey === 'M030') {
+                // Succession tab
+                if (mMenu.data.length) {
+                  this.addSuccessionTabContents(oSubVBox, sTableDataPath);
+                } else {
+                  oSubVBox.addItem(
+                    new sap.m.HBox({
+                      width: '100%',
+                      items: new sap.m.Title({ text: '{i18n>MSG_00001}' }),
+                    }).addStyleClass('succession-card no-data')
+                  );
+                }
+              } else {
+                const oList = new List({
+                  noDataText: this.getBundleText('MSG_00001'),
+                  items: {
+                    path: 'data',
+                    templateShareable: false,
+                    template: new CustomListItem({
+                      content: new CSSGrid({
+                        gridGap: '1px 8px',
+                        gridTemplateColumns: `{${sTableDataPath}/gridTemplate}`,
+                        items: {
+                          path: 'contents',
+                          templateShareable: false,
+                          template: new Text({ text: '{valueTxt}' }),
+                        },
+                      }),
+                      type: sMenuKey === 'M020' ? 'Active' : 'Inactive',
+                    }),
+                  },
+                }).bindElement(sTableDataPath);
 
-              if (sMenuKey === 'M020') {
-                oList.attachItemPress((oEvent) => {
-                  const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
-                  const mHeaderData = this.getViewModel().getProperty('/header');
+                if (sMenuKey === 'M020') {
+                  oList.attachItemPress((oEvent) => {
+                    const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
+                    const mHeaderData = this.getViewModel().getProperty('/header');
 
-                  this.oMobileTalentDevPopoverHandler.openPopover(mHeaderData, mRowData);
-                });
+                    this.oMobileTalentDevPopoverHandler.openPopover(mHeaderData, mRowData);
+                  });
 
-                this.oMobileTalentDevPopoverHandler = new MobileTalentDevPopoverHandler(this);
-              } else if (sMenuKey === 'M030') {
-                oListCSSGrid.addStyleClass('succession-grid');
+                  this.oMobileTalentDevPopoverHandler = new MobileTalentDevPopoverHandler(this);
+                }
+
+                oSubVBox.addItem(oList);
               }
-
-              oSubVBox.addItem(oList);
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
               const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '1px 8px' });
 
@@ -334,30 +375,15 @@ sap.ui.define(
         });
       },
 
-      getSuccessionTemplate() {
-        const oVBox = new VBox({
-          items: {
-            path: 'succession',
-            templateShareable: false,
-            template: new Text({ text: '{valueTxt}' }),
-          },
+      async addSuccessionTabContents(oSubVBox, sDataPath) {
+        const oView = this.getView();
+        const oSuccessionFragment = await Fragment.load({
+          id: oView.getId(),
+          name: `sap.ui.yesco.mvc.view.employee.mobile.Succession`,
+          controller: this,
         });
-        oVBox.addEventDelegate(
-          {
-            onBeforeRendering() {
-              const mProperties = this.getBindingContext().getProperty();
-              if (mProperties.gridRowEnd !== 'auto') {
-                this.setLayoutData(new GridItemLayoutData({ gridRow: '1 / {gridRowEnd}' }));
-              }
-              this.addStyleClass('succession');
-              if (mProperties.bg) {
-                this.addStyleClass('succession-bg-color');
-              }
-            },
-          },
-          oVBox
-        );
-        return oVBox;
+
+        oSubVBox.addItem(oSuccessionFragment.bindElement(sDataPath));
       },
     });
   }

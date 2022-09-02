@@ -1591,12 +1591,13 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .main-profile .sapMITBContent .customBox.sapUiMediumMarginBottom:last-child {margin-bottom:0 !important}
 
 /* 사원프로파일 Succession tab */
+.main-profile .succession-tab-contents > .sapMFlexItem + .sapMFlexItem {margin-top:20px}
 .main-profile .succession-position, .main-profile .succession-nominees {width:50%}
 .main-profile .succession-position > .sapMTitle, .main-profile .succession-nominees > .sapMTitle {margin-bottom:4px; font-size:14px; font-weight:700}
 .main-profile .succession-card {border-radius:8px; border:1px solid #dbdbdb; background-color:#fff; box-shadow:1px 1px 3px rgb(0 0 0 / 0%)}
 .main-profile .succession-card.no-data {padding:14px}
 .main-profile .succession-card.no-data .sapMFlexItem {width:100%; text-align:center}
-.main-profile .succession-card.no-data .sapMTitle {font-size:14px; font-weight:700}
+.main-profile .succession-card.no-data .sapMTitle {font-size:16px; font-weight:700}
 .main-profile .succession-card[data-bg="X"] {background-color:#f8f8f8}
 .main-profile .succession-card .photo .sapMImg {display:inline-block; background-size:cover; background-position:center top; background-repeat:no-repeat}
 .main-profile .succession-position .succession-card {padding:14px}
@@ -1607,17 +1608,18 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .main-profile .succession-position .succession-card .photo + .sapMVBox {width:calc(100% - 60px); padding-left:20px}
 .main-profile .succession-position .succession-card .name {margin-bottom:6px}
 .main-profile .succession-position .succession-card .name ~ .sapMFlexItem {box-sizing:border-box; margin-top:1px; height:16px; line-height:16px}
-.main-profile .succession-position .succession-card .name ~ .sapMHBox .sapMFlexItem .sapMText {width:75px; font-weight:700}
-.main-profile .succession-position .succession-card .name ~ .sapMHBox .sapMFlexItem + .sapMFlexItem .sapMText {font-weight:500}
+.main-profile .succession-position .succession-card .with-label .sapMFlexItem:nth-child(1) .sapMText {width:75px; font-weight:700}
+.main-profile .succession-position .succession-card .with-label .sapMFlexItem:nth-child(2) .sapMText {font-weight:500}
 .main-profile .succession-position .succession-card .sapMTitle {font-size:14px; font-weight:700}
 .main-profile .succession-position .succession-card .sapMText {line-height:16px; font-size:12px}
 .main-profile .succession-nominees .succession-card + .succession-card {margin-top:10px}
-.main-profile .succession-nominees .succession-card .sapMFlexItem {height:30px}
-.main-profile .succession-nominees .succession-card .sapMFlexItem:nth-child(1) {width:30px; text-align:center}
-.main-profile .succession-nominees .succession-card .sapMFlexItem:nth-child(2) {width:50px; text-align:center}
-.main-profile .succession-nominees .succession-card .sapMFlexItem:nth-child(3) {width:120px}
-.main-profile .succession-nominees .succession-card .sapMFlexItem:nth-child(5) {width:120px}
-.main-profile .succession-nominees .succession-card .sapMFlexItem .sapMText {line-height:30px; font-size:14px; font-weight:700}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem {height:30px}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem:nth-child(1) {width:30px; text-align:center}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem:nth-child(2) {width:50px; text-align:center}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem:nth-child(3) {width:110px}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem:nth-child(5) {width:110px}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem:nth-child(6) {width:40px; height:16px; text-align:right}
+.main-profile .succession-nominees .succession-card > .sapMFlexItem .sapMText {line-height:30px; font-size:14px; font-weight:700}
 
 .lineItem-wrap:after {content:""; display:inline-block; height:2px; position:absolute; left:10%; right:10%; top:50%; background:linear-gradient(to right, #f5ec95, 50%, #70cf8d); z-index:1}
 .lineItem {z-index:2; align-self:center; display:flex; justify-content:center; align-content:center}
