@@ -112,7 +112,7 @@ sap.ui.define(
             // Pernr: '',
             // Ename: '',
             Gjahr: sGjahr,
-            Zseqnr: _.get(aZseqnrEntry, [0, 'Zseqnr']),
+            Zseqnr: 'ALL', // _.get(aZseqnrEntry, [0, 'Zseqnr']), // 모바일만 전체 차수가 모두 조회되도록 변경
           });
 
           _.forEach(aZseqnrEntry, (m) => (m.Zseqnrtx = `${m.Zseqnrtx}${AppUtils.getBundleText('LABEL_42003')}`)); // 차
