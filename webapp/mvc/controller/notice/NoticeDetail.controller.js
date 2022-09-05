@@ -84,25 +84,19 @@ sap.ui.define(
               Notice2Nav: [],
             };
 
-            $('#readHtml').text('');
             const oModel = this.getModel(ServiceNames.COMMON);
             const oDetail = await Client.deep(oModel, 'NoticeManage', mSendObject);
 
             const oTargetData = oDetail.Notice1Nav.results[0];
-            const oDetailData = oDetail.Notice2Nav.results;
 
             if (this.getSessionProperty('Pernr') === oTargetData.Apern) {
               oViewModel.setProperty('/MySelf', true);
             }
 
-            oTargetData.Detail = '';
-
-            oDetailData.forEach((e) => {
-              oTargetData.Detail += e.Detail;
-            });
+            oTargetData.Detail = _.map(oDetail.Notice2Nav.results, (m) => m.Detail).join('');
 
             oViewModel.setProperty('/FormData', oTargetData);
-            $('#readHtml').append(oTargetData.Detail);
+            $('#readHtml').empty().append(oTargetData.Detail);
           }
 
           // setTimeout(() => {

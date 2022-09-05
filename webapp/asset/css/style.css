@@ -1847,7 +1847,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .talent-list.sapFGridList .sapMFlexItemAlignAuto {display:inherit}
 .talent-list.sapFGridList .talent-list-PicUrl {width:76px !important; height:100px !important; margin-right:10px !important}
 .talent-list.sapFGridList .sapMTitle.sapMTitleStyleAuto {margin-bottom:8px; font-size:14px; font-weight:700}
-.talent-list.sapFGridList .sapMLabel, .talent-list.sapFGridList .sapMText {font-size:12px; font-weight:500}
+.talent-list.sapFGridList .sapMLabel, .talent-list.sapFGridList .sapMText {line-height:12px; font-size:12px; font-weight:500}
 .talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication01 {background:#27c840}
 .talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication02 {background:#fd5f58}
 .talent-list.sapFGridList .sapMLIBHighlight.sapMLIBHighlightIndication03 {background:#007bff}

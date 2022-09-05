@@ -29,11 +29,11 @@
         <Text text="{= !${/FormData/Chntm} ? '' : ${/FormData/Chntm}}"/>
       </VBox>
       <Label text="{i18n>LABEL_08008}"/>
-      <VBox id="EditorBox" class="pt-6-px pb-6-px" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }">
+      <VBox id="EditorBox" class="py-6-px" visible="{= ${/Hass} &amp;&amp; ${/MySelf} }">
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
-        <rte:RichTextEditor id="editor" value="{/FormData/Detail}" ready=".editorReady" width="99.8%" height="500px" showGroupFont="true" showGroupInsert="true" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
+        <rte:RichTextEditor id="editor" sanitizeValue="false" value="{/FormData/Detail}" ready=".editorReady" width="99.8%" height="500px" showGroupFont="true" showGroupInsert="true" editable="{= !!${/MySelf} &amp;&amp; !!${/Hass} }"/>
       </VBox>
       <VBox visible="{= !${/Hass} || !${/MySelf} }">
         <core:HTML content='&lt;div id="readHtml"&gt;&lt;/div&gt;' />
