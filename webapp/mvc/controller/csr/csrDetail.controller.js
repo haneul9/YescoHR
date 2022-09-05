@@ -261,6 +261,7 @@ sap.ui.define(
             Werks: sWerks
           });
 
+          mData[0].Prgno = mData[0].Prgno.replace('\\n', '\n');
           mData[0].Ctsno = mData[0].Ctsno.replace('\\n', '\n');
 
           const mData2 = await Client.getEntitySet(oModel, 'CsrRequestApproval', {
