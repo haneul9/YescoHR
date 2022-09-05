@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <Title level="H2" text="{i18n>LABEL_46028}" />
+    </HBox>
+
+    <table:Table id="ApprovalTable" class="row-link" rows="{/ApprovalData}" visibleRowCount="{/ApprovalInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
+        <table:columns>
+        <table:Column width="50px" sortProperty="Idx" filterProperty="Idx">
+            <Label text="No."/>
+            <table:template>
+            <Text text="{Idx}" width="100%" textAlign="Center">
+            </Text>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Prstgtx" filterProperty="Prstgtx">
+            <Label text="{i18n>LABEL_46026}"/>
+            <table:template>
+            <Text text="{Prstgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Prstatx" filterProperty="Prstatx">
+            <Label text="{i18n>LABEL_46027}"/>
+            <table:template>
+            <Text text="{Prstatx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
+            <Label text="{i18n>LABEL_00210}"/>
+            <table:template>
+            <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
+            <Label text="{i18n>LABEL_00214}"/>
+            <table:template>
+            <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Zzjikcht" filterProperty="Zzjikcht">
+            <Label text="{i18n>LABEL_00217}"/>
+            <table:template>
+            <Text text="{Zzjikcht}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Rectx" filterProperty="Rectx">
+            <Label text="{i18n>LABEL_00224}"/>
+            <table:template>
+            <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Apstatx" filterProperty="Apstatx">
+            <Label text="{i18n>LABEL_00261}"/>
+            <table:template>
+            <Text text="{Apstatx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
+            <Label text="{i18n>LABEL_00170}"/>
+            <table:template>
+            <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="auto" sortProperty="Reqnt" filterProperty="Reqnt">
+            <Label text="{i18n>LABEL_00330}"/>
+            <table:template>
+            <Text text="{ path: 'Uzeit', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm:ss' } }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>
+        <table:Column width="350px" sortProperty="Comnt" filterProperty="Comnt">
+            <Label text="Comments"/>
+            <table:template>
+            <Text text="{Comnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            </table:template>
+        </table:Column>      
+        </table:columns>
+    </table:Table>
+  </VBox>
+</core:FragmentDefinition>

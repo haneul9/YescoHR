@@ -147,6 +147,9 @@
         { "pattern": "mobile/congratulation/:oDataKey:", "name": "mobile/congratulation-detail", "target": "mobile/congDetail" },
 
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
+        
+        { "pattern": "csr", "name": "csr", "target": "csr" },
+        { "pattern": "csr/{oDataKey}/{werks}", "name": "csr-detail", "target": "csrDetail" },
 
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
         { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
@@ -430,6 +433,9 @@
         "h/commuteTypeConfirm": { "viewId": "h_commuteTypeConfirm", "viewPath": "sap.ui.yesco.mvc.view.commuteConfirm", "viewName": "CommuteConfirmH" },
 
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
+
+        "csr": { "viewId": "csr", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csr" },
+        "csrDetail": { "viewId": "csrDetail", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrDetail" },
 
         "h/driveRecord": { "viewId": "h_driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordH" },
         "driveRecord": { "viewId": "driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecord" },

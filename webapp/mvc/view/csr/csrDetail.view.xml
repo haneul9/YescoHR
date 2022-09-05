@@ -1,0 +1,27 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.csr.csrDetail"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <content>
+      <VBox class="contents-header">
+        <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+          <custom:Breadcrumbs />
+          <HBox class="button-group">
+            <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '60' }" />
+            <Button text="{i18n>LABEL_00103}" type="Emphasized" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_00146}" press=".onPreBack" />
+            <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
+          </HBox>
+        </HBox>
+      </VBox>
+      <VBox class="contents">
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.csr.fragment.DetailForm" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.csr.fragment.DetailForm2" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.fragment.FileAttachmentBox" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.csr.fragment.ApprovalTable" type="XML" />
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>
