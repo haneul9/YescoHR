@@ -1,8 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
-  xmlns:rte="sap.ui.richtexteditor"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:rte="sap.ui.richtexteditor">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_00129}" />
@@ -10,30 +9,30 @@
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid form-search">
       <Label text="{i18n>LABEL_46006}" />
       <VBox>
-        <Input value="{/Data/Apttl}" class="required" editable="true" />
+        <Input value="{/Data/Apttl}" class="required" editable="{= ${/Data/Prsta} === '' }" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_46005}" />
       <VBox>
-        <ComboBox selectedKey="{/Data/Csrty}" editable="true" >
+        <ComboBox selectedKey="{/Data/Csrty}" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" class="required" change=".onsetApprovalList" >
           <core:Item text="{i18n>LABEL_46029}" key="1000" />
           <core:Item text="{i18n>LABEL_46030}" key="2000" />
           <core:Item text="{i18n>LABEL_46031}" key="3000" />
-          <core:Item text="{i18n>LABEL_46032}" key="3100" />
-          <core:Item text="{i18n>LABEL_46033}" key="4000" />
-          <core:Item text="{i18n>LABEL_46034}" key="5000" />
+          <core:Item text="{i18n>LABEL_46032}" key="4000" />
+          <core:Item text="{i18n>LABEL_46033}" key="5000" />
+          <core:Item text="{i18n>LABEL_46034}" key="6000" />
           <core:Item text="{i18n>LABEL_46035}" key="9000" />
         </ComboBox>
       </VBox>
       <Label text="{i18n>LABEL_46018}" />
       <VBox>
-        <DatePicker width="150px" class="sapIcon_Date" dateValue="{ path: '/Data/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="true" />
+        <DatePicker width="150px" class="sapIcon_Date required" dateValue="{ path: '/Data/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" />
       </VBox>
       <Label text="{i18n>LABEL_46019}"/>
       <VBox>
-        <rte:RichTextEditor id="editor1" value="{/Data/Apcnt}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="true" buttonGroups="{/ButtonGroups}" />
+        <rte:RichTextEditor id="editor1" value="{/Data/Apcnt}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>

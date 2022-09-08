@@ -73,7 +73,7 @@
         <table:Column width="350px" sortProperty="Comnt" filterProperty="Comnt">
             <Label text="Comments"/>
             <table:template>
-            <Input value="{Comnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
+            <Input value="{Comnt}" width="100%" class="tableRow_Text" editable="{= ${/Data/Prsta} === ${Prsta} }" />
             </table:template>
         </table:Column>      
         </table:columns>

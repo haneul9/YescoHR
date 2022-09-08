@@ -9,8 +9,8 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox class="button-group">
-            <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '60' }" />
-            <Button text="{i18n>LABEL_00103}" type="Emphasized" visible="{= !${/FormData/ZappStatAl} }" />
+            <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= ${/Austy} === 'H' }" />
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/Austy} === 'E' || ${/Austy} === 'H' }" press=".onPressSave" />
             <Button text="{i18n>LABEL_00146}" press=".onPreBack" />
             <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
           </HBox>

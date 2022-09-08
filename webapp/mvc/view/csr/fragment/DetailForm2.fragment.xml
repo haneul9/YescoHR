@@ -2,21 +2,21 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:rte="sap.ui.richtexteditor">
-  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/Data/Prsta} !== '' &amp;&amp; ${/Data/Prsta} !== '10' }">
     <HBox alignItems="Center" class="table-toolbar">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <Title level="H2" text="{i18n>LABEL_46036}" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid form-search">
       <Label text="{i18n>LABEL_46020}" />
       <VBox class="p-5-px">
-        <rte:RichTextEditor id="editor2" value="{/Data/Testc1}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="true" buttonGroups="{/ButtonGroups}" />
+        <rte:RichTextEditor id="editor2" value="{/Data/Testc1}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="{= ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </VBox>
       <Label text="{i18n>LABEL_46021}" />
       <VBox class="p-5-px">
-        <rte:RichTextEditor id="editor3" value="{/Data/Testc2}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="true" buttonGroups="{/ButtonGroups}" />
+        <rte:RichTextEditor id="editor3" value="{/Data/Testc2}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="{= ${/Data/Prsta} === '22' || ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
@@ -24,22 +24,22 @@
     </grid:CSSGrid>
   </VBox>
   
-  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}" visible="{= ${/Data/Prsta} !== '' &amp;&amp; ${/Data/Prsta} !== '10' }">
     <HBox alignItems="Center" class="table-toolbar">
       <Title level="H2" text="{i18n>LABEL_46022}" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid form-search">
       <Label text="{i18n>LABEL_46023}" />
       <VBox>
-        <TextArea value="{/Data/Prgno}" editable="true" width="100%" growing="true" rows="1" />
+        <TextArea value="{/Data/Prgno}" editable="{= ${/Austy} === 'H' }" width="100%" growing="true" rows="1" />
       </VBox>
       <Label text="{i18n>LABEL_46024}" />
       <VBox>
-        <TextArea value="{/Data/Ctsno}" editable="true" width="100%" growing="true" rows="1" />
+        <TextArea value="{/Data/Ctsno}" editable="{= ${/Austy} === 'H' }" width="100%" growing="true" rows="1" />
       </VBox>
       <Label text="{i18n>LABEL_46025}" />
       <VBox>
-        <Input value="{/Data/Wrktm}" editable="true" />
+        <Input value="{/Data/Wrktm}" editable="{= ${/Austy} === 'H' }" />
       </VBox>
       <Label text="" />
       <VBox />

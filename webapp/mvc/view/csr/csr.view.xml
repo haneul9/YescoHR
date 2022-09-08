@@ -9,7 +9,7 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox class="button-group">
-            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" />
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" visible="{= ${/Austy} === 'E' || ${/Austy} === 'H' }" />
           </HBox>
         </HBox>
       </VBox>

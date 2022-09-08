@@ -20,13 +20,15 @@ sap.ui.define(
         return {
           busy: false,
           routeName: '',
+          Austy: (this.isMss() ? 'M' : (this.isHass() ? 'H' : 'E')),
           LoanType: [],
           TargetCode: {},
           parameters: {},
           search: {
             Werks: this.getAppointeeProperty('Werks'),
             date: moment().hours(9).toDate(),
-            secondDate: moment().startOf('year').hours(9).toDate(),
+            // secondDate: moment().startOf('month').hours(9).toDate(),
+            secondDate: moment().subtract(1, 'months').add(1, 'days').hours(9).toDate()
           },
           listInfo: {
             Title: this.getBundleText("LABEL_46016"), // 상세내역
@@ -108,7 +110,7 @@ sap.ui.define(
           const oSearch = oListModel.getProperty('/search');
 
           const aTableList = await Client.getEntitySet(oModel, 'CsrRequest', {
-            Austy: 'H',
+            Austy: oListModel.getProperty('/Austy'),
             Werks: oSearch.Werks,
             Begda: moment(oSearch.secondDate).hours(9).toDate(),
             Endda: moment(oSearch.date).hours(9).toDate(),
