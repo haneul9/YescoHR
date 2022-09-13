@@ -231,7 +231,7 @@ sap.ui.define(
         const sWerks = oDetailModel.getProperty('/Werks');
 
         if (sAppno === 'N' || !sAppno) {
-          oDetailModel.setProperty('/Data', {Prsta: '', Apcnt: '', Testc1: '', Testc2: '', Clsda: moment().hours(9).toDate()});
+          oDetailModel.setProperty('/Data', {Prstg: '10', Prsta: '', Apcnt: '', Testc1: '', Testc2: '', Clsda: moment().hours(9).toDate()});
           oDetailModel.setProperty('/ApprovalData', []);
           oDetailModel.setProperty('/ApprovalInfo/rowCount', 1);
           oDetailModel.setProperty('/isNew', true);
@@ -265,19 +265,7 @@ sap.ui.define(
 
             mApprovalData.push(tmp);
           }
-          // const mApprovalData = _.map(mData2, (o, i) => ({
-          //   Idx: ++i,
-          //   ...o,
-          // }));
 
-          // const mApprovalData = _.chain(mData2)
-          // .cloneDeep()
-          // .map((o,i) => {
-          //   Idx: ++i,
-          //   ...o,
-          // })
-          // .value();
-console.log('결재현황 조회', mApprovalData)
           oDetailModel.setProperty('/Data', mData[0]);
           oDetailModel.setProperty('/ApprovalData', mApprovalData);
           oDetailModel.setProperty('/ApprovalInfo/rowCount', mApprovalData.length);
@@ -295,7 +283,6 @@ console.log('결재현황 조회', mApprovalData)
           return;
         }
 
-        const sPrsta = oDetailModel.getProperty('/Data/Prsta');
         const oModel = this.getModel(ServiceNames.COMMON);
         const mData = await Client.getEntitySet(oModel, 'CsrRequestApproval', {
           Prcty: 'A',
@@ -305,8 +292,12 @@ console.log('결재현황 조회', mApprovalData)
         const mApprovalData = _.map(mData, (o, i) => ({
           Idx: ++i,
           ...o,
+          Edit: false
         }));
-        console.log('결재리스트', mApprovalData);
+
+        if(oDetailModel.getProperty('/isNew')){
+          _.set(mApprovalData[0], 'Edit', true);
+        }
 
         oDetailModel.setProperty('/ApprovalData', mApprovalData);
         oDetailModel.setProperty('/ApprovalInfo/rowCount', mApprovalData.length);
@@ -344,6 +335,7 @@ console.log('결재현황 조회', mApprovalData)
       // 신청
       onPressSave() {
         if (this.checkError()) return;
+        const oDetailModel = this.getViewModel();
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -352,7 +344,6 @@ console.log('결재현황 조회', mApprovalData)
               try {
                 AppUtils.setAppBusy(true);
   
-                const oDetailModel = this.getViewModel();
                 const mFormData = oDetailModel.getProperty('/Data');
   
                 const sAppno = mFormData.Appno;
@@ -367,7 +358,7 @@ console.log('결재현황 조회', mApprovalData)
                 }
                 
                 // 첨부파일
-                // await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+                await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
   
                 const mApprovalData = _.chain(oDetailModel.getProperty('/ApprovalData'))
                 .cloneDeep()
@@ -384,7 +375,7 @@ console.log('결재현황 조회', mApprovalData)
                   ...mFormData,
                   CsrRequest1Nav: mApprovalData
                 };
-                console.log(oSendObject)
+                
                 await Client.create(oModel, 'CsrRequest', oSendObject);
   
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), { // {신청}되었습니다.
@@ -397,7 +388,7 @@ console.log('결재현황 조회', mApprovalData)
   
                 if(oDetailModel.getProperty('/isNew') === true){
                   oDetailModel.setProperty('/Data/Prsta', '');
-                  oDetailModel.setProperty('/Data/Prstg', '');
+                  oDetailModel.setProperty('/Data/Prstg', '10');
                 }
   
               } finally {
@@ -408,6 +399,7 @@ console.log('결재현황 조회', mApprovalData)
         });
       },
 
+      // PRCTY: B 승인, C 반려
       onPressApprove(vPrcty) {
         if(!vPrcty) return;
 
@@ -437,7 +429,7 @@ console.log('결재현황 조회', mApprovalData)
                   Werks: mFormData.Werks,
                   Comnt: mApprovalData.Comnt
                 };
-                console.log(oSendObject)
+                
                 await Client.create(oModel, 'CsrRequestApproval', oSendObject);
   
                 MessageBox.alert(this.getBundleText('MSG_00007', aText[vPrcty]), { // {승인|반려}되었습니다.

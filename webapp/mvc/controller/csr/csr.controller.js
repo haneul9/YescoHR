@@ -148,7 +148,8 @@ sap.ui.define(
             .value();
           
           oListModel.setProperty('/listInfo', {
-            rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
+            // rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
+            rowCount: iDataLength,
             totalCount: aTableList.length,
             applyCount: oOccurCount['10'],
             approveCount: oOccurCount['20'],
@@ -181,7 +182,7 @@ sap.ui.define(
 
         if (oEvent.getParameter('selectAll') === true) {
           _.forEach(aList, (o, i) => {
-            if (o.Appryn === 'X') oTable.removeSelectionInterval(i, i);
+            if (o.Appryn === '') oTable.removeSelectionInterval(i, i);
           });
         }
 
@@ -239,7 +240,7 @@ sap.ui.define(
       async onSave(vPrcty){
         const oViewModel = this.getViewModel();
         const mData = oViewModel.getProperty('/SelectedRows');
-console.log('선택데이터', mData)
+
         if(mData.length === 0){
           MessageBox.alert(this.getBundleText('MSG_46005')); // 데이터를 선택하여 주십시오.
           return;
@@ -253,37 +254,25 @@ console.log('선택데이터', mData)
             if (vPress && vPress === 'OK') {
               try {
                 AppUtils.setAppBusy(true);
+
+                await this.onProcess(mData, vPrcty, sMessage);
   
-                const mApprovalData = _.chain(mData)
-                .cloneDeep()
-                .map((o) => {
-                  delete o.__metadata;
+                // const mApprovalData = _.chain(mData)
+                // .cloneDeep()
+                // .map((o) => {
+                //   delete o.__metadata;
       
-                  return this.TimeUtils.convert2400Time(o);
-                })
-                .value();
+                //   return this.TimeUtils.convert2400Time(o);
+                // })
+                // .value();
                 
-                _.map(mApprovalData, (e) => {
-                  e.Prcty = vPrcty;
-                  // await Client.create(oModel, 'CsrRequest', e);
-                  console.log(e)
-                });
-  
   //               const oModel = this.getModel(ServiceNames.COMMON);
   //               const oSendObject = {
   //                 ...mFormData,
   //                 CsrRequest1Nav: mApprovalData
   //               };
-  // console.log(oSendObject)
   //               await Client.create(oModel, 'CsrRequestApproval', oSendObject);
   
-                // {승인|반려}되었습니다.
-                MessageBox.alert(this.getBundleText('MSG_00007', sMessage), {
-                  onClose: () => {
-                    this.onSearch();
-                    this.byId('Table').clearSelection();
-                  },
-                });
               } catch (oError) {
                 AppUtils.handleError(oError);
   
@@ -298,6 +287,28 @@ console.log('선택데이터', mData)
             }
           },
         });
+      },
+
+      async onProcess(mData, vPrcty, sMessage){
+
+        const oModel = this.getModel(ServiceNames.COMMON);
+        try {
+          _.map(mData, async (e) => {
+            e.Prcty = vPrcty;
+            await Client.create(oModel, 'CsrRequestApproval', e);
+          });
+
+           // {승인|반려}되었습니다.
+           MessageBox.alert(this.getBundleText('MSG_00007', sMessage), {
+            onClose: () => {
+              this.onSearch();
+              this.byId('Table').clearSelection();
+            },
+          });
+        } catch(oError){
+          AppUtils.handleError(oError);
+        }
+
       },
 
       onPressExcelDownload() {

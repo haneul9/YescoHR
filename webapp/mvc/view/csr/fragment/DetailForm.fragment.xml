@@ -32,7 +32,7 @@
       </VBox>
       <Label text="{i18n>LABEL_46019}"/>
       <VBox>
-        <rte:RichTextEditor id="editor1" value="{/Data/Apcnt}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
+        <rte:RichTextEditor id="editor1" value="{/Data/Apcnt}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" sanitizeValue="false" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
