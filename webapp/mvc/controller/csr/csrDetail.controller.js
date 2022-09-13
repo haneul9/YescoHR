@@ -342,18 +342,11 @@ console.log('결재현황 조회', mApprovalData)
       },      
 
       // 신청
-      onPressSave(vPrcty) {
-        if(!vPrcty){
-          vPrcty = "";
-        }
+      onPressSave() {
+        if (this.checkError()) return;
 
-        if (this.checkError('C')) return;
-
-        const aText = {'': 'LABEL_00121', 'B': 'LABEL_00123', 'C': 'LABEL_00124'};
-
-        // {신청|승인|반려}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', aText[vPrcty]), {
-          // actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')], // 신청 취소
+        // {신청}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           onClose: async (vPress) => {                             
             if (vPress && vPress === 'OK') {
               try {
@@ -389,13 +382,12 @@ console.log('결재현황 조회', mApprovalData)
                 const oModel = this.getModel(ServiceNames.COMMON);
                 const oSendObject = {
                   ...mFormData,
-                  CsrRequest1Nav: mApprovalData,
-                  Prcty: vPrcty
+                  CsrRequest1Nav: mApprovalData
                 };
                 console.log(oSendObject)
                 await Client.create(oModel, 'CsrRequest', oSendObject);
   
-                MessageBox.alert(this.getBundleText('MSG_00007', aText[vPrcty]), { // {신청|승인|반려}되었습니다.
+                MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), { // {신청}되었습니다.
                   onClose: () => {
                     this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
                   },

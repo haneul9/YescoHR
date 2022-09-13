@@ -239,7 +239,7 @@ sap.ui.define(
       async onSave(vPrcty){
         const oViewModel = this.getViewModel();
         const mData = oViewModel.getProperty('/SelectedRows');
-
+console.log('선택데이터', mData)
         if(mData.length === 0){
           MessageBox.alert(this.getBundleText('MSG_46005')); // 데이터를 선택하여 주십시오.
           return;
