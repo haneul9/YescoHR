@@ -67,13 +67,13 @@
         <table:Column width="auto" sortProperty="Reqnt" filterProperty="Reqnt">
             <Label text="{i18n>LABEL_00330}"/>
             <table:template>
-            <Text text="{ path: 'Uzeit', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm:ss' } }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{ path: 'Uzeittx', formatter:'.formatUzeittx' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
             </table:template>
         </table:Column>
         <table:Column width="350px" sortProperty="Comnt" filterProperty="Comnt">
             <Label text="Comments"/>
             <table:template>
-            <Input value="{Comnt}" width="100%" class="tableRow_Text" editable="{= ${/Data/Prsta} === ${Prsta} }" />
+            <Input value="{Comnt}" width="100%" class="tableRow_Text" editable="{Edit}" />
             </table:template>
         </table:Column>      
         </table:columns>

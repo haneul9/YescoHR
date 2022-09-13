@@ -10,7 +10,9 @@
           <custom:Breadcrumbs />
           <HBox class="button-group">
             <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= ${/Austy} === 'H' }" />
-            <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/Austy} === 'E' || ${/Austy} === 'H' }" press=".onPressSave" />
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/Austy} === 'E' &amp;&amp; ${/Data/Prsta} === '' }" press=".onPressSave" />
+            <Button text="{i18n>LABEL_00123}" type="Accept" press=".onPressAccept" visible="{= ${/Data/Appryn} === 'X' }" />
+            <Button text="{i18n>LABEL_00124}" type="Reject" press=".onPressReject" visible="{= ${/Data/Appryn} === 'X' }" />
             <Button text="{i18n>LABEL_00146}" press=".onPreBack" />
             <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
           </HBox>

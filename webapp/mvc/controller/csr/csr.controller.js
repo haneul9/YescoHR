@@ -5,13 +5,15 @@ sap.ui.define(
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/mvc/controller/BaseController',
+    'sap/ui/yesco/control/MessageBox',
   ],
   (
     // prettier 방지용 주석
     AppUtils,
     Client,
     ServiceNames,
-    BaseController
+    BaseController,
+    MessageBox
   ) => {
     'use strict';
 
@@ -21,14 +23,11 @@ sap.ui.define(
           busy: false,
           routeName: '',
           Austy: (this.isMss() ? 'M' : (this.isHass() ? 'H' : 'E')),
-          LoanType: [],
-          TargetCode: {},
-          parameters: {},
           search: {
             Werks: this.getAppointeeProperty('Werks'),
             date: moment().hours(9).toDate(),
-            // secondDate: moment().startOf('month').hours(9).toDate(),
-            secondDate: moment().subtract(1, 'months').add(1, 'days').hours(9).toDate()
+            secondDate: moment().subtract(1, 'months').add(1, 'days').hours(9).toDate(),
+            Schty: 'X'
           },
           listInfo: {
             Title: this.getBundleText("LABEL_46016"), // 상세내역
@@ -49,6 +48,7 @@ sap.ui.define(
             completeCount: 0,
           },
           List: [],
+          SelectedRows: []
         };
       },
 
@@ -59,7 +59,7 @@ sap.ui.define(
           oListModel.setProperty('/busy', true);
           oListModel.setProperty('/routeName', sRouteName);
 
-          await this.readList();
+          // await this.readList();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -68,13 +68,27 @@ sap.ui.define(
         }
       },
 
+      async onBeforeShow(){
+        const oListModel = this.getViewModel();
+
+        try{
+          oListModel.setProperty('/busy', true);
+          await this.readList();
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oListModel.setProperty('/busy', false);
+        }
+        
+      },
+
       async callbackAppointeeChange() {
         const oListModel = this.getViewModel();
 
         try {
           oListModel.setProperty('/busy', true);
 
-          // await this.readList();
+          await this.readList();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -104,8 +118,9 @@ sap.ui.define(
       },
 
       async readList() {
+        const oListModel = this.getViewModel();
+
         try {
-          const oListModel = this.getViewModel();
           const oModel = this.getModel(ServiceNames.COMMON);
           const oSearch = oListModel.getProperty('/search');
 
@@ -114,6 +129,7 @@ sap.ui.define(
             Werks: oSearch.Werks,
             Begda: moment(oSearch.secondDate).hours(9).toDate(),
             Endda: moment(oSearch.date).hours(9).toDate(),
+            Schty: (oListModel.getProperty('/Austy') == 'M' ? (oSearch.Schty == 'A' ? '' : oSearch.Schty) : '') // CSR결재: 조회구분
           });
 
           oListModel.setProperty('/List', aTableList);
@@ -147,9 +163,59 @@ sap.ui.define(
             ObjTxt3: this.getBundleText('LABEL_46002'), // 처리단계
             ObjTxt5: this.getBundleText('LABEL_46003'), // 완료단계
           });
+
+          oListModel.setProperty('/SelectedRows', []);
         } catch (oError) {
           throw oError;
+        } finally {
+          if(oListModel.getProperty('/Austy') === 'M'){
+            this.setTableStyle();
+          }          
         }
+      },
+
+      onSelectionTable(oEvent) {
+        const oViewModel = this.getViewModel();
+        const oTable = oEvent.getSource();
+        const aList = oViewModel.getProperty('/List');
+
+        if (oEvent.getParameter('selectAll') === true) {
+          _.forEach(aList, (o, i) => {
+            if (o.Appryn === 'X') oTable.removeSelectionInterval(i, i);
+          });
+        }
+
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        _.forEach(aList, (o, i) => _.set(o, 'Checked', _.includes(aSelectedIndices, i)));
+        oViewModel.refresh();
+
+        this.setTableStyle();
+
+        const aMappedIndices = oTable.getBindingInfo('rows').binding.aIndices;
+
+        oViewModel.setProperty(
+          '/SelectedRows',
+          _.map(aSelectedIndices, (e) => {
+            return oViewModel.getProperty(`/List/${aMappedIndices[e]}`);
+          })
+        );
+      },
+
+      setTableStyle() {
+        setTimeout(() => {
+          const oTable = this.byId('Table');
+          const sTableId = oTable.getId();
+
+          oTable.getRows().forEach((row, i) => {
+            const mRowData = row.getBindingContext().getObject();
+            if (mRowData.Appryn === 'X') {
+              $(`#${sTableId}-rowsel${i}`).removeClass('disabled-table-selection');
+            } else {
+              $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');              
+            }
+          });
+        }, 100);
       },
 
       onSelectRow(oEvent) {
@@ -160,6 +226,78 @@ sap.ui.define(
 
         oListModel.setProperty('/parameters', oRowData);
         this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno, werks: oRowData.Werks });
+      },
+
+      onPressAccept(){
+        this.onSave('B');
+      },
+
+      onPressReject(){
+        this.onSave('C');
+      },
+
+      async onSave(vPrcty){
+        const oViewModel = this.getViewModel();
+        const mData = oViewModel.getProperty('/SelectedRows');
+
+        if(mData.length === 0){
+          MessageBox.alert(this.getBundleText('MSG_46005')); // 데이터를 선택하여 주십시오.
+          return;
+        }
+
+        const sMessage = vPrcty === 'B' ? 'LABEL_00123' : 'LABEL_00124';
+
+        // {승인|반려}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', sMessage), {
+          onClose: async (vPress) => {
+            if (vPress && vPress === 'OK') {
+              try {
+                AppUtils.setAppBusy(true);
+  
+                const mApprovalData = _.chain(mData)
+                .cloneDeep()
+                .map((o) => {
+                  delete o.__metadata;
+      
+                  return this.TimeUtils.convert2400Time(o);
+                })
+                .value();
+                
+                _.map(mApprovalData, (e) => {
+                  e.Prcty = vPrcty;
+                  // await Client.create(oModel, 'CsrRequest', e);
+                  console.log(e)
+                });
+  
+  //               const oModel = this.getModel(ServiceNames.COMMON);
+  //               const oSendObject = {
+  //                 ...mFormData,
+  //                 CsrRequest1Nav: mApprovalData
+  //               };
+  // console.log(oSendObject)
+  //               await Client.create(oModel, 'CsrRequestApproval', oSendObject);
+  
+                // {승인|반려}되었습니다.
+                MessageBox.alert(this.getBundleText('MSG_00007', sMessage), {
+                  onClose: () => {
+                    this.onSearch();
+                    this.byId('Table').clearSelection();
+                  },
+                });
+              } catch (oError) {
+                AppUtils.handleError(oError);
+  
+                if(oDetailModel.getProperty('/isNew') === true){
+                  oDetailModel.setProperty('/Data/Prsta', '');
+                  oDetailModel.setProperty('/Data/Prstg', '');
+                }
+  
+              } finally {
+                AppUtils.setAppBusy(false);
+              }
+            }
+          },
+        });
       },
 
       onPressExcelDownload() {

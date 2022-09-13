@@ -182,17 +182,17 @@ sap.ui.define(
         const oDetailModel = this.getViewModel();
 
         oDetailModel.setData(this.initializeModel());
-        oDetailModel.setProperty('/busy', true);
         oDetailModel.setProperty('/Appno', sDataKey);
         oDetailModel.setProperty('/Werks', sWerks);
         oDetailModel.setProperty('/routeName', _.chain(sRouteName).split('-', 1).head().value());        
       },
 
-      onAfterShow(){
+      async onAfterShow(){
         const oDetailModel = this.getViewModel();
+        oDetailModel.setProperty('/busy', true);
 
         try {
-          this.setFormData();
+          await this.setFormData();
           this.settingsAttachTable();
         } catch (oError) {
           this.debug(oError);
@@ -249,14 +249,35 @@ sap.ui.define(
           const mData2 = await Client.getEntitySet(oModel, 'CsrRequestApproval', {
             Appno: sAppno,
             Werks: sWerks,
-            Austy: oDetailModel.getProperty('/Austy'),
           });
 
-          const mApprovalData = _.map(mData2, (o, i) => ({
-            Idx: ++i,
-            ...o,
-          }));
+          var sEdit = '', mApprovalData = []; // 
+          for(var i=0; i<mData2.length; i++){
+            var tmp = $.extend(true, {}, mData2[i]);
+            tmp.Idx = (i+1);
+            
+            if(sEdit == '' && !tmp.Datum && tmp.Uzeittx == '000000'){
+              sEdit = 'X';
+              tmp.Edit = true;
+            } else {
+              tmp.Edit = false;
+            }
 
+            mApprovalData.push(tmp);
+          }
+          // const mApprovalData = _.map(mData2, (o, i) => ({
+          //   Idx: ++i,
+          //   ...o,
+          // }));
+
+          // const mApprovalData = _.chain(mData2)
+          // .cloneDeep()
+          // .map((o,i) => {
+          //   Idx: ++i,
+          //   ...o,
+          // })
+          // .value();
+console.log('결재현황 조회', mApprovalData)
           oDetailModel.setProperty('/Data', mData[0]);
           oDetailModel.setProperty('/ApprovalData', mApprovalData);
           oDetailModel.setProperty('/ApprovalInfo/rowCount', mApprovalData.length);
@@ -312,74 +333,131 @@ sap.ui.define(
         return false;
       },
 
+      onPressAccept(){
+        this.onPressApprove('B');
+      },
+      
+      onPressReject(){
+        this.onPressApprove('C');
+      },      
+
       // 신청
-      onPressSave() {
+      onPressSave(vPrcty) {
+        if(!vPrcty){
+          vPrcty = "";
+        }
+
         if (this.checkError('C')) return;
-        console.log(this.getViewModel().getProperty('/Data'));
 
-        // {신청}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')], // 신청 취소
-          onClose: async (vPress) => {
-            // 신청
-            if (vPress && vPress !== this.getBundleText('LABEL_00121')) {
-              return;
+        const aText = {'': 'LABEL_00121', 'B': 'LABEL_00123', 'C': 'LABEL_00124'};
+
+        // {신청|승인|반려}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', aText[vPrcty]), {
+          // actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')], // 신청 취소
+          onClose: async (vPress) => {                             
+            if (vPress && vPress === 'OK') {
+              try {
+                AppUtils.setAppBusy(true);
+  
+                const oDetailModel = this.getViewModel();
+                const mFormData = oDetailModel.getProperty('/Data');
+  
+                const sAppno = mFormData.Appno;
+  
+                if (!sAppno) {
+                  const sAppno = await Appno.get();
+  
+                  oDetailModel.setProperty('/Data/Appno', sAppno);
+                  oDetailModel.setProperty('/Data/Appdt', new Date());
+                  oDetailModel.setProperty('/Data/Prsta', '10');
+                  oDetailModel.setProperty('/Data/Prstg', '10');
+                }
+                
+                // 첨부파일
+                // await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+  
+                const mApprovalData = _.chain(oDetailModel.getProperty('/ApprovalData'))
+                .cloneDeep()
+                .map((o) => {
+                  delete o.Idx;
+                  delete o.__metadata;
+      
+                  return this.TimeUtils.convert2400Time(o);
+                })
+                .value()
+  
+                const oModel = this.getModel(ServiceNames.COMMON);
+                const oSendObject = {
+                  ...mFormData,
+                  CsrRequest1Nav: mApprovalData,
+                  Prcty: vPrcty
+                };
+                console.log(oSendObject)
+                await Client.create(oModel, 'CsrRequest', oSendObject);
+  
+                MessageBox.alert(this.getBundleText('MSG_00007', aText[vPrcty]), { // {신청|승인|반려}되었습니다.
+                  onClose: () => {
+                    this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
+                  },
+                });
+              } catch (oError) {
+                AppUtils.handleError(oError);
+  
+                if(oDetailModel.getProperty('/isNew') === true){
+                  oDetailModel.setProperty('/Data/Prsta', '');
+                  oDetailModel.setProperty('/Data/Prstg', '');
+                }
+  
+              } finally {
+                AppUtils.setAppBusy(false);
+              }
             }
+          },
+        });
+      },
 
-            try {
-              AppUtils.setAppBusy(true);
+      onPressApprove(vPrcty) {
+        if(!vPrcty) return;
 
-              const oDetailModel = this.getViewModel();
-              const mFormData = oDetailModel.getProperty('/Data');
+        const aText = {'B': 'LABEL_00123', 'C': 'LABEL_00124'};
 
-              const sAppno = mFormData.Appno;
+        // {승인|반려}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', aText[vPrcty]), {
+          onClose: async (vPress) => {                             
+            if (vPress && vPress === 'OK') {
+              try {
+                AppUtils.setAppBusy(true);
+  
+                const oDetailModel = this.getViewModel();
+                const mFormData = oDetailModel.getProperty('/Data');
+                
+                // 첨부파일
+                // await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
 
-              if (!sAppno) {
-                const sAppno = await Appno.get();
-
-                oDetailModel.setProperty('/Data/Appno', sAppno);
-                oDetailModel.setProperty('/Data/Appdt', new Date());
-                oDetailModel.setProperty('/Data/Prsta', '10');
-                oDetailModel.setProperty('/Data/Prstg', '10');
+                const mApprovalData = _.find(oDetailModel.getProperty('/ApprovalData'), (o) => {
+                    return o.Edit ;
+                });
+  
+                const oModel = this.getModel(ServiceNames.COMMON);
+                const oSendObject = {
+                  Prcty: vPrcty,
+                  Appno: mFormData.Appno,
+                  Werks: mFormData.Werks,
+                  Comnt: mApprovalData.Comnt
+                };
+                console.log(oSendObject)
+                await Client.create(oModel, 'CsrRequestApproval', oSendObject);
+  
+                MessageBox.alert(this.getBundleText('MSG_00007', aText[vPrcty]), { // {승인|반려}되었습니다.
+                  onClose: () => {
+                    this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
+                  },
+                });
+              } catch (oError) {
+                AppUtils.handleError(oError);  
+              } finally {
+                AppUtils.setAppBusy(false);
               }
-              
-              // 첨부파일
-              // await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
-
-              const mApprovalData = _.chain(oDetailModel.getProperty('/ApprovalData'))
-              .cloneDeep()
-              .map((o) => {
-                delete o.Idx;
-                delete o.__metadata;
-    
-                return this.TimeUtils.convert2400Time(o);
-              })
-              .value()
-
-              const oModel = this.getModel(ServiceNames.COMMON);
-              const oSendObject = {
-                ...mFormData,
-                CsrRequest1Nav: mApprovalData
-              };
-console.log(oSendObject)
-              await Client.create(oModel, 'CsrRequest', oSendObject);
-
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
-                // {신청}되었습니다.
-                onClose: () => {
-                  this.getRouter().navTo(oDetailModel.getProperty('/previousName'));
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-
-              if(oDetailModel.getProperty('/isNew') === true){
-                oDetailModel.setProperty('/Data/Prsta', '');
-                oDetailModel.setProperty('/Data/Prstg', '');
-              }
-
-            } finally {
-              AppUtils.setAppBusy(false);
             }
           },
         });
@@ -398,6 +476,12 @@ console.log(oSendObject)
           fileTypes: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'txt', 'bmp', 'gif', 'png', 'pdf'],
         });
       },
+
+      formatUzeittx(fVal){
+        if(!fVal) return '';
+        
+        return fVal == '' || fVal == '000000' ? '' : (fVal.substring(0,2) + ':' + fVal.substring(2,4) + ':' + fVal.substring(4,6));
+      }
 
     });
   }

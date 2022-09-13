@@ -10,6 +10,8 @@
           <custom:Breadcrumbs />
           <HBox class="button-group">
             <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onClick" visible="{= ${/Austy} === 'E' || ${/Austy} === 'H' }" />
+            <Button text="{i18n>LABEL_00123}" type="Accept" press=".onPressAccept" visible="{= ${/Austy} === 'M' }" />
+            <Button text="{i18n>LABEL_00124}" type="Reject" press=".onPressReject" visible="{= ${/Austy} === 'M' }" />
           </HBox>
         </HBox>
       </VBox>
@@ -18,14 +20,18 @@
           <HBox class="form-bar" alignItems="Center">
             <Label text="{i18n>LABEL_00237}" />
             <ComboBox selectedKey="{/search/Werks}" >
-              <!-- <core:Item text="{Pbtxt}" key="{Werks}" /> -->
               <core:Item text="{i18n>LABEL_WERKS_1000}" key="1000" />
               <core:Item text="{i18n>LABEL_WERKS_2000}" key="2000" />
               <core:Item text="{i18n>LABEL_WERKS_3000}" key="3000" />
               <core:Item text="{i18n>LABEL_WERKS_4000}" key="4000" />
             </ComboBox>
             <Label text="{i18n>LABEL_00266}" design="Bold" />
-              <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+            <custom:DateRangeSelection dateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+            <Label text="{i18n>LABEL_46039}" design="Bold" visible="{= ${/Austy} === 'M'}" />
+            <ComboBox selectedKey="{/search/Schty}" visible="{= ${/Austy} === 'M'}" >
+              <core:Item text="{i18n>LABEL_46037}" key="A" />
+              <core:Item text="{i18n>LABEL_46038}" key="X" />
+            </ComboBox>
             <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onSearch"/>
           </HBox>
         </HBox>
