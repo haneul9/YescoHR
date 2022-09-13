@@ -119,6 +119,14 @@
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>
       </HBox>
+      <Label text="{i18n>LABEL_03029}" visible="{= ${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' ? true : false }" />
+      <HBox visible="{= ${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' ? true : false }" >
+        <Text text="{/FormData/Zresn}" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </HBox>
+      
     </grid:CSSGrid>
   </VBox>
 </core:FragmentDefinition>
