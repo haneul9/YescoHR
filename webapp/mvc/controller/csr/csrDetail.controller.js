@@ -355,6 +355,9 @@ sap.ui.define(
                   oDetailModel.setProperty('/Data/Appdt', new Date());
                   oDetailModel.setProperty('/Data/Prsta', '10');
                   oDetailModel.setProperty('/Data/Prstg', '10');
+                } else if(oDetailModel.getProperty('/isNew') === true){
+                  oDetailModel.setProperty('/Data/Prsta', '10');
+                  oDetailModel.setProperty('/Data/Prstg', '10');
                 }
                 
                 // 첨부파일
