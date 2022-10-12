@@ -12,7 +12,10 @@
         </f:layoutData>
         <f:content>
           <HBox>
-            <Image src="{Photo01}" mode="Background">
+            <Image src="{Photo01}" mode="Background" press=".onPressPhoto">
+              <customData>
+                <core:CustomData key="{Pernr}" />
+              </customData>
               <layoutData>
                 <FlexItemData styleClass="photo" />
               </layoutData>
@@ -41,7 +44,10 @@
             <core:CustomData key="bg" value="{= ${Box} === 'S031' ? ${Value10} : '' }" writeToDom="true" />
           </customData>
           <Text text="{Value06}" />
-          <Image src="{Photo02}" mode="Background">
+          <Image src="{Photo02}" mode="Background" press=".onPressPhoto">
+            <customData>
+              <core:CustomData key="{Value15}" />
+            </customData>
             <layoutData>
               <FlexItemData styleClass="photo" />
             </layoutData>

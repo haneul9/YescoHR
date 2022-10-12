@@ -1812,7 +1812,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .scsn-candidates .sapUiTableDataCell.cell-subtotal .sapMText {font-size:24px; font-weight:500; color:#007bff}
 .scsn-candidates .sapUiTableDataCell {position:relative}
 .scsn-candidates .sapFCard {margin:2px 0 4px 0; border-radius:8px 0 0 8px; border:none; box-shadow:0 2px 4px rgb(0 0 0 / 16%)}
-.scsn-candidates .sapFCard .sapMHBox[data-color-type] {align-items:center; height:100%; border-right:3px solid transparent; padding:10px}
+.scsn-candidates .sapFCard .sapMHBox[data-color-type] {align-items:center; height:100%; border-right:6px solid transparent; padding:10px}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="1"] {border-right-color:#27c840}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="2"] {border-right-color:#fd5f58}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="3"] {border-right-color:#007bff}

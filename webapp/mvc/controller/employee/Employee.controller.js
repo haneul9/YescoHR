@@ -477,12 +477,13 @@ sap.ui.define(
                 _.times(mSubMenu.header.length, (i) => mSubMenu.data.push(o[`Value${_.padStart(i + 1, 2, '0')}`]));
               } else if (mSubMenu.type === this.SUB_TYPE.TABLE) {
                 if (sTabCode === 'M030') {
-                  const aPositionFields = 'Value01,Value02,Value03,Value04,Value05,Value10,Value11,Value13,Photo01'.split(/,/);
-                  const aNomineeFields = 'Value06,Value07,Value08,Value09,Value10,Value12,Value14,Photo02'.split(/,/);
+                  const aPositionFields = 'Pernr,Value01,Value02,Value03,Value04,Value05,Value10,Value11,Value13,Photo01'.split(/,/);
+                  const aNomineeFields = 'Pernr,Value06,Value07,Value08,Value09,Value10,Value12,Value14,Photo02,Value15'.split(/,/);
                   const mNomineeData = _.chain(o).pick(aNomineeFields).set('Icon2', this.COMPANY_ICON[o.Value12]).set('Box', o.Menuc).value();
                   const sPositionKey = [o.Value01, o.Value02].join();
                   const mPositionData = mSubMenu.map[sPositionKey];
                   if (mPositionData) {
+                    console.log(mNomineeData)
                     mPositionData.nominees.push(mNomineeData);
                   } else {
                     const mData = _.chain(o) //
@@ -493,6 +494,7 @@ sap.ui.define(
                       .set('Tscspnt', mSubMenu.label.TSCSPNT) // 승계예정시점
                       .set('nominees', [mNomineeData])
                       .value();
+                      console.log(mData)
                     mSubMenu.data.push(mData);
                     mSubMenu.map[sPositionKey] = mData;
                   }
@@ -607,6 +609,7 @@ sap.ui.define(
               if (sMenuKey === 'M030') {
                 // Succession tab
                 if (mMenu.data.length) {
+                  console.log(this.getViewModel().getProperty(sTableDataPath))
                   this.addSuccessionTabContents(oSubVBox, sTableDataPath);
                 } else {
                   oSubVBox.addItem(
@@ -1583,6 +1586,16 @@ sap.ui.define(
 
       async onPressTalentDevFileDownload(oEvent) {
         this.oTalentDevDialogHandler.onPressFileDownload(oEvent);
+      },
+
+      onPressPhoto(oEvent) {
+        const sPernr = oEvent.getSource().getCustomData()[0].getKey();
+        if(!sPernr){
+          return;
+        }
+
+        const sHost = window.location.href.split('#')[0];
+        window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
       },
 
       /*****************************************************************

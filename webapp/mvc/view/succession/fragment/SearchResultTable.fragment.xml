@@ -22,9 +22,9 @@
         <m:Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
         <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
         <m:Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/>
-        <m:ObjectStatus text="{i18n>LABEL_45006}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-        <m:ObjectStatus text="{i18n>LABEL_45007}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-        <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://circle-task-2" state="Indication05" />
+        <m:ObjectStatus text="{i18n>LABEL_45006}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication03" />
+        <m:ObjectStatus text="{i18n>LABEL_45007}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication04" />
+        <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://color-fill" state="Indication05" />
       </m:HBox>
     </m:HBox>
     <Table id="searchResultTable" rows="{/searchResult/listInfo/list}" visibleRowCount="{/searchResult/listInfo/rowCount}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="127" class="scsn-candidates">
