@@ -234,6 +234,7 @@
         { "pattern": "idpView/{sPernr}/:sZyear:", "name": "idp-view", "target": "idpView" },
 
         { "pattern": "individualWorkState/:pernr:/:year:/:month:", "name": "individualWorkState", "target": "individualWorkState" },
+        { "pattern": "h/individualWorkState/:pernr:/:year:/:month:", "name": "h/individualWorkState", "target": "h/individualWorkState" },
         { "pattern": "individualWorkStateView/:pernr:/:year:/:month:", "name": "individualWorkState-view", "target": "individualWorkStateView" },
         { "pattern": "mobile/individualWorkState/:pernr:/:year:/:month:", "name": "mobile/individualWorkState", "target": "mobile/individualWorkState" },
 
@@ -505,6 +506,7 @@
         "idpView": { "viewId": "idpView", "viewPath": "sap.ui.yesco.mvc.view.idp", "viewName": "Document" },
 
         "individualWorkState": { "viewId": "individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
+        "h/individualWorkState": { "viewId": "h_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "IndiWorkState" },
         "individualWorkStateView": { "viewId": "individualWorkStateView", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState", "viewName": "Document" },
         "mobile/individualWorkState": { "viewId": "mobile_individualWorkState", "viewPath": "sap.ui.yesco.mvc.view.individualWorkState.mobile", "viewName": "IndividualWorkState" },
 

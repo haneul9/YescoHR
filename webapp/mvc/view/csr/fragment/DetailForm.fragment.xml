@@ -21,7 +21,8 @@
           <core:Item text="{i18n>LABEL_46030}" key="2000" />
           <core:Item text="{i18n>LABEL_46031}" key="3000" />
           <core:Item text="{i18n>LABEL_46032}" key="4000" />
-          <core:Item text="{i18n>LABEL_46033}" key="5000" />
+          <core:Item text="{i18n>LABEL_46033}" key="5000" /> 
+          <core:Item text="{i18n>LABEL_46040}" key="7000" />
           <core:Item text="{i18n>LABEL_46034}" key="6000" />
           <core:Item text="{i18n>LABEL_46035}" key="9000" />
         </ComboBox>

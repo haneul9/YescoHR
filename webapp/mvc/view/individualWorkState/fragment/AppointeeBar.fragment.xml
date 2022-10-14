@@ -1,10 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <HBox class="vCardBox appointee-bar" alignItems="Center">
-        <Image src="{/appointee/Photo}" class="member-photo" mode="Background" width="63px" height="63px" />
-        <Text text="{/appointee/Ename}" class="name"/>
-        <Text text="{/appointee/Zzjikgbt} / {/appointee/Zzjikcht}"/>
-        <Text text="{/appointee/Pbtxt} {/appointee/Btrtx}"/>
-        <Text text="{/appointee/Orgtx}"/>
-    </HBox>
+    <FlexBox class="vCardBox appointee-bar" alignContent="SpaceBetween" justifyContent="SpaceBetween">
+        <items>
+            <HBox alignItems="Center">
+                <Image src="{/appointee/Photo}" class="member-photo" mode="Background" width="63px" height="63px" />
+                <Text text="{/appointee/Ename}" class="name"/>
+                <Text text="{/appointee/Zzjikgbt} / {/appointee/Zzjikcht}"/>
+                <Text text="{/appointee/Pbtxt} {/appointee/Btrtx}"/>
+                <Text text="{/appointee/Orgtx}"/>
+            </HBox>
+            <HBox alignItems="Center" visible="{/Hass}">
+                <Button type="Transparent" press=".onEmployeeSearchOpen"  icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_me.png" class="icon-button" />
+            </HBox>
+        </items>
+    </FlexBox>    
 </core:FragmentDefinition>

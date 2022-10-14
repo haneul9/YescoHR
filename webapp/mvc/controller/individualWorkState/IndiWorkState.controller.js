@@ -824,7 +824,7 @@ sap.ui.define(
         }
       },
       getCurrentLocationText() {
-        return this.getBundleText('LABEL_18001'); // My Time Calendar
+        return this.getBundleText('LABEL_18001'); // 개인별근태현황
       },
 
       onPressPrevYear() {
@@ -842,6 +842,35 @@ sap.ui.define(
       onClickDay(oEvent) {
         this.YearPlanBoxHandler.onClickDay(oEvent);
       },
+
+      // 2022-10-14 HASS 메뉴 생성으로 대상자 변경 기능 추가
+      getEmployeeSearchDialogOnLoadSearch() {
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return bIsEss;
+      },
+
+      getEmployeeSearchDialogCustomOptions() {
+        const mSessionInfo = this.getSessionData();
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return {
+          fieldEnabled: { Persa: !bIsEss, Orgeh: !bIsEss },
+          searchConditions: {
+            Persa: bIsEss ? mSessionInfo.Werks : 'ALL',
+            Orgeh: bIsEss ? mSessionInfo.Orgeh : null,
+            Orgtx: bIsEss ? mSessionInfo.Orgtx : null,
+          },
+        };
+      },
+
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+        const oData = {Pernr: this.getAppointeeProperty('Pernr'), year: oViewModel.getProperty('/year'), month: oViewModel.getProperty('/month')};
+
+        this.onObjectMatched(oData);
+      },
+
     });
   }
 );
