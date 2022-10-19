@@ -14,13 +14,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-    MessageBox,
-    Appno,
-    AppUtils,
-    ComboEntry,
-    Client,
-    ServiceNames,
-    BaseController
+	MessageBox,
+	Appno,
+	AppUtils,
+	ComboEntry,
+	Client,
+	ServiceNames,
+	BaseController
   ) => {
     'use strict';
 
@@ -220,6 +220,7 @@ sap.ui.define(
             Pvcnt: '0',
             Rjcnt: '0',
             Pyyea: oTotal.Zyear,
+            Znametx: oViewModel.getProperty('/TargetList/0/Znametx')
           });
 
           const mSessionData = this.getSessionData();
@@ -321,6 +322,94 @@ sap.ui.define(
         const sTargetPath = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
         const mSelectedDetail = oViewModel.getProperty(sTargetPath);
 
+        // 2022-10-18 입력된 진료내역이 존재할 때 신청대상 변경 시 입력 건 임시저장 여부 확인
+        if(oViewModel.getProperty('/HisList').length != 0){
+          MessageBox.alert(this.getBundleText('MSG_09063'), { // 대상자 변경 시 기입력한 데이터가 삭제됩니다. 임시저장하시겠습니까?
+          title: this.getBundleText('LABEL_09010'), // 저장
+          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
+            onClose: async (fVal) => {
+              // 저장 시 기입력내용 임시저장 + 신청대상 변경 및 신청내역, 진료내역 초기화
+              if (fVal && fVal == this.getBundleText('LABEL_00103')) {
+                AppUtils.setAppBusy(true);
+
+                try {
+                  const mFormData = oViewModel.getProperty('/FormData');
+
+                  if (!mFormData.Appno) {
+                    const sAppno = await Appno.get.call(this);
+
+                    _.chain(mFormData).set('Appno', sAppno).set('Appda', new Date()).commit();
+                  }
+
+                  // FileUpload
+                  if (!!this.AttachFileAction.getFileCount.call(this)) {
+                    await this.AttachFileAction.uploadFile.call(this, mFormData.Appno, this.getApprovalType());
+                  }
+
+                  const aDeleteDatas = oViewModel.getProperty('/RemoveFiles');
+
+                  if (!!aDeleteDatas.length) {
+                    await aDeleteDatas.forEach((e) => {
+                      this.AttachFileAction.deleteFile(e.Appno2, this.getApprovalType());
+                    });
+                  }
+
+                  const oModel = this.getModel(ServiceNames.BENEFIT);
+                  const mSendObject = {
+                    ...mFormData,
+                    Prcty: 'T',
+                    Menid: oViewModel.getProperty('/menid'),
+                    Waers: 'KRW',
+                    MedExpenseItemSet: oViewModel.getProperty('/HisList'),
+                  };
+
+                  await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+
+                  // 신청내역 초기화
+                  oViewModel.setProperty('/FormData/Appno', '');
+                  oViewModel.setProperty('/FormData/Appda', null);
+                  oViewModel.setProperty('/FormData/Apbet', '0');
+                  oViewModel.setProperty('/FormData/Apcnt', '0');
+                  oViewModel.setProperty('/FormData/Zbigo', '');
+                  oViewModel.setProperty('/FormData/Pvbet', '0');
+                  oViewModel.setProperty('/FormData/Pvcnt', '0');
+                  oViewModel.setProperty('/FormData/PybetTot', '0');
+                  oViewModel.setProperty('/FormData/Paymm', '');
+                  oViewModel.setProperty('/FormData/Rjbet', '0');
+                  oViewModel.setProperty('/FormData/Rjcnt', '0');
+                  oViewModel.setProperty('/FormData/ZappResn', '');
+
+                  this.onClearDoc(sTargetPath, mSelectedDetail);
+                } catch (oError) {
+                  AppUtils.handleError(oError);
+                } finally {
+                  AppUtils.setAppBusy(false);
+                }
+              } else {
+                const mDetail = oViewModel.getProperty('/TargetDetails');
+
+                oViewModel.setProperty('/FormData/Adult', mDetail.Adult);
+                oViewModel.setProperty('/FormData/Zname', mDetail.Zname);
+                oViewModel.setProperty('/FormData/Znametx', mDetail.Znametx);
+                oViewModel.setProperty('/FormData/Famsa', mDetail.Famsa);
+                oViewModel.setProperty('/FormData/Objps', mDetail.Objps);
+                oViewModel.setProperty('/FormData/Kdsvh', mDetail.Kdsvh);
+                oViewModel.setProperty('/FormData/Famgb', mDetail.Famgb);
+                oViewModel.setProperty('/FormData/Pratetx', mDetail.Pratetx);
+                oViewModel.setProperty('/FormData/Prate', mDetail.Prate);
+              }
+            }
+          }); 
+        } else {
+          this.onClearDoc(sTargetPath, mSelectedDetail);
+        }         
+      },
+
+      onClearDoc(sTargetPath, mSelectedDetail){
+        if(!sTargetPath || !mSelectedDetail) return;
+
+        const oViewModel = this.getViewModel();
+
         oViewModel.setProperty('/TargetDetails', mSelectedDetail);
         oViewModel.setProperty('/FormData/Adult', mSelectedDetail.Adult);
         oViewModel.setProperty('/FormData/Zname', mSelectedDetail.Zname);
@@ -386,11 +475,12 @@ sap.ui.define(
           return true;
         }
 
+        // 2022-10-18 비고 필수입력 제외
         // 비고
-        if (!mFormData.Zbigo) {
-          MessageBox.alert(this.getBundleText('MSG_09026'));
-          return true;
-        }
+        // if (!mFormData.Zbigo) {
+        //   MessageBox.alert(this.getBundleText('MSG_09026'));
+        //   return true;
+        // }
 
         const aHisList = oViewModel.getProperty('/HisList');
 
@@ -410,6 +500,7 @@ sap.ui.define(
 
         return false;
       },
+
       // 재작성
       onRewriteBtn() {
         const oViewModel = this.getViewModel();
@@ -494,6 +585,11 @@ sap.ui.define(
 
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
+
+              if(!oViewModel.getProperty('/FormData/Lnsta')){
+                oViewModel.setProperty('/FormData/Lnsta', '10');
+                oViewModel.setProperty('/FormData/Lnstatx', this.getBundleText('LABEL_00104')); // 임시저장
+              }              
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
@@ -695,6 +791,9 @@ sap.ui.define(
 
               oInput1.setValue(new Intl.NumberFormat('ko-KR').format(sCost1 || 0));
               oViewModel.setProperty('/DialogData/Bet01', sCost1);
+
+              // oInput1.setValue(new Intl.NumberFormat('ko-KR').format(sCost1 || ''));
+              // oViewModel.setProperty('/DialogData/Bet01', sCost1 == '' ? 0 : sCost1);
               break;
             // 병명/진료과목
             case 2:
@@ -708,6 +807,8 @@ sap.ui.define(
               const sCost2 = e.trim().replace(/[^\d]/g, '');
 
               oInput3.setValue(new Intl.NumberFormat('ko-KR').format(sCost2 || 0));
+              // oInput3.setValue(new Intl.NumberFormat('ko-KR').format(sCost2 || ''));
+
               oViewModel.setProperty('/DialogData/Bet02', sCost2);
               oViewModel.setProperty('/DialogData/Bettot', String(parseInt(sCost2) + parseInt(oViewModel.getProperty('/DialogData/Bet01'))));
               break;
