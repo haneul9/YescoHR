@@ -286,8 +286,10 @@ sap.ui.define(
         } else {
           const oChart = FusionCharts(sChartId);
 
-          oChart.setChartData(mChartSetting, 'json');
-          setTimeout(() => oChart.render(), 200);
+          setTimeout(() => {
+            oChart.setChartData(mChartSetting, 'json');
+            oChart.render();
+          }, 200);
         }
       },
 

@@ -308,8 +308,10 @@ sap.ui.define(
         } else {
           const oChart = FusionCharts(sChartId);
 
-          oChart.setChartData(mChartSetting, 'json');
-          setTimeout(() => oChart.render(), 200);
+          setTimeout(() => {
+            oChart.setChartData(mChartSetting, 'json');
+            oChart.render();
+          }, 200);
         }
       },
 
@@ -346,7 +348,10 @@ sap.ui.define(
           this.oDetailDialog.open();
 
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', { ...mSearchConditions, ..._.omit(mPayload, 'Entity') });
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.PA), _.get(mPayload, 'Entity') === 'A' ? 'HeadCountDetail' : 'HeadCountEntRetDetail', {
+            ...mSearchConditions,
+            ..._.omit(mPayload, 'Entity'),
+          });
 
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
           oViewModel.setProperty('/dialog/totalCount', _.size(aDetailData));

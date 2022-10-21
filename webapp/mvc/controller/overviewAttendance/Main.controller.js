@@ -262,8 +262,10 @@ sap.ui.define(
         } else {
           const oChart = FusionCharts(sChartId);
 
-          oChart.setChartData(mChartSetting, 'json');
-          setTimeout(() => oChart.render(), 200);
+          setTimeout(() => {
+            oChart.setChartData(mChartSetting, 'json');
+            oChart.render();
+          }, 200);
         }
       },
 
@@ -383,7 +385,10 @@ sap.ui.define(
 
           const mSearchConditions = oViewModel.getProperty('/searchConditions');
           const sDetailEntity = _.chain(ChartsSetting.CHART_TYPE).find({ Headty: mPayload.Headty }).get('DetailEntity').value();
-          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, { ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()), ..._.pick(mPayload, ['Headty', 'Discod']) });
+          const aDetailData = await Client.getEntitySet(this.getModel(ServiceNames.WORKTIME), sDetailEntity, {
+            ..._.set(mSearchConditions, 'Datum', moment(mSearchConditions.Datum).hours(9).toDate()),
+            ..._.pick(mPayload, ['Headty', 'Discod']),
+          });
 
           oViewModel.setProperty('/dialog/param', mPayload);
           oViewModel.setProperty('/dialog/rowCount', Math.min(aDetailData.length, 12));
