@@ -14,7 +14,7 @@
           <HBox>
             <Image src="{Photo01}" mode="Background" press=".onPressPhoto">
               <customData>
-                <core:CustomData key="{Pernr}" />
+                <core:CustomData key="{Value16}" />
               </customData>
               <layoutData>
                 <FlexItemData styleClass="photo" />
