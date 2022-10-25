@@ -704,6 +704,13 @@ sap.ui.define(
         oViewModel.setProperty(`${sPath}/Zzjarst`, '');
       },
 
+      // 수정
+      onExModifyBtn(){
+        const oViewModel = this.getViewModel();
+
+        oViewModel.setProperty('/jobDiagnosis/fixed', true);
+      },
+
       // 저장
       onExSaveBtn() {
         this.oDataCall('1', 'LABEL_00103');
@@ -940,9 +947,9 @@ sap.ui.define(
         const oTree = this.byId('codeTree');
 
         oTree.collapseAll();
-        _.each(_.omit(mGroupedByParents, '11000000'), (Noteren, parentId) => _.set(mCatsById, [parentId, 'Noteren'], Noteren));
+        _.each(_.omit(mGroupedByParents, aConvertedList[1].Objid), (Noteren, parentId) => _.set(mCatsById, [parentId, 'Noteren'], Noteren));
 
-        return mGroupedByParents['11000000'];
+        return mGroupedByParents[aConvertedList[1].Objid];
       },
 
       // 직무진단 조회
