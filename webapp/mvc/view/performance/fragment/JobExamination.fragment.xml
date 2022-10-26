@@ -3,6 +3,7 @@
   xmlns:core="sap.ui.core">
   <Dialog id="examDialog" title="{/year} {i18n>LABEL_10034}" contentWidth="1300px">
     <buttons>
+      <Button text="{i18n>LABEL_00108}" visible="{= ${/param/OldStatus} === '4' &amp;&amp; ${/param/OldStatusSub} === '1' &amp;&amp; ${/param/OldStatusPart} === '' &amp;&amp; !${/jobDiagnosis/fixed} }" type="Emphasized" press=".onExModifyBtn" />
       <Button text="{i18n>LABEL_00103}" visible="{/jobDiagnosis/fixed}" type="Emphasized" press=".onExSaveBtn" />
       <Button text="{i18n>LABEL_00117}" visible="{/jobDiagnosis/fixed}" type="Emphasized" press=".onExCompleteBtn" />
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" />

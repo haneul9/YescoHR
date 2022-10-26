@@ -704,11 +704,18 @@ sap.ui.define(
         oViewModel.setProperty(`${sPath}/Zzjarst`, '');
       },
 
-      // 수정
+      // 직무진단 수정(문서상태: 평가실시-자기평가필요('4'-'1'-'')의 경우 수정 기능 추가)
       onExModifyBtn(){
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/jobDiagnosis/fixed', true);
+        
+        const aList = oViewModel.getProperty('/jobDiagnosis/list');
+        oViewModel.setProperty('/jobDiagnosis/list', 
+          _.forEach(aList, (o) => {
+            _.set(o, 'Zdeactive', '');
+          })
+        );
       },
 
       // 저장
