@@ -728,6 +728,25 @@ sap.ui.define(
         this.oDataCall('2', 'LABEL_00117');
       },
 
+      setCodeList(aDeepList){
+        const oViewModel = this.getViewModel();
+        AppUtils.setAppBusy(true);
+
+        try{
+          _.forEach(aDeepList, async (e, i) => {
+            const oData = $.extend(true, {}, e);
+            const aCodeList = await this.getJobDiagnosisCode1(oData.Zcode);
+  
+            oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }));
+            oViewModel.setProperty(`/jobDiagnosis/list/${i}/Zzjarst`, oData.Zzjarst);
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false);
+        }
+      },
+
       oDataCall(sKey, sTitle) {
         const bType = sKey === '1';
 
@@ -769,6 +788,8 @@ sap.ui.define(
                   if (!bType) {
                     this.byId('examDialog').close();
                     oViewModel.setProperty('/jobDiagnosis/fixed', false);
+                  } else {
+                    this.setCodeList(aDeepList);
                   }
                 },
               });
