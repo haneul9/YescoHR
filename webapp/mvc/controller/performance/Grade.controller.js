@@ -40,12 +40,13 @@ sap.ui.define(
 
         try {
           this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
-          
+
           const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'Appraisal2GradeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
             Zzappgb: Constants.APPRAISER_TYPE.MB,
             Menid: this.getCurrentMenuId(),
             Werks: this.getAppointeeProperty('Werks'),
+            Zzapper: this.getAppointeeProperty('Pernr')
           });
 
           this.setTableData({ oViewModel, aRowData });
@@ -80,6 +81,40 @@ sap.ui.define(
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
         this.getRouter().navTo('m/performanceGrade-detail', { group: oRowData.Zzappgr });
+      },
+
+      getEmployeeSearchDialogOnLoadSearch() {
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return bIsEss;
+      },
+
+      getEmployeeSearchDialogCustomOptions() {
+        const mSessionInfo = this.getSessionData();
+        const bIsEss = !this.isHass() && !this.isMss();
+
+        return {
+          fieldEnabled: { Persa: !bIsEss, Orgeh: !bIsEss },
+          searchConditions: {
+            Persa: bIsEss ? mSessionInfo.Werks : 'ALL',
+            Orgeh: bIsEss ? mSessionInfo.Orgeh : null,
+            Orgtx: bIsEss ? mSessionInfo.Orgtx : null,
+          },
+        };
+      },
+
+      async callbackAppointeeChange() {
+        const oViewModel = this.getViewModel();
+
+        const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'Appraisal2GradeList', {
+          Prcty: Constants.PROCESS_TYPE.LIST.code,
+          Zzappgb: Constants.APPRAISER_TYPE.MB,
+          Menid: this.getCurrentMenuId(),
+          Werks: this.getAppointeeProperty('Werks'),
+          Zzapper: this.getAppointeeProperty('Pernr')
+        });
+
+        this.setTableData({ oViewModel, aRowData });
       },
 
       /*****************************************************************
