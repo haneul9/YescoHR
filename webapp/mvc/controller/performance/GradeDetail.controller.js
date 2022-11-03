@@ -92,7 +92,7 @@ sap.ui.define(
 
         try {
           const oView = this.getView();
-          const oListView = oView.getParent().getPage('container-ehr---m_performanceGrade');
+          const oListView = this.isHass() ? oView.getParent().getPage('container-ehr---h_performanceGrade') : oView.getParent().getPage('container-ehr---m_performanceGrade');
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
             throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
@@ -162,7 +162,7 @@ sap.ui.define(
           this.debug(`Controller > m/performanceGrade Grade > onObjectMatched Error`, oError);
 
           AppUtils.handleError(oError, {
-            onClose: () => this.getRouter().navTo('m/performanceGrade'),
+            onClose: () => this.getRouter().navTo(this.isHass() ? 'h/performanceGrade' : 'm/performanceGrade'),
           });
         } finally {
           oViewModel.setProperty('/busy', false);

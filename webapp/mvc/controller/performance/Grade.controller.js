@@ -80,7 +80,7 @@ sap.ui.define(
         // }
 
         oViewModel.setProperty('/parameter/rowData', { ...oRowData });
-        this.getRouter().navTo('m/performanceGrade-detail', { group: oRowData.Zzappgr });
+        this.getRouter().navTo((this.isHass() ? 'h/performanceGrade-detail' : 'm/performanceGrade-detail'), { group: oRowData.Zzappgr });
       },
 
       getEmployeeSearchDialogOnLoadSearch() {
