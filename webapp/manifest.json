@@ -304,6 +304,8 @@
         { "pattern": "h/performanceSry/{sType}/{sYear}", "name": "h/performanceSry-detail", "target": "performanceDetail" },
         { "pattern": "m/performanceGrade", "name": "m/performanceGrade", "target": "m/performanceGrade" },
         { "pattern": "m/performanceGrade/{group}", "name": "m/performanceGrade-detail", "target": "m/performanceGradeDetail" },
+        { "pattern": "h/performanceGrade", "name": "h/performanceGrade", "target": "h/performanceGrade" },
+        { "pattern": "h/performanceGrade/{group}", "name": "h/performanceGrade-detail", "target": "h/performanceGradeDetail" },
         { "pattern": "m/performanceSession", "name": "m/performanceSession", "target": "m/performanceSession" },
 
         { "pattern": "referenceRoom", "name": "referenceRoom", "target": "referenceRoom" },
@@ -565,6 +567,8 @@
         "h/performanceSry": { "viewId": "h_performanceSry", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "ListSecondaryH" },
         "m/performanceGrade": { "viewId": "m_performanceGrade", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Grade" },
         "m/performanceGradeDetail": { "viewId": "m_performanceGradeDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "GradeDetail" },
+        "h/performanceGrade": { "viewId": "h_performanceGrade", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Grade" },
+        "h/performanceGradeDetail": { "viewId": "h_performanceGradeDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "GradeDetail" },
         "m/performanceSession": { "viewId": "m_performanceSession", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Session" },
         "performanceDetail": { "viewId": "performanceDetail", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Detail" },
         "performanceView": { "viewId": "performanceView", "viewPath": "sap.ui.yesco.mvc.view.performance", "viewName": "Document" },

@@ -39,6 +39,8 @@ sap.ui.define(
         oViewModel.setProperty('/busy', true);
 
         try {
+          this.getAppointeeModel().setProperty('/showBarChangeButton', this.isHass());
+          
           const aRowData = await Client.getEntitySet(this.getModel(ServiceNames.APPRAISAL), 'Appraisal2GradeList', {
             Prcty: Constants.PROCESS_TYPE.LIST.code,
             Zzappgb: Constants.APPRAISER_TYPE.MB,
