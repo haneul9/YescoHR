@@ -74,6 +74,7 @@ sap.ui.define(
             fixed: true,
             list: [{ codeList: [] }],
             rowCount: 1,
+            modify: false // 직무진단 수정 가능여부
           },
           stage: {
             headers: [],
@@ -314,6 +315,17 @@ sap.ui.define(
               return e.Zdeactive !== 'X';
             })
           );
+
+          // 2022-11-10 직무진단 수정 가능여부 플래그
+          let bModyn = false;
+          if(mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === ''){ // 자기평가필요
+            bModyn = true;
+          } else if(mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === 'A'){ // 1차평가중
+            bModyn = true;
+          }
+
+          oViewModel.setProperty('/jobDiagnosis/modify', bModyn);
+
         } catch (oError) {
           this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
@@ -705,15 +717,29 @@ sap.ui.define(
       },
 
       // 직무진단 수정(문서상태: 평가실시-자기평가필요('4'-'1'-'')의 경우 수정 기능 추가)
+      // 2022-11-10 문서상태 1차평가중(4-1-A) 추가: Appgb(평가구분) = 'MA'인 경우만 open
       onExModifyBtn(){
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/jobDiagnosis/fixed', true);
         
         const aList = oViewModel.getProperty('/jobDiagnosis/list');
+        const aData = oViewModel.getProperty('/param');
+        
+        let vStatus = ''; // 문서상태가 '1차평가중'인 경우 X
+        if(aData.OldStatus === '4' && aData.OldStatusSub === '1' && aData.OldStatusPart === 'A'){
+          vStatus = 'X';
+        }
+
         oViewModel.setProperty('/jobDiagnosis/list', 
           _.forEach(aList, (o) => {
-            _.set(o, 'Zdeactive', '');
+            if(vStatus === 'X'){
+              if(o.Appgb === 'MA'){
+                _.set(o, 'Zdeactive', '');
+              }
+            } else {
+              _.set(o, 'Zdeactive', '');
+            }
           })
         );
       },
