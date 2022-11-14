@@ -190,7 +190,8 @@ sap.ui.define(
             onClose: () => {
               if (this.isMobile()) {
                 // from=logoff : 모바일(iOS)에서 로그아웃 후 생체인증으로 바로 다시 로그인 되어버리는 현상 방지를 위해 추가
-                location.href = '/sap/public/bc/icf/logoff?from=logoff';
+                // location.href = '/sap/public/bc/icf/logoff?from=logoff';
+                location.href = '/sap/public/bc/icf/logoff';
               } else {
                 if (this.isPRD()) {
                   location.reload(); // 운영은 SSO가 있기때문에 /sap/public/bc/icf/logoff 호출 금지
