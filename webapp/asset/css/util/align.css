@@ -20,6 +20,10 @@
 .d-none {display:none !important}
 .d-inherit {display:inherit !important}
 .d-initial {display:initial !important}
+.flex-left {justify-content:flex-start}
+.flex-center {justify-content:center}
+.flex-right {justify-content:flex-end}
+.flex-middle {align-items:center}
 
 .overflow-auto {overflow:auto !important}
 .overflow-hidden {overflow:hidden !important}

@@ -413,7 +413,7 @@ html.sap-desktop .sapMBtn:focus>.sapMFocusable {outline:none; outline-offset:-0.
 .sapMInputBaseContentWrapper {border-width:1px !important; border-color:var(--BorderColorNormal); border-radius:3px} /* Input, TextArea 공통 */
 .sapMSlt {border-radius:3px}
 .sapMCb .sapMCbBg {border-radius:3px}
-div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px}
+div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px; line-height:16px; font-size:16px}
 .radio-selection-table div.sapUiTableRowSelectionCell::after { border-radius:8px; }
 .sapUiTableSelModeMultiToggle.radio-selection-table .sapUiTableRowSel .sapUiTableRowSelectionCell::after { content: '\e255'; padding-left: 1px; padding-bottom: 0.1px; }
 
@@ -1075,15 +1075,17 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 /*radio*/
 .sapUiSizeCompact .sapMRbG .sapMRbBLabel {padding-left:29px}
 .sapUiSizeCompact .sapMRbBLabel {line-height:32px; height:32px; font-size:15px; font-weight:500; font-stretch:normal; font-style:normal; letter-spacing:normal; text-align:left; color:#222}
-.sapUiSizeCompact .sapMCbBg {width:14px; height:14px}
+.sapUiSizeCompact .sapMCb {height:100%}
+.sapUiSizeCompact .sapMCbBg {top:calc(50% - 10px); left:0; width:18px; height:18px}
+.sapUiSizeCompact .sapMCbBg.sapMCbMarkChecked {top:calc(50% - 11px)}
 .sapMCb label {font-size:14px; font-weight:500; font-stretch:normal; font-style:normal; line-height:32px; letter-spacing:normal; text-align:left; color:#222}
-.sapMCbBg.sapMCbMarkChecked:before {color:#427cac; font-size:12px; line-height:16px}
+.sapMCbBg.sapMCbMarkChecked:before {font-size:16px; line-height:17px}/* color:#427cac */
 .sapUiSizeCompact .sapMRb>.sapMLabel {max-width:fit-content}
 .sapMCbBg.sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before {content:""; width:8px; height:8px; background-color:currentColor; border:1px solid transparent; box-sizing:border-box; background-clip:padding-box; margin-top:3px}
 .sapUiSizeCompact.sapMCb .sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before, .sapUiSizeCompact .sapMCbBg.sapMCbMarkChecked.sapMCbMarkPartiallyChecked:before {border-width:0px}
 
 /* custom style checkbox */
-.type-b .sapMCbBg {width:20px; height:20px}
+.type-b .sapMCbBg {width:20px; height:20px; border-width:2px}
 .type-b.sapMCb .sapMCbBg, .type-b.sapMCb .sapMCbMarkChecked {border-color:transparent !important}
 .type-b .sapMCbBg>input {display:none}
 .type-b .sapMCbBg.sapMCbMarkChecked:before {content:""; display:inline-block; width:20px; height:20px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_check_on.png'); background-size:20px}
@@ -1518,6 +1520,8 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 
 .sapUiLayoutCSSGrid.form-grid.type-comp .firstInputWrap {padding-left:1px; padding-right:7px}
 .sapUiLayoutCSSGrid.form-grid.type-comp .secondInputWrap {padding-left:5px; padding-right:4px}
+
+.sapUiLayoutCSSGrid.form-grid > .sapMText {height:48px}
 
 .search-head .sapMLabel {font-size:18px; font-weight:800; letter-spacing:-0.2px}
 
@@ -2553,3 +2557,14 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 .custom-clearable-input.sapMInputBaseHasBeginIcons .sapMInputBaseInner {width:calc(100% - 4.25rem)}
 .custom-clearable-input .sapMInputDescriptionWrapper {box-sizing:border-box; width:auto !important; padding-left:10px; height:36px}
 .custom-clearable-input .sapMInputDescriptionWrapper .sapMInputDescriptionText {padding:0 10px; line-height:36px; background-color:#ebf5fe}
+
+.right-aligned-currency .currency .sapMInputBaseInner {text-align:right}
+.right-aligned-currency .currency.sapMText {justify-content:flex-end}
+.sapUiLayoutCSSGrid.form-grid:not(.form-search) .currency[data-padding="O"] input[readonly="readonly"] {padding-right:11px !important}
+.currency.sapMText[data-padding="O"] {padding-right:11px}
+
+.white-space-pre-wrap {white-space:pre-wrap !important}
+
+.sapUiLayoutCSSGrid.form-grid .sapMFlexBox.multi-line > .sapMFlexItem {min-height:auto !important}
+
+.top-13-px {top:13px}

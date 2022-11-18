@@ -23,7 +23,7 @@
       </VBox>
       <Label text="{i18n>LABEL_05007}"/>
       <VBox>
-        <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onShcoolList" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
+        <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onSchoolList" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
           <core:Item text="{Atext}" key="{Auspr}" />
         </ComboBox>
       </VBox>

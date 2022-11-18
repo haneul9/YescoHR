@@ -531,7 +531,8 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalMonthPicker,
 .sapUiSizeCompact .sapUiCalContent>.sapUiCalYearPicker {margin-left:0; width:100%; top:0; left:0; padding:10px 0 0 0}
 .sapUiSizeCompact .sapMCb {height:24px}
-.sapUiSizeCompact .sapMCbBg {top:0; left:0}
+.sapUiSizeCompact .sapMCbBg,
+.sapUiSizeCompact .sapMCbBg.sapMCbMarkChecked {top:0; left:0}
 div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px}
 
 .sapMIBar.sapMTB .sapMBarChild.button-mimic-link {margin:0 6px !important; line-height:40px; border-radius:4px; border-color:#1d87bd; font-size:15px; color:#fff; background-color:#1d87bd}

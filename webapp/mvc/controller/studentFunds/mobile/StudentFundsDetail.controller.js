@@ -22,7 +22,7 @@ sap.ui.define(
   ) => {
     'use strict';
 
-    return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.StudentFundsDetail', {
+    return BaseController.extend('sap.ui.yesco.mvc.controller.studentFunds.mobile.StudentFundsDetail', {
       initializeModel() {
         return {
           previousName: '',
@@ -42,18 +42,15 @@ sap.ui.define(
         };
       },
 
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+      getCurrentLocationText({ oDataKey }) {
+        return oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
       },
 
       getPreviousRouteName() {
         return this.getViewModel().getProperty('/previousName');
       },
 
-      async onObjectMatched(oParameter, sRouteName) {
-        const sDataKey = oParameter.oDataKey;
+      async onObjectMatched({ oDataKey }, sRouteName) {
         const oViewModel = this.getViewModel();
         const sMenid = this.getCurrentMenuId();
 
@@ -73,7 +70,8 @@ sap.ui.define(
           oViewModel.setProperty('/AcademicSortHide', aAcademicList);
           oViewModel.setProperty('/AcademicSort', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aAcademicList }));
           oViewModel.setProperty('/GradeList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aGradeList }));
-          this.getTargetData(sDataKey);
+
+          this.getTargetData(oDataKey);
         } catch (oError) {
           this.debug(oError);
           AppUtils.handleError(oError);
@@ -87,30 +85,29 @@ sap.ui.define(
         const oModel = this.getModel(ServiceNames.BENEFIT);
         const sWerks = this.getSessionProperty('Werks');
         const sPernr = this.getAppointeeProperty('Pernr');
+        const oDate = new Date();
 
         return Promise.all([
           // 신청대상 조회
-          await Client.getEntitySet(oModel, 'SchExpenseSupportList', {
-            Datum: new Date(),
+          Client.getEntitySet(oModel, 'SchExpenseSupportList', {
+            Datum: oDate,
             Pernr: sPernr,
           }),
-
           // 학력구분 조회
-          await Client.getEntitySet(oModel, 'BenefitCodeList', {
+          Client.getEntitySet(oModel, 'BenefitCodeList', {
             Cdnum: 'BE0006',
             Werks: sWerks,
-            Datum: new Date(),
             Pernr: sPernr,
+            Datum: oDate,
           }),
-
           // 학년 조회
-          await Client.getEntitySet(oModel, 'BenefitCodeList', {
+          Client.getEntitySet(oModel, 'BenefitCodeList', {
             Cdnum: 'BE0004',
             Grcod: 'BE000002',
             Sbcod: 'GRADE',
             Werks: sWerks,
-            Datum: new Date(),
             Pernr: sPernr,
+            Datum: oDate,
           }),
         ]);
       },
@@ -127,13 +124,13 @@ sap.ui.define(
 
         try {
           if (bSelected) {
-            this.getViewModel().setProperty('/FormData/Forsch', 'X');
+            oViewModel.setProperty('/FormData/Forsch', 'X');
 
             const [oList] = await this.getSupAmount();
 
             oViewModel.setProperty('/LimitAmount', oList);
           } else {
-            this.getViewModel().setProperty('/FormData/Forsch', '');
+            oViewModel.setProperty('/FormData/Forsch', '');
           }
 
           this.totalCost();
@@ -163,7 +160,7 @@ sap.ui.define(
         const mFormData = oViewModel.getProperty('/FormData');
         const mFilters = _.pick(mFormData, ['Slart', 'Zname', 'Zzobjps', 'Grdsp', 'Zyear']);
 
-        return await Client.getEntitySet(oModel, 'SchExpenseLimitAmt', _.set(mFilters, 'Pernr', this.getAppointeeProperty('Pernr')));
+        return Client.getEntitySet(oModel, 'SchExpenseLimitAmt', _.set(mFilters, 'Pernr', this.getAppointeeProperty('Pernr')));
       },
 
       // 학자금 총액
@@ -177,9 +174,7 @@ sap.ui.define(
         const iCostD = parseInt(mFormData.ZbetExer) || 0;
         const iCostE = parseInt(mFormData.ZbetSuf) || 0;
         const iCostF = parseInt(mFormData.ZbetEtc) || 0;
-        let iCostG = parseInt(mFormData.ZbetTotl) || 0;
-
-        iCostG = iCostA + iCostB + iCostC + iCostD + iCostE + iCostF;
+        const iCostG = iCostA + iCostB + iCostC + iCostD + iCostE + iCostF;
 
         oViewModel.setProperty('/FormData/ZbetTotl', String(iCostG));
 
@@ -211,7 +206,7 @@ sap.ui.define(
         const mAppointeeData = this.getAppointeeData();
 
         if (sAppno === 'N' || !sAppno) {
-          oViewModel.setProperty('/FormData', mSessionData);
+          // oViewModel.setProperty('/FormData', mSessionData);
           oViewModel.setProperty('/FormData', {
             Apename: mSessionData.Ename,
             Appernr: mSessionData.Pernr,
@@ -663,14 +658,14 @@ sap.ui.define(
         });
       },
 
-      // 취소
+      // 신청취소
       onCancelBtn() {
-        // {취소}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
+        // {신청취소}하시겠습니까?
+        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00122'), {
           // 확인, 취소
           actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
           onClose: async (vPress) => {
-            // 취소
+            // 확인
             if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
               return;
             }
@@ -689,7 +684,7 @@ sap.ui.define(
 
               await Client.create(oModel, 'SchExpenseAppl', mSendObject);
 
-              // {취소}되었습니다.
+              // {신청}이 취소되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
                 onClose: () => {
                   this.onNavBack();

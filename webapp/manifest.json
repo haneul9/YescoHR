@@ -321,6 +321,8 @@
         { "pattern": "studentFunds/{oDataKey}", "name": "studentFunds-detail", "target": "studentFundsDetail" },
         { "pattern": "h/studentFunds", "name": "h/studentFunds", "target": "h/studentFunds" },
         { "pattern": "h/studentFunds/{oDataKey}", "name": "h/studentFunds-detail", "target": "studentFundsDetail" },
+        { "pattern": "mobile/studentFunds", "name": "mobile/studentFunds", "target": "mobile/studentFunds" },
+        { "pattern": "mobile/studentFunds/{oDataKey}", "name": "mobile/studentFunds-detail", "target": "mobile/studentFundsDetail" },
 
         { "pattern": "m/talent", "name": "m/talent", "target": "m/talent" },
         { "pattern": "mobile/m/talent", "name": "mobile/m/talent", "target": "mobile/m/talent" },
@@ -585,6 +587,8 @@
         "h/studentFunds": { "viewId": "h_studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsH" },
         "studentFunds": { "viewId": "studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFunds" },
         "studentFundsDetail": { "viewId": "studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds", "viewName": "StudentFundsDetail" },
+        "mobile/studentFunds": { "viewId": "mobile_studentFunds", "viewPath": "sap.ui.yesco.mvc.view.studentFunds.mobile", "viewName": "StudentFunds" },
+        "mobile/studentFundsDetail": { "viewId": "mobile_studentFundsDetail", "viewPath": "sap.ui.yesco.mvc.view.studentFunds.mobile", "viewName": "StudentFundsDetail" },
 
         "m/talent": { "viewId": "m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent", "viewName": "Talent" },
         "mobile/m/talent": { "viewId": "mobile_m_talent", "viewPath": "sap.ui.yesco.mvc.view.talent.mobile", "viewName": "Talent" },
