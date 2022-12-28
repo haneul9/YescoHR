@@ -125,11 +125,7 @@ sap.ui.define(
       },
 
       toggleDeviceStyle() {
-        if (this.bIsMobile) {
-          $('#desktopstyle').remove();
-        } else {
-          $('#mobilestyle').remove();
-        }
+        $('head').append(`<link rel="stylesheet" href="./asset/css/${this.bIsMobile ? 'mobile-' : ''}style.css?_=${new Date().getTime()}" />`);
         return this;
       },
 
@@ -211,7 +207,7 @@ sap.ui.define(
 
       setMobilePopoverStacker() {
         if (!this.bIsMobile) {
-          return;
+          return this;
         }
         this.aMobilePopoverStacker = [];
         $(document).on('click', '#sap-ui-blocklayer-popup', () => {
@@ -352,7 +348,11 @@ sap.ui.define(
 
             oView.setVisible(true); // 반드시 onObjectMatched 이전에 실행되야함
 
-            if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
+            if (oController && oController.onObjectMatchedForRequestList && typeof oController.onObjectMatchedForRequestList === 'function') {
+              oController.onObjectMatchedForRequestList(mRouteArguments, sRouteName);
+            } else if (oController && oController.onObjectMatchedForRequestDetail && typeof oController.onObjectMatchedForRequestDetail === 'function') {
+              oController.onObjectMatchedForRequestDetail(mRouteArguments, sRouteName);
+            } else if (oController && oController.onObjectMatched && typeof oController.onObjectMatched === 'function') {
               oController.onObjectMatched(mRouteArguments, sRouteName);
             }
 
@@ -377,7 +377,7 @@ sap.ui.define(
         const [sRouteNameMain, sRouteNameSub] = sRouteName.split(/-/);
 
         return Promise.all([
-          this._saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), //
+          this._saveBreadcrumbsData({ mRouteArguments, mConfig, sRouteNameMain, sRouteNameSub, oController }), // prettier 방지용 주석
           this._checkRouteName(sRouteNameMain),
         ]);
       },

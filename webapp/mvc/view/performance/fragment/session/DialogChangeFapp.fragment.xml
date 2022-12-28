@@ -21,43 +21,43 @@
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00209}"/>
                 <template>
-                  <m:Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00210}"/>
                 <template>
-                  <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00215}"/>
                 <template>
-                  <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_10094}"/>
                 <template>
-                  <m:Text text="{Zzappuntx2}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Zzappuntx2}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00224}"/>
                 <template>
-                  <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_10003}"/>
                 <template>
-                  <m:Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_10004}"/>
                 <template>
-                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">

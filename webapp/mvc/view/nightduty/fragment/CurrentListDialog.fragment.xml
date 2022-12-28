@@ -24,55 +24,55 @@
           <Column width="12%" filterProperty="Datum" sortProperty="Datum">
             <m:Label text="{i18n>LABEL_06101}" />
             <template>
-              <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="6%" filterProperty="Kurzt" sortProperty="Kurzt">
             <m:Label text="{i18n>LABEL_06102}" />
             <template>
-              <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="6%" filterProperty="Tagty" sortProperty="Tagty">
             <m:Label text="{i18n>LABEL_06103}" />
             <template>
-              <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="18%" filterProperty="Awart" sortProperty="Atext">
             <m:Label text="{i18n>LABEL_06104}" />
             <template>
-              <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="7%" filterProperty="Ocshf" sortProperty="Ocshf">
             <m:Label text="{i18n>MSG_06006}" />
             <template>
-              <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="10%" filterProperty="PernrB" sortProperty="PernrB">
             <m:Label text="{i18n>LABEL_00209}" />
             <template>
-              <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="12%" filterProperty="EnameB" sortProperty="EnameB">
             <m:Label text="{i18n>LABEL_00210}" />
             <template>
-              <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column filterProperty="OrgtxB" sortProperty="OrgtxB">
             <m:Label text="{i18n>LABEL_00224}" />
             <template>
-              <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
           <Column width="9%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
             <m:Label text="{i18n>LABEL_00215}" />
             <template>
-              <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+              <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
             </template>
           </Column>
         </columns>

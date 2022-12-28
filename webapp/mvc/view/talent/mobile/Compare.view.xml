@@ -22,7 +22,7 @@
                     </layoutData>
                     <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                     <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />
-                    <Text text="{text}" width="100%" textAlign="Center" visible="{= !!${text} }" />
+                    <Text text="{ path: 'text', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" width="100%" textAlign="Center" visible="{= !!${text} }" />
                   </VBox>
                 </VBox>
               </l:BlockLayoutCell>

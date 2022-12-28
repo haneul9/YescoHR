@@ -12,16 +12,38 @@
         <SegmentedButtonItem text="..." key="0" />
       </items>
     </SegmentedButton>
-    <custom:DateRangeSelection visible="{/search/dateBox}" dateValue="{ path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onSearchRange" placeholder="Calendar" class="sapIcon_Date calendar-popover" />
+    <custom:DateRangeSelection dateValue="{
+      path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date'
+    }" secondDateValue="{
+      path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date'
+    }" visible="{/search/dateBox}" change=".onSearchRange" placeholder="Calendar" class="sapIcon_Date calendar-popover" />
+    <custom:SingleComboBox width="100%" items="{/search/entry/select1}" selectedKey="{/search/select1}" visible="{= !!${/search/visible/select1} }" selectionChange=".onChangeSelect1">
+      <custom:layoutData>
+        <FlexItemData styleClass="mt-8-px" growFactor="1" />
+      </custom:layoutData>
+      <core:Item key="{code}" text="{text}" />
+    </custom:SingleComboBox>
+    <custom:SingleComboBox width="100%" items="{/search/entry/select2}" selectedKey="{/search/select2}" visible="{= !!${/search/visible/select2} }" selectionChange=".onChangeSelect2">
+      <custom:layoutData>
+        <FlexItemData styleClass="mt-8-px" growFactor="1" />
+      </custom:layoutData>
+      <core:Item key="{code}" text="{text}" />
+    </custom:SingleComboBox>
   </VBox>
-  <!-- <HBox justifyContent="SpaceBetween" class="list-wrap"> -->
   <HBox justifyContent="SpaceBetween" class="header-wrap">
     <HBox class="header">
       <Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }" class="sapUiSmallMarginEnd" />
-      <Text text="total {/listInfo/totalCount}" />
-      <Text text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" />
+      <Text text="total { path: '/listInfo/totalCount', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Link text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" subtle="true" press=".onPressMobileInfoMessage">
+        <layoutData>
+          <FlexItemData maxWidth="50%" />
+        </layoutData>
+      </Link>
     </HBox>
-    <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".openMobileCommonListStatusPop" visible="{/listInfo/Popover}" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
+    <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".openMobileCommonListStatusPop" visible="{/listInfo/Popover}" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
+      <layoutData>
+        <FlexItemData styleClass="header-info-icon" />
+      </layoutData>
+    </Image>
   </HBox>
-  <!-- </HBox> -->
 </core:FragmentDefinition>

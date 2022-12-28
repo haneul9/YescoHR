@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid">
+  <HBox class="table-toolbar">
+    <HBox class="title">
+      <Title level="H2" text="{i18n>LABEL_00135}" />
+    </HBox>
+  </HBox>
+  <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+    <Label text="{i18n>LABEL_00210}" />
+    <Text text="{/Requestor/Apename}" />
+    <Label text="{i18n>LABEL_00226}" />
+    <Text text="{/Requestor/Aporgtx}" />
+    <Label text="{i18n>LABEL_00136}" />
+    <Text text="{/Requestor/Apjikgbtl}" />
+    <Label text="{i18n>LABEL_00137}" />
+    <Text text="{/Requestor/Appdt}" />
+  </grid:CSSGrid>
+</core:FragmentDefinition>

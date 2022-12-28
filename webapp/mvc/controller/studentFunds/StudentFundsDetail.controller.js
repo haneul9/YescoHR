@@ -42,10 +42,8 @@ sap.ui.define(
         };
       },
 
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+      getCurrentLocationText({ oDataKey }) {
+        return oDataKey === 'N' ? this.getBundleText('LABEL_00134') : this.getBundleText('LABEL_00165'); // 신규신청 : 상세
       },
 
       getPreviousRouteName() {
@@ -540,7 +538,7 @@ sap.ui.define(
         if (!(sWerks === '2000' && (mFormData.Slart === '03' || mFormData.Slart === '04'))) {
           // 첨부파일
           if (!this.AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
-            MessageBox.alert(this.getBundleText('MSG_03005'));
+            MessageBox.alert(this.getBundleText('MSG_03005')); // 신청 시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.
             return true;
           }
         }
@@ -743,7 +741,7 @@ sap.ui.define(
         const sAppno = mFormData.Appno || '';
 
         this.AttachFileAction.setAttachFile(this, {
-          Editable: !mFormData.Status || mFormData.Status === '10',
+          Editable: !mFormData.ZappStatAl || mFormData.ZappStatAl === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'), // 증빙자료를 꼭 등록하세요.

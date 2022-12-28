@@ -16,19 +16,19 @@
         <table:Column width="auto" sortProperty="Wktxt" filterProperty="Wktxt">
           <Label text="{i18n>LABEL_18012}"/>
           <table:template>
-            <Text text="{Wktxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Wktxt}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="60px" sortProperty="Val01" filterProperty="Val01">
           <Label text="{i18n>LABEL_16005}"/>
           <table:template>
-            <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="60px" sortProperty="Val02" filterProperty="Val02">
           <Label text="{i18n>LABEL_16011}"/>
           <table:template>
-            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
       </table:Table>
@@ -36,25 +36,25 @@
         <table:Column width="auto" sortProperty="Ottxt" filterProperty="Ottxt">
           <Label text="{i18n>LABEL_18013}"/>
           <table:template>
-            <Text text="{Ottxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Ottxt}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="60px" sortProperty="Val01" filterProperty="Val01">
           <Label text="{i18n>LABEL_18014}"/>
           <table:template>
-            <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Val01}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="60px" sortProperty="Val02" filterProperty="Val02">
           <Label text="{i18n>LABEL_13025}"/>
           <table:template>
-            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Val02}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="60px" sortProperty="Val03" filterProperty="Val03">
           <Label text="{i18n>LABEL_13028}"/>
           <table:template>
-            <Text text="{Val03}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Val03}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
       </table:Table>

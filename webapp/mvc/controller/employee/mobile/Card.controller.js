@@ -127,6 +127,12 @@ sap.ui.define(
             '/results',
             _.map(aSearchResults, (o) => ({ ...o, Photo: _.isEmpty(o.Photo) ? sUnknownAvatarImageURL : o.Photo }))
           );
+
+          if (aSearchResults.length > 0) {
+            const sControId = this.byId('employeeSearchField').getId();
+
+            $(`#${sControId}-I`).blur();
+          }
         } catch (oError) {
           this.debug('Controller > Mobile-Employee-Card > onPressEmployeeSearch Error', oError);
 

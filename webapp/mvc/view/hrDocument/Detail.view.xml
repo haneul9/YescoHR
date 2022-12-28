@@ -1,0 +1,79 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.hrDocument.Detail"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false" busyIndicatorDelay="0" busy="{/contentsBusy/page}">
+        <VBox class="contents-header">
+            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                <custom:Breadcrumbs />
+                <HBox class="button-group">
+                    <Button text="{i18n>LABEL_49003}" type="Emphasized" visible="{= ${/mode} === 'A' }" busyIndicatorDelay="0" busy="{/contentsBusy/button}" press=".onSave" />
+                    <Button text="{i18n>LABEL_49004}" type="Emphasized" visible="{= ${/mode} === 'D' }" busyIndicatorDelay="0" busy="{/contentsBusy/button}" press=".onDownload" />
+                    <Button text="{i18n>LABEL_00146}" press=".onNavBack" />
+                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />
+                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <HBox class="contents">
+            <VBox class="vCardBox" width="70%">
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{/form/Hrdocttl}" />
+                    </HBox>
+                </HBox>
+                <HBox justifyContent="Center" width="100%" height="100%" busyIndicatorDelay="0" busy="{/contentsBusy/document}">
+                    <core:HTML id="preview-box-container" content='&lt;div class="preview-box"&gt;&lt;/div&gt;' />
+                </HBox>
+            </VBox>
+            <VBox width="30%" class="vCardBox sticky-box alignSelfFlexStart top-80-px sapUiTinyMarginBegin mt-0">
+                <HBox alignItems="Center" class="table-toolbar">
+                    <HBox class="title">
+                        <Title level="H2" text="{= ${/mode} === 'A' ? ${i18n>LABEL_49005} : ${i18n>LABEL_49007} }" />
+                    </HBox>
+                </HBox>
+                <VBox width="100%" visible="{= ${/mode} === 'A' }" busyIndicatorDelay="0" busy="{/contentsBusy/signature}">
+                    <HBox justifyContent="Center" width="100%">
+                        <VBox>
+                            <custom:Signature id="signature-pad" width="380" height="240" class="sapUiSmallMarginEnd" />
+                            <HBox justifyContent="End" class="mr-16-px">
+                                <Button text="{i18n>LABEL_49006}" press=".onPressSignatureClear" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+                <VBox width="100%" visible="{= ${/mode} === 'D' }">
+                    <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="1px 0px" class="form-grid" busyIndicatorDelay="0" busy="{/contentsBusy/document}">
+                        <HBox alignItems="Center" class="pl-18-px">
+                            <layoutData>
+                                <grid:GridItemLayoutData gridColumn="span 2" />
+                            </layoutData>
+                            <Image src="{/submitInfo/Photo}" mode="Background" class="members-photo" error=".loadErrorAvatarImage">
+                                <layoutData>
+                                    <FlexItemData styleClass="members-photo-box" />
+                                </layoutData>
+                            </Image>
+                            <Text text="{/submitInfo/Ename}" tooltip="{/submitInfo/Ename}" class="members-name" />
+                            <Text text="{/submitInfo/Zzjikgbt}" tooltip="{/submitInfo/Zzjikgbt}" class="members-position" />
+                            <Text text="{/submitInfo/Orgtx}" tooltip="{/submitInfo/Orgtx}" class="members-depart" />
+                        </HBox>
+                        <Label text="{i18n>LABEL_49008}" />
+                        <HBox>
+                            <Text text="{/submitInfo/Smdat}" />
+                        </HBox>
+                        <Label text="{i18n>LABEL_49009}" />
+                        <HBox>
+                            <Text text="{/submitInfo/Pcip}" />
+                        </HBox>
+                        <Label text="{i18n>LABEL_49010}" />
+                        <HBox>
+                            <Text text="{/submitInfo/Downcnt}" />
+                        </HBox>
+                    </grid:CSSGrid>
+                </VBox>
+            </VBox>
+        </HBox>
+    </Page>
+</mvc:View>

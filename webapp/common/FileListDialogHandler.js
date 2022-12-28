@@ -29,7 +29,16 @@ sap.ui.define(
        */
       async openDialog(oEvent) {
         const sAppno = oEvent.getSource().getBindingContext().getProperty('Appno');
-        const sApptp = this.oController.getApprovalType();
+        let sApptp;
+        if (typeof this.oController.getApprovalRequestConfig === 'function') {
+          sApptp = this.oController.getApprovalRequestConfig().ApprovalType;
+        } else if (typeof this.oController.getApprovalType === 'function') {
+          sApptp = this.oController.getApprovalType();
+        } else {
+          // {Controller} {getApprovalType} function을 구현하세요.
+          MessageBox.error(this.getBundleText('MSG_APRV001', 'Controller', 'getApprovalType'));
+          return;
+        }
 
         if (!this.oFileListDialog) {
           this.oFileListDialog = await Fragment.load({

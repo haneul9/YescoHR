@@ -13,7 +13,7 @@
         <table:Column width="80px" sortProperty="No" filterProperty="No">
           <Label text="{i18n>LABEL_00164}"/>
           <table:template>
-            <Text text="{No}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{No}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Begda" filterProperty="Begda">
@@ -22,7 +22,7 @@
             <Text text="{
               path: 'Begda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Endda" filterProperty="Endda">
@@ -31,25 +31,25 @@
             <Text text="{
               path: 'Endda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Atext" filterProperty="Atext">
           <Label text="{i18n>LABEL_18023}"/>
           <table:template>
-            <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Abrtg" filterProperty="Abrtg">
           <Label text="{i18n>LABEL_00155}"/>
           <table:template>
-            <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Abrtg}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Abrst" filterProperty="Abrst">
           <Label text="{i18n>LABEL_00330}"/>
           <table:template>
-            <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
@@ -59,7 +59,7 @@
               <Text text="{
                 path: 'ZreqDate',
                 type: 'sap.ui.yesco.mvc.model.type.Date'
-              }" width="100%" visible="{= !${ZappUrl} }" textAlign="Center" wrapping="false" class="tableRow_Text">
+              }" width="100%" visible="{= !${ZappUrl} }" textAlign="Center" wrapping="false">
                 <layoutData>
                   <FlexItemData growFactor="1" />
                 </layoutData>
@@ -81,7 +81,7 @@
             <Text text="{
               path: 'ZappDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
       </table:Table>

@@ -224,8 +224,8 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oViewModel = this.getViewModel();
+        const vPath = oEvent.getParameter('rowBindingContext').getPath();
         const oRowData = oViewModel.getProperty(vPath);
 
         this.getRouter().navTo(`${oViewModel.getProperty('/routeName')}-detail`, { oDataKey: oRowData.Appno });

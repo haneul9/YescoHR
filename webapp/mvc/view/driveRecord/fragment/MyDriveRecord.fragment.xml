@@ -1,20 +1,20 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
-        <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>LABEL_34002}" />
-            </HBox>
-            <HBox class="mt-100-px">
-                <VBox width="40%">
-                    <Label design="Bold" text="{i18n>LABEL_25005}" />
-                    <ObjectStatus text="{/Total/Carno}" class="font-25-px mt-5-px" state="Indication05" />
-                </VBox>
-                <VBox>
-                    <Label design="Bold" text="{i18n>LABEL_34015}" />
-                    <ObjectStatus text="{/Total/Datum}" class="font-25-px mt-5-px" state="Indication05" />
-                </VBox>
-            </HBox>
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox>
+      <HBox justifyContent="SpaceBetween" class="title">
+        <Title level="H2" text="{i18n>LABEL_34002}" />
+      </HBox>
+      <HBox class="mt-100-px">
+        <VBox width="40%">
+          <Label design="Bold" text="{i18n>LABEL_25005}" />
+          <ObjectStatus text="{/Total/Carno}" class="font-25-px mt-5-px" state="Indication05" />
         </VBox>
+        <VBox>
+          <Label design="Bold" text="{i18n>LABEL_34015}" />
+          <ObjectStatus text="{/Total/Datum}" class="font-25-px mt-5-px" state="Indication05" />
+        </VBox>
+      </HBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

@@ -97,7 +97,7 @@ sap.ui.define(
       getRankDutyBindable() {
         const sRank = this.getRank();
         const sDuty = this.getDuty();
-        const sRankBindable = sRank ? `{${sRank}}` : '';
+        const sRankBindable = sRank ? `{ path: '${sRank}', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }` : '';
         const sDutyBindable = sDuty ? `{${sDuty}}` : '';
         return `${sRankBindable}/${sDutyBindable}`.replace(/^\/|\/$/g, '');
       },

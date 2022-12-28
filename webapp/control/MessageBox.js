@@ -9,32 +9,66 @@ sap.ui.define(
   ) {
     'use strict';
 
-    const getBundleText = (sCode) => {
-      return sap.ui.getCore().getComponent('container-ehr').getModel('i18n').getResourceBundle().getText(sCode);
+    const executeMessageBox = (sFunctionName, vMessage, mOptions) => {
+      const sTitle = sap.ui.getCore().getComponent('container-ehr').getModel('i18n').getResourceBundle().getText(`LABEL_${sFunctionName.toUpperCase()}`);
+      MessageBox[sFunctionName](vMessage, {
+        icon: ' ', // MessageBox.Icon.NONE,
+        ...mOptions,
+        title: sTitle,
+        styleClass: `custom-messagebox custom-messagebox-${sFunctionName}`,
+      });
     };
 
     return {
       ...MessageBox,
-      show(vMessage, mOptions = {}) {
-        MessageBox.show(vMessage, { ...mOptions, title: getBundleText('LABEL_SHOW') }); // 보기
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      show(...aArgs) {
+        executeMessageBox('show', ...aArgs);
       },
-      alert(vMessage, mOptions = {}) {
-        MessageBox.alert(vMessage, { ...mOptions, title: getBundleText('LABEL_ALERT') }); // 안내
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      alert(...aArgs) {
+        executeMessageBox('alert', ...aArgs);
       },
-      confirm(vMessage, mOptions = {}) {
-        MessageBox.confirm(vMessage, { ...mOptions, title: getBundleText('LABEL_CONFIRM') }); // 확인
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      confirm(...aArgs) {
+        executeMessageBox('confirm', ...aArgs);
       },
-      error(vMessage, mOptions = {}) {
-        MessageBox.error(vMessage, { ...mOptions, title: getBundleText('LABEL_ERROR') }); // 오류
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      error(...aArgs) {
+        executeMessageBox('error', ...aArgs);
       },
-      information(vMessage, mOptions = {}) {
-        MessageBox.information(vMessage, { ...mOptions, title: getBundleText('LABEL_INFORMATION') }); // 정보
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      information(...aArgs) {
+        executeMessageBox('information', ...aArgs);
       },
-      success(vMessage, mOptions = {}) {
-        MessageBox.success(vMessage, { ...mOptions, title: getBundleText('LABEL_SUCCESS') }); // 성공
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      success(...aArgs) {
+        executeMessageBox('success', ...aArgs);
       },
-      warning(vMessage, mOptions = {}) {
-        MessageBox.warning(vMessage, { ...mOptions, title: getBundleText('LABEL_WARNING') }); // 경고
+      /**
+       * @param  {string} vMessage
+       * @param  {object} mOptions
+       */
+      warning(...aArgs) {
+        executeMessageBox('warning', ...aArgs);
       },
     };
   }

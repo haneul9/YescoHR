@@ -25,13 +25,13 @@
       <table:Column width="130px" sortProperty="Lntyptx" filterProperty="Lntyptx">
         <Label text="{i18n>LABEL_07002}"/>
         <table:template>
-          <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Lntyptx}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="50px" sortProperty="Count" filterProperty="Count">
         <Label text="{i18n>LABEL_07003}"/>
         <table:template>
-          <Text text="{= !${Count} || ${Count} === '0' ? '' : ${Count} }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{= !${Count} || ${Count} === '0' ? '' : ${Count} }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Appda" filterProperty="Appda">
@@ -40,7 +40,7 @@
           <Text text="{
                         path: 'Appda',
                         type: 'sap.ui.yesco.mvc.model.type.Date'
-                    }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                    }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Begda" filterProperty="Begda">
@@ -49,7 +49,7 @@
           <Text text="{= ${Lnsta} === '40' || ${Lnsta} === '60' ? ${
               path: 'Begda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          } : '' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          } : '' }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Endda" filterProperty="Endda">
@@ -58,7 +58,7 @@
           <Text text="{= ${Lnsta} === '40' || ${Lnsta} === '60' ? ${
               path: 'Endda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          } : '' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          } : '' }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Lstdt" filterProperty="Lstdt">
@@ -67,7 +67,7 @@
           <Text text="{
               path: 'Lstdt',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Rpdat1" filterProperty="Rpdat1">
@@ -76,7 +76,7 @@
           <Text text="{
               path: 'Rpdat1',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Rpdat2" filterProperty="Rpdat2">
@@ -85,7 +85,7 @@
           <Text text="{
               path: 'Rpdat2',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="RpdatMid" filterProperty="RpdatMid">
@@ -94,7 +94,7 @@
           <Text text="{
               path: 'RpdatMid',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="Lnamt" filterProperty="Lnamt">
@@ -103,13 +103,13 @@
           <Text text="{
               path: 'Lnamt',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="80px" sortProperty="Recount" filterProperty="Recount">
         <Label text="{i18n>LABEL_07010}"/>
         <table:template>
-          <Text text="{Recount}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Recount}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="RpamtRep" filterProperty="RpamtRep">
@@ -118,7 +118,7 @@
           <Text text="{
               path: 'RpamtRep',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="Rpamt1" filterProperty="Rpamt1">
@@ -127,7 +127,7 @@
           <Text text="{
               path: 'Rpamt1',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="Rpamt2" filterProperty="Rpamt2">
@@ -136,7 +136,7 @@
           <Text text="{
               path: 'Rpamt2',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
@@ -145,7 +145,7 @@
           <Text text="{
               path: 'RpamtMpr',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="110px" sortProperty="RpamtBal" filterProperty="RpamtBal">
@@ -154,7 +154,7 @@
           <Text text="{
               path: 'RpamtBal',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="60px">

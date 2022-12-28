@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page showHeader="false">
+        <content>
+            <VBox class="contents-header">
+                <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+                    <custom:Breadcrumbs />
+                    <HBox class="button-group">
+                        <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/auth} === 'E' || ${/auth} === 'H' }" press=".onClick" />
+                        <Button text="{i18n>LABEL_00123}" type="Accept" visible="{= ${/auth} === 'M' }" press=".onPressAccept" />
+                        <Button text="{i18n>LABEL_00124}" type="Reject" visible="{= ${/auth} === 'M' }" press=".onPressReject" />
+                    </HBox>
+                </HBox>
+            </VBox>
+            <VBox class="contents">
+                <HBox class="vCardBox" justifyContent="SpaceBetween" height="80px">
+                    <HBox class="form-bar" alignItems="Center">
+                        <Label text="{i18n>LABEL_00237}" />
+                        <ComboBox selectedKey="{/search/Werks}" items="{/entry/Werks}">
+                            <core:Item text="{Pbtxt}" key="{Werks}" />
+                        </ComboBox>
+                        <Label text="{i18n>LABEL_00266}" design="Bold" />
+                        <custom:DateRangeSelection dateValue="{ path: '/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" />
+                        <Label text="{i18n>LABEL_46039}" design="Bold" visible="{= ${/auth} === 'M'}" />
+                        <ComboBox selectedKey="{/search/Schty}" visible="{= ${/auth} === 'M'}">
+                            <core:Item text="{i18n>LABEL_46037}" key="A" />
+                            <core:Item text="{i18n>LABEL_46038}" key="X" />
+                        </ComboBox>
+                        <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onSearch"/>
+                    </HBox>
+                </HBox>
+                <VBox class="vCardBox">
+                    <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
+                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.csr.fragment.ApplyListTable" type="XML" />
+                </VBox>
+            </VBox>
+        </content>
+    </Page>
+</core:FragmentDefinition>

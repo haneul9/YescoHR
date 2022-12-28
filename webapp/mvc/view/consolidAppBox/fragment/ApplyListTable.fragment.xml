@@ -28,37 +28,37 @@
           <Text text="{
               path: 'ZreqDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="160px" sortProperty="ZreqForx" filterProperty="ZreqForx">
         <Label text="{i18n>LABEL_19002}"/>
         <table:template>
-          <Text text="{ZreqForx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ZreqForx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZappTitl" filterProperty="ZappTitl">
         <Label text="{i18n>LABEL_19003}"/>
         <table:template>
-          <Text text="{ZappTitl}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ZappTitl}" textAlign="Left" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Pernr1Name" filterProperty="Pernr1Name">
         <Label text="{i18n>LABEL_00135}"/>
         <table:template>
-          <Text text="{Pernr1Name}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Pernr1Name}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Pernr2Name" filterProperty="Pernr2Name">
         <Label text="{i18n>LABEL_03010}"/>
         <table:template>
-          <Text text="{Pernr2Name}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Pernr2Name}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="PernrName" filterProperty="PernrName">
         <Label text="{i18n>LABEL_19004}"/>
         <table:template>
-          <Text text="{PernrName}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PernrName}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="ZappPdate" filterProperty="ZappPdate">
@@ -67,19 +67,19 @@
           <Text text="{
               path: 'ZappPdate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Appno" filterProperty="Appno">
         <Label text="{i18n>LABEL_19006}"/>
         <table:template>
-          <Text text="{Appno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Appno}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="170px" sortProperty="ZappResn" filterProperty="ZappResn">
         <Label text="{i18n>LABEL_00142}"/>
         <table:template>
-          <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
     </table:columns>

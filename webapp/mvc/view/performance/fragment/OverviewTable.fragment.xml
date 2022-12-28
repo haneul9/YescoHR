@@ -7,49 +7,49 @@
         <table:Column width="{/listInfo/columns/ZzapstsSubnm/width}" filterProperty="ZzapstsSubnm" sortProperty="ZzapstsSubnm">
           <Label text="{i18n>LABEL_10001}"/>
           <table:template>
-            <Text text="{ZzapstsSubnm}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ZzapstsSubnm}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zperiod/width}" filterProperty="Zperiod" sortProperty="Zperiod">
           <Label text="{i18n>LABEL_10002}"/>
           <table:template>
-            <Text text="{Zperiod}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{Zperiod}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Ename/width}" filterProperty="Ename" sortProperty="Ename">
           <Label text="{i18n>LABEL_00210}"/>
           <table:template>
-            <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Orgtx/width}" filterProperty="Orgtx" sortProperty="Orgtx">
           <Label text="{i18n>LABEL_00226}"/>
           <table:template>
-            <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zzjikgbt/width}" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
           <Label text="{i18n>LABEL_00215}"/>
           <table:template>
-            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zzjikcht/width}" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
           <Label text="{i18n>LABEL_00217}"/>
           <table:template>
-            <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zapgme/width}" filterProperty="Zapgme" sortProperty="Zapgme" visible="{/listInfo/columns/Zapgme/visible}">
           <Label text="{i18n>LABEL_10003}"/>
           <table:template>
-            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="{/listInfo/columns/Zapgma/width}" filterProperty="Zapgma" sortProperty="Zapgma" visible="{/listInfo/columns/Zapgma/visible}">
           <Label text="{i18n>LABEL_10004}"/>
           <table:template>
-            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
       </table:columns>

@@ -14,25 +14,12 @@
     "resources": "resources.json"
   },
 
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
-  },
-
   "sap.ui": {
     "technology": "UI5",
-    "icons": {
-      "icon": "sap-icon://detail-view",
-      "favIcon": "",
-      "phone": "",
-      "phone@2": "",
-      "tablet": "",
-      "tablet@2": ""
-    },
     "deviceTypes": {
       "desktop": true,
       "tablet": true,
-      "phone": true
+      "phone": false
     }
   },
 
@@ -55,7 +42,7 @@
     },
     "contentDensities": {
       "compact": true,
-      "cozy": true
+      "cozy": false
     },
     "models": {
       "i18n": {
@@ -68,19 +55,7 @@
       }
     },
     "resources": {
-      "css": [
-        { "uri": "asset/css/pretendard-subset.css" },
-        { "uri": "asset/css/style.css", "id": "desktopstyle" },
-        { "uri": "asset/css/mobile-style.css", "id": "mobilestyle" },
-        { "uri": "asset/css/placeholder.css" },
-        { "uri": "asset/css/zample/zample.css" },
-        { "uri": "asset/css/util/font.css" },
-        { "uri": "asset/css/util/margin.css" },
-        { "uri": "asset/css/util/padding.css" },
-        { "uri": "asset/css/util/border.css" },
-        { "uri": "asset/css/util/size.css" },
-        { "uri": "asset/css/util/align.css" }
-      ]
+      "css": []
     },
     "routing": {
       "config": {
@@ -148,12 +123,14 @@
 
         { "pattern": "consolidAppBox", "name": "consolidAppBox", "target": "consolidAppBox" },
         
-        { "pattern": "csr", "name": "csr", "target": "csr" },
-        { "pattern": "csr/{oDataKey}/{werks}", "name": "csr-detail", "target": "csrDetail" },
-        { "pattern": "m/csr", "name": "m/csr", "target": "m/csr" },
-        { "pattern": "m/csr/{oDataKey}/{werks}", "name": "m/csr-detail", "target": "m/csrDetail" },
-        { "pattern": "h/csr", "name": "h/csr", "target": "h/csr" },
-        { "pattern": "h/csr/{oDataKey}/{werks}", "name": "h/csr-detail", "target": "h/csrDetail" },
+        { "pattern": "csrAppl", "name": "csrAppl", "target": "csrAppl" },
+        { "pattern": "csrAppl/{oDataKey}/{werks}", "name": "csrAppl-detail", "target": "csrDetail" },
+        { "pattern": "csrAppr", "name": "csrAppr", "target": "csrAppr" },
+        { "pattern": "csrAppr/{oDataKey}/{werks}", "name": "csrAppr-detail", "target": "csrDetail" },
+        { "pattern": "mobile/csrAppr", "name": "mobile/csrAppr", "target": "mobile/csrAppr" },
+        { "pattern": "mobile/csrAppr/{appno}/{werks}", "name": "mobile/csrAppr-detail", "target": "mobile/csrDetail" },
+        { "pattern": "csrMng", "name": "csrMng", "target": "csrMng" },
+        { "pattern": "csrMng/{oDataKey}/{werks}", "name": "csrMng-detail", "target": "csrDetail" },
 
         { "pattern": "commuteType", "name": "commuteType", "target": "commuteType" },
         { "pattern": "commuteType/{oDataKey}/:zyymm:/:schkz:", "name": "commuteType-detail", "target": "commuteTypeDetail" },
@@ -162,6 +139,12 @@
 
         { "pattern": "m/commuteConfirm", "name": "m/commuteConfirm", "target": "m/commuteConfirm" },
         { "pattern": "h/commuteTypeConfirm", "name": "h/commuteTypeConfirm", "target": "h/commuteTypeConfirm" },
+        
+        { "pattern": "h/documentTemplateMng", "name": "h/documentTemplateMng", "target": "h/documentTemplateMng" },
+        { "pattern": "h/documentTemplateMng/{mode}/:hrdoc:", "name": "h/documentTemplateMng-detail", "target": "documentTemplateMngDetail" },
+
+        { "pattern": "h/documentSubmitMng", "name": "h/documentSubmitMng", "target": "h/documentSubmitMng" },
+        { "pattern": "h/documentSubmitMng/{werks}/:hrdoc:/:seqnr:", "name": "h/documentSubmitMng-detail", "target": "documentSubmitMngDetail" },
 
         { "pattern": "driveRecord", "name": "driveRecord", "target": "driveRecord" },
         { "pattern": "driveRecord/{oDataKey}", "name": "driveRecord-detail", "target": "driveRecordDetail" },
@@ -219,6 +202,9 @@
         { "pattern": "housingLoan", "name": "housingLoan", "target": "housingLoan" },
         { "pattern": "housingLoan/{oDataKey}", "name": "housingLoan-detail", "target": "housingLoanDetail" },
         { "pattern": "housingLoanRepay/{oDataKey}/:lonid:", "name": "housingLoan-repay", "target": "housingLoanRepay" },
+        
+        { "pattern": "hrDocument", "name": "hrDocument", "target": "hrDocument" },
+        { "pattern": "hrDocument/{mode}/{hrdoc}/{seqnr}", "name": "hrDocument-detail", "target": "hrDocumentDetail" },
 
         { "pattern": "historyAppraisal", "name": "historyAppraisal", "target": "historyAppraisal" },
         { "pattern": "m/historyAppraisal", "name": "m/historyAppraisal", "target": "m/historyAppraisal" },
@@ -251,17 +237,22 @@
         { "pattern": "m/leaveSummary", "name": "m/leaveSummary", "target": "m/leaveSummary" },
         { "pattern": "h/leaveSummary", "name": "h/leaveSummary", "target": "h/leaveSummary" },
 
+        { "pattern": "leaveOfAbsence", "name": "leaveOfAbsence", "target": "leaveOfAbsence" },
+        { "pattern": "leaveOfAbsence/{sAppno}", "name": "leaveOfAbsence-detail", "target": "leaveOfAbsenceDetail" },
+        { "pattern": "mobile/leaveOfAbsence", "name": "mobile/leaveOfAbsence", "target": "mobile/leaveOfAbsence" },
+        { "pattern": "mobile/leaveOfAbsence/{sAppno}", "name": "mobile/leaveOfAbsence-detail", "target": "mobile/leaveOfAbsenceDetail" },
+
         { "pattern": "medical", "name": "medical", "target": "medical" },
         { "pattern": "medical/{oDataKey}", "name": "medical-detail", "target": "medicalDetail" },
         { "pattern": "h/medical", "name": "h/medical", "target": "h/medical" },
         { "pattern": "h/medical/{oDataKey}", "name": "h/medical-detail", "target": "medicalDetail" },
+        { "pattern": "mobile/medical", "name": "mobile/medical", "target": "mobile/medical" },
+        { "pattern": "mobile/medical/{oDataKey}", "name": "mobile/medical-detail", "target": "mobile/medicalDetail" },
 
         { "pattern": "nightduty", "name": "nightduty", "target": "nightduty" },
         { "pattern": "nightduty/{sAppno}", "name": "nightduty-detail", "target": "nightdutyDetail" },
         { "pattern": "h/nightduty", "name": "h/nightduty", "target": "h/nightduty" },
         { "pattern": "h/nightduty/{sAppno}", "name": "h/nightduty-detail", "target": "nightdutyDetail" },
-        { "pattern": "mobile/nightduty", "name": "mobile/nightduty", "target": "mobile/nightduty" },
-        { "pattern": "mobile/nightduty/{sAppno}", "name": "mobile/nightduty-detail", "target": "mobile/nightdutyDetail" },
 
         { "pattern": "notice", "name": "notice", "target": "notice" },
         { "pattern": "notice/{Sdate}/{Seqnr}", "name": "notice-detail", "target": "noticeDetail" },
@@ -443,13 +434,19 @@
 
         "consolidAppBox": { "viewId": "consolidAppBox", "viewPath": "sap.ui.yesco.mvc.view.consolidAppBox", "viewName": "ConsolidAppBox" },
 
-        "csr": { "viewId": "csr", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csr" },
+        "csrAppl": { "viewId": "csrAppl", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrE" },
+        "csrAppr": { "viewId": "csrAppr", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrM" },
+        "csrMng": { "viewId": "csrMng", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrH" },
         "csrDetail": { "viewId": "csrDetail", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrDetail" },
-        "m/csr": { "viewId": "m_csr", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csr" },
-        "m/csrDetail": { "viewId": "m_csrDetail", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrDetail" },
-        "h/csr": { "viewId": "h_csr", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csr" },
-        "h/csrDetail": { "viewId": "h_csrDetail", "viewPath": "sap.ui.yesco.mvc.view.csr", "viewName": "csrDetail" },
+        "mobile/csrAppr": { "viewId": "mobile_csrAppr", "viewPath": "sap.ui.yesco.mvc.view.csr.mobile", "viewName": "csr" },
+        "mobile/csrDetail": { "viewId": "mobile_csrDetail", "viewPath": "sap.ui.yesco.mvc.view.csr.mobile", "viewName": "csrDetail" },
 
+        "h/documentTemplateMng": { "viewId": "h_documentTemplateMng", "viewPath": "sap.ui.yesco.mvc.view.documentTemplateMng", "viewName": "ListH" },
+        "documentTemplateMngDetail": { "viewId": "documentTemplateMngDetail", "viewPath": "sap.ui.yesco.mvc.view.documentTemplateMng", "viewName": "Detail" },
+
+        "h/documentSubmitMng": { "viewId": "h_documentSubmitMng", "viewPath": "sap.ui.yesco.mvc.view.documentSubmitMng", "viewName": "ListH" },
+        "documentSubmitMngDetail": { "viewId": "documentSubmitMngDetail", "viewPath": "sap.ui.yesco.mvc.view.documentSubmitMng", "viewName": "Detail" },
+        
         "h/driveRecord": { "viewId": "h_driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordH" },
         "driveRecord": { "viewId": "driveRecord", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecord" },
         "driveRecordDetail": { "viewId": "driveRecordDetail", "viewPath": "sap.ui.yesco.mvc.view.driveRecord", "viewName": "DriveRecordDetail" },
@@ -499,6 +496,9 @@
         "housingLoanDetail": { "viewId": "housingLoanDetail", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanDetail" },
         "housingLoanRepay": { "viewId": "housingLoanRepay", "viewPath": "sap.ui.yesco.mvc.view.housingLoan", "viewName": "HousingLoanRepayment" },
 
+        "hrDocument": { "viewId": "hrDocument", "viewPath": "sap.ui.yesco.mvc.view.hrDocument", "viewName": "ListE" },
+        "hrDocumentDetail": { "viewId": "hrDocumentDetail", "viewPath": "sap.ui.yesco.mvc.view.hrDocument", "viewName": "Detail" },
+
         "historyAppraisal": { "viewId": "historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainE" },
         "m/historyAppraisal": { "viewId": "m_historyAppraisal", "viewPath": "sap.ui.yesco.mvc.view.historyAppraisal", "viewName": "MainM" },
 
@@ -527,15 +527,20 @@
         "m/leaveSummary": { "viewId": "m_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "App" },
         "h/leaveSummary": { "viewId": "h_leaveSummary", "viewPath": "sap.ui.yesco.mvc.view.leaveSummary", "viewName": "AppH" },
 
+        "leaveOfAbsence": { "viewId": "leaveOfAbsence", "viewPath": "sap.ui.yesco.mvc.view.leaveOfAbsence", "viewName": "ApprovalRequestList" },
+        "leaveOfAbsenceDetail": { "viewId": "leaveOfAbsenceDetail", "viewPath": "sap.ui.yesco.mvc.view.leaveOfAbsence", "viewName": "ApprovalRequestDetail" },
+        "mobile/leaveOfAbsence": { "viewId": "mobile_leaveOfAbsence", "viewPath": "sap.ui.yesco.mvc.view.leaveOfAbsence.mobile", "viewName": "ApprovalRequestList" },
+        "mobile/leaveOfAbsenceDetail": { "viewId": "mobile_leaveOfAbsenceDetail", "viewPath": "sap.ui.yesco.mvc.view.leaveOfAbsence.mobile", "viewName": "ApprovalRequestDetail" },
+
         "h/medical": { "viewId": "h_medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalH" },
         "medical": { "viewId": "medical", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "Medical" },
         "medicalDetail": { "viewId": "medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical", "viewName": "MedicalDetail" },
+        "mobile/medical": { "viewId": "mobile_medical", "viewPath": "sap.ui.yesco.mvc.view.medical.mobile", "viewName": "Medical" },
+        "mobile/medicalDetail": { "viewId": "mobile_medicalDetail", "viewPath": "sap.ui.yesco.mvc.view.medical.mobile", "viewName": "MedicalDetail" },
 
-        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestList" },
-        "h/nightduty": { "viewId": "h_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestListH" },
-        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "RequestDetail" },
-        "mobile/nightduty": { "viewId": "mobile_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty.mobile", "viewName": "RequestList" },
-        "mobile/nightdutyDetail": { "viewId": "mobile_nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty.mobile", "viewName": "RequestDetail" },
+        "nightduty": { "viewId": "nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "ApprovalRequestList" },
+        "h/nightduty": { "viewId": "h_nightduty", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "ApprovalRequestListH" },
+        "nightdutyDetail": { "viewId": "nightdutyDetail", "viewPath": "sap.ui.yesco.mvc.view.nightduty", "viewName": "ApprovalRequestDetail" },
 
         "notice": { "viewId": "notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Ess" },
         "h/notice": { "viewId": "h_notice", "viewPath": "sap.ui.yesco.mvc.view.notice", "viewName": "Hass" },

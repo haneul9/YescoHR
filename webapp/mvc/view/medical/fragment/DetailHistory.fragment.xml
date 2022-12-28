@@ -13,25 +13,19 @@
     </HBox>
     <table:Table id="medHisTable" cellClick=".onDetailsRow" fixedColumnCount="5" rowSelectionChange=".onRowSelection" class="row-link" rows="{/HisList}" visibleRowCount="{/listInfo/rowCount}" width="100%" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
       <table:rowSettingsTemplate>
-        <table:RowSettings highlight="{
-            path: 'ZappStat',
-            formatter: '.TableUtils.rowHighlight'
-        }"/>
+        <table:RowSettings highlight="{ path: 'ZappStat', formatter: '.TableUtils.rowHighlight' }" />
       </table:rowSettingsTemplate>
       <table:columns>
         <table:Column width="50px">
-          <Label text="{i18n>LABEL_00164}"/>
+          <Label text="{i18n>LABEL_00164}" />
           <table:template>
-            <Text text="{Seqnr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Seqnr}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
-          <Label text="{i18n>LABEL_00144}"/>
+          <Label text="{i18n>LABEL_00144}" />
           <table:template>
-            <Text text="{
-                  path: 'ZappStat',
-                  formatter: '.TableUtils.StatusTxt'
-              }" width="100%" textAlign="Center">
+            <Text text="{ path: 'ZappStat', formatter: '.TableUtils.StatusTxt' }" width="100%" textAlign="Center">
               <customData>
                 <core:CustomData key="status" value="Z{ZappStat}" writeToDom="true" />
               </customData>
@@ -39,111 +33,102 @@
           </table:template>
         </table:Column>
         <table:Column width="120px">
-          <Label text="{i18n>LABEL_09012}"/>
+          <Label text="{i18n>LABEL_09012}" />
           <table:template>
-            <Text text="{
-                path: 'Begda',
-                type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="120px">
-          <Label text="{i18n>LABEL_09013}"/>
+          <Label text="{i18n>LABEL_09013}" />
           <table:template>
-            <Text text="{
-                path: 'Endda',
-                type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="200px">
-          <Label text="{i18n>LABEL_09020}"/>
+          <Label text="{i18n>LABEL_09020}" />
           <table:template>
-            <Text text="{Disenm}" textAlign="Center" width="100%" class="tableRow_Text"/>
+            <Text text="{Disenm}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="200px">
-          <Label text="{i18n>LABEL_09014}"/>
+          <Label text="{i18n>LABEL_09014}" />
           <table:template>
-            <Text text="{Medorg}" textAlign="Center" width="100%" class="tableRow_Text"/>
+            <Text text="{Medorg}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="200px">
-          <Label text="{i18n>LABEL_09015}"/>
+          <Label text="{i18n>LABEL_09015}" />
           <table:template>
-            <Text text="{Recpgbtx}" textAlign="Center" width="100%" class="tableRow_Text"/>
+            <Text text="{Recpgbtx}" textAlign="Center" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="150px">
-          <Label text="{i18n>LABEL_09016}"/>
+          <Label text="{i18n>LABEL_09016}" />
           <table:template>
-            <Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" class="tableRow_Text"/>
+            <Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="150px">
-          <Label text="{i18n>LABEL_09017}"/>
+          <Label text="{i18n>LABEL_09017}" />
           <table:template>
-            <Text text="{ path: 'Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" class="tableRow_Text"/>
+            <Text text="{ path: 'Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="150px">
-          <Label text="{i18n>LABEL_09018}"/>
+          <Label text="{i18n>LABEL_09018}" />
           <table:template>
-            <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09028}"/>
+          <Label text="{i18n>LABEL_09028}" />
           <table:template>
-            <Text text="{ path: 'Mob01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Mob01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09029}"/>
+          <Label text="{i18n>LABEL_09029}" />
           <table:template>
-            <Text text="{ path: 'Mob02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Mob02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09030}"/>
+          <Label text="{i18n>LABEL_09030}" />
           <table:template>
-            <Text text="{ path: 'Mobtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Mobtot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09027}"/>
+          <Label text="{i18n>LABEL_09027}" />
           <table:template>
-            <Text text="{
-                path: 'Mobet',
-                type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="200px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09031}"/>
+          <Label text="{i18n>LABEL_09031}" />
           <table:template>
-            <Text text="{ZmobResn}" width="100%" textAlign="Left" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ZmobResn}" width="100%" textAlign="Left" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-          <Label text="{i18n>LABEL_09009}"/>
+          <Label text="{i18n>LABEL_09009}" />
           <table:template>
             <Text text="{
                 path: 'Ttmon',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
-          <Label text="{i18n>LABEL_09019}"/>
+          <Label text="{i18n>LABEL_09019}" />
           <table:template>
-            <Text text="{Pratetx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Pratetx}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
-          <Label text="{i18n>LABEL_00169}"/>
+          <Label text="{i18n>LABEL_00169}" />
           <table:template>
-            <core:Icon src="sap-icon://attachment" width="100%" visible="{= ${Attyn} === 'X' }"/>
+            <core:Icon src="sap-icon://attachment" width="100%" visible="{= ${Attyn} === 'X' }" />
           </table:template>
         </table:Column>
       </table:columns>

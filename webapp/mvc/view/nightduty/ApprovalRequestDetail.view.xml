@@ -1,0 +1,35 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.nightduty.ApprovalRequestDetail"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false" binding="{/approvalRequestDetail}">
+    <custom:ApprovalRequestDetailContentsHeader request="true" pressRequest=".onPressRequestApproval" pressNavBack=".onNavBack" pressPrint=".onPagePrint" pressHelp=".onPressHelp" />
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+      <VBox class="vCardBox">
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+          </HBox>
+          <HBox class="table-actions">
+            <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddRowButton" visible="{= ${/approvalRequestConfig/editable} &amp;&amp; ${/approvalRequestDetail/listInfo/count/visibleRows} &lt; 2 }" />
+            <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressRemoveRowButton" visible="{= ${/approvalRequestConfig/editable} &amp;&amp; ${/approvalRequestDetail/listInfo/count/visibleRows} &gt; 0 }" enabled="{/approvalRequestConfig/enabled}" />
+          </HBox>
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.ToBeScheduleTable" type="XML" />
+      </VBox>
+      <VBox class="vCardBox">
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_04013}" />
+          </HBox>
+        </HBox>
+        <TextArea width="100%" class="required" rows="5" growing="true" value="{Chgrsn}" editable="{/approvalRequestConfig/editable}" />
+      </VBox>
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.FileAttachmentBox" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
+    </VBox>
+  </Page>
+</mvc:View>

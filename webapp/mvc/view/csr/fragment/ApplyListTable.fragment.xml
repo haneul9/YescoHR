@@ -1,23 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core">
-  <table:Table id="Table" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" rowSelectionChange=".onSelectionTable" width="100%" selectionMode="{= ${/Austy} === 'M' ? 'MultiToggle' : 'None' }" columnHeaderHeight="45" rowHeight="61" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+  <table:Table id="csrListTable" class="row-link" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" rowSelectionChange=".onSelectionTable" width="100%" selectionMode="{= ${/auth} === 'M' ? 'MultiToggle' : 'None' }" columnHeaderHeight="45" rowHeight="61" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
     <table:rowSettingsTemplate>
       <table:RowSettings highlight="{ path: 'Prstg', formatter: '.rowHighlight' }"/>
     </table:rowSettingsTemplate>
     <table:columns>
-      <!-- <table:Column width="50px" visible="{= ${/Austy} === 'M' }" >
-        <Label text=" "/>
-        <table:template>
-          <CheckBox editable="{= ${Appryn} === 'X'}" enabled="true" selected="{Checkbox}" />
-        </table:template>
-      </table:Column> -->
       <table:Column width="100px" sortProperty="Prstatx" filterProperty="Prstatx">
         <Label text="{i18n>LABEL_46004}"/>
         <table:template>
           <Text text="{Prstatx}" width="100%" textAlign="Center">
             <customData>
-              <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+              <core:CustomData key="csr-status" value="Z{Prstg}" writeToDom="true" />
             </customData>
           </Text>
         </table:template>
@@ -25,69 +19,69 @@
       <table:Column width="100px" sortProperty="Cerno" filterProperty="Cerno">
         <Label text="{i18n>LABEL_46005}"/>
         <table:template>
-          <Text text="{Csrtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Csrtytx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="300px" sortProperty="Apttl" filterProperty="Apttl">
         <Label text="{i18n>LABEL_46006}"/>
         <table:template>
-          <Text text="{Apttl}" textAlign="Begin" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Apttl}" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta10" filterProperty="Prsta10">
         <Label text="{i18n>LABEL_46007}"/>
         <table:template>
-          <Text text="{Prsta10}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta10}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta11" filterProperty="Prsta11">
         <Label text="{i18n>LABEL_46008}"/>
         <table:template>
-          <Text text="{Prsta11}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta11}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta12" filterProperty="Prsta12">
         <Label text="{i18n>LABEL_46009}"/>
         <table:template>
-          <Text text="{Prsta12}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta12}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta20" filterProperty="Prsta20">
         <Label text="{i18n>LABEL_46010}"/>
         <table:template>
-          <Text text="{Prsta20}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta20}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta21" filterProperty="Prsta21">
         <Label text="{i18n>LABEL_46011}"/>
         <table:template>
-          <Text text="{Prsta21}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta21}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta22" filterProperty="Prsta22">
         <Label text="{i18n>LABEL_46012}"/>
         <table:template>
-          <Text text="{Prsta22}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta22}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta30" filterProperty="Prsta30">
         <Label text="{i18n>LABEL_46013}"/>
         <table:template>
-          <Text text="{Prsta30}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta30}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta31" filterProperty="Prsta31">
         <Label text="{i18n>LABEL_46014}"/>
         <table:template>
-          <Text text="{Prsta31}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta31}" textAlign="Center" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Prsta32" filterProperty="Prsta32">
         <Label text="{i18n>LABEL_46015}"/>
         <table:template>
-          <Text text="{Prsta32}" textAlign="Center" width="100%" class="tableRow_Text"/>
+          <Text text="{Prsta32}" textAlign="Center" width="100%" />
         </table:template>
-      </table:Column>      
+      </table:Column>
     </table:columns>
   </table:Table>
 </core:FragmentDefinition>

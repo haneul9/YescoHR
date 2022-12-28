@@ -28,7 +28,7 @@
           <Text text="{
               path: 'Wtdat',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Wtamt" filterProperty="Wtamt">
@@ -37,7 +37,7 @@
           <Text text="{
               path: 'Wtamt',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
@@ -46,7 +46,7 @@
           <Text text="{
               path: 'ZreqDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
@@ -55,13 +55,13 @@
           <Text text="{
               path: 'ZappDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZappResn" filterProperty="ZappResn">
         <Label text="{i18n>LABEL_00142}"/>
         <table:template>
-          <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
     </table:columns>

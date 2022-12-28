@@ -58,8 +58,9 @@ sap.ui.define(
         return Client.getEntitySet(oModel, 'TimeOverview', mPayload);
       },
 
-      transformContentData([{ Cnt01 = '0', Cod01, Cnt03 = '0', Cod03 }]) {
+      transformContentData([{ Ttltxt, Cnt01 = '0', Cod01, Cnt03 = '0', Cod03 }]) {
         return {
+          Ttltxt: Ttltxt ? `${Ttltxt}, ` : '',
           Annual: { Total: 100, Used: parseFloat(Cnt01), Headty: 'D', Discod: Cod01 },
           Summer: { Total: 100, Used: parseFloat(Cnt03), Headty: 'D', Discod: Cod03 },
         };

@@ -28,6 +28,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/model/type/MonthDateWeekday',
     'sap/ui/yesco/mvc/model/type/Percent',
     'sap/ui/yesco/mvc/model/type/Pernr',
+    'sap/ui/yesco/mvc/model/type/ShortPosition',
     'sap/ui/yesco/mvc/model/type/ShortYearDate',
     'sap/ui/yesco/mvc/model/type/Time',
     'sap/ui/yesco/mvc/model/type/Year',

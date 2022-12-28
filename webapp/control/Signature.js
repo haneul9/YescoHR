@@ -149,7 +149,7 @@ sap.ui.define(
       },
 
       getDataUrl: function () {
-        return this.oCanvas.toDataURL();
+        return this.oCanvas.toDataURL('image/png');
       },
 
       dataURItoBlob: function () {

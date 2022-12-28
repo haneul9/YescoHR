@@ -4,89 +4,97 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
     <customData>
-      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '20' || ${/FormData/ZappStatAl} === '45' ? 'request' : 'retrieval' }" writeToDom="true" />
+      <core:CustomData key="form-style" value="request" writeToDom="true" />
     </customData>
     <VBox class="contents">
       <custom:MobileScrollContainer horizontal="false" vertical="true">
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="{i18n>LABEL_03030}" />
+          <Title level="H2" text="{i18n>LABEL_00129}" />
           <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
             <Label text="{i18n>LABEL_03012}" />
-            <ComboBox items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onChangeTarget" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
+            <Text text="{/FormData/Zzobjpstx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
+            <custom:SingleComboBox items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onChangeTarget" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
               <core:Item text="{Znametx}" key="{Zzobjps}" />
-            </ComboBox>
+            </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_03014}" />
-            <ComboBox items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onChangeSchool" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
+            <Text text="{/FormData/Slarttx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
+            <custom:SingleComboBox items="{/AcademicSort}" selectedKey="{/FormData/Slart}" change=".onChangeSchool" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
               <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_03006}" />
-            <ComboBox items="{/GradeList}" selectedKey="{/FormData/Grdsp}" change=".onChangeGrade" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
+            <Text text="{/FormData/Grdsptx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
+            <custom:SingleComboBox items="{/GradeList}" selectedKey="{/FormData/Grdsp}" change=".onChangeGrade" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
               <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_03007}" />
-            <ComboBox items="{/QuarterList}" selectedKey="{/FormData/Divcd}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required">
+            <Text text="{/FormData/Divcdtx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
+            <custom:SingleComboBox items="{/QuarterList}" selectedKey="{/FormData/Divcd}" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
               <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_03013}" class="white-space-pre-wrap" />
             <Text text="{/FormData/Cnttx}" class="d-flex flex-middle" />
 
             <Label text="{i18n>LABEL_03031}" />
-            <Input value="{/FormData/Schtx}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="required" />
+            <Input value="{/FormData/Schtx}" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required" />
 
             <Label text="{i18n>LABEL_03032}" visible="{= !!${/MajorInput} }" />
-            <Input value="{/FormData/Majnm}" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" visible="{= !!${/MajorInput} }" />
+            <Input value="{/FormData/Majnm}" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" visible="{= !!${/MajorInput} }" />
 
             <Label text="{i18n>LABEL_03017}" />
-            <ComboBox items="{/FundsYears}" selectedKey="{/FormData/Zyear}" change=".onChangeYear" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+            <Text text="{/FormData/Zyeartx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
+            <custom:SingleComboBox items="{/FundsYears}" selectedKey="{/FormData/Zyear}" change=".onChangeYear" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }">
               <core:Item text="{Ztext}" key="{Zcode}" />
-            </ComboBox>
+            </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_03033}" />
-            <CheckBox select=".onSelectForeign" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="top-13-px" />
+            <CheckBox select=".onSelectForeign" selected="{= !!${/FormData/Forsch} ? true : false }" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
 
             <Label text="{i18n>LABEL_03019}" />
-            <Input value="{ path: '/FormData/ZbetEntr', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetEntr', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03020}" />
-            <Input value="{ path: '/FormData/ZbetMgmt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetMgmt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03021}" />
-            <Input value="{ path: '/FormData/ZbetClass', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetClass', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03022}" />
-            <Input value="{ path: '/FormData/ZbetExer', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetExer', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03023}" />
-            <Input value="{ path: '/FormData/ZbetSuf', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetSuf', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03026}" />
-            <Input value="{ path: '/FormData/ZbetEtc', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetEtc', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".liveChangeCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
             <Label text="{i18n>LABEL_03034}" class="white-space-pre-wrap" />
             <Input value="{ path: '/FormData/ZbetTotl', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" editable="false" class="currency">
               <customData>
-                <core:CustomData key="padding" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'O' : 'X'}" writeToDom="true" />
+                <core:CustomData key="padding" value="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' ? 'O' : 'X'}" writeToDom="true" />
               </customData>
             </Input>
 
             <Label text="{i18n>LABEL_03025}" />
-            <Input value="{ path: '/FormData/ZbetShip', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".onSchoCost" maxLength="10" width="100%" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="currency" />
+            <Input value="{ path: '/FormData/ZbetShip', type: 'sap.ui.yesco.mvc.model.type.Currency' }" liveChange=".onSchoCost" maxLength="10" width="100%" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="currency" />
 
-            <Label text="{i18n>LABEL_03027}" />
+            <Label text="{i18n>LABEL_03027}" class="align-top" />
             <VBox class="multi-line">
               <Input value="{ path: '/FormData/ZpayAmt', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" editable="false" class="currency">
                 <customData>
-                  <core:CustomData key="padding" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'O' : 'X'}" writeToDom="true" />
+                  <core:CustomData key="padding" value="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' ? 'O' : 'X'}" writeToDom="true" />
                 </customData>
               </Input>
               <ObjectStatus text="{i18n>MSG_03002}" state="Indication05" visible="{/LimitAmountMSG}" />
             </VBox>
+
+            <Label text="{i18n>LABEL_03029}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" class="align-top" />
+            <Text text="{/FormData/Zresn}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" class="multi-line" />
           </grid:CSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
@@ -95,11 +103,12 @@
       </custom:MobileScrollContainer>
     </VBox>
     <footer>
-      <OverflowToolbar>
+      <OverflowToolbar visible="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
         <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
+        <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/ZappStatAl} === '45' }" />
+        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
         <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
       </OverflowToolbar>
     </footer>

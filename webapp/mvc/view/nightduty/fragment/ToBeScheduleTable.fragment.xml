@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <Table id="toBeScheduleTable" selectionMode="{/detail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/list}" visibleRowCount="{/detail/rowCount}" noData="{i18n>MSG_00001}">
+  <Table id="toBeScheduleTable" selectionMode="{/approvalRequestDetail/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/approvalRequestDetail/list}" visibleRowCount="{/approvalRequestDetail/listInfo/count/visibleRows}" noData="{i18n>MSG_00001}">
     <columns>
       <Column width="9%">
         <multiLabels>
@@ -9,7 +9,7 @@
           <m:Label text="{i18n>LABEL_06101}" />
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%">
@@ -18,7 +18,7 @@
           <m:Label text="{i18n>LABEL_06102}" />
         </multiLabels>
         <template>
-          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%">
@@ -27,7 +27,7 @@
           <m:Label text="{i18n>LABEL_06103}" />
         </multiLabels>
         <template>
-          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%" headerSpan="4">
@@ -36,7 +36,7 @@
           <m:Label text="{i18n>LABEL_00209}" />
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%">
@@ -45,7 +45,7 @@
           <m:Label text="{i18n>LABEL_00210}" />
         </multiLabels>
         <template>
-          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
@@ -54,7 +54,7 @@
           <m:Label text="{i18n>LABEL_00224}" />
         </multiLabels>
         <template>
-          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%">
@@ -63,7 +63,7 @@
           <m:Label text="{i18n>LABEL_00215}" />
         </multiLabels>
         <template>
-          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%" headerSpan="4">
@@ -72,7 +72,11 @@
           <m:Label text="{i18n>LABEL_00209}" />
         </multiLabels>
         <template>
-          <m:Input value="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="{= !${/detail/editable} ? 'Center' : 'Begin' }" width="100%" maxSuggestionWidth="350px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{ path:'/detail/employees', templateShareable: true }" class="tableRow_Text" editable="{/detail/editable}" suggestionItemSelected=".onSelectSuggestion" submit=".onSubmitSuggest">
+          <m:Input editable="{/Config/Editable}" textAlign="{= !${/Config/Editable} ? 'Center' : 'Begin' }" value="{
+            path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr'
+          }" showSuggestion="true" showTableSuggestionValueHelp="false" maxSuggestionWidth="350px" suggestionRows="{
+            path:'/Config/employees', templateShareable: true
+          }" suggestionItemSelected=".onSelectSuggestion" submit=".onSubmitSuggest" width="100%">
             <m:suggestionColumns>
               <m:Column popinDisplay="Inline" demandPopin="true">
                 <m:Label text="{i18n>LABEL_00210}" />
@@ -106,7 +110,7 @@
           <m:Label text="{i18n>LABEL_00210}" />
         </multiLabels>
         <template>
-          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
@@ -115,7 +119,7 @@
           <m:Label text="{i18n>LABEL_00224}" />
         </multiLabels>
         <template>
-          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="9%">
@@ -124,7 +128,7 @@
           <m:Label text="{i18n>LABEL_00215}" />
         </multiLabels>
         <template>
-          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
     </columns>

@@ -7,7 +7,11 @@
     </HBox>
     <HBox height="146px">
       <VBox width="146px">
-        <Image src="{appointeeModel>/Photo}" mode="Background" class="member-photo" width="146px" height="146px" />
+        <Image src="{appointeeModel>/Photo}" mode="Background" class="member-photo" width="146px" height="146px">
+          <layoutData>
+            <FlexItemData maxHeight="146px" />
+          </layoutData>
+        </Image>
       </VBox>
       <VBox justifyContent="Center" class="appointee-info">
         <Text text="{appointeeModel>/Ename}" class="name" />

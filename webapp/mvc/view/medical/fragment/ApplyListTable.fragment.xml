@@ -28,19 +28,19 @@
           <Text text="{
               path: 'Appda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Znametx" filterProperty="Znametx">
         <Label text="{i18n>LABEL_03010}"/>
         <table:template>
-          <Text text="{Znametx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Znametx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Apcnt" filterProperty="Apcnt">
         <Label text="{i18n>LABEL_09004}"/>
         <table:template>
-          <Text text="{Apcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Apcnt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Apbet" filterProperty="Apbet">
@@ -49,13 +49,13 @@
           <Text text="{
               path: 'Apbet',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Pvcnt" filterProperty="Pvcnt">
         <Label text="{i18n>LABEL_09006}"/>
         <table:template>
-          <Text text="{Pvcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Pvcnt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Pvbet" filterProperty="Pvbet">
@@ -64,13 +64,13 @@
           <Text text="{
               path: 'Pvbet',
               type: 'sap.ui.yesco.mvc.model.type.Currency'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Rjcnt" filterProperty="Rjcnt">
         <Label text="{i18n>LABEL_09008}"/>
         <table:template>
-          <Text text="{Rjcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Rjcnt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Paymm" filterProperty="Paymm">
@@ -79,7 +79,7 @@
           <Text text="{
               path: 'Paymm',
               formatter: '.formatDate'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="60px">

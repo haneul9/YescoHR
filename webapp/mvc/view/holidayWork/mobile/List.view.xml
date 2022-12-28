@@ -13,17 +13,14 @@
             <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
               <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
               <Text text="{Atrsn}" />
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" class="m-auto">
+              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
                 <core:customData>
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                 </core:customData>
               </core:Icon>
-              <ObjectStatus text="{Apptxt}" class="font-16-px" 
-                            state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
-              <Text 
-                text="
-                { path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }~{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" 
-              />
+              <ObjectStatus text="{Apptxt}" class="font-16-px" state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
+              <Text text="
+                { path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }~{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" />
               <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date', formatter: '.formatSubda' } {Subtytx}" />
               <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
                 <customData>
@@ -37,7 +34,7 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_04002}" type="Emphasized" width="100%" press=".onPressNewApprovalBtn" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onPressNewApprovalBtn" />
       </OverflowToolbar>
     </footer>
   </Page>

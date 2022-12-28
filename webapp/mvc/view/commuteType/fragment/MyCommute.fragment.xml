@@ -1,18 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
-        <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>LABEL_30004}" />
-            </HBox>
-            <VBox class="desc pt-16-px">
-                <Text text="{i18n>MSG_30001}" />
-                <ObjectStatus text="{/MyCom/Rtext}" state="Indication05" class="pl-0 pt-30-px font-26-px" />
-                <Text text="{
-                    parts: [ {path: '/MyCom/Zyymm'}, {path: '/MyCom/Begda'}, {path: '/MyCom/Endda'} ],
-                    formatter: '.formatSchedule'
-                }" class="pt-30-px" />
-            </VBox>
-        </VBox>
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox overview-box" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox>
+      <HBox justifyContent="SpaceBetween" class="title">
+        <Title level="H2" text="{i18n>LABEL_30004}" />
+      </HBox>
+      <VBox class="desc pt-16-px">
+        <Text text="{i18n>MSG_30001}" />
+        <ObjectStatus text="{/MyCom/Rtext}" state="Indication05" class="pl-0 pt-30-px font-26-px" />
+        <Text text="{ parts: [ {path: '/MyCom/Zyymm'}, {path: '/MyCom/Begda'}, {path: '/MyCom/Endda'} ], formatter: '.formatSchedule' }" class="pt-30-px" />
+      </VBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

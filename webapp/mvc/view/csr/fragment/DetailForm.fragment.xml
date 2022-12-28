@@ -16,12 +16,12 @@
       </VBox>
       <Label text="{i18n>LABEL_46005}" />
       <VBox>
-        <ComboBox selectedKey="{/Data/Csrty}" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" class="required" change=".onsetApprovalList" >
+        <ComboBox selectedKey="{/Data/Csrty}" editable="{= ${/Data/Prsta} === '' || ${/auth} === 'H' }" class="required" change=".onsetApprovalList">
           <core:Item text="{i18n>LABEL_46029}" key="1000" />
           <core:Item text="{i18n>LABEL_46030}" key="2000" />
           <core:Item text="{i18n>LABEL_46031}" key="3000" />
           <core:Item text="{i18n>LABEL_46032}" key="4000" />
-          <core:Item text="{i18n>LABEL_46033}" key="5000" /> 
+          <core:Item text="{i18n>LABEL_46033}" key="5000" />
           <core:Item text="{i18n>LABEL_46040}" key="7000" />
           <core:Item text="{i18n>LABEL_46034}" key="6000" />
           <core:Item text="{i18n>LABEL_46035}" key="9000" />
@@ -29,11 +29,11 @@
       </VBox>
       <Label text="{i18n>LABEL_46018}" />
       <VBox>
-        <DatePicker width="150px" class="sapIcon_Date required" dateValue="{ path: '/Data/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" />
+        <DatePicker width="150px" class="sapIcon_Date required" dateValue="{ path: '/Data/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/Data/Prsta} === '' || ${/auth} === 'H' }" />
       </VBox>
       <Label text="{i18n>LABEL_46019}"/>
       <VBox>
-        <rte:RichTextEditor id="editor1" value="{/Data/Apcnt}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" sanitizeValue="false" editable="{= ${/Data/Prsta} === '' || ${/Austy} === 'H' }" buttonGroups="{/ButtonGroups}" />
+        <rte:RichTextEditor id="csrEditor1" value="{/Data/ApcntHtml}" ready=".editorReady" width="99.8%" height="250px" showGroupFont="true" showGroupInsert="true" sanitizeValue="false" editable="{= ${/Data/Prsta} === '' || ${/auth} === 'H' }" buttonGroups="{/ButtonGroups}" />
         <layoutData>
           <grid:GridItemLayoutData gridColumn="2 / 5"/>
         </layoutData>

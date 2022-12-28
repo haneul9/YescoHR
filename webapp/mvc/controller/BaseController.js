@@ -12,6 +12,7 @@ sap.ui.define(
     'sap/ui/yesco/common/DateUtils',
     'sap/ui/yesco/common/TimeUtils',
     'sap/ui/yesco/common/EmployeeSearchDialogHandler',
+    'sap/ui/yesco/common/PdfUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/TextUtils',
@@ -29,6 +30,7 @@ sap.ui.define(
     DateUtils,
     TimeUtils,
     EmployeeSearchDialogHandler,
+    PdfUtils,
     UI5Error,
     TableUtils,
     TextUtils
@@ -38,6 +40,7 @@ sap.ui.define(
     return Controller.extend('sap.ui.yesco.mvc.controller.BaseController', {
       AttachFileAction: AttachFileAction,
       DateUtils: DateUtils,
+      PdfUtils: PdfUtils,
       TimeUtils: TimeUtils,
       TableUtils: TableUtils,
       TextUtils: TextUtils,
@@ -110,6 +113,10 @@ sap.ui.define(
       isHass() {
         const sHash = HashChanger.getInstance().getHash();
         return /^h\//.test(sHash) || /^mobile\/h\//.test(sHash);
+      },
+
+      getCurrentAuthChar() {
+        return this.isHass() ? 'H' : this.isMss() ? 'M' : 'E';
       },
 
       /**
@@ -209,15 +216,21 @@ sap.ui.define(
         return _.chain(this.getOwnerComponent().getMetadataModel().getData()).get([sServiceName, sEntityType, sProperty, 'maxLength']).toInteger().value();
       },
 
-      onMobileSearchList(oEvent) {
-        const oEventSource = oEvent.getSource();
-        const oMobileSearchBox = oEventSource.getParent();
-        if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
-          oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
+      setContentsBusy(bContentsBusy = true, vTarget = []) {
+        const oViewModel = this.getViewModel();
+        const mBusy = oViewModel.getProperty('/busy') || oViewModel.getProperty('/contentsBusy');
+
+        if (_.isEmpty(vTarget)) {
+          _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
+        } else {
+          if (_.isArray(vTarget)) {
+            _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
+          } else {
+            _.set(mBusy, vTarget, bContentsBusy);
+          }
         }
-        if (typeof this.onSearchList === 'function') {
-          this.onSearchList(oEvent);
-        }
+
+        oViewModel.refresh();
       },
 
       /**
@@ -292,11 +305,20 @@ sap.ui.define(
 
       onEmployeeSearchOpen() {
         this.getEmployeeSearchDialogHandler()
+          .activeMultiSelect(this.getEmployeeSearchMultiSelect())
           .setChangeAppointee(true) // 선택 후 대상자 변경 여부
           .setOnLoadSearch(this.getEmployeeSearchDialogOnLoadSearch()) // Open 후 조회 여부 - 각 화면에서 구현
           .setOptions(this.getEmployeeSearchDialogCustomOptions()) // Fields 활성화여부 및 초기 선택값 - 각 화면에서 구현
           .setCallback(this.callbackAppointeeChange.bind(this)) // 선택 후 실행 할 Function - 각 화면에서 구현
           .openDialog();
+      },
+
+      getEmployeeSearchSelectAll() {
+        return false;
+      },
+
+      getEmployeeSearchMultiSelect() {
+        return false;
       },
 
       getEmployeeSearchDialogCustomOptions() {
@@ -314,40 +336,47 @@ sap.ui.define(
       /**
        * FileAttachmentBox.fragment.xml
        */
-      onAttachmentChange(oEvent) {
-        this.getFileAttachmentBoxHandler().onAttachmentChange(oEvent);
+      onPressAttachmentDescription(oEvent) {
+        this.getFileAttachmentBoxHandler().onPressAttachmentDescription(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
-      onAttachmentUploadComplete(oEvent) {
-        this.getFileAttachmentBoxHandler().onAttachmentUploadComplete(oEvent);
+      onChangeAttachment(oEvent) {
+        this.getFileAttachmentBoxHandler().onChangeAttachment(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
-      onTypeMissMatch(oEvent) {
-        this.getFileAttachmentBoxHandler().onTypeMissMatch(oEvent);
+      onUploadCompleteAttachment(oEvent) {
+        this.getFileAttachmentBoxHandler().onUploadComplete(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
-      onAttachmentRemove(oEvent) {
-        this.getFileAttachmentBoxHandler().onAttachmentRemove(oEvent);
+      onTypeMissMatchAttachment(oEvent) {
+        this.getFileAttachmentBoxHandler().onTypeMissMatchAttachment(oEvent);
       },
 
       /**
        * FileAttachmentBox.fragment.xml
        */
-      onAttachmentRemoveCancel(oEvent) {
-        this.getFileAttachmentBoxHandler().onAttachmentRemoveCancel(oEvent);
+      onPressAttachmentRemove(oEvent) {
+        this.getFileAttachmentBoxHandler().onPressAttachmentRemove(oEvent);
+      },
+
+      /**
+       * FileAttachmentBox.fragment.xml
+       */
+      onPressAttachmentRemoveCancel(oEvent) {
+        this.getFileAttachmentBoxHandler().onPressAttachmentRemoveCancel(oEvent);
       },
 
       getFileAttachmentBoxHandler() {
-        return this.FileAttachmentBoxHandler;
+        return this.oFileAttachmentBoxHandler;
       },
 
       getStaticResourceURL(sResourcePath) {
@@ -360,6 +389,10 @@ sap.ui.define(
 
       getUnknownAvatarImageURL() {
         return AppUtils.getUnknownAvatarImageURL();
+      },
+
+      loadErrorAvatarImage(oEvent) {
+        oEvent.getSource().setSrc(this.getUnknownAvatarImageURL());
       },
 
       /**
@@ -380,22 +413,65 @@ sap.ui.define(
       /**
        * Mobile Common
        */
-      async openMobileCommonListStatusPop(oEvent) {
-        const oButton = oEvent.getSource();
+      async onPressMobileInfoMessage(oEvent) {
+        if (this.oMobileInfoMessagePopover && this.oMobileInfoMessagePopover.isOpen()) {
+          this.oMobileInfoMessagePopover.close();
+        } else {
+          const oButton = oEvent.getSource();
 
-        if (!this._pPopover) {
-          const oView = this.getView();
+          if (!this.oMobileInfoMessagePopover) {
+            const oView = this.getView();
 
-          this._pPopover = await Fragment.load({
-            id: oView.getId(),
-            name: 'sap.ui.yesco.fragment.mobile.ListStatusPopover',
-            controller: this,
-          });
+            this.oMobileInfoMessagePopover = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.fragment.mobile.InfoMessagePopover',
+              controller: this,
+            });
 
-          oView.addDependent(this._pPopover);
+            oView.addDependent(this.oMobileInfoMessagePopover);
+          }
+
+          this.oMobileInfoMessagePopover.openBy(oButton);
         }
+      },
 
-        this._pPopover.openBy(oButton);
+      /**
+       * Mobile Common
+       */
+      async openMobileCommonListStatusPop(oEvent) {
+        if (this.oMobileListStatusPopover && this.oMobileListStatusPopover.isOpen()) {
+          this.oMobileListStatusPopover.close();
+        } else {
+          const oButton = oEvent.getSource();
+
+          if (!this.oMobileListStatusPopover) {
+            const oView = this.getView();
+
+            this.oMobileListStatusPopover = await Fragment.load({
+              id: oView.getId(),
+              name: 'sap.ui.yesco.fragment.mobile.ListStatusPopover',
+              controller: this,
+            });
+
+            oView.addDependent(this.oMobileListStatusPopover);
+          }
+
+          this.oMobileListStatusPopover.openBy(oButton);
+        }
+      },
+
+      /**
+       * Mobile Common
+       */
+      onMobileSearchList(oEvent) {
+        const oEventSource = oEvent.getSource();
+        const oMobileSearchBox = oEventSource.getParent();
+        if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
+          oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
+        }
+        if (typeof this.onSearchList === 'function') {
+          this.onSearchList(oEvent);
+        }
       },
 
       /**

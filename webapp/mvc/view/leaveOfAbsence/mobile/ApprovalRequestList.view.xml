@@ -1,0 +1,46 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.leaveOfAbsence.mobile.ApprovalRequestList"
+  xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{/search/showFooter}">
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.approvalRequest.mobile.ListHeader" type="XML" class="sapUiSmallMarginBottom" />
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <List items="{/search/approvalRequestList}" busyIndicatorDelay="0" busy="{/search/busy}" class="list-wrap wrap">
+          <CustomListItem type="Active" press=".onSelectRow">
+            <grid:CSSGrid gridTemplateColumns="3fr 2fr 1fr" gridGap="6px 0">
+              <Text text="{Apptytx}" class="font-16-px font-bold" />
+              <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Right" />
+              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
+                <core:customData>
+                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+                </core:customData>
+              </core:Icon>
+              <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' } {= !!${Endda} ? '~' : '' } {= !!${Endda} ? ${ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' } : ''} {ApptytxSplited}" width="100%">
+                <layoutData>
+                  <grid:GridItemLayoutData gridColumn="span 2" />
+                </layoutData>
+              </Text>
+              <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="m-auto">
+                <customData>
+                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+                </customData>
+              </Text>
+            </grid:CSSGrid>
+          </CustomListItem>
+        </List>
+      </custom:MobileScrollContainer>
+    </VBox>
+    <footer class="wrap">
+      <OverflowToolbar>
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onPressNewRequest" enabled="{/search/showFooter}">
+          <layoutData>
+            <FlexItemData growFactor="1" />
+          </layoutData>
+        </Button>
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

@@ -137,10 +137,8 @@ sap.ui.define(
         return 'HR17';
       },
 
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+      getCurrentLocationText({ oDataKey }) {
+        return oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165'); // 신규신청 : 상세
       },
 
       // 신청내역 checkBox

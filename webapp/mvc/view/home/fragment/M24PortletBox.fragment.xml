@@ -12,7 +12,7 @@
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <Text text="{i18n>LABEL_01191}" class="desc-txt" />
+      <Text text="{/Ttltxt}{i18n>LABEL_01191}" class="desc-txt" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

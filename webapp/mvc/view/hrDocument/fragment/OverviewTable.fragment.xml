@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <Table id="hrDocumentTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <rowSettingsTemplate>
+            <RowSettings highlight="{ path: 'Status', formatter: '.rowHighlight' }" />
+        </rowSettingsTemplate>
+        <columns>
+            <Column width="25%" filterProperty="Hrdocttl" sortProperty="Hrdocttl">
+                <m:Label text="{i18n>LABEL_48006}"/>
+                <template>
+                    <m:Text text="{Hrdocttl}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="20%" filterProperty="Hrdoctx" sortProperty="Hrdoctx">
+                <m:Label text="{i18n>LABEL_47001}"/>
+                <template>
+                    <m:Text text="{Hrdoctx}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="BegdaFormatted" sortProperty="BegdaFormatted">
+                <m:Label text="{i18n>LABEL_48007}"/>
+                <template>
+                    <m:Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="EnddaFormatted" sortProperty="EnddaFormatted">
+                <m:Label text="{i18n>LABEL_48008}"/>
+                <template>
+                    <m:Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="SmdatFormatted" sortProperty="SmdatFormatted">
+                <m:Label text="{i18n>LABEL_48014}"/>
+                <template>
+                    <m:Text text="{ path: 'Smdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="SmtimFormatted" sortProperty="SmtimFormatted">
+                <m:Label text="{i18n>LABEL_48015}"/>
+                <template>
+                    <m:Text text="{ path: 'Smtim', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Downcnt" sortProperty="Downcnt">
+                <m:Label text="{i18n>LABEL_49001}"/>
+                <template>
+                    <m:Text text="{ path: 'Downcnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+        </columns>
+    </Table>
+</core:FragmentDefinition>

@@ -1,0 +1,66 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.csr.mobile.csrDetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <Page enableScrolling="false" showFooter="{= ${/form/Appryn} === 'X' }" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" busyIndicatorDelay="0" busy="{/busy}" navButtonPress=".onNavBack">
+        <VBox class="contents">
+            <custom:MobileScrollContainer horizontal="false" vertical="true">
+                <VBox class="wrap">
+                    <Title level="H2" text="{i18n>LABEL_00129}" />
+                    <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid mb-8-px">
+                        <Label text="{i18n>LABEL_00129}"/>
+                        <VBox>
+                            <Text text="{/form/Apttl}" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_46005}"/>
+                        <VBox>
+                            <Text text="{/form/Csrtytx}" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_46045}"/>
+                        <VBox>
+                            <Text text="{/form/ReqdatFormatted}" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_46018}"/>
+                        <VBox>
+                            <Text text="{ path: '/form/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+                        </VBox>
+                    </grid:CSSGrid>
+                    <Title level="H2" text="{i18n>LABEL_46046}" />
+                    <core:HTML content="{/form/Apcnt}" class="editor-view mb-8-px" />
+                    <Title level="H2" text="{i18n>LABEL_46020}" visible="{= ${/form/Prstg} !== '10' }" />
+                    <core:HTML content="{/form/Testc1}" class="editor-view mb-8-px" visible="{= ${/form/Prstg} !== '10' }" />
+                    <Title level="H2" text="{i18n>LABEL_46021}" visible="{= ${/form/Prstg} !== '10' }" />
+                    <core:HTML content="{/form/Testc2}" class="editor-view mb-8-px" visible="{= ${/form/Prstg} !== '10' }" />
+                    <Title level="H2" text="{i18n>LABEL_46047}" visible="{= ${/form/Prstg} !== '10' }" />
+                    <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid" visible="{= ${/form/Prstg} !== '10' }">
+                        <Label text="{i18n>LABEL_46023}"/>
+                        <VBox>
+                            <Text text="{/form/Prgno}" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_46024}"/>
+                        <VBox>
+                            <Text text="{/form/Ctsno}" />
+                        </VBox>
+                        <Label text="{i18n>LABEL_46025}(Abap/Web)"/>
+                        <VBox>
+                            <Text text="{/form/Wrktm}({/form/Abaptm} / {/form/Webtm})" />
+                        </VBox>
+                    </grid:CSSGrid>
+                    <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+                    <Title level="H2" text="{i18n>LABEL_46028}" />
+                    <grid:CSSGrid gridTemplateColumns="3fr 3fr 5fr" items="{/approval}" gridGap="6px 0" class="form-grid">
+                        <Text text="{label}" wrapping="false" />
+                    </grid:CSSGrid>
+                </VBox>
+            </custom:MobileScrollContainer>
+        </VBox>
+        <footer>
+            <OverflowToolbar>
+                <Button text="{i18n>LABEL_00123}" type="Emphasized" press=".onPressApproval" />
+                <Button text="{i18n>LABEL_00124}" type="Reject" press=".onPressReject" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -58,7 +58,7 @@ sap.ui.define(
 
         try {
           if (_.isEmpty(oParameter)) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+            throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const oModel = this.getModel(ServiceNames.APPRAISAL);

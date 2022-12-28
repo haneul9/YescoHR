@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <Table id="docSubmitListTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
+        <rowSettingsTemplate>
+            <RowSettings highlight="{ path: 'Status', formatter: '.rowHighlight' }" />
+        </rowSettingsTemplate>
+        <columns>
+            <Column width="20%" filterProperty="Hrdocttl" sortProperty="Hrdocttl">
+                <m:Label text="{i18n>LABEL_48006}"/>
+                <template>
+                    <m:Text text="{Hrdocttl}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="16%" filterProperty="Hrdoctx" sortProperty="Hrdoctx">
+                <m:Label text="{i18n>LABEL_47001}"/>
+                <template>
+                    <m:Text text="{Hrdoctx}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="BegdaFormatted" sortProperty="BegdaFormatted">
+                <m:Label text="{i18n>LABEL_48007}"/>
+                <template>
+                    <m:Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="EnddaFormatted" sortProperty="EnddaFormatted">
+                <m:Label text="{i18n>LABEL_48008}"/>
+                <template>
+                    <m:Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Tgempcnt" sortProperty="Tgempcnt">
+                <m:Label text="{i18n>LABEL_48009}"/>
+                <template>
+                    <m:Text text="{ path: 'Tgempcnt', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Smempcnt" sortProperty="Smempcnt">
+                <m:Label text="{i18n>LABEL_48010}"/>
+                <template>
+                    <m:Text text="{ path: 'Smempcnt', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Enamec" sortProperty="Enamec">
+                <m:Label text="{i18n>LABEL_47003}"/>
+                <template>
+                    <m:Text text="{Enamec}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="DatumcFormatted" sortProperty="DatumcFormatted">
+                <m:Label text="{i18n>LABEL_47004}" wrapping="true"/>
+                <template>
+                    <m:Text text="{ path: 'Datumc', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+        </columns>
+    </Table>
+</core:FragmentDefinition>

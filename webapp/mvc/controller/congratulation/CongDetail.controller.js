@@ -26,7 +26,7 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.congratulation.CongDetail', {
-      FileAttachmentBoxHandler: null,
+      oFileAttachmentBoxHandler: null,
 
       initializeModel() {
         return {
@@ -605,7 +605,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              const oError = await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+              const oError = await this.oFileAttachmentBoxHandler.upload(mFormData.Appno);
               if (oError && oError.code === 'E') {
                 throw oError;
               }
@@ -664,7 +664,7 @@ sap.ui.define(
               }
 
               // 파일 삭제 및 업로드
-              await this.FileAttachmentBoxHandler.upload(mFormData.Appno);
+              await this.oFileAttachmentBoxHandler.upload(mFormData.Appno);
 
               const oModel = this.getModel(ServiceNames.BENEFIT);
               const mSendObject = {
@@ -760,7 +760,8 @@ sap.ui.define(
         const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
         const sAppno = oViewModel.getProperty('/FormData/Appno') || '';
 
-        this.FileAttachmentBoxHandler = new FileAttachmentBoxHandler(this, {
+        this.oFileAttachmentBoxHandler = new FileAttachmentBoxHandler(this, {
+          visible: true,
           editable: !sStatus || sStatus === '10',
           appno: sAppno,
           apptp: this.getApprovalType(),

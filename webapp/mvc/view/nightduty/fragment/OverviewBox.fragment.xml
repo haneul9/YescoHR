@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core">
+  <VBox binding="{/overview}" busy="{busy}" busyIndicatorDelay="0" class="hCardBox overview-box">
+    <HBox justifyContent="SpaceBetween" class="title">
+      <Title level="H2" text="{i18n>LABEL_06002}" />
+      <Button type="Transparent" icon="sap-icon://detail-view" class="icon-button" press=".onPressOverviewBoxIcon" tooltip="{i18n>LABEL_06006}" />
+    </HBox>
+    <HBox width="100%" justifyContent="SpaceBetween" class="excavation-overview">
+      <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr" gridGap="50px 26px">
+        <Text text="{year}{i18n>MSG_06001}" class="sapUiSmallMarginBottom">
+          <layoutData>
+            <grid:GridItemLayoutData gridColumn="1 / 4" />
+          </layoutData>
+        </Text>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06003}" />
+          <ObjectStatus text="{ path: 'Cnt11', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06004}" />
+          <ObjectStatus text="{ path: 'Cnt12', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06005}" />
+          <ObjectStatus text="{ path: 'Cnt13', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+      </grid:CSSGrid>
+
+      <grid:CSSGrid gridTemplateColumns="1fr 1fr 1fr" gridGap="50px 26px">
+        <Text text="{yearMonth} {i18n>MSG_06003}" class="sapUiSmallMarginBottom">
+          <layoutData>
+            <grid:GridItemLayoutData gridColumn="1 / 4" />
+          </layoutData>
+        </Text>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06003}" />
+          <ObjectStatus text="{ path: 'Cnt21', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06004}" />
+          <ObjectStatus text="{ path: 'Cnt22', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_06005}" />
+          <ObjectStatus text="{ path: 'Cnt23', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication04" />
+        </VBox>
+      </grid:CSSGrid>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

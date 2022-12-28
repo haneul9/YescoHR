@@ -144,7 +144,7 @@ sap.ui.define(
           const errorJSON = JSON.parse(oError.responseText);
 
           if (errorJSON.error.innererror.errordetails && errorJSON.error.innererror.errordetails.length) {
-            mErrorData.code = errorJSON.error.code;
+            mErrorData.code = _.startsWith(errorJSON.error.code, '/') ? 'E' : errorJSON.error.code;
             mErrorData.message = errorJSON.error.innererror.errordetails[0].message;
           } else if (errorJSON.error.message) {
             // mErrorData.code = 'I';
@@ -190,7 +190,7 @@ sap.ui.define(
             onClose: () => {
               if (this.isMobile()) {
                 // from=logoff : 모바일(iOS)에서 로그아웃 후 생체인증으로 바로 다시 로그인 되어버리는 현상 방지를 위해 추가
-                // location.href = '/sap/public/bc/icf/logoff?from=logoff';
+                // TODO: ?keepMYSAPSSO2Cookie=false&propagateLogoff=false CL_HTTP_EXT_LOGOFF
                 location.href = '/sap/public/bc/icf/logoff';
               } else {
                 if (this.isPRD()) {

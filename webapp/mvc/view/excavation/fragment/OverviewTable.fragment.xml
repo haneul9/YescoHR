@@ -25,7 +25,7 @@
           <m:Label text="{i18n>LABEL_06101}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="5%" filterProperty="Kurzt" sortProperty="Kurzt">
@@ -34,7 +34,7 @@
           <m:Label text="{i18n>LABEL_06102}"/>
         </multiLabels>
         <template>
-          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="5%" filterProperty="Tagty" sortProperty="Tagty">
@@ -43,7 +43,7 @@
           <m:Label text="{i18n>LABEL_06103}"/>
         </multiLabels>
         <template>
-          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="PernrB" sortProperty="PernrB" headerSpan="4">
@@ -52,7 +52,7 @@
           <m:Label text="{i18n>LABEL_00209}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="EnameB" sortProperty="EnameB">
@@ -61,7 +61,7 @@
           <m:Label text="{i18n>LABEL_00210}"/>
         </multiLabels>
         <template>
-          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="OrgtxB" sortProperty="OrgtxB">
@@ -70,7 +70,7 @@
           <m:Label text="{i18n>LABEL_00224}"/>
         </multiLabels>
         <template>
-          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
@@ -79,7 +79,7 @@
           <m:Label text="{i18n>LABEL_00215}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="PernrA" sortProperty="PernrA" headerSpan="4">
@@ -88,7 +88,7 @@
           <m:Label text="{i18n>LABEL_00209}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="EnameA" sortProperty="EnameA">
@@ -97,7 +97,7 @@
           <m:Label text="{i18n>LABEL_00210}"/>
         </multiLabels>
         <template>
-          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="OrgtxA" sortProperty="OrgtxA">
@@ -106,7 +106,7 @@
           <m:Label text="{i18n>LABEL_00224}"/>
         </multiLabels>
         <template>
-          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="7%" filterProperty="ZzjikgbtA" sortProperty="ZzjikgbtA">
@@ -115,7 +115,7 @@
           <m:Label text="{i18n>LABEL_00215}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column filterProperty="Appda" sortProperty="Appda">
@@ -124,7 +124,7 @@
           <m:Label text="{i18n>LABEL_00266}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column filterProperty="Sgnda" sortProperty="Sgnda">
@@ -133,7 +133,7 @@
           <m:Label text="{i18n>LABEL_00269}"/>
         </multiLabels>
         <template>
-          <m:Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
     </columns>

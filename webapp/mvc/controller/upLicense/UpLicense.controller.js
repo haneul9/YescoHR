@@ -352,7 +352,7 @@ sap.ui.define(
                   width: '100%',
                   textAlign: 'Center',
                   visible: !_.startsWith(sColumnId, 'Cert'),
-                }).addStyleClass('tableRow_Text'),
+                }),
                 new sap.m.Link({
                   layoutData: new sap.m.FlexItemData({ growFactor: 1 }),
                   width: '100%',

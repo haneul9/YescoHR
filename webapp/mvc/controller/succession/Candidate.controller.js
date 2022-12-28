@@ -438,7 +438,7 @@ sap.ui.define(
       },
 
       throwError(...aMessageCodes) {
-        throw new UI5Error({ code: 'I', message: this.getBundleText(...aMessageCodes) });
+        throw new UI5Error({ code: 'A', message: this.getBundleText(...aMessageCodes) });
       },
 
       async readCandidateSearch() {
@@ -459,7 +459,7 @@ sap.ui.define(
         oViewModel.setProperty('/searchResult/listInfo/totalCount', aSearchResults.length);
 
         if (!aResults.length) {
-          MessageBox.information(this.getBundleText('MSG_00062')); // 검색결과가 없습니다.
+          MessageBox.alert(this.getBundleText('MSG_00062')); // 검색결과가 없습니다.
 
           this.getViewModel().setProperty('/searchBar/showSearchConditions', true);
         } else {

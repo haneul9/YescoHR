@@ -32,6 +32,7 @@ sap.ui.define(
       oResultTable: null,
       fCallback: null,
       mOptions: {},
+      bSelectAll: false,
       bMultiSelect: false,
       bOnLoadSearch: false,
       bOpenByAppointee: false,
@@ -47,8 +48,9 @@ sap.ui.define(
         });
       },
 
-      activeMultiSelect() {
-        this.bMultiSelect = true;
+      activeMultiSelect(bMultiSelect = false) {
+        this.bMultiSelect = bMultiSelect;
+        this.bSelectAll = bMultiSelect;
 
         return this;
       },
@@ -133,6 +135,7 @@ sap.ui.define(
           this.oResultTable = this.oCommonEmployeeSearchDialog.getContent()[0].getItems()[1].getItems()[1];
           this.oResultTable.toggleStyleClass('radio-selection-table', !this.bMultiSelect);
           this.oResultTable.clearSelection();
+          this.oResultTable.setEnableSelectAll(this.bSelectAll);
 
           if (this.bOnLoadSearch) this.readData();
           else oEmployeeDialogModel.setProperty('/busy', false);
@@ -237,7 +240,8 @@ sap.ui.define(
           } else {
             const mEmployeeData = oEmployeeDialogModel.getProperty(`/results/list/${aSelectedIndices[0]}`);
 
-            if (this.bOpenByAppointee) this.oController.getViewModel('appointeeModel').setData(_.chain(mEmployeeData).set('Werks', mEmployeeData.Persa).set('Orgtx', mEmployeeData.Fulln).value(), true);
+            if (this.bOpenByAppointee)
+              this.oController.getViewModel('appointeeModel').setData(_.chain(mEmployeeData).set('Werks', mEmployeeData.Persa).set('Orgtx', mEmployeeData.Fulln).value(), true);
             if (this.fCallback && typeof this.fCallback === 'function') this.fCallback(mEmployeeData);
           }
 

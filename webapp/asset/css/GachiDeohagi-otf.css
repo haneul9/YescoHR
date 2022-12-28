@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: 'GachiDeohagi';
+	font-weight: 700;
+	font-display: swap;
+	src: local('가치 더하기 Bold'), url('/sap/public/bc/ui2/zui5_yescohr/webfonts/otf/GachiDeohagi-Bold.otf') format('opentype');
+}
+
+@font-face {
+	font-family: 'GachiDeohagi';
+	font-weight: 400;
+	font-display: swap;
+	src: local('가치 더하기 Regular'), url('/sap/public/bc/ui2/zui5_yescohr/webfonts/otf/GachiDeohagi-Regular.otf') format('opentype');
+}
+
+@font-face {
+	font-family: 'GachiDeohagi';
+	font-weight: 300;
+	font-display: swap;
+	src: local('가치 더하기 Light'), url('/sap/public/bc/ui2/zui5_yescohr/webfonts/otf/GachiDeohagi-Light.otf') format('opentype');
+}

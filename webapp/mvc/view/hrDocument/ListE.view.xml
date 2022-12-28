@@ -1,0 +1,6 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.hrDocument.List"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.hrDocument.fragment.ListContents" type="XML" />
+</mvc:View>

@@ -19,6 +19,16 @@ sap.ui.define(
           return _.isEqual(mEdmTime.ms, 0) ? null : mEdmTime;
         },
 
+        format(oValue) {
+          if ($.isPlainObject(oValue)) {
+            return moment(oValue.ms - this.i9Hours).format('HH:mm');
+          }
+
+          if (typeof oValue === 'string' || oValue instanceof String) {
+            return this.getMoment(oValue).format('HH:mm');
+          }
+        },
+
         diff(mStart, mEnd) {
           if (_.has(mStart, 'ms') && _.has(mEnd, 'ms')) {
             const dBeguz = mEnd.ms !== 0 && mStart.ms > mEnd.ms ? moment.utc(mStart.ms).subtract(1, 'days') : moment.utc(mStart.ms);
@@ -59,6 +69,15 @@ sap.ui.define(
           });
 
           return mData;
+        },
+
+        getMoment(oValue) {
+          if (/^PT/.test(oValue)) {
+            return moment.duration(oValue).add(this.i9Hours, 'milliseconds');
+          }
+
+          const sTimeString = oValue.replace(/[^\d]/g, '');
+          return moment(`19700101${sTimeString}`, 'YYYYMMDDHHmmss');
         },
       };
 

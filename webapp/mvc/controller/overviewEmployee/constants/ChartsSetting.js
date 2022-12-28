@@ -197,6 +197,7 @@ sap.ui.define([], function () {
         chart: FusionCharts.curryChartOptions({
           scrollHeight: 6,
           scrollColor: '#ffffff',
+          scrollToEnd: 1,
           animation: 0,
           yAxisNameFontSize: 12,
           showXAxisLine: 0,

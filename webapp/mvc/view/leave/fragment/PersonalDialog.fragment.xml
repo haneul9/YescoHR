@@ -42,7 +42,7 @@
               <m:Link text="{Ename}" class="showLine" width="100%" textAlign="Center" press=".onPressDialogRowEname" />
             </template>
           </Column>
-          <Column width="8%" sortProperty="ZzjikgbtSort" filterProperty="ZzjikgbtFilter">
+          <Column width="12%" sortProperty="ZzjikgbtSort" filterProperty="ZzjikgbtFilter">
             <multiLabels>
               <m:Label text="{i18n>LABEL_00215}"/>
               <m:Label text="{i18n>LABEL_00215}"/>

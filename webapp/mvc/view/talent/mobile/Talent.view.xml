@@ -35,7 +35,7 @@
           </Button>
         </HBox>
         <HBox justifyContent="SpaceBetween" alignItems="Center">
-          <SearchField maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
+          <SearchField id="talentSearchField" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
             <layoutData>
               <FlexItemData minWidth="67%" maxWidth="67%" />
             </layoutData>
@@ -70,7 +70,7 @@
                 <VBox width="100%">
                   <FlexBox width="calc(100% - 27px)" alignContent="SpaceBetween" justifyContent="SpaceBetween" class="talent-list-emp-name">
                     <items>
-                      <Title text="{Linetx1}" wrapping="true"/>
+                      <Title text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="true"/>
                       <Image src="{Icon}" height="15px" class="pr-10-px" />
                     </items>
                   </FlexBox>

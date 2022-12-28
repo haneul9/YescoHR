@@ -41,7 +41,7 @@ sap.ui.define(
             success: (oData) => {
               AppUtils.debug(`${sUrl} get-entityset success.`, oData);
 
-              resolve(oData.results ?? []);
+              resolve(oData.results.map(({ ['__metadata']: _, ...obj }) => obj) ?? []);
             },
             error: (oError) => {
               AppUtils.debug(`${sUrl} get-entityset error.`, oError);

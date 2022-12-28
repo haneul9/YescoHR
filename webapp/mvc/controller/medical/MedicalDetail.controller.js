@@ -14,13 +14,13 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     Fragment,
-	MessageBox,
-	Appno,
-	AppUtils,
-	ComboEntry,
-	Client,
-	ServiceNames,
-	BaseController
+    MessageBox,
+    Appno,
+    AppUtils,
+    ComboEntry,
+    Client,
+    ServiceNames,
+    BaseController
   ) => {
     'use strict';
 
@@ -56,21 +56,28 @@ sap.ui.define(
             rejectCount: 0,
             completeCount: 0,
           },
-          busy: false,
+          busy: true,
         };
+      },
+
+      // override AttachFileCode
+      getApprovalType() {
+        return 'HR09';
       },
 
       getPreviousRouteName() {
         return this.getViewModel().getProperty('/previousName');
       },
 
-      async onObjectMatched(oParameter, sRouteName) {
-        const sDataKey = oParameter.oDataKey;
+      getCurrentLocationText(oArguments) {
+        return oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+      },
+
+      async onObjectMatched({ oDataKey }, sRouteName) {
         const oViewModel = this.getViewModel();
 
         oViewModel.setData(this.initializeModel());
-        oViewModel.setProperty('/busy', true);
-        oViewModel.setProperty('/ViewKey', sDataKey);
+        oViewModel.setProperty('/ViewKey', oDataKey);
 
         try {
           // Input Field Imited
@@ -87,126 +94,21 @@ sap.ui.define(
           this.debug(oError);
           AppUtils.handleError(oError);
         } finally {
-          oViewModel.setProperty('/busy', false);
+          this.setBusy(false);
         }
-      },
-
-      // override AttachFileCode
-      getApprovalType() {
-        return 'HR09';
-      },
-
-      formatDate(sDate = '') {
-        sDate = !sDate || _.toNumber(sDate) === 0 ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
-
-        return sDate;
-      },
-
-      forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
-        const sMob1 = this.TextUtils.toCurrency(cost1);
-        const sMob2 = this.TextUtils.toCurrency(cost2);
-        const sMobtot = this.TextUtils.toCurrency(costtot);
-
-        return `${sMobtot} (${sMob1} / ${sMob2})`;
-      },
-
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
       },
 
       // FormData Settings
       async setFormData() {
-        const sWerks = this.getAppointeeProperty('Werks');
-        const sCommMsg = `<span style='color: #006bd3;'>※ </span>
-          <span'>${this.getBundleText('MSG_05017')}</span>
-          <span style='color: #006bd3; margin-left: -3px;'>${this.getBundleText('MSG_05018')}</span><br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #006bd3;'>${this.getBundleText('MSG_05019')}</span><br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span>${this.getBundleText('MSG_05020')}</span>`;
-        let sMsg = '';
-
-        if (sWerks === '2000') {
-          sMsg = `<p>${this.getBundleText('MSG_09002')}</p>
-            <p>${this.getBundleText('MSG_09003')}</p>
-            <p>${this.getBundleText('MSG_09004')}</p>
-            <p>${this.getBundleText('MSG_09005')}</p>
-            <ul>
-              <li>${this.getBundleText('MSG_09006')}
-                <ul>
-                  <li>${this.getBundleText('MSG_09007')}</li>
-                  <li>${this.getBundleText('MSG_09008')}</li>
-                  <li>${this.getBundleText('MSG_09009')}</li>
-                  <li>${this.getBundleText('MSG_09010')}</li>
-                  <li>${this.getBundleText('MSG_09011')}</li>
-                  <li>${this.getBundleText('MSG_09012')}</li>
-                  <li>${this.getBundleText('MSG_09013')}</li>
-                  <li>${this.getBundleText('MSG_09014')}</li>
-                </ul>
-              </li>
-            </ul>
-            <p>${this.getBundleText('MSG_09015')}</p>
-            <br/>
-            ${sCommMsg}`;
-        } else if (sWerks === '1000' || sWerks === '4000' || sWerks === '5000') {
-          sMsg = `<ol>
-            <li>${this.getBundleText('MSG_09029')}</il>
-            <li>${this.getBundleText('MSG_09030')}</il>
-            <ul>
-              <li>${this.getBundleText('MSG_09031')}</li>
-              <li>${this.getBundleText('MSG_09032')}</li>
-            </ul>
-            <li>${this.getBundleText('MSG_09033')}</il>
-            <li>${this.getBundleText('MSG_09034')}</il>
-            <li>${this.getBundleText('MSG_09035')}</il>
-            <ul>
-              <li>${this.getBundleText('MSG_09036')}</li>
-              <li>${this.getBundleText('MSG_09037')}</li>
-              <li>${this.getBundleText('MSG_09038')}</li>
-            </ul>
-            <li>${this.getBundleText('MSG_09039')}</il>
-            <ul>
-              <li>${this.getBundleText('MSG_09040')}</li>
-              ${this.getBundleText('MSG_09041')}
-              <li>${this.getBundleText('MSG_09042')}</li>
-              <li>${this.getBundleText('MSG_09043')}</li>
-              <li>${this.getBundleText('MSG_09044')}</li>
-              <li>${this.getBundleText('MSG_09045')}</li>
-              <li>${this.getBundleText('MSG_09046')}</li>
-              <li>${this.getBundleText('MSG_09047')}</li>
-            </ul>
-          </ol>
-          ${sCommMsg}`;
-        } else if (sWerks === '3000') {
-          sMsg = `<dl>
-            <dt>${this.getBundleText('MSG_09002')}</dt>
-            <dd>${this.getBundleText('MSG_09048')}</dd>
-            <dt>${this.getBundleText('MSG_09004')}</dt>
-            <br>
-            <dt>${this.getBundleText('MSG_09005')}</dt>
-            <dt>${this.getBundleText('LABEL_09025')}</dt>
-              <dd>${this.getBundleText('MSG_09049')}</dd>
-              <dd>${this.getBundleText('MSG_09050')}</dd>
-              <dd>${this.getBundleText('MSG_09051')}</dd>
-              <dd>${this.getBundleText('MSG_09052')}</dd>
-            <dt>${this.getBundleText('LABEL_09026')}</dt>
-              <dd>${this.getBundleText('MSG_09053')}</dd>
-              <dd>${this.getBundleText('MSG_09054')}</dd>
-              <dd>${this.getBundleText('MSG_09055')}</dd>
-              <dd>${this.getBundleText('MSG_09056')}</dd>
-              <dd>${this.getBundleText('MSG_09057')}</dd>
-              <dd>${this.getBundleText('MSG_09058')}</dd>
-              <dd>${this.getBundleText('MSG_09059')}</dd>
-          </dl>`;
-        }
-
         const oViewModel = this.getViewModel();
 
+        const sWerks = this.getAppointeeProperty('Werks');
+        const sMsg = this.getGuideMessage(sWerks);
         oViewModel.setProperty('/InfoMessage', sMsg);
 
-        const [oTotal] = await this.getTotalYear();
+        const [{ Zyear }] = await this.getTotalYear();
 
-        oViewModel.setProperty('/sYear', oTotal.Zyear);
+        oViewModel.setProperty('/sYear', Zyear);
 
         const sViewKey = oViewModel.getProperty('/ViewKey');
 
@@ -219,8 +121,8 @@ sap.ui.define(
             Apcnt: '0',
             Pvcnt: '0',
             Rjcnt: '0',
-            Pyyea: oTotal.Zyear,
-            Znametx: oViewModel.getProperty('/TargetList/0/Znametx')
+            Pyyea: Zyear,
+            Znametx: oViewModel.getProperty('/TargetList/0/Znametx'),
           });
 
           const mSessionData = this.getSessionData();
@@ -262,6 +164,90 @@ sap.ui.define(
         }
 
         this.settingsAttachTable();
+      },
+
+      getGuideMessage(sWerks) {
+        const sCommMsg = `<span style='color:#006bd3'>※ </span>
+<span'>${this.getBundleText('MSG_05017')}</span>
+<span style='color:#006bd3; margin-left:-3px'>${this.getBundleText('MSG_05018')}</span><br />
+&nbsp; &nbsp; <span style='color:#006bd3'>${this.getBundleText('MSG_05019')}</span><br />
+&nbsp; &nbsp; <span>${this.getBundleText('MSG_05020')}</span>`;
+        let sMsg = '';
+
+        if (sWerks === '2000') {
+          sMsg = `<p>${this.getBundleText('MSG_09002')}</p>
+<p>${this.getBundleText('MSG_09003')}</p>
+<p>${this.getBundleText('MSG_09004')}</p>
+<p>${this.getBundleText('MSG_09005')}</p>
+<ul>
+  <li>${this.getBundleText('MSG_09006')}
+    <ul>
+      <li>${this.getBundleText('MSG_09007')}</li>
+      <li>${this.getBundleText('MSG_09008')}</li>
+      <li>${this.getBundleText('MSG_09009')}</li>
+      <li>${this.getBundleText('MSG_09010')}</li>
+      <li>${this.getBundleText('MSG_09011')}</li>
+      <li>${this.getBundleText('MSG_09012')}</li>
+      <li>${this.getBundleText('MSG_09013')}</li>
+      <li>${this.getBundleText('MSG_09014')}</li>
+    </ul>
+  </li>
+</ul>
+<p>${this.getBundleText('MSG_09015')}</p>
+<br />
+${sCommMsg}`;
+        } else if (sWerks === '1000' || sWerks === '4000' || sWerks === '5000') {
+          sMsg = `<ol>
+  <li>${this.getBundleText('MSG_09029')}</il>
+  <li>${this.getBundleText('MSG_09030')}</il>
+  <ul>
+    <li>${this.getBundleText('MSG_09031')}</li>
+    <li>${this.getBundleText('MSG_09032')}</li>
+  </ul>
+  <li>${this.getBundleText('MSG_09033')}</il>
+  <li>${this.getBundleText('MSG_09034')}</il>
+  <li>${this.getBundleText('MSG_09035')}</il>
+  <ul>
+    <li>${this.getBundleText('MSG_09036')}</li>
+    <li>${this.getBundleText('MSG_09037')}</li>
+    <li>${this.getBundleText('MSG_09038')}</li>
+  </ul>
+  <li>${this.getBundleText('MSG_09039')}</il>
+  <ul>
+    <li>${this.getBundleText('MSG_09040')}</li>
+    ${this.getBundleText('MSG_09041')}
+    <li>${this.getBundleText('MSG_09042')}</li>
+    <li>${this.getBundleText('MSG_09043')}</li>
+    <li>${this.getBundleText('MSG_09044')}</li>
+    <li>${this.getBundleText('MSG_09045')}</li>
+    <li>${this.getBundleText('MSG_09046')}</li>
+    <li>${this.getBundleText('MSG_09047')}</li>
+  </ul>
+</ol>
+${sCommMsg}`;
+        } else if (sWerks === '3000') {
+          sMsg = `<dl>
+  <dt>${this.getBundleText('MSG_09002')}</dt>
+  <dd>${this.getBundleText('MSG_09048')}</dd>
+  <dt>${this.getBundleText('MSG_09004')}</dt>
+  <br />
+  <dt>${this.getBundleText('MSG_09005')}</dt>
+  <dt>${this.getBundleText('LABEL_09025')}</dt>
+  <dd>${this.getBundleText('MSG_09049')}</dd>
+  <dd>${this.getBundleText('MSG_09050')}</dd>
+  <dd>${this.getBundleText('MSG_09051')}</dd>
+  <dd>${this.getBundleText('MSG_09052')}</dd>
+  <dt>${this.getBundleText('LABEL_09026')}</dt>
+  <dd>${this.getBundleText('MSG_09053')}</dd>
+  <dd>${this.getBundleText('MSG_09054')}</dd>
+  <dd>${this.getBundleText('MSG_09055')}</dd>
+  <dd>${this.getBundleText('MSG_09056')}</dd>
+  <dd>${this.getBundleText('MSG_09057')}</dd>
+  <dd>${this.getBundleText('MSG_09058')}</dd>
+  <dd>${this.getBundleText('MSG_09059')}</dd>
+</dl>`;
+        }
+        return sMsg;
       },
 
       async getTotalYear() {
@@ -323,13 +309,14 @@ sap.ui.define(
         const mSelectedDetail = oViewModel.getProperty(sTargetPath);
 
         // 2022-10-18 입력된 진료내역이 존재할 때 신청대상 변경 시 입력 건 임시저장 여부 확인
-        if(oViewModel.getProperty('/HisList').length != 0){
-          MessageBox.alert(this.getBundleText('MSG_09063'), { // 대상자 변경 시 기입력한 데이터가 삭제됩니다. 임시저장하시겠습니까?
-          title: this.getBundleText('LABEL_09010'), // 저장
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
+        if (oViewModel.getProperty('/HisList').length !== 0) {
+          MessageBox.alert(this.getBundleText('MSG_09063'), {
+            // 대상자 변경 시 기입력한 데이터가 삭제됩니다. 임시저장하시겠습니까?
+            title: this.getBundleText('LABEL_09010'), // 저장
+            actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
             onClose: async (fVal) => {
               // 저장 시 기입력내용 임시저장 + 신청대상 변경 및 신청내역, 진료내역 초기화
-              if (fVal && fVal == this.getBundleText('LABEL_00103')) {
+              if (fVal && fVal === this.getBundleText('LABEL_00103')) {
                 AppUtils.setAppBusy(true);
 
                 try {
@@ -398,15 +385,15 @@ sap.ui.define(
                 oViewModel.setProperty('/FormData/Pratetx', mDetail.Pratetx);
                 oViewModel.setProperty('/FormData/Prate', mDetail.Prate);
               }
-            }
-          }); 
+            },
+          });
         } else {
           this.onClearDoc(sTargetPath, mSelectedDetail);
-        }         
+        }
       },
 
-      onClearDoc(sTargetPath, mSelectedDetail){
-        if(!sTargetPath || !mSelectedDetail) return;
+      onClearDoc(sTargetPath, mSelectedDetail) {
+        if (!sTargetPath || !mSelectedDetail) return;
 
         const oViewModel = this.getViewModel();
 
@@ -465,37 +452,53 @@ sap.ui.define(
         oViewModel.setProperty('/HisList', aHisList);
       },
 
-      checkError() {
+      /**
+       *
+       * @param {string} sMode R: 신청, S: 임시저장
+       * @returns
+       */
+      checkError(sMode = 'R') {
         const oViewModel = this.getViewModel();
         const mFormData = oViewModel.getProperty('/FormData');
 
         // 신청대상
         if (mFormData.Kdsvh === 'ALL' || !mFormData.Kdsvh) {
-          MessageBox.alert(this.getBundleText('MSG_09025'));
+          MessageBox.alert(this.getBundleText('MSG_09025')); // 신청대상을 선택하세요.
           return true;
+        }
+
+        // 2022-11-29 신청이 아니면 신청대상 외 입력 체크 제외
+        if (sMode !== 'R') {
+          return false;
         }
 
         // 2022-10-18 비고 필수입력 제외
         // 비고
         // if (!mFormData.Zbigo) {
-        //   MessageBox.alert(this.getBundleText('MSG_09026'));
+        //   MessageBox.alert(this.getBundleText('MSG_09026')); // 비고를 입력하세요.
         //   return true;
         // }
 
-        const aHisList = oViewModel.getProperty('/HisList');
-
         // 상세내역
-        if (!aHisList.length) {
-          MessageBox.alert(this.getBundleText('MSG_09027'));
+        const aHisList = oViewModel.getProperty('/HisList');
+        if (sMode === 'R' && !aHisList.length) {
+          MessageBox.alert(this.getBundleText('MSG_09027')); // 상세내역을 추가하세요.
           return true;
         }
 
         // 첨부파일
-        const bResult = aHisList.every((e) => e.Attyn === 'X');
-
-        if (!bResult && !this.AttachFileAction.getFileCount.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_09028'));
-          return true;
+        const bResult = aHisList.every((e) => e.Attyn === 'X'); // 진료내역별 증빙파일 첨부 체크
+        if (this.getAppointeeProperty('Werks') === '2000') {
+          // 예스코의 경우 신청 첨부파일은 받지 않고 진료내역별 증빙파일만 받음
+          if (!bResult) {
+            MessageBox.alert(this.getBundleText('MSG_09064')); // 진료내역 중 증빙파일이 누락된 건이 있습니다.
+            return true;
+          }
+        } else {
+          if (!bResult && !this.AttachFileAction.getFileCount.call(this)) {
+            MessageBox.alert(this.getBundleText('MSG_09028')); // 신청 첨부파일을 등록하거나 진료내역별 증빙파일을 모두 등록하세요.
+            return true;
+          }
         }
 
         return false;
@@ -528,12 +531,13 @@ sap.ui.define(
         oViewModel.setProperty('/HisList', aHisList);
         oViewModel.setProperty('/listInfo/rowCount', _.size(aHisList));
         this.setAppAmount();
+        this.addSeqnrNum();
         this.settingsAttachTable();
       },
 
       // 임시저장
       onSaveBtn() {
-        if (this.checkError()) return;
+        if (this.checkError('S')) return;
 
         // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
@@ -586,10 +590,10 @@ sap.ui.define(
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
 
-              if(!oViewModel.getProperty('/FormData/Lnsta')){
+              if (!oViewModel.getProperty('/FormData/Lnsta')) {
                 oViewModel.setProperty('/FormData/Lnsta', '10');
                 oViewModel.setProperty('/FormData/Lnstatx', this.getBundleText('LABEL_00104')); // 임시저장
-              }              
+              }
             } catch (oError) {
               AppUtils.handleError(oError);
             } finally {
@@ -601,7 +605,7 @@ sap.ui.define(
 
       // 신청
       onApplyBtn() {
-        if (this.checkError()) return;
+        if (this.checkError('R')) return;
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
@@ -676,26 +680,32 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true);
+            try {
+              AppUtils.setAppBusy(true);
 
-            const oModel = this.getModel(ServiceNames.BENEFIT);
-            const oViewModel = this.getViewModel();
-            const mSendObject = {
-              ...oViewModel.getProperty('/FormData'),
-              Prcty: 'W',
-              Menid: oViewModel.getProperty('/menid'),
-            };
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const oViewModel = this.getViewModel();
+              const mSendObject = {
+                ...oViewModel.getProperty('/FormData'),
+                Prcty: 'W',
+                Menid: oViewModel.getProperty('/menid'),
+              };
 
-            delete mSendObject.isNew;
+              delete mSendObject.isNew;
 
-            await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+              await Client.create(oModel, 'MedExpenseAppl', mSendObject);
 
-            // {취소}되었습니다.
-            MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
-              onClose: () => {
-                this.onNavBack();
-              },
-            });
+              // {취소}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00039', 'LABEL_00121'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
+            }
           },
         });
       },
@@ -712,19 +722,25 @@ sap.ui.define(
               return;
             }
 
-            AppUtils.setAppBusy(true);
+            try {
+              AppUtils.setAppBusy(true);
 
-            const oModel = this.getModel(ServiceNames.BENEFIT);
-            const oViewModel = this.getViewModel();
+              const oModel = this.getModel(ServiceNames.BENEFIT);
+              const oViewModel = this.getViewModel();
 
-            await Client.remove(oModel, 'MedExpenseAppl', { Appno: oViewModel.getProperty('/FormData/Appno') });
+              await Client.remove(oModel, 'MedExpenseAppl', { Appno: oViewModel.getProperty('/FormData/Appno') });
 
-            // {삭제}되었습니다.
-            MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-              onClose: () => {
-                this.onNavBack();
-              },
-            });
+              // {삭제}되었습니다.
+              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+                onClose: () => {
+                  this.onNavBack();
+                },
+              });
+            } catch (oError) {
+              AppUtils.handleError(oError);
+            } finally {
+              AppUtils.setAppBusy(false);
+            }
           },
         });
       },
@@ -991,9 +1007,8 @@ sap.ui.define(
                 return true;
               }
             } else {
-              const iAddBet02 = parseInt(sAddBet02);
-
               // 2022-07-22 금액 체크로직 삭제
+              // const iAddBet02 = parseInt(sAddBet02);
               // if (iAddBet02 < iActCost) {
               //   // 비급여 추가한도를 초과했을경우
               //   MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
@@ -1003,11 +1018,12 @@ sap.ui.define(
           }
         }
 
+        // 2022-11-29 예스코(2000)의 경우 진료내역 dialog에서 첨부파일 체크 로직은 제거하고 신청시에 체크하도록 변경
         // 인사영역 2000번일경우는 첨부파일 필수
-        if (this.getAppointeeProperty('Werks') === '2000' && !this.getViewModel(this.DIALOG_FILE_ID).getProperty('/Data').length) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
-          return true;
-        }
+        // if (this.getAppointeeProperty('Werks') === '2000' && !this.getViewModel(this.DIALOG_FILE_ID).getProperty('/Data').length) {
+        //   MessageBox.alert(this.getBundleText('MSG_00046'));
+        //   return true;
+        // }
 
         return false;
       },
@@ -1060,9 +1076,9 @@ sap.ui.define(
           // 2022-07-22 비급여 한도금액(추가) 메세지 처리 로직 추가 - Errmsg 필드에 메세지가 리턴된 경우 비급여 필드(Bet02) 데이터 변경 + 합계 재계산
           const aData = await this.checkedDialogData(aHisList);
           const aMedItem = _.find(aData.MedExpenseItemSet.results, { Line: 'X' });
-          if(!_.isEmpty(aMedItem.Errmsg)){
+          if (!_.isEmpty(aMedItem.Errmsg)) {
             MessageBox.alert(aMedItem.Errmsg);
-            
+
             oViewModel.setProperty('/DialogData/Bet02', aMedItem.Bet02);
 
             const iBet01 = mDialogData.Bet01 ? parseInt(mDialogData.Bet01.trim().replace(/[^\d]/g, '')) : 0;
@@ -1088,11 +1104,11 @@ sap.ui.define(
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
           let sFile = '';
 
-          if (!!oDialogModel.getProperty('/DeleteDatas').length) {
+          if (oDialogModel.getProperty('/DeleteDatas').length) {
             sFile = '';
           }
 
-          if (!!oDialogModel.getProperty('/Data').length) {
+          if (oDialogModel.getProperty('/Data').length) {
             sFile = 'X';
           }
 
@@ -1139,9 +1155,9 @@ sap.ui.define(
           // await this.checkedDialogData(aDetail);
           const aData = await this.checkedDialogData(aDetail);
           const aMedItem = _.find(aData.MedExpenseItemSet.results, { Line: 'X' });
-          if(!_.isEmpty(aMedItem.Errmsg)){
+          if (!_.isEmpty(aMedItem.Errmsg)) {
             MessageBox.alert(aMedItem.Errmsg);
-            
+
             oViewModel.setProperty('/DialogData/Bet02', aMedItem.Bet02);
 
             const iBet01 = mDialogData.Bet01 ? parseInt(mDialogData.Bet01.trim().replace(/[^\d]/g, '')) : 0;
@@ -1160,11 +1176,11 @@ sap.ui.define(
 
           let sFile = '';
 
-          if (!!oDialogModel.getProperty('/DeleteDatas').length) {
+          if (oDialogModel.getProperty('/DeleteDatas').length) {
             sFile = '';
           }
 
-          if (!!oDialogModel.getProperty('/Data').length) {
+          if (oDialogModel.getProperty('/Data').length) {
             sFile = 'X';
           }
 
@@ -1217,9 +1233,8 @@ sap.ui.define(
                 oViewModel.setProperty('/DialogLimit', true);
               }
             } else {
-              const iAddBet02 = parseInt(sAddBet02);
-
               // 2022-07-22 금액 체크 로직 삭제
+              // const iAddBet02 = parseInt(sAddBet02);
               // if (iAddBet02 < iActCost) {
               //   // 비급여 추가한도를 초과했을경우
               //   MessageBox.alert(this.getBundleText('MSG_09061', mReciptDetails.Bet02AddBasic, this.TextUtils.toCurrency(parseInt(iAddBet02 / parseFloat(mTargetDetails.Prate)))));
@@ -1340,10 +1355,31 @@ sap.ui.define(
 
         this.AttachFileAction.setAttachFile(this, {
           Id: this.DIALOG_FILE_ID,
-          Editable: oViewModel.getProperty('/ReWriteStat'),
-          Type: this.getApprovalType(),
+          Title: this.getBundleText('LABEL_09104'), // 증빙파일
           Appno: sAppno,
+          Type: this.getApprovalType(),
           Max: 1,
+          Editable: oViewModel.getProperty('/ReWriteStat'),
+        });
+      },
+
+      formatDate(sDate = '') {
+        sDate = !sDate || _.toNumber(sDate) === 0 ? '' : `${sDate.slice(0, 4)}.${sDate.slice(4, 6)}`;
+
+        return sDate;
+      },
+
+      forMatCost(cost1 = '0', cost2 = '0', costtot = '0') {
+        const sMob1 = this.TextUtils.toCurrency(cost1);
+        const sMob2 = this.TextUtils.toCurrency(cost2);
+        const sMobtot = this.TextUtils.toCurrency(costtot);
+
+        return `${sMobtot} (${sMob1} / ${sMob2})`;
+      },
+
+      setBusy(bBusy = true) {
+        setTimeout(() => {
+          this.getViewModel().setProperty('/busy', bBusy);
         });
       },
     });

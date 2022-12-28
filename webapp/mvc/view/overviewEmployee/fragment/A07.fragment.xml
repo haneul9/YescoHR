@@ -33,7 +33,7 @@
             <core:CustomData key="Headty" value="{/contents/A07/Headty}" />
             <core:CustomData key="Discod" value="{Cod01}" />
           </custom:customData>
-          <Label text="{Ttltxt} :" class="statistic-text legend">
+          <Label text="{ path: 'Ttltxt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' } :" class="statistic-text legend">
             <customData>
               <core:CustomData key="legend" value="{Type}" writeToDom="true" />
             </customData>

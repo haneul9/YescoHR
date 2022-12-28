@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="hrDocPreviewDialog" showHeader="false" contentWidth="auto">
+        <buttons>
+            <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
+        </buttons>
+        <content>
+            <!-- <VBox class="vCardBox"> -->
+            <core:HTML id="preview-box-container" content='&lt;div class="preview-box zoom popup-preview"&gt;&lt;/div&gt;' />
+            <!-- </VBox> -->
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

@@ -18,7 +18,7 @@
                 <VBox alignItems="{align}" items="{path: 'value01', templateShareable: false}">
                   <VBox>
                     <layoutData>
-                      <FlexItemData minWidth="100%" />
+                      <FlexItemData minWidth="100%" maxWidth="80px" />
                     </layoutData>
                     <Label text="{label}" visible="{= !!${label} }" class="font-16-px" />
                     <Image src="{image}" width="80px" visible="{= !!${image} }" press=".onPressPic" />

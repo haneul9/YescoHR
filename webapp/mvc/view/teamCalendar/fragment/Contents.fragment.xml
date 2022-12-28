@@ -58,7 +58,7 @@
               </layoutData>
             </Image>
             <Text width="100%" text="{label}" visible="{= !!${photo} }" class="active-link" />
-            <Text width="100%" text="{label}" visible="{= !${photo} }">
+            <Text width="100%" text="{ path: 'label', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" visible="{= !${photo} }">
               <layoutData>
                 <FlexItemData growFactor="1" />
               </layoutData>

@@ -1587,9 +1587,7 @@ sap.ui.define(
 
       onPressPhoto(oEvent) {
         const sPernr = oEvent.getSource().getCustomData()[0].getKey();
-        if(!sPernr){
-          return;
-        }
+        if(!sPernr) return;
 
         const sHost = window.location.href.split('#')[0];
         window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');

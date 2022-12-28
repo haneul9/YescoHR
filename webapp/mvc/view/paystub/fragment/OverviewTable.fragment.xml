@@ -6,61 +6,61 @@
       <Column width="4%" filterProperty="Idx" sortProperty="Idx">
         <m:Label text="No."/>
         <template>
-          <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="10%" filterProperty="Paydt" sortProperty="Paydt">
         <m:Label text="{i18n>LABEL_13006}"/>
         <template>
-          <m:Text text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="15%" filterProperty="Ocrtx" sortProperty="Ocrtx">
         <m:Label text="{i18n>LABEL_00147}"/>
         <template>
-          <m:Text text="{Ocrtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Ocrtx}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet01" sortProperty="Bet01">
         <m:Label text="{i18n>LABEL_13044}"/>
         <template>
-          <m:Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet02" sortProperty="Bet02">
         <m:Label text="{i18n>LABEL_13045}"/>
         <template>
-          <m:Text text="{ path: 'Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet03" sortProperty="Bet03">
         <m:Label text="{i18n>LABEL_13046}"/>
         <template>
-          <m:Text text="{ path: 'Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet04" sortProperty="Bet04">
         <m:Label text="{i18n>LABEL_13047}" wrapping="true"/>
         <template>
-          <m:Text text="{ path: 'Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet05" sortProperty="Bet05">
         <m:Label text="{i18n>LABEL_13048}"/>
         <template>
-          <m:Text text="{ path: 'Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet06" sortProperty="Bet06">
         <m:Label text="{i18n>LABEL_13049}" wrapping="true"/>
         <template>
-          <m:Text text="{ path: 'Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
       <Column width="auto" filterProperty="Bet07" sortProperty="Bet07">
         <m:Label text="{i18n>LABEL_13050}" wrapping="true" />
         <template>
-          <m:Text text="{ path: 'Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
     </columns>

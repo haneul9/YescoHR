@@ -1,30 +1,24 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
-        <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>MSG_07001}" />
-            </HBox>
-            <Text text="{i18n>MSG_07002}" class="sapUiSmallMarginBottom" />
-            <HBox class="mt-50-px">
-                <VBox width="30%" class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_02003}" />
-                    <ObjectStatus text="{
-                        path: '/Total/Count',
-                        formatter: '.formatNumber'
-                    }" state="Indication05" />
-                </VBox>
-                <VBox class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_07016}" />
-                    <HBox alignItems="Baseline">
-                        <ObjectStatus text="{
-                            path: '/Total/RpamtBal',
-                            formatter: '.formatPay'
-                        }" state="Indication04" class="mr-5-px" />
-                        <Label design="Bold" text="{i18n>LABEL_00158}" />
-                    </HBox>
-                </VBox>
-            </HBox>
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox overview-box" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox>
+      <HBox justifyContent="SpaceBetween" class="title">
+        <Title level="H2" text="{i18n>MSG_07001}" />
+      </HBox>
+      <Text text="{i18n>MSG_07002}" class="sapUiSmallMarginBottom" />
+      <HBox class="mt-50-px">
+        <VBox width="30%" class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_02003}" />
+          <ObjectStatus text="{ path: '/Total/Count', formatter: '.formatNumber' }" state="Indication05" />
         </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_07016}" />
+          <HBox alignItems="Baseline">
+            <ObjectStatus text="{ path: '/Total/RpamtBal', formatter: '.formatPay' }" state="Indication04" class="mr-5-px" />
+            <Label design="Bold" text="{i18n>LABEL_00158}" />
+          </HBox>
+        </VBox>
+      </HBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

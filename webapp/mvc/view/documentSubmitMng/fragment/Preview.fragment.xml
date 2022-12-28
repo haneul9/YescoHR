@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog showHeader="false" contentWidth="auto" busyIndicatorDelay="0" busy="{/contentsBusy/preview}">
+        <buttons>
+            <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
+        </buttons>
+        <content>
+            <core:HTML id="preview-box-container" content='&lt;div class="preview-box zoom"&gt;&lt;/div&gt;' />
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

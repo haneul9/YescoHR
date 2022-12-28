@@ -265,7 +265,7 @@ sap.ui.define(
           oViewModel.setProperty('/dialog/busy', true);
 
           const sPernr = this.getAppointeeProperty('Pernr');
-          let aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+          let aOverviewList = await Client.getEntitySet(oModel, 'DrillList', {
             Prcty: sMode,
             Zyymm: sYearMonth,
             Pernr: _.chain(aList)
@@ -274,10 +274,10 @@ sap.ui.define(
               .value(),
           });
 
-          aSummaryList = _.differenceWith(aSummaryList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
+          aOverviewList = _.differenceWith(aOverviewList, aList, (a, b) => moment(a.Datum).format('YYYYMMDD') === moment(b.Datum).format('YYYYMMDD'));
 
-          const iRowCount = aSummaryList.length || 1;
-          oViewModel.setProperty('/dialog/list', [...aSummaryList]);
+          const iRowCount = aOverviewList.length || 1;
+          oViewModel.setProperty('/dialog/list', [...aOverviewList]);
           oViewModel.setProperty('/dialog/rowCount', iRowCount > 10 ? 10 : iRowCount);
         } catch (oError) {
           this.debug('Controller > excavation Detail > retrieveCurrentDuty Error', oError);
@@ -422,21 +422,21 @@ sap.ui.define(
         oViewModel.setProperty('/dialog/selectedData', []);
 
         this.toggleHasRowProperty();
-        this.onPressSummaryDialogClose(oEvent);
+        this.onPressOverviewDialogClose(oEvent);
       },
 
-      onPressSummaryExcelDownload() {
-        const oTable = this.byId('summaryDialogTable');
+      onPressOverviewExcelDownload() {
+        const oTable = this.byId('overviewDialogTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
 
         this.TableUtils.export({ oTable, sFileName });
       },
 
-      onPressSummaryDialogClose(oEvent) {
+      onPressOverviewDialogClose(oEvent) {
         AppUtils.setAppBusy(false);
 
         oEvent.getSource().getParent().getContent()[1].getItems()[0].clearSelection();
-        this.byId('summaryDialog').close();
+        this.byId('overviewDialog').close();
       },
 
       onPressApproval() {

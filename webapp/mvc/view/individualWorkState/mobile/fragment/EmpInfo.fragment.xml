@@ -2,27 +2,27 @@
   xmlns:core="sap.ui.core">
   <HBox alignItems="Center" class="individual-appointee-box">
     <!-- 사진 -->
-    <Image src="{/appointee/Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="30px" height="30px">
+    <Image src="{/appointee/Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="35px" height="35px">
       <layoutData>
-        <FlexItemData baseSize="30px" maxWidth="30px" styleClass="h-35-px" />
+        <FlexItemData styleClass="h-40-px" />
       </layoutData>
     </Image>
     <!-- 성명 -->
-    <Link text="{/appointee/Ename}" subtle="true" width="100%" class="name ml-10-px">
+    <Link text="{/appointee/Ename}" subtle="true" class="name">
       <layoutData>
-        <FlexItemData baseSize="90px" maxWidth="90px" />
+        <FlexItemData styleClass="pl-16-px" />
       </layoutData>
     </Link>
     <!-- 직급/직책 -->
-    <Link text="{/appointee/Zzjikgbt}/{/appointee/Zzjikcht}" subtle="true" width="100%">
+    <Link text="{/appointee/Zzjikgbt}/{/appointee/Zzjikcht}" subtle="true">
       <layoutData>
-        <FlexItemData baseSize="100px" maxWidth="100px" />
+        <FlexItemData styleClass="pl-16-px" />
       </layoutData>
     </Link>
     <!-- 부서명 -->
-    <Link text="{/appointee/Fulln}" subtle="true" width="100%">
+    <Link text="{/appointee/Fulln}" subtle="true">
       <layoutData>
-        <FlexItemData growFactor="1" maxWidth="calc(100% - 213px)" styleClass="pr-4-px" />
+        <FlexItemData styleClass="pl-16-px" />
       </layoutData>
     </Link>
   </HBox>

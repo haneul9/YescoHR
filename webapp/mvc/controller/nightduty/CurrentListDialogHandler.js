@@ -1,31 +1,31 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/base/Object',
     'sap/ui/core/Fragment',
     'sap/ui/model/json/JSONModel',
     'sap/ui/table/SelectionMode',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/ComboEntry',
+    'sap/ui/yesco/common/Debuggable',
     'sap/ui/yesco/common/TableUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
-    BaseObject,
     Fragment,
     JSONModel,
     SelectionMode,
     AppUtils,
     ComboEntry,
+    Debuggable,
     TableUtils,
     Client,
     ServiceNames
   ) => {
     'use strict';
 
-    return BaseObject.extend('sap.ui.yesco.mvc.controller.nightduty.CurrentListDialogHandler', {
+    return Debuggable.extend('sap.ui.yesco.mvc.controller.nightduty.CurrentListDialogHandler', {
       constructor: function ({ oController, sPrcty = 'R', sSelectionMode = SelectionMode.None, fnCallback = () => {} }) {
         this.oController = oController;
         this.sPrcty = sPrcty;
@@ -34,10 +34,12 @@ sap.ui.define(
         this.oCurrentListDialog = null;
         this.sCurrentListTableId = 'currentListTable';
         this.sThisMonth = moment().hours(9).format(oController.getSessionProperty('DTFMTYYYYMM'));
-        this.oDialogModel = new JSONModel(this.getInitialData());
+        this.oDialogModel = new JSONModel(this.getInitData());
+
+        this.initDialog();
       },
 
-      getInitialData() {
+      getInitData() {
         return {
           dialog: {
             busy: true,
@@ -59,30 +61,30 @@ sap.ui.define(
         };
       },
 
-      async openDialog(aPernrList = []) {
-        if (!this.oCurrentListDialog) {
-          const oView = this.oController.getView();
+      async initDialog() {
+        const oView = this.oController.getView();
 
-          this.oCurrentListDialog = await Fragment.load({
-            id: oView.createId(this.sSelectionMode.toLowerCase()),
-            name: 'sap.ui.yesco.mvc.view.nightduty.fragment.CurrentListDialog',
-            controller: this,
+        this.oCurrentListDialog = await Fragment.load({
+          id: oView.createId(this.sSelectionMode.toLowerCase()),
+          name: 'sap.ui.yesco.mvc.view.nightduty.fragment.CurrentListDialog',
+          controller: this,
+        });
+
+        oView.addDependent(this.oCurrentListDialog);
+
+        this.oCurrentListDialog
+          .setModel(this.oDialogModel)
+          .bindElement('/dialog')
+          .attachBeforeOpen(() => {
+            this.initDialogData();
+            this.onPressCurrentListSearch();
+          })
+          .attachAfterClose(() => {
+            this.initDialogData();
           });
+      },
 
-          oView.addDependent(this.oCurrentListDialog);
-
-          this.oCurrentListDialog
-            .setModel(this.oDialogModel)
-            .bindElement('/dialog')
-            .attachBeforeOpen(() => {
-              this.initDialogData();
-              this.onPressCurrentListSearch();
-            })
-            .attachAfterClose(() => {
-              this.initDialogData();
-            });
-        }
-
+      openDialog(aPernrList = []) {
         this.oDialogModel.setProperty('/dialog/pernrList', aPernrList || []);
 
         this.oCurrentListDialog.open();
@@ -98,7 +100,7 @@ sap.ui.define(
 
         const aPernrList = this.oDialogModel.getProperty('/dialog/pernrList');
 
-        this.oDialogModel.setData(this.getInitialData());
+        this.oDialogModel.setData(this.getInitData());
         this.oDialogModel.setProperty('/dialog/pernrList', aPernrList || []);
       },
 
@@ -121,7 +123,7 @@ sap.ui.define(
 
           this.setCurrentListTableData(aCurrentListTableData);
         } catch (oError) {
-          AppUtils.debug('Controller > Nightduty Summary > Dialog > onPressCurrentListSearch Error', oError);
+          this.debug('controller.nightduty.CurrentListDialogHandler > onPressCurrentListSearch Error', oError);
 
           AppUtils.handleError(oError);
         } finally {

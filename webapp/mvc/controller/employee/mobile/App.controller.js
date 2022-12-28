@@ -53,8 +53,8 @@ sap.ui.define(
         // INCR: '1fr 2fr', // 사내경력
         9001: '1fr 3fr', // 평가
         PAYS: '1fr 1fr', // 급여
-        // '0022': '2fr 3fr', // 학력
-        9006: '3fr 3fr 2fr', // 자격
+        '0022': '4fr 5fr', // 학력
+        9006: '4fr 4fr 3fr', // 자격
         '0183': '1fr 1fr 1fr', // 포상
         '0021': '1fr 1fr 1fr', // 가족
         EDU1: '1fr 1fr', // 교육
@@ -162,6 +162,7 @@ sap.ui.define(
           _.forEach(aSubMenus, (data) => {
             let mContentData;
             if (data.Menuc1 === 'M030') {
+              // Succession tab
               mContentData = {
                 type: data.Child,
                 title: data.Menu2,
@@ -192,6 +193,7 @@ sap.ui.define(
           aHeaderReturnData.forEach((headers, index) => {
             const sTabCode = aTabMenus[index].Menuc1;
             if (sTabCode === 'M030') {
+              // Succession tab
               _.chain(oViewModelData)
                 .get(['sub', sTabCode, 'contents'])
                 .defaultsDeep(
@@ -222,12 +224,13 @@ sap.ui.define(
                 mSubMenu.gridTemplate = _.get(this.LIST_GRID_TEMPLATE, o.Menuc, mSubMenu.gridTemplate);
 
                 if (sTabCode === 'M020') {
-                  // 인재육성위원회
+                  // 인재육성위원회 tab
                   mSubMenu.data.push({
                     contents: [{ valueTxt: o.Value01 }, { valueTxt: o.Value02 }],
                     popoverParams: { Pernr: o.Pernr, Gjahr: o.Value01.replace(/\D/g, ''), Mdate: o.Value06, Zseqnr: o.Value07 },
                   });
                 } else if (sTabCode === 'M030') {
+                  // Succession tab
                   const aPositionFields = 'Value01,Value02,Value03,Value04,Value05,Value10,Value11,Value13,Photo01'.split(/,/);
                   const aNomineeFields = 'Value06,Value07,Value08,Value09,Value10,Value12,Value14,Photo02'.split(/,/);
                   const mNomineeData = _.chain(o).pick(aNomineeFields).set('Icon2', this.COMPANY_ICON[o.Value12]).set('Box', o.Menuc).value();
@@ -253,7 +256,7 @@ sap.ui.define(
                   mSubMenu.data.push({
                     contents: _.chain(o)
                       .pickBy((v, p) => _.startsWith(p, 'Value') && !_.isEmpty(v))
-                      .map((v) => ({ valueTxt: v }))
+                      .map((v) => ({ valueTxt: v === '-' ? '' : v }))
                       .value(),
                   });
                 }
@@ -344,6 +347,7 @@ sap.ui.define(
                 }).bindElement(sTableDataPath);
 
                 if (sMenuKey === 'M020') {
+                  // 인재육성위원회 tab
                   oList.attachItemPress((oEvent) => {
                     const mRowData = oEvent.getParameter('listItem').getBindingContext().getProperty('popoverParams');
                     const mHeaderData = this.getViewModel().getProperty('/header');

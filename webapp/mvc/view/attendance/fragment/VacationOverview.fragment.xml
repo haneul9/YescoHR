@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="hCardBox summary-box">
+  <VBox class="hCardBox overview-box">
     <HBox alignItems="End">
       <Title level="H2" text="{i18n>LABEL_04005}" />
       <Text text="{i18n>LABEL_04032}" class="sapUiSmallMarginBegin" />

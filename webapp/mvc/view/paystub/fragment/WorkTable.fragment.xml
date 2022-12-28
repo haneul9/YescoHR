@@ -6,67 +6,67 @@
       <!-- <Column>
         <m:Label text="{i18n>LABEL_13020}"/>
         <template>
-          <m:Text text="{ path:'Tim501', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim501', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13021}"/>
         <template>
-          <m:Text text="{ path:'Tim502', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim502', type:'sap.ui.model.type.Integer' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column> -->
       <Column>
         <m:Label text="{i18n>LABEL_13022}"/>
         <template>
-          <m:Text text="{ path:'Tim503', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim503', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13023}"/>
         <template>
-          <m:Text text="{ path:'Tim504', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim504', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13024}"/>
         <template>
-          <m:Text text="{ path:'Tim505', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim505', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13028}" wrapping="true"/>
         <template>
-          <m:Text text="{ path:'Tim506', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim506', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13029}"/>
         <template>
-          <m:Text text="{ path:'Tim507', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim507', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13030}" wrapping="true"/>
         <template>
-          <m:Text text="{ path:'Tim508', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim508', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13025}"/>
         <template>
-          <m:Text text="{ path:'Tim509', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim509', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13026}" wrapping="true"/>
         <template>
-          <m:Text text="{ path:'Tim510', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim510', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13027}" wrapping="true"/>
         <template>
-          <m:Text text="{ path:'Tim511', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path:'Tim511', type:'sap.ui.model.type.Float' }" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
     </columns>

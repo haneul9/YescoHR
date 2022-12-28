@@ -177,7 +177,7 @@ sap.ui.define(
                 ['data'],
                 _.map(aChartDatas, (o) => {
                   fBar2dMaxValues = Math.max(fBar2dMaxValues, Number(o.Cnt01));
-                  return { label: o.Ttltxt, value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` };
+                  return { label: _.replace(o.Ttltxt, /Senior(\s|\\n)/, 'Sr.'), value: o.Cnt01, color: '#7BB4EB', link: `j-callAttendanceDetail-${mChartInfo.Headty},${o.Cod01}` };
                 })
               )
               .commit();

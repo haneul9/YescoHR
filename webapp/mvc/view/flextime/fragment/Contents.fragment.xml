@@ -1,40 +1,40 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox>
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-                </HBox>
-            </HBox>
-        </VBox>
-        <VBox class="contents" justifyContent="SpaceBetween">
-            <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
-            <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" class="header-wrap">
-                    <HBox class="header">
-                        <Title level="H3" text="{i18n>LABEL_00173}" class="sapUiSmallMarginEnd" />
-                        <Text text="{i18n>MSG_40001}" class="sapUiMediumMarginEnd desc-txt" />
-                    </HBox>
-                </HBox>
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.SummaryTable" type="XML" />
-            </VBox>
-            <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" class="header-wrap top-sticky">
-                    <HBox class="header">
-                        <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
-                    </HBox>
-                    <HBox class="table-actions">
-                        <Button text="{i18n>LABEL_40008}" visible="{= !${/isMss} }" enabled="{= ${/details/list}.length &gt; 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
-                        <Button text="{i18n>LABEL_40032}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRConfirm" />
-                        <Button text="{i18n>LABEL_40033}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRCancel" />
-                    </HBox>
-                </HBox>
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.DetailsTable" type="XML" />
-            </VBox>
-        </VBox>
-    </Page>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox>
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents" justifyContent="SpaceBetween">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+      <VBox class="vCardBox">
+        <HBox justifyContent="SpaceBetween" class="header-wrap">
+          <HBox class="header">
+            <Title level="H3" text="{i18n>LABEL_00173}" class="sapUiSmallMarginEnd" />
+            <Text text="{i18n>MSG_40001}" class="sapUiMediumMarginEnd desc-txt" />
+          </HBox>
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.SummaryTable" type="XML" />
+      </VBox>
+      <VBox class="vCardBox">
+        <HBox justifyContent="SpaceBetween" class="header-wrap top-sticky">
+          <HBox class="header">
+            <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
+          </HBox>
+          <HBox class="table-actions">
+            <Button text="{i18n>LABEL_40008}" visible="{= !${/isMss} }" enabled="{= ${/details/list}.length &gt; 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
+            <Button text="{i18n>LABEL_40032}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRConfirm" />
+            <Button text="{i18n>LABEL_40033}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRCancel" />
+          </HBox>
+        </HBox>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.DetailsTable" type="XML" />
+      </VBox>
+    </VBox>
+  </Page>
 </core:FragmentDefinition>

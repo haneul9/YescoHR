@@ -14,13 +14,12 @@
               <Text text="{Atext}" class="font-16-px font-bold" />
               <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !${Endda} }" />
               <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !!${Endda} }" />
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" class="m-auto">
+              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
                 <core:customData>
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                 </core:customData>
               </core:Icon>
-              <ObjectStatus text="{Apptxt}" class="font-16-px" 
-                            state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
+              <ObjectStatus text="{Apptxt}" class="font-16-px" state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
               <Text text="{Period}" />
               <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
                 <customData>

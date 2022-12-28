@@ -9,10 +9,34 @@
         <HBox justifyContent="SpaceBetween" class="breadcrumbs">
           <custom:Breadcrumbs />
           <HBox class="button-group">
-            <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= ${/Austy} === 'H' }" />
-            <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/Austy} === 'E' &amp;&amp; ${/Data/Prsta} === '' }" press=".onPressSave" />
-            <Button text="{i18n>LABEL_00123}" type="Accept" press=".onPressAccept" visible="{= ${/Data/Appryn} === 'X' }" />
-            <Button text="{i18n>LABEL_00124}" type="Reject" press=".onPressReject" visible="{= ${/Data/Appryn} === 'X' }" />
+            <Button text="{i18n>LABEL_46017}" type="Emphasized" visible="{= ${/auth} === 'H' &amp;&amp; ${/Data/Prsta} === '12' }" press=".onPressComplete">
+              <customData>
+                <core:CustomData key="Prsta" value="20" />
+              </customData>
+            </Button>
+            <Button text="{i18n>LABEL_46041}" type="Emphasized" visible="{= ${/auth} === 'H' &amp;&amp; ${/Data/Prsta} === '20' }" press=".onPressComplete">
+              <customData>
+                <core:CustomData key="Prsta" value="21" />
+              </customData>
+            </Button>
+            <Button text="{i18n>LABEL_46042}" type="Emphasized" visible="{= ${/auth} !== 'M' &amp;&amp; ${/Data/Prsta} === '21' }" press=".onPressComplete">
+              <customData>
+                <core:CustomData key="Prsta" value="22" />
+              </customData>
+            </Button>
+            <Button text="{i18n>LABEL_46043}" type="Emphasized" visible="{= ${/auth} === 'H' &amp;&amp; (${/Data/Prsta} === '22' || ${/Data/Prsta} === '30') }" press=".onPressComplete">
+              <customData>
+                <core:CustomData key="Prsta" value="31" />
+              </customData>
+            </Button>
+            <Button text="{i18n>LABEL_46015}" type="Emphasized" visible="{= ${/auth} === 'H' &amp;&amp; ${/Data/Prsta} === '31' }" press=".onPressComplete">
+              <customData>
+                <core:CustomData key="Prsta" value="32" />
+              </customData>
+            </Button>
+            <Button text="{i18n>LABEL_00121}" type="Emphasized" visible="{= ${/auth} === 'E' &amp;&amp; ${/Data/Prsta} === '' }" press=".onPressSave" />
+            <Button text="{i18n>LABEL_00123}" type="Accept" visible="{= ${/auth} === 'M' &amp;&amp; ${/Data/Appryn} === 'X' }" press=".onPressAccept" />
+            <Button text="{i18n>LABEL_00124}" type="Reject" visible="{= ${/auth} === 'M' &amp;&amp; ${/Data/Appryn} === 'X' }" press=".onPressReject" />
             <Button text="{i18n>LABEL_00146}" press=".onPreBack" />
             <Button text="{i18n>LABEL_00131}" icon="sap-icon://print" press=".onPagePrint" />
           </HBox>

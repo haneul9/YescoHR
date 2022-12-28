@@ -1,43 +1,31 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
-        <VBox>
-            <HBox justifyContent="SpaceBetween" class="title">
-                <Title level="H2" text="{i18n>LABEL_09002}" />
-            </HBox>
-            <Text text="{
-                path: '/Total/Zyear',
-                formatter: '.thisYear'
-            }" class="sapUiSmallMarginBottom" />
-            <HBox class="mt-50-px">
-                <VBox width="20%" class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_02003}" />
-                    <ObjectStatus text="{
-                        path: '/Total/Count',
-                        formatter: '.formatNumber'
-                    }" state="Indication05" />
-                </VBox>
-                <VBox width="40%" class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_09009}" />
-                    <HBox alignItems="Baseline">
-                        <ObjectStatus text="{
-                            path: '/Total/Pybet',
-                            formatter: '.formatPay'
-                        }" state="Indication05" class="mr-5-px" />
-                        <Label design="Bold" text="{i18n>LABEL_00158}" />
-                    </HBox>
-                </VBox>
-                <VBox class="summary-info">
-                    <Label design="Bold" text="{i18n>LABEL_09003}" />
-                    <HBox alignItems="Baseline">
-                        <ObjectStatus text="{
-                            path: '/Total/Apbet',
-                            formatter: '.formatPay'
-                        }" state="Indication04" class="mr-5-px" />
-                        <Label design="Bold" text="{i18n>LABEL_00158}" />
-                    </HBox>
-                </VBox>
-            </HBox>
+  xmlns:core="sap.ui.core">
+  <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+    <VBox>
+      <HBox justifyContent="SpaceBetween" class="title">
+        <Title level="H2" text="{i18n>LABEL_09002}" />
+      </HBox>
+      <Text text="{ path: '/Total/Zyear', formatter: '.thisYear' }" class="sapUiSmallMarginBottom" />
+      <HBox class="mt-50-px">
+        <VBox width="20%" class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_02003}" />
+          <ObjectStatus text="{ path: '/Total/Count', formatter: '.formatNumber' }" state="Indication05" />
         </VBox>
+        <VBox width="40%" class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_09009}" />
+          <HBox alignItems="Baseline">
+            <ObjectStatus text="{ path: '/Total/Pybet', formatter: '.formatPay' }" state="Indication05" class="mr-5-px" />
+            <Label design="Bold" text="{i18n>LABEL_00158}" />
+          </HBox>
+        </VBox>
+        <VBox class="overview-info">
+          <Label design="Bold" text="{i18n>LABEL_09003}" />
+          <HBox alignItems="Baseline">
+            <ObjectStatus text="{ path: '/Total/Apbet', formatter: '.formatPay' }" state="Indication04" class="mr-5-px" />
+            <Label design="Bold" text="{i18n>LABEL_00158}" />
+          </HBox>
+        </VBox>
+      </HBox>
     </VBox>
+  </VBox>
 </core:FragmentDefinition>

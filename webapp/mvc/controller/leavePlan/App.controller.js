@@ -225,7 +225,7 @@ sap.ui.define(
           const oSignature = this.byId('signature-pad');
           const mSummary = oViewModel.getProperty('/summary');
 
-          if (!oSignature.isDraw()) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
+          if (!oSignature.isDraw()) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_20005') }); // 서명을 입력하여 주십시오.
 
           await this.AttachFileAction.upload.call(this, mSummary.Appno, this.APPTP, [oSignature.dataURItoBlob()], `Leave-signature-${this.getAppointeeProperty('Pernr')}.png`);
         } catch (oError) {
@@ -387,7 +387,7 @@ sap.ui.define(
           const mSummary = oViewModel.getProperty('/summary');
 
           // validation
-          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
+          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
 
           // Appno 채번
           if (_.isEqual(mSummary.Appno, '00000000000000')) _.set(mSummary, 'Appno', await Appno.get());
@@ -419,7 +419,7 @@ sap.ui.define(
           const mSummary = oViewModel.getProperty('/summary');
 
           // validation
-          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
+          if (!_.isEqual(100, mSummary.Useperc3)) throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_20004') }); // 미계획 일수가 존재합니다. 계획수립이 완료되어야 신청이 가능합니다.
 
           // Appno 채번
           if (_.isEqual(mSummary.Appno, '00000000000000')) _.set(mSummary, 'Appno', await Appno.get());

@@ -17,7 +17,7 @@
       <Text text="{Zyymm2}" />
       <Text text="{Period2}" class="date"/>
       <Label text="{i18n>LABEL_01103}" />
-      <Text text="{Zyymm3}" />
+      <Text text="{ path: 'Zyymm3', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" />
       <Text text="{Period3}" class="date"/>
     </VBox>
   </HBox>

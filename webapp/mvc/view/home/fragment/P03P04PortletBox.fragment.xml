@@ -54,10 +54,10 @@
                 <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
               </custom:customData>
               <Image src="{Photo}" mode="Background" class="members-photo" />
-              <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
+              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="members-name" />
               <VBox class="members-position">
-                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" />
-                <Text text="{Orgtx}" tooltip="{Orgtx}" />
+                <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" tooltip="{Zzjikgbt}" wrapping="false" />
+                <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" />
               </VBox>
               <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
@@ -78,10 +78,10 @@
                 <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
               </custom:customData>
               <Image src="{Photo}" mode="Background" class="members-photo" />
-              <Text text="{Ename}" tooltip="{Ename}" class="members-name" />
+              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="members-name" />
               <VBox class="members-position">
-                <Text text="{Zzjikgbt}" tooltip="{Zzjikgbt}" />
-                <Text text="{Orgtx}" tooltip="{Orgtx}" />
+                <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" tooltip="{Zzjikgbt}" wrapping="false" />
+                <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" />
               </VBox>
               <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>

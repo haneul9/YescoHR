@@ -14,7 +14,7 @@
             <Image src="{/header/profilePath}" class="member-photo" mode="Background" width="88px" height="88px" />
           </VBox>
           <HBox justifyContent="SpaceBetween">
-            <Label text="{/header/name}" class="name" />
+            <Label text="{ path: '/header/name', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" class="name" />
             <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= !!${/header/chief}}" />
           </HBox>
           <grid:CSSGrid items="{/header/baseInfo}" gridTemplateColumns="1fr">

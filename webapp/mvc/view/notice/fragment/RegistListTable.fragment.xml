@@ -6,7 +6,7 @@
       <table:Column width="auto" sortProperty="Title" filterProperty="Title">
         <Label text="{i18n>LABEL_08002}" width="100%"/>
         <table:template>
-          <Text text="{Title}" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Title}" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" visible="{/Hass}">
@@ -23,19 +23,19 @@
           <Text text="{
               path: 'Sdate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="250px" sortProperty="Chntm" filterProperty="Chntm">
         <Label text="{i18n>LABEL_08003}"/>
         <table:template>
-          <Text text="{Chntm}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Chntm}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="180px" sortProperty="ApernTxt" filterProperty="ApernTxt">
         <Label text="{i18n>LABEL_08004}"/>
         <table:template>
-          <Text text="{ApernTxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ApernTxt}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" visible="{/Hass}">

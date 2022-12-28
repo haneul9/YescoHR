@@ -113,7 +113,7 @@ sap.ui.define(
           const oListView = oView.getParent().getPage(mListRoute.id);
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+            throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();

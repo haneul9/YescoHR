@@ -58,7 +58,7 @@ sap.ui.define(
             rowCount: 1,
             list: [],
           },
-          isHass: false
+          isHass: false,
         };
       },
 
@@ -152,10 +152,12 @@ sap.ui.define(
           // this.setTableData(oViewModel, oViewModel.getProperty('/summary/list'));
 
           const aRowData2 = oViewModel.getProperty('/summary/list');
-          var iApplyCount = 0, iApproveCount = 0, iRejectCount = 0;
+          var iApplyCount = 0,
+            iApproveCount = 0,
+            iRejectCount = 0;
 
-          _.map(aRowData2, function(o, i){
-            switch(o.ZappStatAl){
+          _.map(aRowData2, function (o, i) {
+            switch (o.ZappStatAl) {
               case '20':
                 iApplyCount++;
                 break;
@@ -170,7 +172,7 @@ sap.ui.define(
 
           oViewModel.setProperty('/listInfo/applyCount', iApplyCount);
           oViewModel.setProperty('/listInfo/approveCount', iApproveCount);
-          oViewModel.setProperty('/listInfo/rejectCount', iRejectCount);    
+          oViewModel.setProperty('/listInfo/rejectCount', iRejectCount);
         } catch (oError) {
           throw oError;
         }
@@ -199,22 +201,22 @@ sap.ui.define(
         }
       },
 
-      setContentsBusy(bContentsBusy = true, vTarget = []) {
-        const oViewModel = this.getViewModel();
-        const mBusy = oViewModel.getProperty('/busy');
+      // setContentsBusy(bContentsBusy = true, vTarget = []) {
+      //   const oViewModel = this.getViewModel();
+      //   const mBusy = oViewModel.getProperty('/busy');
 
-        if (_.isEmpty(vTarget)) {
-          _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
-        } else {
-          if (_.isArray(vTarget)) {
-            _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
-          } else {
-            _.set(mBusy, vTarget, bContentsBusy);
-          }
-        }
+      //   if (_.isEmpty(vTarget)) {
+      //     _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
+      //   } else {
+      //     if (_.isArray(vTarget)) {
+      //       _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
+      //     } else {
+      //       _.set(mBusy, vTarget, bContentsBusy);
+      //     }
+      //   }
 
-        oViewModel.refresh();
-      },
+      //   oViewModel.refresh();
+      // },
 
       onSelectRow(oEvent) {
         const sPath = oEvent.getParameters().rowBindingContext.getPath();
@@ -230,23 +232,25 @@ sap.ui.define(
         this.TableUtils.export({ oTable, sFileName });
       },
 
-      onHRConfirm(){
-        try{
+      onHRConfirm() {
+        try {
           const oViewModel = this.getViewModel();
           const aDetailsList = oViewModel.getProperty('/summary/list');
           const aSelectedIndices = this.byId('flextimeSummaryListTable').getSelectedIndices();
 
-          if (aSelectedIndices.length == 0 ) {
-              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40030')); // {확정}할 데이터를 선택하여 주십시오.
-              return; 
+          if (aSelectedIndices.length == 0) {
+            MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40030')); // {확정}할 데이터를 선택하여 주십시오.
+            return;
           }
 
           const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
           const sFlag = _.find(aSelectData, (e) => {
-                  return e.Hrcfm === 'X';
-                }) ? 'X' : '';
+            return e.Hrcfm === 'X';
+          })
+            ? 'X'
+            : '';
 
-          if(sFlag == 'X'){
+          if (sFlag == 'X') {
             MessageBox.alert(this.getBundleText('MSG_40007')); // 선택한 데이터 중 이미 확정된 데이터가 존재합니다.
             return;
           }
@@ -263,7 +267,7 @@ sap.ui.define(
               await this.createProcess(aSelectData, 'C');
 
               this.byId('flextimeSummaryListTable').clearSelection();
-              // MessageBox.alert(this.getBundleText('MSG_40008', 'LABEL_40030'), { // {확정취소} 처리가 완료되었습니다.      
+              // MessageBox.alert(this.getBundleText('MSG_40008', 'LABEL_40030'), { // {확정취소} 처리가 완료되었습니다.
               //   onClose: () => {this.readFlextimeList(); this.setContentsBusy(false, ['Button', 'Summary']);}
               // });
             },
@@ -278,24 +282,26 @@ sap.ui.define(
         }
       },
 
-      onHRCancel(){
-        try{
+      onHRCancel() {
+        try {
           const oViewModel = this.getViewModel();
           const aDetailsList = oViewModel.getProperty('/summary/list');
           const aSelectedIndices = this.byId('flextimeSummaryListTable').getSelectedIndices();
 
-          if (aSelectedIndices.length == 0 ) {
-              MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40031')); // {확정취소}할 데이터를 선택하여 주십시오.
-              return; 
+          if (aSelectedIndices.length == 0) {
+            MessageBox.alert(this.getBundleText('MSG_40006', 'LABEL_40031')); // {확정취소}할 데이터를 선택하여 주십시오.
+            return;
           }
 
           const aSelectData = _.map(aSelectedIndices, (d) => _.get(aDetailsList, [d]));
 
           const sFlag = _.find(aSelectData, (e) => {
             return e.Hrcfm === '';
-          }) ? 'X' : '';
+          })
+            ? 'X'
+            : '';
 
-          if(sFlag == 'X'){
+          if (sFlag == 'X') {
             MessageBox.alert(this.getBundleText('MSG_40009')); // 선택한 데이터 중 확정 상태가 아닌 데이터가 존재합니다.
             return;
           }
@@ -314,8 +320,7 @@ sap.ui.define(
               this.byId('flextimeSummaryListTable').clearSelection();
               // MessageBox.alert(this.getBundleText('MSG_40008', 'LABEL_40031'), { // {확정취소} 처리가 완료되었습니다.
               //   onClose: () => {this.readFlextimeList(); this.setContentsBusy(false, ['Button', 'Summary']);}
-              // });  
-              
+              // });
             },
           });
         } catch (oError) {
@@ -329,24 +334,20 @@ sap.ui.define(
       },
 
       // C 확정, D 확정취소
-      async createProcess (aData, sPrcty) {
+      async createProcess(aData, sPrcty) {
         const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.WORKTIME);
         try {
-
           await Promise.all(_.map(aData, async (o) => Client.create(oModel, 'FlexTimeSummary', { ...o, Prcty: sPrcty })));
-          
-          MessageBox.alert(this.getBundleText('MSG_40008', (sPrcty == 'C' ? 'LABEL_40030' : 'LABEL_40031')));  // {확정|확정취소} 처리가 완료되었습니다.
-          this.readFlextimeList(); 
+
+          MessageBox.alert(this.getBundleText('MSG_40008', sPrcty == 'C' ? 'LABEL_40030' : 'LABEL_40031')); // {확정|확정취소} 처리가 완료되었습니다.
+          this.readFlextimeList();
           this.setContentsBusy(false, ['Button', 'Summary']);
-        
         } catch (oError) {
           setTimeout(() => this.setContentsBusy(false, ['Input', 'Button']), 1000);
           throw oError;
         }
       },
-
-
     });
   }
 );

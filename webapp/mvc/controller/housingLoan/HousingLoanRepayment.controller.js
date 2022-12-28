@@ -439,7 +439,7 @@ sap.ui.define(
 
         // 첨부파일
         if (!this.AttachFileAction.getFileCount.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
+          MessageBox.alert(this.getBundleText('MSG_00046')); // 첨부파일을 등록하세요.
           return true;
         }
 

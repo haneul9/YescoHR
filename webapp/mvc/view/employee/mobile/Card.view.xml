@@ -4,7 +4,7 @@
   xmlns="sap.m">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents mobile-mss-employee-card-list">
-      <SearchField value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" class="wrap"/>
+      <SearchField id="employeeSearchField" value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" class="wrap"/>
       <VBox class="wrap mt-1-rem">
         <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat">
           <items>

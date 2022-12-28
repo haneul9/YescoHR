@@ -8,25 +8,25 @@
         <table:Column width="17%" sortProperty="Certtytx" filterProperty="Certtytx">
           <Label text="{i18n>LABEL_39015}"/>
           <table:template>
-            <Text text="{Certtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Certtytx}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="17%" sortProperty="Certdttx" filterProperty="Certdttx">
           <Label text="{i18n>LABEL_39006}"/>
           <table:template>
-            <Text text="{Certdttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Certdttx}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="17%" sortProperty="Mancnt" filterProperty="Mancnt">
           <Label text="{i18n>LABEL_39008}"/>
           <table:template>
-            <Text text="{Mancnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Mancnt}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="17%" sortProperty="Regcnt" filterProperty="Regcnt">
           <Label text="{i18n>LABEL_00106}"/>
           <table:template>
-            <Text text="{Regcnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Regcnt}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="17%" sortProperty="Gapcnt" filterProperty="Gapcnt">
@@ -42,7 +42,7 @@
         <table:Column width="auto" sortProperty="Poscnt" filterProperty="Poscnt">
           <Label text="{i18n>LABEL_39010}"/>
           <table:template>
-            <Text text="{Poscnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{Poscnt}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
       </table:columns>

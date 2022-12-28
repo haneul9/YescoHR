@@ -17,26 +17,20 @@
     <VBox class="contents">
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-        <VBox class="hCardBox summary-box" busyIndicatorDelay="0" busy="{/busy}">
+        <VBox class="hCardBox overview-box" busyIndicatorDelay="0" busy="{/busy}">
           <HBox justifyContent="SpaceBetween" class="title">
             <Title level="H2" text="{i18n>MSG_02001}" />
           </HBox>
           <Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
           <HBox>
-            <VBox width="30%" class="summary-info">
+            <VBox width="30%" class="overview-info">
               <Label design="Bold" text="{i18n>LABEL_02003}" />
-              <ObjectStatus text="{
-									path: '/Total/Pycnt',
-									formatter: '.formatNumber'
-								}" state="Indication05" />
+              <ObjectStatus text="{ path: '/Total/Pycnt', formatter: '.formatNumber' }" state="Indication05" />
             </VBox>
-            <VBox class="summary-info">
+            <VBox class="overview-info">
               <Label design="Bold" text="{i18n>LABEL_02002}" />
               <HBox alignItems="Baseline">
-                <ObjectStatus text="{
-									path: '/Total/ZpayBetT',
-									formatter: '.formatPay'
-								}" state="Indication05" class="mr-5-px" />
+                <ObjectStatus text="{ path: '/Total/ZpayBetT', formatter: '.formatPay' }" state="Indication05" class="mr-5-px" />
                 <Label design="Bold" text="{i18n>LABEL_00158}" />
               </HBox>
             </VBox>
@@ -62,19 +56,13 @@
         <core:Fragment fragmentName="sap.ui.yesco.fragment.OverviewTableHeader" type="XML" />
         <table:Table id="conguTable" class="row-link" rows="{/CongList}" width="100%" visibleRowCount="{/listInfo/rowCount}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}" cellClick=".onSelectRow">
           <table:rowSettingsTemplate>
-            <table:RowSettings highlight="{
-							path: 'ZappStatAl',
-							formatter: '.TableUtils.rowHighlight'
-						}"/>
+            <table:RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }"/>
           </table:rowSettingsTemplate>
           <table:columns>
             <table:Column width="100px" sortProperty="ZappStatAl" filterProperty="ZappStatAl">
               <Label text="{i18n>LABEL_00144}"/>
               <table:template>
-                <Text text="{
-										path: 'ZappStatAl',
-										formatter: '.TableUtils.StatusTxt'
-									}" width="100%" textAlign="Center">
+                <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" width="100%" textAlign="Center">
                   <customData>
                     <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                   </customData>
@@ -84,43 +72,37 @@
             <table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
               <Label text="{i18n>LABEL_02005}"/>
               <table:template>
-                <Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+                <Text text="{Zname}" width="100%" textAlign="Center" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="auto" sortProperty="Famtx" filterProperty="Famtx">
               <Label text="{i18n>LABEL_02006}"/>
               <table:template>
-                <Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{Famtx}" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="auto" sortProperty="Context" filterProperty="Context">
               <Label text="{i18n>LABEL_02007}"/>
               <table:template>
-                <Text text="{Context}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                <Text text="{Context}" textAlign="Center" wrapping="false" width="100%" />
               </table:template>
             </table:Column>
             <table:Column width="auto" sortProperty="Conretx" filterProperty="Conretx">
               <Label text="{i18n>LABEL_02008}"/>
               <table:template>
-                <Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{Conretx}" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="100px" sortProperty="Conddate" filterProperty="Conddate">
               <Label text="{i18n>LABEL_02009}"/>
               <table:template>
-                <Text text="{
-										path: 'Conddate',
-										type: 'sap.ui.yesco.mvc.model.type.Date'
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{ path: 'Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="100px" sortProperty="ZpayBetT" filterProperty="ZpayBetT">
               <Label text="{i18n>LABEL_02011}"/>
               <table:template>
-                <Text text="{
-                    path: 'ZpayBet',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{ path: 'ZpayBet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" textAlign="End" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="90px">
@@ -133,28 +115,19 @@
             <table:Column width="100px" sortProperty="Appda" filterProperty="Appda">
               <Label text="{i18n>LABEL_00266}"/>
               <table:template>
-                <Text text="{
-										path: 'Appda',
-										type: 'sap.ui.yesco.mvc.model.type.Date'
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="100px" sortProperty="Sgnda" filterProperty="Sgnda">
               <Label text="{i18n>LABEL_00269}"/>
               <table:template>
-                <Text text="{
-										path: 'Sgnda',
-										type: 'sap.ui.yesco.mvc.model.type.Date'
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="100px" sortProperty="Paydt" filterProperty="Paydt">
               <Label text="{i18n>LABEL_02012}"/>
               <table:template>
-                <Text text="{
-										path: 'Paydt',
-										type: 'sap.ui.yesco.mvc.model.type.Date'
-									}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{ path: 'Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
           </table:columns>

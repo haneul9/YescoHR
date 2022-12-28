@@ -13,7 +13,7 @@
             <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
               <Text text="{Conretx}" class="font-16-px font-bold" />
               <Text text="{Famtx}"/>
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" class="m-auto">
+              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
                 <core:customData>
                   <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
                 </core:customData>

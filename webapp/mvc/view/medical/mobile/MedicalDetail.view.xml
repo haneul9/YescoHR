@@ -1,0 +1,100 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.medical.mobile.MedicalDetail"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' &amp;&amp; ${/FormData/Lnsta} !== 'XX' }">
+    <customData>
+      <core:CustomData key="form-style" value="request" writeToDom="true" />
+    </customData>
+    <VBox class="contents">
+      <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_00129}" />
+            </HBox>
+            <HBox class="table-actions">
+              <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressOpenGuideDialog" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
+            </HBox>
+          </HBox>
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+            <Label text="{i18n>LABEL_03012}" />
+            <Text text="{/FormData/Znametx}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+            <custom:SingleComboBox items="{/TargetList}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" selectionChange=".onTargetList" visible="{= !${/FormData/Lnsta} }" class="required">
+              <core:Item text="{Znametx}" key="{Famsa},{Objps},{Kdsvh},{Famgb}" />
+            </custom:SingleComboBox>
+
+            <Label text="{i18n>LABEL_09005} {i18n>LABEL_09102}" />
+            <Input value="{ path: '/FormData/Apbet', type: 'sap.ui.yesco.mvc.model.type.Currency' } {/FormData/ApcntTxt}" editable="false" />
+
+            <Label text="{i18n>LABEL_09007} {i18n>LABEL_09102}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+            <Input value="{ path: '/FormData/Pvbet', type: 'sap.ui.yesco.mvc.model.type.Currency' } {/FormData/PvcntTxt}" editable="false" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+
+            <Label text="{i18n>LABEL_09009} / {i18n>LABEL_03002}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+            <Input value="{ path: '/FormData/PybetTot', type: 'sap.ui.yesco.mvc.model.type.Currency' } / { path: '/FormData/Paymm', formatter: '.formatDate' }" editable="false" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+
+            <Label text="{i18n>LABEL_09011} {i18n>LABEL_09102}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
+            <FlexBox visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }">
+              <items>
+                <core:HTML content="{/FormData/RjbetRjcntHtml}" />
+              </items>
+            </FlexBox>
+
+            <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }" class="align-top" />
+            <Text text="{/FormData/ZappResn}" visible="{= !!${/FormData/ZappResn} }" class="multi-line" />
+
+            <Label text="{i18n>LABEL_00163}" class="align-top" />
+            <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+            <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" class="multi-line" />
+          </grid:CSSGrid>
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_09022}" />
+            </HBox>
+            <HBox class="table-actions">
+              <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" />
+              <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />
+            </HBox>
+          </HBox>
+          <List id="medHisTable" items="{/HisList}" class="list-wrap request" mode="{/HisListMode}" rememberSelections="false">
+            <CustomListItem type="Active" press=".onDetailsRow">
+              <customData>
+                <core:CustomData key="status" value="Z{ZappStat}" writeToDom="true" />
+              </customData>
+              <grid:CSSGrid gridTemplateColumns="3fr 2fr" gridGap="6px 10px">
+                <HBox justifyContent="SpaceBetween">
+                  <layoutData>
+                    <grid:GridItemLayoutData gridColumn="span 2" />
+                  </layoutData>
+                  <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" wrapping="false" />
+                  <core:Icon src="sap-icon://attachment" visible="{= ${Attyn} === 'X' }" class="align-right" />
+                </HBox>
+                <Text text="{Disenm}" wrapping="false" />
+                <Text text="{Medorg}" textAlign="Right" wrapping="false" />
+                <Text text="{ path: 'Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" wrapping="false" />
+                <Text text="{ path: 'ZappStat', formatter: '.TableUtils.StatusTxt' }" textAlign="Right" />
+              </grid:CSSGrid>
+            </CustomListItem>
+          </List>
+          <FlexBox visible="{= !!${/AttachTableVisible} }">
+            <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+          </FlexBox>
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
+          <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
+        </VBox>
+      </custom:MobileScrollContainer>
+    </VBox>
+    <footer>
+      <OverflowToolbar visible="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' &amp;&amp; ${/FormData/Lnsta} !== 'XX' }">
+        <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
+        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
+        <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || !!${/ReWriteBtn} }" />
+        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+        <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
+      </OverflowToolbar>
+    </footer>
+  </Page>
+</mvc:View>

@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <VBox class="hCardBox summary-box">
+  <VBox class="hCardBox overview-box">
     <HBox justifyContent="SpaceBetween" class="title">
       <Title level="H2" text="{i18n>LABEL_13001}" />
     </HBox>

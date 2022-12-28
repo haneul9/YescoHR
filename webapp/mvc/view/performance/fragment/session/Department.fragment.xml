@@ -1,155 +1,141 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <VBox width="100%" class="vCardBox">
-        <Panel expandable="true" expanded="true" class="per-panel grade-department">
-            <headerToolbar>
-                <Toolbar height="45px" width="100%">
-                    <HBox justifyContent="SpaceBetween" class="table-toolbar">
-                        <HBox class="title">
-                            <Title level="H4" text="{i18n>LABEL_10056}" />
-                        </HBox>
-                        <HBox>
-                            <Text text="{i18n>MSG_10016}" class="desc-txt"/>
-                        </HBox>
-                    </HBox>
-                </Toolbar>
-            </headerToolbar>
-            <content>
-                <table:Table id="departmentTable" selectionMode="None" class="perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}">
-                    <table:columns>
-                        <table:Column>
-                            <table:multiLabels>
-                                <Label text="{i18n>LABEL_10090}"/>
-                                <Label text="{i18n>LABEL_10090}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Link text="{Zzappuntx2}" class="showLine" width="100%" textAlign="Center" press=".onSelectRow" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%" headerSpan="2">
-                            <table:multiLabels>
-                                <Label text="{/grade/0/ValueText}"/>
-                                <Label text="{i18n>LABEL_10067}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{Dept01}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%">
-                            <table:multiLabels>
-                                <Label text="{/grade/0/ValueText}"/>
-                                <Label text="&#37;"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{ path: 'Dept02', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%" headerSpan="2">
-                            <table:multiLabels>
-                                <Label text="{/grade/1/ValueText}"/>
-                                <Label text="{i18n>LABEL_10067}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{Dept03}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%">
-                            <table:multiLabels>
-                                <Label text="{/grade/1/ValueText}"/>
-                                <Label text="&#37;"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{ path: 'Dept04', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%" headerSpan="2">
-                            <table:multiLabels>
-                                <Label text="{/grade/2/ValueText}"/>
-                                <Label text="{i18n>LABEL_10067}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <HBox direction="Column">
-                                    <Text text="{Dept05}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isChange} }" />
-                                    <Link
-                                        enabled="true"
-                                        width="100%"
-                                        text="{Dept05}"
-                                        textAlign="Center"
-                                        press=".pressValue"
-                                        visible="{= ${/isChange} }"
-                                    >
-                                        <customData>
-                                            <core:CustomData key="" value="{}" />
-                                            <core:CustomData key="" value="{/grade/2/ValueEid}"/>
-                                        </customData>
-                                    </Link>
-                                </HBox>
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%">
-                            <table:multiLabels>
-                                <Label text="{/grade/2/ValueText}"/>
-                                <Label text="&#37;"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{ path: 'Dept06', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%" headerSpan="2">
-                            <table:multiLabels>
-                                <Label text="{/grade/3/ValueText}"/>
-                                <Label text="{i18n>LABEL_10067}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <HBox direction="Column">
-                                    <Text text="{Dept07}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isChange} }"/>
-                                    <Link
-                                        enabled="true"
-                                        width="100%"
-                                        text="{Dept07}"
-                                        textAlign="Center"
-                                        press=".pressValue"
-                                        visible="{= ${/isChange} }"
-                                    >
-                                        <customData>
-                                            <core:CustomData key="" value="{}" />
-                                            <core:CustomData key="" value="{/grade/3/ValueEid}"/>
-                                        </customData>
-                                    </Link>
-                                </HBox>
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%">
-                            <table:multiLabels>
-                                <Label text="{/grade/3/ValueText}"/>
-                                <Label text="&#37;"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{ path: 'Dept08', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%" headerSpan="2">
-                            <table:multiLabels>
-                                <Label text="{i18n>LABEL_00172}"/>
-                                <Label text="{i18n>LABEL_10067}"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{Dept09}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                        <table:Column width="8%">
-                            <table:multiLabels>
-                                <Label text="{i18n>LABEL_00172}}"/>
-                                <Label text="&#37;"/>
-                            </table:multiLabels>
-                            <table:template>
-                                <Text text="{ path: 'Dept10', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
-                            </table:template>
-                        </table:Column>
-                    </table:columns>
-                </table:Table>
-            </content>
-        </Panel>
-    </VBox>
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <VBox width="100%" class="vCardBox">
+    <Panel expandable="true" expanded="true" class="per-panel grade-department">
+      <headerToolbar>
+        <Toolbar height="45px" width="100%">
+          <HBox justifyContent="SpaceBetween" class="table-toolbar">
+            <HBox class="title">
+              <Title level="H4" text="{i18n>LABEL_10056}" />
+            </HBox>
+            <HBox>
+              <Text text="{i18n>MSG_10016}" class="desc-txt"/>
+            </HBox>
+          </HBox>
+        </Toolbar>
+      </headerToolbar>
+      <content>
+        <table:Table id="departmentTable" selectionMode="None" class="perGrade-depart-table" width="100%" fixedBottomRowCount="1" columnHeaderHeight="45" rowHeight="44" rows="{/department/list}" visibleRowCount="{/department/rowCount}" noData="{i18n>MSG_00001}">
+          <table:columns>
+            <table:Column>
+              <table:multiLabels>
+                <Label text="{i18n>LABEL_10090}"/>
+                <Label text="{i18n>LABEL_10090}"/>
+              </table:multiLabels>
+              <table:template>
+                <Link text="{Zzappuntx2}" class="showLine" width="100%" textAlign="Center" press=".onSelectRow" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%" headerSpan="2">
+              <table:multiLabels>
+                <Label text="{/grade/0/ValueText}"/>
+                <Label text="{i18n>LABEL_10067}"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{Dept01}" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%">
+              <table:multiLabels>
+                <Label text="{/grade/0/ValueText}"/>
+                <Label text="&#37;"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{ path: 'Dept02', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%" headerSpan="2">
+              <table:multiLabels>
+                <Label text="{/grade/1/ValueText}"/>
+                <Label text="{i18n>LABEL_10067}"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{Dept03}" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%">
+              <table:multiLabels>
+                <Label text="{/grade/1/ValueText}"/>
+                <Label text="&#37;"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{ path: 'Dept04', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%" headerSpan="2">
+              <table:multiLabels>
+                <Label text="{/grade/2/ValueText}"/>
+                <Label text="{i18n>LABEL_10067}"/>
+              </table:multiLabels>
+              <table:template>
+                <HBox direction="Column">
+                  <Text text="{Dept05}" width="100%" textAlign="Center" wrapping="false" visible="{= !${/isChange} }" />
+                  <Link enabled="true" width="100%" text="{Dept05}" textAlign="Center" press=".pressValue" visible="{= ${/isChange} }">
+                    <customData>
+                      <core:CustomData key="" value="{}" />
+                      <core:CustomData key="" value="{/grade/2/ValueEid}"/>
+                    </customData>
+                  </Link>
+                </HBox>
+              </table:template>
+            </table:Column>
+            <table:Column width="8%">
+              <table:multiLabels>
+                <Label text="{/grade/2/ValueText}"/>
+                <Label text="&#37;"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{ path: 'Dept06', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%" headerSpan="2">
+              <table:multiLabels>
+                <Label text="{/grade/3/ValueText}"/>
+                <Label text="{i18n>LABEL_10067}"/>
+              </table:multiLabels>
+              <table:template>
+                <HBox direction="Column">
+                  <Text text="{Dept07}" width="100%" textAlign="Center" wrapping="false" visible="{= !${/isChange} }"/>
+                  <Link enabled="true" width="100%" text="{Dept07}" textAlign="Center" press=".pressValue" visible="{= ${/isChange} }">
+                    <customData>
+                      <core:CustomData key="" value="{}" />
+                      <core:CustomData key="" value="{/grade/3/ValueEid}"/>
+                    </customData>
+                  </Link>
+                </HBox>
+              </table:template>
+            </table:Column>
+            <table:Column width="8%">
+              <table:multiLabels>
+                <Label text="{/grade/3/ValueText}"/>
+                <Label text="&#37;"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{ path: 'Dept08', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%" headerSpan="2">
+              <table:multiLabels>
+                <Label text="{i18n>LABEL_00172}"/>
+                <Label text="{i18n>LABEL_10067}"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{Dept09}" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+            <table:Column width="8%">
+              <table:multiLabels>
+                <Label text="{i18n>LABEL_00172}}"/>
+                <Label text="&#37;"/>
+              </table:multiLabels>
+              <table:template>
+                <Text text="{ path: 'Dept10', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
+              </table:template>
+            </table:Column>
+          </table:columns>
+        </table:Table>
+      </content>
+    </Panel>
+  </VBox>
 </core:FragmentDefinition>

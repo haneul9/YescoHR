@@ -28,31 +28,31 @@
           <Text text="{
               path: 'Appda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="ApptyTxt" filterProperty="ApptyTxt">
         <Label text="{i18n>LABEL_25004}"/>
         <table:template>
-          <Text text="{ApptyTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ApptyTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Carno" filterProperty="Carno">
         <Label text="{i18n>LABEL_25005}"/>
         <table:template>
-          <Text text="{Carno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Carno}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="PayorgTxt" filterProperty="PayorgTxt">
         <Label text="{i18n>LABEL_25006}"/>
         <table:template>
-          <Text text="{PayorgTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PayorgTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="PaytyTxt" filterProperty="PaytyTxt">
         <Label text="{i18n>LABEL_25007}"/>
         <table:template>
-          <Text text="{PaytyTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PaytyTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="60px">

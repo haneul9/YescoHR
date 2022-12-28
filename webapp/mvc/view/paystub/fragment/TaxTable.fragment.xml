@@ -6,13 +6,13 @@
       <Column>
         <m:Label text="{i18n>LABEL_13033}"/>
         <template>
-          <m:Text text="{Pyitx}" width="100%" textAlign="{= ${Sumrow} ? 'Center' : 'Begin' }" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Pyitx}" width="100%" textAlign="{= ${Sumrow} ? 'Center' : 'Begin' }" wrapping="false" />
         </template>
       </Column>
       <Column width="40%">
         <m:Label text="{i18n>LABEL_00174}"/>
         <template>
-          <m:Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="End" wrapping="false" />
         </template>
       </Column>
     </columns>

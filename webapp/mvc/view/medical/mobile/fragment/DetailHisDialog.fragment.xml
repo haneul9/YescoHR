@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Dialog title="{i18n>LABEL_09022}" horizontalScrolling="false" class="full-dialog">
+    <content>
+      <VBox busyIndicatorDelay="0" busy="{/busy}" class="contents wrap">
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_09022}" />
+          </HBox>
+        </HBox>
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid">
+          <Label text="{i18n>LABEL_09021}" />
+          <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{/ReWriteStat}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
+
+          <Label text="{i18n>LABEL_09020}" class="align-top" />
+          <Input id="DialogData3" maxLength="{/FieldLimitPop/Disenm}" value="{/DialogData/Disenm}" class="required" visible="{= !!${/ReWriteStat} }" />
+          <Text text="{/DialogData/Disenm}" visible="{= !${/ReWriteStat} }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09014}" class="align-top" />
+          <Input id="DialogData5" maxLength="{/FieldLimitPop/Medorg}" value="{/DialogData/Medorg}" class="required" visible="{= !!${/ReWriteStat} }" />
+          <Text text="{/DialogData/Medorg}" visible="{= !${/ReWriteStat} }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09015}" />
+          <ComboBox id="DialogData6" items="{/ReceiptType}" selectedKey="{/DialogData/Recpgb}" change=".onRecipt" class="required" editable="{/ReWriteStat}">
+            <core:Item text="{Ztext}" key="{Zcode}" />
+          </ComboBox>
+
+          <Label text="{i18n>LABEL_09016}" />
+          <Input id="DialogData2" maxLength="10" value="{ path: '/DialogData/Bet01', type: 'sap.ui.yesco.mvc.model.type.CurrencyBlank' }" liveChange=".liveCompar" editable="{/ReWriteStat}" />
+
+          <Label text="{i18n>LABEL_09017}" />
+          <Input id="DialogData4" maxLength="10" value="{ path: '/DialogData/Bet02', type: 'sap.ui.yesco.mvc.model.type.CurrencyBlank' }" liveChange=".liveCompar" editable="{/ReWriteStat}" />
+
+          <Label text="{i18n>LABEL_09018}" />
+          <Text text="{ path: '/DialogData/Bettot', type: 'sap.ui.yesco.mvc.model.type.Currency' }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09033}" visible="{= ${/DialogData/ZappStat} === 'P' }" class="white-space-pre-wrap" />
+          <Text text="{ parts: [{ path: '/DialogData/Mob01' }, { path: '/DialogData/Mob02' }, { path: '/DialogData/Mobtot' }], formatter: '.forMatCost' }" visible="{= ${/DialogData/ZappStat} === 'P' }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09031}" visible="{= ${/DialogData/ZappStat} === 'P' }" class="align-top" />
+          <Text text="{/DialogData/ZmobResn}" visible="{= ${/DialogData/ZappStat} === 'P' }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09027}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+          <Text text="{ path: '/DialogData/Mobet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{= ${/DialogData/ZappStat} === 'P' }" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09019}" />
+          <Text text="{/DialogData/Pratetx}" class="multi-line" />
+
+          <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
+          <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{= ${/DialogData/ZappStat} === 'P' }" class="multi-line" />
+        </grid:CSSGrid>
+        <core:Fragment id="DialogAttFile" fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
+      </VBox>
+    </content>
+    <buttons>
+      <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
+      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
+      <Button text="{i18n>LABEL_00118}" press=".onDialogClose" visible="{= !!${/ReWriteStat} }" class="cancel" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" visible="{= !${/ReWriteStat} }" class="cancel" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

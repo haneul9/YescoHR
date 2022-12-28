@@ -28,25 +28,25 @@
           <Text text="{
               path: 'Pernr',
               type: 'sap.ui.yesco.mvc.model.type.Pernr'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
-          <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
-          <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
-          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
@@ -55,19 +55,19 @@
           <Text text="{
               path: 'Datum',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Dtype" filterProperty="Dtype">
         <Label text="{i18n>LABEL_27021}" wrapping="true"/>
         <table:template>
-          <Text text="{Dtype}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Dtype}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Nxtwktx" filterProperty="Nxtwktx">
         <Label text="{i18n>LABEL_27018}"/>
         <table:template>
-          <Text text="{Nxtwktx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Nxtwktx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
@@ -76,7 +76,7 @@
           <Text text="{
               path: 'Beguz',
               formatter: '.formatTime'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Enduz" filterProperty="Enduz">
@@ -85,25 +85,25 @@
           <Text text="{
               path: 'Enduz',
               formatter: '.formatTime'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_27007}"/>
         <table:template>
-          <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Abrst}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Ottyptx" filterProperty="Ottyptx">
         <Label text="{i18n>LABEL_00154}"/>
         <table:template>
-          <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ottyptx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Apename" filterProperty="Apename">
         <Label text="{i18n>LABEL_00135}"/>
         <table:template>
-          <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
@@ -112,7 +112,7 @@
           <Text text="{
               path: 'Appda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Sgnda" filterProperty="Sgnda">
@@ -121,7 +121,7 @@
           <Text text="{
               path: 'Sgnda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

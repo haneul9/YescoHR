@@ -38,25 +38,25 @@
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_00210}"/>
                 <template>
-                  <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="20%">
                 <m:Label text="{i18n>LABEL_10082}"/>
                 <template>
-                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="20%">
                 <m:Label text="{i18n>LABEL_10089}"/>
                 <template>
-                  <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="20%">
                 <m:Label text="{i18n>LABEL_10018}"/>
                 <template>
-                  <m:Text text="{LfappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{LfappTx}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
             </columns>

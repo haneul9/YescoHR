@@ -466,22 +466,22 @@ sap.ui.define(
         oViewModel.refresh();
       },
 
-      setContentsBusy(bContentsBusy = true, vTarget = []) {
-        const oViewModel = this.getViewModel();
-        const mBusy = oViewModel.getProperty('/busy');
+      // setContentsBusy(bContentsBusy = true, vTarget = []) {
+      //   const oViewModel = this.getViewModel();
+      //   const mBusy = oViewModel.getProperty('/busy');
 
-        if (_.isEmpty(vTarget)) {
-          _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
-        } else {
-          if (_.isArray(vTarget)) {
-            _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
-          } else {
-            _.set(mBusy, vTarget, bContentsBusy);
-          }
-        }
+      //   if (_.isEmpty(vTarget)) {
+      //     _.forOwn(mBusy, (v, p) => _.set(mBusy, p, bContentsBusy));
+      //   } else {
+      //     if (_.isArray(vTarget)) {
+      //       _.forEach(vTarget, (s) => _.set(mBusy, s, bContentsBusy));
+      //     } else {
+      //       _.set(mBusy, vTarget, bContentsBusy);
+      //     }
+      //   }
 
-        oViewModel.refresh();
-      },
+      //   oViewModel.refresh();
+      // },
 
       helpInput(oEvent) {
         const oViewModel = this.getViewModel();

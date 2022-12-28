@@ -1,22 +1,21 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
-  <VBox class="hCardBox summary-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
       <HBox justifyContent="SpaceBetween" class="title">
         <Title level="H2" text="{i18n>LABEL_26007}" />
       </HBox>
       <Text text="{i18n>LABEL_26002}" />
       <HBox width="100%" justifyContent="SpaceBetween" class="w-100 pt-75-px">
-        <VBox class="summary-info">
+        <VBox class="overview-info">
           <Label design="Bold" text="{i18n>LABEL_26003}" />
           <ObjectStatus text="{/MyAcc/Banka}" state="Indication05" class="font-20-px" />
         </VBox>
-        <VBox class="summary-info">
+        <VBox class="overview-info">
           <Label design="Bold" text="{i18n>LABEL_26004}" />
           <ObjectStatus text="{/MyAcc/Bankn}" state="Indication05" class="font-20-px" />
         </VBox>
-        <VBox class="summary-info">
+        <VBox class="overview-info">
           <Label design="Bold" text="{i18n>LABEL_00271}" />
           <ObjectStatus text="{
                 path: '/MyAcc/Begda',

@@ -18,27 +18,37 @@ sap.ui.define(
     'use strict';
 
     return BaseController.extend('sap.ui.yesco.mvc.controller.csr.csr', {
+      LIST_TABLE_ID: 'csrListTable',
+      ROUTE_MAP: {
+        csrMng: 'H',
+        csrAppr: 'M',
+        csrAppl: 'E',
+      },
+
       initializeModel() {
         return {
           busy: false,
           routeName: '',
-          Austy: (this.isMss() ? 'M' : (this.isHass() ? 'H' : 'E')),
+          auth: 'E',
           search: {
-            Werks: this.getAppointeeProperty('Werks'),
-            date: moment().hours(9).toDate(),
-            secondDate: moment().subtract(1, 'months').add(1, 'days').hours(9).toDate(),
-            Schty: 'X'
+            Werks: '',
+            Begda: moment().subtract(1, 'months').add(1, 'days').hours(9).toDate(),
+            Endda: moment().hours(9).toDate(),
+            Schty: 'X',
+          },
+          entry: {
+            Werks: [],
           },
           listInfo: {
-            Title: this.getBundleText("LABEL_46016"), // 상세내역
+            Title: '',
             isShowProgress: false,
             isShowApply: true,
             isShowApprove: true,
             isShowReject: false,
             isShowComplete: true,
-            ObjTxt2: this.getBundleText('LABEL_46001'), // 신청단계
-            ObjTxt3: this.getBundleText('LABEL_46002'), // 처리단계
-            ObjTxt5: this.getBundleText('LABEL_46003'), // 완료단계
+            ObjTxt2: '',
+            ObjTxt3: '',
+            ObjTxt5: '',
             rowCount: 3,
             totalCount: 0,
             progressCount: 0,
@@ -48,7 +58,7 @@ sap.ui.define(
             completeCount: 0,
           },
           List: [],
-          SelectedRows: []
+          SelectedRows: [],
         };
       },
 
@@ -58,28 +68,48 @@ sap.ui.define(
         try {
           oListModel.setProperty('/busy', true);
           oListModel.setProperty('/routeName', sRouteName);
+          oListModel.setProperty('/auth', this.ROUTE_MAP[sRouteName] || 'E');
 
-          // await this.readList();
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          // this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
-          oListModel.setProperty('/busy', false);
-        }
-      },
+          const mAppointee = this.getAppointeeData();
+          const aPersaEntry = await Client.getEntitySet(this.getModel(ServiceNames.COMMON), 'WerksList', { Pernr: mAppointee.Pernr });
 
-      async onBeforeShow(){
-        const oListModel = this.getViewModel();
+          oListModel.setProperty('/entry/Werks', aPersaEntry);
+          oListModel.setProperty('/search/Werks', mAppointee.Werks);
 
-        try{
-          oListModel.setProperty('/busy', true);
+          const mListInfo = oListModel.getProperty('/listInfo');
+
+          oListModel.setProperty('/listInfo', {
+            ...mListInfo,
+            Title: this.getBundleText('LABEL_46016'), // 상세내역
+            ObjTxt2: this.getBundleText('LABEL_46001'), // 신청단계
+            ObjTxt3: this.getBundleText('LABEL_46002'), // 처리단계
+            ObjTxt5: this.getBundleText('LABEL_46003'), // 완료단계
+            isShowProgress: false,
+            isShowApply: true,
+            isShowApprove: true,
+            isShowReject: false,
+            isShowComplete: true,
+          });
+
           await this.readList();
+
+          setTimeout(() => {
+            const oDetailView = sap.ui.getCore().byId('container-ehr---csrDetail');
+            if (oDetailView) oDetailView.destroy();
+
+            const $detailView = $('#container-ehr---csrDetail');
+            if ($detailView.length) $detailView.remove();
+
+            const oRouter = this.getOwnerComponent().getRouter();
+            delete oRouter._oViews._oCache.view['sap.ui.yesco.mvc.view.csr.csrDetail'];
+          }, 0);
         } catch (oError) {
+          this.debug(`Controller > ${sRouteName} List > onObjectMatched Error`, oError);
+
           AppUtils.handleError(oError);
         } finally {
           oListModel.setProperty('/busy', false);
         }
-        
       },
 
       async callbackAppointeeChange() {
@@ -123,18 +153,20 @@ sap.ui.define(
         try {
           const oModel = this.getModel(ServiceNames.COMMON);
           const oSearch = oListModel.getProperty('/search');
+          const sAuth = oListModel.getProperty('/auth');
 
           const aTableList = await Client.getEntitySet(oModel, 'CsrRequest', {
-            Austy: oListModel.getProperty('/Austy'),
+            Austy: sAuth,
             Werks: oSearch.Werks,
-            Begda: moment(oSearch.secondDate).hours(9).toDate(),
-            Endda: moment(oSearch.date).hours(9).toDate(),
-            Schty: (oListModel.getProperty('/Austy') == 'M' ? (oSearch.Schty == 'A' ? '' : oSearch.Schty) : '') // CSR결재: 조회구분
+            Begda: moment(oSearch.Begda).hours(9).toDate(),
+            Endda: moment(oSearch.Endda).hours(9).toDate(),
+            Schty: sAuth === 'M' ? (oSearch.Schty === 'A' ? '' : oSearch.Schty) : '', // CSR결재: 조회구분
           });
 
           oListModel.setProperty('/List', aTableList);
 
-          const iVisibleRowCountLimit = this.TableUtils.calculateVisibleRowCount(this.byId('Table'));
+          const iVisibleRowCountLimit = this.TableUtils.calculateVisibleRowCount(this.byId(this.LIST_TABLE_ID));
+          const mListInfo = oListModel.getProperty('/listInfo');
           const iDataLength = aTableList.length;
           const oOccurCount = _.chain(aTableList)
             .map('Prstg')
@@ -143,35 +175,24 @@ sap.ui.define(
               ['']: 0,
               ['10']: 0,
               ['20']: 0,
-              ['30']: 0
+              ['30']: 0,
             })
             .value();
-          
+
           oListModel.setProperty('/listInfo', {
-            // rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
-            rowCount: iDataLength,
+            ...mListInfo,
+            rowCount: Math.min(iVisibleRowCountLimit, iDataLength),
             totalCount: aTableList.length,
             applyCount: oOccurCount['10'],
             approveCount: oOccurCount['20'],
             completeCount: oOccurCount['30'],
-            Title: this.getBundleText("LABEL_46016"), // 상세내역
-            isShowProgress: false,
-            isShowApply: true,
-            isShowApprove: true,
-            isShowReject: false,
-            isShowComplete: true,
-            ObjTxt2: this.getBundleText('LABEL_46001'), // 신청단계
-            ObjTxt3: this.getBundleText('LABEL_46002'), // 처리단계
-            ObjTxt5: this.getBundleText('LABEL_46003'), // 완료단계
           });
 
           oListModel.setProperty('/SelectedRows', []);
+
+          if (sAuth === 'M') this.setTableStyle();
         } catch (oError) {
           throw oError;
-        } finally {
-          if(oListModel.getProperty('/Austy') === 'M'){
-            this.setTableStyle();
-          }          
         }
       },
 
@@ -205,7 +226,7 @@ sap.ui.define(
 
       setTableStyle() {
         setTimeout(() => {
-          const oTable = this.byId('Table');
+          const oTable = this.byId(this.LIST_TABLE_ID);
           const sTableId = oTable.getId();
 
           oTable.getRows().forEach((row, i) => {
@@ -213,7 +234,7 @@ sap.ui.define(
             if (mRowData.Appryn === 'X') {
               $(`#${sTableId}-rowsel${i}`).removeClass('disabled-table-selection');
             } else {
-              $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');              
+              $(`#${sTableId}-rowsel${i}`).addClass('disabled-table-selection');
             }
           });
         }, 100);
@@ -229,19 +250,19 @@ sap.ui.define(
         this.getRouter().navTo(`${sRouteName}-detail`, { oDataKey: oRowData.Appno, werks: oRowData.Werks });
       },
 
-      onPressAccept(){
+      onPressAccept() {
         this.onSave('B');
       },
 
-      onPressReject(){
+      onPressReject() {
         this.onSave('C');
       },
 
-      async onSave(vPrcty){
+      async onSave(vPrcty) {
         const oViewModel = this.getViewModel();
-        const mData = oViewModel.getProperty('/SelectedRows');
+        const aSelectedData = oViewModel.getProperty('/SelectedRows');
 
-        if(mData.length === 0){
+        if (aSelectedData.length === 0) {
           MessageBox.alert(this.getBundleText('MSG_46005')); // 데이터를 선택하여 주십시오.
           return;
         }
@@ -255,32 +276,14 @@ sap.ui.define(
               try {
                 AppUtils.setAppBusy(true);
 
-                await this.onProcess(mData, vPrcty, sMessage);
-  
-                // const mApprovalData = _.chain(mData)
-                // .cloneDeep()
-                // .map((o) => {
-                //   delete o.__metadata;
-      
-                //   return this.TimeUtils.convert2400Time(o);
-                // })
-                // .value();
-                
-  //               const oModel = this.getModel(ServiceNames.COMMON);
-  //               const oSendObject = {
-  //                 ...mFormData,
-  //                 CsrRequest1Nav: mApprovalData
-  //               };
-  //               await Client.create(oModel, 'CsrRequestApproval', oSendObject);
-  
+                await this.onProcess(aSelectedData, vPrcty, sMessage);
               } catch (oError) {
                 AppUtils.handleError(oError);
-  
-                if(oDetailModel.getProperty('/isNew') === true){
+
+                if (oDetailModel.getProperty('/isNew') === true) {
                   oDetailModel.setProperty('/Data/Prsta', '');
                   oDetailModel.setProperty('/Data/Prstg', '');
                 }
-  
               } finally {
                 AppUtils.setAppBusy(false);
               }
@@ -289,30 +292,52 @@ sap.ui.define(
         });
       },
 
-      async onProcess(mData, vPrcty, sMessage){
-
+      async onProcess(aSelectedData, vPrcty, sMessage) {
         const oModel = this.getModel(ServiceNames.COMMON);
-        try {
-          _.map(mData, async (e) => {
-            e.Prcty = vPrcty;
-            await Client.create(oModel, 'CsrRequestApproval', e);
-          });
 
-           // {승인|반려}되었습니다.
-           MessageBox.alert(this.getBundleText('MSG_00007', sMessage), {
+        try {
+          for (const el of aSelectedData) {
+            el.Prcty = vPrcty;
+
+            // 승인시 진행상태 값
+            if (vPrcty === 'B') {
+              const iPrsta = _.toInteger(el.Prsta);
+
+              switch (true) {
+                case iPrsta === 10:
+                  el.Prsta = '11';
+                  break;
+                case iPrsta === 11:
+                  el.Prsta = '12';
+                  break;
+                case iPrsta >= 22:
+                  el.Prsta = '30';
+                  break;
+                default:
+                  delete el.Prsta;
+                  break;
+              }
+            }
+
+            await Client.create(oModel, 'CsrRequestApproval', el);
+          }
+
+          // {승인|반려}되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_00007', sMessage), {
             onClose: () => {
               this.onSearch();
-              this.byId('Table').clearSelection();
+              this.byId(this.LIST_TABLE_ID).clearSelection();
             },
           });
-        } catch(oError){
+        } catch (oError) {
+          this.debug(`Controller > ${this.getViewModel().getProperty('/routeName')} List > onProcess Error`, oError);
+
           AppUtils.handleError(oError);
         }
-
       },
 
       onPressExcelDownload() {
-        const oTable = this.byId('Table');
+        const oTable = this.byId(this.LIST_TABLE_ID);
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_46000'); // CSR_목록
 
         this.TableUtils.export({ oTable, sFileName });
@@ -335,7 +360,6 @@ sap.ui.define(
             return null;
         }
       },
-
     });
   }
 );

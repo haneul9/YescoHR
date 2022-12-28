@@ -11,7 +11,7 @@ sap.ui.define(
     ParseException,
     AppUtils
   ) => {
-    ('use strict');
+    'use strict';
 
     /**
      * 주의 : formatter 사용시 format으로 변환된 값은 해당 control에만 적용되며
@@ -44,17 +44,49 @@ sap.ui.define(
           return null;
         }
         if (vValue instanceof Date) {
-          return moment(vValue).hour(9).toDate();
+          return DateUtils.trimTime(vValue);
         }
         if (vValue instanceof String || typeof vValue === 'string') {
           if (/^\/Date/.test(vValue)) {
             const iTime = parseInt(vValue.replace(/\/Date\((-?\d+)\)\//, '$1'), 10);
-            return new Date(iTime);
+            return DateUtils.trimTime(iTime);
           }
-          const sDateString = vValue.replace(/[^\d]/g, '');
-          return moment(sDateString, 'YYYYMMDD').hour(9).toDate();
+          return DateUtils.trimTime(vValue);
         }
         throw new ParseException(`Don't know how to parse Date from ${vValue}`);
+      },
+
+      getFromToDates({ fromDateFieldName, toDateFieldName, period = 1, periodUnit = 'month' }) {
+        const oTodayMoment = DateUtils.getMoment();
+        return {
+          [toDateFieldName]: oTodayMoment.toDate(),
+          [fromDateFieldName]: oTodayMoment.subtract(period, periodUnit).add(1, 'day').toDate(),
+        };
+      },
+
+      trimTime(vDate) {
+        return DateUtils.getMoment(vDate).toDate();
+      },
+
+      /**
+       * @param {*} vDate
+       * @param {*} trimTime true: OData에서 받을 때 UTC+0로 받을 수 있도록 UTC+9으로 parsing 또는 생성된 moment 제공
+       * @returns
+       */
+      getMoment(vDate, trimTime = true) {
+        let o;
+        if (moment.isMoment(vDate)) {
+          o = vDate;
+        } else if (vDate instanceof String || typeof vDate === 'string') {
+          o = moment(vDate.replace(/\D/g, ''), 'YYYYMMDDHHmmss');
+        } else {
+          o = moment(vDate); // Date or Number or undefined
+        }
+        return trimTime ? o.startOf('day').hours(9) : o;
+      },
+
+      getToday() {
+        return DateUtils.trimTime();
       },
     };
 

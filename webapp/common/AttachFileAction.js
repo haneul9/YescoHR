@@ -22,6 +22,7 @@ sap.ui.define(
           true,
           {
             Id: '',
+            Title: AppUtils.getBundleText('LABEL_00248'), // 첨부파일
             RefeFilebox: false,
             Appno: '',
             Type: '',

@@ -95,7 +95,7 @@ sap.ui.define(
           const oListView = this.isHass() ? oView.getParent().getPage('container-ehr---h_performanceGrade') : oView.getParent().getPage('container-ehr---m_performanceGrade');
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+            throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
@@ -150,7 +150,12 @@ sap.ui.define(
             { Label: this.getBundleText('LABEL_10077'), Ztotcnt: '0', Zgrade1: '0', Zgrade1State: 'None', Zgrade2: '0', Zgrade2State: 'None', Zgrade3: '0', Zgrade3State: 'None' },
           ]);
 
-          const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({ Idx: ++i, ..._.omit(o, '__metadata'), Fapp: _.isEmpty(o.Fapp) ? 'ALL' : o.Fapp, FappTx: _.get(mGradeMap, o.Fapp, '') }));
+          const aRawData = _.map(mDetailData.Appraisal2GDocDetSet.results, (o, i) => ({
+            Idx: ++i,
+            ..._.omit(o, '__metadata'),
+            Fapp: _.isEmpty(o.Fapp) ? 'ALL' : o.Fapp,
+            FappTx: _.get(mGradeMap, o.Fapp, ''),
+          }));
 
           oViewModel.setProperty('/raw/list', aRawData);
           oViewModel.setProperty('/tab/list', aRawData);

@@ -6,37 +6,37 @@
       <table:Column width="auto" filterProperty="Pernr" sortProperty="Pernr" visible="{/history/visible/Pernr}">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
-          <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Ename" sortProperty="Ename" visible="{/history/visible/Ename}">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
-          <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Zyear" sortProperty="Zyear" visible="{/history/visible/Zyear}">
         <Label text="{i18n>LABEL_15005}"/>
         <table:template>
-          <Text text="{Zyear}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zyear}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
-          <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Zzjikcht" sortProperty="Zzjikcht">
         <Label text="{i18n>LABEL_00217}"/>
         <table:template>
-          <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zzjikcht}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
-          <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Dettx" sortProperty="Appty">
@@ -44,7 +44,7 @@
         <table:template>
           <VBox>
             <Link text="{= ${Zzappgd01} === '' ? ${Zzapppt01} === '0.000' ? '' : ${Zzapppt01} : ${Zzappgd01} }" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid1} }" press=".onPressRowPerformance" />
-            <Text text="{= ${Zzappgd01} === '' ? ${Zzapppt01} === '0.000' ? '' : ${Zzapppt01} : ${Zzappgd01} }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid1} }" />
+            <Text text="{= ${Zzappgd01} === '' ? ${Zzapppt01} === '0.000' ? '' : ${Zzapppt01} : ${Zzappgd01} }" width="100%" textAlign="Center" wrapping="false" visible="{= !${Zdocid1} }" />
           </VBox>
         </table:template>
       </table:Column>
@@ -53,20 +53,20 @@
         <table:template>
           <VBox>
             <Link text="{= ${Zzappgd02} === '' ? ${Zzapppt02} === '0.000' ? '' : ${Zzapppt02} : ${Zzappgd02} }" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid2} }" press=".onPressRowCompetency" />
-            <Text text="{= ${Zzappgd02} === '' ? ${Zzapppt02} === '0.000' ? '' : ${Zzapppt02} : ${Zzappgd02} }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid2} }" />
+            <Text text="{= ${Zzappgd02} === '' ? ${Zzapppt02} === '0.000' ? '' : ${Zzapppt02} : ${Zzappgd02} }" width="100%" textAlign="Center" wrapping="false" visible="{= !${Zdocid2} }" />
           </VBox>
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Apename" sortProperty="Ename">
         <Label text="{i18n>LABEL_00311}"/>
         <table:template>
-          <Text text="{ path: 'Zzaptpt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{ path: 'Zzaptpt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Atext" sortProperty="Awart">
         <Label text="{i18n>LABEL_10097}"/>
         <table:template>
-          <Text text="{Zzaptgd}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zzaptgd}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" filterProperty="Atext" sortProperty="Awart" visible="{/history/visible/Zzappgd03}">
@@ -74,7 +74,7 @@
         <table:template>
           <VBox>
             <Link text="{Zzappgd03}" class="showLine" width="100%" textAlign="Center" visible="{= !!${Zdocid3} }" press=".onPressRowMulti" />
-            <Text text="{Zzappgd03}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${Zdocid3} }" />
+            <Text text="{Zzappgd03}" width="100%" textAlign="Center" wrapping="false" visible="{= !${Zdocid3} }" />
           </VBox>
         </table:template>
       </table:Column>
@@ -87,7 +87,7 @@
       <table:Column width="12%" filterProperty="Atext" sortProperty="Awart">
         <Label text="{i18n>LABEL_00163}"/>
         <table:template>
-          <Text text="{Zzapeptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{Zzapeptx}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

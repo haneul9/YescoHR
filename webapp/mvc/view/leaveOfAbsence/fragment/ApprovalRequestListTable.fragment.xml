@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="approvalRequestListTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/search/approvalRequestList}" visibleRowCount="{/search/approvalRequestListInfo/count/visibleRows}" cellClick=".onSelectRow" busy="{/search/busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}">
+    <rowSettingsTemplate>
+      <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }" />
+    </rowSettingsTemplate>
+    <columns>
+      <Column width="10%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+        <m:Label text="{i18n>LABEL_00144}" />
+        <template>
+          <m:Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" width="100%" textAlign="Center">
+            <m:customData>
+              <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+            </m:customData>
+          </m:Text>
+        </template>
+      </Column>
+      <Column width="20%" filterProperty="Appda" sortProperty="Appda">
+        <m:Label text="{i18n>LABEL_50101}" />
+        <template>
+          <m:Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="20%" filterProperty="Apptytx" sortProperty="Apptytx">
+        <m:Label text="{i18n>LABEL_50102}" />
+        <template>
+          <m:Text text="{Apptytx}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="20%" filterProperty="Begda" sortProperty="Begda">
+        <m:Label text="{i18n>LABEL_50103}" />
+        <template>
+          <m:Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="20%" filterProperty="Endda" sortProperty="Endda">
+        <m:Label text="{i18n>LABEL_50104}" />
+        <template>
+          <m:Text text="{ path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="10%">
+        <m:Label text="{i18n>LABEL_50105}" />
+        <template>
+          <m:Button type="Transparent" class="mnw-0" icon="sap-icon://attachment" press=".onPressRowAttachmentDownload" visible="{= ${Docyn} === 'Y' }" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
+</core:FragmentDefinition>

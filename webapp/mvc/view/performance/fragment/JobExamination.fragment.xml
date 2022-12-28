@@ -15,31 +15,31 @@
             <table:Column width="10%" sortProperty="Appgbtx" filterProperty="Appgbtx">
               <Label text="{i18n>LABEL_00147}"/>
               <table:template>
-                <Text text="{Appgbtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                <Text text="{Appgbtx}" textAlign="Center" wrapping="false" width="100%" />
               </table:template>
             </table:Column>
             <table:Column width="20%" sortProperty="Zzjaitmtx" filterProperty="Zzjaitmtx">
               <Label text="{i18n>LABEL_10103}"/>
               <table:template>
-                <Text text="{Zzjaitmtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+                <Text text="{Zzjaitmtx}" textAlign="Center" wrapping="false" width="100%" />
               </table:template>
             </table:Column>
             <table:Column width="30%">
               <Label text="{i18n>LABEL_10104}"/>
               <table:template>
                 <HBox>
-                  <ComboBox items="{path: 'codeList', templateShareable: true}" editable="{= ${Zdeactive} !== 'X' }" visible="{= ${Zcode} !== '90' }" width="100%" selectedKey="{Zzjarst}">
+                  <ComboBox items="{ path: 'codeList', templateShareable: true }" editable="{= ${Zdeactive} !== 'X' }" visible="{= ${Zcode} !== '90' }" width="100%" selectedKey="{Zzjarst}">
                     <layoutData>
                       <FlexItemData growFactor="1" />
                     </layoutData>
                     <customData>
-                      <core:CustomData key="required" value="{Zcheck}" writeToDom="true" />
+                      <core:CustomData key="required" value="o{= ${Zcheck} === 'X' ? 'n' : 'ff' }" writeToDom="true" />
                     </customData>
                     <core:Item text="{Ztext}" key="{Zcode}" />
                   </ComboBox>
                   <Input value="{Zzjarsttx}" visible="{= ${Zcode} === '90' }" editable="{= ${Zdeactive} !== 'X' }" showValueHelp="true" valueHelpOnly= "true" valueHelpRequest=".onJobSearch">
                     <customData>
-                      <core:CustomData key="required" value="{Zcheck}" writeToDom="true" />
+                      <core:CustomData key="required" value="o{= ${Zcheck} === 'X' ? 'n' : 'ff' }" writeToDom="true" />
                     </customData>
                     <layoutData>
                       <FlexItemData growFactor="1" />

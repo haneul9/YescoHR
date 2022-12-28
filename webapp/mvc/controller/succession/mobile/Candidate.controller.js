@@ -439,7 +439,7 @@ sap.ui.define(
       },
 
       throwError(...aMessageCodes) {
-        throw new UI5Error({ code: 'I', message: this.getBundleText(...aMessageCodes) });
+        throw new UI5Error({ code: 'A', message: this.getBundleText(...aMessageCodes) });
       },
 
       async readCandidateSearch() {
@@ -457,7 +457,7 @@ sap.ui.define(
         oViewModel.setProperty('/searchResult/listInfo/totalCount', aSearchResults.length);
 
         if (!aResults.length) {
-          MessageBox.information(this.getBundleText('MSG_00062')); // 검색결과가 없습니다.
+          MessageBox.alert(this.getBundleText('MSG_00062')); // 검색결과가 없습니다.
         } else {
           if (this.oDetailConditionsDialog) {
             this.oDetailConditionsDialog.close();
@@ -475,7 +475,7 @@ sap.ui.define(
             PicUrl: _.trim(m.PicUrl) || sUnknownAvatarImageURL,
             Chckd: '',
             Icon: this.COMPANY_ICON[m.Werks],
-            Linetx1: m.Linetx1.replace(/\s/, '\n'),
+            Linetx1: _.chain(m.Linetx1).replace(/\s/, '\n').replace(/\//, '\n').value(),
             Linetx6: this.getBundleText(
               'LABEL_45502',
               m.Esstot,

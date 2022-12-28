@@ -70,8 +70,8 @@ sap.ui.define(
         }
       },
 
-      getCurrentLocationText(oArguments) {
-        return `${this.getBundleText('LABEL_29001')} > ${oArguments.Title}`;
+      getCurrentLocationText({ Title }) {
+        return `${this.getBundleText('LABEL_29001')} > ${Title}`;
       },
 
       // 메뉴 경로

@@ -36,20 +36,20 @@
               <Column width="{= ${/dialog/mode} === 'A' ? 'auto' : '40%' }">
                 <m:Label text="{i18n>LABEL_00210}"/>
                 <template>
-                  <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{Ename} {Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="auto">
                 <m:Label text="{i18n>LABEL_10082}"/>
                 <template>
-                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <m:Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" width="100%" textAlign="Center" wrapping="false" />
                 </template>
               </Column>
               <Column width="{= ${/dialog/mode} === 'B' ? 'auto' : '30%' }">
                 <m:Label text="{i18n>LABEL_10089}"/>
                 <template>
                   <m:VBox>
-                    <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} || ${/dialog/mode} === 'A' }" />
+                    <m:Text text="{FappTx}" width="100%" textAlign="Center" wrapping="false" visible="{= !${/isActive} || ${/dialog/mode} === 'A' }" />
                     <m:ComboBox class="small-table-input" selectedKey="{Fapp2}" items="{ path: '/grade', templateShareable: true }" visible="{= ${/isActive} &amp;&amp; ${/dialog/mode} === 'B' }">
                       <core:Item text="{text}" key="{code}" />
                     </m:ComboBox>

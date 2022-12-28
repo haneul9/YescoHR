@@ -117,9 +117,8 @@ sap.ui.define(
       },
 
       getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+        // const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+        return this.getBundleText('LABEL_00195', 'LABEL_26001'); // {급여계좌변경} 신청
       },
 
       // 계좌구분 선택
@@ -205,7 +204,7 @@ sap.ui.define(
 
         // 첨부파일
         if (sType === 'C' && !this.AttachFileAction.getFileCount.call(this)) {
-          MessageBox.alert(this.getBundleText('MSG_00046'));
+          MessageBox.alert(this.getBundleText('MSG_00046')); // 첨부파일을 등록하세요.
           return true;
         }
 

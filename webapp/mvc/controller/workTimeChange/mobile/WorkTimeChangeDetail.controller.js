@@ -127,10 +127,9 @@ sap.ui.define(
         return 'HR18';
       },
 
-      getCurrentLocationText(oArguments) {
-        const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
-
-        return sAction;
+      getCurrentLocationText() {
+        // const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+        return this.getBundleText('LABEL_00195', 'LABEL_27022'); // {시간외근무변경취소} 신청
       },
 
       // 신청내역 checkBox

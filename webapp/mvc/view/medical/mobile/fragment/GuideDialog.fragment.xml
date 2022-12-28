@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog title="{i18n>LABEL_00353}" horizontalScrolling="false" class="full-dialog">
+    <content>
+      <FlexBox class="medical-request-guide">
+        <items>
+          <core:HTML content="{/InfoMessage}" />
+        </items>
+      </FlexBox>
+    </content>
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" press=".onPressCloseGuideDialog" class="cancel" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

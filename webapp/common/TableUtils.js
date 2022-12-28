@@ -119,6 +119,38 @@ sap.ui.define(
         };
       },
 
+      getCount({ oTable, aRowData, sStatCode = 'ZappStatAl', bHasSumRow = false }) {
+        const iVisibleRowCountLimit = this.calculateVisibleRowCount(oTable);
+        const iDataLength = bHasSumRow ? (aRowData.length || 1) + 1 : aRowData.length;
+        const oOccurCount = _.chain(aRowData)
+          .map(sStatCode)
+          .countBy()
+          .defaults({
+            ['']: 0,
+            [STATE_IN_PROGRESS0]: 0,
+            [STATE_IN_PROGRESS1]: 0,
+            [STATE_IN_PROGRESS2]: 0,
+            [STATE_APPLY1]: 0,
+            [STATE_APPLY2]: 0,
+            [STATE_APPLY3]: 0,
+            [STATE_APPROVE]: 0,
+            [STATE_REJECT1]: 0,
+            [STATE_REJECT2]: 0,
+            [STATE_COMPLETE]: 0,
+          })
+          .value();
+
+        return {
+          visibleRows: Math.min(iVisibleRowCountLimit, iDataLength),
+          total: aRowData.length,
+          progress: oOccurCount[''] + oOccurCount[STATE_IN_PROGRESS0] + oOccurCount[STATE_IN_PROGRESS1] + oOccurCount[STATE_IN_PROGRESS2],
+          request: oOccurCount[STATE_APPLY1] + oOccurCount[STATE_APPLY2] + oOccurCount[STATE_APPLY3],
+          approve: oOccurCount[STATE_APPROVE],
+          reject: oOccurCount[STATE_REJECT1] + oOccurCount[STATE_REJECT2],
+          complete: oOccurCount[STATE_COMPLETE],
+        };
+      },
+
       calculateVisibleRowCount(oTable) {
         const iBodyHeight = Math.floor($('body').height()); // body 높이
         const $Table = oTable.$();
@@ -133,6 +165,18 @@ sap.ui.define(
         const iVisibleRowCount = Math.floor((iBodyHeight - iOffsetTopOfTbody - iParentBoxBottom - iCardBoxBottom - iCardBoxShadow) / iRowHeight);
         // console.log('calculateVisibleRowCount', { iBodyHeight, iOffsetTopOfTbody, iParentBoxBottom, iCardBoxBottom, iCardBoxShadow, iRowHeight, iVisibleRowCount });
         return iVisibleRowCount;
+      },
+
+      getSelectionData(oTable) {
+        const oTableRows = oTable.getBinding('rows');
+        const aSelectedIndices = oTable.getSelectedIndices();
+
+        return (
+          _.chain(oTableRows.getContexts(0, oTableRows.getLength()))
+            .filter((o, i) => _.includes(aSelectedIndices, i))
+            .map((o) => ({ ...o.getObject() }))
+            .value() ?? []
+        );
       },
 
       export({ oTable, sFileName, aTableData = [], aCustomColumns = [], sStatCode = 'ZappStatAl', sStatTxt = 'ZappStxtAl' }) {
@@ -329,6 +373,19 @@ sap.ui.define(
         }
 
         aRows.forEach((row) => _.forOwn(mColorMap, (value, key) => $(`#${row.getId()}-col${key}`).addClass(value)));
+      },
+
+      clearTable(oTable) {
+        oTable.clearSelection();
+        oTable.getBinding().sort(null);
+        oTable.getBinding().filter(null);
+
+        const aColumns = oTable.getColumns();
+
+        for (const col of aColumns) {
+          col.setSorted(false);
+          oTable.filter(col, null);
+        }
       },
 
       /**************************

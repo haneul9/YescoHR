@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.ui.table"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core">
-  <m:Dialog id="summaryDialog" title="{i18n>LABEL_11005}" contentWidth="1000px" contentHeight="533px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
+  <m:Dialog id="overviewDialog" title="{i18n>LABEL_11005}" contentWidth="1000px" contentHeight="533px" draggable="true" horizontalScrolling="false" verticalScrolling="false">
     <m:content>
       <m:VBox class="hCardBox dialog-search-box sapUiSmallMarginBottom">
         <m:HBox justifyContent="SpaceBetween" alignItems="Center">
@@ -10,59 +10,59 @@
             <m:DatePicker value="{/dialog/yearMonth}" displayFormat="yyyy.MM" valueFormat="yyyyMM" change=".onChangeDialogSearch" width="110px" class="sapIcon_Date" />
           </m:HBox>
           <m:HBox class="form-bar" alignItems="Center">
-            <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressSummaryExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+            <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressOverviewExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
           </m:HBox>
         </m:HBox>
       </m:VBox>
       <m:VBox class="hCardBox mb-16-px dialog-content-table">
-        <Table id="summaryDialogTable" width="100%" selectionMode="{/dialog/listMode}" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
+        <Table id="overviewDialogTable" width="100%" selectionMode="{/dialog/listMode}" columnHeaderHeight="35" rowHeight="34" rows="{/dialog/list}" visibleRowCount="{/dialog/rowCount}" busyIndicatorDelay="0" busy="{/dialog/busy}" noData="{i18n>MSG_00001}" rowSelectionChange=".onChangeRowSelection">
           <columns>
             <Column width="12%" filterProperty="Datum" sortProperty="Datum">
               <m:Label text="{i18n>LABEL_00170}"/>
               <template>
-                <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="8%" filterProperty="Kurzt" sortProperty="Kurzt">
               <m:Label text="{i18n>LABEL_06102}"/>
               <template>
-                <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="8%" filterProperty="Tagty" sortProperty="Tagty">
               <m:Label text="{i18n>LABEL_06103}"/>
               <template>
-                <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="12%" filterProperty="Awart" sortProperty="Atext">
               <m:Label text="{i18n>LABEL_00147}"/>
               <template>
-                <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="12%" filterProperty="Pernr" sortProperty="Pernr">
               <m:Label text="{i18n>LABEL_00209}"/>
               <template>
-                <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="12%" filterProperty="Ename" sortProperty="Ename">
               <m:Label text="{i18n>LABEL_00210}"/>
               <template>
-                <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column filterProperty="Orgtx" sortProperty="Orgtx">
               <m:Label text="{i18n>LABEL_00224}"/>
               <template>
-                <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="12%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
               <m:Label text="{i18n>LABEL_00215}"/>
               <template>
-                <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Zzjikgbt}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
           </columns>
@@ -71,7 +71,7 @@
     </m:content>
     <m:buttons>
       <m:Button type="Emphasized" text="{i18n>LABEL_00121}" visible="{= ${/dialog/mode} === 'C' }" enabled="{/dialog/isActiveApproval}" press=".onPressAddData"/>
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressSummaryDialogClose" class="cancel" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressOverviewDialogClose" class="cancel" />
     </m:buttons>
   </m:Dialog>
 </core:FragmentDefinition>

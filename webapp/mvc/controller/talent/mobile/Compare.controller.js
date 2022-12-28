@@ -96,7 +96,7 @@ sap.ui.define(
                   return {
                     colorSet: i % 2 === 0 ? 'ColorSet2' : 'ColorSet1',
                     align: 'Start',
-                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').value() }],
+                    value01: [{ pernr: o.Pernr, image: _.isEmpty(o.Picurl) ? sUnknownAvatarImageURL : o.Picurl }, { text: _.chain(o.Value01).split(' ').join('\n').replace(/\//, '\n').value() }],
                     value02: this.convertCompareRow(o, 'Value02'),
                     value03: this.convertCompareRow(o, 'Value03'),
                     value04: this.convertCompareRow(o, 'Value04'),

@@ -56,7 +56,7 @@
                     </m:layoutData>
                   </m:Image>
                   <m:VBox>
-                    <m:Title text="{Linetx1}" wrapping="true"/>
+                    <m:Title text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="true"/>
                     <m:Image src="{Icon}">
                       <m:layoutData>
                         <m:FlexItemData styleClass="company-icon" />

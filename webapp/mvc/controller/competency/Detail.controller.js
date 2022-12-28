@@ -114,7 +114,7 @@ sap.ui.define(
           const oListView = oView.getParent().getPage(mListRoute.id);
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+            throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
@@ -199,7 +199,9 @@ sap.ui.define(
             .set('count', aScales.length)
             .set(
               'headers',
-              _.reduce(aScales, (acc, cur) => [...acc, { type: 'body', label: cur.Pstext.substring(0, 7), text: _.replace(cur.Pstext, cur.Pstext.substring(0, 8), '') }], [{ type: 'head', text: this.getBundleText('LABEL_22006') }])
+              _.reduce(aScales, (acc, cur) => [...acc, { type: 'body', label: cur.Pstext.substring(0, 7), text: _.replace(cur.Pstext, cur.Pstext.substring(0, 8), '') }], [
+                { type: 'head', text: this.getBundleText('LABEL_22006') },
+              ])
             )
             .set('rows', [
               ..._.reduce(aScales, (acc, cur) => [...acc, { type: 'body', child: [{ text: cur.Steptext }] }], [{ type: 'head', child: [{ text: this.getBundleText('LABEL_22007') }] }]), //
@@ -350,7 +352,10 @@ sap.ui.define(
         const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
         const aSummaryValid = _.filter(aValid, (o) => _.includes(Constants.SUMMARY_PROPERTIES, o.field));
 
-        if (_.some(aCommonGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
+        if (
+          _.some(aCommonGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) ||
+          _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))
+        ) {
           this.changeTab(Constants.TAB.ABILITY);
           return false;
         }

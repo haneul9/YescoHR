@@ -6,13 +6,13 @@
       <Column width="20%">
         <m:Label text="{i18n>LABEL_13031}"/>
         <template>
-          <m:Text text="{Pyitx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Pyitx}" width="100%" textAlign="Center" wrapping="false" />
         </template>
       </Column>
       <Column>
         <m:Label text="{i18n>LABEL_13032}"/>
         <template>
-          <m:Text text="{Caltx}" width="100%" wrapping="false" class="tableRow_Text" />
+          <m:Text text="{Caltx}" width="100%" wrapping="false" />
         </template>
       </Column>
     </columns>

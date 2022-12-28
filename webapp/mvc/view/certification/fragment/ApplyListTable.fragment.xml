@@ -25,43 +25,43 @@
       <table:Column width="150px" sortProperty="Cerno" filterProperty="Cerno">
         <Label text="{i18n>LABEL_17003}"/>
         <table:template>
-          <Text text="{Cerno}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Cerno}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Certx" filterProperty="Certx">
         <Label text="{i18n>LABEL_17004}"/>
         <table:template>
-          <Text text="{Certx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Certx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Reqtx" filterProperty="Reqtx">
         <Label text="{i18n>LABEL_17005}"/>
         <table:template>
-          <Text text="{Reqtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Reqtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Usetx" filterProperty="Usetx">
         <Label text="{i18n>LABEL_17006}"/>
         <table:template>
-          <Text text="{Usetx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Usetx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Sendp" filterProperty="Sendp">
         <Label text="{i18n>LABEL_17007}"/>
         <table:template>
-          <Text text="{Sendp}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Sendp}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Rectx" filterProperty="Rectx">
         <Label text="{i18n>LABEL_17008}"/>
         <table:template>
-          <Text text="{Rectx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Rectx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="70px" sortProperty="Reqnt" filterProperty="Reqnt">
         <Label text="{i18n>LABEL_17009}"/>
         <table:template>
-          <Text text="{Reqnt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Reqnt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="170px" sortProperty="ZreqDate" filterProperty="ZreqDate">
@@ -70,7 +70,7 @@
           <Text text="{
               path: 'ZreqDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="170px" sortProperty="ZappDate" filterProperty="ZappDate">
@@ -79,7 +79,7 @@
           <Text text="{
               path: 'ZappDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="170px" sortProperty="Pntda" filterProperty="Pntda">
@@ -88,7 +88,7 @@
           <Text text="{
               path: 'Pntda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

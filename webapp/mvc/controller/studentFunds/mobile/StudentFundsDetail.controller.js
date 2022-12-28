@@ -30,11 +30,12 @@ sap.ui.define(
           AmountRate: 0,
           FormData: {
             Forsch: '',
+            ZappStatAl: 'XX',
           },
           AppTarget: [],
           AcademicSort: [],
           GradeList: [],
-          QuarterList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], /// -선택-
+          QuarterList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], // -선택-
           Settings: {},
           busy: false,
           LimitAmountMSG: false,
@@ -42,8 +43,8 @@ sap.ui.define(
         };
       },
 
-      getCurrentLocationText({ oDataKey }) {
-        return oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
+      getCurrentLocationText() {
+        return this.getBundleText('LABEL_00195', 'LABEL_03001'); // {학자금} 신청
       },
 
       getPreviousRouteName() {
@@ -244,6 +245,20 @@ sap.ui.define(
             }
           });
 
+          const { Zzobjps, Slart, Grdsp } = oTargetData;
+          oTargetData.Zzobjpstx = _.chain(oViewModel.getProperty('/AppTarget'))
+            .find((m) => m.Zzobjps === Zzobjps)
+            .get('Znametx')
+            .value();
+          oTargetData.Slarttx = _.chain(oViewModel.getProperty('/AcademicSort'))
+            .find((m) => m.Zcode === Slart)
+            .get('Ztext')
+            .value();
+          oTargetData.Grdsptx = _.chain(oViewModel.getProperty('/GradeList'))
+            .find((m) => m.Zcode === Grdsp)
+            .get('Ztext')
+            .value();
+
           oViewModel.setProperty('/FormData', oTargetData);
           oViewModel.setProperty('/ApplyInfo', oTargetData);
           oViewModel.setProperty('/ApprovalDetails', oTargetData);
@@ -277,6 +292,12 @@ sap.ui.define(
             oViewModel.setProperty('/LimitAmount', oList);
             this.totalCost();
           }
+          const sZyear = oViewModel.getProperty('/FormData/Zyear');
+          const sZyeartx = _.chain(aYearsList)
+            .find((m) => m.Zcode === sZyear)
+            .get('Ztext')
+            .value();
+          oViewModel.setProperty('/FormData/Zyeartx', sZyeartx);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -420,17 +441,14 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const vSelected = !oEvent ? oViewModel.getProperty('/FormData/Slart') : oEvent.getSource().getSelectedKey();
 
-        if (vSelected === 'ALL') return;
+        if (vSelected === 'ALL') {
+          return;
+        }
 
         try {
           const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
-
           if (!sStatus || sStatus === '10') {
-            if (vSelected === '05' || vSelected === '06') {
-              oViewModel.setProperty('/MajorInput', true);
-            } else {
-              oViewModel.setProperty('/MajorInput', false);
-            }
+            oViewModel.setProperty('/MajorInput', vSelected === '05' || vSelected === '06');
 
             if (!!oEvent) {
               oViewModel.setProperty('/FormData/Schtx', '');
@@ -438,18 +456,13 @@ sap.ui.define(
             }
           }
 
-          oViewModel.setProperty(
-            '/AmountRate',
-            _.chain(oViewModel.getProperty('/AcademicSort'))
-              .find((e) => {
-                return vSelected === e.Zcode;
-              })
-              .get('Zchar1')
-              .value()
-          );
+          const sZchar1 = _.chain(oViewModel.getProperty('/AcademicSort'))
+            .find((e) => vSelected === e.Zcode)
+            .get('Zchar1')
+            .value();
+          oViewModel.setProperty('/AmountRate', sZchar1);
 
           const [oList] = await this.getSupAmount();
-
           oViewModel.setProperty('/LimitAmount', oList);
 
           if (!!oEvent) {
@@ -458,12 +471,18 @@ sap.ui.define(
           }
 
           const aList = await this.getQuarterList(vSelected);
-
           oViewModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
 
           if (!!oEvent) {
             oViewModel.setProperty('/FormData/Divcd', 'ALL');
           }
+
+          const sDivcd = oViewModel.getProperty('/FormData/Divcd');
+          const sDivcdtx = _.chain(oViewModel.getProperty('/QuarterList'))
+            .find((e) => e.Zcode === sDivcd)
+            .get('Ztext')
+            .value();
+          oViewModel.setProperty('/FormData/Divcdtx', sDivcdtx);
         } catch (oError) {
           AppUtils.handleError(oError);
         }
@@ -535,7 +554,7 @@ sap.ui.define(
         if (!(sWerks === '2000' && (mFormData.Slart === '03' || mFormData.Slart === '04'))) {
           // 첨부파일
           if (!this.AttachFileAction.getFileCount.call(this) && AppBtn === 'O') {
-            MessageBox.alert(this.getBundleText('MSG_03005'));
+            MessageBox.alert(this.getBundleText('MSG_03005')); // 신청 시 첨부파일은 필수입니다. 업로드 후 신청하시기 바랍니다.
             return true;
           }
         }
@@ -548,7 +567,7 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/FormData/Appno', '');
-        oViewModel.setProperty('/FormData/ZappStatAl', '');
+        oViewModel.setProperty('/FormData/ZappStatAl', null);
         this.settingsAttachTable();
         this.onChangeSchool();
       },
@@ -738,12 +757,16 @@ sap.ui.define(
         const sAppno = mFormData.Appno || '';
 
         this.AttachFileAction.setAttachFile(this, {
-          Editable: !mFormData.Status || mFormData.Status === '10',
+          Editable: !mFormData.ZappStatAl || mFormData.ZappStatAl === '10',
           Type: this.getApprovalType(),
           Appno: sAppno,
           Message: this.getBundleText('MSG_00040'), // 증빙자료를 꼭 등록하세요.
           Max: 10,
         });
+      },
+
+      reduceViewResource() {
+        this.getViewModel().setProperty('/FormData/ZappStatAl', 'XX');
       },
     });
   }

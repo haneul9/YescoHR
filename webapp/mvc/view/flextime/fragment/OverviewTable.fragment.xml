@@ -1,98 +1,98 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:table="sap.ui.table"
-    xmlns:core="sap.ui.core">
-    <HBox>
-        <table:Table id="flextimeSummaryListTable" class="row-link" selectionMode="{= ${/isHass} === true ? 'MultiToggle' : 'None' }" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" cellClick=".onSelectRow" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
-            <table:columns>
-                <table:Column width="3%">
-                    <Label text="No." />
-                    <table:template>
-                        <Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="6%">
-                    <Label text="{i18n>LABEL_00144}" />
-                    <table:template>
-                        <Text text="{Statustx}" width="100%" textAlign="Center" wrapping="false" >
-                            <customData>
-                                <core:CustomData key="status" value="Z{Status}" writeToDom="true" />
-                            </customData>
-                        </Text>
-                    </table:template>
-                </table:Column>
-                <table:Column width="6%">
-                    <Label text="{i18n>LABEL_00209}" />
-                    <table:template>
-                        <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="6%">
-                    <Label text="{i18n>LABEL_00210}"/>
-                    <table:template>
-                        <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="7%">
-                    <Label text="{i18n>LABEL_00215}"/>
-                    <table:template>
-                        <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="11%">
-                    <Label text="{i18n>LABEL_00224}"/>
-                    <table:template>
-                        <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40010}"/>
-                    <table:template>
-                        <Text text="{ path: 'Caldays', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40011}"/>
-                    <table:template>
-                        <Text text="{ path: 'Wrkdays', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40025}"/>
-                    <table:template>
-                        <Text text="{ path: 'Bastim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40026}"/>
-                    <table:template>
-                        <Text text="{ path: 'Ctrtim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40027}"/>
-                    <table:template>
-                        <Text text="{ path: 'Daytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40015}"/>
-                    <table:template>
-                        <ObjectStatus text="{Gaptimtx}" state="{= ${Gaptim} &lt; 0 ? 'Error' : 'Indication05' }" class="table-object-status" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="auto">
-                    <Label text="{i18n>LABEL_40016}"/>
-                    <table:template>
-                        <Text text="{ path: 'Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
-                    </table:template>
-                </table:Column>
-                <table:Column width="18%">
-                    <Label text="{i18n>LABEL_00144}"/>
-                    <table:template>
-                        <ObjectStatus text="{Statxt}" state="{= ${Stacol} === '2' ? 'Error' : 'Indication05' }" class="table-object-status" />
-                    </table:template>
-                </table:Column>
-            </table:columns>
-        </table:Table>
-    </HBox>
+  xmlns:table="sap.ui.table"
+  xmlns:core="sap.ui.core">
+  <HBox>
+    <table:Table id="flextimeSummaryListTable" class="row-link" selectionMode="{= ${/isHass} === true ? 'MultiToggle' : 'None' }" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/summary/list}" visibleRowCount="{/summary/rowCount}" cellClick=".onSelectRow" busyIndicatorDelay="0" busy="{/busy/Summary}" noData="{i18n>MSG_00001}">
+      <table:columns>
+        <table:Column width="3%">
+          <Label text="No." />
+          <table:template>
+            <Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00144}" />
+          <table:template>
+            <Text text="{Statustx}" width="100%" textAlign="Center" wrapping="false">
+              <customData>
+                <core:CustomData key="status" value="Z{Status}" writeToDom="true" />
+              </customData>
+            </Text>
+          </table:template>
+        </table:Column>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00209}" />
+          <table:template>
+            <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="6%">
+          <Label text="{i18n>LABEL_00210}"/>
+          <table:template>
+            <Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="10%">
+          <Label text="{i18n>LABEL_00215}"/>
+          <table:template>
+            <Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="11%">
+          <Label text="{i18n>LABEL_00224}"/>
+          <table:template>
+            <Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40010}"/>
+          <table:template>
+            <Text text="{ path: 'Caldays', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40011}"/>
+          <table:template>
+            <Text text="{ path: 'Wrkdays', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40025}"/>
+          <table:template>
+            <Text text="{ path: 'Bastim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40026}"/>
+          <table:template>
+            <Text text="{ path: 'Ctrtim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40027}"/>
+          <table:template>
+            <Text text="{ path: 'Daytim', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40015}"/>
+          <table:template>
+            <ObjectStatus text="{Gaptimtx}" state="{= ${Gaptim} &lt; 0 ? 'Error' : 'Indication05' }" class="table-object-status" />
+          </table:template>
+        </table:Column>
+        <table:Column width="auto">
+          <Label text="{i18n>LABEL_40016}"/>
+          <table:template>
+            <Text text="{ path: 'Wekavg', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
+          </table:template>
+        </table:Column>
+        <table:Column width="15%">
+          <Label text="{i18n>LABEL_00144}"/>
+          <table:template>
+            <ObjectStatus text="{Statxt}" state="{= ${Stacol} === '2' ? 'Error' : 'Indication05' }" class="table-object-status" />
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </HBox>
 </core:FragmentDefinition>

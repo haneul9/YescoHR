@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+    <Table id="targetEmployeeTable" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/list}" visibleRowCount="{/listInfo/rowCount}" noData="{i18n>MSG_00001}">
+        <rowSettingsTemplate>
+            <RowSettings highlight="{ path: 'Smdat', formatter: '.rowHighlight' }" />
+        </rowSettingsTemplate>
+        <columns>
+            <Column width="auto" filterProperty="Pernr" sortProperty="Pernr">
+                <m:Label text="{i18n>LABEL_00209}"/>
+                <template>
+                    <m:Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Ename" sortProperty="Ename">
+                <m:Label text="{i18n>LABEL_00210}"/>
+                <template>
+                    <m:Text text="{Ename}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
+                <m:Label text="{i18n>LABEL_00215}"/>
+                <template>
+                    <m:Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
+                <m:Label text="{i18n>LABEL_00217}"/>
+                <template>
+                    <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="Orgtx" sortProperty="Orgtx">
+                <m:Label text="{i18n>LABEL_00227}"/>
+                <template>
+                    <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="SmdatFormatted" sortProperty="SmdatFormatted">
+                <m:Label text="{i18n>LABEL_48014}"/>
+                <template>
+                    <m:Text text="{ path: 'Smdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+            <Column width="auto" filterProperty="SmtimFormatted" sortProperty="SmtimFormatted">
+                <m:Label text="{i18n>LABEL_48015}"/>
+                <template>
+                    <m:Text text="{ path: 'Smtim', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }" width="100%" textAlign="Center" wrapping="false" />
+                </template>
+            </Column>
+        </columns>
+    </Table>
+</core:FragmentDefinition>

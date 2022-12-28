@@ -169,10 +169,9 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = oViewModel.getProperty(vPath);
+        const sAppno = oEvent.getParameters('rowBindingContext').getProperty('Appno');
 
-        this.getRouter().navTo(oViewModel.getProperty('/detailName'), { oDataKey: oRowData.Appno });
+        this.getRouter().navTo(oViewModel.getProperty('/detailName'), { oDataKey: sAppno });
       },
 
       onPressExcelDownload() {

@@ -15,7 +15,7 @@
             <layoutData>
               <grid:GridItemLayoutData gridColumn="span 2" />
             </layoutData>
-            <Label text="{Ename} {Zzjikgbt} / {Zzjikcht}" class="name" />
+            <Label text="{Ename} { path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' } / {Zzjikcht}" class="name" />
             <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_captain.svg" width="1.2rem" alt="Captain" visible="{= ${Chief} === 'X' }" />
           </HBox>
           <Label text="{i18n>LABEL_00226}" class="mt-4-px" />

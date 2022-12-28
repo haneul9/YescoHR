@@ -12,47 +12,47 @@
       <table:Column width="3%" sortProperty="No" filterProperty="No">
         <Label text="{i18n>LABEL_00164}"/>
         <table:template>
-          <Text text="{No}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{No}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
-      <table:Column width="6%" sortProperty="Status" filterProperty="Status">
+      <table:Column width="5%" sortProperty="Status" filterProperty="Status">
         <Label text="{i18n>LABEL_00261}"/>
         <table:template>
           <Text text="{
                 path: 'Status',
                 formatter: '.TableUtils.StatusTxt'
-            }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text">
+            }" textAlign="Center" wrapping="false" width="100%">
             <customData>
               <core:CustomData key="status" value="Z{Status}" writeToDom="true" />
             </customData>
           </Text>
         </table:template>
       </table:Column>
-      <table:Column width="6%" sortProperty="Pernr" filterProperty="Pernr">
+      <table:Column width="5%" sortProperty="Pernr" filterProperty="Pernr">
         <Label text="{i18n>LABEL_00209}"/>
         <table:template>
-          <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+          <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
-      <table:Column width="6%" sortProperty="Ename" filterProperty="Ename">
+      <table:Column width="5%" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
           <VBox>
-            <Text visible="{= !${/manager} }" text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text visible="{= !${/manager} }" text="{Ename}" textAlign="Center" wrapping="false" width="100%" />
             <Link visible="{/manager}" press=".onPressEname" textAlign="Center" width="100%" text="{Ename}"/>
           </VBox>
         </table:template>
       </table:Column>
-      <table:Column width="6%" sortProperty="Zzjikgbtx" filterProperty="Zzjikgbtx">
+      <table:Column width="13%" sortProperty="Zzjikgbtx" filterProperty="Zzjikgbtx">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
-          <Text text="{Zzjikgbtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Zzjikgbtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
-      <table:Column width="14%" sortProperty="Orgtx" filterProperty="Orgtx">
+      <table:Column width="12%" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
-          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="7%" sortProperty="Begda" filterProperty="Begda">
@@ -61,13 +61,13 @@
           <Text text="{
               path: 'Begda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="3%" sortProperty="WkdayB" filterProperty="WkdayB">
         <Label text="{i18n>LABEL_06102}"/>
         <table:template>
-          <Text text="{WkdayB}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{WkdayB}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="7%" sortProperty="Endda" filterProperty="Endda">
@@ -76,13 +76,13 @@
           <Text text="{
               path: 'Endda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="3%" sortProperty="WkdayE" filterProperty="WkdayE">
         <Label text="{i18n>LABEL_06102}"/>
         <table:template>
-          <Text text="{WkdayE}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{WkdayE}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="5%" sortProperty="Beguz" filterProperty="Beguz">
@@ -91,7 +91,7 @@
           <Text text="{
               path: 'Beguz',
               formatter: '.setTime'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="5%" sortProperty="Enduz" filterProperty="Enduz">
@@ -100,32 +100,32 @@
           <Text text="{
               path: 'Enduz',
               formatter: '.setTime'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="9%" sortProperty="Atext" filterProperty="Atext">
         <Label text="{i18n>LABEL_04010}"/>
         <table:template>
-          <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Atext}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
-      <table:Column width="5%" sortProperty="Abrtgtx" filterProperty="Abrtgtx">
+      <table:Column width="4%" sortProperty="Abrtgtx" filterProperty="Abrtgtx">
         <Label text="{i18n>LABEL_00155}"/>
         <table:template>
-          <Text text="{Abrtgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Abrtgtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
-      <table:Column width="5%" sortProperty="Abrsttx" filterProperty="Abrsttx">
+      <table:Column width="4%" sortProperty="Abrsttx" filterProperty="Abrsttx">
         <Label text="{i18n>LABEL_00330}"/>
         <table:template>
-          <Text text="{Abrsttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Abrsttx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="10%" sortProperty="Appno" filterProperty="Appno">
         <Label text="{i18n>LABEL_19006}"/>
         <table:template>
           <VBox>
-            <Text visible="{= !${ZappUrl} }" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text visible="{= !${ZappUrl} }" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" textAlign="Center" wrapping="false" width="100%" />
             <Link visible="{= !!${ZappUrl} }" target="_blank" href="{ZappUrl}" textAlign="Center" width="100%" text="{ path: 'Appno', type: 'sap.ui.yesco.mvc.model.type.Docno' }"/>
           </VBox>
         </table:template>

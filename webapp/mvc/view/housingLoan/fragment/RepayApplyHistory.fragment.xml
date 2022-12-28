@@ -30,7 +30,7 @@
         <table:Column width="130px" sortProperty="Rptyptx" filterProperty="Rptyptx">
           <Label text="{i18n>LABEL_07040}"/>
           <table:template>
-            <Text text="{Rptyptx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Rptyptx}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="RpamtMpr" filterProperty="RpamtMpr">
@@ -39,7 +39,7 @@
             <Text text="{
                 path: 'RpamtMpr',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="130px" sortProperty="RpamtMin" filterProperty="RpamtMin">
@@ -48,7 +48,7 @@
             <Text text="{
                 path: 'RpamtMin',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="RpamtTot" filterProperty="RpamtTot">
@@ -57,7 +57,7 @@
             <Text text="{
                 path: 'RpamtTot',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="Appda" filterProperty="Appda">
@@ -66,7 +66,7 @@
             <Text text="{
                 path: 'Appda',
                 type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="150px" sortProperty="Paydt" filterProperty="Paydt">
@@ -75,13 +75,13 @@
             <Text text="{
                 path: 'Paydt',
                 type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="ZappResn" filterProperty="ZappResn">
           <Label text="{i18n>LABEL_00142}"/>
           <table:template>
-            <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            <Text text="{ZappResn}" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
       </table:columns>

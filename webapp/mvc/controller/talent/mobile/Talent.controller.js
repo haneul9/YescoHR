@@ -490,8 +490,12 @@ sap.ui.define(
           const mFilters = mSearch.Prcty === 'A' ? _.pick(mSearch, ['Freetx', 'Command', 'Prcty', 'Werks']) : _.omit(mSearch, 'Freetx', 'Command');
           const aSearchResults = await Client.getEntitySet(this.getModel(ServiceNames.PA), 'TalentSearch', { Pernr: this.getAppointeeProperty('Pernr'), ..._.omitBy(mFilters, _.isEmpty) });
           const mState = { 1: 'Indication01', 2: 'Indication02', 3: 'Indication03' };
-          const mIcon = {'1000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg', '2000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg', 
-                         '3000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg', '4000': '/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg'};
+          const mIcon = {
+            1000: '/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg',
+            2000: '/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg',
+            3000: '/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg',
+            4000: '/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg',
+          };
 
           const sUnknownAvatarImageURL = this.getUnknownAvatarImageURL();
 
@@ -500,6 +504,8 @@ sap.ui.define(
             '/result/list',
             _.map(aSearchResults, (o) => ({ ..._.omit(o, '__metadata'), ColtyState: mState[o.Colty], PicUrl: _.isEmpty(o.PicUrl) ? sUnknownAvatarImageURL : o.PicUrl, Icon: mIcon[o.Werks] }))
           );
+
+          return aSearchResults.length;
         } catch (oError) {
           throw oError;
         }
@@ -539,7 +545,13 @@ sap.ui.define(
 
           oViewModel.setProperty('/result/busy', true);
 
-          await this.readTalentSearch();
+          const iResultSize = await this.readTalentSearch();
+
+          if (iResultSize > 0) {
+            const sControId = this.byId('talentSearchField').getId();
+
+            $(`#${sControId}-I`).blur();
+          }
         } catch (oError) {
           this.debug('Controller > Talent Mobile > onObjectMatched Error', oError);
 

@@ -74,7 +74,7 @@ sap.ui.define(
             fixed: true,
             list: [{ codeList: [] }],
             rowCount: 1,
-            modify: false // 직무진단 수정 가능여부
+            modify: false, // 직무진단 수정 가능여부
           },
           stage: {
             headers: [],
@@ -108,7 +108,11 @@ sap.ui.define(
           },
           currentItemsLength: 0,
           fieldControl: {
-            display: _.reduce([...Constants.GOAL_PROPERTIES, ...Constants.SUMMARY_PROPERTIES, ...Constants.MANAGE_PROPERTIES, ...Constants.REJECT_PROPERTIES], this.initializeFieldsControl.bind(this), {}),
+            display: _.reduce(
+              [...Constants.GOAL_PROPERTIES, ...Constants.SUMMARY_PROPERTIES, ...Constants.MANAGE_PROPERTIES, ...Constants.REJECT_PROPERTIES],
+              this.initializeFieldsControl.bind(this),
+              {}
+            ),
             limit: {},
           },
           goals: {
@@ -137,7 +141,7 @@ sap.ui.define(
           const oListView = oView.getParent().getPage(mListRoute.id);
 
           if (_.isEmpty(oListView) || _.isEmpty(oListView.getModel().getProperty('/parameter/rowData'))) {
-            throw new UI5Error({ code: 'E', message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
+            throw new UI5Error({ message: this.getBundleText('MSG_00043') }); // 잘못된 접근입니다.
           }
 
           const mParameter = _.chain(oListView.getModel().getProperty('/parameter/rowData')).cloneDeep().omit('__metadata').value();
@@ -318,14 +322,15 @@ sap.ui.define(
 
           // 2022-11-10 직무진단 수정 가능여부 플래그
           let bModyn = false;
-          if(mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === ''){ // 자기평가필요
+          if (mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === '') {
+            // 자기평가필요
             bModyn = true;
-          } else if(mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === 'A'){ // 1차평가중
+          } else if (mParameter.OldStatus === '4' && mParameter.OldStatusSub === '1' && mParameter.OldStatusPart === 'A') {
+            // 1차평가중
             bModyn = true;
           }
 
           oViewModel.setProperty('/jobDiagnosis/modify', bModyn);
-
         } catch (oError) {
           this.debug(`Controller > ${mListRoute.route} Detail > onObjectMatched Error`, oError);
 
@@ -464,7 +469,10 @@ sap.ui.define(
         const aGoalValid = _.filter(aValid, (o) => _.includes(Constants.GOAL_PROPERTIES, o.field));
         const aManageValid = _.filter(aValid, (o) => _.includes(Constants.MANAGE_PROPERTIES, o.field));
 
-        if (_.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) || _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))) {
+        if (
+          _.some(aStrategyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: aGoalValid, sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` })) ||
+          _.some(aDutyGoals, (mFieldValue) => !Validator.check({ mFieldValue, aFieldProperties: _.reject(aGoalValid, { field: 'Z103s' }), sPrefixMessage: `[${_.truncate(mFieldValue.Obj0)}]의` }))
+        ) {
           this.changeTab(Constants.TAB.GOAL);
           return false;
         }
@@ -718,23 +726,24 @@ sap.ui.define(
 
       // 직무진단 수정(문서상태: 평가실시-자기평가필요('4'-'1'-'')의 경우 수정 기능 추가)
       // 2022-11-10 문서상태 1차평가중(4-1-A) 추가: Appgb(평가구분) = 'MA'인 경우만 open
-      onExModifyBtn(){
+      onExModifyBtn() {
         const oViewModel = this.getViewModel();
 
         oViewModel.setProperty('/jobDiagnosis/fixed', true);
-        
+
         const aList = oViewModel.getProperty('/jobDiagnosis/list');
         const aData = oViewModel.getProperty('/param');
-        
+
         let vStatus = ''; // 문서상태가 '1차평가중'인 경우 X
-        if(aData.OldStatus === '4' && aData.OldStatusSub === '1' && aData.OldStatusPart === 'A'){
+        if (aData.OldStatus === '4' && aData.OldStatusSub === '1' && aData.OldStatusPart === 'A') {
           vStatus = 'X';
         }
 
-        oViewModel.setProperty('/jobDiagnosis/list', 
+        oViewModel.setProperty(
+          '/jobDiagnosis/list',
           _.forEach(aList, (o) => {
-            if(vStatus === 'X'){
-              if(o.Appgb === 'MA'){
+            if (vStatus === 'X') {
+              if (o.Appgb === 'MA') {
                 _.set(o, 'Zdeactive', '');
               }
             } else {
@@ -754,15 +763,15 @@ sap.ui.define(
         this.oDataCall('2', 'LABEL_00117');
       },
 
-      setCodeList(aDeepList){
+      setCodeList(aDeepList) {
         const oViewModel = this.getViewModel();
         AppUtils.setAppBusy(true);
 
-        try{
+        try {
           _.forEach(aDeepList, async (e, i) => {
             const oData = $.extend(true, {}, e);
             const aCodeList = await this.getJobDiagnosisCode1(oData.Zcode);
-  
+
             oViewModel.setProperty(`/jobDiagnosis/list/${i}/codeList`, new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aCodeList }));
             oViewModel.setProperty(`/jobDiagnosis/list/${i}/Zzjarst`, oData.Zzjarst);
           });

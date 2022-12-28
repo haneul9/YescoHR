@@ -6,37 +6,37 @@
       <table:Column width="150px" sortProperty="Gjahr" filterProperty="Gjahr">
         <Label text="{i18n>LABEL_21007}"/>
         <table:template>
-          <Text text="{Gjahr}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Gjahr}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="PtypeTxt" filterProperty="PtypeTxt">
         <Label text="{i18n>LABEL_21008}"/>
         <table:template>
-          <Text text="{PtypeTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{PtypeTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Pname" filterProperty="Pname">
         <Label text="{i18n>LABEL_21009}"/>
         <table:template>
-          <Text text="{Pname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Pname}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="130px" sortProperty="Pyear" filterProperty="Pyear">
         <Label text="{i18n>LABEL_21010}"/>
         <table:template>
-          <Text text="{Pyear}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Pyear}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="130px" sortProperty="ItypeTxt" filterProperty="ItypeTxt">
         <Label text="{i18n>LABEL_21011}"/>
         <table:template>
-          <Text text="{ItypeTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ItypeTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="130px" sortProperty="IcompTxt" filterProperty="IcompTxt">
         <Label text="{i18n>LABEL_21014}"/>
         <table:template>
-          <Text text="{IcompTxt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{IcompTxt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Begda" filterProperty="Begda">
@@ -45,19 +45,19 @@
           <Text text="{
               path: 'Begda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="200px" sortProperty="Ihopt" filterProperty="Ihopt">
         <Label text="{i18n>LABEL_21012}"/>
         <table:template>
-          <Text text="{Ihopt}" textAlign="Left" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ihopt}" textAlign="Left" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Instx" filterProperty="Instx">
         <Label text="{i18n>LABEL_21013}"/>
         <table:template>
-          <Text text="{Instx}" textAlign="Left" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Instx}" textAlign="Left" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

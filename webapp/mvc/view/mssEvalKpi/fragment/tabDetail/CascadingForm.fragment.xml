@@ -40,14 +40,14 @@
         <table:Column width="150px">
           <Label text="{i18n>LABEL_15009}"/>
           <table:template>
-            <Text text="{Otext}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Otext}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="300px">
           <Label text="{i18n>LABEL_15010}"/>
           <table:template>
             <HBox>
-              <Text visible="{= !${Url} }" text="{Stext}" wrapping="false" class="tableRow_Text"/>
+              <Text visible="{= !${Url} }" text="{Stext}" wrapping="false" />
               <Link visible="{= !!${Url} }" text="{Stext}" press=".onPressLink" />
             </HBox>
           </table:template>
@@ -55,19 +55,19 @@
         <table:Column width="auto">
           <Label text="{i18n>LABEL_15011}"/>
           <table:template>
-            <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_15012}"/>
           <table:template>
-            <Link text="{Tmcnt}" press=".onPressTeam" textAlign="End" width="100%" class="tableRow_Text" />
+            <Link text="{Tmcnt}" press=".onPressTeam" textAlign="End" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="100px">
           <Label text="{i18n>LABEL_15013}"/>
           <table:template>
-            <Text text="{Prozt}" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Prozt}" textAlign="End" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
       </table:columns>

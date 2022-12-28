@@ -28,31 +28,31 @@
           <Text text="{
               path: 'Pernr',
               type: 'sap.ui.yesco.mvc.model.type.Pernr'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="6%" sortProperty="Ename" filterProperty="Ename">
         <Label text="{i18n>LABEL_00210}"/>
         <table:template>
-          <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt">
         <Label text="{i18n>LABEL_00215}"/>
         <table:template>
-          <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Zzjikgbt}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Orgtx" filterProperty="Orgtx">
         <Label text="{i18n>LABEL_00224}"/>
         <table:template>
-          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
         <Label text="{i18n>LABEL_27004}"/>
         <table:template>
-          <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Beguz" filterProperty="Beguz">
@@ -70,37 +70,37 @@
       <table:Column width="4%" sortProperty="Abrst" filterProperty="Abrst">
         <Label text="{i18n>LABEL_27007}"/>
         <table:template>
-          <Text text="{ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Subtytx" filterProperty="Subtytx">
         <Label text="{i18n>LABEL_41007}"/>
         <table:template>
-          <Text text="{Subtytx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Subtytx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Subda" filterProperty="Subda">
         <Label text="{i18n>LABEL_41005}"/>
         <table:template>
-          <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Apename" filterProperty="Apename">
         <Label text="{i18n>LABEL_00135}"/>
         <table:template>
-          <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Apename}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Appda" filterProperty="Appda">
         <Label text="{i18n>LABEL_00266}"/>
         <table:template>
-          <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Sgnda" filterProperty="Sgnda">
         <Label text="{i18n>LABEL_00269}"/>
         <table:template>
-          <Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

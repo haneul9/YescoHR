@@ -25,13 +25,13 @@
             <table:Column width="auto" sortProperty="Stext" filterProperty="Stext">
               <Label text="{i18n>LABEL_00227}"/>
               <table:template>
-                <Text text="{Stext}" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{Stext}" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
             <table:Column width="200px" sortProperty="EnameM" filterProperty="EnameM">
               <Label text="{i18n>LABEL_00230}"/>
               <table:template>
-                <Text text="{EnameM}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+                <Text text="{EnameM}" textAlign="Center" width="100%" wrapping="false" />
               </table:template>
             </table:Column>
           </table:columns>

@@ -11,7 +11,7 @@
         <table:Column width="50px" sortProperty="Number" filterProperty="Number">
           <Label text="{i18n>LABEL_00164}"/>
           <table:template>
-            <Text text="{Number}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Number}" width="100%" textAlign="Center" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Datum" filterProperty="Datum">
@@ -20,7 +20,7 @@
             <Text text="{
                 path: 'Datum',
                 type: 'sap.ui.yesco.mvc.model.type.Date'
-            }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+            }" textAlign="Center" wrapping="false" width="100%" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Pni" filterProperty="Pni">
@@ -29,7 +29,7 @@
             <Text text="{
                 path: 'Pni',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Int" filterProperty="Int">
@@ -38,13 +38,13 @@
             <Text text="{
                 path: 'Int',
                 type: 'sap.ui.yesco.mvc.model.type.Currency'
-            }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="auto" sortProperty="Pyway" filterProperty="Pyway">
           <Label text="{i18n>LABEL_07031}"/>
           <table:template>
-            <Text text="{Pyway}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Pyway}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
       </table:columns>

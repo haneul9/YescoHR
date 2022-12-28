@@ -14,7 +14,7 @@ sap.ui.define(
      */
     return SimpleType.extend('sap.ui.yesco.mvc.model.type.Pernr', {
       formatValue(oValue) {
-        return (oValue || '').replace(/^0+/, '');
+        return _.padStart((oValue || '').replace(/^0+/, ''), 5, 0);
       },
 
       parseValue(oValue) {

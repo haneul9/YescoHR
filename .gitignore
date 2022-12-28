@@ -8,3 +8,4 @@ node_modules
 package-lock.json
 
 OdataTest.http
+ui5-phr3.yaml

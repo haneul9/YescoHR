@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Popover showHeader="false" placement="Bottom" horizontalScrolling="false" class="info-message-popover">
+    <Text text="{/listInfo/infoMessage}" />
+  </Popover>
+</core:FragmentDefinition>

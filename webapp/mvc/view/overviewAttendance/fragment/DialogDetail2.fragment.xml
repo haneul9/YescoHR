@@ -24,19 +24,19 @@
             <Column width="60px" filterProperty="Idx" sortProperty="Idx">
               <m:Label text="No."/>
               <template>
-                <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Idx}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="12%" filterProperty="OrgtxD" sortProperty="OrgtxD">
               <m:Label text="{i18n>LABEL_28034}"/>
               <template>
-                <m:Text text="{OrgtxD}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{OrgtxD}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="15%" filterProperty="Orgtx" sortProperty="Orgtx">
               <m:Label text="{i18n>LABEL_00224}"/>
               <template>
-                <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Orgtx}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Ename" sortProperty="Ename">
@@ -48,55 +48,55 @@
             <Column width="auto" filterProperty="Zzjikgbtx" sortProperty="Zzjikgbtx">
               <m:Label text="{i18n>LABEL_00215}"/>
               <template>
-                <m:Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Zzjikgbtx}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Zzjikchtx" sortProperty="Zzjikchtx">
               <m:Label text="{i18n>LABEL_00217}"/>
               <template>
-                <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Zzjikchtx}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Ktext" sortProperty="Ktext">
               <m:Label text="{i18n>LABEL_28050}"/>
               <template>
-                <m:Text text="{Ktext}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{Ktext}" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Crecnt" sortProperty="Crecnt">
               <m:Label text="{i18n>LABEL_18008}"/>
               <template>
-                <m:Text text="{ path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Crecnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Dedcnt" sortProperty="Dedcnt">
               <m:Label text="{i18n>LABEL_18009}"/>
               <template>
-                <m:Text text="{ path: 'Dedcnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Dedcnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Userte" sortProperty="Userte">
               <m:Label text="{i18n>LABEL_28051}"/>
               <template>
-                <m:Text text="{ path: 'Userte', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Userte', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Balcnt" sortProperty="Balcnt">
               <m:Label text="{i18n>LABEL_18010}"/>
               <template>
-                <m:Text text="{ path: 'Balcnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Balcnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="auto" filterProperty="Plncnt" sortProperty="Plncnt">
               <m:Label text="{i18n>LABEL_23007}"/>
               <template>
-                <m:Text text="{ path: 'Plncnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Plncnt', type: 'sap.ui.yesco.mvc.model.type.Decimal' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
             <Column width="8%" filterProperty="Plnrte" sortProperty="Plnrte">
               <m:Label text="{i18n>LABEL_28052}"/>
               <template>
-                <m:Text text="{ path: 'Plnrte', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                <m:Text text="{ path: 'Plnrte', type: 'sap.ui.yesco.mvc.model.type.Percent' }" width="100%" textAlign="Center" wrapping="false" />
               </template>
             </Column>
           </columns>

@@ -1,0 +1,83 @@
+<mvc:View controllerName="sap.ui.yesco.mvc.controller.leaveOfAbsence.ApprovalRequestDetail"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false" binding="{/approvalRequestDetail}">
+    <custom:ApprovalRequestDetailContentsHeader rewrite="true" pressRewrite=".onPressRewrite" save="true" pressSave=".onPressSave" request="true" pressRequest=".onPressRequestApproval" remove="true" pressRemove=".onPressRemove" pressNavBack=".onNavBack" pressPrint=".onPagePrint" pressHelp=".onPressHelp" />
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.InfoMessage" type="XML" />
+      <VBox class="vCardBox">
+        <HBox class="table-toolbar">
+          <HBox class="title">
+            <Title level="H2" text="{i18n>LABEL_00129}" />
+          </HBox>
+        </HBox>
+        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+          <Label text="{i18n>LABEL_50102}" />
+          <VBox>
+            <layoutData>
+              <grid:GridItemLayoutData gridColumn="span 3" />
+            </layoutData>
+            <ComboBox items="{/approvalRequestConfig/ApptyList}" selectedKey="{Appty}" editable="{/approvalRequestConfig/editable}" selectionChange=".onSelectionChangeAppty" class="required" width="250px">
+              <core:Item text="{Apptytx}" key="{Appty}" />
+            </ComboBox>
+          </VBox>
+          <Label text="{i18n>LABEL_50103}" />
+          <VBox>
+            <custom:DatePicker dateValue="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/approvalRequestConfig/editable}" change=".onChangeBegda" class="required" width="250px" />
+          </VBox>
+          <Label text="{i18n>LABEL_50104}" visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' || ${/approvalRequestConfig/fieldControl/Zdays} !== 'X' }" />
+          <HBox visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' || ${/approvalRequestConfig/fieldControl/Zdays} !== 'X' }">
+            <custom:DatePicker dateValue="{
+                path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date'
+              }" visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' }" editable="{/approvalRequestConfig/editable}" change=".onChangeEndda" class="mr-16-px" width="250px">
+              <custom:customData>
+                <core:CustomData key="required" value="o{= ${/approvalRequestConfig/fieldControl/Endda} === 'M' ? 'n' : 'ff' }" writeToDom="true" />
+              </custom:customData>
+            </custom:DatePicker>
+            <Text text="{i18n>LABEL_50110} { path: 'Zdays', type: 'sap.ui.yesco.mvc.model.type.Currency' }{i18n>LABEL_50111}" visible="{= ${/approvalRequestConfig/fieldControl/Zdays} !== 'X' }" />
+          </HBox>
+          <Label text="{i18n>LABEL_50106}" visible="{= ${/approvalRequestConfig/fieldControl/Zresn} !== 'X' }" />
+          <VBox visible="{= ${/approvalRequestConfig/fieldControl/Zresn} !== 'X' }">
+            <Input value="{Zresn}" editable="{/approvalRequestConfig/editable}" maxLength="{/approvalRequestConfig/maxLength/Zresn}" width="507px">
+              <customData>
+                <core:CustomData key="required" value="o{= ${/approvalRequestConfig/fieldControl/Zresn} === 'M' ? 'n' : 'ff' }" writeToDom="true" />
+              </customData>
+            </Input>
+          </VBox>
+          <Label text="{i18n>LABEL_50107}" visible="{= ${/approvalRequestConfig/fieldControl/Zname} !== 'X' }" />
+          <VBox visible="{= ${/approvalRequestConfig/fieldControl/Zname} !== 'X' }">
+            <Input value="{Zname}" editable="{/approvalRequestConfig/editable}" maxLength="{/approvalRequestConfig/maxLength/Zname}" width="250px">
+              <customData>
+                <core:CustomData key="required" value="o{= ${/approvalRequestConfig/fieldControl/Zname} === 'M' ? 'n' : 'ff' }" writeToDom="true" />
+              </customData>
+            </Input>
+          </VBox>
+          <Label text="{i18n>LABEL_50108}" visible="{= ${/approvalRequestConfig/fieldControl/Birdt} !== 'X' }" />
+          <VBox visible="{= ${/approvalRequestConfig/fieldControl/Birdt} !== 'X' }">
+            <custom:DatePicker dateValue="{ path: 'Birdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/approvalRequestConfig/editable}" maxDate="{/approvalRequestConfig/maxDate/Birdt}" width="250px">
+              <custom:customData>
+                <core:CustomData key="required" value="o{= ${/approvalRequestConfig/fieldControl/Birdt} === 'M' ? 'n' : 'ff' }" writeToDom="true" />
+              </custom:customData>
+            </custom:DatePicker>
+          </VBox>
+          <Label text="{i18n>LABEL_50109}" visible="{= ${/approvalRequestConfig/status} === '65' }" />
+          <VBox visible="{= ${/approvalRequestConfig/status} === '65' }">
+            <Text text="{ZappResn}" width="100%" />
+          </VBox>
+          <HBox visible="{= ${/approvalRequestConfig/fieldControl/CssGridPad} !== 'X' }">
+            <layoutData>
+              <grid:GridItemLayoutData gridColumn="span 2" />
+            </layoutData>
+          </HBox>
+        </grid:CSSGrid>
+      </VBox>
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.FileAttachmentBox" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.ApplyInfo" type="XML" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.ApprovalDetails" type="XML" />
+    </VBox>
+  </Page>
+</mvc:View>

@@ -84,128 +84,125 @@ sap.ui.define(
         }
 
         // 3rd level 메뉴 속성 정리
-        aLevel3.map((m) => {
-          const mMenuProperties = mMenidToProperties[m.Menid] || {};
-          if (!mMenuProperties.Mnurl) {
-            return;
-          }
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
-
-          $.extend(mMenuProperties, {
-            Level: 3,
-            L1id: m.L1id,
-            L2id: m.L2id,
-            L3id: m.L3id,
-            L4id: m.L4id,
-            Mnid1: m.Mnid1,
-            Mnid2: m.Mnid2,
-            Mnid3: m.Mnid3,
-            Mname: m.Mnnm3,
-            Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
-            Pwchk: m.Pwchk === 'X',
-          });
-
-          mMenidToProperties[m.Menid] = mMenuProperties;
-          mMenidToProperties[m.Mnid3] = mMenuProperties;
-
-          if (this.bMobile) {
+        aLevel3
+          .filter((m) => m.Hide !== 'X')
+          .map((m) => {
+            const mMenuProperties = mMenidToProperties[m.Menid] || {};
+            if (!mMenuProperties.Mnurl) {
+              return;
+            }
             if (m.Favor === 'X') {
-              aMobileFavoriteMenus.push(mMenuProperties);
+              aFavoriteMenids.push(m.Menid);
             }
 
-            const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
-            if (aLevel1SubMenu) {
-              aLevel1SubMenu.push(mMenuProperties);
+            $.extend(mMenuProperties, {
+              Level: 3,
+              L1id: m.L1id,
+              L2id: m.L2id,
+              L3id: m.L3id,
+              L4id: m.L4id,
+              Mnid1: m.Mnid1,
+              Mnid2: m.Mnid2,
+              Mnid3: m.Mnid3,
+              Mname: m.Mnnm3,
+              Mepop: m.Mepop === 'X',
+              Favor: m.Favor === 'X',
+              Pwchk: m.Pwchk === 'X',
+            });
+
+            mMenidToProperties[m.Menid] = mMenuProperties;
+            mMenidToProperties[m.Mnid3] = mMenuProperties;
+
+            if (this.bMobile) {
+              if (m.Favor === 'X') {
+                aMobileFavoriteMenus.push(mMenuProperties);
+              }
+
+              const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
+              if (aLevel1SubMenu) {
+                aLevel1SubMenu.push(mMenuProperties);
+              } else {
+                mLevel1Sub[m.Mnid1] = [mMenuProperties];
+              }
             } else {
-              mLevel1Sub[m.Mnid1] = [mMenuProperties];
+              const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
+              if (aLevel2SubMenu) {
+                aLevel2SubMenu.push(mMenuProperties);
+              } else {
+                mLevel2Sub[m.Mnid2] = [mMenuProperties];
+              }
             }
-          } else {
-            const aLevel2SubMenu = mLevel2Sub[m.Mnid2];
-            if (aLevel2SubMenu) {
-              aLevel2SubMenu.push(mMenuProperties);
-            } else {
-              mLevel2Sub[m.Mnid2] = [mMenuProperties];
-            }
-          }
-        });
+          });
 
         // 2nd level 메뉴 속성 정리
-        aLevel2.map((m) => {
-          const mMenuProperties = mMenidToProperties[m.Menid] || {};
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
-
-          $.extend(mMenuProperties, {
-            Level: 2,
-            Menid: m.Menid,
-            Mnid2: m.Mnid2,
-            Mname: m.Mnnm2,
-            Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
-            Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
-            Pwchk: m.Pwchk === 'X',
-            Children: mLevel2Sub[m.Mnid2] || [],
-          });
-
-          mMenidToProperties[m.Menid] = mMenuProperties;
-          mMenidToProperties[m.Mnid2] = mMenuProperties;
-
-          if (!this.bMobile) {
-            const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
-            if (aLevel1SubMenu) {
-              aLevel1SubMenu.push(mMenuProperties);
-            } else {
-              mLevel1Sub[m.Mnid1] = [mMenuProperties];
-            }
-          } else {
+        aLevel2
+          .filter((m) => m.Hide !== 'X')
+          .map((m) => {
+            const mMenuProperties = mMenidToProperties[m.Menid] || {};
             if (m.Favor === 'X') {
-              aMobileFavoriteMenus.push(mMenuProperties);
+              aFavoriteMenids.push(m.Menid);
             }
-          }
-        });
+
+            $.extend(mMenuProperties, {
+              Level: 2,
+              Menid: m.Menid,
+              Mnid2: m.Mnid2,
+              Mname: m.Mnnm2,
+              Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
+              Mepop: m.Mepop === 'X',
+              Favor: m.Favor === 'X',
+              Pwchk: m.Pwchk === 'X',
+              Children: mLevel2Sub[m.Mnid2] || [],
+            });
+
+            mMenidToProperties[m.Menid] = mMenuProperties;
+            mMenidToProperties[m.Mnid2] = mMenuProperties;
+
+            if (!this.bMobile) {
+              const aLevel1SubMenu = mLevel1Sub[m.Mnid1];
+              if (aLevel1SubMenu) {
+                aLevel1SubMenu.push(mMenuProperties);
+              } else {
+                mLevel1Sub[m.Mnid1] = [mMenuProperties];
+              }
+            } else {
+              if (m.Favor === 'X') {
+                aMobileFavoriteMenus.push(mMenuProperties);
+              }
+            }
+          });
 
         // Top level 메뉴 속성 정리
-        const tree = aLevel1.map((m) => {
-          const mMenuProperties = mMenidToProperties[m.Menid] || {};
-          if (m.Hide === 'X') {
-            return;
-          }
-          if (m.Favor === 'X') {
-            aFavoriteMenids.push(m.Menid);
-          }
+        const tree = aLevel1
+          .filter((m) => m.Hide !== 'X')
+          .map((m) => {
+            const mMenuProperties = mMenidToProperties[m.Menid] || {};
+            if (m.Favor === 'X') {
+              aFavoriteMenids.push(m.Menid);
+            }
 
-          $.extend(mMenuProperties, {
-            Level: 1,
-            Menid: m.Menid,
-            Mnid1: m.Mnid1,
-            Mname: m.Mnnm1,
-            Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
-            Mepop: m.Mepop === 'X',
-            Favor: m.Favor === 'X',
-            Pwchk: m.Pwchk === 'X',
-            Children: mLevel1Sub[m.Mnid1] || [],
-            StyleClasses: this.getStyleClasses(m),
+            $.extend(mMenuProperties, {
+              Level: 1,
+              Menid: m.Menid,
+              Mnid1: m.Mnid1,
+              Mname: m.Mnnm1,
+              Mnurl: !m.Menid ? '' : mMenuProperties.Mnurl || '',
+              Mepop: m.Mepop === 'X',
+              Favor: m.Favor === 'X',
+              Pwchk: m.Pwchk === 'X',
+              Children: mLevel1Sub[m.Mnid1] || [],
+              StyleClasses: this.getStyleClasses(m),
+            });
+
+            mMenidToProperties[m.Menid] = mMenuProperties;
+            mMenidToProperties[m.Mnid1] = mMenuProperties;
+
+            if (this.bMobile && m.Favor === 'X') {
+              aMobileFavoriteMenus.push(mMenuProperties);
+            }
+
+            return mMenuProperties;
           });
-
-          mMenidToProperties[m.Menid] = mMenuProperties;
-          mMenidToProperties[m.Mnid1] = mMenuProperties;
-
-          if (this.bMobile && m.Favor === 'X') {
-            aMobileFavoriteMenus.push(mMenuProperties);
-          }
-
-          return mMenuProperties;
-        });
 
         const mModelData = {
           tree,

@@ -27,62 +27,62 @@
         <table:Column width="4%" filterProperty="Idx" sortProperty="Idx">
           <Label text="No."/>
           <table:template>
-            <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Idx}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Zzappee" sortProperty="Zzappee">
           <Label text="{i18n>LABEL_00209}"/>
           <table:template>
-            <Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Zzappee', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Ename" sortProperty="Ename">
           <Label text="{i18n>LABEL_00210}"/>
           <table:template>
-            <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Zzjikgbt" sortProperty="Zzjikgbt">
           <Label text="{i18n>LABEL_00215}"/>
           <table:template>
-            <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column filterProperty="Zzappuntx2" sortProperty="Zzappuntx2">
           <Label text="{i18n>LABEL_10094}"/>
           <table:template>
-            <Text text="{Zzappuntx2}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Zzappuntx2}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column filterProperty="Orgtx" sortProperty="Orgtx">
           <Label text="{i18n>LABEL_00224}"/>
           <table:template>
-            <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{Orgtx}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Zapgme" sortProperty="Zapgme">
           <Label text="{i18n>LABEL_10003}"/>
           <table:template>
-            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Zapgme', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Zapgma" sortProperty="Zapgma">
           <Label text="{i18n>LABEL_10022}"/>
           <table:template>
-            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{ path: 'Zapgma', type: 'sap.ui.yesco.mvc.model.type.Decimal', formatOptions: { maxFractionDigits: 2 } }" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="8%" filterProperty="Fapp" sortProperty="Fapp">
           <Label text="{i18n>LABEL_10078}"/>
           <table:template>
-            <Text text="{FappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+            <Text text="{FappTx}" textAlign="Center" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="12%" filterProperty="Lfapp" sortProperty="Lfapp">
           <Label text="{i18n>LABEL_10095}"/>
           <table:template>
             <VBox>
-              <Text text="{LfappTx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" visible="{= !${/isActive} }" />
+              <Text text="{LfappTx}" textAlign="Center" width="100%" wrapping="false" visible="{= !${/isActive} }" />
               <ComboBox selectedKey="{Lfapp}" items="{ path: '/gradeEntry', templateShareable: true }" visible="{/isActive}" change=".onChangeLfapp">
                 <core:Item text="{ValueText}" key="{ValueEid}" />
               </ComboBox>

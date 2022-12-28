@@ -183,8 +183,8 @@ sap.ui.define(
           sEnTime = '';
           sHoliday = 'Holiday';
         } else {
-          sBeTime = `${sBeTime.slice(0, 2)}:${sBeTime.slice(2)}`;
-          sEnTime = `${sEnTime.slice(0, 2)}:${sEnTime.slice(2)}`;
+          sBeTime = sBeTime && _.size(sBeTime) === 4 ? moment(sBeTime, 'hhmm').format('HH:mm') : ' ';
+          sEnTime = sEnTime && _.size(sEnTime) === 4 ? moment(sEnTime, 'hhmm').format('HH:mm') : ' ';
         }
         // sStripes = oDateObject.inProgress;
 

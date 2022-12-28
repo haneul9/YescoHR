@@ -6,53 +6,53 @@
   xmlns:custom="sap.ui.yesco.control">
   <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
-      <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }"  writeToDom="true" />
+      <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="form-grid" >
+      <custom:MobileScrollContainer horizontal="false" vertical="true" class="form-grid">
         <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
-            <HBox class="table-toolbar" visible="{= ${/Fixed}}">
-              <HBox class="title">
-                <Title level="H2" text="{i18n>LABEL_04002}" />
-              </HBox>
-              <HBox class="table-actions">
-                <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn" />
-              </HBox>
+          <HBox class="table-toolbar" visible="{= ${/Fixed}}">
+            <HBox class="title">
+              <Title level="H2" text="{i18n>LABEL_00156}" />
             </HBox>
-            <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= ${/Fixed}}">
-              <Label text="{i18n>LABEL_27004}"/>
-              <HBox>
-                <custom:DatePicker dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" />
-              </HBox>
-              <Label text="{i18n>LABEL_27013}"/>
-              <HBox>
-                <TimePicker width="100px" value="{/dialog/BeguzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
-                <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" value="{/dialog/EnduzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
-                <Input value="{/dialog/AbrstB}" editable="false" class="ml-10-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_25008}"/>
-              <HBox>
-                <ComboBox items="{/appTypeList}" selectedKey="{/dialog/Appty}" change=".onApptype" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
+            <HBox class="table-actions">
+              <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn" />
+            </HBox>
+          </HBox>
+          <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= ${/Fixed}}">
+            <Label text="{i18n>LABEL_27004}"/>
+            <HBox>
+              <custom:DatePicker dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" />
+            </HBox>
+            <Label text="{i18n>LABEL_27013}"/>
+            <HBox>
+              <TimePicker width="100px" value="{/dialog/BeguzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+              <Text text="~" class="mx-5-px" />
+              <TimePicker width="100px" value="{/dialog/EnduzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+              <Input value="{/dialog/AbrstB}" editable="false" class="ml-10-px" />
+            </HBox>
+            <Label text="{i18n>LABEL_25008}"/>
+            <HBox>
+              <ComboBox items="{/appTypeList}" selectedKey="{/dialog/Appty}" change=".onApptype" class="required" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }">
                 <core:Item text="{Apptxt}" key="{Appty}" />
-                </ComboBox>
-              </HBox>
-              <Label text="{i18n>LABEL_27014}"/>
-              <HBox>
-                <TimePicker width="100px" value="{/dialog/Beguz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
-                <Text text="~" class="mx-5-px" />
-                <TimePicker width="100px" value="{/dialog/Enduz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
-                <Input value="{/dialog/Abrst}" editable="false" class="ml-10-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_00154}"/>
-              <HBox>
-                <Input value="{/dialog/Chgrsn}" maxLength="{/FieldLimit/Chgrsn}" >
+              </ComboBox>
+            </HBox>
+            <Label text="{i18n>LABEL_27014}"/>
+            <HBox>
+              <TimePicker width="100px" value="{/dialog/Beguz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
+              <Text text="~" class="mx-5-px" />
+              <TimePicker width="100px" value="{/dialog/Enduz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
+              <Input value="{/dialog/Abrst}" editable="false" class="ml-10-px" />
+            </HBox>
+            <Label text="{i18n>LABEL_00154}"/>
+            <HBox>
+              <Input value="{/dialog/Chgrsn}" maxLength="{/FieldLimit/Chgrsn}">
                 <layoutData>
                   <FlexItemData growFactor="1" />
                 </layoutData>
-                </Input>
-              </HBox>
-            </grid:CSSGrid>
+              </Input>
+            </HBox>
+          </grid:CSSGrid>
           <HBox class="table-toolbar">
             <HBox class="title">
               <Title level="H2" text="{i18n>LABEL_00129}" />
@@ -65,22 +65,20 @@
             <CustomListItem type="Active">
               <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
                 <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="6px 25px">
-                    <HBox>
-                      <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
-                      <ObjectStatus text="{Apptxt}"
-                                    state="{ path: 'Appty', formatter: '.onChangeIndication' }"
-                                    class="pl-5-px pt-3-px" />
-                    </HBox>
-                    <HBox>
-                      <Text text="{i18n>LABEL_27015}: " />
-                      <Text text="{ parts: [{path: 'BeguzB'}, {path: 'EnduzB'}, {path: 'AbrstB'}], formatter: '.formatTime' }" />
-                    </HBox>
-                    <Text text="{Chgrsn}"/>
-                    <HBox>
-                      <Text text="{i18n>LABEL_27016}: " />
-                      <Text text="{ parts: [{path: 'Beguz'}, {path: 'Enduz'}, {path: 'Abrst'}], formatter: '.formatTime' }"/>
-                    </HBox>
-                </grid:CSSGrid>               
+                  <HBox>
+                    <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
+                    <ObjectStatus text="{Apptxt}" state="{ path: 'Appty', formatter: '.onChangeIndication' }" class="pl-5-px pt-3-px" />
+                  </HBox>
+                  <HBox>
+                    <Text text="{i18n>LABEL_27015}: " />
+                    <Text text="{ parts: [{path: 'BeguzB'}, {path: 'EnduzB'}, {path: 'AbrstB'}], formatter: '.formatTime' }" />
+                  </HBox>
+                  <Text text="{Chgrsn}"/>
+                  <HBox>
+                    <Text text="{i18n>LABEL_27016}: " />
+                    <Text text="{ parts: [{path: 'Beguz'}, {path: 'Enduz'}, {path: 'Abrst'}], formatter: '.formatTime' }"/>
+                  </HBox>
+                </grid:CSSGrid>
               </HBox>
             </CustomListItem>
           </List>

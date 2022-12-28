@@ -27,7 +27,7 @@
                 <m:FlexItemData maxHeight="38px" minHeight="38px" />
               </m:layoutData>
             </m:Image>
-            <m:Text text="{Target}" wrapping="false" />
+            <m:Text text="{ path: 'Target', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="false" />
           </m:HBox>
         </template>
       </Column>

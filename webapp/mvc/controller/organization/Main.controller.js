@@ -56,7 +56,7 @@ sap.ui.define(
             ]);
 
             if (_.isEmpty(aReturnData)) {
-              MessageBox.information(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
+              MessageBox.alert(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
             }
 
             setTimeout(() => {
@@ -182,7 +182,7 @@ sap.ui.define(
           });
 
           if (_.isEmpty(aReturnData)) {
-            MessageBox.information(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
+            MessageBox.alert(this.getBundleText('MSG_12002')); // 조회된 조직도 정보가 없습니다.
           }
 
           oViewModel.setProperty('/orgList', this.getOrgList(aReturnData));
@@ -292,7 +292,7 @@ sap.ui.define(
             Photo: '{Photo}',
             Botxt: '{Botxt}',
             JikgbtlLabel: '{JikgbtlLabel}',
-            Jikgbtl: '{Jikgbtl}',
+            Jikgbtl: '{ path: "Jikgbtl", type: "sap.ui.yesco.mvc.model.type.ShortPosition" }',
             ZorgLevl: '{ZorgLevl}',
             TenureLabel: '{TenureLabel}',
             Tenure: '{Tenure}',
@@ -301,7 +301,7 @@ sap.ui.define(
             ScspntLabel: '{ScspntLabel}', // 예정시점
             Scspnt: '{Scspnt}',
             Cand1stLabel: '{Cand1stLabel}', // 후보자(1순위)
-            Cand1st1: '{Cand1st1}', // 승계후보자(1순위)_성명/직급
+            Cand1st1: '{ path: "Cand1st1", type: "sap.ui.yesco.mvc.model.type.ShortPosition" }', // 승계후보자(1순위)_성명/직급
             Cand1st2: '{Cand1st2}', // 승계후보자(1순위)_인사영역
             Cand1st3: '{Cand1st3}', // 승계후보자(1순위)_포지션
             CandpntLabel: '{CandpntLabel}', // 가능시점

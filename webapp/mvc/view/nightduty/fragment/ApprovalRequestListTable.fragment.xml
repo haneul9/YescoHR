@@ -1,0 +1,159 @@
+<core:FragmentDefinition xmlns="sap.ui.table"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core">
+  <Table id="approvalRequestListTable" selectionMode="None" class="row-link" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/search/approvalRequestList}" visibleRowCount="{/search/approvalRequestListInfo/count/visibleRows}" cellClick=".onSelectRow" busy="{/search/busy}" busyIndicatorDelay="0" noData="{i18n>MSG_00001}">
+    <rowSettingsTemplate>
+      <RowSettings highlight="{ path: 'ZappStatAl', formatter: '.TableUtils.rowHighlight' }" />
+    </rowSettingsTemplate>
+    <columns>
+      <Column width="6%" filterProperty="ZappStxtAl" sortProperty="ZappStxtAl">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00144}" />
+          <m:Label text="{i18n>LABEL_00144}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" width="100%" textAlign="Center">
+            <m:customData>
+              <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
+            </m:customData>
+          </m:Text>
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="Datum" sortProperty="Datum">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06101}" />
+          <m:Label text="{i18n>LABEL_06101}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="4%" filterProperty="Kurzt" sortProperty="Kurzt">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06102}" />
+          <m:Label text="{i18n>LABEL_06102}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Kurzt}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="4%" filterProperty="Tagty" sortProperty="Tagty">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06103}" />
+          <m:Label text="{i18n>LABEL_06103}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Tagty}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="10%" filterProperty="Awart" sortProperty="Atext">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06104}" />
+          <m:Label text="{i18n>LABEL_06104}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Atext}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="4%" filterProperty="Ocshf" sortProperty="Ocshf">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06105}" />
+          <m:Label text="{i18n>LABEL_06105}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{Ocshf}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="PernrB" sortProperty="PernrB" headerSpan="4">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00209}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'PernrB', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="EnameB" sortProperty="EnameB">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00210}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{EnameB}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="10%" filterProperty="OrgtxB" sortProperty="OrgtxB">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00224}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{OrgtxB}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="ZzjikgbtB" sortProperty="ZzjikgbtB">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06106}" />
+          <m:Label text="{i18n>LABEL_00215}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ZzjikgbtB}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="5%" filterProperty="PernrA" sortProperty="PernrA" headerSpan="4">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00209}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="EnameA" sortProperty="EnameA">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00210}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{EnameA}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="10%" filterProperty="OrgtxA" sortProperty="OrgtxA">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00224}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{OrgtxA}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="ZzjikgbtA" sortProperty="ZzjikgbtA">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_06107}" />
+          <m:Label text="{i18n>LABEL_00215}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ZzjikgbtA}" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="Appda" sortProperty="Appda">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00266}" />
+          <m:Label text="{i18n>LABEL_00266}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+      <Column width="6%" filterProperty="Sgnda" sortProperty="Sgnda">
+        <multiLabels>
+          <m:Label text="{i18n>LABEL_00269}" />
+          <m:Label text="{i18n>LABEL_00269}" />
+        </multiLabels>
+        <template>
+          <m:Text text="{ path: 'Sgnda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="100%" textAlign="Center" wrapping="false" />
+        </template>
+      </Column>
+    </columns>
+  </Table>
+</core:FragmentDefinition>

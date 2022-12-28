@@ -11,13 +11,13 @@
           <table:Column width="auto">
             <Label text="{i18n>LABEL_15019}"/>
             <table:template>
-              <Text text="{Orgtx}" textAlign="Begin" width="100%" wrapping="false" class="tableRow_Text"/>
+              <Text text="{Orgtx}" textAlign="Begin" width="100%" wrapping="false" />
             </table:template>
           </table:Column>
           <table:Column width="100px">
             <Label text="{i18n>LABEL_15020}"/>
             <table:template>
-              <Text text="{Chief}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+              <Text text="{Chief}" textAlign="Center" width="100%" wrapping="false" />
             </table:template>
           </table:Column>
         </table:columns>

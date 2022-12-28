@@ -11,19 +11,19 @@
     </HBox>
     <table:Table id="holidayWorkTable" selectionMode="{/form/listMode}" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/form/list}" visibleRowCount="{/form/rowCount}" noData="{i18n>MSG_00001}">
       <table:columns>
-        <table:Column width="6%">
+        <table:Column width="5%">
           <Label text="{i18n>LABEL_00209}" />
           <table:template>
             <Text text="{ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' }" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="6%">
+        <table:Column width="5%">
           <Label text="{i18n>LABEL_00210}" />
           <table:template>
             <Text text="{Ename}" width="100%" textAlign="Center" />
           </table:template>
         </table:Column>
-        <table:Column width="6%">
+        <table:Column width="8%">
           <Label text="{i18n>LABEL_00215}" />
           <table:template>
             <Text text="{Zzjikgbt}" width="100%" textAlign="Center" />

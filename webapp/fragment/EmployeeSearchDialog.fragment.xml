@@ -60,49 +60,49 @@
               <table:Column width="auto" sortProperty="Pernr" filterProperty="Pernr" visible="{/settings/fieldVisible/Pernr}">
                 <Label text="{i18n>LABEL_00209}" />
                 <table:template>
-                  <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text" />
+                  <Text text="{Pernr}" width="100%" textAlign="Center" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Ename" filterProperty="Ename" visible="{/settings/fieldVisible/Ename}">
                 <Label text="{i18n>LABEL_00210}" />
                 <table:template>
-                  <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{Ename}" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="25%" sortProperty="Fulln" filterProperty="Fulln" visible="{/settings/fieldVisible/Fulln}">
                 <Label text="{i18n>LABEL_00227}" />
                 <table:template>
-                  <Text text="{Fulln}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
+                  <Text text="{Fulln}" textAlign="Center" wrapping="false" width="100%" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Zzjikgbt" filterProperty="Zzjikgbt" visible="{/settings/fieldVisible/Zzjikgbt}">
                 <Label text="{i18n>LABEL_00215}" />
                 <table:template>
-                  <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{Zzjikgbt}" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Zzjikcht" filterProperty="Zzjikcht" visible="{/settings/fieldVisible/Zzjikcht}">
                 <Label text="{i18n>LABEL_00217}" />
                 <table:template>
-                  <Text text="{Zzjikcht}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{Zzjikcht}" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Stat2tx" filterProperty="Stat2tx" visible="{/settings/fieldVisible/Stat2tx}">
                 <Label text="{i18n>LABEL_00240}" />
                 <table:template>
-                  <Text text="{Stat2tx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{Stat2tx}" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Entda" filterProperty="Entda" visible="{/settings/fieldVisible/Entda}">
                 <Label text="{i18n>LABEL_00235}" />
                 <table:template>
-                  <Text text="{ path: 'Entda', type: 'sap.ui.yesco.mvc.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd' } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{ path: 'Entda', type: 'sap.ui.yesco.mvc.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd' } }" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
               <table:Column width="auto" sortProperty="Retdt" filterProperty="Retdt" visible="{/settings/fieldVisible/Retdt}">
                 <Label text="{i18n>LABEL_00236}" />
                 <table:template>
-                  <Text text="{ path: 'Retdt', type: 'sap.ui.yesco.mvc.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd' } }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text" />
+                  <Text text="{ path: 'Retdt', type: 'sap.ui.yesco.mvc.model.type.Date', formatOptions: { pattern: 'yyyy.MM.dd' } }" textAlign="Center" width="100%" wrapping="false" />
                 </table:template>
               </table:Column>
             </table:columns>

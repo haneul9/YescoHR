@@ -52,12 +52,15 @@
                   <core:CustomData key="color-type" value="{ColtyState}" writeToDom="true" />
                 </customData>
                 <VBox>
+                  <layoutData>
+                    <FlexItemData maxWidth="76px" />
+                  </layoutData>
                   <Image src="{PicUrl}" press=".onPressPhoto">
                     <layoutData>
                       <FlexItemData styleClass="photo" />
                     </layoutData>
                   </Image>
-                  <Text text="{Linetx1}" textAlign="Center" width="100%" class="name" />
+                  <Text text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" textAlign="Center" width="100%" class="name" wrappingType="Hyphenated" />
                 </VBox>
                 <VBox>
                   <Image src="{Icon}">
@@ -65,7 +68,7 @@
                       <FlexItemData styleClass="company-icon" />
                     </layoutData>
                   </Image>
-                  <CheckBox selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
+                  <CheckBox class="mobile-card-checkbox" selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
                     <layoutData>
                       <FlexItemData styleClass="compare-target-checkbox" />
                     </layoutData>
@@ -112,12 +115,15 @@
                   <core:CustomData key="color-type" value="{ColtyState}" writeToDom="true" />
                 </customData>
                 <VBox>
+                  <layoutData>
+                    <FlexItemData maxWidth="76px" />
+                  </layoutData>
                   <Image src="{PicUrl}" press=".onPressPhoto">
                     <layoutData>
                       <FlexItemData styleClass="photo" />
                     </layoutData>
                   </Image>
-                  <Text text="{Linetx1}" textAlign="Center" width="100%" class="name" />
+                  <Text text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" textAlign="Center" width="100%" class="name" />
                 </VBox>
                 <VBox>
                   <Image src="{Icon}">
@@ -125,7 +131,7 @@
                       <FlexItemData styleClass="company-icon" />
                     </layoutData>
                   </Image>
-                  <CheckBox selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
+                  <CheckBox class="mobile-card-checkbox" selected="{= ${Chckd} === 'X' }" select=".onSelectCheckBox">
                     <layoutData>
                       <FlexItemData styleClass="compare-target-checkbox" />
                     </layoutData>

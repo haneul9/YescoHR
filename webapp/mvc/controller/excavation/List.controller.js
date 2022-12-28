@@ -32,7 +32,7 @@ sap.ui.define(
             Apbeg: moment().subtract(1, 'month').add(1, 'day').hours(9).toDate(),
             Apend: moment().hours(9).toDate(),
           },
-          summary: {
+          overview: {
             Year: today.format('YYYY'),
             YearMonth: this.getBundleText('MSG_06002', today.format('YYYY'), today.format('M')),
             CurrentYM: today.format('YYYYMM'),
@@ -84,19 +84,24 @@ sap.ui.define(
         const oViewModel = this.getViewModel();
         const sPernr = this.getAppointeeProperty('Pernr');
         const oSearchConditions = oViewModel.getProperty('/search');
-        const mSummary = oViewModel.getProperty('/summary');
+        const mOverview = oViewModel.getProperty('/overview');
 
         try {
           this.sRouteName = sRouteName;
           oViewModel.setProperty('/busy', true);
 
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
-          const [aResultSummary, aRowData] = await Promise.all([
+          const [aResultOverview, aRowData] = await Promise.all([
             fCurriedGetEntitySet('DrillSummary', { Pernr: sPernr }), //
-            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg), Apend: this.DateUtils.parse(oSearchConditions.Apend) }),
+            fCurriedGetEntitySet('DrillChangeApp', {
+              Menid: this.getCurrentMenuId(),
+              Pernr: sPernr,
+              Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: this.DateUtils.parse(oSearchConditions.Apend),
+            }),
           ]);
 
-          oViewModel.setProperty('/summary', { ...mSummary, ...aResultSummary[0] });
+          oViewModel.setProperty('/overview', { ...mOverview, ...aResultOverview[0] });
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug('Controller > excavation List > initialRetrieve Error', oError);
@@ -115,15 +120,20 @@ sap.ui.define(
 
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const fCurriedGetEntitySet = Client.getEntitySet(oModel);
-          const mSummary = oViewModel.getProperty('/summary');
+          const mOverview = oViewModel.getProperty('/overview');
           const oSearchConditions = oViewModel.getProperty('/search');
           const sPernr = this.getAppointeeProperty('Pernr');
-          const [aResultSummary, aRowData] = await Promise.all([
+          const [aResultOverview, aRowData] = await Promise.all([
             fCurriedGetEntitySet('DrillSummary', { Pernr: sPernr }), //
-            fCurriedGetEntitySet('DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg), Apend: this.DateUtils.parse(oSearchConditions.Apend) }),
+            fCurriedGetEntitySet('DrillChangeApp', {
+              Menid: this.getCurrentMenuId(),
+              Pernr: sPernr,
+              Apbeg: this.DateUtils.parse(oSearchConditions.Apbeg),
+              Apend: this.DateUtils.parse(oSearchConditions.Apend),
+            }),
           ]);
 
-          oViewModel.setProperty('/summary', { ...mSummary, ...aResultSummary[0] });
+          oViewModel.setProperty('/overview', { ...mOverview, ...aResultOverview[0] });
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
           this.debug('Controller > excavation List > callbackAppointeeChange Error', oError);
@@ -154,7 +164,12 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          const aRowData = await Client.getEntitySet(oModel, 'DrillChangeApp', { Menid: this.getCurrentMenuId(), Pernr: sPernr, Apbeg: this.DateUtils.parse(mSearchConditions.Apbeg), Apend: this.DateUtils.parse(mSearchConditions.Apend) });
+          const aRowData = await Client.getEntitySet(oModel, 'DrillChangeApp', {
+            Menid: this.getCurrentMenuId(),
+            Pernr: sPernr,
+            Apbeg: this.DateUtils.parse(mSearchConditions.Apbeg),
+            Apend: this.DateUtils.parse(mSearchConditions.Apend),
+          });
 
           this.setTableData({ oViewModel, aRowData });
         } catch (oError) {
@@ -166,24 +181,24 @@ sap.ui.define(
         }
       },
 
-      async onPressSummary() {
-        if (!this.pSummaryDialog) {
+      async onPressOverview() {
+        if (!this.pOverviewDialog) {
           const oView = this.getView();
           const oViewModel = this.getViewModel();
           const oModel = this.getModel(ServiceNames.WORKTIME);
           const sMode = oViewModel.getProperty('/dialog/mode');
-          const sYearMonth = oViewModel.getProperty('/summary/CurrentYM');
-          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+          const sYearMonth = oViewModel.getProperty('/overview/CurrentYM');
+          const aOverviewList = await Client.getEntitySet(oModel, 'DrillList', {
             Prcty: sMode,
             Zyymm: sYearMonth,
             Pernr: this.getAppointeeProperty('Pernr'),
           });
 
-          const iRowCount = aSummaryList.length || 1;
-          oViewModel.setProperty('/dialog/list', [...aSummaryList]);
+          const iRowCount = aOverviewList.length || 1;
+          oViewModel.setProperty('/dialog/list', [...aOverviewList]);
           oViewModel.setProperty('/dialog/rowCount', iRowCount > 10 ? 10 : iRowCount);
 
-          this.pSummaryDialog = Fragment.load({
+          this.pOverviewDialog = Fragment.load({
             id: oView.getId(),
             name: 'sap.ui.yesco.mvc.view.excavation.fragment.DialogTable',
             controller: this,
@@ -192,17 +207,17 @@ sap.ui.define(
             return oDialog;
           });
         }
-        this.pSummaryDialog.then(function (oDialog) {
+        this.pOverviewDialog.then(function (oDialog) {
           oDialog.open();
         });
       },
 
-      onPressSummaryDialogClose() {
-        this.byId('summaryDialog').close();
+      onPressOverviewDialogClose() {
+        this.byId('overviewDialog').close();
       },
 
-      onPressSummaryExcelDownload() {
-        const oTable = this.byId('summaryDialogTable');
+      onPressOverviewExcelDownload() {
+        const oTable = this.byId('overviewDialogTable');
         const sFileName = this.getBundleText('LABEL_00282', 'LABEL_11005'); // {통합굴착야간근무현황}_목록
 
         this.TableUtils.export({ oTable, sFileName });
@@ -217,14 +232,14 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/dialog/busy', true);
 
-          const aSummaryList = await Client.getEntitySet(oModel, 'DrillList', {
+          const aOverviewList = await Client.getEntitySet(oModel, 'DrillList', {
             Prcty: sMode,
             Zyymm: sYearMonth,
             Pernr: this.getAppointeeProperty('Pernr'),
           });
 
-          oViewModel.setProperty('/dialog/list', [...aSummaryList]);
-          oViewModel.setProperty('/dialog/rowCount', aSummaryList.length || 1);
+          oViewModel.setProperty('/dialog/list', [...aOverviewList]);
+          oViewModel.setProperty('/dialog/rowCount', aOverviewList.length || 1);
         } catch (oError) {
           this.debug('Controller > excavation List > onChangeDialogSearch Error', oError);
 
@@ -242,10 +257,9 @@ sap.ui.define(
       },
 
       onSelectRow(oEvent) {
-        const sPath = oEvent.getParameters().rowBindingContext.getPath();
-        const oRowData = this.getViewModel().getProperty(sPath);
+        const sAppno = oEvent.getParameters('rowBindingContext').getProperty('Appno');
 
-        this.getRouter().navTo(`${this.sRouteName}-detail`, { appno: oRowData.Appno });
+        this.getRouter().navTo(`${this.sRouteName}-detail`, { appno: sAppno });
       },
 
       onPressNewApprovalBtn() {

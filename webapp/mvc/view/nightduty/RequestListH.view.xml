@@ -1,6 +1,0 @@
-<mvc:View controllerName="sap.ui.yesco.mvc.controller.nightduty.RequestList"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc" visible="false">
-    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.nightduty.fragment.Main" type="XML" />
-</mvc:View>

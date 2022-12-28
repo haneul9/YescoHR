@@ -25,19 +25,19 @@
       <table:Column width="auto" sortProperty="Accttx" filterProperty="Accttx">
         <Label text="{i18n>LABEL_26005}"/>
         <table:template>
-          <Text text="{Accttx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Accttx}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Banka" filterProperty="Banka">
         <Label text="{i18n>LABEL_26003}"/>
         <table:template>
-          <Text text="{Banka}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Banka}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="BanknBef" filterProperty="BanknBef">
         <Label text="{i18n>LABEL_26004}"/>
         <table:template>
-          <Text text="{BanknBef}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{BanknBef}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Begym" filterProperty="Begym">
@@ -46,7 +46,7 @@
           <Text text="{
               path: 'Begym',
               formatter: '.formatYear'
-          }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          }" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZreqDate" filterProperty="ZreqDate">
@@ -55,7 +55,7 @@
           <Text text="{
               path: 'ZreqDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZappDate" filterProperty="ZappDate">
@@ -64,7 +64,7 @@
           <Text text="{
               path: 'ZappDate',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          }" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

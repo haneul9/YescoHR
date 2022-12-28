@@ -25,31 +25,31 @@
       <table:Column width="100px" sortProperty="Famtx" filterProperty="Famtx">
         <Label text="{i18n>LABEL_02005}"/>
         <table:template>
-          <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Famtx}" width="100%" textAlign="Center" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Zname" filterProperty="Zname">
         <Label text="{i18n>LABEL_03010}"/>
         <table:template>
-          <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text"/>
+          <Text text="{Zname}" textAlign="Center" wrapping="false" width="100%" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="Sltxt" filterProperty="Sltxt">
         <Label text="{i18n>LABEL_03014}"/>
         <table:template>
-          <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Sltxt}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Grdtx" filterProperty="Grdtx">
         <Label text="{i18n>LABEL_03006}"/>
         <table:template>
-          <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Grdtx}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="100px" sortProperty="Divtx" filterProperty="Divtx">
         <Label text="{i18n>LABEL_03007}"/>
         <table:template>
-          <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Divtx}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="auto" sortProperty="ZbetTotl" filterProperty="ZbetTotl">
@@ -58,13 +58,13 @@
           <Text text="{
                         path: 'ZbetTotl',
                         type: 'sap.ui.yesco.mvc.model.type.Currency'
-                    }" textAlign="End" width="100%" wrapping="false" class="tableRow_Text"/>
+                    }" textAlign="End" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="90px" sortProperty="Curcnt" filterProperty="Curcnt">
         <Label text="{i18n>LABEL_03009}"/>
         <table:template>
-          <Text text="{Curcnt}" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          <Text text="{Curcnt}" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="90px">
@@ -79,7 +79,7 @@
           <Text text="{
               path: 'Appda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Sgnda" filterProperty="Sgnda">
@@ -88,7 +88,7 @@
           <Text text="{
               path: 'Sgnda',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
       <table:Column width="150px" sortProperty="Zpayym" filterProperty="Zpayym">
@@ -97,7 +97,7 @@
           <Text text="{
               path: 'Zpayym',
               type: 'sap.ui.yesco.mvc.model.type.Date'
-          }" textAlign="Center" width="100%" wrapping="false" class="tableRow_Text"/>
+          }" textAlign="Center" width="100%" wrapping="false" />
         </table:template>
       </table:Column>
     </table:columns>

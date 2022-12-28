@@ -7,19 +7,19 @@
         <Column width="80px">
           <m:Label text="{i18n>LABEL_01126}" />
           <template>
-            <m:Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
+            <m:Text text="{Ename}" textAlign="Center" wrapping="false" width="100%" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
           </template>
         </Column>
         <Column width="150px">
           <m:Label text="{i18n>LABEL_01127}" />
           <template>
-            <m:Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
+            <m:Text text="{Orgtx}" textAlign="Center" wrapping="false" width="100%" tooltip="{Ename}({ path: 'Pernr', type: 'sap.ui.yesco.mvc.model.type.Pernr' })" />
           </template>
         </Column>
         <Column width="215px" visible="{visiblePeriod}">
           <m:Label text="{i18n>LABEL_01128}" />
           <template>
-            <m:Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" wrapping="false" width="100%" class="tableRow_Text" />
+            <m:Text text="{ path: 'Tmdat', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Center" wrapping="false" width="100%" />
           </template>
         </Column>
       </columns>
