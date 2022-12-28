@@ -362,7 +362,8 @@ sap.ui.define(
             .attachBeforeOpen(() => this.setContentsBusy(true, 'preview'))
             .attachAfterOpen(async () => {
               try {
-                const mSelectedData = aSelectedTableData[0] || {};
+                const oTable = this.byId(this.LIST_TABLE_ID);
+                const [mSelectedData] = this.TableUtils.getSelectionData(oTable);
                 const sPrcty = mSelectedData.Smdat ? 'D' : 'S';
                 const [mDocument] = await this.retrieveDocument(sPrcty, mSelectedData.Werks, mSelectedData.Pernr);
 
