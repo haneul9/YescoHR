@@ -217,11 +217,9 @@ sap.ui.define(
       onAfterRewrite() {
         const sAppty = this.getDetailProperty('Appty');
         const mItemProperty = this.getApptyProperties(sAppty);
-        this.debug('mItemProperty', mItemProperty);
 
         this.setConfigProperty('fieldControl', this.getFieldControl(mItemProperty));
         this.getFileAttachmentBoxHandler().setDescription(mItemProperty.Zprint);
-        this.getFileAttachmentBoxHandler().setEditable(true);
       },
 
       /**

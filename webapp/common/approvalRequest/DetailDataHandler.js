@@ -137,13 +137,14 @@ sap.ui.define(
       rewrite() {
         // {common.approvalRequest.DetailDataHandler} {rewrite} function을 overriding 할 수 있습니다.
         this.debug(AppUtils.getBundleText('MSG_APRV002', 'common.approvalRequest.DetailDataHandler', 'rewrite'));
-        this.oController.setStatus(null);
-        this.oController.setEditable(true);
-        this.oController.setEnabled(true);
-        this.oController.setAppno(null);
-        this.getFileAttachmentBoxHandler().clearFileList();
-        this.oController.setApplyInfoBoxData(null);
-        this.oController.setApprovalBoxData(null);
+        this.oController //
+          .setStatus(null)
+          .setEditable(true)
+          .setEnabled(true)
+          .setAppno(null)
+          .setApplyInfoBoxData(null)
+          .setApprovalBoxData(null);
+        this.getFileAttachmentBoxHandler().clearFileList().setEditable(true);
         return this;
       },
 

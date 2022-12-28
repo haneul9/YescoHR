@@ -143,6 +143,8 @@ sap.ui.define(
           oBoxModel.setProperty('/files', []);
           oBoxModel.setProperty('/fileCount', 0);
           oBoxModel.setProperty('/settings/fullFiles', false);
+
+          return this;
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
