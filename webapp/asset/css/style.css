@@ -422,9 +422,10 @@ html.sap-desktop .sapMBtn:focus>.sapMFocusable {outline:none; outline-offset:-0.
 .sapMInputBaseContentWrapper {border-width:1px !important; border-color:var(--BorderColorNormal); border-radius:3px} /* Input, TextArea 공통 */
 .sapMSlt {border-radius:3px}
 .sapMCb .sapMCbBg {border-radius:3px}
-.sapUiTableSelAllEnabled div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {left:1px; width:20px; height:20px; border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px; line-height:16px; font-size:16px; font-weight:normal}
+.sapUiTableRowHighlights .sapUiTableSelectAllCheckBox::after {left:5px}
+.sapUiTableSelAllEnabled div.sapUiTableSelectAllCheckBox::after, div.sapUiTableRowSelectionCell::after {width:20px; height:20px; border-width:1px; border-color:var(--BorderColorNormal); border-radius:3px; line-height:16px; font-size:16px; font-weight:normal}
+div.sapUiTableRowSelectionCell::after {left:1px}
 .sapUiTableSelAllEnabled:not(.sapUiTableSelAll) div.sapUiTableSelectAllCheckBox::after, .sapUiTableSelModeMultiToggle .sapUiTableRowSel .sapUiTableRowSelectionCell::after {border-width:2px}
-.sapUiTableSelModeMultiToggle .sapUiTableRowSel .sapUiTableRowSelectionCell::after {left:2px}
 .radio-selection-table div.sapUiTableRowSelectionCell::after {width:18px; height:18px; border-radius:9px}
 .sapUiTableSelModeMultiToggle.radio-selection-table .sapUiTableRowSel .sapUiTableRowSelectionCell::after {content:''; font-size:12px}
 .sapUiTableSelModeMultiToggle.radio-selection-table .sapUiTableRowSel .sapUiTableRowSelectionCell[aria-selected="true"]::after {left:1px; border:0; font-size:18px}
@@ -1673,6 +1674,9 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .lineItem-wrap:after {content:""; display:inline-block; height:2px; position:absolute; left:10%; right:10%; top:50%; background:linear-gradient(to right, #f5ec95, 50%, #70cf8d); z-index:1}
 .lineItem {z-index:2; align-self:center; display:flex; justify-content:center; align-content:center}
 .lineItem::before {margin-top:6px}
+
+.sapUiSizeCompact .employee-profile-education-register-form .sapMCbBg {top:10px; left:0}
+.sapUiSizeCompact .employee-profile-education-register-form .sapMCbBg.sapMCbMarkChecked {top:10px; left:0}
 
 /* MAIN */
 .sapMTileCntContent>.sapMTcInnerMarker {display:flex; vertical-align:bottom; line-height:normal; width:100%; align-items:center}
