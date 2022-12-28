@@ -362,11 +362,12 @@ sap.ui.define(
             .attachBeforeOpen(() => this.setContentsBusy(true, 'preview'))
             .attachAfterOpen(async () => {
               try {
-                const sPrcty = aSelectedTableData[0].Smdat ? 'D' : 'S';
-                const [mDocument] = await this.retrieveDocument(sPrcty);
+                const mSelectedData = aSelectedTableData[0] || {};
+                const sPrcty = mSelectedData.Smdat ? 'D' : 'S';
+                const [mDocument] = await this.retrieveDocument(sPrcty, mSelectedData.Werks, mSelectedData.Pernr);
 
                 if (sPrcty === 'S') {
-                  const aInputData = await this.retrieveInputData();
+                  const aInputData = await this.retrieveInputData(mSelectedData.Werks, mSelectedData.Pernr);
                   const sTransformHtml = this.transformDocument(mDocument.Hrdochtml, aInputData);
 
                   $('.preview-box').html(sTransformHtml);
@@ -492,7 +493,7 @@ sap.ui.define(
         }
       },
 
-      async retrieveDocument(sPrcty) {
+      async retrieveDocument(sPrcty, sWerks, sPernr) {
         const oViewModel = this.getViewModel();
 
         try {
@@ -502,8 +503,8 @@ sap.ui.define(
           return await Client.getEntitySet(this.getViewModel(ServiceNames.PA), 'HrDocSubmit', {
             Prcty: sPrcty,
             Actty: sAuth,
-            Werks: this.getAppointeeProperty('Werks'),
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Werks: sWerks,
+            Pernr: sPernr,
             Hrdoc: mFormData.Hrdoc,
             Seqnr: mFormData.Seqnr,
           });
@@ -512,7 +513,7 @@ sap.ui.define(
         }
       },
 
-      async retrieveInputData() {
+      async retrieveInputData(sWerks, sPernr) {
         const oViewModel = this.getViewModel();
 
         try {
@@ -521,8 +522,8 @@ sap.ui.define(
 
           return await Client.getEntitySet(this.getViewModel(ServiceNames.PA), 'HrDocInputField', {
             Actty: sAuth,
-            Werks: this.getAppointeeProperty('Werks'),
-            Pernr: this.getAppointeeProperty('Pernr'),
+            Werks: sWerks,
+            Pernr: sPernr,
             Hrdoc: mFormData.Hrdoc,
           });
         } catch (oError) {
