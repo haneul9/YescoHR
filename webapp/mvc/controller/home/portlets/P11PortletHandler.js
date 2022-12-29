@@ -98,16 +98,18 @@ sap.ui.define(
 
         mPortletData.ButtonText1 = this.getMenuName('attendance');
         const Werks = this.getController().getSessionProperty('Werks');
-        if ('1000,4000'.split(',').includes(Werks)) {
-          mPortletData.ButtonText2 = this.getMenuName('individualWorkState');
+        if ('1000,4000,5000'.split(',').includes(Werks)) {
+          mPortletData.ButtonText2 = this.getMenuName('flextime'); // 선택적근로제
+        } else if ('3000'.split(',').includes(Werks)) {
+          mPortletData.ButtonText2 = this.getMenuName('individualWorkState'); // 개인별근태현황
         } else {
-          mPortletData.ButtonText2 = this.getMenuName('workTime');
+          mPortletData.ButtonText2 = this.getMenuName('workTime'); // 시간외근무신청
         }
 
-        if(mPortletData.Wkrul && mPortletData.Wkrul.indexOf("선택") != -1){
-          mPortletData.Wktext = "this month";
+        if (mPortletData.Wkrul && mPortletData.Wkrul.indexOf('선택') != -1) {
+          mPortletData.Wktext = 'this month';
         } else {
-          mPortletData.Wktext = "this week";
+          mPortletData.Wktext = 'this week';
         }
 
         return mPortletData;
