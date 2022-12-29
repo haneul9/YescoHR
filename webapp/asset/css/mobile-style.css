@@ -73,7 +73,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapUiSizeCompact .portlet-header .sapMSegB {margin-bottom:-6px}
 .sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {display:none}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
-.portlet-body .sapMFlexBoxScroll .sapMScrollCont {margin:0 -5px; width:auto !important; padding-right:0}
+.portlet-body .sapMFlexBoxScroll .sapMScrollCont {margin:0 -5px; width:auto !important}
 .portlet-p03p04:hover .portlet-members.my-members .members-position {max-width:calc(100% - 208px)}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:none}
 .portlet-p06 .font-12-px {letter-spacing:-0.6px}
