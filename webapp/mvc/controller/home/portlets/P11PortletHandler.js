@@ -106,7 +106,7 @@ sap.ui.define(
           mPortletData.ButtonText2 = this.getMenuName('workTime'); // 시간외근무신청
         }
 
-        if (mPortletData.Wkrul && mPortletData.Wkrul.indexOf('선택') != -1) {
+        if (mPortletData.Wkrul && mPortletData.Wkrul.indexOf('선택') !== -1) {
           mPortletData.Wktext = 'this month';
         } else {
           mPortletData.Wktext = 'this week';
@@ -196,7 +196,14 @@ sap.ui.define(
 
       onPressButton2() {
         const Werks = this.getController().getSessionProperty('Werks');
-        const sRouteName = '1000,4000'.split(',').includes(Werks) ? 'individualWorkState' : 'workTime';
+        let sRouteName;
+        if ('1000,4000,5000'.split(',').includes(Werks)) {
+          sRouteName = 'flextime'; // 선택적근로제
+        } else if ('3000'.split(',').includes(Werks)) {
+          sRouteName = 'individualWorkState'; // 개인별근태현황
+        } else {
+          sRouteName = 'workTime'; // 시간외근무신청
+        }
 
         this.navTo(sRouteName);
       },
