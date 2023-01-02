@@ -41,6 +41,7 @@ sap.ui.define(
             success: (oData) => {
               AppUtils.debug(`${sUrl} get-entityset success.`, oData);
 
+              // eslint-disable-next-line no-unused-vars
               resolve(oData.results.map(({ ['__metadata']: _, ...obj }) => obj) ?? []);
             },
             error: (oError) => {
