@@ -1,9 +1,10 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.succession.mobile.Candidate"
   xmlns="sap.m"
-  xmlns:core="sap.ui.core"
   xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
   xmlns:custom="sap.ui.yesco.control"
-  xmlns:mvc="sap.ui.core.mvc">
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" busy="{/busy}" busyIndicatorDelay="0">
     <VBox class="contents">
       <HBox class="search-area row-2" binding="{/searchBar}">
@@ -27,7 +28,7 @@
           <!-- <Button press=".onPressSearch" text="{i18n>LABEL_00101}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" class="sapUiTinyMarginTop" /> -->
         </VBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="px-12-px">
+      <mobile:ScrollContainer class="px-12-px">
         <HBox justifyContent="SpaceBetween" class="header-wrap" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
           <VBox>
             <HBox class="header">
@@ -153,7 +154,7 @@
             </f:content>
           </f:Card>
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
     <footer class="wrap">
       <OverflowToolbar>

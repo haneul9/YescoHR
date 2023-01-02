@@ -8,20 +8,12 @@
   </HBox>
   <grid:CSSGrid visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }" gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
     <Label text="{i18n>LABEL_00138}" />
-    <VBox>
-      <Text text="{ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" />
-    </VBox>
+    <Text text="{ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" />
     <Label text="{i18n>LABEL_00140}" />
-    <VBox>
-      <Text text="{/ApprovalDetails/ZappStxtAl}" />
-    </VBox>
+    <Text text="{/ApprovalDetails/ZappStxtAl}" />
     <Label text="{i18n>LABEL_00141}" />
-    <VBox>
-      <Text text="{/ApprovalDetails/Sgndt}" />
-    </VBox>
+    <Text text="{/ApprovalDetails/Sgndt}" />
     <Label text="{i18n>LABEL_00142}" visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} }" />
-    <VBox visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} }">
-      <Text text="{/ApprovalDetails/ZappResn}" />
-    </VBox>
+    <Text text="{/ApprovalDetails/ZappResn}" visible="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} }" />
   </grid:CSSGrid>
 </core:FragmentDefinition>

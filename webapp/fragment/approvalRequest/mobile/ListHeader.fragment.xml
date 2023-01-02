@@ -9,7 +9,7 @@
         <SegmentedButtonItem text="{i18n>LABEL_00192}" key="3m" />
         <SegmentedButtonItem text="{i18n>LABEL_00193}" key="6m" />
         <SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
-        <SegmentedButtonItem text="..." key="0" />
+        <SegmentedButtonItem text="⋯" key="0" />
       </items>
     </SegmentedButton>
     <custom:DateRangeSelection dateValue="{
@@ -20,8 +20,16 @@
   </VBox>
   <HBox justifyContent="SpaceBetween" class="header-wrap" binding="{/search/approvalRequestListInfo}">
     <HBox class="header">
-      <Title level="H3" text="{title}" class="sapUiSmallMarginEnd" />
-      <Text text="total { path: 'count/total', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Title level="H3" text="{title}">
+        <layoutData>
+          <FlexItemData styleClass="header-title" />
+        </layoutData>
+      </Title>
+      <Text text="total { path: 'count/total', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+        <layoutData>
+          <FlexItemData styleClass="header-count" />
+        </layoutData>
+      </Text>
       <Link text="{description}" visible="{= !!${description} }" class="desc-txt" subtle="true" press=".onPressMobileApprovalRequestListDescription">
         <layoutData>
           <FlexItemData maxWidth="50%" />

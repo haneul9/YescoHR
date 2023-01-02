@@ -78,12 +78,17 @@ sap.ui.define(
 
         try {
           const oEventSource = oEvent.getSource();
-          const oMobileSearchBox = oEventSource.getParent();
-          if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
-            oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
-          }
-
           const sKey = oEventSource.getSelectedKey();
+          const bShowDateRangeSelection = sKey === '0';
+
+          setTimeout(() => {
+            const oMobileSearchBox = oEventSource.getParent();
+            if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
+              oMobileSearchBox.toggleStyleClass('search-box-expanded', bShowDateRangeSelection);
+            }
+            this.setSearchProperty('showDateRangeSelection', bShowDateRangeSelection);
+          });
+
           const oPastMoment = DateUtils.getMoment(); // time trimmed moment
           const oToday = oPastMoment.toDate();
 
@@ -106,7 +111,6 @@ sap.ui.define(
             default:
           }
 
-          const bShowDateRangeSelection = sKey === '0';
           if (!bShowDateRangeSelection) {
             const { fromDateFieldName, toDateFieldName } = this.getSearchPeriodConfig();
             this.setSearchProperty(fromDateFieldName, oPastMoment.toDate()); // 과거 일자
@@ -114,8 +118,6 @@ sap.ui.define(
 
             this.onPressIcon();
           }
-
-          this.setSearchProperty('showDateRangeSelection', bShowDateRangeSelection);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {

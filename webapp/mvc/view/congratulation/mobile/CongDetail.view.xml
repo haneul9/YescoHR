@@ -2,85 +2,63 @@
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack" showFooter="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
-    <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
-      <!-- <core:CustomData key="form-style" value="X{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '20' || ${/FormData/ZappStatAl} === '45' ? 'request' : 'retrieval' }" writeToDom="true" /> -->
-    </customData>
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <mobile:Page navButtonPress=".onNavBack" showFooter="{= !'30,40,50,60'.split(',').includes(${/FormData/ZappStatAl}) }">
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="{i18n>LABEL_00129}" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+      <mobile:ScrollContainer>
+        <VBox class="wrap">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <custom:Title text="{i18n>LABEL_00129}" />
+            </HBox>
+          </HBox>
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_02013}" />
-            <VBox>
-              <custom:SingleComboBox class="required" items="{ path: '/BenefitType', templateSharable: true }" selectedKey="{/FormData/Concode}" selectionChange=".onTypeChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </custom:SingleComboBox>
-              <Text text="{/FormData/Context}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }" />
-            </VBox>
+            <Text text="{/FormData/Context}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }" />
+            <custom:SingleComboBox class="required" items="{/BenefitType}" selectedKey="{/FormData/Concode}" selectionChange=".onTypeChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </custom:SingleComboBox>
             <Label text="{i18n>LABEL_02008}" />
-            <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" selectionChange=".onCauseChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </custom:SingleComboBox>
-              <Text text="{/FormData/Conretx}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }" />
-            </VBox>
+            <Text text="{/FormData/Conretx}" visible="{= ${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl} }" />
+            <custom:SingleComboBox class="required" items="{/BenefitCause}" selectedKey="{/FormData/Conresn}" selectionChange=".onCauseChange" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </custom:SingleComboBox>
             <Label text="{i18n>LABEL_02015}" />
-            <VBox>
-              <custom:SingleComboBox class="required" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" selectionChange=".onRelationChange" visible="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/fixRelation} }">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </custom:SingleComboBox>
-              <Text text="{/FormData/Famtx}" visible="{= (${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl}) || !${/fixRelation} }" />
-            </VBox>
+            <Text text="{/FormData/Famtx}" visible="{= (${/FormData/ZappStatAl} !== '10' &amp;&amp; !!${/FormData/ZappStatAl}) || !${/fixRelation} }" />
+            <custom:SingleComboBox class="required" items="{/BenefitRelation}" selectedKey="{/FormData/Kdsvh}" selectionChange=".onRelationChange" visible="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/fixRelation} }">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </custom:SingleComboBox>
             <Label text="{i18n>LABEL_02017}" />
-            <VBox>
-              <Input class="required" showValueHelp="true" valueHelpRequest=".onTargetDialog" value="{/FormData/Zname}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/relationTxt} }" />
-            </VBox>
+            <Input class="required" showValueHelp="true" valueHelpRequest=".onTargetDialog" value="{/FormData/Zname}" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/relationTxt} }" />
             <Label text="{i18n>LABEL_02014}" />
-            <VBox>
-              <custom:DatePicker class="required" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/birthDatePicker} }" />
-            </VBox>
+            <custom:DatePicker class="required" maxDate="{/BirthMaxDate}" change=".onBirthDate" dateValue="{ path: '/FormData/Zbirthday', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{= (${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl}) &amp;&amp; ${/birthDatePicker} }" />
             <Label text="{i18n>LABEL_02009}" />
-            <VBox>
-              <custom:DatePicker dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
+            <custom:DatePicker dateValue="{ path: '/FormData/Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" change=".onBenefitChangeDate" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_02016}" />
-            <VBox>
-              <Input value="{/FormData/Zeloc}" class="required" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-            </VBox>
+            <Input value="{/FormData/Zeloc}" class="required" editable="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
             <Label text="{i18n>LABEL_02021}" />
-            <VBox>
-              <Text text="{ path: '/FormData/Zflower', formatter: '.formatFlowerTxt' }" />
-            </VBox>
+            <Text text="{ path: '/FormData/Zflower', formatter: '.formatFlowerTxt' }" />
             <Label text="{i18n>LABEL_02018}" />
-            <VBox>
-              <Text text="{/FormData/ZbacBetT}" />
-            </VBox>
+            <Text text="{/FormData/ZbacBetT}" />
             <Label text="{i18n>LABEL_02019}" />
-            <VBox>
-              <Text text="{/FormData/PayrtT}" />
-            </VBox>
+            <Text text="{/FormData/PayrtT}" />
             <Label text="{i18n>LABEL_02020}" />
-            <VBox>
-              <Text text="{/FormData/ZpayBetT}" />
-            </VBox>
-          </grid:CSSGrid>
+            <Text text="{/FormData/ZpayBetT}" />
+          </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
-    <footer>
-      <OverflowToolbar visible="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
+    <mobile:footer>
+      <OverflowToolbar visible="{= !'30,40,50,60'.split(',').includes(${/FormData/ZappStatAl}) }">
+        <Button text="{i18n>LABEL_00118}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
+        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

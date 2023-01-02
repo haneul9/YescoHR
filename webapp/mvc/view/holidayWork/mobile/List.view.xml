@@ -1,13 +1,13 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.holidayWork.mobile.List"
   xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
-  xmlns:custom="sap.ui.yesco.control"
-  xmlns:mvc="sap.ui.core.mvc">
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom" />
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
+      <mobile:ScrollContainer>
         <List items="{ path: '/list' }" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
           <CustomListItem type="Active" press=".onSelectRow">
             <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
@@ -30,7 +30,7 @@
             </grid:CSSGrid>
           </CustomListItem>
         </List>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
     <footer>
       <OverflowToolbar>

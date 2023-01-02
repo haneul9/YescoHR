@@ -1,15 +1,16 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.medical.mobile.MedicalDetail"
   xmlns="sap.m"
-  xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
-  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' &amp;&amp; ${/FormData/Lnsta} !== 'XX' }">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
     <customData>
       <core:CustomData key="form-style" value="request" writeToDom="true" />
     </customData>
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
+      <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <HBox class="table-toolbar">
             <HBox class="title">
@@ -84,10 +85,10 @@
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
     <footer>
-      <OverflowToolbar visible="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' &amp;&amp; ${/FormData/Lnsta} !== 'XX' }">
+      <OverflowToolbar visible="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
         <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
         <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || !!${/ReWriteBtn} }" />

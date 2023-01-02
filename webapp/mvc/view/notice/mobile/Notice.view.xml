@@ -1,12 +1,12 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.notice.mobile.Notice"
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:custom="sap.ui.yesco.control"
-  xmlns:mvc="sap.ui.core.mvc">
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
+      <mobile:ScrollContainer>
         <List items="{path: '/NoticeList'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
           <CustomListItem type="Active" press=".onSelectRow">
             <VBox>
@@ -18,7 +18,7 @@
             </VBox>
           </CustomListItem>
         </List>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
   </Page>
 </mvc:View>

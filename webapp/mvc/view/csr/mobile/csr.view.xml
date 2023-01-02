@@ -1,73 +1,73 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.csr.mobile.csr"
-    xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-        <VBox class="contents">
-            <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
-            <custom:MobileScrollContainer id="listScrollContainer" horizontal="false" vertical="true">
-                <custom:layoutData>
-                    <FlexItemData styleClass="mobile-list-scroll-box search-row-3" />
-                </custom:layoutData>
-                <List items="{path: '/list'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-                    <CustomListItem type="Active" press=".onSelectRow">
-                        <grid:CSSGrid gridTemplateColumns="40px 4fr 4fr 3fr 40px" gridGap="6px 0">
-                            <CheckBox selected="{rowChecked}" editable="{= ${Appryn} === 'X' }">
-                                <layoutData>
-                                    <grid:GridItemLayoutData gridRow="span 2" />
-                                </layoutData>
-                            </CheckBox>
-                            <Text text="{Apttl}" wrapping="false" class="font-16-px font-bold">
-                                <layoutData>
-                                    <grid:GridItemLayoutData gridColumn="span 2" />
-                                </layoutData>
-                            </Text>
-                            <HBox width="100%" justifyContent="End" class="pr-4-px">
-                                <Image src="{CompanyIcon}" width="30px" height="16px" />
-                            </HBox>
-                            <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
-                                <core:layoutData>
-                                    <grid:GridItemLayoutData gridRow="span 2" />
-                                </core:layoutData>
-                                <core:customData>
-                                    <core:CustomData key="csr-status" value="Z{Prstg}" writeToDom="true" />
-                                </core:customData>
-                            </core:Icon>
-                            <Text text="{Prstatx}" wrapping="false">
-                                <customData>
-                                    <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
-                                </customData>
-                            </Text>
-                            <Text text="{Csrtytx}" wrapping="false">
-                                <customData>
-                                    <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
-                                </customData>
-                            </Text>
-                            <Text text="{ReqdatFormatted}" wrapping="false">
-                                <customData>
-                                    <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
-                                </customData>
-                            </Text>
-                        </grid:CSSGrid>
-                    </CustomListItem>
-                </List>
-            </custom:MobileScrollContainer>
-        </VBox>
-        <footer class="wrap">
-            <OverflowToolbar>
-                <Button text="{i18n>LABEL_00123}" type="Emphasized" width="100%" press=".onPressApproval">
-                    <layoutData>
-                        <FlexItemData growFactor="1"/>
-                    </layoutData>
-                </Button>
-                <Button text="{i18n>LABEL_00124}" type="Reject" width="100%" press=".onPressReject">
-                    <layoutData>
-                        <FlexItemData growFactor="1"/>
-                    </layoutData>
-                </Button>
-            </OverflowToolbar>
-        </footer>
-    </Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
+      <mobile:ScrollContainer id="listScrollContainer">
+        <mobile:layoutData>
+          <FlexItemData styleClass="mobile-list-scroll-box search-row-3" />
+        </mobile:layoutData>
+        <List items="{path: '/list'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
+          <CustomListItem type="Active" press=".onSelectRow">
+            <grid:CSSGrid gridTemplateColumns="40px 4fr 4fr 3fr 40px" gridGap="6px 0">
+              <CheckBox selected="{rowChecked}" editable="{= ${Appryn} === 'X' }">
+                <layoutData>
+                  <grid:GridItemLayoutData gridRow="span 2" />
+                </layoutData>
+              </CheckBox>
+              <Text text="{Apttl}" wrapping="false" class="font-16-px font-bold">
+                <layoutData>
+                  <grid:GridItemLayoutData gridColumn="span 2" />
+                </layoutData>
+              </Text>
+              <HBox width="100%" justifyContent="End" class="pr-4-px">
+                <Image src="{CompanyIcon}" width="30px" height="16px" />
+              </HBox>
+              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
+                <core:layoutData>
+                  <grid:GridItemLayoutData gridRow="span 2" />
+                </core:layoutData>
+                <core:customData>
+                  <core:CustomData key="csr-status" value="Z{Prstg}" writeToDom="true" />
+                </core:customData>
+              </core:Icon>
+              <Text text="{Prstatx}" wrapping="false">
+                <customData>
+                  <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
+                </customData>
+              </Text>
+              <Text text="{Csrtytx}" wrapping="false">
+                <customData>
+                  <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
+                </customData>
+              </Text>
+              <Text text="{ReqdatFormatted}" wrapping="false">
+                <customData>
+                  <core:CustomData key="text-hilight" value="step{Prstg}" writeToDom="true" />
+                </customData>
+              </Text>
+            </grid:CSSGrid>
+          </CustomListItem>
+        </List>
+      </mobile:ScrollContainer>
+    </VBox>
+    <footer class="wrap">
+      <OverflowToolbar>
+        <Button text="{i18n>LABEL_00123}" type="Emphasized" width="100%" press=".onPressApproval">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </Button>
+        <Button text="{i18n>LABEL_00124}" type="Reject" width="100%" press=".onPressReject">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+        </Button>
+      </OverflowToolbar>
+    </footer>
+  </Page>
 </mvc:View>

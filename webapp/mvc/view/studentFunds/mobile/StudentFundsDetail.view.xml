@@ -1,18 +1,19 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.studentFunds.mobile.StudentFundsDetail"
   xmlns="sap.m"
-  xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
-  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
-    <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
-    </customData>
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <mobile:Page navButtonPress=".onNavBack" showFooter="{= !'30,40,50,60'.split(',').includes(${/FormData/ZappStatAl}) }">
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="{i18n>LABEL_00129}" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+      <mobile:ScrollContainer>
+        <VBox class="wrap">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <custom:Title text="{i18n>LABEL_00129}" />
+            </HBox>
+          </HBox>
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_03012}" />
             <Text text="{/FormData/Zzobjpstx}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" />
             <custom:SingleComboBox items="{/AppTarget}" selectedKey="{/FormData/Zzobjps}" change=".onChangeTarget" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
@@ -95,22 +96,21 @@
 
             <Label text="{i18n>LABEL_03029}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" class="align-top" />
             <Text text="{/FormData/Zresn}" visible="{= !!${/FormData/ZappStatAl} &amp;&amp; ${/FormData/ZappStatAl} !== '10' }" class="multi-line" />
-          </grid:CSSGrid>
+          </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
-    <footer>
-      <OverflowToolbar visible="{= ${/FormData/ZappStatAl} !== '30' &amp;&amp; ${/FormData/ZappStatAl} !== '40' &amp;&amp; ${/FormData/ZappStatAl} !== '50' &amp;&amp; ${/FormData/ZappStatAl} !== '60' &amp;&amp; ${/FormData/ZappStatAl} !== 'XX' }">
-        <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
+    <mobile:footer>
+      <OverflowToolbar visible="{= !'30,40,50,60'.split(',').includes(${/FormData/ZappStatAl}) }">
+        <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
         <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/ZappStatAl} === '45' }" />
         <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
         <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
-        <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

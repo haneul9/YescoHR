@@ -1,35 +1,36 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-        <VBox class="contents">
-            <custom:MobileScrollContainer horizontal="false" vertical="true">
-                <VBox class="search-area" visible="{= ${/auth} !== 'E' }">
-                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-                        <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" selectionChange=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
-                            <custom:layoutData>
-                                <FlexItemData minWidth="67%" maxWidth="67%" />
-                            </custom:layoutData>
-                            <core:Item key="{Werks}" text="{Pbtxt}" />
-                        </custom:SingleComboBox>
-                    </HBox>
-                    <HBox justifyContent="SpaceBetween" alignItems="Center">
-                        <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
-                            <custom:layoutData>
-                                <FlexItemData minWidth="67%" maxWidth="67%" />
-                            </custom:layoutData>
-                            <core:Item text="{Orgtx}" key="{Orgeh}" />
-                        </custom:SingleComboBox>
-                        <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
-                            <layoutData>
-                                <FlexItemData minWidth="33%" maxWidth="33%" />
-                            </layoutData>
-                        </Button>
-                    </HBox>
-                </VBox>
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.teamCalendar.mobile.fragment.MonthlyCalendar" type="XML" />
-                <core:Fragment fragmentName="sap.ui.yesco.mvc.view.teamCalendar.mobile.fragment.ReasonList" type="XML" />
-            </custom:MobileScrollContainer>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <VBox class="contents">
+      <mobile:ScrollContainer>
+        <VBox class="search-area" visible="{= ${/auth} !== 'E' }">
+          <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+            <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Werks}" items="{/entry/Werks}" enabled="{= ${/auth} !== 'E' }" selectionChange=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Werks}">
+              <custom:layoutData>
+                <FlexItemData minWidth="67%" maxWidth="67%" />
+              </custom:layoutData>
+              <core:Item key="{Werks}" text="{Pbtxt}" />
+            </custom:SingleComboBox>
+          </HBox>
+          <HBox justifyContent="SpaceBetween" alignItems="Center">
+            <custom:SingleComboBox width="100%" selectedKey="{/searchConditions/Orgeh}" items="{/entry/Orgeh}" enabled="{= ${/auth} !== 'E' }" busyIndicatorDelay="0" busy="{/busy/Orgeh}">
+              <custom:layoutData>
+                <FlexItemData minWidth="67%" maxWidth="67%" />
+              </custom:layoutData>
+              <core:Item text="{Orgtx}" key="{Orgeh}" />
+            </custom:SingleComboBox>
+            <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressSearch" width="100%" class="sapUiTinyMarginBegin">
+              <layoutData>
+                <FlexItemData minWidth="33%" maxWidth="33%" />
+              </layoutData>
+            </Button>
+          </HBox>
         </VBox>
-    </Page>
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.teamCalendar.mobile.fragment.MonthlyCalendar" type="XML" />
+        <core:Fragment fragmentName="sap.ui.yesco.mvc.view.teamCalendar.mobile.fragment.ReasonList" type="XML" />
+      </mobile:ScrollContainer>
+    </VBox>
+  </Page>
 </core:FragmentDefinition>

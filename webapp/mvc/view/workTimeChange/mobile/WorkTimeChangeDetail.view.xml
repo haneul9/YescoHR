@@ -1,15 +1,16 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.workTimeChange.mobile.WorkTimeChangeDetail"
   xmlns="sap.m"
-  xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
-  <Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <customData>
       <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }" writeToDom="true" />
     </customData>
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="form-grid">
+      <mobile:ScrollContainer class="form-grid">
         <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
           <HBox class="table-toolbar" visible="{= ${/Fixed}}">
             <HBox class="title">
@@ -86,7 +87,7 @@
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
     <footer>
       <OverflowToolbar>

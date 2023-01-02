@@ -6,22 +6,14 @@
       <Title level="H2" text="{i18n>LABEL_00135}" />
     </HBox>
   </HBox>
-  <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid border-bottom-0px">
+  <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="16px 0" class="form-grid">
     <Label text="{i18n>LABEL_00210}"/>
-    <VBox>
-      <Text text="{/ApplyInfo/Apename}"/>
-    </VBox>
+    <Text text="{/ApplyInfo/Apename}"/>
     <Label text="{i18n>LABEL_00226}"/>
-    <VBox>
-      <Text text="{/ApplyInfo/Aporgtx}"/>
-    </VBox>
+    <Text text="{/ApplyInfo/Aporgtx}"/>
     <Label text="{i18n>LABEL_00136}"/>
-    <VBox>
-      <Text text="{/ApplyInfo/Apjikgbtl}"/>
-    </VBox>
+    <Text text="{/ApplyInfo/Apjikgbtl}"/>
     <Label text="{i18n>LABEL_00137}"/>
-    <VBox>
-      <Text text="{/ApplyInfo/Appdt}"/>
-    </VBox>
+    <Text text="{/ApplyInfo/Appdt}"/>
   </grid:CSSGrid>
 </core:FragmentDefinition>

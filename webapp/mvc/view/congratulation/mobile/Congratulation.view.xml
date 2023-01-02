@@ -1,43 +1,28 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.congratulation.mobile.Congratulation"
-  xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
-  xmlns:custom="sap.ui.yesco.control"
-  xmlns:mvc="sap.ui.core.mvc">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  xmlns="sap.m"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
-        <List items="{path: '/CongList'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-          <CustomListItem type="Active" press=".onSelectRow">
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
-              <Text text="{Conretx}" class="font-16-px font-bold" />
-              <Text text="{Famtx}"/>
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
-                <core:customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </core:customData>
-              </core:Icon>
-              <Text text="{Zname}"/>
-              <Text text="{ path: 'Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
-              <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
-                <customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </customData>
-              </Text>
-            </grid:CSSGrid>
-          </CustomListItem>
-        </List>
-      </custom:MobileScrollContainer>
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" />
+      <mobile:ScrollContainer>
+        <mobile:List items="{/CongList}">
+          <mobile:CustomListItem press=".onSelectRow">
+            <mobile:ApprovalRequestListItemBox>              <!-- statusFieldName="ZappStatAl" -->
+              <mobile:ListCSSGrid>
+                <Text text="{Conretx}" class="emphasized" />
+                <Text text="{Famtx}" />
+                <Text text="{Zname}" />
+                <Text text="{ path: 'Conddate', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              </mobile:ListCSSGrid>
+            </mobile:ApprovalRequestListItemBox>
+          </mobile:CustomListItem>
+        </mobile:List>
+      </mobile:ScrollContainer>
     </VBox>
-    <footer class="wrap">
-      <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onClick">
-          <layoutData>
-            <FlexItemData growFactor="1"/>
-          </layoutData>
-        </Button>
-      </OverflowToolbar>
-    </footer>
-  </Page>
+    <mobile:footer>
+      <mobile:ApprovalRequestListFooterToolbar pressRequestNew=".onClick" />
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

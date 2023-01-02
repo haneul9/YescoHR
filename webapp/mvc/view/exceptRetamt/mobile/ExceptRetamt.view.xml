@@ -1,62 +1,63 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.exceptRetamt.mobile.ExceptRetamt"
-  	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:custom="sap.ui.yesco.control"
-	xmlns:mvc="sap.ui.core.mvc">
-	<Page enableScrolling="false" floatingFooter="true" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-		<customData>
-		<core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-		</customData>
-		<VBox class="contents">
-			<custom:MobileScrollContainer horizontal="false" vertical="true">
-				<VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-					<VBox>
-						<Title level="H2" text="{i18n>LABEL_33002}" />
-						<grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
-							<Label text="{i18n>LABEL_33004}" />
-							<VBox>
-								<custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" />
-							</VBox>
-							<Label text="{i18n>LABEL_33003}" />
-							<VBox>
-								<Text text="{ path:'/data/Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-							</VBox>
-						</grid:CSSGrid>
-					</VBox>
-					
-					<VBox class="pt-20-px">
-						<Title level="H2" text="{i18n>LABEL_33006}" />
-						<grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="7px 0" class="form-grid">
-							<Label text="{i18n>LABEL_33007}" />
-							<VBox>
-								<Text text="{/data/Dat01}" />
-							</VBox>
-							<Label text="{i18n>LABEL_33008}" />
-							<HBox>
-								<Text text="{/data/Dat02}" />
-							</HBox>
-							<Label text="{i18n>LABEL_33011}" />
-							<VBox>
-								<Text text="{/data/Dat05}" />
-							</VBox>
-							<!-- <Label text="{i18n>LABEL_33012}" />
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <customData>
+      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
+    </customData>
+    <VBox class="contents">
+      <mobile:ScrollContainer>
+        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
+          <VBox>
+            <Title level="H2" text="{i18n>LABEL_33002}" />
+            <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+              <Label text="{i18n>LABEL_33004}" />
+              <VBox>
+                <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" />
+              </VBox>
+              <Label text="{i18n>LABEL_33003}" />
+              <VBox>
+                <Text text="{ path:'/data/Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+              </VBox>
+            </grid:CSSGrid>
+          </VBox>
+
+          <VBox class="pt-20-px">
+            <Title level="H2" text="{i18n>LABEL_33006}" />
+            <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="7px 0" class="form-grid">
+              <Label text="{i18n>LABEL_33007}" />
+              <VBox>
+                <Text text="{/data/Dat01}" />
+              </VBox>
+              <Label text="{i18n>LABEL_33008}" />
+              <HBox>
+                <Text text="{/data/Dat02}" />
+              </HBox>
+              <Label text="{i18n>LABEL_33011}" />
+              <VBox>
+                <Text text="{/data/Dat05}" />
+              </VBox>
+              <!-- <Label text="{i18n>LABEL_33012}" />
 							<HBox>
 								<Text text="{/data/Dat06}" />
 							</HBox> -->
-							<Label text="{i18n>LABEL_33013}" />
-							<HBox>
-								<ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />
-							</HBox>
-						</grid:CSSGrid>
-					</VBox>
-				</VBox>
-			</custom:MobileScrollContainer>
-		</VBox>
-		<footer>
-			<OverflowToolbar>
-				<Button text="{i18n>LABEL_33014}" type="Emphasized" press=".onSearch" />
-			</OverflowToolbar>
-		</footer>
-	</Page>
+              <Label text="{i18n>LABEL_33013}" />
+              <HBox>
+                <ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />
+              </HBox>
+            </grid:CSSGrid>
+          </VBox>
+        </VBox>
+      </mobile:ScrollContainer>
+    </VBox>
+    <footer>
+      <OverflowToolbar>
+        <Button text="{i18n>LABEL_33014}" type="Emphasized" press=".onSearch" />
+      </OverflowToolbar>
+    </footer>
+  </Page>
 </mvc:View>

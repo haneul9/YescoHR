@@ -9,7 +9,7 @@
         <SegmentedButtonItem text="{i18n>LABEL_00192}" key="3m" />
         <SegmentedButtonItem text="{i18n>LABEL_00193}" key="6m" />
         <SegmentedButtonItem text="{i18n>LABEL_00194}" key="12m" />
-        <SegmentedButtonItem text="..." key="0" />
+        <SegmentedButtonItem text="⋯" key="0" />
       </items>
     </SegmentedButton>
     <custom:DateRangeSelection dateValue="{
@@ -32,8 +32,16 @@
   </VBox>
   <HBox justifyContent="SpaceBetween" class="header-wrap">
     <HBox class="header">
-      <Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }" class="sapUiSmallMarginEnd" />
-      <Text text="total { path: '/listInfo/totalCount', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Title level="H3" text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }">
+        <layoutData>
+          <FlexItemData styleClass="header-title" />
+        </layoutData>
+      </Title>
+      <Text text="total { path: '/listInfo/totalCount', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+        <layoutData>
+          <FlexItemData styleClass="header-count" />
+        </layoutData>
+      </Text>
       <Link text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" subtle="true" press=".onPressMobileInfoMessage">
         <layoutData>
           <FlexItemData maxWidth="50%" />

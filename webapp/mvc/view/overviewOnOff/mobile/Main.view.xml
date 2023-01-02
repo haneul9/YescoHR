@@ -2,7 +2,8 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
     <headerContent>
       <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchAreaClose}" />
@@ -29,7 +30,7 @@
           <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
         </VBox>
       </HBox>
-      <custom:MobileScrollContainer horizontal="false" vertical="true" class="px-12-px">
+      <mobile:ScrollContainer class="px-12-px">
         <VBox class="overviews row-280-px mb-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.fragment.A02" type="XML" />
@@ -38,7 +39,7 @@
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A03" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewOnOff.mobile.A06" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
   </Page>
 </mvc:View>

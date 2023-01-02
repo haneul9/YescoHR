@@ -3,20 +3,18 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
-  <Page binding="{/approvalRequestDetail}" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= !!${/approvalRequestConfig/showFooter} }">
-    <customData>
-      <core:CustomData key="form-style" value="request" writeToDom="true" />
-    </customData>
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
+  <mobile:Page binding="{/approvalRequestDetail}" navButtonPress=".onNavBack" showFooter="{= !!${/approvalRequestConfig/showFooter} }">
     <VBox class="contents">
-      <custom:MobileScrollContainer horizontal="false" vertical="true">
+      <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <HBox class="table-toolbar">
             <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_00129}" />
+              <custom:Title text="{i18n>LABEL_00129}" />
             </HBox>
           </HBox>
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="16px 0" class="form-grid">
             <Label text="{i18n>LABEL_50102}" />
             <Text text="{Apptytx}" visible="{= !${/approvalRequestConfig/editable} }" />
             <custom:SingleComboBox items="{/approvalRequestConfig/ApptyList}" selectedKey="{Appty}" visible="{/approvalRequestConfig/editable}" selectionChange=".onSelectionChangeAppty" class="required">
@@ -68,10 +66,10 @@
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
-      </custom:MobileScrollContainer>
+      </mobile:ScrollContainer>
     </VBox>
-    <footer>
-      <custom:ApprovalRequestDetailFooterToolbar rewrite="true" pressRewrite=".onPressRewrite" save="true" pressSave=".onPressSave" request="true" pressRequest=".onPressRequestApproval" remove="true" pressRemove=".onPressRemove" />
-    </footer>
-  </Page>
+    <mobile:footer>
+      <mobile:ApprovalRequestDetailFooterToolbar rewrite="true" pressRewrite=".onPressRewrite" save="true" pressSave=".onPressSave" request="true" pressRequest=".onPressRequestApproval" remove="true" pressRemove=".onPressRemove" />
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

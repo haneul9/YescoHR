@@ -37,9 +37,7 @@ sap.ui.define(
           ViewKey: '',
           sYear: '',
           previousName: '',
-          FormData: {
-            Lnsta: 'XX',
-          },
+          FormData: {},
           DialogData: {},
           TargetDetails: {},
           RemoveFiles: [],
@@ -1398,7 +1396,6 @@ ${sCommMsg}`;
       },
 
       reduceViewResource() {
-        this.getViewModel().setProperty('/FormData/Lnsta', 'XX');
         if (this.oGuideDialog) {
           this.oGuideDialog.destroy();
           this.oGuideDialog = null;

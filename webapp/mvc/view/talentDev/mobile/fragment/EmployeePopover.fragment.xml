@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Popover placement="Top" horizontalScrolling="false" verticalScrolling="false" class="full-popover" busy="{/busy/Employee}" busyIndicatorDelay="0" modal="true">
     <customHeader>
       <Bar>
@@ -29,7 +29,7 @@
             </layoutData>
           </Image>
         </HBox>
-        <custom:MobileScrollContainer horizontal="false" vertical="true">
+        <mobile:ScrollContainer>
           <List items="{/employee/listInfo/list}" busy="{/busy/Employee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-employee">
             <CustomListItem type="Active" press=".onPressEmployeeListItem">
               <grid:CSSGrid gridTemplateColumns="46px auto" gridTemplateRows="20px 20px" gridGap="6px 16px">
@@ -49,7 +49,7 @@
               </grid:CSSGrid>
             </CustomListItem>
           </List>
-        </custom:MobileScrollContainer>
+        </mobile:ScrollContainer>
       </VBox>
     </content>
   </Popover>

@@ -465,10 +465,14 @@ sap.ui.define(
        */
       onMobileSearchList(oEvent) {
         const oEventSource = oEvent.getSource();
-        const oMobileSearchBox = oEventSource.getParent();
-        if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
-          oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
-        }
+
+        setTimeout(() => {
+          const oMobileSearchBox = oEventSource.getParent();
+          if (oMobileSearchBox && oMobileSearchBox.hasStyleClass('search-box')) {
+            oMobileSearchBox.toggleStyleClass('search-box-expanded', oEventSource.getSelectedKey() === '0');
+          }
+        });
+
         if (typeof this.onSearchList === 'function') {
           this.onSearchList(oEvent);
         }

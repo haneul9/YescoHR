@@ -32,8 +32,8 @@
           <Label text="{i18n>LABEL_50104}" visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' || ${/approvalRequestConfig/fieldControl/Zdays} !== 'X' }" />
           <HBox visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' || ${/approvalRequestConfig/fieldControl/Zdays} !== 'X' }">
             <custom:DatePicker dateValue="{
-                path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date'
-              }" visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' }" editable="{/approvalRequestConfig/editable}" change=".onChangeEndda" class="mr-16-px" width="250px">
+              path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.Date'
+            }" visible="{= ${/approvalRequestConfig/fieldControl/Endda} !== 'X' }" editable="{/approvalRequestConfig/editable}" change=".onChangeEndda" class="mr-16-px" width="250px">
               <custom:customData>
                 <core:CustomData key="required" value="o{= ${/approvalRequestConfig/fieldControl/Endda} === 'M' ? 'n' : 'ff' }" writeToDom="true" />
               </custom:customData>

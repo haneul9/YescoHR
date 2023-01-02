@@ -100,53 +100,46 @@ sap.ui.define(
 
       // 검색 날짜 선택
       async onSearchList(oEvent) {
+        const sKey = oEvent.getSource().getSelectedKey();
         const oViewModel = this.getViewModel();
 
         try {
-          const sKey = oEvent.getSource().getSelectedKey();
-          let dBegda = moment().toDate();
-          let dEndda = moment().toDate();
-          let bDateRangeBox = false;
-
           oViewModel.setProperty('/busy', true);
+
+          const bDateRangeBox = sKey === '0';
+          setTimeout(() => {
+            oViewModel.setProperty('/search/dateBox', bDateRangeBox);
+          });
+
+          const dEndda = moment();
 
           switch (sKey) {
             case '1w':
-              dEndda = moment().subtract(7, 'day').toDate();
-              bDateRangeBox = false;
+              dEndda.subtract(7, 'day');
               break;
             case '1m':
-              dEndda = moment().subtract(1, 'months').add(1, 'day').toDate();
-              bDateRangeBox = false;
+              dEndda.subtract(1, 'months').add(1, 'day');
               break;
             case '3m':
-              dEndda = moment().subtract(3, 'months').add(1, 'day').toDate();
-              bDateRangeBox = false;
+              dEndda.subtract(3, 'months').add(1, 'day');
               break;
             case '6m':
-              dEndda = moment().subtract(6, 'months').add(1, 'day').toDate();
-              bDateRangeBox = false;
+              dEndda.subtract(6, 'months').add(1, 'day');
               break;
             case '12m':
-              dEndda = moment().subtract(12, 'months').add(1, 'day').toDate();
-              bDateRangeBox = false;
-              break;
-            case '0':
-              bDateRangeBox = true;
+              dEndda.subtract(12, 'months').add(1, 'day');
               break;
           }
 
           if (!bDateRangeBox) {
-            oViewModel.setProperty('/search/secondDate', dBegda);
-            oViewModel.setProperty('/search/date', dEndda);
+            oViewModel.setProperty('/search/secondDate', moment().startOf('day').hours(9).toDate());
+            oViewModel.setProperty('/search/date', dEndda.startOf('day').hours(9).toDate());
 
             const aCongList = await this.getAppList();
 
             oViewModel.setProperty('/CongList', aCongList);
             oViewModel.setProperty('/listInfo/totalCount', _.size(aCongList));
           }
-
-          oViewModel.setProperty('/search/dateBox', bDateRangeBox);
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
