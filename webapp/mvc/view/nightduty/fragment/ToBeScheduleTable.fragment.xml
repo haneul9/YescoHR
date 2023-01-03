@@ -72,10 +72,10 @@
           <m:Label text="{i18n>LABEL_00209}" />
         </multiLabels>
         <template>
-          <m:Input editable="{/Config/Editable}" textAlign="{= !${/Config/Editable} ? 'Center' : 'Begin' }" value="{
+          <m:Input editable="{/approvalRequestConfig/editable}" textAlign="{= !${/approvalRequestConfig/editable} ? 'Center' : 'Begin' }" value="{
             path: 'PernrA', type: 'sap.ui.yesco.mvc.model.type.Pernr'
           }" showSuggestion="true" showTableSuggestionValueHelp="false" maxSuggestionWidth="350px" suggestionRows="{
-            path:'/Config/employees', templateShareable: true
+            path:'/approvalRequestConfig/employees', templateShareable: true
           }" suggestionItemSelected=".onSelectSuggestion" submit=".onSubmitSuggest" width="100%">
             <m:suggestionColumns>
               <m:Column popinDisplay="Inline" demandPopin="true">
