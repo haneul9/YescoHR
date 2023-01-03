@@ -182,4 +182,7 @@
             </custom:SingleComboBox>
           </HBox>
         </VBox>
-      </mobile:ScrollContainer>>
+      </mobile:ScrollContainer>
+    </VBox>
+  </Page>
+</mvc:View>
