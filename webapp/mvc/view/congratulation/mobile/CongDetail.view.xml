@@ -53,7 +53,7 @@
       </mobile:ScrollContainer>
     </VBox>
     <mobile:footer>
-      <OverflowToolbar visible="{= !'30,40,50,60'.split(',').includes(${/FormData/ZappStatAl}) }">
+      <OverflowToolbar>
         <Button text="{i18n>LABEL_00118}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
         <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />

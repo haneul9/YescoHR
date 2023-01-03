@@ -17,8 +17,7 @@ sap.ui.define(
       constructor: function (...aArgs) {
         CSSGrid.apply(this, aArgs);
 
-        this.setGridTemplateColumns('1fr 1fr') // prettier 방지용 주석
-          .setGridGap('6px 0')
+        this.setGridGap('6px 0') // prettier 방지용 주석
           .setLayoutData(
             new FlexItemData({
               styleClass: 'approval-request-list-item-detail',

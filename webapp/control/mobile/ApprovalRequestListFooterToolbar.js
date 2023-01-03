@@ -22,6 +22,8 @@ sap.ui.define(
       metadata: {
         properties: {
           requestNew: { type: 'boolean', group: 'Misc', defaultValue: true },
+          requestNewEnabled: { type: 'boolean', group: 'Misc', defaultValue: true },
+          requestNewVisible: { type: 'boolean', group: 'Misc', defaultValue: true },
         },
         events: {
           pressRequestNew: {},
@@ -48,6 +50,8 @@ sap.ui.define(
         return new Button({
           text: '{i18n>LABEL_00121}', // 신청
           type: ButtonType.Emphasized,
+          enabled: this.getRequestNewEnabled(),
+          visible: this.getRequestNewVisible(),
           press: this.firePressRequestNew.bind(this),
         });
       },

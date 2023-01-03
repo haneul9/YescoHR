@@ -10,7 +10,7 @@
         <mobile:List items="{/CongList}">
           <mobile:CustomListItem press=".onSelectRow">
             <mobile:ApprovalRequestListItemBox>              <!-- statusFieldName="ZappStatAl" -->
-              <mobile:ListCSSGrid>
+              <mobile:ListCSSGrid gridTemplateColumns="1fr 1fr">
                 <Text text="{Conretx}" class="emphasized" />
                 <Text text="{Famtx}" />
                 <Text text="{Zname}" />
