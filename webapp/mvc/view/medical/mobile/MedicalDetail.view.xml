@@ -5,22 +5,22 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
-    <customData>
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack" showFooter="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
+    <mobile:customData>
       <core:CustomData key="form-style" value="request" writeToDom="true" />
-    </customData>
+    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <HBox class="table-toolbar">
             <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_00129}" />
+              <custom:Title text="{i18n>LABEL_00129}" />
             </HBox>
             <HBox class="table-actions">
               <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressOpenGuideDialog" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
             </HBox>
           </HBox>
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_03012}" />
             <Text text="{/FormData/Znametx}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
             <custom:SingleComboBox items="{/TargetList}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" selectionChange=".onTargetList" visible="{= !${/FormData/Lnsta} }" class="required">
@@ -49,10 +49,10 @@
             <Label text="{i18n>LABEL_00163}" class="align-top" />
             <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
             <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" class="multi-line" />
-          </grid:CSSGrid>
+          </mobile:DetailCSSGrid>
           <HBox class="table-toolbar">
             <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_09022}" />
+              <custom:Title text="{i18n>LABEL_09022}" />
             </HBox>
             <HBox class="table-actions">
               <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" />
@@ -87,15 +87,14 @@
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
-      <OverflowToolbar visible="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
-        <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
+    <mobile:footer>
+      <OverflowToolbar>
         <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
         <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || !!${/ReWriteBtn} }" />
         <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
         <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

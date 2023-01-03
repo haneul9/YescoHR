@@ -2,18 +2,17 @@
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <customData>
+  <mobile:Page title="{menuModel>/current/currentLocationText}" showFooter="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '20' }" navButtonPress=".onNavBack">
+    <mobile:customData>
       <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </customData>
+    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <Title level="H2" text="{i18n>LABEL_00129}" />
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+          <custom:Title text="{i18n>LABEL_00129}" />
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_26008}"/>
             <VBox>
               <custom:SingleComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" selectionChange=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
@@ -48,18 +47,18 @@
             <VBox>
               <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
             </VBox>
-          </grid:CSSGrid>
+          </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApprovalDetails" type="XML" />
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
         <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
+        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

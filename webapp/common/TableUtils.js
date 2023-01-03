@@ -71,6 +71,18 @@ sap.ui.define(
      * @constant {string}} 의료비 상세내역 반려
      */
     const MED_STATE_REJECT = 'F';
+    /**
+     * @constant {number} CSR신청단계
+     */
+    const STATE_CSR_APPLY = 'CSR10';
+    /**
+     * @constant {number} CSR처리단계
+     */
+    const STATE_CSR_PROGRESS = 'CSR20';
+    /**
+     * @constant {number} CSR완료단계
+     */
+    const STATE_CSR_COMPLETE = 'CSR30';
 
     function rem2px(rem) {
       if (rem.endsWith('px')) {
@@ -449,6 +461,7 @@ sap.ui.define(
           case STATE_APPLY1:
           case STATE_APPLY2:
           case STATE_APPLY3:
+          case STATE_CSR_APPLY:
             // 신청
             return '신청';
           case STATE_APPROVE:
@@ -462,8 +475,11 @@ sap.ui.define(
             return '반려';
           case STATE_COMPLETE:
           case STATE_COMPLETE2:
+          case STATE_CSR_COMPLETE:
             // 완료
             return '완료';
+          case STATE_CSR_PROGRESS:
+            return '처리';
           default:
             return '';
         }

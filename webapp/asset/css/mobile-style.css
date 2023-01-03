@@ -545,14 +545,17 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z10"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z15"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z90"] .approval-request-status {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/status-gray.png')}
+.contents .list-wrap li .approval-request-list-item-box[data-status="ZCSR10"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z20"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z30"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z50"] .approval-request-status {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/status-yellow.png')}
+.contents .list-wrap li .approval-request-list-item-box[data-status="ZCSR20"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z40"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="ZP"] .approval-request-status {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/status-green.png')}
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z45"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z65"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="ZF"] .approval-request-status {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/status-red.png')}
+.contents .list-wrap li .approval-request-list-item-box[data-status="ZCSR30"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z30"] .approval-request-status,
 .contents .list-wrap li .approval-request-list-item-box[data-status="Z60"] .approval-request-status {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/status-blue.png')}
 .contents .list-wrap li .approval-request-list-item-box .approval-request-status .sapMText {width:100%; padding-right:3px; text-align:right !important; font-size:12px}

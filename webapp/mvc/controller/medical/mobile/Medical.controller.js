@@ -21,7 +21,7 @@ sap.ui.define(
           busy: false,
           search: {
             dateRange: '12m',
-            date: moment().startOf('year').hours(9).toDate(),
+            date: moment().subtract(12, 'months').add(1, 'day').toDate(),
             secondDate: new Date(),
             dateBox: false,
           },
