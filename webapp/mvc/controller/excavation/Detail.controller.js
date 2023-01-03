@@ -363,7 +363,7 @@ sap.ui.define(
         }
 
         const aEmployees = oViewModel.getProperty('/form/employees');
-        const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue));
+        const [mEmployee] = _.filter(aEmployees, (o) => _.startsWith(o.Pernr, sInputValue.replace(/0+/, '')));
 
         if (sRowPath && !_.isEmpty(mEmployee)) {
           oViewModel.setProperty(`${sRowPath}/PernrA`, mEmployee.Pernr);
