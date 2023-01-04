@@ -57,8 +57,8 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" />
-        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
+        <Button text="{i18n>LABEL_00110}" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" class="button-tertiary" />
+        <Button text="{i18n>LABEL_00121}" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} }" class="button-primary" />
       </OverflowToolbar>
     </footer>
   </Page>

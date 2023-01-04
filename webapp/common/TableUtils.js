@@ -16,7 +16,7 @@ sap.ui.define(
      */
     const STATE_COMPLETE2 = 1;
     /**
-     * @constant {number} 진행중
+     * @constant {number} 진행
      */
     const STATE_IN_PROGRESS3 = 2;
     /**
@@ -398,7 +398,7 @@ sap.ui.define(
           case STATE_IN_PROGRESS0:
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
-            // 작성중
+            // 작성
             return sap.ui.core.IndicationColor.None;
           case STATE_APPLY1:
           case STATE_APPLY2:
@@ -444,8 +444,8 @@ sap.ui.define(
             return '미신청';
           case STATE_IN_PROGRESS1:
           case STATE_IN_PROGRESS2:
-            // 작성중
-            return '작성중';
+            // 작성
+            return '작성';
           case STATE_APPLY1:
           case STATE_APPLY2:
           case STATE_APPLY3:

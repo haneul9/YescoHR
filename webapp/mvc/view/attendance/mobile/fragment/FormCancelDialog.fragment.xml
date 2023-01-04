@@ -12,8 +12,8 @@
       </grid:CSSGrid>
     </content>
     <buttons>
-      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" />
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" class="cancel" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormCancelDialogClose" class="button-tertiary" />
+      <m:Button text="{i18n>LABEL_00103}" press=".onPressFormCancelDialogSave" class="button-primary" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

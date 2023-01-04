@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <Dialog title="{i18n>LABEL_00353}" horizontalScrolling="false" class="full-dialog">
+  <Dialog title="{i18n>LABEL_00353}" horizontalScrolling="false" class="full-dialog medical-request-guide-dialog">
     <content>
       <FlexBox class="medical-request-guide">
         <items>
@@ -9,7 +9,7 @@
       </FlexBox>
     </content>
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onPressCloseGuideDialog" class="cancel" />
+      <Button text="{i18n>LABEL_00115}" press=".onPressCloseGuideDialog" type="Back" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

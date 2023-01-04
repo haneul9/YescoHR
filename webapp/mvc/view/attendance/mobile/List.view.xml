@@ -33,9 +33,9 @@
     </VBox>
     <footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_04002}" type="Emphasized" width="100%" press=".onPressNewApprovalBtn" />
-        <Button text="{i18n>LABEL_04003}" type="Emphasized" width="100%" press=".onPressModApprovalBtn" />
-        <Button text="{i18n>LABEL_04004}" type="Emphasized" width="100%" press=".onPressCancApprovalBtn" />
+        <Button text="{i18n>LABEL_04002}" width="100%" press=".onPressNewApprovalBtn" class="button-primary" />
+        <Button text="{i18n>LABEL_04003}" width="100%" press=".onPressModApprovalBtn" class="button-primary" />
+        <Button text="{i18n>LABEL_04004}" width="100%" press=".onPressCancApprovalBtn" class="button-primary" />
       </OverflowToolbar>
     </footer>
   </Page>

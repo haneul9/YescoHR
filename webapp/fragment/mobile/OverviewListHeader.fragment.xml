@@ -13,10 +13,10 @@
       </items>
     </SegmentedButton>
     <custom:DateRangeSelection dateValue="{
-      path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date'
-    }" secondDateValue="{
-      path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date'
-    }" visible="{/search/dateBox}" change=".onSearchRange" placeholder="Calendar" class="sapIcon_Date calendar-popover" />
+        path: '/search/date', type: 'sap.ui.yesco.mvc.model.type.Date'
+      }" secondDateValue="{
+        path: '/search/secondDate', type: 'sap.ui.yesco.mvc.model.type.Date'
+      }" visible="{/search/dateBox}" change=".onSearchRange" placeholder="Calendar" class="sapIcon_Date calendar-popover" />
     <custom:SingleComboBox width="100%" items="{/search/entry/select1}" selectedKey="{/search/select1}" visible="{= !!${/search/visible/select1} }" selectionChange=".onChangeSelect1">
       <custom:layoutData>
         <FlexItemData styleClass="mt-8-px" growFactor="1" />

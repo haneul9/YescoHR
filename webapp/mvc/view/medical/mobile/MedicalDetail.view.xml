@@ -55,8 +55,16 @@
               <Title level="H2" text="{i18n>LABEL_09022}" />
             </HBox>
             <HBox class="table-actions">
-              <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" />
-              <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />
+              <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails">
+                <layoutData>
+                  <FlexItemData styleClass="plus-button" />
+                </layoutData>
+              </Button>
+              <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails">
+                <layoutData>
+                  <FlexItemData styleClass="minus-button" />
+                </layoutData>
+              </Button>
             </HBox>
           </HBox>
           <List id="medHisTable" items="{/HisList}" class="list-wrap request" mode="{/HisListMode}" rememberSelections="false">
@@ -89,12 +97,11 @@
     </VBox>
     <footer>
       <OverflowToolbar visible="{= !!${/ReWriteBtn} || ${/FormData/Lnsta} !== '30' &amp;&amp; ${/FormData/Lnsta} !== '40' &amp;&amp; ${/FormData/Lnsta} !== '50' &amp;&amp; ${/FormData/Lnsta} !== '60' }">
-        <!-- <Button text="{i18n>LABEL_00177}" press=".onNavBack" /> -->
-        <Button text="{i18n>LABEL_00122}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" />
-        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" />
-        <Button text="{i18n>LABEL_00120}" type="Emphasized" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || !!${/ReWriteBtn} }" />
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+        <Button text="{i18n>LABEL_00122}" press=".onCancelBtn" visible="{= ${/FormData/Lnsta} === '20' }" class="button-primary" />
+        <Button text="{i18n>LABEL_00110}" press=".onDeleteBtn" visible="{= ${/FormData/Lnsta} === '10' || ${/FormData/Lnsta} === '45' }" class="button-primary" />
+        <Button text="{i18n>LABEL_00120}" press=".onRewriteBtn" visible="{= ${/FormData/Lnsta} === '45' || !!${/ReWriteBtn} }" class="button-primary" />
+        <Button text="{i18n>LABEL_00104}" press=".onSaveBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="button-primary" />
+        <Button text="{i18n>LABEL_00121}" press=".onApplyBtn" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="button-primary" />
       </OverflowToolbar>
     </footer>
   </Page>

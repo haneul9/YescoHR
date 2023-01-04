@@ -9,7 +9,7 @@
       <mobile:ScrollContainer>
         <mobile:List items="{/CongList}">
           <mobile:CustomListItem press=".onSelectRow">
-            <mobile:ApprovalRequestListItemBox>              <!-- statusFieldName="ZappStatAl" -->
+            <mobile:ApprovalRequestListItemBox>
               <mobile:ListCSSGrid gridTemplateColumns="1fr 1fr">
                 <Text text="{Conretx}" class="emphasized" />
                 <Text text="{Famtx}" />

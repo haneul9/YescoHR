@@ -1517,7 +1517,7 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .sapUiLayoutCSSGrid.form-grid .sapMLabel {padding-left:0px; text-indent:0px; white-space:normal}
 .sapUiLayoutCSSGrid.form-grid .sapMLabel > bdi {padding-left:20px; padding-right:20px}
 .sapUiLayoutCSSGrid.form-grid .sapMLabel.align-top {align-items:flex-start}
-.sapUiLayoutCSSGrid.form-grid .sapMLabel.align-top > bdi {padding-top:15px}
+.sapUiLayoutCSSGrid.form-grid .sapMLabel.align-top > bdi {padding-top:11px}
 .sapUiLayoutCSSGrid.form-grid .sapMObjStatus {align-self:center}
 .sapUiLayoutCSSGrid.form-grid .sapMInputBase:not(.sapMTextArea), .sapUiLayoutCSSGrid.form-grid .sapMCb {align-self:center}
 .sapUiLayoutCSSGrid.form-grid .sapMInputDescriptionWrapper {width:auto !important}

@@ -23,11 +23,19 @@
       <HBox class="table-actions" visible="{/settings/editable}" justifyContent="End">
         <u:FileUploader id="fileUploader" visible="{= !${/settings/fullFiles} }" maximumFileSize="{/settings/maxFileSize}" fileType="{/settings/fileTypes}" change=".onChangeAttachment" uploadComplete= ".onUploadCompleteAttachment" typeMissmatch=".onTypeMissMatchAttachment" icon="sap-icon://add" buttonText="{i18n>LABEL_00107}" buttonOnly="true">
           <u:layoutData>
-            <FlexItemData maxHeight="40px" styleClass="attachfile-button" />
+            <FlexItemData styleClass="attachfile-button" />
           </u:layoutData>
         </u:FileUploader>
-        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressAttachmentRemove" />
-        <Button icon="sap-icon://reset" text="{i18n>LABEL_00176}" press=".onPressAttachmentRemoveCancel" />
+        <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressAttachmentRemove">
+          <layoutData>
+            <FlexItemData styleClass="removefile-button" />
+          </layoutData>
+        </Button>
+        <Button icon="sap-icon://reset" text="{i18n>LABEL_00176}" press=".onPressAttachmentRemoveCancel">
+          <layoutData>
+            <FlexItemData styleClass="restorefile-button" />
+          </layoutData>
+        </Button>
       </HBox>
     </HBox>
     <table:Table id="filesTable" width="100%" selectionMode="{/fileSelectionMode}" columnHeaderHeight="45" rowHeight="44" visibleRowCount="{/fileCount}" rows="{/files}" noData="{i18n>MSG_00001}">

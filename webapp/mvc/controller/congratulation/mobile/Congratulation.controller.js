@@ -95,7 +95,7 @@ sap.ui.define(
           Prcty: 'L',
         };
 
-        return await Client.getEntitySet(oModel, 'ConExpenseAppl', mPayLoad);
+        return Client.getEntitySet(oModel, 'ConExpenseAppl', mPayLoad);
       },
 
       // 검색 날짜 선택

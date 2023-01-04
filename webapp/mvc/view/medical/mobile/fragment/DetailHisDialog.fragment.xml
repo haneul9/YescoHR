@@ -1,16 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Dialog title="{i18n>LABEL_09022}" horizontalScrolling="false" class="full-dialog">
     <content>
       <VBox busyIndicatorDelay="0" busy="{/busy}" class="contents wrap">
         <HBox class="table-toolbar">
           <HBox class="title">
-            <Title level="H2" text="{i18n>LABEL_09022}" />
+            <custom:Title text="{i18n>LABEL_09022}" />
           </HBox>
         </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid">
+        <mobile:DetailCSSGrid gridTemplateColumns="1fr 2fr">
           <Label text="{i18n>LABEL_09021}" />
           <custom:DateRangeSelection id="DialogData1" maxDate="{/DialogData/maxDate}" minDate="{/DialogData/minDate}" editable="{/ReWriteStat}" dateValue="{ path: '/DialogData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/DialogData/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date required" />
 
@@ -50,15 +51,15 @@
 
           <Label text="{i18n>LABEL_09009}" visible="{= ${/DialogData/ZappStat} === 'P' }" />
           <Text text="{ path: '/DialogData/Ttmon', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{= ${/DialogData/ZappStat} === 'P' }" class="multi-line" />
-        </grid:CSSGrid>
+        </mobile:DetailCSSGrid>
         <core:Fragment id="DialogAttFile" fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
       </VBox>
     </content>
     <buttons>
-      <Button text="{i18n>LABEL_00106}" type="Emphasized" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
-      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" />
-      <Button text="{i18n>LABEL_00118}" press=".onDialogClose" visible="{= !!${/ReWriteStat} }" class="cancel" />
-      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" visible="{= !${/ReWriteStat} }" class="cancel" />
+      <Button text="{i18n>LABEL_00115}" press=".onDialogClose" visible="{= !${/ReWriteStat} }" class="button-tertiary" />
+      <Button text="{i18n>LABEL_00118}" press=".onDialogClose" visible="{= !!${/ReWriteStat} }" class="button-tertiary" />
+      <Button text="{i18n>LABEL_00108}" press=".onHisUpBtn" visible="{= !${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" class="button-primary" />
+      <Button text="{i18n>LABEL_00106}" press=".onHisRegBtn" visible="{= !!${/DialogData/isNew} &amp;&amp; ${/ReWriteStat} }" class="button-primary" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>
