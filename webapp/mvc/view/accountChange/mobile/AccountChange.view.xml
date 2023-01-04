@@ -2,35 +2,23 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" />
       <mobile:ScrollContainer>
-        <List items="{path: '/Data'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-          <CustomListItem type="Active" press=".onSelectRow">
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
-              <Text text="{Accttx}" class="font-16-px font-bold" />
-              <Text text="{Banka}"/>
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
-                <core:customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </core:customData>
-              </core:Icon>
-              <Text text="{ path: 'Begym', formatter: '.formatYear' }"/>
-              <Text text="{Bankn}"/>
-              <Text text="{
-									path: 'ZappStatAl',
-									formatter: '.TableUtils.StatusTxt'
-								}" class="sapMText m-auto">
-                <customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </customData>
-              </Text>
-            </grid:CSSGrid>
-          </CustomListItem>
-        </List>
+        <mobile:List items="{path: '/Data'}">
+          <mobile:CustomListItem press=".onSelectRow">
+            <mobile:ApprovalRequestListItemBox>
+              <mobile:ListCSSGrid gridTemplateColumns="2fr 2fr">
+                <Text text="{Accttx}" class="font-16-px font-bold" />
+                <Text text="{Banka}"/>
+                <Text text="{ path: 'Begym', formatter: '.formatYear' }"/>
+                <Text text="{Bankn}"/>
+              </mobile:ListCSSGrid>
+            </mobile:ApprovalRequestListItemBox>
+          </mobile:CustomListItem>
+        </mobile:List>
       </mobile:ScrollContainer>
     </VBox>
     <mobile:footer>

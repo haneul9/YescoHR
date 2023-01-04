@@ -2,42 +2,27 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" enableScrolling="false" showFooter="{= ${/Total/Btnyn} === 'Y' }">
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack" showFooter="{= ${/Total/Btnyn} === 'Y' }">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom" />
       <mobile:ScrollContainer>
-        <List items="{/List}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-          <CustomListItem type="Active" press=".onSelectRow">
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
-              <Text text="{Znametx}" class="font-16-px font-bold" />
-              <Text text="{Apcnt}{i18n>LABEL_09101}" width="100%" textAlign="Right" />
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
-                <core:customData>
-                  <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
-                </core:customData>
-              </core:Icon>
-              <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-              <Text text="{ path: 'Apbet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Right" />
-              <Text text="{ path: 'Lnsta', formatter: '.TableUtils.StatusTxt' }" class="m-auto">
-                <customData>
-                  <core:CustomData key="status" value="Z{Lnsta}" writeToDom="true" />
-                </customData>
-              </Text>
-            </grid:CSSGrid>
-          </CustomListItem>
-        </List>
+        <mobile:List items="{/List}">
+          <mobile:CustomListItem press=".onSelectRow">
+            <mobile:ApprovalRequestListItemBox statusFieldName="Lnsta">
+              <mobile:ListCSSGrid gridTemplateColumns="1fr 1fr">
+                <Text text="{Znametx}" class="font-16-px font-bold" />
+                <Text text="{Apcnt}{i18n>LABEL_09101}" width="100%" textAlign="Right" />
+                <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+                <Text text="{ path: 'Apbet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" width="100%" textAlign="Right" />
+              </mobile:ListCSSGrid>
+            </mobile:ApprovalRequestListItemBox>
+          </mobile:CustomListItem>
+        </mobile:List>
       </mobile:ScrollContainer>
     </VBox>
-    <footer class="wrap">
-      <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" width="100%" press=".onClick" enabled="{= ${/Total/Btnyn} === 'Y' }">
-          <layoutData>
-            <FlexItemData growFactor="1" />
-          </layoutData>
-        </Button>
-      </OverflowToolbar>
-    </footer>
-  </Page>
+    <mobile:footer>
+      <mobile:ApprovalRequestListFooterToolbar pressRequestNew=".onClick" />
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

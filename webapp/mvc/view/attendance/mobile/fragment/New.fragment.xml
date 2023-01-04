@@ -1,16 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }">
     <HBox class="title">
-      <Title level="H2" text="{i18n>LABEL_04002}" />
+      <custom:Title text="{i18n>LABEL_04002}" />
     </HBox>
     <HBox class="table-actions">
       <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressFormDialogSave" />
     </HBox>
   </HBox>
-  <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= !${/ZappStatAl} }">
+  <mobile:DetailCSSGrid gridTemplateColumns="2fr 5fr" visible="{= !${/ZappStatAl} }">
     <Label text="{i18n>LABEL_04010}"/>
     <VBox>
       <custom:SingleComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" selectionChange=".onChangeAwartCombo">
@@ -21,18 +22,17 @@
     <VBox>
       <HBox>
         <custom:DateRangeSelection class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
-        <!-- <Input width="45px" value="{/form/dialog/data/AbrtgTxt}" editable="false" textAlign="Right" /> -->
       </HBox>
     </VBox>
     <Label text="{i18n>LABEL_04009}" />
     <VBox>
       <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
     </VBox>
-  </grid:CSSGrid>
+  </mobile:DetailCSSGrid>
 
   <HBox class="table-toolbar">
     <HBox class="title">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <custom:Title text="{i18n>LABEL_00129}" />
     </HBox>
     <HBox class="table-actions">
       <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />

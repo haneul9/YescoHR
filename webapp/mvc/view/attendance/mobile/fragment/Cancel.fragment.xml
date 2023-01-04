@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }">
     <HBox class="title">
-      <Title level="H2" text="{i18n>LABEL_04024}" />
+      <custom:Title level="H2" text="{i18n>LABEL_04024}" />
     </HBox>
     <HBox class="table-actions">
       <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
@@ -26,7 +26,7 @@
 
   <HBox class="table-toolbar">
     <HBox class="title">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <custom:Title level="H2" text="{i18n>LABEL_00129}" />
     </HBox>
     <HBox class="table-actions">
       <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />

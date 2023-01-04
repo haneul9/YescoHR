@@ -145,6 +145,7 @@ sap.ui.define(
             '/list',
             _.map(aRowData, (el) => ({
               ...el,
+              ZappStatAl: `CSR${el.Prstg}`,
               CompanyIcon: _.get(mCompanyIcon, el.Werks),
               ReqdatFormatted: `${moment(el.Reqdat).hours(9).format('MM/DD')} ${sRequestText}`,
             }))

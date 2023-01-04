@@ -1,42 +1,33 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.attendance.mobile.List"
   xmlns="sap.m"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:mobile="sap.ui.yesco.control.mobile"
   xmlns:mvc="sap.ui.core.mvc">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom" />
       <mobile:ScrollContainer>
-        <List items="{ path: '/list' }" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-          <CustomListItem type="Active" press=".onSelectRow">
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr 1fr" gridGap="6px 0">
-              <Text text="{Atext}" class="font-16-px font-bold" />
-              <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !${Endda} }" />
-              <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !!${Endda} }" />
-              <core:Icon src="sap-icon://circle-task-2" width="11px" height="11px" size="12.5px" class="m-auto">
-                <core:customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </core:customData>
-              </core:Icon>
-              <ObjectStatus text="{Apptxt}" class="font-16-px" state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
-              <Text text="{Period}" />
-              <Text text="{ path: 'ZappStatAl', formatter: '.TableUtils.StatusTxt' }" class="sapMText m-auto">
-                <customData>
-                  <core:CustomData key="status" value="Z{ZappStatAl}" writeToDom="true" />
-                </customData>
-              </Text>
-            </grid:CSSGrid>
-          </CustomListItem>
-        </List>
+        <mobile:List items="{ path: '/list' }">
+          <mobile:CustomListItem press=".onSelectRow">
+            <mobile:ApprovalRequestListItemBox>
+              <mobile:ListCSSGrid gridTemplateColumns="1fr 1fr">
+                <Text text="{Atext}" class="font-16-px font-bold" />
+                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !${Endda} }" />
+                <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.MonthDate' }" visible="{= !!${Endda} }" />
+                <ObjectStatus text="{Apptxt}" class="font-16-px" state="{ path: 'Appty', formatter: '.onChangeIndication' }" />
+                <Text text="{Period}" />
+              </mobile:ListCSSGrid>
+            </mobile:ApprovalRequestListItemBox>
+          </mobile:CustomListItem>
+        </mobile:List>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
         <Button text="{i18n>LABEL_04002}" width="100%" press=".onPressNewApprovalBtn" class="button-primary" />
         <Button text="{i18n>LABEL_04003}" width="100%" press=".onPressModApprovalBtn" class="button-primary" />
         <Button text="{i18n>LABEL_04004}" width="100%" press=".onPressCancApprovalBtn" class="button-primary" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

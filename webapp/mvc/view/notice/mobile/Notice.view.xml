@@ -3,22 +3,21 @@
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
       <mobile:ScrollContainer>
-        <List items="{path: '/NoticeList'}" busyIndicatorDelay="0" busy="{/busy}" class="list-wrap wrap">
-          <CustomListItem type="Active" press=".onSelectRow">
-            <VBox>
-              <Text text="{Title}" class="font-16-px font-bold" />
-              <Text text="{
-                  path: 'Sdate',
-                  type: 'sap.ui.yesco.mvc.model.type.Date'
-              }"/>
-            </VBox>
-          </CustomListItem>
-        </List>
+        <mobile:List items="{path: '/NoticeList'}">
+          <mobile:CustomListItem press=".onSelectRow">
+            <mobile:ApprovalRequestListItemBox>
+              <mobile:ListCSSGrid gridTemplateColumns="1fr">
+                <Text text="{Title}" class="font-16-px font-bold" />
+                <Text text="{ path: 'Sdate', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
+              </mobile:ListCSSGrid>
+            </mobile:ApprovalRequestListItemBox>
+          </mobile:CustomListItem>
+        </mobile:List>
       </mobile:ScrollContainer>
     </VBox>
-  </Page>
+  </mobile:Page>
 </mvc:View>

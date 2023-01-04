@@ -2,18 +2,18 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <customData>
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <mobile:customData>
       <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </customData>
+    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <VBox>
-            <Title level="H2" text="{i18n>LABEL_00173}" />
-            <grid:CSSGrid gridTemplateColumns="2fr 1fr" gridGap="7px 0" class="form-grid">
+            <custom:Title text="{i18n>LABEL_00173}" />
+            <mobile:DetailCSSGrid gridTemplateColumns="2fr 1fr">
               <Label text="{i18n>LABEL_13006}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/summary/list/0/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
@@ -50,12 +50,12 @@
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <ObjectStatus text="{ path: '/summary/list/0/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" class="font-16-px" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_13015}" />
-            <grid:CSSGrid items="{path: '/pay/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} > 0 ? true : false}">
+            <custom:Title text="{i18n>LABEL_13015}" />
+            <mobile:DetailCSSGrid items="{path: '/pay/list'}" gridTemplateColumns="1fr" visible="{= ${/pay/count} > 0 ? true : false}">
               <HBox width="100%">
                 <Label text="{Pyitx}">
                   <customData>
@@ -76,17 +76,17 @@
                   </Text>
                 </HBox>
               </HBox>
-            </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/pay/count} === 0 ? true : false}">
+            </mobile:DetailCSSGrid>
+            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/pay/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
                 <Text text="{i18n>MSG_00001}" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_13016}" />
-            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} > 0 ? true : false}">
+            <custom:Title text="{i18n>LABEL_13016}" />
+            <mobile:DetailCSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} > 0 ? true : false}">
               <HBox width="100%">
                 <Label text="{Pyitx}">
                   <customData>
@@ -107,17 +107,17 @@
                   </Text>
                 </HBox>
               </HBox>
-            </grid:CSSGrid>
-            <grid:CSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/deduction/count} === 0 ? true : false}">
+            </mobile:DetailCSSGrid>
+            <mobile:DetailCSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} === 0 ? true : false}">
               <HBox width="100%">
                 <Text text="{i18n>MSG_00001}" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_13041}" />
-            <grid:CSSGrid items="{path: '/retroactive/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid">
+            <custom:Title text="{i18n>LABEL_13041}" />
+            <mobile:DetailCSSGrid items="{path: '/retroactive/list'}" gridTemplateColumns="1fr">
               <HBox width="100%">
                 <Label text="{Pyitx}">
                   <customData>
@@ -138,17 +138,17 @@
                   </Text>
                 </HBox>
               </HBox>
-            </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/retroactive/count} === 0 ? true : false}">
+            </mobile:DetailCSSGrid>
+            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/retroactive/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
                 <Text text="{i18n>MSG_00001}" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_13042}" />
-            <grid:CSSGrid items="{path: '/tax/list'}" gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/tax/count} > 0 ? true : false}">
+            <custom:Title text="{i18n>LABEL_13042}" />
+            <mobile:DetailCSSGrid items="{path: '/tax/list'}" gridTemplateColumns="1fr" visible="{= ${/tax/count} > 0 ? true : false}">
               <HBox width="100%">
                 <Label text="{Pyitx}">
                   <customData>
@@ -169,17 +169,17 @@
                   </Text>
                 </HBox>
               </HBox>
-            </grid:CSSGrid>
-            <grid:CSSGrid gridTemplateColumns="1fr" gridGap="7px 0" class="form-grid" visible="{= ${/tax/count} === 0 ? true : false}">
+            </mobile:DetailCSSGrid>
+            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/tax/count} === 0 ? true : false}">
               <HBox width="100%" justifyContent="Center">
                 <Text text="{i18n>MSG_00001}" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_13018}" />
-            <grid:CSSGrid gridTemplateColumns="2fr 2fr" gridGap="7px 0" class="form-grid">
+            <custom:Title text="{i18n>LABEL_13018}" />
+            <mobile:DetailCSSGrid gridTemplateColumns="2fr 2fr">
               <Label text="{i18n>LABEL_13022}"/>
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim503', type: 'sap.ui.model.type.Float' }"/>
@@ -216,16 +216,15 @@
               <HBox alignContent="SpaceBetween" justifyContent="End">
                 <Text text="{ path: '/work/list/0/Tim511', type: 'sap.ui.model.type.Float' }"/>
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
-        <!-- <Button text="{i18n>LABEL_00171}" type="Emphasized" press=".onPressPDFPrint" /> -->
         <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

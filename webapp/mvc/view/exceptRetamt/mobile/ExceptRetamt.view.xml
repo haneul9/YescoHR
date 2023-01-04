@@ -2,19 +2,18 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <customData>
+  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+    <mobile:customData>
       <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </customData>
+    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <VBox>
-            <Title level="H2" text="{i18n>LABEL_33002}" />
-            <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+            <custom:Title text="{i18n>LABEL_33002}" />
+            <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
               <Label text="{i18n>LABEL_33004}" />
               <VBox>
                 <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" />
@@ -23,12 +22,12 @@
               <VBox>
                 <Text text="{ path:'/data/Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
               </VBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
 
           <VBox class="pt-20-px">
             <Title level="H2" text="{i18n>LABEL_33006}" />
-            <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="7px 0" class="form-grid">
+            <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
               <Label text="{i18n>LABEL_33007}" />
               <VBox>
                 <Text text="{/data/Dat01}" />
@@ -49,15 +48,15 @@
               <HBox>
                 <ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
         <Button text="{i18n>LABEL_33014}" type="Emphasized" press=".onSearch" />
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

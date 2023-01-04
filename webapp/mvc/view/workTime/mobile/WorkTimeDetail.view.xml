@@ -5,23 +5,23 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <customData>
+  <mobile:Page title="{menuModel>/current/currentLocationText}" showFooter="{/Fixed}" navButtonPress=".onNavBack">
+    <mobile:customData>
       <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </customData>
+    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox height="100%" class="wrap with-actions" busy="{/busy}" busyIndicatorDelay="0">
           <VBox class="mb-25-px" visible="{= ${/Fixed}}">
             <HBox class="table-toolbar" visible="{= ${/Fixed}}">
               <HBox class="title">
-                <Title level="H2" text="{i18n>LABEL_04002}" />
+                <custom:Title text="{i18n>LABEL_04002}" />
               </HBox>
               <HBox class="table-actions">
                 <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn" />
               </HBox>
             </HBox>
-            <grid:CSSGrid gridTemplateColumns="2fr 5fr" gridGap="6px 0" class="form-grid" visible="{= ${/Fixed}}">
+            <mobile:DetailCSSGrid gridTemplateColumns="2fr 5fr" visible="{= ${/Fixed}}">
               <Label text="{i18n>LABEL_27004}"/>
               <HBox>
                 <custom:DatePicker dateValue="{ path: '/DialogData/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" />
@@ -47,11 +47,11 @@
                   </layoutData>
                 </Input>
               </HBox>
-            </grid:CSSGrid>
+            </mobile:DetailCSSGrid>
           </VBox>
           <HBox class="table-toolbar">
             <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_00129}" />
+              <custom:Title text="{i18n>LABEL_00129}" />
             </HBox>
             <HBox class="table-actions">
               <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" visible="{= ${/Fixed}}" />
@@ -75,10 +75,10 @@
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
         <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{/Fixed}"/>
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>
