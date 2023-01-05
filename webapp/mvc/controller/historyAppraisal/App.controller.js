@@ -291,15 +291,15 @@ sap.ui.define(
 
       async onPressSearch() {
         const oViewModel = this.getViewModel();
-        const sWerks = oViewModel.getProperty('/appointee/Werks');
+        // const sWerks = oViewModel.getProperty('/appointee/Werks');
 
-        if (_.isEqual(sWerks, '3000')) {
-          oViewModel.setProperty('/history/rowCount', 1);
-          oViewModel.setProperty('/history/list', []);
-          oViewModel.setProperty('/history/busy', false);
+        // if (_.isEqual(sWerks, '3000')) {
+        //   oViewModel.setProperty('/history/rowCount', 1);
+        //   oViewModel.setProperty('/history/list', []);
+        //   oViewModel.setProperty('/history/busy', false);
 
-          return;
-        }
+        //   return;
+        // }
 
         oViewModel.setProperty('/history/busy', true);
 
