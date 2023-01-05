@@ -779,6 +779,7 @@ sap.ui.define(
             controller: this,
           });
 
+          this[`_p${fragmentName}`] = oSelectDialog;
           oView.addDependent(oSelectDialog);
         }
 
@@ -1452,6 +1453,10 @@ sap.ui.define(
             Client.getEntitySet(oModel, 'DegreeCode', mFilters),
           ]);
 
+          oViewModel.setProperty('/employee/dialog/form/Zzschtx', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzschcd', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzmajo1tx', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzmajo1', '');
           oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
           oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
           oViewModel.setProperty('/employee/dialog/degreeList', new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext', aEntries: aDegreeList }));
