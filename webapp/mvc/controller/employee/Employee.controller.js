@@ -855,7 +855,7 @@ sap.ui.define(
         if (!oFiles.length) return sAppno;
 
         try {
-          if (!sAppno) sAppno = await Appno.get();
+          if (!sAppno || _.chain('00000000000000').replace(/0+/, '').isEmpty().value()) sAppno = await Appno.get();
 
           if (!_.isEmpty(oOriginFiles)) await this.AttachFileAction.deleteFile(sAppno, sMenuKey, oOriginFiles[0].Seqnr);
 
@@ -1587,7 +1587,7 @@ sap.ui.define(
 
       onPressPhoto(oEvent) {
         const sPernr = oEvent.getSource().getCustomData()[0].getKey();
-        if(!sPernr) return;
+        if (!sPernr) return;
 
         const sHost = window.location.href.split('#')[0];
         window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
