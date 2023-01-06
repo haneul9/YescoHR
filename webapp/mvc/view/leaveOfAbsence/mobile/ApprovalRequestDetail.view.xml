@@ -68,7 +68,7 @@
       </mobile:ScrollContainer>
     </VBox>
     <mobile:footer>
-      <mobile:ApprovalRequestDetailFooterToolbar rewrite="true" pressRewrite=".onPressRewrite" save="true" pressSave=".onPressSave" request="true" pressRequest=".onPressRequestApproval" remove="true" pressRemove=".onPressRemove" />
+      <mobile:ApprovalRequestDetailFooterToolbar request="true" pressRequest=".onPressRequestApproval" save="true" pressSave=".onPressSave" remove="true" pressRemove=".onPressRemove" rewrite="true" pressRewrite=".onPressRewrite" />
     </mobile:footer>
   </mobile:Page>
 </mvc:View>

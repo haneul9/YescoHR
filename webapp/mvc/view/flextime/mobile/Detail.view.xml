@@ -2,27 +2,22 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <customData>
-      <core:CustomData key="form-style" value="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </customData>
+  <mobile:Page navButtonPress=".onNavBack" showFooter="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }">
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
           <!-- <Title level="H2" text="{i18n>LABEL_00168}" /> -->
           <HBox class="table-toolbar">
             <HBox class="title">
-              <Title level="H2" text="{i18n>LABEL_00168}: " />
+              <custom:Title text="{i18n>LABEL_00168}: " />
               <ObjectStatus text="{/details/list/0/Datumtx}" state="{= ${/details/list/0/Offyn} === 'X' ? 'Error' : 'None'}" class="table-object-status font-20-px pl-5-px" />
             </HBox>
           </HBox>
-          <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_00151}"/>
-            <VBox>
-              <Text text="{/details/list/0/Atext}" width="100%" textAlign="Center" wrapping="false" />
-            </VBox>
+            <Text text="{/details/list/0/Atext}" width="100%" textAlign="Center" wrapping="false" />
             <Label text="{i18n>LABEL_40001}"/>
             <HBox>
               <TimePicker width="100px" dateValue="{ path: '/details/list/0/Beguz', type: 'sap.ui.yesco.mvc.model.type.InputTime' }" initialFocusedDateValue="{/initBeguz}" editable="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" textAlign="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} ? 'Begin' : 'Center' }" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" change=".onChangeWorktime">
@@ -79,15 +74,17 @@
                 </customData>
               </TimePicker>
             </HBox>
-          </grid:CSSGrid>
+          </mobile:DetailCSSGrid>
         </VBox>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.DetailSummary" type="XML" />
       </mobile:ScrollContainer>
     </VBox>
-    <footer>
+    <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onPressDialogConfirm" visible="{= !${/isMss} &amp;&amp; ${/details/list/0/Offyn} !== 'X' &amp;&amp; !${/details/list/0/Alldf} }" />
+        <HBox class="button-group button-1">
+          <Button text="{i18n>LABEL_00103}" press=".onPressDialogConfirm" />
+        </HBox>
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

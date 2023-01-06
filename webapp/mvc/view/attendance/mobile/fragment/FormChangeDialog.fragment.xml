@@ -1,28 +1,22 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:m="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:custom="sap.ui.yesco.control">
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:mobile="sap.ui.yesco.control.mobile">
   <Dialog id="FormChangeDialog" title="{i18n>LABEL_04025}" contentWidth="" horizontalScrolling="false" verticalScrolling="false">
     <content>
-      <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid pl-20-px pr-20-px">
+      <mobile:DetailCSSGrid gridTemplateColumns="1fr 2fr">
         <Label text="{i18n>LABEL_00148}"/>
-        <VBox>
-          <custom:DatePicker class="required" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onChangeRowBegda" />
-        </VBox>
+        <custom:DatePicker class="required" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onChangeRowBegda" />
         <Label text="{i18n>LABEL_00149}" />
-        <VBox>
-          <custom:DatePicker class="required" minDate="{/form/dialog/data/Begda}" dateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Abrtg2} !== '1.00' }" change=".validChangeLeave" />
-        </VBox>
+        <custom:DatePicker class="required" minDate="{/form/dialog/data/Begda}" dateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Abrtg2} !== '1.00' }" change=".validChangeLeave" />
         <Label text="{i18n>LABEL_04013}" />
-        <VBox>
-          <m:Input value="{/form/dialog/data/Tmrsn}" class="required" />
-        </VBox>
-      </grid:CSSGrid>
+        <m:Input value="{/form/dialog/data/Tmrsn}" class="required" />
+      </mobile:DetailCSSGrid>
     </content>
     <buttons>
-      <m:Button type="Emphasized" text="{i18n>LABEL_00103}" press=".onPressFormChangeDialogSave" />
-      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormChangeDialogClose" class="cancel" />
+      <m:Button text="{i18n>LABEL_00115}" press=".onPressFormChangeDialogClose" class="button-tertiary" />
+      <m:Button text="{i18n>LABEL_00103}" press=".onPressFormChangeDialogSave" class="button-primary" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

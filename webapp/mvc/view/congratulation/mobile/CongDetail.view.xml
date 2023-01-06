@@ -54,10 +54,21 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00118}" type="Reject" press=".onCancelBtn" visible="{= ${/FormData/ZappStatAl} === '20' }" />
-        <Button text="{i18n>LABEL_00110}" type="Reject" press=".onDeleteBtn" visible="{= ${/FormData/ZappStatAl} === '10' || ${/FormData/ZappStatAl} === '45' }" />
-        <Button text="{i18n>LABEL_00104}" type="Emphasized" press=".onSaveBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
+        <HBox class="button-group button-2" visible="{= !${/FormData/ZappStatAl} }">
+          <Button text="{i18n>LABEL_00104}" press=".onSaveBtn" />
+          <Button text="{i18n>LABEL_00121}" press=".onApplyBtn" />
+        </HBox>
+        <HBox class="button-group button-3" visible="{= ${/FormData/ZappStatAl} === '10' }">
+          <Button text="{i18n>LABEL_00110}" press=".onDeleteBtn" />
+          <Button text="{i18n>LABEL_00104}" press=".onSaveBtn" />
+          <Button text="{i18n>LABEL_00121}" press=".onApplyBtn" />
+        </HBox>
+        <HBox class="button-group button-1" visible="{= ${/FormData/ZappStatAl} === '20' }">
+          <Button text="{i18n>LABEL_00118}" press=".onCancelBtn" />
+        </HBox>
+        <HBox class="button-group button-1" visible="{= ${/FormData/ZappStatAl} === '45' }">
+          <Button text="{i18n>LABEL_00110}" press=".onDeleteBtn" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

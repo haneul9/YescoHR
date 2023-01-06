@@ -2,12 +2,13 @@
   xmlns="sap.m"
   xmlns:l="sap.ui.layout"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <HBox justifyContent="SpaceBetween" class="header-wrap">
+      <HBox class="header-wrap">
         <HBox class="header">
-          <Title level="H3" text="{i18n>LABEL_35002}" />
+          <custom:Title text="{i18n>LABEL_35002}" />
         </HBox>
       </HBox>
       <mobile:ScrollContainer>
@@ -106,5 +107,5 @@
         </l:VerticalLayout>
       </mobile:ScrollContainer>
     </VBox>
-  </Page>
+  </mobile:Page>
 </mvc:View>

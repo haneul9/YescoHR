@@ -3,9 +3,9 @@
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack" showFooter="{= ${/Total/Btnyn} === 'Y' }">
+  <mobile:Page navButtonPress=".onNavBack" showFooter="{= ${/Total/Btnyn} === 'Y' }">
     <VBox class="contents">
-      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom" />
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" />
       <mobile:ScrollContainer>
         <mobile:List items="{/List}">
           <mobile:CustomListItem press=".onSelectRow">

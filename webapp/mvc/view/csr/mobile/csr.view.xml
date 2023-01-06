@@ -4,14 +4,14 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
       <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
       <mobile:ScrollContainer id="listScrollContainer">
         <mobile:layoutData>
           <FlexItemData styleClass="mobile-list-scroll-box search-row-3" />
         </mobile:layoutData>
-        <mobile:List items="{path: '/list'}">
+        <mobile:List items="{/list}">
           <mobile:CustomListItem press=".onSelectRow">
             <mobile:ApprovalRequestListItemBox>
               <mobile:ListCSSGrid gridTemplateColumns="40px 1fr 1fr 1fr">
@@ -51,8 +51,10 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00123}" type="Emphasized" width="100%" press=".onPressApproval" />
-        <Button text="{i18n>LABEL_00124}" type="Reject" width="100%" press=".onPressReject" />
+        <HBox class="button-group button-2">
+          <Button text="{i18n>LABEL_00124}" press=".onPressReject" />
+          <Button text="{i18n>LABEL_00123}" press=".onPressApproval" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

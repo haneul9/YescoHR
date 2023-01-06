@@ -75,10 +75,11 @@
           </grid:layoutData>
           <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="font-16-px font-bold" />
           <Text text="{Atrsn}" />
-          <Text text="
-                { path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }
-                ~{ path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' } }
-                ({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" />
+          <Text text="{
+              path: 'Beguz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' }
+            }~{
+              path: 'Enduz', type: 'sap.ui.yesco.mvc.model.type.Time', formatOptions: { pattern: 'HH:mm' }
+            }({ path: 'Abrst', type: 'sap.ui.yesco.mvc.model.type.Decimal' }{i18n>LABEL_27007})" />
           <Text text="{ path: 'Subda', type: 'sap.ui.yesco.mvc.model.type.Date' } {Subtytx}" />
         </grid:CSSGrid>
       </HBox>

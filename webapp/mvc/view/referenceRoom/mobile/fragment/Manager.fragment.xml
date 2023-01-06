@@ -21,7 +21,7 @@
       </table:Table>
     </content>
     <endButton>
-      <Button text="{i18n>LABEL_00115}" press=".onClick" class="cancel" />
+      <Button text="{i18n>LABEL_00115}" press=".onClick" class="button-tertiary" />
     </endButton>
   </Dialog>
 </core:FragmentDefinition>

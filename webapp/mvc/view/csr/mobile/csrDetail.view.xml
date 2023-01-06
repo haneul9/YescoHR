@@ -5,28 +5,20 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <mobile:Page showFooter="{= ${/form/Appryn} === 'X' }" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page showFooter="{= ${/form/Appryn} === 'X' }" navButtonPress=".onNavBack">
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox class="wrap">
           <custom:Title text="{i18n>LABEL_00129}" />
           <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_00129}"/>
-            <VBox>
-              <Text text="{/form/Apttl}" />
-            </VBox>
+            <Text text="{/form/Apttl}" />
             <Label text="{i18n>LABEL_46005}"/>
-            <VBox>
-              <Text text="{/form/Csrtytx}" />
-            </VBox>
+            <Text text="{/form/Csrtytx}" />
             <Label text="{i18n>LABEL_46045}"/>
-            <VBox>
-              <Text text="{/form/ReqdatFormatted}" />
-            </VBox>
+            <Text text="{/form/ReqdatFormatted}" />
             <Label text="{i18n>LABEL_46018}"/>
-            <VBox>
-              <Text text="{ path: '/form/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-            </VBox>
+            <Text text="{ path: '/form/Clsda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
           </mobile:DetailCSSGrid>
           <custom:Title text="{i18n>LABEL_46046}" />
           <core:HTML content="{/form/Apcnt}" class="editor-view mb-8-px" />
@@ -37,17 +29,11 @@
           <custom:Title text="{i18n>LABEL_46047}" visible="{= ${/form/Prstg} !== '10' }" />
           <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr" visible="{= ${/form/Prstg} !== '10' }">
             <Label text="{i18n>LABEL_46023}"/>
-            <VBox>
-              <Text text="{/form/Prgno}" />
-            </VBox>
+            <Text text="{/form/Prgno}" />
             <Label text="{i18n>LABEL_46024}"/>
-            <VBox>
-              <Text text="{/form/Ctsno}" />
-            </VBox>
+            <Text text="{/form/Ctsno}" />
             <Label text="{i18n>LABEL_46025}"/>
-            <VBox>
-              <Text text="{/form/Wrktm}" />
-            </VBox>
+            <Text text="{/form/Wrktm}" />
           </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <custom:Title text="{i18n>LABEL_46028}" />
@@ -59,8 +45,10 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00123}" type="Emphasized" press=".onPressApproval" />
-        <Button text="{i18n>LABEL_00124}" type="Reject" press=".onPressReject" />
+        <HBox class="button-group button-2">
+          <Button text="{i18n>LABEL_00124}" press=".onPressReject" />
+          <Button text="{i18n>LABEL_00123}" press=".onPressApproval" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

@@ -3,10 +3,6 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:core="sap.ui.core">
   <Dialog title="{i18n>LABEL_35021}" contentHeight="60%" horizontalScrolling="false" busy="{appModel>/isAppBusy}" busyIndicatorDelay="0" class="talent-detail-conditions-dialog">
-    <buttons>
-      <Button text="{i18n>LABEL_00115}" class="flex-grow1 cancel" press=".onPressDetailClose" />
-      <Button type="Emphasized" text="{i18n>LABEL_00101}" class="flex-grow2" press=".onPressDetailSearch" />
-    </buttons>
     <content>
       <VBox class="section">
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
@@ -248,5 +244,9 @@
         </grid:CSSGrid>
       </VBox>
     </content>
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" class="button-tertiary" press=".onPressDetailClose" />
+      <Button text="{i18n>LABEL_00101}" class="button-primary" press=".onPressDetailSearch" />
+    </buttons>
   </Dialog>
 </core:FragmentDefinition>

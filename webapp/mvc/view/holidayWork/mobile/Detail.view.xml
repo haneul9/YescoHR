@@ -3,10 +3,7 @@
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <mobile:Page title="{menuModel>/current/currentLocationText}" showFooter="{= !${/ZappStatAl} }" navButtonPress=".onNavBack">
-    <mobile:customData>
-      <core:CustomData key="form-style" value="{= !${/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </mobile:customData>
+  <mobile:Page showFooter="{= !${/ZappStatAl} }" navButtonPress=".onNavBack">
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
@@ -19,7 +16,9 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressApproval" visible="{= !${/ZappStatAl} }" />
+        <HBox class="button-group button-1">
+          <Button text="{i18n>LABEL_00121}" press=".onPressApproval" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

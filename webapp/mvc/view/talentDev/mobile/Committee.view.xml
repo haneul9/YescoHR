@@ -5,37 +5,26 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <HBox class="search-area row-3" binding="{/searchConditions}">
-        <VBox width="67%" height="100%">
+      <mobile:SearchAreaCSSGrid gridTemplateColumns="2fr 1fr" rowCount="3">
+        <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{/entry/Werks}" selectionFinish=".onChangeWerks">
+          <core:Item key="{Werks}" text="{Pbtxt}" />
+        </custom:SingleComboBox>
+        <Button press=".onPressSearch" text="{i18n>LABEL_00100}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" />
+        <custom:SingleComboBox width="100%" selectedKey="{Gjahr}" items="{/entry/Gjahr}" selectionFinish=".onChangeGjahr">
+          <core:Item key="{Gjahr}" text="{Gjahrtx}" />
+        </custom:SingleComboBox>
+        <Text text=" ">
           <layoutData>
-            <FlexItemData maxWidth="67%" />
+            <grid:GridItemLayoutData gridRow="span 2" />
           </layoutData>
-          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{/entry/Werks}" selectionFinish=".onChangeWerks">
-            <core:Item key="{Werks}" text="{Pbtxt}" />
-          </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" selectedKey="{Gjahr}" items="{/entry/Gjahr}" class="sapUiTinyMarginTop" selectionFinish=".onChangeGjahr">
-            <core:Item key="{Gjahr}" text="{Gjahrtx}" />
-          </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" selectedKey="{Zseqnr}" items="{/entry/Zseqnr}" class="sapUiTinyMarginTop">
-            <core:Item key="{Zseqnr}" text="{Zseqnrtx}" />
-          </custom:SingleComboBox>
-        </VBox>
-        <VBox width="33%" height="100%" class="pl-8-px">
-          <layoutData>
-            <FlexItemData growFactor="1" maxWidth="33%" />
-          </layoutData>
-          <Button press=".onPressSearch" busy="{/busy/Button}" busyIndicatorDelay="0" text="{i18n>LABEL_00100}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" />
-        </VBox>
-      </HBox>
-      <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <HBox class="header">
-          <Title level="H3" text="{i18n>LABEL_43001}" class="sapUiSmallMarginEnd" />
-          <Text text="total {/committee/listInfo/totalCount}" />
-        </HBox>
-        <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
-      </HBox>
+        </Text>
+        <custom:SingleComboBox width="100%" selectedKey="{Zseqnr}" items="{/entry/Zseqnr}">
+          <core:Item key="{Zseqnr}" text="{Zseqnrtx}" />
+        </custom:SingleComboBox>
+      </mobile:SearchAreaCSSGrid>
+      <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_43001" countPath="/committee/listInfo/totalCount" pressInfoIcon=".onPressLegend" />
       <mobile:ScrollContainer>
         <List items="{/committee/listInfo/list}" busy="{/busy/Committee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-committee">
           <CustomListItem type="Active" press=".onPressCommitteeListItem">
@@ -58,5 +47,5 @@
         </List>
       </mobile:ScrollContainer>
     </VBox>
-  </Page>
+  </mobile:Page>
 </mvc:View>

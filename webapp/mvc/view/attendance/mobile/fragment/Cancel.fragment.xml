@@ -4,13 +4,13 @@
   xmlns:custom="sap.ui.yesco.control">
   <HBox class="table-toolbar" visible="{= !${/ZappStatAl} }">
     <HBox class="title">
-      <custom:Title level="H2" text="{i18n>LABEL_04024}" />
+      <custom:Title text="{i18n>LABEL_04024}" />
     </HBox>
     <HBox class="table-actions">
       <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
     </HBox>
   </HBox>
-  <List items="{ path: '/form/dialog/list' }" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }">
+  <List items="{/form/dialog/list}" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }">
     <CustomListItem type="Active" press=".openFormCancelDialog">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
         <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
@@ -26,13 +26,13 @@
 
   <HBox class="table-toolbar">
     <HBox class="title">
-      <custom:Title level="H2" text="{i18n>LABEL_00129}" />
+      <custom:Title text="{i18n>LABEL_00129}" />
     </HBox>
     <HBox class="table-actions">
       <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
     </HBox>
   </HBox>
-  <List id="DetailListC" items="{ path: '/form/list' }" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
+  <List id="DetailListC" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
     <CustomListItem type="Active">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
         <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
@@ -47,7 +47,6 @@
               <FlexItemData maxWidth="90%" />
             </layoutData>
           </Text>
-
         </grid:CSSGrid>
       </HBox>
     </CustomListItem>

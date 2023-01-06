@@ -10,7 +10,7 @@ sap.ui.define(
     'sap/m/VBox',
     'sap/ui/core/Fragment',
     'sap/ui/layout/cssgrid/CSSGrid',
-    'sap/ui/yesco/control/MobileScrollContainer',
+    'sap/ui/yesco/control/mobile/ScrollContainer',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/odata/Client',
     'sap/ui/yesco/common/odata/ServiceNames',
@@ -287,7 +287,7 @@ sap.ui.define(
         Object.keys(aSubMenu).forEach((sMenuKey) => {
           const aSubMenuContents = _.get(aSubMenu, [sMenuKey, 'contents']);
           const oTabContainer = _.find(aTabItems, (o) => _.isEqual(o.getProperty('key'), sMenuKey));
-          const oScrollContainer = new MobileScrollContainer({ horizontal: false, vertical: true });
+          const oScrollContainer = new MobileScrollContainer();
           let oWrapperVBox = sap.ui.getCore().byId(`sub${sMenuKey}`);
 
           if (oWrapperVBox) {

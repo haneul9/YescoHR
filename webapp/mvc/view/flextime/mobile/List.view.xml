@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
       <mobile:ScrollContainer>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.EmpInfo" type="XML" />
@@ -11,5 +11,5 @@
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.mobile.fragment.Summary" type="XML" />
       </mobile:ScrollContainer>
     </VBox>
-  </Page>
+  </mobile:Page>
 </mvc:View>

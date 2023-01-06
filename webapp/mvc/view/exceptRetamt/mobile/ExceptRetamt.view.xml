@@ -1,13 +1,9 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.exceptRetamt.mobile.ExceptRetamt"
   xmlns="sap.m"
-  xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <mobile:Page title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
-    <mobile:customData>
-      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </mobile:customData>
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
@@ -55,7 +51,9 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_33014}" type="Emphasized" press=".onSearch" />
+        <HBox class="button-group button-1">
+          <Button text="{i18n>LABEL_33014}" press=".onSearch" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

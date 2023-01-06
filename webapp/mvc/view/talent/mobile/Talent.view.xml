@@ -6,61 +6,28 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" showNavButton="{menuModel>/current/hasPrevious}" title="{menuModel>/current/currentLocationText}" navButtonPress=".onNavBack">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents mobile-mss-talent-list">
-      <VBox class="search-area">
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:SingleComboBox width="100%" selectedKey="{/search/Werks}" items="{/entry/Werks}">
-            <custom:layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </custom:layoutData>
-            <core:Item key="{Werks}" text="{Pbtxt}" />
-          </custom:SingleComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog">
-            <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
-            </layoutData>
-          </Button>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
-          <custom:SingleComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" selectionChange=".onChangeSearchCondition">
-            <custom:layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </custom:layoutData>
-            <core:Item key="{Zcode}" text="{Ztext}" />
-          </custom:SingleComboBox>
-          <Button class="sapUiTinyMarginBegin" width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset">
-            <layoutData>
-              <FlexItemData minWidth="33%" maxWidth="33%" />
-            </layoutData>
-          </Button>
-        </HBox>
-        <HBox justifyContent="SpaceBetween" alignItems="Center">
-          <SearchField id="talentSearchField" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch">
-            <layoutData>
-              <FlexItemData minWidth="67%" maxWidth="67%" />
-            </layoutData>
-          </SearchField>
-          <ComboBox selectedKey="{/search/Command}" class="sapUiTinyMarginBegin">
-            <layoutData>
-              <FlexItemData minWidth="35%" maxWidth="35%" />
-            </layoutData>
-            <items>
-              <core:Item text="AND" key="AND" />
-              <core:Item text="OR" key="OR" />
-            </items>
-          </ComboBox>
-        </HBox>
-      </VBox>
-      <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <HBox class="header">
-          <Title level="H3" text="{i18n>LABEL_35003}" class="sapUiSmallMarginEnd" />
-          <Text text="total {/result/totalCount}" />
-        </HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" press=".onPressLegend" visible="{/listInfo/Popover}" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto" />
-      </HBox>
+      <mobile:SearchAreaCSSGrid gridTemplateColumns="2fr 1fr" rowCount="3">
+        <custom:SingleComboBox width="100%" selectedKey="{/search/Werks}" items="{/entry/Werks}">
+          <core:Item key="{Werks}" text="{Pbtxt}" />
+        </custom:SingleComboBox>
+        <Button width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" text="{i18n>LABEL_35004}" press=".onPressDetailConditionsDialog" />
+        <custom:SingleComboBox width="100%" selectedKey="{/saved/selectedCondition}" items="{/saved/entry}" enabled="{= !${/result/busy} }" selectionChange=".onChangeSearchCondition">
+          <core:Item key="{Zcode}" text="{Ztext}" />
+        </custom:SingleComboBox>
+        <Button width="100%" text="{i18n>LABEL_35005}" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" enabled="{= !${/result/busy} }" press=".onPressConditionReset" />
+        <SearchField id="talentSearchField" maxLength="{/fieldLimit/Freetx}" value="{/search/Freetx}" placeholder="{i18n>MSG_35012}" search=".onPressSearch" />
+        <ComboBox width="100%" selectedKey="{/search/Command}">
+          <items>
+            <core:Item text="AND" key="AND" />
+            <core:Item text="OR" key="OR" />
+          </items>
+        </ComboBox>
+      </mobile:SearchAreaCSSGrid>
+      <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_35003" countPath="/result/totalCount" pressInfoIcon=".onPressLegend" />
       <mobile:ScrollContainer>
-        <f:GridList id="talentList" mode="MultiSelect" items="{ path: '/result/list' }" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
+        <f:GridList id="talentList" mode="MultiSelect" items="{/result/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
           <f:customLayout>
             <grid:GridBasicLayout gridTemplateColumns="1fr" gridGap="10px" />
           </f:customLayout>
@@ -86,14 +53,12 @@
         </f:GridList>
       </mobile:ScrollContainer>
     </VBox>
-    <footer class="wrap">
+    <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_35002}" type="Emphasized" width="100%" press=".onPressCompare">
-          <layoutData>
-            <FlexItemData growFactor="1"/>
-          </layoutData>
-        </Button>
+        <HBox class="button-group button-1">
+          <Button text="{i18n>LABEL_35002}" press=".onPressCompare" />
+        </HBox>
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

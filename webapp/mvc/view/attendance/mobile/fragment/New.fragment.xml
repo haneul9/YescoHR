@@ -13,21 +13,13 @@
   </HBox>
   <mobile:DetailCSSGrid gridTemplateColumns="2fr 5fr" visible="{= !${/ZappStatAl} }">
     <Label text="{i18n>LABEL_04010}"/>
-    <VBox>
-      <custom:SingleComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" selectionChange=".onChangeAwartCombo">
-        <core:Item key="{Awart}" text="{Atext}" />
-      </custom:SingleComboBox>
-    </VBox>
+    <custom:SingleComboBox class="required" selectedKey="{/form/dialog/data/Awart}" editable="{= ${/type} !== 'B'}" items="{ path: '/form/dialog/awartCodeList', templateShareable: false }" selectionChange=".onChangeAwartCombo">
+      <core:Item key="{Awart}" text="{Atext}" />
+    </custom:SingleComboBox>
     <Label text="{i18n>LABEL_04014}" />
-    <VBox>
-      <HBox>
-        <custom:DateRangeSelection class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
-      </HBox>
-    </VBox>
+    <custom:DateRangeSelection class="required sapIcon_Date" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/data/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" change=".onChangeLeaveDate" />
     <Label text="{i18n>LABEL_04009}" />
-    <VBox>
-      <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
-    </VBox>
+    <Input class="required" value="{/form/dialog/data/Tmrsn}" enabled="{= ${/form/dialog/data/Awart} !== 'ALL'}" />
   </mobile:DetailCSSGrid>
 
   <HBox class="table-toolbar">
@@ -38,7 +30,7 @@
       <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
     </HBox>
   </HBox>
-  <List id="DetailListA" items="{ path: '/form/list' }" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
+  <List id="DetailListA" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
     <CustomListItem type="Active">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
         <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">

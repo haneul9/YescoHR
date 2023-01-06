@@ -3,20 +3,20 @@
   <Popover showHeader="false" placement="Bottom" horizontalScrolling="false" class="status-popover">
     <VBox class="status-wrap">
       <HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_1000}" class="sapUiSmallMarginEnd pb-3-px"/>
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+        <Text text="{i18n>LABEL_WERKS_1000}" />
       </HBox>
       <HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_2000}" class="sapUiSmallMarginEnd pb-3-px"/>
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+        <Text text="{i18n>LABEL_WERKS_2000}" />
       </HBox>
       <HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd pb-3-px"/>
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+        <Text text="{i18n>LABEL_WERKS_3000}" />
       </HBox>
       <HBox>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd pb-3-px"/>
+        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
+        <Text text="{i18n>LABEL_WERKS_4000}" />
       </HBox>
       <ObjectStatus text="{i18n>LABEL_35010}" icon="sap-icon://circle-task-2" state="Indication03" />
       <ObjectStatus text="{i18n>LABEL_35011}" icon="sap-icon://circle-task-2" state="Indication04" />

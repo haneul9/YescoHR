@@ -2,20 +2,22 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/Button',
-    'sap/m/ButtonType',
+    'sap/m/HBox',
     'sap/m/OverflowToolbar',
   ],
   (
     // prettier 방지용 주석
     Button,
-    ButtonType,
+    HBox,
     OverflowToolbar
   ) => {
     'use strict';
 
     /**
     <OverflowToolbar>
-      <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressRequestApproval" />
+      <HBox class="button-group button-1">
+        <Button text="{i18n>LABEL_00121}" press=".onPressRequestApproval" />
+      </HBox>
     </OverflowToolbar>
      */
     return OverflowToolbar.extend('sap.ui.yesco.control.mobile.ApprovalRequestListFooterToolbar', {
@@ -39,17 +41,20 @@ sap.ui.define(
         OverflowToolbar.apply(this, aArgs);
 
         if (this.getRequestNew()) {
-          this.addContent(this.getRequestNewButton());
+          this.addContent(
+            new HBox({
+              items: [this.getRequestNewButton()],
+            }).addStyleClass('button-group button-1')
+          );
         }
       },
 
       /**
-       * <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onPressRequestApproval" />
+       * <Button text="{i18n>LABEL_00121}" press=".onPressRequestApproval" />
        */
       getRequestNewButton() {
         return new Button({
           text: '{i18n>LABEL_00121}', // 신청
-          type: ButtonType.Emphasized,
           enabled: this.getRequestNewEnabled(),
           visible: this.getRequestNewVisible(),
           press: this.firePressRequestNew.bind(this),

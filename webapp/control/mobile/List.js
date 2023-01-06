@@ -17,6 +17,7 @@ sap.ui.define(
 
         this.setBusyIndicatorDelay(0) // prettier 방지용 주석
           .bindProperty('busy', '/busy')
+          .bindProperty('noDataText', 'i18n>MSG_00001')
           .addStyleClass('list-wrap wrap');
       },
     });

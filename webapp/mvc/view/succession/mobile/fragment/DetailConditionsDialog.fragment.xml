@@ -2,10 +2,6 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core">
   <Dialog title="{i18n>LABEL_45005}" contentHeight="60%" horizontalScrolling="false" busy="{/busy}" busyIndicatorDelay="0" class="candidate-detail-conditions-dialog">
-    <buttons>
-      <Button text="{i18n>LABEL_00115}" class="flex-grow1 cancel" press=".onPressDetailClose" />
-      <Button type="Emphasized" text="{i18n>LABEL_00101}" class="flex-grow2" press=".onPressSearch" />
-    </buttons>
     <content>
       <VBox class="section" binding="{/searchConditions}">
         <HBox class="title-bar">
@@ -232,5 +228,9 @@
         </grid:CSSGrid>
       </VBox>
     </content>
+    <buttons>
+      <Button text="{i18n>LABEL_00115}" press=".onPressDetailClose" class="button-tertiary" />
+      <Button text="{i18n>LABEL_00101}" press=".onPressSearch" class="button-primaery" />
+    </buttons>
   </Dialog>
 </core:FragmentDefinition>

@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }" height="420px">
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28030}" />
+      <custom:Title text="{i18n>LABEL_28030}" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

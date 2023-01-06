@@ -5,43 +5,21 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" busy="{/busy}" busyIndicatorDelay="0">
+  <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <HBox class="search-area row-2" binding="{/searchBar}">
-        <VBox width="67%" height="100%">
-          <layoutData>
-            <FlexItemData maxWidth="67%" />
-          </layoutData>
-          <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{ path: '/entries/Werks', templateShareable: false }" selectionFinish=".onChangeWerks">
-            <core:Item key="{Werks}" text="{Pbtxt}" />
-          </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" selectedKey="{Plans}" items="{/entries/Plans}" selectionFinish=".onChangePlans" class="sapUiTinyMarginTop">
-            <core:Item key="{Plans}" text="{Planstx}" />
-          </custom:SingleComboBox>
-        </VBox>
-        <VBox width="33%" height="100%" class="pl-8-px">
-          <layoutData>
-            <FlexItemData growFactor="1" maxWidth="33%" />
-          </layoutData>
-          <Button press=".onPressDetailConditionsDialog" text="{i18n>LABEL_00203}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" />
-          <!-- <Button press=".onPressConditionReset" text="{i18n>LABEL_35005}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" class="sapUiTinyMarginTop" /> -->
-          <!-- <Button press=".onPressSearch" text="{i18n>LABEL_00101}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" class="sapUiTinyMarginTop" /> -->
-        </VBox>
-      </HBox>
-      <mobile:ScrollContainer class="px-12-px">
-        <HBox justifyContent="SpaceBetween" class="header-wrap" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
-          <VBox>
-            <HBox class="header">
-              <Title level="H3" text="{i18n>LABEL_45401}" class="sapUiSmallMarginEnd" />
-            </HBox>
-            <Text text="{i18n>MSG_45013}" class="desc-txt start" />
-          </VBox>
-          <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
-            <layoutData>
-              <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
-            </layoutData>
-          </Image>
-        </HBox>
+      <mobile:SearchAreaCSSGrid gridTemplateColumns="2fr 1fr" rowCount="2" binding="{/searchBar}">
+        <custom:SingleComboBox width="100%" selectedKey="{Werks}" items="{ path: '/entries/Werks', templateShareable: false }" selectionFinish=".onChangeWerks">
+          <core:Item key="{Werks}" text="{Pbtxt}" />
+        </custom:SingleComboBox>
+        <Button press=".onPressDetailConditionsDialog" text="{i18n>LABEL_00203}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_DetailSearch.svg" iconDensityAware="false" />
+        <custom:SingleComboBox width="100%" selectedKey="{Plans}" items="{/entries/Plans}" selectionFinish=".onChangePlans">
+          <core:Item key="{Plans}" text="{Planstx}" />
+        </custom:SingleComboBox>
+        <!-- <Button press=".onPressConditionReset" text="{i18n>LABEL_35005}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/btn_Reflesh.svg" iconDensityAware="false" /> -->
+        <!-- <Button press=".onPressSearch" text="{i18n>LABEL_00101}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" /> -->
+      </mobile:SearchAreaCSSGrid>
+      <mobile:ScrollContainer>
+        <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_45401" countPath="/candidate/listInfo/totalCount" infoMessagePath="i18n>MSG_45013" pressInfoIcon=".onPressLegend" visible="{= ${/candidate/listInfo/totalCount} > 0 }" />
         <VBox id="candidateList" items="{/candidate/listInfo/list}" class="scsn-candidates" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
           <f:Card>
             <f:customData>
@@ -91,20 +69,7 @@
             </f:content>
           </f:Card>
         </VBox>
-        <HBox justifyContent="SpaceBetween" class="header-wrap">
-          <VBox>
-            <HBox class="header">
-              <Title level="H3" text="{i18n>LABEL_00204}" class="sapUiSmallMarginEnd" />
-              <Text text="total {/searchResult/listInfo/totalCount}" />
-            </HBox>
-            <Text text="{i18n>MSG_45014}" class="desc-txt start" />
-          </VBox>
-          <Image press=".onPressLegend" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg" width="16px" height="16px" mode="Background" backgroundPosition="center center" backgroundSize="auto">
-            <layoutData>
-              <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
-            </layoutData>
-          </Image>
-        </HBox>
+        <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_00204" countPath="/searchResult/listInfo/totalCount" infoMessagePath="i18n>MSG_45014" pressInfoIcon=".onPressLegend" />
         <VBox id="searchResultList" items="{/searchResult/listInfo/list}" class="scsn-candidates" visible="{= ${/searchResult/listInfo/totalCount} > 0 }">
           <f:Card>
             <f:customData>
@@ -156,14 +121,12 @@
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-    <footer class="wrap">
+    <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_35002}" type="Emphasized" width="100%" press=".onPressCompare">
-          <layoutData>
-            <FlexItemData growFactor="1"/>
-          </layoutData>
-        </Button>
+        <HBox class="button-group button-1">
+          <Button text="{i18n>LABEL_35002}" press=".onPressCompare" />
+        </HBox>
       </OverflowToolbar>
-    </footer>
-  </Page>
+    </mobile:footer>
+  </mobile:Page>
 </mvc:View>

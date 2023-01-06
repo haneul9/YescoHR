@@ -4,10 +4,10 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <Page enableScrolling="false" title="{menuModel>/current/currentLocationText}" showNavButton="{menuModel>/current/hasPrevious}" navButtonPress=".onNavBack" class="header-right-button">
-    <headerContent>
+  <mobile:Page navButtonPress=".onNavBack" class="header-right-button">
+    <mobile:headerContent>
       <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close" visible="{/searchAreaClose}" />
-    </headerContent>
+    </mobile:headerContent>
     <VBox class="contents">
       <HBox alignItems="End" class="search-area row-3">
         <VBox width="67%">
@@ -41,5 +41,5 @@
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
-  </Page>
+  </mobile:Page>
 </mvc:View>
