@@ -779,6 +779,7 @@ sap.ui.define(
             controller: this,
           });
 
+          this[`_p${fragmentName}`] = oSelectDialog;
           oView.addDependent(oSelectDialog);
         }
 
@@ -855,7 +856,7 @@ sap.ui.define(
         if (!oFiles.length) return sAppno;
 
         try {
-          if (!sAppno) sAppno = await Appno.get();
+          if (!sAppno || _.chain('00000000000000').replace(/0+/, '').isEmpty().value()) sAppno = await Appno.get();
 
           if (!_.isEmpty(oOriginFiles)) await this.AttachFileAction.deleteFile(sAppno, sMenuKey, oOriginFiles[0].Seqnr);
 
@@ -1452,6 +1453,10 @@ sap.ui.define(
             Client.getEntitySet(oModel, 'DegreeCode', mFilters),
           ]);
 
+          oViewModel.setProperty('/employee/dialog/form/Zzschtx', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzschcd', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzmajo1tx', '');
+          oViewModel.setProperty('/employee/dialog/form/Zzmajo1', '');
           oViewModel.setProperty('/employee/dialog/form/Slabs', 'ALL');
           oViewModel.setProperty('/employee/dialog/schoolList', aSchoolList);
           oViewModel.setProperty('/employee/dialog/degreeList', new ComboEntry({ codeKey: 'Slabs', valueKey: 'Stext', aEntries: aDegreeList }));
@@ -1587,7 +1592,7 @@ sap.ui.define(
 
       onPressPhoto(oEvent) {
         const sPernr = oEvent.getSource().getCustomData()[0].getKey();
-        if(!sPernr) return;
+        if (!sPernr) return;
 
         const sHost = window.location.href.split('#')[0];
         window.open(`${sHost}#/employeeView/${sPernr}/M`, '_blank', 'width=1400,height=800');
