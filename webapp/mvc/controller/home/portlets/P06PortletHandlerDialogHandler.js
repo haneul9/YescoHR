@@ -112,7 +112,7 @@ sap.ui.define(
         // const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
         const oDatum = moment(this.mPayload.Datum);
 
-        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1650,height=800');
       },
 
       onPressDetailExcelDownload(oEvent) {

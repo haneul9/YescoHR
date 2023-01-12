@@ -487,7 +487,7 @@ sap.ui.define(
         // const sUsrty = this.isMss() ? 'M' : this.isHass() ? 'H' : '';
         const dSearchDate = moment(this.getViewModel().getProperty('/searchConditions/Datum'));
 
-        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${dSearchDate.get('year')}/${dSearchDate.get('month')}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${mRowData.Pernr}/${dSearchDate.get('year')}/${dSearchDate.get('month')}`, '_blank', 'width=1650,height=800');
       },
 
       async onPressEmployee2Row(oEvent) {

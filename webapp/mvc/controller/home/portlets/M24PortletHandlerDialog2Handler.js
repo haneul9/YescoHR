@@ -112,7 +112,7 @@ sap.ui.define(
         const sPernr = oEvent.getSource().getParent().getBindingContext().getProperty('Pernr');
         const oDatum = moment(this.mPayload.Datum);
 
-        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${oDatum.get('year')}/${oDatum.get('month')}`, '_blank', 'width=1650,height=800');
       },
 
       onPressDetailExcelDownload(oEvent) {
