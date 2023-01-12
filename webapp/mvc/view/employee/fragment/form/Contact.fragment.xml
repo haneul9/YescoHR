@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:custom="sap.ui.yesco.control">
+    <grid:CSSGrid gridTemplateColumns="3fr 7fr" gridGap="8px">
+        <grid:layoutData>
+            <FlexItemData growFactor="1"/>
+        </grid:layoutData>
+        <Label text="{i18n>LABEL_00267}" />
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Usrty}">
+            <items>
+                <core:Item key="ALL" text="{i18n>LABEL_00268}" />
+                <core:Item key="0010" text="{i18n>LABEL_00260}" />
+                <core:Item key="9000" text="{i18n>LABEL_00265}" />
+                <core:Item key="CELL" text="{i18n>LABEL_00264}" />
+                <core:Item key="EPHN" text="{i18n>LABEL_00263}" />
+                <core:Item key="HPHN" text="{i18n>LABEL_00262}" />
+            </items>
+        </ComboBox>
+        <Label text="{i18n>LABEL_00271}" />
+        <custom:DatePicker width="100%" class="required" value="{ path: '/employee/dialog/form/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+        <Label text="{i18n>LABEL_00329}" />
+        <Input width="100%" class="required" value="{/employee/dialog/form/Usrid}" />
+    </grid:CSSGrid>
+</core:FragmentDefinition>

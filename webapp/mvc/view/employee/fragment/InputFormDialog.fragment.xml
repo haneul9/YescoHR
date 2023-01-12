@@ -11,6 +11,9 @@
           <HBox visible="{= ${/employee/dialog/subKey} === '0006'}">
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Address" type="XML" />
           </HBox>
+          <HBox visible="{= ${/employee/dialog/subKey} === '0105'}">
+            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Contact" type="XML" />
+          </HBox>
           <HBox visible="{= ${/employee/dialog/subKey} === '0022'}">
             <core:Fragment fragmentName="sap.ui.yesco.mvc.view.employee.fragment.form.Education" type="XML" />
           </HBox>

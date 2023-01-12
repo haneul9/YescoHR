@@ -64,6 +64,18 @@ sap.ui.define(
             { label: 'LABEL_00273', field: 'Pstlz', type: Validator.INPUT2 }, // 우편번호
           ],
         },
+        CONTACT: {
+          key: '0105',
+          label: 'LABEL_00329',
+          path: 'contact',
+          odata: 'ContactInfo',
+          pk: ['Pernr', 'Usrty', 'Begda'],
+          valid: [
+            { label: 'LABEL_00267', field: 'Usrty', type: Validator.SELECT1 }, // 통신유형
+            { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
+            { label: 'LABEL_00329', field: 'Usrid', type: Validator.INPUT2 }, // 연락처
+          ],
+        },
         EDUCATION: {
           key: '0022',
           label: 'LABEL_00303',
@@ -585,7 +597,7 @@ sap.ui.define(
                     text: this.getBundleText('LABEL_00122'), // 신청취소
                     customData: [new CustomData({ key: 'code', value: mMenu.code })],
                     enabled: '{= !!${/employee/sub/' + sMenuKey + '/contents/' + mMenu.code + '/data}.length }',
-                    visible: !_.isEqual(mMenu.code, this.CRUD_TABLES.ADDRESS.key),
+                    visible: !_.includes([this.CRUD_TABLES.ADDRESS.key, this.CRUD_TABLES.CONTACT.key], mMenu.code),
                     press: this.onPressCancelTable.bind(this),
                   }).addStyleClass('icon-button'),
                 ],
@@ -1012,6 +1024,10 @@ sap.ui.define(
             oViewModel.setProperty('/employee/dialog/form', { Subty: sDefaultSelectedKey, State: sDefaultSelectedKey });
 
             break;
+          case this.CRUD_TABLES.CONTACT.path:
+            oViewModel.setProperty('/employee/dialog/form', { Usrty: sDefaultSelectedKey });
+
+            break;
           case this.CRUD_TABLES.EDUCATION.path:
             const mCountryList = oViewModel.getProperty('/employee/dialog/countryList');
             const mKoreaObject = _.find(mCountryList, { Sland: 'KR' });
@@ -1067,6 +1083,16 @@ sap.ui.define(
               const oSido = _.find(oViewModel.getProperty('/employee/dialog/sidoList'), { State: mFieldValue.State });
               mInputData = {
                 ...oSido,
+                ...mFieldValue,
+                Begda: mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
+              };
+
+              break;
+            case this.CRUD_TABLES.CONTACT.key:
+              sOdataEntity = this.CRUD_TABLES.CONTACT.odata;
+              aFieldProperties = this.CRUD_TABLES.CONTACT.valid;
+
+              mInputData = {
                 ...mFieldValue,
                 Begda: mFieldValue.Begda ? this.DateUtils.parse(mFieldValue.Begda) : mFieldValue.Begda,
               };
@@ -1204,7 +1230,7 @@ sap.ui.define(
         const aSelectedIndices = oTable.getSelectedIndices();
         const sSelectedMenuCode = oControl.data('code');
         const sTablePath = _.lowerCase(_.findKey(this.CRUD_TABLES, { key: sSelectedMenuCode }));
-        const sActionTextCode = !_.isEqual(sSelectedMenuCode, this.CRUD_TABLES.ADDRESS.key) ? 'LABEL_00343' : 'LABEL_00108';
+        const sActionTextCode = !_.includes([this.CRUD_TABLES.ADDRESS.key, this.CRUD_TABLES.CONTACT.key], sSelectedMenuCode) ? 'LABEL_00343' : 'LABEL_00108';
 
         if (aSelectedIndices.length !== 1) {
           MessageBox.alert(this.getBundleText('MSG_00059', sActionTextCode)); // {0}할 데이터를 한 건만 선택하여 주십시오.
@@ -1224,6 +1250,10 @@ sap.ui.define(
             delete mFilters.Prcty;
           }
 
+          if (sTablePath === this.CRUD_TABLES.CONTACT.path && mFilters.Usrty === '0010') {
+            throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00036') }); // 회사메일은 수정이 불가합니다.
+          }
+
           oViewModel.setProperty('/employee/dialog/subKey', sSelectedMenuCode);
           oViewModel.setProperty('/employee/dialog/subLabel', sLabel);
           oViewModel.setProperty('/employee/dialog/action', 'U');
@@ -1233,6 +1263,7 @@ sap.ui.define(
 
           switch (sTablePath) {
             case this.CRUD_TABLES.ADDRESS.path:
+            case this.CRUD_TABLES.CONTACT.path:
               mFilters.Begda = this.DateUtils.parse(mFilters.Begda);
 
               break;
