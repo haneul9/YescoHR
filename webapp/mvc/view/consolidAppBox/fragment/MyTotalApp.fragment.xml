@@ -1,12 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="hCardBox overview-box consolidAppBox-overview" width="33%" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
       <HBox justifyContent="SpaceBetween" class="title">
         <Title level="H2" text="{i18n>LABEL_19007}" />
       </HBox>
       <Text text="{i18n>MSG_19002}" class="sapUiSmallMarginBottom" />
-      <HBox class="mt-50-px">
+      <HBox class="mt-50-px consolidAppBox-overview-content">
         <VBox width="50%" class="overview-info">
           <Label design="Bold" text="{i18n>LABEL_19008}" />
           <ObjectStatus text="{= !${/Total/AppIng} ? '0' : ${/Total/AppIng} }" state="Indication05" />

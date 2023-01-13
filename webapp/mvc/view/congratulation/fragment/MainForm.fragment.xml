@@ -17,7 +17,7 @@
     <VBox class="contents">
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
-        <VBox class="hCardBox overview-box" busyIndicatorDelay="0" busy="{/busy}">
+        <VBox class="hCardBox overview-box congratulation-overview" busyIndicatorDelay="0" busy="{/busy}">
           <HBox justifyContent="SpaceBetween" class="title">
             <Title level="H2" text="{i18n>MSG_02001}" />
           </HBox>

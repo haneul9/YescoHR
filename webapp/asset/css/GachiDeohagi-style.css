@@ -2,6 +2,9 @@
 
 .p11-right-contents .label-week.mt-13-px { margin-top: 0 !important; }
 
+.hCardBox.overview-box.holidayWork-overview .title { margin-bottom: 14px !important; }
+.holidayWork-overview .holidayWork-overview-content-right .label-week.mt-10-px { margin-top: 0 !important; }
+
 .hCardBox.overview-box.my-work-time-overview .title { margin-bottom: 14px !important; }
 .workTime-summary-box .label-week.mt-10-px { margin-top: 0 !important; }
 
@@ -10,3 +13,18 @@
 .commute-type-overview .desc .work-schedule-text.pt-30-px { padding-top: 28px !important; }
 .commute-type-overview .desc .schedule-period { white-space: nowrap; }
 .commute-type-overview .desc .schedule-period.pt-30-px { padding-top: 28px !important; }
+
+.congratulation-overview .overview-info { margin-bottom: 0 !important; }
+
+.studentFunds-overview .studentFunds-overview-content.mt-50-px { margin-top: 25px !important; }
+
+.educationHistory-overview .educationHistory-overview-content.mt-50-px { margin-top: 25px !important; }
+
+.housingLoan-overview .housingLoan-overview-content.mt-50-px { margin-top: 25px !important; }
+
+.consolidAppBox-overview .consolidAppBox-overview-content.mt-50-px { margin-top: 25px !important; }
+
+.medical-overview .medical-overview-content.mt-50-px { margin-top: 25px !important; }
+.medical-overview .overview-info .available-amount-text { white-space: nowrap; }
+
+.accountChange-overview .accountChange-overview-content.pt-75-px { padding-top: 60px !important; }
