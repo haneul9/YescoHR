@@ -1,0 +1,12 @@
+.certification-overview-item.mt-50-px { margin-top: 25px !important; }
+
+.p11-right-contents .label-week.mt-13-px { margin-top: 0 !important; }
+
+.hCardBox.overview-box.my-work-time-overview .title { margin-bottom: 14px !important; }
+.workTime-summary-box .label-week.mt-10-px { margin-top: 0 !important; }
+
+.hCardBox.overview-box.commute-type-overview .title { margin-bottom: 14px !important; }
+.commute-type-overview .desc.pt-16-px { padding-top: 8px !important; }
+.commute-type-overview .desc .work-schedule-text.pt-30-px { padding-top: 28px !important; }
+.commute-type-overview .desc .schedule-period { white-space: nowrap; }
+.commute-type-overview .desc .schedule-period.pt-30-px { padding-top: 28px !important; }
