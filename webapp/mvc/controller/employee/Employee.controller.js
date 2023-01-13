@@ -65,7 +65,7 @@ sap.ui.define(
           ],
         },
         CONTACT: {
-          key: '0105',
+          key: 'NOT_ACTIVE_0105',
           label: 'LABEL_00329',
           path: 'contact',
           odata: 'ContactInfo',
