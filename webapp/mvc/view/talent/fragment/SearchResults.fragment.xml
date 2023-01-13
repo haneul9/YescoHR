@@ -13,14 +13,14 @@
         <Text class="sapUiSmallMarginBegin total-txt" text="total {/result/totalCount}" />
       </HBox>
       <HBox class="status-wrap">
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" height="15px" class="pr-3-px"/>
+        <!-- <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" height="15px" class="pr-3-px"/>
         <Text text="{i18n>LABEL_WERKS_1000}" class="sapUiSmallMarginEnd"/>
         <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" height="15px" class="pr-3-px"/>
         <Text text="{i18n>LABEL_WERKS_2000}" class="sapUiSmallMarginEnd"/>
         <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" height="15px" class="pr-3-px"/>
         <Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
         <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/>
+        <Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/> -->
         <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
         <ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
