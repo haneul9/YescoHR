@@ -169,7 +169,7 @@ sap.ui.define(
 
       onSelectRow(oEvent) {
         const oViewModel = this.getViewModel();
-        const sAppno = oEvent.getParameters('rowBindingContext').getProperty('Appno');
+        const sAppno = oEvent.getParameter('rowBindingContext').getProperty('Appno');
 
         this.getRouter().navTo(oViewModel.getProperty('/detailName'), { oDataKey: sAppno });
       },
