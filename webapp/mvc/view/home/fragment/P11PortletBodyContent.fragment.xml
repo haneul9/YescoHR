@@ -8,7 +8,7 @@
       <FlexBox width="60%">
         <core:HTML content='&lt;div id="portlet-p11-chart-container"&gt;&lt;/div&gt;' />
       </FlexBox>
-      <VBox alignItems="End">
+      <VBox class="p11-right-contents" alignItems="End">
         <layoutData>
           <FlexItemData growFactor="1" />
         </layoutData>
@@ -16,7 +16,7 @@
         <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus19" />
         <Text text="{Wktim}" class="portlet-p11-text" />
         <!-- <Label text="{i18n>LABEL_01162}" class="mt-13-px" /> -->
-        <Label text="{Wktext}" class="mt-13-px" />
+        <Label text="{Wktext}" class="label-week mt-13-px" />
         <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus19" />
         <ObjectStatus text="{Reltx}" state="Indication05" class="portlet-p11-objectstatus15 mt-0" />
         <Text text="{Wkrul}" class="portlet-p11-text" />

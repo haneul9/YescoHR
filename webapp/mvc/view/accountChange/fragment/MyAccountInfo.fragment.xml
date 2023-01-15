@@ -1,12 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core">
-  <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
+  <VBox class="hCardBox overview-box accountChange-overview" width="33%" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
       <HBox justifyContent="SpaceBetween" class="title">
         <Title level="H2" text="{i18n>LABEL_26007}" />
       </HBox>
       <Text text="{i18n>LABEL_26002}" />
-      <HBox width="100%" justifyContent="SpaceBetween" class="w-100 pt-75-px">
+      <HBox width="100%" justifyContent="SpaceBetween" class="w-100 pt-75-px accountChange-overview-content">
         <VBox class="overview-info">
           <Label design="Bold" text="{i18n>LABEL_26003}" />
           <ObjectStatus text="{/MyAcc/Banka}" state="Indication05" class="font-20-px" />

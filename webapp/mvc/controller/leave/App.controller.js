@@ -216,7 +216,9 @@ sap.ui.define(
 
           const mGroupByOyymm = _.chain(aSummary)
             .groupBy('Oyymm')
-            .defaults({ ..._.times(12, (v) => ({ [`${this.getBundleText('LABEL_16019', v + 1)}`]: [{ [this.CHARTS.ACC.prop]: 0, [this.CHARTS.CUR.prop]: 0 }] })).reduce((acc, cur) => ({ ...acc, ...cur }), {}) })
+            .defaults({
+              ..._.times(12, (v) => ({ [`${this.getBundleText('LABEL_16019', v + 1)}`]: [{ [this.CHARTS.ACC.prop]: 0, [this.CHARTS.CUR.prop]: 0 }] })).reduce((acc, cur) => ({ ...acc, ...cur }), {}),
+            })
             .value();
 
           const iCurrentMonthIndex = moment(mFilters.Zyymm).month() + 1;
@@ -282,7 +284,7 @@ sap.ui.define(
 
         if (!sPernr) return;
 
-        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${dDatum.year()}/${dDatum.month()}`, '_blank', 'width=1400,height=800');
+        window.open(`${sHost}#/individualWorkStateView/${sPernr}/${dDatum.year()}/${dDatum.month()}`, '_blank', 'width=1650,height=800');
       },
 
       onDetailTableSort(oEvent) {

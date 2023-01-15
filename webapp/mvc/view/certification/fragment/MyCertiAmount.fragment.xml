@@ -5,7 +5,7 @@
       <HBox justifyContent="SpaceBetween" class="title">
         <Title level="H2" text="{i18n>LABEL_17002}" />
       </HBox>
-      <VBox items="{/myCerti}" class="mt-50-px">
+      <VBox items="{/myCerti}" class="mt-50-px certification-overview-item">
         <HBox justifyContent="SpaceBetween">
           <Text text="{Certx}"/>
           <Text text="{Text}"/>
