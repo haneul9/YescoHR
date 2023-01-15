@@ -11,8 +11,16 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <Text text="{i18n>LABEL_01171}" class="desc-txt" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <Text text="{i18n>LABEL_01171}" class="desc-txt">
+        <layoutData>
+          <FlexItemData styleClass="portlet-header-description" />
+        </layoutData>
+      </Text>
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

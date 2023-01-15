@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="portlet portlet-box portlet-m21" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
@@ -9,7 +10,7 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }" />
       <Text text="{sessionModel>/Orgtx}, {i18n>LABEL_01181}" class="desc-txt" />
       <Text text="">
         <layoutData>

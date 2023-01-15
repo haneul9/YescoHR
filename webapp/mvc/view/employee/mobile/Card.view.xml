@@ -4,16 +4,21 @@
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents mobile-mss-employee-card-list">
-      <SearchField id="employeeSearchField" value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch" class="wrap"/>
-      <VBox class="wrap mt-1-rem">
-        <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat">
-          <items>
-            <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
-            <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
-            <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
-          </items>
-        </SegmentedButton>
-      </VBox>
+      <SearchField id="employeeSearchField" value="{/search/searchText}" placeholder="{i18n>LABEL_00276}" search=".onPressEmployeeSearch">
+        <layoutData>
+          <FlexItemData styleClass="mmecl-search-field" />
+        </layoutData>
+      </SearchField>
+      <SegmentedButton width="100%" selectedKey="{/search/selectedState}" selectionChange=".onChangeStat">
+        <layoutData>
+          <FlexItemData styleClass="mmecl-segmented-button" />
+        </layoutData>
+        <items>
+          <SegmentedButtonItem text="{i18n>LABEL_00245}" key="" />
+          <SegmentedButtonItem text="{i18n>LABEL_00277}" key="3" />
+          <SegmentedButtonItem text="{i18n>LABEL_00278}" key="0" />
+        </items>
+      </SegmentedButton>
       <mobile:ScrollContainer>
         <List id="employeeCardList" items="{/results}" class="employee-card-list" busyIndicatorDelay="0" busy="{/busy}">
           <CustomListItem type="Active" press=".onClickEmployeeCard">

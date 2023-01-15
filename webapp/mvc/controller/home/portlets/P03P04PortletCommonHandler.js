@@ -85,7 +85,7 @@ sap.ui.define(
           oPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
 
           const oPortletBox = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.P03P04PortletBox',
+            name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P03P04PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P03P04PortletBox',
             controller: this,
           });
 

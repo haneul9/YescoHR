@@ -19,7 +19,7 @@
         <!-- <Button press=".onPressSearch" text="{i18n>LABEL_00101}" width="100%" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" /> -->
       </mobile:SearchAreaCSSGrid>
       <mobile:ScrollContainer>
-        <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_45401" countPath="/candidate/listInfo/totalCount" infoMessagePath="i18n>MSG_45013" pressInfoIcon=".onPressLegend" visible="{= ${/candidate/listInfo/totalCount} > 0 }" />
+        <mobile:HeaderTitleCountStatus title="{i18n>LABEL_45401}" countPath="/candidate/listInfo/totalCount" infoMessage="{i18n>MSG_45013}" pressInfoIcon=".onPressLegend" visible="{= ${/candidate/listInfo/totalCount} > 0 }" />
         <VBox id="candidateList" items="{/candidate/listInfo/list}" class="scsn-candidates" visible="{= ${/candidate/listInfo/totalCount} > 0 }">
           <f:Card>
             <f:customData>
@@ -69,7 +69,7 @@
             </f:content>
           </f:Card>
         </VBox>
-        <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_00204" countPath="/searchResult/listInfo/totalCount" infoMessagePath="i18n>MSG_45014" pressInfoIcon=".onPressLegend" />
+        <mobile:HeaderTitleCountStatus title="{i18n>LABEL_00204}" countPath="/searchResult/listInfo/totalCount" infoMessage="{i18n>MSG_45014}" pressInfoIcon=".onPressLegend" />
         <VBox id="searchResultList" items="{/searchResult/listInfo/list}" class="scsn-candidates" visible="{= ${/searchResult/listInfo/totalCount} > 0 }">
           <f:Card>
             <f:customData>

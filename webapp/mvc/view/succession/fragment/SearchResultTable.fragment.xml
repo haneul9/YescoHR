@@ -7,23 +7,15 @@
     <custom:Placeholder />
   </m:VBox>
   <m:VBox class="vCardBox" visible="{= !${/searchResult/listInfo/busy} }">
-    <m:HBox class="table-toolbar" justifyContent="SpaceBetween">
-      <m:HBox class="title">
-        <m:Title text="{i18n>LABEL_00204}" level="H4" />
-        <m:Text text="total {/searchResult/listInfo/totalCount}" class="total-txt" />
-        <m:Text text="{i18n>MSG_45001}" class="desc-txt" />
-      </m:HBox>
+    <m:HBox class="table-toolbar">
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00204}" countPath="/searchResult/listInfo/totalCount" infoMessage="{i18n>MSG_45001}" class="title" />
       <m:HBox class="status-wrap">
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_1000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_2000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/>
-        <m:ObjectStatus text="{i18n>LABEL_45006}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication03" />
-        <m:ObjectStatus text="{i18n>LABEL_45007}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication04" />
+        <m:ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+        <m:ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+        <m:ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+        <m:ObjectStatus text="{i18n>LABEL_WERKS_4000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
+        <m:ObjectStatus text="{i18n>LABEL_45006}" icon="sap-icon://color-fill" state="Indication03" />
+        <m:ObjectStatus text="{i18n>LABEL_45007}" icon="sap-icon://color-fill" state="Indication04" />
         <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://color-fill" state="Indication05" />
       </m:HBox>
     </m:HBox>

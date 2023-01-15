@@ -1,12 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
     <HBox class="table-toolbar">
-      <HBox class="title">
-        <Title level="H2" text="{i18n>LABEL_20005}" />
-        <Text text="{/FullYear}" class="desc-txt" />
-      </HBox>
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_20005}" infoMessagePath="/FullYear" class="title" />
     </HBox>
     <HBox height="176px">
       <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />

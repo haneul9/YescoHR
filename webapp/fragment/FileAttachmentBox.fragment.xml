@@ -1,7 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core"
-  xmlns:u="sap.ui.unified">
+  xmlns:u="sap.ui.unified"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox id="fileAttachmentBox" class="vCardBox" visible="{= !!${/settings/visible} }" busy="true" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="full-files" value="{= ${/settings/fullFiles} ? 'tru' : 'fals' }e" writeToDom="true" />
@@ -9,14 +10,14 @@
     </customData>
     <HBox class="table-toolbar">
       <HBox class="title">
-        <Title level="H2" text="{/settings/title}">
+        <custom:Title text="{/settings/title}">
+          <custom:layoutData>
+            <FlexItemData styleClass="header-title" />
+          </custom:layoutData>
+        </custom:Title>
+        <Link text="{/settings/description}" visible="{= ${/settings/editable} &amp;&amp; !!${/settings/description} }" enabled="{/settings/enableDescriptionPopover}" press=".onPressAttachmentDescription" subtle="true" class="desc-txt ml-0">
           <layoutData>
-            <FlexItemData styleClass="table-toolbar-title" />
-          </layoutData>
-        </Title>
-        <Link text="{/settings/description}" visible="{= ${/settings/editable} &amp;&amp; !!${/settings/description} }" enabled="{/settings/enableDescriptionPopover}" press=".onPressAttachmentDescription" subtle="true" class="desc-txt">
-          <layoutData>
-            <FlexItemData styleClass="table-toolbar-description" />
+            <FlexItemData styleClass="header-description" />
           </layoutData>
         </Link>
       </HBox>
@@ -38,7 +39,7 @@
         </Button>
       </HBox>
     </HBox>
-    <table:Table id="filesTable" width="100%" selectionMode="{/fileSelectionMode}" columnHeaderHeight="45" rowHeight="44" visibleRowCount="{/fileCount}" rows="{/files}" noData="{i18n>MSG_00001}">
+    <table:Table id="filesTable" width="100%" selectionMode="{/fileSelectionMode}" columnHeaderHeight="45" rowHeight="{/settings/rowHeight}" visibleRowCount="{/fileCount}" rows="{/files}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="4%">
           <Label text="No"/>

@@ -6,7 +6,7 @@
       <core:CustomData key="key" value="a07" />
     </customData>
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28015}" />
+      <custom:Title text="{i18n>LABEL_28015}" />
       <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" class="ml-8-px" tooltip="{i18n>LABEL_28003}" />
       <Text text="">
         <layoutData>

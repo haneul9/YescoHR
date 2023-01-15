@@ -66,10 +66,10 @@
       </VBox>
     </content>
     <buttons>
-      <Button text="{i18n>LABEL_00108}" type="Emphasized" press=".onPressEdit" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/ViewMode} }" />
-      <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onPressSave" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
-      <Button text="{i18n>LABEL_00117}" type="Emphasized" press=".onPressComplete" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" />
-      <Button text="{i18n>LABEL_00115}" press=".onPressDialogClose" class="cancel" />
+      <Button text="{i18n>LABEL_00115}" press=".onPressDialogClose" class="button-tertiary" />
+      <Button text="{i18n>LABEL_00108}" press=".onPressEdit" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; ${/Detail/ViewMode} }" class="button-primary" />
+      <Button text="{i18n>LABEL_00103}" press=".onPressSave" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" class="button-secondary" />
+      <Button text="{i18n>LABEL_00117}" press=".onPressComplete" visible="{= ${/Detail/AuthChange} === 'X' &amp;&amp; !${/Detail/ViewMode} }" class="button-primary" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

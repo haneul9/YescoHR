@@ -1,10 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox binding="{/overview}" busy="{busy}" busyIndicatorDelay="0" class="hCardBox overview-box leave-of-absence">
-    <HBox alignItems="Baseline" class="title">
-      <Title level="H2" text="{i18n>MSG_50001}" />
-      <Text text="{i18n>LABEL_50002}" class="sapUiSmallMarginBegin" />
-    </HBox>
+    <custom:HeaderTitleCountMessage title="{i18n>MSG_50001}" infoMessage="{i18n>LABEL_50002}" infoMessageUnderline="false" class="title" />
     <HBox alignItems="End" visible="{= ${Absck} === 'X' }">
       <Text text="{Line1}">
         <layoutData>

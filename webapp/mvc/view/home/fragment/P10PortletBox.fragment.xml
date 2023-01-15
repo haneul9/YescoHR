@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <!-- 성과관리 -->
   <VBox class="portlet portlet-box portlet-p10" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
@@ -10,8 +11,16 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <Text text="{description}" class="desc-txt" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <Text text="{description}" class="desc-txt">
+        <layoutData>
+          <FlexItemData styleClass="portlet-header-description" />
+        </layoutData>
+      </Text>
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -31,7 +40,7 @@
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="63%" />
         </layoutData>
-        <ScrollContainer>
+        <ScrollContainer horizontal="false" vertical="true">
           <VBox width="100%" height="100%" items="{list}" class="portlet-p10-list">
             <HBox width="100%" alignItems="Center">
               <core:Icon src="sap-icon://color-fill" width="16px" height="16px" class="pr-5-px">

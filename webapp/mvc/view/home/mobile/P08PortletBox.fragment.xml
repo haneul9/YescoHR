@@ -1,0 +1,96 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <!-- To Do List -->
+  <VBox class="portlet portlet-box portlet-p08" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <SegmentedButton selectedKey="{selectedTabKey}">
+        <items>
+          <SegmentedButtonItem text="{i18n>LABEL_01141}" tooltip="{i18n>LABEL_01141}" key="Today" />
+          <SegmentedButtonItem text="{i18n>LABEL_01142}" tooltip="{i18n>LABEL_01142}" key="Future" />
+        </items>
+      </SegmentedButton>
+      <!-- <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" /> -->
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox class="mt-10-px">
+        <layoutData>
+          <FlexItemData growFactor="1" maxWidth="100%" />
+        </layoutData>
+        <ScrollContainer visible="{= ${selectedTabKey} === 'Today' }" horizontal="false" vertical="true">
+          <HBox width="100%" class="no-data" visible="{= ${today/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <VBox width="100%" items="{today/list}" visible="{= ${today/listCount} &gt; 0 }" class="portlet-todo-list">
+            <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+              <!-- 메뉴 없는 경우 -->
+              <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
+              <!-- 메뉴 이동인 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
+              <!-- http|https|javascript로 시작되는 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !!${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
+              <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
+                <layoutData>
+                  <FlexItemData minWidth="75px" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+        <ScrollContainer visible="{= ${selectedTabKey} === 'Future' }" horizontal="false" vertical="true">
+          <HBox width="100%" class="no-data" visible="{= ${future/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <VBox width="100%" items="{future/list}" visible="{= ${future/listCount} &gt; 0 }" class="portlet-todo-list">
+            <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween">
+              <!-- 메뉴 없는 경우 -->
+              <Text text="{Title}" wrapping="false" tooltip="{Title}" visible="{= !${Mnurl} }" class="menu-link-text" />
+              <!-- 메뉴 이동인 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" press=".handleMenuLink" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
+              <!-- http|https|javascript로 시작되는 경우 -->
+              <Link text="{Title}" visible="{= !!${Mnurl} &amp;&amp; !!${Mepop} }" href="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuUrl' }" subtle="true" target="{ parts: [ { path: 'Mnurl' }, { path: 'Mepop' } ], formatter: '.formatMenuTarget' }" class="menu-link">
+                <layoutData>
+                  <FlexItemData growFactor="1" />
+                </layoutData>
+              </Link>
+              <Text text="{ path: 'Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }">
+                <layoutData>
+                  <FlexItemData minWidth="75px" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </VBox>
+        </ScrollContainer>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

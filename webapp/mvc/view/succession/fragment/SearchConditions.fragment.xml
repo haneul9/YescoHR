@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox class="form-bar" alignItems="Center" binding="{/searchBar}">
       <Label text="{i18n>LABEL_00237}" />
@@ -24,9 +25,7 @@
     </HBox>
 
     <VBox class="scsn-search-filter-area" visible="{/searchBar/showSearchConditions}" binding="{/searchConditions}">
-      <HBox class="title">
-        <Title text="{i18n>LABEL_45101}" level="H4" />
-      </HBox>
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_45101}" titleLevel="H4" class="title" />
       <grid:CSSGrid class="scsn-search-filter-box">
         <Label text="{i18n>LABEL_00222} 1" />
         <MultiComboBox width="100%" selectedKeys="{Stell1}" items="{ path: '/entries/A', templateShareable: false }" selectionChange=".onSelectionChangeStell">
@@ -152,9 +151,7 @@
         </HBox>
       </grid:CSSGrid>
 
-      <HBox class="title">
-        <Title text="{i18n>LABEL_45201}" level="H4" />
-      </HBox>
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_45201}" titleLevel="H4" class="title" />
       <grid:CSSGrid class="scsn-search-filter-box">
         <Label text="{i18n>LABEL_35009} 1" />
         <HBox justifyContent="SpaceBetween" width="100%" class="search-filter-language">
@@ -208,10 +205,7 @@
         </MultiComboBox>
       </grid:CSSGrid>
 
-      <HBox class="title">
-        <Title text="{i18n>LABEL_45301}" level="H4" />
-        <Text text="{i18n>MSG_45011}" class="desc-txt" />
-      </HBox>
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_45301}" titleLevel="H4" infoMessage="{i18n>MSG_45011}" class="title" />
       <grid:CSSGrid class="scsn-search-filter-box">
         <Label text="{i18n>LABEL_00237}" />
         <MultiComboBox width="100%" selectedKeys="{Werks}" items="{ path: '/entries/Werks', templateShareable: false }">

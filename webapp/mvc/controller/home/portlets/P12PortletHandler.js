@@ -28,7 +28,10 @@ sap.ui.define(
         });
 
         const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox
+          .setModel(oPortletModel)
+          .bindElement('/')
+          .addStyleClass(this.bMobile ? 'h-auto' : `portlet-h${iPortletHeight}`);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -64,6 +67,11 @@ sap.ui.define(
         }
         if (!mPortletContentData.Summer) {
           mPortletContentData.Summer = { Total: 0, Used: 0, Remain: 0 };
+        }
+
+        if (this.bMobile) {
+          mPortletContentData.hideTitle = true;
+          mPortletContentData.switchable = false;
         }
 
         return mPortletContentData;

@@ -1,71 +1,72 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.idp.Document"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:grid="sap.ui.layout.cssgrid">
-    <Page showHeader="false" class="popup-view">
-        <VBox class="contents">
-            <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.AppointeeBar" type="XML" />
-            <HBox class="vCardBox" height="80px">
-                <HBox class="form-bar" alignItems="Center">
-                    <Label text="{i18n>LABEL_36002} {i18n>LABEL_36020}" />
-                    <ComboBox width="250px" selectedKey="{/searchConditions/Zyear}" items="{ path: '/entry/years', templateShareable: true }" change=".onChangeYear">
-                        <core:Item key="{Year}" text="{Year}" />
-                    </ComboBox>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false" class="popup-view">
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.AppointeeBar" type="XML" />
+      <HBox class="vCardBox" height="80px">
+        <HBox class="form-bar" alignItems="Center">
+          <Label text="{i18n>LABEL_36002} {i18n>LABEL_36020}" />
+          <ComboBox width="250px" selectedKey="{/searchConditions/Zyear}" items="{ path: '/entry/years', templateShareable: true }" change=".onChangeYear">
+            <core:Item key="{Year}" text="{Year}" />
+          </ComboBox>
+        </HBox>
+      </HBox>
+      <HBox width="100%" class="vCardBox no-data" visible="{/hasNoData}">
+        <layoutData>
+          <FlexItemData minHeight="550px" />
+        </layoutData>
+        <Text text="{i18n>MSG_00001}" />
+      </HBox>
+      <HBox busyIndicatorDelay="0" busy="{/busy}" visible="{= !${/hasNoData} }">
+        <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+          <items>
+            <IconTabFilter text="{i18n>LABEL_36003}" key="T01">
+              <VBox class="vCardBox">
+                <HBox>
+                  <HBox alignItems="Center" class="table-toolbar">
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36003}" class="title" />
+                  </HBox>
                 </HBox>
-            </HBox>
-            <HBox width="100%" class="vCardBox no-data" visible="{/hasNoData}">
-                <layoutData>
-                    <FlexItemData minHeight="550px" />
-                </layoutData>
-                <Text text="{i18n>MSG_00001}" />
-            </HBox>
-            <HBox busyIndicatorDelay="0" busy="{/busy}" visible="{= !${/hasNoData} }">
-                <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
-                    <layoutData>
-                        <FlexItemData growFactor="1"/>
-                    </layoutData>
-                    <items>
-                        <IconTabFilter text="{i18n>LABEL_36003}" key="T01">
-                            <VBox class="vCardBox">
-                                <HBox>
-                                    <HBox alignItems="Center" class="table-toolbar">
-                                        <Title level="H2" text="{i18n>LABEL_36003}" class="sapUiMediumMarginEnd"/>
-                                    </HBox>
-                                </HBox>
-                                <VBox items="{/goals/comp}">
-                                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.ItemOnlyView" type="XML" />
-                                </VBox>
-                            </VBox>
-                        </IconTabFilter>
-                        <IconTabFilter text="{i18n>LABEL_36004}" key="T02">
-                            <VBox class="vCardBox">
-                                <HBox>
-                                    <HBox alignItems="Center" class="table-toolbar">
-                                        <Title level="H2" text="{i18n>LABEL_36004}" class="sapUiMediumMarginEnd"/>
-                                    </HBox>
-                                </HBox>
-                                <VBox>
-                                    <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
-                                        <VBox>
-                                            <Label width="100%" text="{i18n>LABEL_36008}" vAlign="Top" />
-                                        </VBox>
-                                        <VBox>
-                                            <TextArea width="100%" rows="5" value="{/manage/Z317}" enabled="false" />
-                                        </VBox>
-                                        <VBox>
-                                            <Label width="100%" text="{i18n>LABEL_36009}" vAlign="Top" />
-                                        </VBox>
-                                        <VBox>
-                                            <TextArea width="100%" rows="5" value="{/manage/Z319}" enabled="false" />
-                                        </VBox>
-                                    </grid:CSSGrid>
-                                </VBox>
-                            </VBox>
-                        </IconTabFilter>
-                    </items>
-                </IconTabBar>
-            </HBox>
-        </VBox>
-    </Page>
+                <VBox items="{/goals/comp}">
+                  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.ItemOnlyView" type="XML" />
+                </VBox>
+              </VBox>
+            </IconTabFilter>
+            <IconTabFilter text="{i18n>LABEL_36004}" key="T02">
+              <VBox class="vCardBox">
+                <HBox>
+                  <HBox alignItems="Center" class="table-toolbar">
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36004}" class="title" />
+                  </HBox>
+                </HBox>
+                <VBox>
+                  <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(2, 1fr 3fr)">
+                    <VBox>
+                      <Label width="100%" text="{i18n>LABEL_36008}" vAlign="Top" />
+                    </VBox>
+                    <VBox>
+                      <TextArea width="100%" rows="5" value="{/manage/Z317}" enabled="false" />
+                    </VBox>
+                    <VBox>
+                      <Label width="100%" text="{i18n>LABEL_36009}" vAlign="Top" />
+                    </VBox>
+                    <VBox>
+                      <TextArea width="100%" rows="5" value="{/manage/Z319}" enabled="false" />
+                    </VBox>
+                  </grid:CSSGrid>
+                </VBox>
+              </VBox>
+            </IconTabFilter>
+          </items>
+        </IconTabBar>
+      </HBox>
+    </VBox>
+  </Page>
 </mvc:View>

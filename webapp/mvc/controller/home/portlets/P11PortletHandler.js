@@ -94,6 +94,9 @@ sap.ui.define(
           } else {
             this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
           }
+        } else {
+          mPortletData.hideTitle = true;
+          mPortletData.switchable = false;
         }
 
         mPortletData.ButtonText1 = this.getMenuName('attendance');

@@ -1,18 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:dnd="sap.ui.core.dnd"
+  xmlns:f="sap.f"
   xmlns:dnd-grid="sap.f.dnd"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:f="sap.f">
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="contents">
     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
-
     <VBox width="100%" class="vCardBox">
       <HBox justifyContent="SpaceBetween" class="table-toolbar">
-        <HBox class="title">
-          <Title level="H4" text="{i18n>LABEL_15004} {i18n>LABEL_15018}" />
-          <Text text="{i18n>MSG_15005}" class="desc-txt"/>
-        </HBox>
+        <custom:HeaderTitleCountMessage title="{i18n>LABEL_15004} {i18n>LABEL_15018}" infoMessage="{i18n>MSG_15005}" class="title" />
         <HBox class="cascading-type-list">
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png"/>
           <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>

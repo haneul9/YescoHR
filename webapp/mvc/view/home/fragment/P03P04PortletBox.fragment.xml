@@ -14,10 +14,14 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{=
-        ${selectedMembersButton} === 'ORG' ? ${orgMembers/title} : (
-        ${selectedMembersButton} === 'MY' ? ${myMembers/title} : ''
-      )}" visible="{= !${hideTitle} }" />
+      <custom:Title text="{=
+          ${selectedMembersButton} === 'ORG' ? ${orgMembers/title} : (
+          ${selectedMembersButton} === 'MY' ? ${myMembers/title} : ''
+        )}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
       <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
           <SegmentedButtonItem text="{i18n>LABEL_01111}" key="ORG" />
@@ -44,7 +48,7 @@
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
-        <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }">
+        <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }" horizontal="false" vertical="true">
           <HBox width="100%" class="no-data" visible="{= ${orgMembers/listCount} === 0 }">
             <Text text="{i18n>MSG_00001}" />
           </HBox>
@@ -68,7 +72,7 @@
             </custom:HBox>
           </VBox>
         </ScrollContainer>
-        <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }">
+        <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" horizontal="false" vertical="true">
           <HBox width="100%" class="no-data" visible="{= ${myMembers/listCount} === 0 }">
             <Text text="{i18n>MSG_00001}" />
           </HBox>

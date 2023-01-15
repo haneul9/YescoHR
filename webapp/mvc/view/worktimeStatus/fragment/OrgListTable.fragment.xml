@@ -1,15 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" visible="{= ${/search/Disty} === '2' }">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
-      <HBox class="header">
-        <Title level="H3" text="{i18n>LABEL_32006}" class="sapUiSmallMarginEnd" />
-        <Text text="{i18n>MSG_16001}" class="desc-txt" />
-      </HBox>
-      <HBox class="status-wrap">
-        <ObjectStatus text="{i18n>LABEL_32007}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-        <ObjectStatus text="{i18n>LABEL_32008}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_32006}" infoMessage="{i18n>MSG_16001}" />
+      <HBox>
+        <HBox class="status-wrap">
+          <ObjectStatus text="{i18n>LABEL_32007}" icon="sap-icon://circle-task-2" state="Indication04" />
+          <ObjectStatus text="{i18n>LABEL_32008}" icon="sap-icon://circle-task-2" state="Indication05" />
+        </HBox>
         <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressOrgExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
       </HBox>
     </HBox>

@@ -26,10 +26,9 @@ sap.ui.define(
 
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
-        const sFragmentName = this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P10PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox';
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: sFragmentName,
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P10PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox',
           controller: this,
         });
 

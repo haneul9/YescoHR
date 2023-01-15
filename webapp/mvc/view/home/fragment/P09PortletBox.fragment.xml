@@ -11,7 +11,11 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
       <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" />
       <Text text="">
         <layoutData>
@@ -28,7 +32,7 @@
           <Image alt="{i18n>LABEL_01151}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_birthday.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
-          <ScrollContainer>
+          <ScrollContainer horizontal="false" vertical="true">
             <HBox width="100%" class="no-data" visible="{= ${birthday/listCount} === 0 }">
               <Text text="{i18n>MSG_00001}" />
             </HBox>
@@ -55,7 +59,7 @@
           <Image alt="{i18n>LABEL_01152}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_wedding.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
-          <ScrollContainer>
+          <ScrollContainer horizontal="false" vertical="true">
             <HBox width="100%" class="no-data" visible="{= ${wedding/listCount} === 0 }">
               <Text text="{i18n>MSG_00001}" />
             </HBox>

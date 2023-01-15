@@ -1,8 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox class="title mb-10-px">
-      <Title level="H2" text="{i18n>LABEL_32003}" />
+      <custom:Title text="{i18n>LABEL_32003}" />
     </HBox>
     <HBox height="250px">
       <core:HTML content='&lt;div id="chart-bar-container"&gt;&lt;/div&gt;' />

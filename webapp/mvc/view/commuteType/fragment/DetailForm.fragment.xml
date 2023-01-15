@@ -1,27 +1,28 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_30002}"/>
-            <VBox>
-                <DatePicker displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/FormData/Zyymm}" editable="false" />
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_30003}"/>
-            <VBox>
-                <ComboBox items="{/WorkType}" selectedKey="{/FormData/Schkz}" editable="{= !${/FormData/ZappStatAl} }" class="required">
-                    <core:Item text="{Rtext}" key="{Schkz}" />
-                </ComboBox>
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-        </grid:CSSGrid>
-    </VBox>
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00129}" class="title" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_30002}"/>
+      <VBox>
+        <DatePicker displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/FormData/Zyymm}" editable="false" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_30003}"/>
+      <VBox>
+        <ComboBox items="{/WorkType}" selectedKey="{/FormData/Schkz}" editable="{= !${/FormData/ZappStatAl} }" class="required">
+          <core:Item text="{Rtext}" key="{Schkz}" />
+        </ComboBox>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

@@ -35,13 +35,13 @@
     <VBox width="100%" class="mt-0-px" visible="{= !${/Competency/busy} }">
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{/Competency/Title}" />
+          <custom:HeaderTitleCountMessage titlePath="/Competency/Title" class="title" />
         </HBox>
         <TextArea class="view-box" enabled="false" value="{/Competency/Defin}" width="100%" />
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22004}" />
+          <custom:HeaderTitleCountMessage title="{i18n>LABEL_22004}" class="title" />
         </HBox>
         <VBox>
           <Panel expandable="true" width="auto" class="capability-level">
@@ -79,7 +79,7 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22005}" />
+          <custom:HeaderTitleCountMessage title="{i18n>LABEL_22005}" class="title" />
         </HBox>
         <HBox items="{/Competency/RelateJobs/JobTypes}" class="flex-wrap">
           <Button text="{JobName}" press=".onPressJob" class="job"/>

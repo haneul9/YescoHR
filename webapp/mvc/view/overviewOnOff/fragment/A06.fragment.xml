@@ -7,7 +7,7 @@
       <grid:GridItemLayoutData gridColumn="span 2" />
     </layoutData>
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28024}" />
+      <custom:Title text="{i18n>LABEL_28024}" />
       <Text text="{i18n>LABEL_28023}" class="desc-txt" />
       <Text text="">
         <layoutData>

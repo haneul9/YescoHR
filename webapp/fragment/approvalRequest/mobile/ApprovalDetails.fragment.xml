@@ -1,10 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
   <HBox class="table-toolbar" visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }">
-    <HBox class="title">
-      <Title level="H2" text="{i18n>LABEL_00139}" />
-    </HBox>
+    <custom:HeaderTitleCountMessage title="{i18n>LABEL_00139}" class="title" />
   </HBox>
   <grid:CSSGrid visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }" gridTemplateColumns="2fr 3fr" gridGap="6px 0" class="form-grid">
     <Label text="{i18n>LABEL_00138}" />

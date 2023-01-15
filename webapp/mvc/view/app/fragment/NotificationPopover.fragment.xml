@@ -4,7 +4,7 @@
   <custom:Popover contentMinWidth="490px" resizable="true" placement="{placement}" horizontalScrolling="false" class="notification-popover" busy="{busy}" busyIndicatorDelay="0" initialFocus="notification-popover-close" scroll=".onScroll">
     <custom:customHeader>
       <HBox class="notification-popover-header">
-        <Title text="{i18n>LABEL_01401}" level="H3" />
+        <custom:Title text="{i18n>LABEL_01401}" />
         <Text text="">
           <layoutData>
             <FlexItemData growFactor="1" />

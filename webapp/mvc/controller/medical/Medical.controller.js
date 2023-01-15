@@ -60,8 +60,7 @@ sap.ui.define(
           oViewModel.setProperty('/search/Objps', 'ALL');
           oViewModel.setProperty('/search/Kdsvh', 'ALL');
 
-          this.getApplyList();
-          this.totalCount();
+          this.onSearch();
           this.getAppointeeModel().setProperty('/showChangeButton', this.isHass());
         } catch (oError) {
           AppUtils.handleError(oError);
@@ -85,8 +84,7 @@ sap.ui.define(
           oViewModel.setProperty('/search/Objps', 'ALL');
           oViewModel.setProperty('/search/Kdsvh', 'ALL');
 
-          this.getApplyList();
-          this.totalCount();
+          this.onSearch();
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -122,7 +120,35 @@ sap.ui.define(
       },
 
       async onSearch() {
-        this.getApplyList();
+        const oViewModel = this.getViewModel();
+
+        try {
+          oViewModel.getProperty('/busy', true);
+
+          const [aList, [mTotal]] = await Promise.all([this.getApplyList(), this.totalCount()]);
+
+          const oTable = this.byId('medTable');
+          oViewModel.setProperty('/List', aList);
+          oViewModel.setProperty('/Total', mTotal);
+          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
+          if (mTotal.Note) {
+            oViewModel.setProperty('/listInfo/infoMessage', mTotal.Note);
+          }
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          oViewModel.getProperty('/busy', false);
+        }
+      },
+
+      getFamilyCode() {
+        const oModel = this.getModel(ServiceNames.BENEFIT);
+        const mPayLoad = {
+          Datum: new Date(),
+          Pernr: this.getAppointeeProperty('Pernr'),
+        };
+
+        return Client.getEntitySet(oModel, 'MedExpenseSupportList', mPayLoad);
       },
 
       async getApplyList() {
@@ -144,62 +170,25 @@ sap.ui.define(
           sKdsvh = mSearch.Kdsvh;
         }
 
-        oViewModel.setProperty('/busy', true);
-
-        try {
-          const mPayLoad = {
-            Prcty: 'L',
-            Menid: sMenid,
-            Apbeg: dDate,
-            Apend: dDate2,
-            Famgb: sFamgb,
-            Famsa: sFamsa,
-            Objps: sObjps,
-            Kdsvh: sKdsvh,
-            Pernr: this.getAppointeeProperty('Pernr'),
-          };
-
-          const aList = await Client.getEntitySet(oModel, 'MedExpenseAppl', mPayLoad);
-          const oTable = this.byId('medTable');
-
-          oViewModel.setProperty('/List', aList);
-          oViewModel.setProperty('/listInfo', this.TableUtils.count({ oTable, aRowData: aList, sStatCode: 'Lnsta' }));
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
-      },
-
-      getFamilyCode() {
-        const oModel = this.getModel(ServiceNames.BENEFIT);
         const mPayLoad = {
-          Datum: new Date(),
+          Prcty: 'L',
+          Menid: sMenid,
+          Apbeg: dDate,
+          Apend: dDate2,
+          Famgb: sFamgb,
+          Famsa: sFamsa,
+          Objps: sObjps,
+          Kdsvh: sKdsvh,
           Pernr: this.getAppointeeProperty('Pernr'),
         };
 
-        return Client.getEntitySet(oModel, 'MedExpenseSupportList', mPayLoad);
+        return Client.getEntitySet(oModel, 'MedExpenseAppl', mPayLoad);
       },
 
       async totalCount() {
-        const oViewModel = this.getViewModel();
+        const oModel = this.getModel(ServiceNames.BENEFIT);
 
-        oViewModel.setProperty('/busy', true);
-
-        try {
-          const oModel = this.getModel(ServiceNames.BENEFIT);
-          const [mTotal] = await Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
-
-          oViewModel.setProperty('/Total', mTotal);
-
-          if (!!mTotal.Note) {
-            oViewModel.setProperty('/listInfo/infoMessage', mTotal.Note);
-          }
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+        return Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
       },
 
       // 대상자 선택시

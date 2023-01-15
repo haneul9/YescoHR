@@ -31,10 +31,7 @@
       </HBox>
       <VBox width="100%" class="vCardBox small">
         <HBox class="table-toolbar">
-          <HBox class="title">
-            <Title level="H2" text="Team Calendar" class="sapUiSmallMarginEnd" />
-            <Text text="{i18n>MSG_37001}" class="desc-txt ml-0" visible="{= ${/auth} !== 'E' }" />
-          </HBox>
+          <custom:HeaderTitleCountMessage title="Team Calendar" infoMessage="{i18n>MSG_37001}" infoMessageVisible="[= $[/auth] !== 'E' ]" class="title" />
         </HBox>
         <HBox justifyContent="Center" class="year-plan-head">
           <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" enabled="{= !${/busy/Calendar} }" />

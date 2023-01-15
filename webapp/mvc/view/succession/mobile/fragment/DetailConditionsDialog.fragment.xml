@@ -1,11 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <Dialog title="{i18n>LABEL_45005}" contentHeight="60%" horizontalScrolling="false" busy="{/busy}" busyIndicatorDelay="0" class="candidate-detail-conditions-dialog">
     <content>
       <VBox class="section" binding="{/searchConditions}">
         <HBox class="title-bar">
-          <Title text="{i18n>LABEL_45101}" level="H3" />
+          <custom:Title text="{i18n>LABEL_45101}" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_00222} 1" />
@@ -127,7 +128,7 @@
           </HBox>
         </grid:CSSGrid>
         <HBox class="title-bar">
-          <Title text="{i18n>LABEL_45201}" level="H3" />
+          <custom:Title text="{i18n>LABEL_45201}" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_35009} 1" />
@@ -177,7 +178,7 @@
           </MultiComboBox>
         </grid:CSSGrid>
         <HBox class="title-bar">
-          <Title text="{i18n>LABEL_45301}" level="H3" />
+          <custom:Title text="{i18n>LABEL_45301}" />
           <Text text="{i18n>MSG_45011}" class="desc-txt" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">

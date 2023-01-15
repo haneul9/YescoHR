@@ -8,7 +8,7 @@
     <VBox class="contents">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <!-- <Title level="H2" text="{i18n>LABEL_00168}" /> -->
+          <!-- <custom:Title text="{i18n>LABEL_00168}" /> -->
           <HBox class="table-toolbar">
             <HBox class="title">
               <custom:Title text="{i18n>LABEL_00168}: " />

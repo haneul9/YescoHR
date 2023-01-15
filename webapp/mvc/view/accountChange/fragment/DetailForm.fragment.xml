@@ -1,9 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <custom:Title text="{i18n>LABEL_00129}" />
       <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">

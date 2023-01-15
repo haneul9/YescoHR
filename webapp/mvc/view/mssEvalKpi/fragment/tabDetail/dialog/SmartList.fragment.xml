@@ -1,10 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:smartList="sap.ui.comp.smartlist">
-
-  <HBox justifyContent="SpaceBetween" class="table-toolbar">
+  xmlns:smartList="sap.ui.comp.smartlist"
+  xmlns:custom="sap.ui.yesco.control">
+  <HBox class="table-toolbar">
     <HBox class="title">
-      <Title level="H2" text="{= ${/situation/segmentKey} === 'A' ? ${i18n>LABEL_15022} : ${i18n>LABEL_15023} }" />
+      <custom:Title text="{= ${/situation/segmentKey} === 'A' ? ${i18n>LABEL_15022} : ${i18n>LABEL_15023} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="header-title" />
+        </custom:layoutData>
+      </custom:Title>
     </HBox>
     <HBox class="cascading-type-list">
       <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png"/>
@@ -15,7 +19,7 @@
       <Text text="{i18n>LABEL_15016}" textAlign="Center" width="100%"/>
     </HBox>
   </HBox>
-  <!-- <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBindingPath="/CascadingSitu/SituList">
+  <!-- <smartList:SmartList listType="Tree" enableAutoBinding="true" showRowCount="false" showFullScreenButton="true" listBinding="{/CascadingSitu/SituList}">
     <smartList:listItemTemplate>
       <StandardTreeItem title="{Stext}" />
     </smartList:listItemTemplate>

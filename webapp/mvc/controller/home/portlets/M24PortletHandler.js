@@ -33,7 +33,10 @@ sap.ui.define(
         });
 
         const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox
+          .setModel(oPortletModel)
+          .bindElement('/')
+          .addStyleClass(this.bMobile ? 'h-auto' : `portlet-h${iPortletHeight}`);
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

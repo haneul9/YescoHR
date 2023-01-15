@@ -5,7 +5,7 @@
     <layoutData>
       <FlexItemData growFactor="1" maxWidth="100%" />
     </layoutData>
-    <ScrollContainer>
+    <ScrollContainer horizontal="false" vertical="true">
       <HBox width="100%" class="no-data" visible="{= ${listCount} === 0 }">
         <Text text="{i18n>MSG_00001}" />
       </HBox>

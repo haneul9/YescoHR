@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core">
   <Popover contentWidth="120px" showHeader="false" placement="Bottom" horizontalScrolling="false" class="status-popover">
     <VBox class="status-wrap" binding="{/search/approvalRequestListInfo}">
-      <ObjectStatus text="{statusText/progress}" visible="{statusVisible/progress}" icon="sap-icon://circle-task-2" state="None" />
+      <ObjectStatus text="{statusText/progress}" visible="{statusVisible/progress}" icon="sap-icon://circle-task-2" class="sapMObjStatusIndication06" />
       <ObjectStatus text="{statusText/request}" visible="{statusVisible/request}" icon="sap-icon://circle-task-2" state="Indication02" />
       <ObjectStatus text="{statusText/approve}" visible="{statusVisible/approve}" icon="sap-icon://circle-task-2" state="Indication03" />
       <ObjectStatus text="{statusText/reject}" visible="{statusVisible/reject}" icon="sap-icon://circle-task-2" state="Indication04" />

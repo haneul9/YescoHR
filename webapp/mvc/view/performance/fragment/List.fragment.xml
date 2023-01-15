@@ -15,10 +15,7 @@
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="header-wrap">
-          <HBox class="header">
-            <Title level="H3" text="{i18n>LABEL_10005}" class="sapUiSmallMarginEnd" />
-            <Text text="{i18n>MSG_10001}" class="sapUiMediumMarginEnd desc-txt" />
-          </HBox>
+          <custom:HeaderTitleCountMessage title="{i18n>LABEL_10005}" infoMessage="{i18n>MSG_10001}" />
         </HBox>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.OverviewTable" type="XML" />
       </VBox>

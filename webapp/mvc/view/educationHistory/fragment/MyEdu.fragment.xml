@@ -1,10 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box educationHistory-overview" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <HBox justifyContent="SpaceBetween" class="title">
-        <Title level="H2" text="{i18n>LABEL_31002}" />
-      </HBox>
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_31002}" class="title" />
       <Text text="{ path: '/Total/Zyear', formatter: '.thisYear' }" class="sapUiSmallMarginBottom" />
       <HBox class="mt-50-px educationHistory-overview-content">
         <VBox width="33%" class="overview-info">

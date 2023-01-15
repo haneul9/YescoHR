@@ -1,9 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox binding="{/overview}" busy="{busy}" busyIndicatorDelay="0" class="hCardBox overview-box">
     <HBox justifyContent="SpaceBetween" class="title">
-      <Title level="H2" text="{i18n>LABEL_06002}" />
+      <custom:Title text="{i18n>LABEL_06002}" />
       <Button type="Transparent" icon="sap-icon://detail-view" class="icon-button" press=".onPressOverviewBoxIcon" tooltip="{i18n>LABEL_06006}" />
     </HBox>
     <HBox width="100%" justifyContent="SpaceBetween" class="excavation-overview">

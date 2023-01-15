@@ -42,11 +42,12 @@ sap.ui.define(
        * @returns {sap.ui.base.Object}
        */
       constructor: function (oController, opt) {
+        const bMobile = AppUtils.isMobile();
         const options = {
           fragmentId: '',
           title: oController.getBundleText('LABEL_00248'), // 첨부파일
           description: '',
-          enableDescriptionPopover: AppUtils.isMobile(),
+          enableDescriptionPopover: bMobile,
           appno: '',
           apptp: '',
           gubun: false,
@@ -56,6 +57,7 @@ sap.ui.define(
           maxFileCount: 3,
           maxFileSize: 10,
           fileTypes: ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'bmp', 'gif', 'png', 'txt', 'pdf'],
+          rowHeight: bMobile ? 39 : 44,
           ...opt,
         };
 

@@ -25,7 +25,7 @@
       <core:Item key="{code}" text="{text}" />
     </custom:SingleComboBox>
   </VBox>
-  <mobile:HeaderTitleCountStatus titlePath="{= !!${/listInfo/Title} ? '/listInfo/Title' : 'i18n>LABEL_00129' }" countPath="/listInfo/totalCount" infoMessagePath="/listInfo/infoMessage" pressInfoIcon=".openMobileCommonListStatusPop" />
+  <mobile:HeaderTitleCountStatus titlePath="/listInfo/Title" countPath="/listInfo/totalCount" infoMessagePath="/listInfo/infoMessage" pressInfoIcon=".openMobileCommonListStatusPop" />
   <!-- <HBox justifyContent="SpaceBetween" class="header-wrap">
     <HBox class="header">
       <custom:Title text="{= !!${/listInfo/Title} ? ${/listInfo/Title} : ${i18n>LABEL_00129} }">

@@ -1,16 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <Dialog id="detailDialog" showHeader="false" contentWidth="1100px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <content>
       <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <HBox class="header">
-          <Title level="H3" text="{i18n>LABEL_16012}" class="sapUiSmallMarginEnd" />
-          <Text text="{i18n>MSG_32001}" class="desc-txt" />
-        </HBox>
+        <custom:HeaderTitleCountMessage title="{i18n>LABEL_16012}" infoMessage="{i18n>MSG_32001}" />
         <HBox class="status-wrap">
           <ObjectStatus text="{i18n>LABEL_32012}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
           <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />

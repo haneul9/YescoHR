@@ -1,13 +1,21 @@
 /* eslint-disable quote-props */
 sap.ui.define(
   [
-    'sap/ui/yesco/common/AppUtils', //
+    //
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
   ],
-  (AppUtils, JSONModel, ServiceManager, ServiceNames, MessageBox) => {
+  (
+    //
+    AppUtils,
+    JSONModel,
+    ServiceManager,
+    ServiceNames,
+    MessageBox
+  ) => {
     'use strict';
 
     return {
@@ -36,6 +44,7 @@ sap.ui.define(
             LinkUrl: null,
             Visible: true,
             maximumFileSize: 10,
+            RowHeight: AppUtils.isMobile() ? 39 : 44,
           },
           opt
         );

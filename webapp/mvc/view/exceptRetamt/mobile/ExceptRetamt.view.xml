@@ -22,7 +22,7 @@
           </VBox>
 
           <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_33006}" />
+            <custom:Title text="{i18n>LABEL_33006}" />
             <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
               <Label text="{i18n>LABEL_33007}" />
               <VBox>

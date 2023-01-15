@@ -1,0 +1,161 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <!-- 나의 직원들은 무엇을 하고 있을까요? -->
+  <VBox class="portlet portlet-box portlet-p06 h-auto" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+    <customData>
+      <core:CustomData key="portlet-switchable" value="{switchable}" />
+    </customData>
+    <layoutData>
+      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
+    </layoutData>
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" pickOnly="true" />
+    </HBox>
+    <VBox class="portlet-body">
+      <ScrollContainer>
+        <HBox width="auto" height="90px">
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt02} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt02} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod02}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod02}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01132}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt03} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt03} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod03}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod03}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01133}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt04} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt04} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod04}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod04}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01134}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt05} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt05} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod05}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod05}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01135}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt06} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt06} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod06}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod06}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01136}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt07} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt07} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod07}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod07}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01137}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+          <VBox>
+            <ObjectStatus text="{ path: 'counts/Cnt08', type: 'sap.ui.yesco.mvc.model.type.Currency' }" active="{= ${counts/Cnt08} > 0 }" press=".onPressCount" class="team-member-count">
+              <customData>
+                <core:CustomData key="popover" value="{= ${counts/Cnt08} === '0' ? 'N' : 'Y' }" writeToDom="true" />
+                <core:CustomData key="table-key" value="k{counts/Cod08}" writeToDom="true" />
+                <core:CustomData key="OData" value="T" />
+                <core:CustomData key="Headty" value="A" />
+                <core:CustomData key="Discod" value="{counts/Cod08}" />
+              </customData>
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-wrap" />
+              </layoutData>
+            </ObjectStatus>
+            <Label text="{i18n>LABEL_01138}">
+              <layoutData>
+                <FlexItemData styleClass="team-member-count-label" />
+              </layoutData>
+            </Label>
+          </VBox>
+        </HBox>
+      </ScrollContainer>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

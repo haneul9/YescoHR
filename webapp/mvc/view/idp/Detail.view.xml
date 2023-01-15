@@ -25,8 +25,12 @@
       <core:Fragment fragmentName="sap.ui.yesco.mvc.view.idp.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <HBox alignItems="Center" class="title">
-            <Title level="H2" text="{/year} {i18n>LABEL_36002}" />
+          <HBox class="title">
+            <custom:Title text="{/year} {i18n>LABEL_36002}">
+              <custom:layoutData>
+                <FlexItemData styleClass="header-title" />
+              </custom:layoutData>
+            </custom:Title>
           </HBox>
         </HBox>
         <HBox>
@@ -42,8 +46,8 @@
             <IconTabFilter text="{i18n>LABEL_36003}" key="T01">
               <VBox class="vCardBox">
                 <HBox>
-                  <HBox alignItems="Center" class="table-toolbar">
-                    <Title level="H2" text="{i18n>LABEL_36003}" class="sapUiMediumMarginEnd"/>
+                  <HBox class="table-toolbar">
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36003}" class="title" />
                     <Button type="Emphasized" text="{i18n>LABEL_36005}" visible="{/buttons/hasHistory}" press=".onPressHistory" />
                     <Button icon="sap-icon://sys-add" text="{i18n>LABEL_36006}" enabled="{= ${/currentItemsLength} &lt; 3 }" visible="{/buttons/goal/ADD/Availability}" class="sapUiTinyMarginBegin" press=".addCompItem" />
                   </HBox>
@@ -57,7 +61,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <Title level="H2" text="{i18n>LABEL_36021}" class="sapUiMediumMarginEnd"/>
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36021}" class="title" />
                   </HBox>
                 </HBox>
                 <VBox>

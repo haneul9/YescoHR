@@ -18,9 +18,7 @@
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
         <VBox class="hCardBox overview-box congratulation-overview" busyIndicatorDelay="0" busy="{/busy}">
-          <HBox justifyContent="SpaceBetween" class="title">
-            <Title level="H2" text="{i18n>MSG_02001}" />
-          </HBox>
+          <custom:HeaderTitleCountMessage title="{i18n>MSG_02001}" class="title" />
           <Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
           <HBox>
             <VBox width="30%" class="overview-info">
@@ -35,7 +33,7 @@
               </HBox>
             </VBox>
           </HBox>
-          <HBox class="desc">
+          <HBox height="20px" class="desc mt-2-px">
             <Text text="{i18n>MSG_02003}"/>
             <ObjectStatus text="{/Total/Excon}" state="Indication05" />
             <Text text="{i18n>MSG_02004}"/>
@@ -43,7 +41,7 @@
         </VBox>
         <VBox class="hCardBox search-box">
           <HBox justifyContent="SpaceBetween" class="title">
-            <Title text="{i18n>LABEL_00202}" level="H2" />
+            <custom:Title text="{i18n>LABEL_00202}" />
             <Button type="Transparent" press=".onSearch" class="icon-button search" />
           </HBox>
           <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">

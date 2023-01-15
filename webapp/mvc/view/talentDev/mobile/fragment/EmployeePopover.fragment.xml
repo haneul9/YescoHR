@@ -15,7 +15,8 @@
     </customHeader>
     <content>
       <VBox class="contents">
-        <HBox justifyContent="SpaceBetween" class="header-wrap">
+        <mobile:HeaderTitleCountStatus title="{i18n>LABEL_43002}" countPath="/employee/listInfo/totalCount" infoMessagePath="/employee/listInfo/infoMessage" pressInfoIcon=".onPressLegend" />
+        <!-- <HBox justifyContent="SpaceBetween" class="header-wrap">
           <VBox>
             <HBox class="header">
               <Title level="H3" text="{i18n>LABEL_43002}" class="sapUiSmallMarginEnd" />
@@ -28,7 +29,7 @@
               <FlexItemData alignSelf="Start" styleClass="mt-7-px" />
             </layoutData>
           </Image>
-        </HBox>
+        </HBox> -->
         <mobile:ScrollContainer>
           <List items="{/employee/listInfo/list}" busy="{/busy/Employee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-employee">
             <CustomListItem type="Active" press=".onPressEmployeeListItem">

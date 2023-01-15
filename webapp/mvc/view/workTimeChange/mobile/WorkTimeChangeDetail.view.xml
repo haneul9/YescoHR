@@ -91,7 +91,9 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Button text="{i18n>LABEL_00121}" type="Emphasized" press=".onApplyBtn" visible="{/Fixed}"/>
+        <HBox class="button-group button-1" visible="{/Fixed}">
+          <Button text="{i18n>LABEL_00121}" press=".onApplyBtn" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

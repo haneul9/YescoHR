@@ -1,11 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox width="100%" class="vCardBox small MultiBoxmobile">
-    <HBox class="title mt-15-px">
-      <Title level="H2" text="{i18n>LABEL_18024}" />
-      <Text text="{/FullYear}" class="desc-txt" />
-    </HBox>
+    <custom:HeaderTitleCountMessage title="{i18n>LABEL_18024}" infoMessagePath="/FullYear" class="title" />
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/DailyWorkList}">
         <HBox class="mobileInnerBox">

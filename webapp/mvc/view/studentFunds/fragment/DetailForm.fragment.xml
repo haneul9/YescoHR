@@ -1,12 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-    <HBox alignItems="Center" class="table-toolbar">
-      <HBox class="title">
-        <Title level="H2" text="{i18n>LABEL_00129}" />
-        <Text text="{i18n>MSG_03001}" visible="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} }" class="desc-txt" />
-      </HBox>
+    <HBox class="table-toolbar">
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00129}" infoMessage="{i18n>MSG_03001}" infoMessageVisible="[= $[/FormData/ZappStatAl] === '10' || !$[/FormData/ZappStatAl] ]" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="repeat(2, 1fr 3fr)" gridGap="1px 0px" class="form-grid">
       <Label text="{i18n>LABEL_03012}" />

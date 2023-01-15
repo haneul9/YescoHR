@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox search-box" busyIndicatorDelay="0" busy="{/busy}">
     <HBox justifyContent="SpaceBetween" class="title">
-      <Title text="{i18n>LABEL_00202}" level="H2" />
+      <custom:Title text="{i18n>LABEL_00202}" />
       <Button type="Transparent" class="icon-button search" press=".onPressSearch" tooltip="{i18n>LABEL_00100}" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="8px">

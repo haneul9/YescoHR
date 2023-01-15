@@ -29,8 +29,12 @@
       <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <HBox alignItems="Center" class="title">
-            <Title level="H2" text="{/year} {i18n>LABEL_10006}" />
+          <HBox class="title">
+            <custom:Title text="{/year} {i18n>LABEL_10006}">
+              <custom:layoutData>
+                <FlexItemData styleClass="header-title" />
+              </custom:layoutData>
+            </custom:Title>
           </HBox>
         </HBox>
         <HBox>
@@ -46,8 +50,8 @@
             <IconTabFilter text="{i18n>LABEL_10009}" key="T01">
               <VBox class="vCardBox">
                 <HBox>
-                  <HBox alignItems="Center" class="table-toolbar">
-                    <Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
+                  <HBox class="table-toolbar">
+                    <custom:Title text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd" />
                     <Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 10 }" visible="{/buttons/goal/ADD/Availability}" press=".onPressAddStrategy" />
                   </HBox>
                 </HBox>
@@ -57,8 +61,8 @@
               </VBox>
               <VBox class="vCardBox sapUiSmallMarginTop">
                 <HBox>
-                  <HBox alignItems="Center" class="table-toolbar">
-                    <Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
+                  <HBox class="table-toolbar">
+                    <custom:Title text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
                     <Button icon="sap-icon://sys-add" text="{i18n>LABEL_10011}" enabled="{= ${/currentItemsLength} &lt; 10 }" visible="{/buttons/goal/ADD/Availability}" press=".onPressAddDuty" />
                   </HBox>
                 </HBox>
@@ -162,10 +166,7 @@
               </VBox>
               <VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Z140} !== 'H' }">
                 <HBox class="table-toolbar">
-                  <HBox class="title">
-                    <Title level="H2" text="{i18n>LABEL_10010}" />
-                    <Text text="{i18n>MSG_10008}" class="desc-txt" />
-                  </HBox>
+                  <custom:HeaderTitleCountMessage title="{i18n>LABEL_10010}" infoMessage="{i18n>MSG_10008}" class="title" />
                 </HBox>
                 <VBox>
                   <TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="{= ${/fieldControl/display/Z140} === 'X' }" />

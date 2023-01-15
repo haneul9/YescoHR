@@ -1,69 +1,69 @@
 <mvc:View controllerName="sap.ui.yesco.mvc.controller.performance.Document"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:custom="sap.ui.yesco.control">
-	<Page showHeader="false" class="popup-view">
-		<VBox class="contents">
-			<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.AppointeeBar" type="XML" />
-			<HBox>
-				<IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
-					<layoutData>
-						<FlexItemData growFactor="1"/>
-					</layoutData>
-					<items>
-						<IconTabFilter text="{i18n>LABEL_10009}" key="T01">
-							<VBox class="vCardBox">
-								<HBox>
-									<HBox alignItems="Center" class="table-toolbar">
-										<Title level="H2" text="{i18n>LABEL_10007}" class="sapUiMediumMarginEnd"/>
-									</HBox>
-								</HBox>
-								<VBox items="{/goals/strategy}">
-									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItemOnlyView" type="XML" />
-								</VBox>
-							</VBox>
-							<VBox class="vCardBox sapUiSmallMarginTop">
-								<HBox>
-									<HBox alignItems="Center" class="table-toolbar">
-										<Title level="H3" text="{i18n>LABEL_10008}" class="sapUiMediumMarginEnd" />
-									</HBox>
-								</HBox>
-								<VBox items="{/goals/duty}">
-									<core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItemOnlyView" type="XML" />
-								</VBox>
-							</VBox>
-							<HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/type} !== 'ME' }">
-								<grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(8, 1fr)">
-									<VBox>
-										<Label text="{i18n>LABEL_10012}" />
-									</VBox>
-									<VBox>
-										<custom:NumberInput value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" />
-									</VBox>
-									<VBox>
-										<Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
-									</VBox>
-									<VBox>
-										<custom:NumberInput value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" />
-									</VBox>
-									<VBox>
-										<Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
-									</VBox>
-									<VBox>
-										<ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/statusF', templateShareable: true }" enabled="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
-											<core:Item key="{ValueEid}" text="{ValueText}" />
-										</ComboBox>
-									</VBox>
-									<HBox />
-									<HBox />
-								</grid:CSSGrid>
-							</HBox>
-						</IconTabFilter>
-					</items>
-				</IconTabBar>
-			</HBox>
-		</VBox>
-	</Page>
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false" class="popup-view">
+    <VBox class="contents">
+      <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.AppointeeBar" type="XML" />
+      <HBox>
+        <IconTabBar class="type-b" selectedKey="{/tab/selectedKey}" expandable="false">
+          <layoutData>
+            <FlexItemData growFactor="1"/>
+          </layoutData>
+          <items>
+            <IconTabFilter text="{i18n>LABEL_10009}" key="T01">
+              <VBox class="vCardBox">
+                <HBox>
+                  <HBox class="table-toolbar">
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10007}" class="title" />
+                  </HBox>
+                </HBox>
+                <VBox items="{/goals/strategy}">
+                  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItemOnlyView" type="XML" />
+                </VBox>
+              </VBox>
+              <VBox class="vCardBox sapUiSmallMarginTop">
+                <HBox>
+                  <HBox class="table-toolbar">
+                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10008}" class="title" />
+                  </HBox>
+                </HBox>
+                <VBox items="{/goals/duty}">
+                  <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.GoalItemOnlyView" type="XML" />
+                </VBox>
+              </VBox>
+              <HBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/type} !== 'ME' }">
+                <grid:CSSGrid gridGap="1px 0" class="form-grid" gridTemplateColumns="repeat(8, 1fr)">
+                  <VBox>
+                    <Label text="{i18n>LABEL_10012}" />
+                  </VBox>
+                  <VBox>
+                    <custom:NumberInput value="{ path: '/summary/Zmepoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" />
+                  </VBox>
+                  <VBox>
+                    <Label text="{i18n>LABEL_10013}" visible="{= ${/fieldControl/display/Zmapoint} !== 'H' }"/>
+                  </VBox>
+                  <VBox>
+                    <custom:NumberInput value="{ path: '/summary/Zmapoint', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 } }" enabled="false" />
+                  </VBox>
+                  <VBox>
+                    <Label text="{i18n>LABEL_10014}" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }"/>
+                  </VBox>
+                  <VBox>
+                    <ComboBox class="required" selectedKey="{/summary/Zmbgrade}" items="{ path: '/entry/statusF', templateShareable: true }" enabled="{= ${/fieldControl/display/Zmbgrade} === 'X' }" visible="{= ${/fieldControl/display/Zmbgrade} !== 'H' }">
+                      <core:Item key="{ValueEid}" text="{ValueText}" />
+                    </ComboBox>
+                  </VBox>
+                  <HBox />
+                  <HBox />
+                </grid:CSSGrid>
+              </HBox>
+            </IconTabFilter>
+          </items>
+        </IconTabBar>
+      </HBox>
+    </VBox>
+  </Page>
 </mvc:View>

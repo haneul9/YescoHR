@@ -36,7 +36,10 @@ sap.ui.define(
         });
 
         const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox
+          .setModel(oPortletModel)
+          .bindElement('/')
+          .addStyleClass(this.bMobile ? 'h-auto' : `portlet-h${iPortletHeight}`);
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -156,7 +159,7 @@ sap.ui.define(
             {
               minValue: 0,
               maxValue: Number(iWTMax),
-              code: '#34649d', // 기본 근무시간
+              code: '#79abec', // 기본 근무시간 #34649d
             },
             {
               minValue: Number(iWTMax),

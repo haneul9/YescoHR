@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox small MultiBoxmobile">
     <HBox justifyContent="SpaceBetween" class="title">
-      <Title level="H2" text="{i18n>LABEL_18015}" />
+      <custom:Title text="{i18n>LABEL_18015}" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="135px" class="pickonly-datepicker" change=".onWeekWorkTime" />
     </HBox>
     <VBox class="section week-Work-summary progressBox">

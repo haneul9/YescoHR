@@ -1,104 +1,104 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_25008}" />
-            <VBox>
-                <ComboBox items="{/MaintainType}" width="250px" selectedKey="{/FormData/Appty}" change="onMaintainType" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{= ${/FormData/Appty} !== 'D' ? ${i18n>LABEL_25009} : '' }" />
-            <VBox>
-                <ComboBox items="{/AppDept}" width="250px" selectedKey="{/FormData/Payorg}" visible="{= ${/FormData/Appty} !== 'D' }" editable="{/FormData/Fixed}" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_25010}" visible="{= ${/FormData/Appty} === 'D' }"/>
-            <HBox visible="{= ${/FormData/Appty} === 'D' }">
-                <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/FormData/Appty} === 'D' &amp;&amp; !${/FormData/Fixed}) &amp;&amp; (!${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10') }" class="sapUiTinyMarginEnd required"/>
-                <Text text="{i18n>MSG_25002}"/>
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </HBox>
-            <Label text="{i18n>LABEL_25005}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_25011}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_25012}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Cc}" maxLength="4" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_25013}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{/DatePickLabel}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <custom:DatePicker minDate="{/minDate}" maxDate="{/maxDate}" dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_25015}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Insu} }" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="1 / 5"/>
-                </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_25016}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_25017}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <ComboBox items="{/LicenseType}" width="250px" selectedKey="{/FormData/Idtype}" editable="{/FormData/Fixed}" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="1 / 5"/>
-                </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_25007}" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <ComboBox items="{/PayType}" width="250px" selectedKey="{/FormData/Payty}" change=".onPayType" editable="{/FormData/Fixed}" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{= ${/FormData/bPayType} ? ${i18n>LABEL_25018} : '' }" visible="{= ${/FormData/Appty} !== 'D' }" />
-            <HBox visible="{= ${/FormData/Appty} !== 'D' }">
-                <Text text="{/FormData/Ename}" class="sapUiTinyMarginEnd" visible="{/FormData/bPayType}"/>
-                <Text text="{i18n>MSG_25003}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Fixed} }"/>
-            </HBox>
-            <Label text="{i18n>LABEL_25019}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
-                <ComboBox items="{/BankList}" width="250px" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_25020}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
-            <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
-                <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccountTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_00163}" />
-            <VBox>
-                <Input value="{/FormData/Zbigo}" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-        </grid:CSSGrid>
-    </VBox>
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <custom:Title text="{i18n>LABEL_00129}" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_25008}" />
+      <VBox>
+        <ComboBox items="{/MaintainType}" width="250px" selectedKey="{/FormData/Appty}" change="onMaintainType" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{= ${/FormData/Appty} !== 'D' ? ${i18n>LABEL_25009} : '' }" />
+      <VBox>
+        <ComboBox items="{/AppDept}" width="250px" selectedKey="{/FormData/Payorg}" visible="{= ${/FormData/Appty} !== 'D' }" editable="{/FormData/Fixed}" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{i18n>LABEL_25010}" visible="{= ${/FormData/Appty} === 'D' }"/>
+      <HBox visible="{= ${/FormData/Appty} === 'D' }">
+        <custom:DatePicker dateValue="{ path: '/FormData/Expdt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{= (${/FormData/Appty} === 'D' &amp;&amp; !${/FormData/Fixed}) &amp;&amp; (!${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10') }" class="sapUiTinyMarginEnd required"/>
+        <Text text="{i18n>MSG_25002}"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </HBox>
+      <Label text="{i18n>LABEL_25005}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Carno}" maxLength="{/FieldLimit/Carno}" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_25011}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Carty}" maxLength="{/FieldLimit/Carty}" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_25012}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Cc}" maxLength="4" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_25013}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Caryr}" maxLength="{/FieldLimit/Caryr}" liveChange=".onNumberTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{/DatePickLabel}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <custom:DatePicker minDate="{/minDate}" maxDate="{/maxDate}" dateValue="{ path: '/FormData/Cardt', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_25015}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <CheckBox select=".onCheckBox" selected="{= !!${/FormData/Insu} }" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_25016}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Id}" maxLength="{/FieldLimit/Id}" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_25017}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <ComboBox items="{/LicenseType}" width="250px" selectedKey="{/FormData/Idtype}" editable="{/FormData/Fixed}" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="1 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_25007}" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <ComboBox items="{/PayType}" width="250px" selectedKey="{/FormData/Payty}" change=".onPayType" editable="{/FormData/Fixed}" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{= ${/FormData/bPayType} ? ${i18n>LABEL_25018} : '' }" visible="{= ${/FormData/Appty} !== 'D' }" />
+      <HBox visible="{= ${/FormData/Appty} !== 'D' }">
+        <Text text="{/FormData/Ename}" class="sapUiTinyMarginEnd" visible="{/FormData/bPayType}"/>
+        <Text text="{i18n>MSG_25003}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Fixed} }"/>
+      </HBox>
+      <Label text="{i18n>LABEL_25019}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
+        <ComboBox items="{/BankList}" width="250px" selectedKey="{/FormData/Bankl}" editable="{/FormData/Fixed}" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{i18n>LABEL_25020}" visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }" />
+      <VBox visible="{= ${/FormData/bPayType} &amp;&amp; ${/FormData/Appty} !== 'D' }">
+        <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccountTxt" width="250px" editable="{/FormData/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_00163}" />
+      <VBox>
+        <Input value="{/FormData/Zbigo}" editable="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '10' }" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

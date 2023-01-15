@@ -62,8 +62,16 @@ sap.ui.define(
         const oPortletHeader = new HBox({
           visible: '{= !${hideTitle} || ${switchable} }',
           items: [
-            new Title({ level: 'H2', text: '{title}', visible: '{= !${hideTitle} }' }), //
-            new Text({ text: '', layoutData: new FlexItemData({ growFactor: 1 }) }),
+            new Title({
+              level: 'H2',
+              text: '{title}',
+              visible: '{= !${hideTitle} }',
+              layoutData: new FlexItemData({ styleClass: 'portlet-header-title' }),
+            }),
+            new Text({
+              text: '',
+              layoutData: new FlexItemData({ growFactor: 1 }),
+            }),
             oCloseButton,
             oLinkButton,
           ],

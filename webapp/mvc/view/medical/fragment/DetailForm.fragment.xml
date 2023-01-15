@@ -1,82 +1,80 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_03012}" />
-            <VBox>
-                <ComboBox items="{/TargetList}" value="{/FormData/Znametx}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" change=".onTargetList" editable="{= !${/FormData/Lnsta} }" class="required">
-                    <core:Item text="{Znametx}" key="{Famsa},{Objps},{Kdsvh},{Famgb}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{= !!${/FormData/Lnsta} ? ${i18n>LABEL_00261} : '' }" />
-            <VBox>
-                <Text text="{= !!${/FormData/Lnsta} ? ${/FormData/Lnstatx} : ''}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09005}"/>
-            <VBox>
-                <Text text="{
-                    path: '/FormData/Apbet',
-                    type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09004}"/>
-            <VBox>
-                <Text text="{/FormData/Apcnt}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_00163}"/>
-            <VBox>
-                <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }"/>
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_09007}"/>
-            <VBox>
-                <Text text="{
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox class="table-toolbar">
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00129}" class="title" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_03012}" />
+      <VBox>
+        <ComboBox items="{/TargetList}" value="{/FormData/Znametx}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" change=".onTargetList" editable="{= !${/FormData/Lnsta} }" class="required">
+          <core:Item text="{Znametx}" key="{Famsa},{Objps},{Kdsvh},{Famgb}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{= !!${/FormData/Lnsta} ? ${i18n>LABEL_00261} : '' }" />
+      <VBox>
+        <Text text="{= !!${/FormData/Lnsta} ? ${/FormData/Lnstatx} : ''}" />
+      </VBox>
+      <Label text="{i18n>LABEL_09005}" />
+      <VBox>
+        <Text text="{ path: '/FormData/Apbet', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      </VBox>
+      <Label text="{i18n>LABEL_09004}" />
+      <VBox>
+        <Text text="{/FormData/Apcnt}" />
+      </VBox>
+      <Label text="{i18n>LABEL_00163}" />
+      <VBox>
+        <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5" />
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_09007}" />
+      <VBox>
+        <Text text="{
                     path: '/FormData/Pvbet',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09006}"/>
-            <VBox>
-                <Text text="{/FormData/Pvcnt}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09009}"/>
-            <VBox>
-                <Text text="{
+                }" />
+      </VBox>
+      <Label text="{i18n>LABEL_09006}" />
+      <VBox>
+        <Text text="{/FormData/Pvcnt}" />
+      </VBox>
+      <Label text="{i18n>LABEL_09009}" />
+      <VBox>
+        <Text text="{
                     path: '/FormData/PybetTot',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_03002}"/>
-            <VBox>
-                <Text text="{
+                }" />
+      </VBox>
+      <Label text="{i18n>LABEL_03002}" />
+      <VBox>
+        <Text text="{
                     path: '/FormData/Paymm',
                     formatter: '.formatDate'
                 }" />
-            </VBox>
-            <Label text="{i18n>LABEL_09011}"/>
-            <VBox>
-                <ObjectStatus text="{
+      </VBox>
+      <Label text="{i18n>LABEL_09011}" />
+      <VBox>
+        <ObjectStatus text="{
                     path: '/FormData/Rjbet',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
-                }" state="Indication04"/>
-            </VBox>
-            <Label text="{i18n>LABEL_09008}"/>
-            <VBox>
-                <ObjectStatus text="{/FormData/Rjcnt}" state="Indication04"/>
-            </VBox>
-            <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }"/>
-            <VBox visible="{= !!${/FormData/ZappResn} }">
-                <Text text="{/FormData/ZappResn}"/>
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-        </grid:CSSGrid>
-    </VBox>
+                }" state="Indication04" />
+      </VBox>
+      <Label text="{i18n>LABEL_09008}" />
+      <VBox>
+        <ObjectStatus text="{/FormData/Rjcnt}" state="Indication04" />
+      </VBox>
+      <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }" />
+      <VBox visible="{= !!${/FormData/ZappResn} }">
+        <Text text="{/FormData/ZappResn}" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5" />
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

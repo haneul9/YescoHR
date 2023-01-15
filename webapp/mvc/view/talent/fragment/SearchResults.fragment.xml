@@ -7,20 +7,13 @@
     <custom:Placeholder />
   </VBox>
   <VBox class="vCardBox" visible="{= !${/result/busy} }">
-    <HBox class="table-toolbar" justifyContent="SpaceBetween">
-      <HBox class="title">
-        <Title text="{i18n>LABEL_00204}" level="H4" />
-        <Text class="sapUiSmallMarginBegin total-txt" text="total {/result/totalCount}" />
-      </HBox>
+    <HBox class="table-toolbar">
+      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00204}" countPath="/result/totalCount" class="title" />
       <HBox class="status-wrap">
-        <!-- <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_1000}" class="sapUiSmallMarginEnd"/>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_2000}" class="sapUiSmallMarginEnd"/>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
-        <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" height="15px" class="pr-3-px"/>
-        <Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/> -->
+        <!-- <ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+        <ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+        <ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+        <ObjectStatus text="{i18n>LABEL_WERKS_4000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" /> -->
         <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
         <ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
@@ -38,7 +31,7 @@
             <VBox>
               <FlexBox width="166px" alignContent="SpaceBetween" justifyContent="SpaceBetween" class="talent-list-emp-name">
                 <items>
-                  <Title text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="true"/>
+                  <Title text="{ path: 'Linetx1', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="true" />
                   <Image src="{Icon}" height="15px" class="pr-10-px" />
                 </items>
               </FlexBox>
