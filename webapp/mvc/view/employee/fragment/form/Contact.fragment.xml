@@ -7,7 +7,7 @@
             <FlexItemData growFactor="1"/>
         </grid:layoutData>
         <Label text="{i18n>LABEL_00267}" />
-        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Usrty}">
+        <ComboBox width="100%" class="required" selectedKey="{/employee/dialog/form/Subty}">
             <items>
                 <core:Item key="ALL" text="{i18n>LABEL_00268}" />
                 <core:Item key="0010" text="{i18n>LABEL_00260}" />

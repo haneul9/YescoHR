@@ -65,13 +65,13 @@ sap.ui.define(
           ],
         },
         CONTACT: {
-          key: 'NOT_ACTIVE_0105',
+          key: '0105',
           label: 'LABEL_00329',
           path: 'contact',
           odata: 'ContactInfo',
-          pk: ['Pernr', 'Usrty', 'Begda'],
+          pk: ['Pernr', 'Subty', 'Begda'],
           valid: [
-            { label: 'LABEL_00267', field: 'Usrty', type: Validator.SELECT1 }, // 통신유형
+            { label: 'LABEL_00267', field: 'Subty', type: Validator.SELECT1 }, // 통신유형
             { label: 'LABEL_00271', field: 'Begda', type: Validator.INPUT1 }, // 적용시작일
             { label: 'LABEL_00329', field: 'Usrid', type: Validator.INPUT2 }, // 연락처
           ],
@@ -1250,7 +1250,7 @@ sap.ui.define(
             delete mFilters.Prcty;
           }
 
-          if (sTablePath === this.CRUD_TABLES.CONTACT.path && mFilters.Usrty === '0010') {
+          if (sTablePath === this.CRUD_TABLES.CONTACT.path && mFilters.Subty === '0010') {
             throw new UI5Error({ code: 'A', message: AppUtils.getBundleText('MSG_00036') }); // 회사메일은 수정이 불가합니다.
           }
 
