@@ -17,7 +17,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10047}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10047" class="title" />
                   </HBox>
                 </HBox>
                 <VBox items="{/goals/common}">
@@ -40,7 +40,7 @@
               <VBox class="vCardBox sapUiSmallMarginTop">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10050}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10050" class="title" />
                   </HBox>
                 </HBox>
                 <VBox items="{/goals/duty}">
@@ -78,7 +78,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10053}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10053" class="title" />
                   </HBox>
                 </HBox>
                 <VBox>
@@ -101,7 +101,7 @@
               <VBox class="vCardBox sapUiSmallMarginTop">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10010}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10010" class="title" />
                   </HBox>
                 </HBox>
                 <VBox>

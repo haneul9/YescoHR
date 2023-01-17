@@ -70,8 +70,10 @@ html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl):not(.showLine) {text-decoratio
 .sapMImageContent.logo-init,
 .sapMImageContent.logo-1000 {width:182px; height:30px}
 .sapMImageContent.logo-2000 {width:145px; height:43px}
-.sapMImageContent.logo-3000 {width:203px; height:25px} /* {width:308px; height:43px} */
-.sapMImageContent.logo-3000 img {width:203px}
+.sapMImageContent.logo-2000,
+.sapMImageContent.logo-2000 img {width:130px; height:36px}/* width:259px; height:72px */
+.sapMImageContent.logo-3000 {height:25px} /* {width:308px; height:43px} */
+.sapMImageContent.logo-3000 img {height:25px}
 .sapMLabel.app-menu-level1 {box-sizing:border-box; padding:0 1rem; line-height:60px; font-size:18px; font-weight:800 !important; color:#484c50 !important; cursor:default}
 html[lang="en"] .sapMLabel.app-menu-level1 {padding:0}
 .sapMLabel.app-menu-level1 bdi {box-sizing:border-box; border-top:solid 5px transparent; border-bottom:solid 5px transparent; padding:0 1.0rem; line-height:50px}

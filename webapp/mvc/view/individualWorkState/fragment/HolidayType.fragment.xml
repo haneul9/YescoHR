@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox small">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_18006}" infoMessagePath="/FullYear" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18006" infoMessagePath="/FullYear" class="title" />
     </HBox>
     <HBox justifyContent="SpaceBetween">
       <table:Table class="pr-20-px" rows="{/VacaTypeList1}" visibleRowCount="3" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">

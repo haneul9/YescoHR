@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box" busyIndicatorDelay="0" busy="{/busy}">
-    <custom:HeaderTitleCountMessage title="{i18n>LABEL_05002}" class="title" />
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_05002" class="title" />
     <HBox class="desc">
       <Text text="{i18n>MSG_05001}" />
       <ObjectStatus text="{ path: '/Total/Famcnt', formatter: '.formatNumber' }" state="Indication05" class="sapUiSmallMarginBottom" />

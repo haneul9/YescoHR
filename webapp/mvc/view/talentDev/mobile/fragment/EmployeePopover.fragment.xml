@@ -15,7 +15,7 @@
     </customHeader>
     <content>
       <VBox class="contents">
-        <mobile:HeaderTitleCountStatus title="{i18n>LABEL_43002}" countPath="/employee/listInfo/totalCount" infoMessagePath="/employee/listInfo/infoMessage" pressInfoIcon=".onPressLegend" />
+        <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_43002" countPath="/employee/listInfo/totalCount" infoMessagePath="/employee/listInfo/infoMessage" pressInfoIcon=".onPressLegend" />
         <!-- <HBox justifyContent="SpaceBetween" class="header-wrap">
           <VBox>
             <HBox class="header">

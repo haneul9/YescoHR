@@ -25,7 +25,7 @@
           </items>
         </ComboBox>
       </mobile:SearchAreaCSSGrid>
-      <mobile:HeaderTitleCountStatus title="{i18n>LABEL_35003}" countPath="/result/totalCount" pressInfoIcon=".onPressLegend" />
+      <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_35003" countPath="/result/totalCount" pressInfoIcon=".onPressLegend" />
       <mobile:ScrollContainer>
         <f:GridList id="talentList" mode="MultiSelect" items="{/result/list}" class="talent-list sapUiResponsiveContentPadding" visible="{= ${/result/totalCount} !== 0 }">
           <f:customLayout>

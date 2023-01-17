@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox binding="{/overview}" busy="{busy}" busyIndicatorDelay="0" class="hCardBox overview-box leave-of-absence">
-    <custom:HeaderTitleCountMessage title="{i18n>MSG_50001}" infoMessage="{i18n>LABEL_50002}" infoMessageUnderline="false" class="title" />
+    <custom:HeaderTitleCountMessage titlePath="i18n>MSG_50001" infoMessagePath="i18n>LABEL_50002" infoMessageUnderline="false" class="title" />
     <HBox alignItems="End" visible="{= ${Absck} === 'X' }">
       <Text text="{Line1}">
         <layoutData>

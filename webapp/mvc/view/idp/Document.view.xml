@@ -31,7 +31,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36003}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_36003" class="title" />
                   </HBox>
                 </HBox>
                 <VBox items="{/goals/comp}">
@@ -43,7 +43,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox alignItems="Center" class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_36004}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_36004" class="title" />
                   </HBox>
                 </HBox>
                 <VBox>

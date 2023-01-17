@@ -63,11 +63,30 @@ sap.ui.define(
           controller: this,
         });
 
-        const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/');
+        const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/').toggleStyleClass(this.getPortletStyleClasses(), true);
         oPortletBox.getItems()[1].addItem(oPortletBodyContent);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
+      },
+
+      getPortletStyleClasses() {
+        const oPortletModel = this.getPortletModel();
+        const sId = oPortletModel.getProperty('/id');
+        if (!sId) {
+          return '';
+        }
+        const sBorderlessStyleClass = oPortletModel.getProperty('/borderless') ? '' : 'portlet-box ';
+        const sPortletId = sId.toLowerCase();
+        const sPortletKey = oPortletModel.getProperty('/key').toLowerCase();
+        const sPortletIdStyleClass = sPortletId !== sPortletKey ? `portlet-${sPortletId} ` : '';
+        const sPortletHeightStyleClass = this.getPortletHeightStyleClass(oPortletModel);
+        return `portlet ${sBorderlessStyleClass}${sPortletIdStyleClass}portlet-${sPortletKey} ${sPortletHeightStyleClass}`;
+      },
+
+      getPortletHeightStyleClass(oPortletModel) {
+        const iPortletHeight = oPortletModel.getProperty('/height') || 0;
+        return `portlet-h${iPortletHeight}`;
       },
 
       async showContentData() {

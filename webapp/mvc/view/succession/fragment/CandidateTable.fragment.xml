@@ -14,7 +14,7 @@
       <m:customData>
         <core:CustomData key="padding-bottom" value="{= !!${/candidate/listInfo/expand} ? 'O' : 'X' }" writeToDom="true" />
       </m:customData>
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_45401}" infoMessage="{i18n>MSG_45001}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45401" infoMessagePath="i18n>MSG_45001" class="title" />
       <m:HBox>
         <m:HBox class="status-wrap">
           <m:ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />

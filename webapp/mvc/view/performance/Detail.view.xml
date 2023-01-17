@@ -166,7 +166,7 @@
               </VBox>
               <VBox class="vCardBox sapUiSmallMarginTop" visible="{= ${/fieldControl/display/Z140} !== 'H' }">
                 <HBox class="table-toolbar">
-                  <custom:HeaderTitleCountMessage title="{i18n>LABEL_10010}" infoMessage="{i18n>MSG_10008}" class="title" />
+                  <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10010" infoMessagePath="i18n>MSG_10008" class="title" />
                 </HBox>
                 <VBox>
                   <TextArea width="100%" rows="5" value="{/manage/Z140}" maxLength="{/fieldControl/limit/Z140}" enabled="{= ${/fieldControl/display/Z140} === 'X' }" />

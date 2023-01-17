@@ -27,20 +27,36 @@
     <HBox class="portlet-body" justifyContent="SpaceBetween">
       <VBox width="49%">
         <VBox class="portlet-box left-box">
-          <Text text="{i18n>LABEL_01161}" />
-          <ObjectStatus text="{Timtx}" state="Indication05" class="portlet-p11-objectstatus19" />
-          <ObjectStatus text="-" state="Indication05" class="portlet-p11-objectstatus15 color-transparent" />
-          <Text text="{Wktim}" class="portlet-p11-text" />
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-portlet-p11-today.svg" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="left-box-icon" />
+            </layoutData>
+          </Image>
+          <Text text="{i18n>LABEL_01161}">
+            <layoutData>
+              <FlexItemData styleClass="left-box-icon-label" />
+            </layoutData>
+          </Text>
+          <ObjectStatus text="{Timtx}" state="Indication05" class="left-box-primary" />
+          <Text text="{Wkrul}" class="left-box-secondary" />
         </VBox>
         <Button text="{ButtonText1} &gt;" press=".onPressButton1" class="portlet-box" />
       </VBox>
       <VBox width="49%">
         <VBox class="portlet-box right-box">
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-portlet-p11-week.svg" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="right-box-icon" />
+            </layoutData>
+          </Image>
           <!-- <Text text="{i18n>LABEL_01162}" /> -->
-          <Text text="{Wktext}" />
-          <ObjectStatus text="{Reltm}" state="Indication05" class="portlet-p11-objectstatus19" />
-          <ObjectStatus text="{Reltx}" state="Indication05" class="portlet-p11-objectstatus15" />
-          <Text text="{Wkrul}" class="portlet-p11-text" />
+          <Text text="{Wktext}">
+            <layoutData>
+              <FlexItemData styleClass="right-box-icon-label" />
+            </layoutData>
+          </Text>
+          <ObjectStatus text="{Reltm}" state="Indication05" class="right-box-primary" />
+          <Text text="{Reltx}" class="right-box-secondary" />
         </VBox>
         <Button text="{ButtonText2} &gt;" press=".onPressButton2" class="portlet-box" />
       </VBox>

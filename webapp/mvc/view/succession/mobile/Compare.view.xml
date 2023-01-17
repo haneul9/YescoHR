@@ -5,7 +5,7 @@
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <mobile:HeaderTitleCountStatus title="{i18n>LABEL_35002}" useInfoIcon="false" />
+      <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_35002" infoIconVisible="false" />
       <mobile:ScrollContainer>
         <l:VerticalLayout id="containerLayout" width="100%" class="sapUiBlockLayoutBackgroundLight compare-block" busyIndicatorDelay="0" busy="{/busy}">
           <l:BlockLayout id="BlockLayout" background="Mixed" content="{/compare/data}">

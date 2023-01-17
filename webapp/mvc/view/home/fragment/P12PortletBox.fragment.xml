@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 나의 휴가 현황 -->
-  <VBox class="portlet portlet-box portlet-p12" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>

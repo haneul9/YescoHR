@@ -19,19 +19,21 @@ sap.ui.define(
      * 나의 휴가 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P12PortletHandler', {
+      getPortletHeightStyleClass(oPortletModel) {
+        return this.bMobile ? 'portlet-h0' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
+      },
+
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
+        const sPortletId = oPortletModel.getProperty('/id');
+        const sFragmentName = this.bMobile ? `sap.ui.yesco.mvc.view.home.mobile.${sPortletId}PortletBox` : 'sap.ui.yesco.mvc.view.home.fragment.P12PortletBox';
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P12PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P12PortletBox',
+          name: sFragmentName,
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox
-          .setModel(oPortletModel)
-          .bindElement('/')
-          .addStyleClass(this.bMobile ? 'h-auto' : `portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

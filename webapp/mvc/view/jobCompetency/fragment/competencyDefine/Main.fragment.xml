@@ -41,7 +41,7 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_22004}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_22004" class="title" />
         </HBox>
         <VBox>
           <Panel expandable="true" width="auto" class="capability-level">
@@ -79,7 +79,7 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_22005}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_22005" class="title" />
         </HBox>
         <HBox items="{/Competency/RelateJobs/JobTypes}" class="flex-wrap">
           <Button text="{JobName}" press=".onPressJob" class="job"/>

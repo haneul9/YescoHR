@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox small" busyIndicatorDelay="0" busy="{/week/busy}">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_18015}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18015" class="title" />
       <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="200px" change=".onWeekWorkTime" />
     </HBox>
     <HBox alignItems="Center" class="week-work-time">

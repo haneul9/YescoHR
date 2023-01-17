@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_07032}" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_07032" />
       <Button text="{i18n>LABEL_07034}" press=".onRepayApp" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
     </HBox>
     <table:Table id="repayTable" rows="{/RepayList}" visibleRowCount="1" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">

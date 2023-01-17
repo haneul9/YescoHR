@@ -17,7 +17,7 @@
               <VBox class="vCardBox">
                 <HBox>
                   <HBox class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10007}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10007" class="title" />
                   </HBox>
                 </HBox>
                 <VBox items="{/goals/strategy}">
@@ -27,7 +27,7 @@
               <VBox class="vCardBox sapUiSmallMarginTop">
                 <HBox>
                   <HBox class="table-toolbar">
-                    <custom:HeaderTitleCountMessage title="{i18n>LABEL_10008}" class="title" />
+                    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10008" class="title" />
                   </HBox>
                 </HBox>
                 <VBox items="{/goals/duty}">

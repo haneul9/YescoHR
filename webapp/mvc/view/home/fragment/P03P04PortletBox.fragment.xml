@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 부서원 현황 / 내동료 현황 -->
-  <VBox class="portlet portlet-box portlet-p03p04" tooltip="{=
+  <VBox class="portlet-p03p04" tooltip="{=
       ${selectedMembersButton} === 'ORG' ? ${orgMembers/tooltip} : (
       ${selectedMembersButton} === 'MY' ? ${myMembers/tooltip} : ''
     )}" busy="{busy}" busyIndicatorDelay="0">

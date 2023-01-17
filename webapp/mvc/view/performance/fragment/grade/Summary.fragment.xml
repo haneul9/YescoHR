@@ -5,7 +5,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="100%" class="vCardBox">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_10072}" infoMessage="{i18n>MSG_10009}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10072" infoMessagePath="i18n>MSG_10009" class="title" />
     </HBox>
     <HBox>
       <VBox width="30%">

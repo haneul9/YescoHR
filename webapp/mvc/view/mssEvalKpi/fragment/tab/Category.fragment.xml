@@ -9,7 +9,7 @@
     <core:Fragment fragmentName="sap.ui.yesco.mvc.view.mssEvalKpi.fragment.tabDetail.CascadingForm" type="XML" />
     <VBox width="100%" class="vCardBox">
       <HBox justifyContent="SpaceBetween" class="table-toolbar">
-        <custom:HeaderTitleCountMessage title="{i18n>LABEL_15004} {i18n>LABEL_15018}" infoMessage="{i18n>MSG_15005}" class="title" />
+        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_15004} {i18n>LABEL_15018" infoMessagePath="i18n>MSG_15005" class="title" />
         <HBox class="cascading-type-list">
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_cascading_type01.png"/>
           <Text text="{i18n>LABEL_15014}" textAlign="Center" width="100%"/>

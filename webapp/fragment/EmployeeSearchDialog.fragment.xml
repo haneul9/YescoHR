@@ -54,7 +54,7 @@
         </VBox>
         <VBox width="80%" height="635px" class="hCardBox">
           <HBox height="46px" justifyContent="SpaceBetween" class="table-toolbar">
-            <custom:HeaderTitleCountMessage title="{i18n>LABEL_00204}" class="title" />
+            <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00204" class="title" />
           </HBox>
           <table:Table class="radio-selection-table" enableSelectAll="false" rows="{/results/list}" rowSelectionChange=".onRowSelection" visibleRowCount="{/results/rowCount}" rowHeight="34" columnHeaderHeight="35">
             <table:columns>

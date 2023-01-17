@@ -122,7 +122,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet-p03p04:hover .portlet-members.my-members .members-position {max-width:none}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
 .portlet-p03p04:hover .portlet-members.my-members .members-organization {max-width:none}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:none}
-.portlet-p06 {margin:0 -16px; padding:30px 5px 25px 16px; background-color:#f4f8f8}
+.portlet-p06 {margin:26px -16px 0 !important; padding:30px 5px 25px 16px; background-color:#f4f8f8}
 .portlet-p06 .portlet-header {margin-bottom:18px}
 .portlet-p06 .portlet-header .portlet-header-title + .sapMFlexItem {height:16px}
 .portlet-p06 .portlet-header .sapIcon_Date {width:auto !important; height:16px !important}
@@ -171,8 +171,12 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80p
 .portlet-p11 .right-box .right-box-icon {height:15px; line-height:15px}
 .portlet-p11 .left-box .left-box-icon .sapMImg,
 .portlet-p11 .right-box .right-box-icon .sapMImg {width:13px; height:15px}
-/* .portlet-p11 .left-box {border:none; background-color:#a3edce}
-.portlet-p11 .right-box {border:none; background-color:#b4cef2} */
+.portlet-p11 .left-box .left-box-icon-label .sapMText,
+.portlet-p11 .right-box .right-box-icon-label .sapMText {font-weight:700}
+.portlet-p11 .left-box .left-box-primary,
+.portlet-p11 .right-box .right-box-primary {height:24px; line-height:24px}
+.portlet-p11 .left-box .left-box-primary .sapMText,
+.portlet-p11 .right-box .right-box-primary .sapMText {line-height:24px; font-weight:700}
 .portlet-p11 .portlet-p11-objectstatus19 {margin-top:18px}
 .portlet-p11 .portlet-p11-objectstatus15 {margin-top:0}
 .portlet-p11 .portlet-p11-objectstatus19 .sapMObjStatusText,
@@ -181,17 +185,26 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80p
 .sapUiSizeCompact .portlet-p11 .sapMBtn.portlet-box {margin-top:5px; width:100%; border:none}
 .sapUiSizeCompact .portlet-p11 .sapMBtnInner.sapMBtnText {height:auto; border-radius:8px; padding:3px}
 .portlet-p12 {margin-top:0 !important; background-color:transparent}
+.portlet-p12.portlet-m27 {margin-top:70px !important}
 .portlet-p12 .home-top-pine-tree-layer {height:50px}
 .portlet-p12 .home-top-pine-tree-layer::after {top:10px}
 .portlet-p12 .portlet-vacation-summary {margin:0 1px 1px 0; width:calc(100% - 1px) !important; height:189px; border-radius:16px; padding:16px 16px 49px 16px; background-color:transparent; box-shadow:1px 1px 1px 0 rgba(139,139,139,.35)}
 .portlet-p12 .portlet-vacation-summary .annual,
 .portlet-p12 .portlet-vacation-summary .summer {justify-content:space-between; margin-top:25px; height:22px; line-height:22px}
 .portlet-p12 .portlet-vacation-summary .annual + .sapMFlexItem,
-.portlet-p12 .portlet-vacation-summary .summer + .sapMFlexItem {margin-top:7px}
+.portlet-p12 .portlet-vacation-summary .summer + .sapMFlexItem {margin-top:9px}
 .portlet-p12 .portlet-vacation-summary .annual-left,
 .portlet-p12 .portlet-vacation-summary .annual-right,
 .portlet-p12 .portlet-vacation-summary .summer-left,
 .portlet-p12 .portlet-vacation-summary .summer-right {align-items:baseline; height:22px; line-height:22px}
+.portlet-p12 .portlet-vacation-summary .annual-left .sapMFlexItem:nth-child(2) {margin-left:8px}
+.portlet-p12 .portlet-vacation-summary .annual-left .sapMFlexItem:nth-child(3) {margin-left:3px}
+.portlet-p12 .portlet-vacation-summary .annual-right .sapMFlexItem:nth-child(2) {margin-left:3px}
+.portlet-p12 .portlet-vacation-summary .annual-right .sapMFlexItem:nth-child(3) {margin-left:3px}
+.portlet-p12 .portlet-vacation-summary .summer-left .sapMFlexItem:nth-child(2) {margin-left:8px}
+.portlet-p12 .portlet-vacation-summary .summer-left .sapMFlexItem:nth-child(3) {margin-left:3px}
+.portlet-p12 .portlet-vacation-summary .summer-right .sapMFlexItem:nth-child(2) {margin-left:3px}
+.portlet-p12 .portlet-vacation-summary .summer-right .sapMFlexItem:nth-child(3) {margin-left:3px}
 .portlet-p12 .portlet-vacation-summary .annual-left .sapMText,
 .portlet-p12 .portlet-vacation-summary .annual-right .sapMText,
 .portlet-p12 .portlet-vacation-summary .summer-left .sapMText,

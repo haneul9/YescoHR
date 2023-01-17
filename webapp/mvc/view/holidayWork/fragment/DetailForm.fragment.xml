@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00129}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00129" class="title" />
       <HBox class="button-group">
         <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{= !${/ZappStatAl} }" press=".onAddDetail" />
         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{= !${/ZappStatAl} }" press=".onDelDetail" />

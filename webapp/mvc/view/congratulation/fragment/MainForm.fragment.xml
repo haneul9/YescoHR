@@ -18,7 +18,7 @@
       <HBox justifyContent="SpaceAround">
         <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBox" type="XML" />
         <VBox class="hCardBox overview-box congratulation-overview" busyIndicatorDelay="0" busy="{/busy}">
-          <custom:HeaderTitleCountMessage title="{i18n>MSG_02001}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>MSG_02001" class="title" />
           <Text text="{i18n>MSG_02002}" class="sapUiSmallMarginBottom" />
           <HBox>
             <VBox width="30%" class="overview-info">

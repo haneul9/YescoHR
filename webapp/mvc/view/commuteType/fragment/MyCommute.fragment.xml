@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box commute-type-overview" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_30004}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_30004" class="title" />
       <VBox class="desc pt-16-px">
         <Text text="{i18n>MSG_30001}" />
         <ObjectStatus text="{/MyCom/Rtext}" state="Indication05" class="work-schedule-text pl-0 pt-30-px font-26-px" />

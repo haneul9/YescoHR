@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_33006}" infoMessage="{i18n>MSG_33002}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_33006" infoMessagePath="i18n>MSG_33002" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_33007}" />

@@ -2,7 +2,8 @@
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="portlet portlet-box portlet-p10" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <!-- 성과관리 -->
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>

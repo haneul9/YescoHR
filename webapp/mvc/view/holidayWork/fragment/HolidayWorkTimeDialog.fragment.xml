@@ -51,7 +51,7 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_02023}" infoMessage="{i18n>MSG_27003}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_02023" infoMessagePath="i18n>MSG_27003" class="title" />
           <HBox class="button-group">
             <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogAdd" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDialogDel" />

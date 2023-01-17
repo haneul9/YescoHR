@@ -3,7 +3,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box">
-    <custom:HeaderTitleCountMessage title="{i18n>LABEL_04005}" infoMessage="{i18n>LABEL_04032}" infoMessageUnderline="false" class="title" />
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_04005" infoMessagePath="i18n>LABEL_04032" infoMessageUnderline="false" class="title" />
     <grid:CSSGrid gridTemplateColumns="repeat(3, 1fr)" gridRowGap="19px" gridColumnGap="8px" class="sapUiMediumMarginTop">
       <VBox alignItems="Start">
         <Label text="{/quota/10/Kotxt}" />

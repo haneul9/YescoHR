@@ -39,7 +39,7 @@ sap.ui.define(
     return HBox.extend('sap.ui.yesco.control.HeaderTitleCountMessage', {
       metadata: {
         properties: {
-          title: { type: 'string', group: 'Misc', defaultValue: '{i18n>LABEL_00129}' }, // i18n 또는 hard coding, 신청내역
+          title: { type: 'string', group: 'Misc', defaultValue: null }, // i18n 또는 hard coding
           titlePath: { type: 'string', group: 'Misc', defaultValue: null }, // model path만 입력
           titleLevel: { type: 'string', group: 'Misc', defaultValue: TitleLevel.H2 },
           titleVisible: { type: 'string', group: 'Misc', defaultValue: null },
@@ -91,14 +91,14 @@ sap.ui.define(
 
         const sTitlePath = this.getTitlePath();
         if (sTitlePath) {
-          mSettings.text = `{= \${${sTitlePath}} || \${i18n>LABEL_00129} }`;
+          mSettings.text = `{= \${${sTitlePath}} || \${i18n>LABEL_00129} }`; // 신청내역
         } else {
           mSettings.text = this.getTitle();
         }
 
         const sVisible = this.getTitleVisible();
         if (sVisible) {
-          mSettings.visible = this.transformToExpression(sVisible); // bindProperty function에는 {}없이 경로를 바로 입력
+          mSettings.visible = this.toBoolean(sVisible); // bindProperty function에는 {}없이 경로를 바로 입력
         }
 
         return new CustomTitle(mSettings);
@@ -118,7 +118,7 @@ sap.ui.define(
 
         const sVisible = this.getCountVisible();
         if (sVisible) {
-          mSettings.visible = this.transformToExpression(sVisible);
+          mSettings.visible = this.toBoolean(sVisible);
         }
 
         return new Text(mSettings);
@@ -144,7 +144,7 @@ sap.ui.define(
 
         const sVisible = this.getInfoMessageVisible();
         if (sVisible) {
-          mSettings.visible = this.transformToExpression(sVisible);
+          mSettings.visible = this.toBoolean(sVisible);
         }
 
         const oControl = new Text(mSettings);
@@ -157,8 +157,13 @@ sap.ui.define(
         return oControl;
       },
 
-      transformToExpression(sVisible) {
+      toExpression(sVisible) {
         return (sVisible || '').replace(/\[/g, '{').replace(/\]/g, '}');
+      },
+
+      toBoolean(sVisible) {
+        const sExpression = this.toExpression(sVisible);
+        return sExpression === 'true' ? true : sExpression === 'false' ? false : sExpression;
       },
     });
   }

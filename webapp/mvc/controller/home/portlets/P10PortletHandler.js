@@ -24,6 +24,10 @@ sap.ui.define(
       sChartId: 'portlet-p10-chart',
       oChartPromise: null,
 
+      getPortletHeightStyleClass(oPortletModel) {
+        return this.bMobile ? 'portlet-h2' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
+      },
+
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
@@ -32,11 +36,7 @@ sap.ui.define(
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox
-          .setModel(oPortletModel)
-          .bindElement('/')
-          .addStyleClass(this.bMobile ? 'portlet-h2' : `portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

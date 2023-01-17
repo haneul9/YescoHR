@@ -24,7 +24,7 @@
           <core:Item key="{Zseqnr}" text="{Zseqnrtx}" />
         </custom:SingleComboBox>
       </mobile:SearchAreaCSSGrid>
-      <mobile:HeaderTitleCountStatus title="{i18n>LABEL_43001}" countPath="/committee/listInfo/totalCount" pressInfoIcon=".onPressLegend" />
+      <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_43001" countPath="/committee/listInfo/totalCount" pressInfoIcon=".onPressLegend" />
       <mobile:ScrollContainer>
         <List items="{/committee/listInfo/list}" busy="{/busy/Committee}" busyIndicatorDelay="0" class="list-wrap wrap talent-dev-committee">
           <CustomListItem type="Active" press=".onPressCommitteeListItem">

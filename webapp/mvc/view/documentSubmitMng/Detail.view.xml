@@ -20,7 +20,7 @@
     <VBox class="contents">
       <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/contentsBusy/form}">
         <HBox alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_48012}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_48012" class="title" />
         </HBox>
         <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
           <Label text="{i18n>LABEL_48006}"/>
@@ -45,7 +45,7 @@
       </VBox>
       <VBox class="vCardBox" width="100%" busyIndicatorDelay="0" busy="{/contentsBusy/table}">
         <HBox alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_48017}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_48017" class="title" />
           <HBox class="table-actions">
             <Button class="table-action-button" text="{i18n>LABEL_48018}" press=".onPressPDFDownload" visible="{= ${/mode} !== 'N' }" />
             <Button class="table-action-button" text="{i18n>LABEL_47005}" press=".onPressPreview" visible="{= ${/mode} !== 'N' }" />

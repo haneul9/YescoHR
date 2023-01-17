@@ -3,7 +3,7 @@
   xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <Dialog id="detailDialog" afterClose=".onDialogAfClose" title="{i18n>LABEL_27001}" contentWidth="1100px" contentHeight="auto">
+  <Dialog id="detailDialog" afterClose=".onDialogAfClose" titlePath="i18n>LABEL_27001" contentWidth="1100px" contentHeight="auto">
     <buttons>
       <Button text="{i18n>LABEL_00103}" type="Emphasized" press=".onDialogSavBtn" busyIndicatorDelay="0" busy="{/busy}" />
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
@@ -52,7 +52,7 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_02023}" infoMessage="{i18n>MSG_27003}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_02023" infoMessagePath="i18n>MSG_27003" class="title" />
           <HBox class="button-group">
             <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogAdd" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDialogDel" />

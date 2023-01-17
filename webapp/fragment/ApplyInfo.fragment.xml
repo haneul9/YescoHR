@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" id="applyInfo">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00135}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00135" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="repeat(2, 1fr 3fr)" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_00210}"/>

@@ -80,24 +80,6 @@ sap.ui.define(
         this.addItem(oPortletHeader).addItem(new HBox().addStyleClass('portlet-body'));
       },
 
-      /**
-       * @override
-       */
-      onBeforeRendering(...aArgs) {
-        VBox.prototype.onBeforeRendering.apply(this, aArgs);
-
-        const oContext = this.getBindingContext();
-        const bBorderless = oContext.getProperty('borderless');
-        const sPortletKey = oContext.getProperty('key').toLowerCase();
-        const iPortletHeight = oContext.getProperty('height');
-
-        if (bBorderless) {
-          this.addStyleClass(`portlet portlet-${sPortletKey} portlet-h${iPortletHeight}`);
-        } else {
-          this.addStyleClass(`portlet portlet-box portlet-${sPortletKey} portlet-h${iPortletHeight}`);
-        }
-      },
-
       onPressClose(oEvent) {
         this.getPortletHandler().onPressClose(oEvent);
       },

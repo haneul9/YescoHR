@@ -46,6 +46,10 @@ sap.ui.define(
         P04: 'P03',
       },
 
+      getPortletStyleClasses() {
+        return `portlet portlet-box portlet-h2`;
+      },
+
       async addPortlet() {
         this.setInherency();
 
@@ -74,9 +78,6 @@ sap.ui.define(
                 .parent()
                 .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
 
-              const iPortletHeight = oPortletModel.getProperty('/height');
-              oSiblingPortletBox.addStyleClass(`portlet-h${iPortletHeight}`);
-
               this.setPortletBox(oSiblingPortletBox);
             }
           }, 300);
@@ -89,8 +90,7 @@ sap.ui.define(
             controller: this,
           });
 
-          const iPortletHeight = oPortletModel.getProperty('/height');
-          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
           this.getController().byId(this.sContainerId).addItem(oPortletBox);
           this.setPortletBox(oPortletBox);

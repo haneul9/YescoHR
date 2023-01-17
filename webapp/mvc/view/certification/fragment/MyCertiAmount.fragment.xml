@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box" width="33%" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_17002}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_17002" class="title" />
       <VBox items="{/myCerti}" class="mt-50-px certification-overview-item">
         <HBox justifyContent="SpaceBetween">
           <Text text="{Certx}"/>

@@ -26,6 +26,10 @@ sap.ui.define(
       sChartId: 'portlet-m23-chart',
       oChartPromise: null,
 
+      getPortletHeightStyleClass(oPortletModel) {
+        return this.bMobile ? 'portlet-h0' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
+      },
+
       async addPortlet() {
         const oController = this.getController();
         const oPortletModel = this.getPortletModel();
@@ -35,11 +39,7 @@ sap.ui.define(
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox
-          .setModel(oPortletModel)
-          .bindElement('/')
-          .addStyleClass(this.bMobile ? 'h-auto' : `portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

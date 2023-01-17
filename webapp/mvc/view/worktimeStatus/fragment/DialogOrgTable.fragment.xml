@@ -8,7 +8,7 @@
     </buttons>
     <content>
       <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <custom:HeaderTitleCountMessage title="{i18n>LABEL_16012}" infoMessage="{i18n>MSG_32001}" />
+        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_16012" infoMessagePath="i18n>MSG_32001" />
         <HBox class="status-wrap">
           <ObjectStatus text="{i18n>LABEL_32012}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
           <ObjectStatus text="{i18n>LABEL_32013}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />

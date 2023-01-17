@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box studentFunds-overview" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <custom:HeaderTitleCountMessage title="{i18n>MSG_03011}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>MSG_03011" class="title" />
       <Text text="{ path: '/Total/Zyear', formatter: '.thisYear' }" class="sapUiSmallMarginBottom" />
       <HBox class="mt-50-px studentFunds-overview-content">
         <VBox width="30%" class="overview-info">

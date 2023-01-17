@@ -8,7 +8,7 @@
   </VBox>
   <VBox class="vCardBox" visible="{= !${/result/busy} }">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_00204}" countPath="/result/totalCount" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00204" countPath="/result/totalCount" class="title" />
       <HBox class="status-wrap">
         <!-- <ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
         <ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />

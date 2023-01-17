@@ -79,6 +79,8 @@ sap.ui.define(
         M23: 'M23',
         M24: 'M24',
         M25: 'M25',
+        M26: 'P06',
+        M27: 'P12',
         // 직원용
         P01: 'P01',
         P02: 'P02',
@@ -92,6 +94,9 @@ sap.ui.define(
         P10: 'P10',
         P11: 'P11',
         P12: 'P12',
+        P13: 'P06',
+        P14: 'P11',
+        P15: 'P12',
       },
       mPortletHandlers: {
         // 임원용
@@ -110,6 +115,8 @@ sap.ui.define(
         M23: M23PortletHandler,
         M24: M24PortletHandler,
         M25: M25PortletHandler,
+        M26: P06PortletHandler,
+        M27: P12PortletHandler,
         // 직원용
         P01: P01PortletHandler,
         P02: P02PortletHandler,
@@ -123,6 +130,9 @@ sap.ui.define(
         P10: P10PortletHandler,
         P11: P11PortletHandler,
         P12: P12PortletHandler,
+        P13: P06PortletHandler,
+        P14: P11PortletHandler,
+        P15: P12PortletHandler,
       },
 
       onInit() {

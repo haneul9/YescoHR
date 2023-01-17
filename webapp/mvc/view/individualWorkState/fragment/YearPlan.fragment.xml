@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="100%" class="vCardBox small">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_18032}" infoMessage="{i18n>MSG_18001}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18032" infoMessagePath="i18n>MSG_18001" class="title" />
     </HBox>
     <HBox justifyContent="Center" class="year-plan-head">
       <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevYear" class="icon-button" />

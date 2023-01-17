@@ -25,7 +25,7 @@
       </HBox>
       <VBox class="vCardBox">
         <HBox class="table-toolbar" justifyContent="SpaceBetween">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_20005}" infoMessage="{i18n>MSG_20001}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_20005" infoMessagePath="i18n>MSG_20001" class="title" />
           <HBox class="status-wrap year-plan leave-plan">
             <Text text="{i18n>LABEL_20006}" class="type06" />
             <Text text="{i18n>LABEL_20007}" class="type07" />
@@ -52,7 +52,7 @@
       </VBox>
       <VBox class="vCardBox" visible="{= ${/summary/Sgnyn} === 'X' }">
         <HBox class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_20009}" infoMessage="{i18n>MSG_20002}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_20009" infoMessagePath="i18n>MSG_20002" class="title" />
         </HBox>
         <VBox>
           <HBox visible="{= ${/summary/ZappStatAl} === '' || ${/summary/ZappStatAl} === '10' }" alignItems="End">

@@ -18,7 +18,7 @@
     <HBox class="contents">
       <VBox class="vCardBox" width="70%">
         <HBox alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_47007}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_47007" class="title" />
         </HBox>
         <HBox justifyContent="Center" width="100%" height="100%" busyIndicatorDelay="0" busy="{/contentsBusy/editor}">
           <core:HTML id="preview-box-container" content='&lt;div class="preview-box"&gt;&lt;/div&gt;' />
@@ -27,7 +27,7 @@
       <VBox width="30%" class="mt-0">
         <VBox width="100%" class="vCardBox sapUiTinyMarginBegin">
           <HBox alignItems="Center" class="table-toolbar">
-            <custom:HeaderTitleCountMessage title="{i18n>LABEL_47006}" class="title" />
+            <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_47006" class="title" />
           </HBox>
           <HBox>
             <grid:CSSGrid gridTemplateColumns="1fr 3fr" gridGap="1px 0px" class="form-grid" busyIndicatorDelay="0" busy="{/contentsBusy/input}">
@@ -52,7 +52,7 @@
         </VBox>
         <VBox class="vCardBox sapUiTinyMarginBegin sapUiTinyMarginTop" width="100%" height="{/editorBoxHeight}">
           <HBox alignItems="Center" class="table-toolbar">
-            <custom:HeaderTitleCountMessage title="{i18n>LABEL_47008}" class="title" />
+            <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_47008" class="title" />
           </HBox>
           <ScrollContainer width="100%" height="calc(100% - 55px)" vertical="true" busyIndicatorDelay="0" busy="{/contentsBusy/tree}">
             <Tree id="InputFieldsTree" class="employee-tree" mode="SingleSelectMaster" items="{path: '/templates'}" selectionChange=".onSelectTreeItem">

@@ -2,7 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <HBox justifyContent="SpaceBetween" class="header-wrap">
-    <custom:HeaderTitleCountMessage title="{i18n>LABEL_00168}" countPath="/listInfo/totalCount" />
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00168" countPath="/listInfo/totalCount" />
     <HBox>
       <HBox class="status-wrap">
         <ObjectStatus text="{i18n>LABEL_48002} {/listInfo/Count10}" icon="sap-icon://circle-task-2" state="Indication04" />

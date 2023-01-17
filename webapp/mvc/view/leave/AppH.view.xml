@@ -35,7 +35,7 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_16002}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_16002" class="title" />
         </HBox>
         <HBox height="250px">
           <core:HTML content="&lt;div id='chart-h/leave-container'&gt;&lt;/div&gt;" />
@@ -43,7 +43,7 @@
       </VBox>
       <VBox class="vCardBox">
         <HBox class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_16003}" infoMessage="{i18n>MSG_16002}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_16003" infoMessagePath="i18n>MSG_16002" class="title" />
           <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
         </HBox>
         <HBox>

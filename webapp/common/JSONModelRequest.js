@@ -140,13 +140,13 @@ sap.ui.define(
       }
 
       getEncodedURL(mParameterMap) {
-        const sQueryString = encodeURLParameters(mParameterMap || this.getmParameterMap());
+        const sQueryString = encodeURLParameters(mParameterMap || this.getParameterMap());
 
         return `${location.origin}${this.sURL}?${sQueryString}`;
       }
 
       getDecodedURL(mParameterMap) {
-        const sQueryString = Object.entries(mParameterMap || this.getmParameterMap())
+        const sQueryString = Object.entries(mParameterMap || this.getParameterMap())
           .map(([k, v]) => `${k}=${v}`)
           .join('&');
 
@@ -154,7 +154,7 @@ sap.ui.define(
       }
 
       setEncodedQueryString(mParameterMap) {
-        return encodeURLParameters(mParameterMap || this.getmParameterMap());
+        return encodeURLParameters(mParameterMap || this.getParameterMap());
       }
 
       isMultipleRequest() {

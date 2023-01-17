@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:grid="sap.ui.layout.cssgrid">
   <!-- 조직근무현황 -->
-  <VBox class="portlet portlet-box portlet-p06" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>

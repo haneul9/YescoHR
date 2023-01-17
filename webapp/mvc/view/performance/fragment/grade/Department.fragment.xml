@@ -7,7 +7,7 @@
       <headerToolbar>
         <Toolbar height="45px" width="100%">
           <HBox class="table-toolbar">
-            <custom:HeaderTitleCountMessage title="{i18n>LABEL_10073}" infoMessage="{i18n>MSG_10010}" class="title" />
+            <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10073" infoMessagePath="i18n>MSG_10010" class="title" />
           </HBox>
         </Toolbar>
       </headerToolbar>

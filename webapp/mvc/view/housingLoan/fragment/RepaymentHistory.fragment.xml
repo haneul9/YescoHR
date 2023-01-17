@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_07033}" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_07033" />
       <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
     </HBox>
     <table:Table id="repayHisTable" fixedBottomRowCount="1" rows="{/RepayHisList}" visibleRowCount="{/RepayHisLength}" width="100%" busyIndicatorDelay="0" busy="{/hisBusy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">

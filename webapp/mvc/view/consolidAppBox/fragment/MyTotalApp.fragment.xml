@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box consolidAppBox-overview" width="33%" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_19007}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_19007" class="title" />
       <Text text="{i18n>MSG_19002}" class="sapUiSmallMarginBottom" />
       <HBox class="mt-50-px consolidAppBox-overview-content">
         <VBox width="50%" class="overview-info">

@@ -19,10 +19,10 @@ sap.ui.define(
     P06PortletHandlerDialogHandler,
     EmployeeList1PopoverHandler
   ) => {
-    'use strict';
+    ('use strict');
 
     /**
-     * 조직근무현황 Portlet
+     * 조직근무현황, 나의 직원/팀원들은 무엇을 하고 있을까요? Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
       sChartId: 'portlet-p06-chart',
@@ -40,8 +40,7 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         oPortletModel.setProperty('/selectedDate', new Date());
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -103,6 +102,7 @@ sap.ui.define(
 
       transformContentData([mPortletContentData]) {
         const fValue = Number(mPortletContentData.Rte01);
+
         if (!this.bMobile) {
           if (this.oChartPromise) {
             this.oChartPromise.then(() => {

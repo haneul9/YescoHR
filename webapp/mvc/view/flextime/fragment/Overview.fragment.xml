@@ -31,7 +31,7 @@
       </HBox>
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_00168}" infoMessage="{i18n>MSG_40003}" class="title" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00168" infoMessagePath="i18n>MSG_40003" class="title" />
           <HBox class="table-actions">
             <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
               <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} } {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" icon="sap-icon://circle-task-2" class="sapMObjStatusIndication06" />

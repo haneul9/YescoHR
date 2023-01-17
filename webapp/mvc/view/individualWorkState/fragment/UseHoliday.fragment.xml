@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="100%" class="vCardBox small">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_18021}" infoMessagePath="/FullYear" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18021" infoMessagePath="/FullYear" class="title" />
       <ComboBox width="200px" items="{/WorkTypeUseList}" selectedKey="{/WorkTypeUse}" change=".onWorkTypeUse">
         <core:Item text="{Atext}" key="{Awart}" />
       </ComboBox>

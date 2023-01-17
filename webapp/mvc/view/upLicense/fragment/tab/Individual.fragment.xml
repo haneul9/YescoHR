@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox">
     <HBox justifyContent="SpaceBetween" class="header-wrap">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_39004}" countPath="/listInfo/totalCount" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_39004" countPath="/listInfo/totalCount" />
       <HBox>
         <HBox class="status-wrap">
           <ObjectStatus text="{i18n>LABEL_00106}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />

@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box housingLoan-overview" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <custom:HeaderTitleCountMessage title="{i18n>MSG_07001}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>MSG_07001" class="title" />
       <Text text="{i18n>MSG_07002}" class="sapUiSmallMarginBottom" />
       <HBox class="mt-50-px housingLoan-overview-content">
         <VBox width="30%" class="overview-info">

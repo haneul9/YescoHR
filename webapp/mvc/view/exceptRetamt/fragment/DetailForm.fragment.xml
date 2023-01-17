@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_33002}" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_33002" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_33003}" />
@@ -15,11 +15,11 @@
       <HBox></HBox>
       <Label text="{i18n>LABEL_33004}" />
       <HBox>
-        <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" class="required"/>
+        <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="250px" class="required" />
         <Button id="RetdaBtn" icon="sap-icon://accept" press='.onSearch' class="InputinnerButton" text="{i18n>LABEL_33005}" />
       </HBox>
       <HBox></HBox>
       <HBox></HBox>
     </grid:CSSGrid>
-  </VBox>
+  </VBox>Path
 </core:FragmentDefinition>

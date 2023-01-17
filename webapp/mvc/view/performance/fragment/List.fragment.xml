@@ -15,7 +15,7 @@
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="header-wrap">
-          <custom:HeaderTitleCountMessage title="{i18n>LABEL_10005}" infoMessage="{i18n>MSG_10001}" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10005" infoMessagePath="i18n>MSG_10001" />
         </HBox>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.performance.fragment.OverviewTable" type="XML" />
       </VBox>

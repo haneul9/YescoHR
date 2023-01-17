@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox width="50%" class="vCardBox small sapUiMediumMarginEnd">
     <HBox class="table-toolbar">
-      <custom:HeaderTitleCountMessage title="{i18n>LABEL_18011}" infoMessagePath="/FullYear" class="title" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18011" infoMessagePath="/FullYear" class="title" />
       <ComboBox width="80px" items="{/WorkMonths}" selectedKey="{/WorkMonth}" change=".onWorkMonth">
         <core:Item text="{Ztext}" key="{Zcode}" />
       </ComboBox>
