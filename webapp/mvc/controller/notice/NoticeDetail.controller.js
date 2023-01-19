@@ -305,7 +305,7 @@ sap.ui.define(
                 Notice2Nav: aDetail,
               };
 
-              await Client.create(oModel, 'NoticeManage', mSendObject);
+              await Client.deep(oModel, 'NoticeManage', mSendObject);
 
               // {삭제}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {

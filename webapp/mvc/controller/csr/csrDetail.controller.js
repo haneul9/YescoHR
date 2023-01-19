@@ -455,7 +455,7 @@ sap.ui.define(
                   CsrRequest1Nav: mApprovalData,
                 };
 
-                await Client.create(oModel, 'CsrRequest', oSendObject);
+                await Client.deep(oModel, 'CsrRequest', oSendObject);
 
                 MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00121'), {
                   // {신청}되었습니다.

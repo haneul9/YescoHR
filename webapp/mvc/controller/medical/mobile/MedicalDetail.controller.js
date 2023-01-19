@@ -150,7 +150,7 @@ sap.ui.define(
             MedExpenseItemSet: [],
           };
 
-          const oTargetData = await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+          const oTargetData = await Client.deep(oModel, 'MedExpenseAppl', mSendObject);
           const aHisList = oTargetData.MedExpenseItemSet.results;
           const sRjbetRjcntHtml = this.getRjbetRjcntHtml(oTargetData.Rjbet, oTargetData.Rjcnt);
 
@@ -628,7 +628,7 @@ ${sCommMsg}`;
                 MedExpenseItemSet: oViewModel.getProperty('/HisList'),
               };
 
-              await Client.create(oModel, 'MedExpenseAppl', mSendObject);
+              await Client.deep(oModel, 'MedExpenseAppl', mSendObject);
 
               // {저장}되었습니다.
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103'));
@@ -1105,7 +1105,7 @@ ${sCommMsg}`;
           MedExpenseItemSet: aDetailList,
         };
 
-        return Client.create(oModel, 'MedExpenseAppl', mSendObject);
+        return Client.deep(oModel, 'MedExpenseAppl', mSendObject);
       },
 
       // Dialog 등록

@@ -232,7 +232,7 @@ sap.ui.define(
           const aTableData = oViewModel.getProperty('/form/list');
           const sChgrsn = oViewModel.getProperty('/form/Chgrsn');
 
-          await Client.create(oModel, 'DrillChangeApp', {
+          await Client.deep(oModel, 'DrillChangeApp', {
             Menid: this.getCurrentMenuId(),
             Pernr: this.getAppointeeProperty('Pernr'),
             Appno: sAppno,

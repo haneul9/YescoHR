@@ -133,7 +133,7 @@ sap.ui.define(
             PortletInfoTab2Set: aPortletData,
           };
 
-          await Client.create(oModel, 'PortletInfo', mPayload);
+          await Client.deep(oModel, 'PortletInfo', mPayload);
 
           return true;
         } catch (oError) {

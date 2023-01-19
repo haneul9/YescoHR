@@ -277,7 +277,7 @@ sap.ui.define(
           OnCallChangeNav: aDetailListData.map((o) => ({ ...o, Chgrsn: sChgrsn })),
         };
 
-        return Client.create(oModel, 'OnCallChangeApp', mPayload);
+        return Client.deep(oModel, 'OnCallChangeApp', mPayload);
       },
     });
   }

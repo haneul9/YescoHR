@@ -822,7 +822,7 @@ sap.ui.define(
                 KpiCascadingNav: aList,
               };
 
-              await Client.create(oModel, 'KpiCascadingOrgList', mSendObject);
+              await Client.deep(oModel, 'KpiCascadingOrgList', mSendObject);
 
               MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00103')); // {저장}되었습니다.
               this.onSearch();

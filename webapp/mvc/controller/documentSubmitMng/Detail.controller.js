@@ -238,7 +238,7 @@ sap.ui.define(
           const mFormData = _.cloneDeep(oViewModel.getProperty('/form'));
           const aEmpList = _.cloneDeep(oViewModel.getProperty('/list'));
 
-          await Client.create(oModel, 'HrDocManage', {
+          await Client.deep(oModel, 'HrDocManage', {
             Prcty: this.MODE === 'N' ? 'C' : 'M',
             Actty: oViewModel.getProperty('/auth'),
             Werks: mFormData.Werks || this.getAppointeeProperty('Werks'),
