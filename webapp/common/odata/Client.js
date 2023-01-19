@@ -71,6 +71,8 @@ sap.ui.define(
       }),
 
       create: _.curry((oModel, sUrl, mPayload) => {
+        AppUtils.ODatalog(sUrl, 'C');
+
         return new Promise((resolve, reject) => {
           oModel.create(`/${sUrl}Set`, mPayload, {
             success: (oData) => {
@@ -88,6 +90,8 @@ sap.ui.define(
       }),
 
       deep: _.curry((oModel, sUrl, mPayload) => {
+        AppUtils.ODatalog(sUrl, 'N');
+
         return new Promise((resolve, reject) => {
           oModel.create(`/${sUrl}Set`, mPayload, {
             success: (oData) => {
@@ -105,6 +109,8 @@ sap.ui.define(
       }),
 
       remove: _.curry((oModel, sUrl, mKeyMap = {}) => {
+        AppUtils.ODatalog(sUrl, 'D');
+
         return new Promise((resolve, reject) => {
           oModel.remove(oModel.createKey(`/${sUrl}Set`, mKeyMap), {
             success: (oData) => {

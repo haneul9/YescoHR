@@ -2,10 +2,12 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/ui/yesco/control/MessageBox',
+    'sap/ui/yesco/common/odata/ServiceNames',
   ],
   (
     // prettier 방지용 주석
-    MessageBox
+    MessageBox,
+    ServiceNames
   ) => {
     'use strict';
 
@@ -204,6 +206,22 @@ sap.ui.define(
         } else {
           reject(oError);
         }
+      },
+
+      ODatalog(sFunc, sAction) {
+        if (/SaveConnectLog/.test(sFunc)) return;
+
+        const oAppComponent = sap.ui.getCore().getComponent('container-ehr');
+        const oModel = oAppComponent?.getModel(ServiceNames.COMMON);
+        const bIsMobile = this.isMobile();
+
+        oModel.create('/SaveConnectLogSet', {
+          Menid: oAppComponent?.getMenuModel()?.getCurrentMenuId(),
+          Pernr: oAppComponent?.getSessionModel()?.getProperty('/Pernr'),
+          Mobile: bIsMobile ? 'X' : '',
+          Func: sFunc || '',
+          Action: sAction || '',
+        });
       },
 
       /**
