@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
+    'sap/m/MessageBox',
     'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/Appno',
@@ -13,6 +14,7 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
+    MessageBoxOrigin,
     Fragment,
     MessageBox,
     Appno,
@@ -712,37 +714,53 @@ ${sCommMsg}`;
 
       // 삭제
       onDeleteBtn() {
-        // {삭제}하시겠습니까?
-        MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
-          onClose: async (vPress) => {
-            // 삭제
-            if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
-              return;
-            }
+        const oViewModel = this.getViewModel();
+        const aDeleteDatas = oViewModel.getProperty('/HisDeleteDatas');
 
-            try {
-              AppUtils.setAppBusy(true);
+        if (aDeleteDatas.length > 0) {
+          // 해당 삭제 버튼은 의료비 신청사항 전체를 삭제할 때 사용합니다.\n진료내역이 선택되어 있는데 진료내역만 삭제를 원하실 경우에는 진료내역 테이블의 우측 상단의 삭제 버튼을 선택하여 주시기 바랍니다.\n신청사항 전체를 삭제하고자 하는 경우 진료내역 선택을 해제하여 주시기 바랍니다.
+          MessageBoxOrigin.warning(this.getBundleText('MSG_09065'), {
+            icon: ' ',
+            title: this.getBundleText('LABEL_WARNING'),
+            styleClass: `custom-messagebox custom-messagebox-WARNING font-warning`,
+          });
+        } else {
+          // 해당 삭제 버튼은 의료비 신청사항 전체를 삭제할 때 사용합니다.\n신청사항 전체를 삭제하시겠습니까?
+          MessageBox.confirm(this.getBundleText('MSG_09066'), {
+            // 삭제, 취소
+            actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
+            onClose: async (vPress) => {
+              // 삭제
+              if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
+                return;
+              }
 
-              const oModel = this.getModel(ServiceNames.BENEFIT);
-              const oViewModel = this.getViewModel();
+              await this.deleteProcess();
+            },
+          });
+        }
+      },
 
-              await Client.remove(oModel, 'MedExpenseAppl', { Appno: oViewModel.getProperty('/FormData/Appno') });
+      async deleteProcess() {
+        try {
+          AppUtils.setAppBusy(true);
 
-              // {삭제}되었습니다.
-              MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
-                onClose: () => {
-                  this.onNavBack();
-                },
-              });
-            } catch (oError) {
-              AppUtils.handleError(oError);
-            } finally {
-              AppUtils.setAppBusy(false);
-            }
-          },
-        });
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const oViewModel = this.getViewModel();
+
+          await Client.remove(oModel, 'MedExpenseAppl', { Appno: oViewModel.getProperty('/FormData/Appno') });
+
+          // {삭제}되었습니다.
+          MessageBox.alert(this.getBundleText('MSG_00007', 'LABEL_00110'), {
+            onClose: () => {
+              this.onNavBack();
+            },
+          });
+        } catch (oError) {
+          AppUtils.handleError(oError);
+        } finally {
+          AppUtils.setAppBusy(false);
+        }
       },
 
       // Excel Copy to Dialog
@@ -1101,6 +1119,9 @@ ${sCommMsg}`;
 
           await this.AttachFileAction.uploadFile.call(this, mDialogData.Appno2, this.getApprovalType(), this.DIALOG_FILE_ID);
 
+          // 임시저장(최초 히스토리 등록시)
+          await this.temporarySaveProcess();
+
           const oDialogModel = this.getViewModel(this.DIALOG_FILE_ID);
           let sFile = '';
 
@@ -1119,6 +1140,35 @@ ${sCommMsg}`;
           AppUtils.handleError(oError);
         } finally {
           AppUtils.setAppBusy(false);
+        }
+      },
+
+      async temporarySaveProcess() {
+        try {
+          const oViewModel = this.getViewModel();
+          const mFormData = oViewModel.getProperty('/FormData');
+
+          if (mFormData.Appno) return;
+
+          const oModel = this.getModel(ServiceNames.BENEFIT);
+          const sAppno = await Appno.get.call(this);
+
+          _.chain(mFormData).set('Appno', sAppno).set('Appda', new Date()).commit();
+
+          await Client.deep(oModel, 'MedExpenseAppl', {
+            ...mFormData,
+            Prcty: 'T',
+            Menid: oViewModel.getProperty('/menid'),
+            Waers: 'KRW',
+            MedExpenseItemSet: oViewModel.getProperty('/HisList'),
+          });
+
+          if (!mFormData.Lnsta) {
+            oViewModel.setProperty('/FormData/Lnsta', '10');
+            oViewModel.setProperty('/FormData/Lnstatx', this.getBundleText('LABEL_00104')); // 임시저장
+          }
+        } catch (oError) {
+          throw oError;
         }
       },
 

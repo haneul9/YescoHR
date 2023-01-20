@@ -2316,6 +2316,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .sapMIBar-CTX.sapMFooter-CTX[data-sap-ui*=confirm] .sapMBtn:active> .sapMBtnDefault.sapMBtnActive,
 .sapMIBar-CTX.sapMFooter-CTX[data-sap-ui*=warning] .sapMBtn:active> .sapMBtnDefault.sapMBtnActive,
 .sapMIBar-CTX.sapMFooter-CTX[data-sap-ui*=error] .sapMBtn:active> .sapMBtnDefault.sapMBtnActive {background-color:#f4f4f4; color:#5a6268; border:1px solid #d8dbdd}
+.sapMDialog[data-sap-ui*=warning].custom-messagebox-WARNING.font-warning>section .sapMText {color: var(--BorderColorError); font-weight: 700;}
 
 
 .mobile-only {display:none !important}
