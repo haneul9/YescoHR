@@ -1,15 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- To Do List -->
-  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
-    <customData>
-      <core:CustomData key="portlet-switchable" value="{switchable}" />
-    </customData>
-    <layoutData>
-      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
-    </layoutData>
+  <VBox class="portlet-content-scrollable" busy="{busy}" busyIndicatorDelay="0">
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <custom:Title text="{title}" visible="{= !${hideTitle} }">
         <custom:layoutData>
@@ -23,8 +16,8 @@
       </Text>
       <SegmentedButton selectedKey="{selectedTabKey}">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01141}" tooltip="{i18n>LABEL_01141}" key="Today" />
-          <SegmentedButtonItem text="{i18n>LABEL_01142}" tooltip="{i18n>LABEL_01142}" key="Future" />
+          <SegmentedButtonItem text="{i18n>LABEL_01141}" key="Today" press=".onPressSegmentedButtonItem" />
+          <SegmentedButtonItem text="{i18n>LABEL_01142}" key="Future" press=".onPressSegmentedButtonItem" />
         </items>
       </SegmentedButton>
       <!-- <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" /> -->

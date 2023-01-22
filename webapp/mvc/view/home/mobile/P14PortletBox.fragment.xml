@@ -1,15 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 근무시간 현황 -->
-  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
-    <customData>
-      <core:CustomData key="portlet-switchable" value="{switchable}" />
-    </customData>
-    <layoutData>
-      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
-    </layoutData>
+  <VBox busy="{busy}" busyIndicatorDelay="0">
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <custom:Title text="{title}" visible="{= !${hideTitle} }">
         <custom:layoutData>
@@ -21,12 +14,11 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body" justifyContent="SpaceBetween">
       <VBox width="49%">
-        <VBox class="portlet-box left-box">
+        <VBox class="left-box">
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-portlet-p11-today.svg" mode="Background">
             <layoutData>
               <FlexItemData styleClass="left-box-icon" />
@@ -37,13 +29,20 @@
               <FlexItemData styleClass="left-box-icon-label" />
             </layoutData>
           </Text>
-          <ObjectStatus text="{Timtx}" state="Indication05" class="left-box-primary" />
-          <Text text="{Wkrul}" class="left-box-secondary" />
+          <Text text="{Timtx}">
+            <layoutData>
+              <FlexItemData styleClass="left-box-primary" />
+            </layoutData>
+          </Text>
+          <Text text="{Wkrul}">
+            <layoutData>
+              <FlexItemData styleClass="left-box-secondary" />
+            </layoutData>
+          </Text>
         </VBox>
-        <Button text="{ButtonText1} &gt;" press=".onPressButton1" class="portlet-box" />
       </VBox>
       <VBox width="49%">
-        <VBox class="portlet-box right-box">
+        <VBox class="right-box">
           <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-portlet-p11-week.svg" mode="Background">
             <layoutData>
               <FlexItemData styleClass="right-box-icon" />
@@ -55,10 +54,16 @@
               <FlexItemData styleClass="right-box-icon-label" />
             </layoutData>
           </Text>
-          <ObjectStatus text="{Reltm}" state="Indication05" class="right-box-primary" />
-          <Text text="{Reltx}" class="right-box-secondary" />
+          <HBox class="right-box-primary">
+            <Text text="{Reltm}" />
+            <Text text="{i18n>LABEL_01231}" />
+          </HBox>
+          <Text text="{Reltx}">
+            <layoutData>
+              <FlexItemData styleClass="right-box-secondary" />
+            </layoutData>
+          </Text>
         </VBox>
-        <Button text="{ButtonText2} &gt;" press=".onPressButton2" class="portlet-box" />
       </VBox>
     </HBox>
   </VBox>

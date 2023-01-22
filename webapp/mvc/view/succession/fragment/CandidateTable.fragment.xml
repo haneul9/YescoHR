@@ -17,6 +17,10 @@
       <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45401" infoMessagePath="i18n>MSG_45001" class="title" />
       <m:HBox>
         <m:HBox class="status-wrap">
+          <!-- <m:ObjectStatus text="PSNC홀딩스" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+          <m:ObjectStatus text="PSNC전자" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+          <m:ObjectStatus text="PSNC건설" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+          <m:ObjectStatus text="PSNC컨설팅" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" /> -->
           <m:ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
           <m:ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
           <m:ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />

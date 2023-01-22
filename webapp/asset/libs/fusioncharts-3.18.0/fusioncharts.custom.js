@@ -11,14 +11,14 @@
     });
 
     FusionCharts.options.defaultChartMessageOptions = {
-      baseChartMessageFont: 'YescoHoldings', // Pretendard
+      baseChartMessageFont: 'Pretendard', // GachiDeohagi Pretendard
       baseChartMessageFontSize: 14,
     };
 
     FusionCharts.options.defaultChartOptions = {
       animation: 1,
 
-      baseFont: 'YescoHoldings', // Pretendard
+      baseFont: 'Pretendard', // GachiDeohagi Pretendard
       baseFontSize: 14,
       valueFontSize: 14,
       valueFontAlpha: 100,

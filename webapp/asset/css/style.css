@@ -146,18 +146,21 @@ html[lang="en"] .portlet-p01 .my-info .name {letter-spacing:-1px}
 .portlet-p02 .portlet-body .sapUiIcon {vertical-align:text-top}
 .portlet-p03p04 .sapMImg {box-sizing:border-box; border:1px solid #fff}
 .portlet-p03p04 .portlet-members {justify-content:space-between; align-items:center; height:auto !important}
-.portlet-p03p04 .portlet-members > .sapMHBox {align-items:center; margin-bottom:16px; width:100%}
-.portlet-p03p04 .portlet-members > .sapMHBox:last-child {margin-bottom:0}
-.portlet-p03p04 .portlet-members > .sapMHBox > * {display:flex}
-.portlet-p03p04 .portlet-members > .sapMHBox > .sapMFlexItem + .sapMFlexItem {margin-left:16px}
+.portlet-p03p04 .portlet-members > .sapMHBox {align-items:center; width:100%}
+.portlet-p03p04 .portlet-members > .sapMHBox + .sapMHBox {margin-top:16px}
+.portlet-p03p04 .portlet-members > .sapMHBox > *,
+.portlet-p03p04 .portlet-members.my-members .my-members-navigable-wrap > * {display:flex}
+.portlet-p03p04 .portlet-members > .sapMHBox > .sapMFlexItem + .sapMFlexItem,
+.portlet-p03p04 .portlet-members.my-members .my-members-navigable-wrap > .sapMFlexItem + .sapMFlexItem {margin-left:16px}
 .portlet-p03p04 .portlet-members .members-photo {width:40px; height:40px; border-radius:50%; background-size:cover; background-position:center top; background-repeat:no-repeat}
 .portlet-p03p04 .portlet-members .members-name {width:60px; line-height:40px; font-size:15px; font-weight:700}
 .portlet-p03p04 .portlet-members .members-position {flex-grow:1; max-width:calc(100% - 208px); height:40px}/* 40 + (16 + 60) + calc(100% - 16 - 192) + (16 + 60) */
 .portlet-p03p04 .portlet-members .members-position .sapMFlexItem {height:20px}
 .portlet-p03p04 .portlet-members .members-awart {width:140px; height:40px;}
 .portlet-p03p04 .portlet-members .members-awart .sapMText {font-size:15px; font-weight:700}
-.portlet-p03p04:hover .portlet-members.my-members .members-position {max-width:calc(100% - 245px)}/* 40 + (16 + 60) + calc(100% - 16 - 229) + (16 + 60) + (16 + 21) */
 .portlet-p03p04 .portlet-members .members-status {width:60px; text-align:center !important}
+.portlet-p03p04 .portlet-members.my-members .my-members-navigable-wrap {width:100%}
+.portlet-p03p04:hover .portlet-members.my-members .my-members-navigable-wrap {width:calc(100% - 37px)}
 .portlet-p03p04 .portlet-members.my-members .members-remove {display:none}
 .portlet-p03p04:hover .portlet-members.my-members .members-remove {display:flex}
 .portlet-p03p04 [data-portlet-members-status] {padding:2px 0; border:1px solid; border-radius:3px; line-height:14px; font-size:12px}
@@ -222,7 +225,7 @@ html[lang="en"] .portlet-p06 .portlet-header .sapIcon_Date {width:140px !importa
 .portlet-p08 .sapMSegB .sapMSegBBtn:nth-child(2) {min-width:80px}
 html[lang="en"] .portlet-p08 .sapMSegB .sapMSegBBtn:nth-child(1) {min-width:70px}
 html[lang="en"] .portlet-p08 .sapMSegB .sapMSegBBtn:nth-child(2) {min-width:120px}
-.portlet-p08 .portlet-todo-list .sapMFlexBox {background-color:#fafafa; height:40px; padding:0 10px; border-radius:8px}
+.portlet-p08 .portlet-todo-list .sapMFlexBox {background-color:#f6f6f6; height:40px; padding:0 10px; border-radius:8px}
 .portlet-p08 .portlet-todo-list .sapMFlexBox + .sapMFlexBox {margin-top:9px}
 .portlet-p08 .portlet-todo-list .menu-link-text {margin-bottom:-6px; font-weight:700; color:#555 !important}
 .portlet-p08 .portlet-todo-list .menu-link {width:100%; line-height:40px}
@@ -1972,29 +1975,38 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow {scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch}
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell {scroll-snap-align:end}
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow::-webkit-scrollbar {height:0px !important}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child,
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child {width:16%}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child),
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) {width:28%}
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:first-child {width:30%; min-width:30%}
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell .sapUiBlockCellContent {padding:1rem 6px}
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow .sapUiBlockScrollableCell:not(:first-child) {width:70%; min-width:70%}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child,
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:last-child {height:13px; position:sticky; bottom:0; z-index:4}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child),
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow.sapUiBlockScrollingRow:not(:last-child) {overflow:hidden}
 .compare-block .sapUiBlockLayoutRow.sapUiBlockScrollingRow > .sapUiBlockLayoutCell:first-child {position:sticky; left:0; z-index:1}
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapUiBlockCellContent {display:flex; flex-flow:column; justify-content:center; align-items:center}
 .compare-block .sapUiBlockLayoutRow .sapUiBlockLayoutCell:first-child .sapMText[data-type=label] {font-weight:700}
 .compare-block .sapUiBlockLayoutRow:not(:last-child) {border-bottom:1px solid rgba(112, 112, 112, .5)}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent,
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent {background-color:#fff !important}
+.compare-block .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent,
 .compare-block .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent {background-color:#f7f7f7 !important}
 .compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child {max-width:200px; text-align:center}
 .compare-block .sapUiBlockLayoutRow div .sapUiBlockLayoutCell:first-child .sapMVBox {height:100%; display:inline-grid; align-items:center; font-weight:700}
 .compare-block .sapUiBlockLayoutRow:first-child .sapMText {margin-top:24px; font-weight:700}
 
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent,
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow .sapUiBlockLayoutOddCell .sapUiBlockCellContent {background-color:#fff !important}
+.compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent,
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutSizeXL .sapUiBlockLayoutRow .sapUiBlockLayoutEvenCell .sapUiBlockCellContent {background-color:#f7f7f7 !important}
 
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow.sapUiBlockLayoutBackgroundColorSet1 .sapUiBlockCellContent {background-color:#fff !important}
 .compare-block .sapUiBlockLayoutSizeS .sapUiBlockScrollingRow.sapUiBlockLayoutBackgroundColorSet2 .sapUiBlockCellContent {background-color:#f7f7f7 !important}
 
+.compare-block .sapUiBlockLayoutSizeL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
 .compare-block .sapUiBlockLayoutSizeXL:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent,
 .compare-block.sapUiBlockLayoutBackgroundLight .sapUiBlockLayoutRow .sapUiBlockCellContent {padding:16px 30px; font-size:14px}
 

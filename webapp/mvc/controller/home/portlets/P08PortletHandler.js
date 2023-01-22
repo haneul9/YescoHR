@@ -53,6 +53,11 @@ sap.ui.define(
           .map((o) => ({ ...o, ...oMenuModel.getProperties(o.MenidPc) }))
           .value();
 
+        const iListCount = aTodayList.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           today: {
             list: aTodayList,
@@ -63,6 +68,14 @@ sap.ui.define(
             listCount: aFutureList.length,
           },
         };
+      },
+
+      onPressSegmentedButtonItem(oEvent) {
+        const iListCount = this.getPortletModel().getProperty(`/${oEvent.getSource().getKey().toLowerCase()}/listCount`);
+
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
       },
     });
   }

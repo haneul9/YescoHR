@@ -77,7 +77,26 @@ sap.ui.define(
           ],
         }).addStyleClass('portlet-header');
 
-        this.addItem(oPortletHeader).addItem(new HBox().addStyleClass('portlet-body'));
+        this.oPortletBody = new HBox().addStyleClass('portlet-body');
+
+        this.addItem(oPortletHeader).addItem(this.oPortletBody);
+      },
+
+      setPortletBody(oPortletBody) {
+        this.oPortletBody = oPortletBody;
+        return this;
+      },
+
+      getPortletBody() {
+        return this.oPortletBody;
+      },
+
+      togglePortletBodyStyleClass(sStyleClass, bAdd) {
+        if (!this.oPortletBody) {
+          this.setPortletBody(sap.ui.getCore().byId(this.$().find('.portlet-body').attr('id')));
+        }
+        this.oPortletBody.toggleStyleClass(sStyleClass, bAdd);
+        return this;
       },
 
       onPressClose(oEvent) {

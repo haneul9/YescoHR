@@ -1,15 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 성과관리 -->
-  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
-    <customData>
-      <core:CustomData key="portlet-switchable" value="{switchable}" />
-    </customData>
-    <layoutData>
-      <f:GridContainerItemLayoutData rows="2" columns="{width}" />
-    </layoutData>
+  <VBox class="portlet-content-scrollable" busy="{busy}" busyIndicatorDelay="0">
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <custom:Title text="{title}" visible="{= !${hideTitle} }">
         <custom:layoutData>
@@ -26,12 +19,11 @@
           <FlexItemData growFactor="1" />
         </layoutData>
       </Text>
-      <Button visible="{switchable}" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" />
       <Button visible="{hasLink}" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" />
     </HBox>
     <HBox class="portlet-body">
       <VBox width="100%" height="100%">
-        <FlexBox width="100%" height="500px" class="my-20-px">
+        <FlexBox width="100%" height="232px" class="my-20-px">
           <core:HTML content='&lt;div id="portlet-p10-chart-container"&gt;&lt;/div&gt;' />
         </FlexBox>
         <ScrollContainer horizontal="false" vertical="true">

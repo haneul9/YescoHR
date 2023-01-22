@@ -65,6 +65,7 @@
               </VBox>
               <Text text="{Atext}" tooltip="{Atext}" class="members-status">
                 <customData>
+                  <core:CustomData key="portlet-members-box" value="Z{Atext}" writeToDom="true" />
                   <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
                   <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
                 </customData>
@@ -77,28 +78,31 @@
             <Text text="{i18n>MSG_00001}" />
           </HBox>
           <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
-            <custom:HBox press=".navToProfile">
-              <custom:customData>
-                <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
-              </custom:customData>
-              <Image src="{Photo}" mode="Background" class="members-photo" />
-              <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="members-name" />
-              <VBox class="members-position">
-                <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" tooltip="{Zzjikgbt}" wrapping="false" />
-                <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" />
-              </VBox>
-              <Text text="{Atext}" tooltip="{Atext}" class="members-status">
-                <customData>
-                  <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
-                  <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
-                </customData>
-              </Text>
+            <HBox>
+              <custom:HBox press=".navToProfile" class="my-members-navigable-wrap">
+                <custom:customData>
+                  <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
+                </custom:customData>
+                <Image src="{Photo}" mode="Background" class="members-photo" />
+                <Text text="{Ename}" tooltip="{Ename}" wrapping="false" class="members-name" />
+                <VBox class="members-position">
+                  <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" tooltip="{Zzjikgbt}" wrapping="false" />
+                  <Text text="{Orgtx}" tooltip="{Orgtx}" wrapping="false" />
+                </VBox>
+                <Text text="{Atext}" tooltip="{Atext}" class="members-status">
+                  <customData>
+                    <core:CustomData key="portlet-members-box" value="Z{Atext}" writeToDom="true" />
+                    <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
+                    <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
+                  </customData>
+                </Text>
+              </custom:HBox>
               <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button" press=".onPressMyMemberRemove">
                 <layoutData>
                   <FlexItemData styleClass="members-remove" />
                 </layoutData>
               </Button>
-            </custom:HBox>
+            </HBox>
           </VBox>
         </ScrollContainer>
       </VBox>

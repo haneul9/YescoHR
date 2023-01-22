@@ -19,10 +19,6 @@ sap.ui.define(
      * 나의 휴가 현황 Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P12PortletHandler', {
-      getPortletHeightStyleClass(oPortletModel) {
-        return this.bMobile ? 'portlet-h0' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
-      },
-
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const sPortletId = oPortletModel.getProperty('/id');
@@ -33,6 +29,7 @@ sap.ui.define(
           controller: this,
         });
 
+        // TODO : 예전 포틀릿 스타일 다시 살리기 P11, P12
         oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
@@ -74,9 +71,50 @@ sap.ui.define(
         if (this.bMobile) {
           mPortletContentData.hideTitle = true;
           mPortletContentData.switchable = false;
+
+          mPortletContentData.ButtonText1 = this.getMenuName('attendance');
+          const Werks = this.getController().getSessionProperty('Werks');
+          if ('1000,4000,5000'.split(',').includes(Werks)) {
+            mPortletContentData.ButtonText2 = this.getMenuName('flextime'); // 선택적근로제
+          } else if ('3000'.split(',').includes(Werks)) {
+            mPortletContentData.ButtonText2 = this.getMenuName('individualWorkState'); // 개인별근태현황
+          } else {
+            mPortletContentData.ButtonText2 = this.getMenuName('workTime'); // 시간외근무신청
+          }
         }
 
         return mPortletContentData;
+      },
+
+      getMenuName(sMenuUrl) {
+        const oMenuModel = this.getMenuModel();
+        const sMenid = oMenuModel.getMenid(this.bMobile ? `mobile/${sMenuUrl}` : sMenuUrl);
+
+        return oMenuModel.getProperties(sMenid).Mname;
+      },
+
+      /**
+       * Mobile
+       */
+      onPressButton1() {
+        this.navTo('attendance');
+      },
+
+      /**
+       * Mobile
+       */
+      onPressButton2() {
+        const Werks = this.getController().getSessionProperty('Werks');
+        let sRouteName;
+        if ('1000,4000,5000'.split(',').includes(Werks)) {
+          sRouteName = 'flextime'; // 선택적근로제
+        } else if ('3000'.split(',').includes(Werks)) {
+          sRouteName = 'individualWorkState'; // 개인별근태현황
+        } else {
+          sRouteName = 'workTime'; // 시간외근무신청
+        }
+
+        this.navTo(sRouteName);
       },
     });
   }

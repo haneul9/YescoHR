@@ -1,15 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 나의 직원/팀원들은 무엇을 하고 있을까요? -->
-  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
-    <customData>
-      <core:CustomData key="portlet-switchable" value="{switchable}" />
-    </customData>
-    <layoutData>
-      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
-    </layoutData>
+  <VBox busy="{busy}" busyIndicatorDelay="0">
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <custom:Title text="{title}" visible="{= !${hideTitle} }">
         <custom:layoutData>

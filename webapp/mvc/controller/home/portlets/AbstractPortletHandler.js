@@ -59,15 +59,19 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const sPortletKey = oPortletModel.getProperty('/key');
         const oPortletBodyContent = await Fragment.load({
-          name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletKey}PortletBodyContent`,
+          name: this.getPortletBodyContentFragmentName(sPortletKey),
           controller: this,
         });
 
         const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/').toggleStyleClass(this.getPortletStyleClasses(), true);
-        oPortletBox.getItems()[1].addItem(oPortletBodyContent);
+        oPortletBox.getPortletBody().addItem(oPortletBodyContent);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
+      },
+
+      getPortletBodyContentFragmentName(sPortletKey) {
+        return `sap.ui.yesco.mvc.view.home.fragment.${sPortletKey}PortletBodyContent`;
       },
 
       getPortletStyleClasses() {
@@ -195,7 +199,30 @@ sap.ui.define(
       },
 
       getPortletBox() {
+        if (typeof this.oPortletBox.getPortletBody !== 'function') {
+          this.bindFunctions();
+        }
+
         return this.oPortletBox;
+      },
+
+      bindFunctions() {
+        this.oPortletBox.setPortletBody = function setPortletBody(oPortletBody) {
+          this.oPortletBody = oPortletBody;
+          return this;
+        };
+
+        this.oPortletBox.getPortletBody = function getPortletBody() {
+          return this.oPortletBody;
+        };
+
+        this.oPortletBox.togglePortletBodyStyleClass = function togglePortletBodyStyleClass(sStyleClass, bAdd) {
+          if (!this.oPortletBody) {
+            this.setPortletBody(sap.ui.getCore().byId(this.$().find('.portlet-body').attr('id')));
+          }
+          this.oPortletBody.toggleStyleClass(sStyleClass, bAdd);
+          return this;
+        };
       },
 
       getAppMenu() {

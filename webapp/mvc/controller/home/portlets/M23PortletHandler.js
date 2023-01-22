@@ -35,7 +35,7 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: oController.getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.M23PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.M23PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.M23PortletBox',
           controller: this,
         });
 
@@ -134,15 +134,17 @@ sap.ui.define(
       getChartOption() {
         return FusionCharts.curryChartOptions({
           baseFontSize: 12,
+          valueFontSize: 16,
           gaugeOriginY: 125,
           gaugeOuterRadius: 107,
           gaugeInnerRadius: 75,
-          majorTMNumber: 13,
+          // majorTMNumber: 4,
           majorTMColor: '#333333',
           majorTMHeight: -2.5,
           majorTMThickness: 1,
           tickValueDistance: 5,
-          tickValueStep: 10,
+          tickValueStep: 13,
+          showTickValues: 1,
           showPlotBorder: 0,
           showGaugeBorder: 0,
           showPivotBorder: 0,

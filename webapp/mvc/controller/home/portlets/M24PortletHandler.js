@@ -32,7 +32,7 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: oController.getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.M24PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.M24PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.M24PortletBox',
           controller: this,
         });
 

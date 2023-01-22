@@ -25,7 +25,8 @@ sap.ui.define(
       oChartPromise: null,
 
       getPortletHeightStyleClass(oPortletModel) {
-        return this.bMobile ? 'portlet-h2' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
+        const iPortletHeight = oPortletModel.getProperty('/height') || 0;
+        return this.bMobile ? 'portlet-h2' : `portlet-h${iPortletHeight}`;
       },
 
       async addPortlet() {
@@ -123,10 +124,15 @@ sap.ui.define(
           }
         }, 300);
 
+        const iListCount = aList.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 9); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           description: `${aPortletContentData.ZzapstsNm}/${aPortletContentData.ZzapstsSubnm}`,
           list: aList,
-          listCount: aList.length,
+          listCount: iListCount,
           aChartData,
         };
       },

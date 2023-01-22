@@ -1,18 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 임직원 현황 -->
-  <VBox class="portlet-p03p04" tooltip="{=
-      ${selectedMembersButton} === 'ORG' ? ${orgMembers/tooltip} : (
-      ${selectedMembersButton} === 'MY' ? ${myMembers/tooltip} : ''
-    )}" busy="{busy}" busyIndicatorDelay="0">
-    <customData>
-      <core:CustomData key="portlet-switchable" value="{switchable}" />
-    </customData>
-    <layoutData>
-      <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
-    </layoutData>
+  <VBox class="portlet-p03p04 portlet-content-scrollable" busy="{busy}" busyIndicatorDelay="0">
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
       <custom:Title text="{=
           ${selectedMembersButton} === 'ORG' ? ${orgMembers/title} : (
@@ -29,8 +19,8 @@
       </Text>
       <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
         <items>
-          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="ORG" />
-          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="MY" />
+          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="ORG" press=".onPressSegmentedButtonItem" />
+          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="MY" press=".onPressSegmentedButtonItem" />
         </items>
       </SegmentedButton>
       <!-- <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_write.png" iconDensityAware="false" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" press=".onPressMyMemberAdd" />
@@ -44,7 +34,7 @@
       ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00342}" /> -->
     </HBox>
     <HBox class="portlet-body">
-      <VBox class="mt-10-px">
+      <VBox>
         <layoutData>
           <FlexItemData growFactor="1" maxWidth="100%" />
         </layoutData>
@@ -62,7 +52,7 @@
                   <FlexItemData styleClass="members-photo" />
                 </layoutData>
               </Image>
-              <VBox class="members-name-position">
+              <VBox class="members-name-position-box">
                 <Text text="{Ename}" wrapping="false">
                   <layoutData>
                     <FlexItemData styleClass="members-name" />
@@ -74,8 +64,8 @@
                   </layoutData>
                 </Text>
               </VBox>
-              <VBox class="members-worktime-organization">
-                <Text text="{Atext}" wrapping="false">
+              <VBox class="members-worktime-organization-box">
+                <Text text="{Ztime}" wrapping="false">
                   <layoutData>
                     <FlexItemData styleClass="members-worktime" />
                   </layoutData>
@@ -113,7 +103,7 @@
                   <FlexItemData styleClass="members-photo" />
                 </layoutData>
               </Image>
-              <VBox class="members-name-position">
+              <VBox class="members-name-position-box">
                 <Text text="{Ename}" wrapping="false">
                   <layoutData>
                     <FlexItemData styleClass="members-name" />
@@ -125,8 +115,8 @@
                   </layoutData>
                 </Text>
               </VBox>
-              <VBox class="members-worktime-organization">
-                <Text text="{Atext}" wrapping="false">
+              <VBox class="members-worktime-organization-box">
+                <Text text="{Ztime}" wrapping="false">
                   <layoutData>
                     <FlexItemData styleClass="members-worktime" />
                   </layoutData>

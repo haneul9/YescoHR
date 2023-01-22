@@ -14,9 +14,13 @@ sap.ui.define(
     'use strict';
 
     /**
-     * 홈화면 최상단 검색 및 오늘자 기념일 인원수 Portlet (임원용)
+     * Mobile 홈화면 최상단 검색, 오늘자 기념일 인원수, 자주 쓰는 메뉴 아이콘 Portlet (임원용)
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M25PortletHandler', {
+      getPortletHeightStyleClass() {
+        return 'portlet-h0';
+      },
+
       async readContentData() {
         const oController = this.getController();
         const oModel = oController.getModel(ServiceNames.COMMON);
