@@ -603,6 +603,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.DELETE,
+          ],
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -966,7 +970,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
+          actions: [
+            MessageBox.Action.CANCEL, //
+            this.getBundleText('LABEL_00121'),
+          ],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false);

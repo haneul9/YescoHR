@@ -116,7 +116,7 @@ sap.ui.define(
         return 'HR16';
       },
 
-      getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         // const sAction = oArguments.oDataKey === 'N' ? this.getBundleText('LABEL_04002') : this.getBundleText('LABEL_00165');
         return this.getBundleText('LABEL_00195', 'LABEL_26001'); // {급여계좌변경} 신청
       },
@@ -217,8 +217,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          // 신청, 취소
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00121'), // 신청
+          ],
           onClose: async (vPress) => {
             // 신청
             if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
@@ -272,8 +274,10 @@ sap.ui.define(
       onDeleteBtn() {
         // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00110'), // 삭제
+          ],
           onClose: async (vPress) => {
             // 삭제
             if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {

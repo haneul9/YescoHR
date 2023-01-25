@@ -187,8 +187,10 @@ sap.ui.define(
       onPressMyMemberRemove(oEvent) {
         const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
         const sMessage = AppUtils.getBundleText('MSG_01101'); // 내동료 목록에서 삭제하시겠습니까?
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;
@@ -217,8 +219,10 @@ sap.ui.define(
         const { oPortletModel, oPortletHandler } = this.getSelectedPortletHandler();
         const sTitle = oPortletModel.getProperty(`/${oPortletHandler.ROOT_PATH}/title`);
         const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;

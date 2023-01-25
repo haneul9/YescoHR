@@ -116,6 +116,10 @@ sap.ui.define(
 
         // {승인|반려}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', sMessage), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           onClose: async (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) {
               oViewModel.setProperty('/busy', false);

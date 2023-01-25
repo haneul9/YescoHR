@@ -450,6 +450,7 @@ sap.ui.define(
         const sPath = '/Data';
         const aFileDatas = oJSonModel.getProperty(sPath);
         const aContexts = oTable.getSelectedIndices();
+        const aActions = [MessageBox.Action.YES, MessageBox.Action.NO];
 
         if (!aContexts.length) {
           MessageBox.alert(this.getBundleText('MSG_00018')); // 삭제할 파일을 선택하세요.
@@ -457,7 +458,7 @@ sap.ui.define(
         }
 
         MessageBox.confirm(this.getBundleText('MSG_00019'), {
-          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (fVal) => {
             if (fVal === MessageBox.Action.YES) {
               const aSelectFiles = [];

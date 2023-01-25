@@ -30,7 +30,8 @@ sap.ui.define(
         return this.getViewModel().getProperty('/previousName');
       },
 
-      getCurrentLocationText(oArguments) {
+      // getCurrentLocationText(oArguments) {
+      getCurrentLocationText() {
         // const sAction = oArguments.appno === 'n' ? this.getBundleText('LABEL_41012') : this.getBundleText('LABEL_41013'); // 휴일근무 신규신청, 휴일근무 조회
         return this.getBundleText('LABEL_00195', 'LABEL_41016'); // {휴일근무} 신청
       },
@@ -300,7 +301,7 @@ sap.ui.define(
       validRequiredInputData() {
         const oViewModel = this.getViewModel();
         const mInputData = oViewModel.getProperty('/dialog/grid');
-        const aTargets = oViewModel.getProperty('/dialog/list');
+        // const aTargets = oViewModel.getProperty('/dialog/list');
 
         if (!mInputData.Datum) {
           MessageBox.alert(this.getBundleText('MSG_00002', 'LABEL_27004')); // {근무일}을 입력하세요.
@@ -364,7 +365,10 @@ sap.ui.define(
           this.callCreateOdata();
         } else {
           MessageBox.confirm(_.replace(mCheckResult.Retmsg, '\\n', '\n'), {
-            actions: [this.getBundleText('LABEL_00114'), MessageBox.Action.CANCEL],
+            actions: [
+              MessageBox.Action.CANCEL,
+              this.getBundleText('LABEL_00114'), // 확인
+            ],
             onClose: (sAction) => {
               if (!sAction || sAction === MessageBox.Action.CANCEL) {
                 AppUtils.setAppBusy(false);
@@ -441,7 +445,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
+          actions: [
+            MessageBox.Action.CANCEL,
+            this.getBundleText('LABEL_00121'), // 신청
+          ],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false);
@@ -470,6 +477,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           onClose: function (sAction) {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -491,7 +502,7 @@ sap.ui.define(
         this.pHolidayWorkTimeDialog = null;
       },
 
-      onDialogSavBtn(oEvent) {
+      onDialogSavBtn() {
         if (this.validExistRows()) return;
 
         if (this.validRequiredInputData()) return;
@@ -602,6 +613,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           onClose: function (sAction) {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -689,6 +704,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 

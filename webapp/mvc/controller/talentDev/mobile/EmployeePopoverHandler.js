@@ -394,8 +394,8 @@ sap.ui.define(
           // {삭제}하시겠습니까?
           MessageBox.confirm(this.getBundleText('MSG_00006', sMessageCode), {
             actions: [
-              sYes,
               this.getBundleText('LABEL_00118'), // 취소
+              sYes,
             ],
             onClose: (sAction) => {
               resolve(sAction === sYes);
