@@ -122,8 +122,10 @@ sap.ui.define(
       onPressClose(oEvent) {
         const sTitle = oEvent.getSource().getBindingContext().getProperty('title');
         const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;

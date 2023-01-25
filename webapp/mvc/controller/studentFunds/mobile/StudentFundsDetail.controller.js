@@ -578,8 +578,10 @@ sap.ui.define(
 
         // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
-          // 저장, 취소
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00103'), // 저장
+          ],
           onClose: async (vPress) => {
             // 저장
             if (!vPress || vPress !== this.getBundleText('LABEL_00103')) {
@@ -628,8 +630,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          // 신청, 취소
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00121'), // 신청
+          ],
           onClose: async (vPress) => {
             // 신청
             if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
@@ -681,8 +685,10 @@ sap.ui.define(
       onCancelBtn() {
         // {신청취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00122'), {
-          // 확인, 취소
-          actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00114'), // 확인
+          ],
           onClose: async (vPress) => {
             // 확인
             if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
@@ -721,7 +727,10 @@ sap.ui.define(
       // 삭제
       onDeleteBtn() {
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00110'), // 삭제
+          ],
           onClose: async (vPress) => {
             if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {
               return;

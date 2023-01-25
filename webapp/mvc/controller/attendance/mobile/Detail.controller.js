@@ -603,6 +603,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.DELETE,
+          ],
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -793,8 +797,24 @@ sap.ui.define(
             '/form/list',
             _.concat(
               aList, //
-              { ...mSelectedData, Awart: mTempData.Awart1, Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart1 }).get('Atext').value(), Begda: mTempData.Begda1, Endda: mTempData.Begda1, Abrtg: mHalf1.Abrtg, Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn },
-              { ...mSelectedData, Awart: mTempData.Awart2, Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart2 }).get('Atext').value(), Begda: mTempData.Begda2, Endda: mTempData.Begda2, Abrtg: mHalf2.Abrtg, Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn }
+              {
+                ...mSelectedData,
+                Awart: mTempData.Awart1,
+                Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart1 }).get('Atext').value(),
+                Begda: mTempData.Begda1,
+                Endda: mTempData.Begda1,
+                Abrtg: mHalf1.Abrtg,
+                Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn,
+              },
+              {
+                ...mSelectedData,
+                Awart: mTempData.Awart2,
+                Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart2 }).get('Atext').value(),
+                Begda: mTempData.Begda2,
+                Endda: mTempData.Begda2,
+                Abrtg: mHalf2.Abrtg,
+                Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn,
+              }
             )
           );
 
@@ -950,7 +970,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
+          actions: [
+            MessageBox.Action.CANCEL, //
+            this.getBundleText('LABEL_00121'),
+          ],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false);

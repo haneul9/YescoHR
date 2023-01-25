@@ -258,9 +258,11 @@ sap.ui.define(
        * 로그아웃
        */
       onPressLogout() {
+        const aActions = [MessageBox.Action.YES, MessageBox.Action.NO];
+
         // 로그아웃하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_01006'), {
-          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (sAction === MessageBox.Action.YES) {
               // from=logoff : 모바일(iOS)에서 로그아웃 후 생체인증으로 바로 다시 로그인 되어버리는 현상 방지를 위해 추가
