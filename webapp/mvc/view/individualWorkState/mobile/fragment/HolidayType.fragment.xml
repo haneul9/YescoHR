@@ -3,7 +3,10 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox small MultiBoxmobile">
-    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18006" infoMessagePath="/FullYear" class="title" />
+    <HBox class="title-bar">
+      <custom:Title text="{i18n>LABEL_18006}" />
+      <Text text="{/FullYear}" class="desc-txt" />
+    </HBox>
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/VacaTypeList}">
         <HBox class="mobileInnerBox">

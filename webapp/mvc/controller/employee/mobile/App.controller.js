@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/CustomListItem',
+    'sap/m/FlexItemData',
     'sap/m/Input',
     'sap/m/Label',
     'sap/m/List',
@@ -20,6 +21,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     CustomListItem,
+    FlexItemData,
     Input,
     Label,
     List,
@@ -305,7 +307,7 @@ sap.ui.define(
             const mMenu = _.get(aSubMenuContents, sKey);
             const oSubVBox = new VBox().addStyleClass('profile-detail');
 
-            this.debug(`Sub ${mMenu.title}`, mMenu);
+            this.debug(`Sub ${mMenu.title}`, mMenu, sMenuKey, sKey);
 
             // Title
             oSubVBox.addItem(new Title({ level: 'H4', text: mMenu.title }));
@@ -326,19 +328,33 @@ sap.ui.define(
                   );
                 }
               } else {
+                const aTabTypes = [
+                  'M000', // 발령
+                  'M003', // 학력
+                  'M005', // 자격
+                  'M006', // 어학
+                  'M009', // 경력
+                  'M010', // 가족
+                  'M012', // 평가
+                ];
+                const oTemplateText = new Text({ text: '{valueTxt}' });
+                if (!aTabTypes.includes(sMenuKey)) {
+                  oTemplateText.addStyleClass('profile-detail-list-text'); // label 용도 text 회색 처리용 style class
+                }
                 const oList = new List({
+                  layoutData: new FlexItemData({ styleClass: 'profile-detail-list' }),
                   noDataText: this.getBundleText('MSG_00001'),
                   items: {
                     path: 'data',
                     templateShareable: false,
                     template: new CustomListItem({
                       content: new CSSGrid({
-                        gridGap: '1px 8px',
+                        gridGap: '8px',
                         gridTemplateColumns: `{${sTableDataPath}/gridTemplate}`,
                         items: {
                           path: 'contents',
                           templateShareable: false,
-                          template: new Text({ text: '{valueTxt}' }),
+                          template: oTemplateText,
                         },
                       }),
                       type: sMenuKey === 'M020' ? 'Active' : 'Inactive',
@@ -361,7 +377,7 @@ sap.ui.define(
                 oSubVBox.addItem(oList);
               }
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
-              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '1px 8px' });
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '11px 8px' });
 
               mMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new Label({ text: head.Header }));

@@ -6,8 +6,11 @@
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <VBox class="wrap">
+      <VBox class="wrap employee-profile-personal-info">
         <grid:CSSGrid gridTemplateColumns="1fr 6fr" class="member-detail" gridGap="4px 20px">
+          <grid:layoutData>
+            <FlexItemData styleClass="member-detail-wrapper" />
+          </grid:layoutData>
           <VBox justifyContent="Center" alignItems="Center">
             <layoutData>
               <grid:GridItemLayoutData gridRow="span 2" />
@@ -27,7 +30,7 @@
           </grid:CSSGrid>
         </grid:CSSGrid>
       </VBox>
-      <VBox height="100%">
+      <VBox class="employee-profile-tabs">
         <IconTabBar id="employeeTabBar" expandable="false" selectedKey="{/tab/selectedKey}" items="{/tab/list}" stretchContentHeight="true" class="inner-tab-bar">
           <layoutData>
             <FlexItemData growFactor="1" />

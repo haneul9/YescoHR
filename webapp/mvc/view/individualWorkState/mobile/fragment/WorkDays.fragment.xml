@@ -3,7 +3,10 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox small MultiBoxmobile">
-    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18012" infoMessagePath="/full" class="title" />
+    <HBox class="title-bar">
+      <custom:Title text="{i18n>LABEL_18012}" />
+      <Text text="{/full}" class="desc-txt" />
+    </HBox>
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/MonthWorkList}">
         <HBox class="mobileInnerBox">
@@ -12,7 +15,10 @@
         </HBox>
       </grid:CSSGrid>
     </VBox>
-    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18013" infoMessagePath="/full" class="title mt-15-px" />
+    <HBox class="title-bar mt-15-px">
+      <custom:Title text="{i18n>LABEL_18013}" />
+      <Text text="{/full}" class="desc-txt" />
+    </HBox>
     <VBox class="section px-0">
       <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/OTWorkList}">
         <HBox class="mobileInnerBox">

@@ -2,28 +2,12 @@
   xmlns:core="sap.ui.core">
   <HBox alignItems="Center" class="individual-appointee-box">
     <!-- 사진 -->
-    <Image src="{/appointee/Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="35px" height="35px">
-      <layoutData>
-        <FlexItemData styleClass="h-40-px" />
-      </layoutData>
-    </Image>
+    <Image src="{/appointee/Photo}" mode="Background" backgroundPosition="center top" class="member-photo" width="36px" height="36px" />
     <!-- 성명 -->
-    <Link text="{/appointee/Ename}" subtle="true" class="name">
-      <layoutData>
-        <FlexItemData styleClass="pl-16-px" />
-      </layoutData>
-    </Link>
+    <Link text="{/appointee/Ename}" subtle="true" class="name" />
     <!-- 직급/직책 -->
-    <Link text="{/appointee/Zzjikgbt}/{/appointee/Zzjikcht}" subtle="true">
-      <layoutData>
-        <FlexItemData styleClass="pl-16-px" />
-      </layoutData>
-    </Link>
+    <Link text="{/appointee/Zzjikgbt}/{/appointee/Zzjikcht}" subtle="true" />
     <!-- 부서명 -->
-    <Link text="{/appointee/Fulln}" subtle="true">
-      <layoutData>
-        <FlexItemData styleClass="pl-16-px" />
-      </layoutData>
-    </Link>
+    <Link text="{/appointee/Fulln}" subtle="true" />
   </HBox>
 </core:FragmentDefinition>

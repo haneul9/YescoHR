@@ -14,11 +14,11 @@
           <layoutData>
             <FlexItemData maxWidth="67%" />
           </layoutData>
-          <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" />
-          <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks" class="sapUiTinyMarginTop">
+          <DatePicker width="100%" displayFormat="yyyy" valueFormat="yyyy" value="{/searchConditions/Zyear}" class="sapIcon_Date" />
+          <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </custom:SingleComboBox>
           <!-- <HBox justifyContent="SpaceBetween" alignItems="Center" height="40px" class="sapUiTinyMarginTop info-icon-area">
@@ -59,25 +59,17 @@
             <FlexItemData growFactor="1" maxWidth="33%" />
           </layoutData>
           <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded" />
-          <HBox height="40px" justifyContent="Center" alignItems="Center" class="sapUiTinyMarginTop">
-            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px">
-              <layoutData>
-                <FlexItemData styleClass="h-16-px" />
-              </layoutData>
-            </Image>
-            <Text text="{i18n>LABEL_28003}" class="ml-4-px font-14-px" />
-            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" class="ml-12-px">
-              <layoutData>
-                <FlexItemData styleClass="h-16-px" />
-              </layoutData>
-            </Image>
-            <Text text="{i18n>LABEL_28004}" class="ml-4-px font-14-px" />
+          <HBox class="overviews-legend">
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_green.svg" width="12px" />
+            <Text text="{i18n>LABEL_28003}" />
+            <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_human_orange.svg" width="12px" />
+            <Text text="{i18n>LABEL_28004}" />
           </HBox>
-          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" />
         </VBox>
       </HBox>
-      <mobile:ScrollContainer class="px-12-px">
-        <VBox class="overviews row-270-px mb-11-px">
+      <mobile:ScrollContainer>
+        <VBox class="overviews row-270-px mb-11-px px-11-px">
           <!-- 인원현황 -->
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewEmployee.fragment.A01" type="XML" />
           <!-- 세대별 현황 -->

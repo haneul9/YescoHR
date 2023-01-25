@@ -3,7 +3,10 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox small MultiBoxmobile">
-    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_20005" infoMessagePath="/FullYear" class="title" />
+    <HBox class="title-bar">
+      <custom:Title text="{i18n>LABEL_20005}" />
+      <Text text="{/FullYear}" class="desc-txt" />
+    </HBox>
     <VBox height="100%" class="mt-15-px">
       <core:HTML content='&lt;div id="chart-doughnut-container"&gt;&lt;/div&gt;' />
       <grid:CSSGrid class="status-wrap year-plan year-plan-cssGrid" gridTemplateColumns="3fr 1fr 1fr" gridGap="5px">

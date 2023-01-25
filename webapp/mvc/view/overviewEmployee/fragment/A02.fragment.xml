@@ -19,7 +19,7 @@
       <layoutData>
         <FlexItemData growFactor="1" />
       </layoutData>
-      <custom:HBox width="100%" justifyContent="Center" class="active-link mobile-mt-15-px" press=".onPressCount">
+      <custom:HBox width="100%" justifyContent="Center" class="active-link mt-15-px" press=".onPressCount">
         <custom:customData>
           <core:CustomData key="OData" value="H" />
           <core:CustomData key="Headty" value="{/contents/A02/Headty}" />
