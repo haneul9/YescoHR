@@ -2,7 +2,7 @@
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="vCardBox small MultiBoxmobile">
+  <VBox class="vCardBox MultiBoxmobile">
     <HBox class="title-bar">
       <custom:Title text="{i18n>LABEL_20005}" />
       <Text text="{/FullYear}" class="desc-txt" />

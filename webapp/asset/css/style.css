@@ -2544,7 +2544,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
     .sapUiMedia-Std-Phone .section {padding:0 10px}
     .sapUiMedia-Std-Phone .section + .section {margin-top:30px}
     .sapUiMedia-Std-Phone .section .title-bar {height:34px; margin-bottom:16px; font-size:20px; font-weight:700; border-bottom:1px solid #222}
-    .sapUiMedia-Std-Phone .section .title-bar h3.sapMTitle {font-size:20px; font-weight:800; color:#222}
+    .sapUiMedia-Std-Phone .section .title-bar h2.sapMTitle {font-size:20px; font-weight:800; color:#222}
     .sapUiMedia-Std-Phone .dl * {font-size:16px; font-weight:600}
     .sapUiMedia-Std-Phone .dl .sapMHBox.sapMLabel {font-weight:600}
     .sapUiMedia-Std-Phone .dl .sapMHBox.sapMText {text-align:right !important}
@@ -2554,7 +2554,7 @@ text.active-link, .active-link .sapMLabel, .active-link .sapMText, .active-link 
 
 .sapUiMedia-Std-Phone .section + .section {margin-top:30px}
 .sapUiMedia-Std-Phone .section .title-bar {height:34px; margin-bottom:16px; font-size:20px; font-weight:700; border-bottom:1px solid #222}
-.sapUiMedia-Std-Phone .section .title-bar h3.sapMTitle {margin-right:10px; font-size:20px; font-weight:800; color:#222}
+.sapUiMedia-Std-Phone .section .title-bar h2.sapMTitle {font-size:20px; font-weight:800; color:#222}
 .sapUiMedia-Std-Phone .section .sapMFlexItem + .title-bar {margin-top:32px}
 .sapUiMedia-Std-Phone .section .sapMFlexItem + .title-bar .desc-txt {margin-left:0}
 .sapUiMedia-Std-Phone .dl * {font-size:16px; font-weight:600}

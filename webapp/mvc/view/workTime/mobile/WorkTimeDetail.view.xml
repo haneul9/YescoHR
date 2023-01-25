@@ -18,7 +18,11 @@
                 <custom:Title text="{i18n>LABEL_04002}" />
               </HBox>
               <HBox class="table-actions">
-                <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn" />
+                <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onDialogSavBtn">
+                  <layoutData>
+                    <FlexItemData styleClass="plus-button" />
+                  </layoutData>
+                </Button>
               </HBox>
             </HBox>
             <mobile:DetailCSSGrid gridTemplateColumns="2fr 5fr" visible="{= ${/Fixed}}">
@@ -54,7 +58,11 @@
               <custom:Title text="{i18n>LABEL_00129}" />
             </HBox>
             <HBox class="table-actions">
-              <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" visible="{= ${/Fixed}}" />
+              <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onDelDetail" visible="{= ${/Fixed}}">
+                <layoutData>
+                  <FlexItemData styleClass="minus-button" />
+                </layoutData>
+              </Button>
             </HBox>
           </HBox>
           <List id="DetailList" items="{ path: '/detail/list' }" class="list-wrap request" mode="{= !${/Fixed} ? 'None' : 'MultiSelect' }" rememberSelections="false">

@@ -80,16 +80,19 @@ sap.ui.define(
 
         try {
           oViewModel.setData(this.initializeModel());
-          oViewModel.setProperty('/ViewKey', oDataKey);
+
+          const aAppList = await this.getTargetList();
+          _.chain(aAppList)
+            .forEach((m) => _.set(m, 'TargetKey', [m.Famsa, m.Objps, m.Kdsvh, m.Famgb].join(',')))
+            .commit();
+
+          oViewModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'TargetKey', valueKey: 'Znametx', aEntries: aAppList }));
 
           // Input Field Imited
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
           oViewModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
           oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
-
-          const aAppList = await this.getTargetList();
-
-          oViewModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
+          oViewModel.setProperty('/ViewKey', oDataKey);
 
           this.setFormData();
         } catch (oError) {
@@ -132,6 +135,7 @@ sap.ui.define(
             RjbetRjcntHtml: sRjbetRjcntHtml,
             Pyyea: Zyear,
             Znametx: oViewModel.getProperty('/TargetList/0/Znametx'),
+            TargetKey: 'ALL',
           });
 
           const mSessionData = this.getSessionData();
@@ -155,6 +159,7 @@ sap.ui.define(
           const sRjbetRjcntHtml = this.getRjbetRjcntHtml(oTargetData.Rjbet, oTargetData.Rjcnt);
 
           oViewModel.setProperty('/FormData', oTargetData);
+          oViewModel.setProperty('/FormData/TargetKey', [oTargetData.Famsa, oTargetData.Objps, oTargetData.Kdsvh, oTargetData.Famgb].join(','));
           oViewModel.setProperty('/FormData/ApcntTxt', this.getBracketCount(Number(oTargetData.Apcnt)));
           oViewModel.setProperty('/FormData/PvcntTxt', this.getBracketCount(Number(oTargetData.Pvcnt)));
           oViewModel.setProperty('/FormData/RjbetRjcntHtml', sRjbetRjcntHtml);

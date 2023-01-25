@@ -35,7 +35,7 @@ sap.ui.define(
           AppTarget: [],
           AcademicSort: [],
           GradeList: [],
-          QuarterList: [{ Zcode: 'ALL', Ztext: this.getBundleText('LABEL_00268') }], // -선택-
+          QuarterList: [],
           Settings: {},
           busy: false,
           LimitAmountMSG: false,
@@ -207,7 +207,7 @@ sap.ui.define(
         const mAppointeeData = this.getAppointeeData();
 
         if (sAppno === 'N' || !sAppno) {
-          // oViewModel.setProperty('/FormData', mSessionData);
+          oViewModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext' }));
           oViewModel.setProperty('/FormData', {
             Apename: mSessionData.Ename,
             Appernr: mSessionData.Pernr,
@@ -236,6 +236,7 @@ sap.ui.define(
             Appno: sAppno,
             Pernr: sPernr,
           };
+
           // 대상자리스트
           const [oTargetData] = await Client.getEntitySet(oModel, 'SchExpenseAppl', mPayLoad);
 
@@ -306,38 +307,43 @@ sap.ui.define(
       },
 
       // 신청대상 선택시
-      async onChangeTarget(oEvent) {
-        const sSelectedKey = oEvent.getSource().getSelectedKey();
-        const oViewModel = this.getViewModel();
+      onChangeTarget(oEvent) {
+        const oEventSource = oEvent.getSource();
+        setTimeout(async () => {
+          const sSelectedKey = oEventSource.getSelectedKey();
+          const oViewModel = this.getViewModel();
 
-        if (sSelectedKey === 'ALL') return;
-
-        try {
-          this.reflashList(sSelectedKey);
-
-          const sSlartKey = oViewModel.getProperty('/FormData/Slart');
-
-          if (sSlartKey === '05' || sSlartKey === '06') {
-            oViewModel.setProperty('/MajorInput', true);
-          } else {
-            oViewModel.setProperty('/MajorInput', false);
+          if (sSelectedKey === 'ALL') {
+            return;
           }
 
-          oViewModel.setProperty('/FormData/Schtx', '');
-          oViewModel.setProperty('/FormData/Majnm', '');
-          oViewModel.setProperty('/FormData/Slart', 'ALL');
-          oViewModel.setProperty('/FormData/Divcd', 'ALL');
+          try {
+            this.reflashList(sSelectedKey);
 
-          const [oList] = await this.getSupAmount();
+            const sSlartKey = oViewModel.getProperty('/FormData/Slart');
 
-          oViewModel.setProperty('/LimitAmount', oList);
-          this.totalCost();
-          this.getApplyNumber();
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        } finally {
-          oViewModel.setProperty('/busy', false);
-        }
+            if (sSlartKey === '05' || sSlartKey === '06') {
+              oViewModel.setProperty('/MajorInput', true);
+            } else {
+              oViewModel.setProperty('/MajorInput', false);
+            }
+
+            oViewModel.setProperty('/FormData/Schtx', '');
+            oViewModel.setProperty('/FormData/Majnm', '');
+            oViewModel.setProperty('/FormData/Slart', 'ALL');
+            oViewModel.setProperty('/FormData/Divcd', 'ALL');
+
+            const [oList] = await this.getSupAmount();
+
+            oViewModel.setProperty('/LimitAmount', oList);
+            this.totalCost();
+            this.getApplyNumber();
+          } catch (oError) {
+            AppUtils.handleError(oError);
+          } finally {
+            oViewModel.setProperty('/busy', false);
+          }
+        }, 500);
       },
 
       // 학력구분List 다시셋팅
@@ -437,55 +443,56 @@ sap.ui.define(
       },
 
       // 학력구분 선택시
-      async onChangeSchool(oEvent) {
+      onChangeSchool(oEvent) {
         const oViewModel = this.getViewModel();
-        const vSelected = !oEvent ? oViewModel.getProperty('/FormData/Slart') : oEvent.getSource().getSelectedKey();
+        setTimeout(async () => {
+          const vSelected = oViewModel.getProperty('/FormData/Slart');
+          if (vSelected === 'ALL') {
+            return;
+          }
 
-        if (vSelected === 'ALL') {
-          return;
-        }
+          try {
+            const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
+            if (!sStatus || sStatus === '10') {
+              oViewModel.setProperty('/MajorInput', vSelected === '05' || vSelected === '06');
 
-        try {
-          const sStatus = oViewModel.getProperty('/FormData/ZappStatAl');
-          if (!sStatus || sStatus === '10') {
-            oViewModel.setProperty('/MajorInput', vSelected === '05' || vSelected === '06');
+              if (!!oEvent) {
+                oViewModel.setProperty('/FormData/Schtx', '');
+                oViewModel.setProperty('/FormData/Majnm', '');
+              }
+            }
+
+            const sZchar1 = _.chain(oViewModel.getProperty('/AcademicSort'))
+              .find((e) => vSelected === e.Zcode)
+              .get('Zchar1')
+              .value();
+            oViewModel.setProperty('/AmountRate', sZchar1);
+
+            const [oList] = await this.getSupAmount();
+            oViewModel.setProperty('/LimitAmount', oList);
 
             if (!!oEvent) {
-              oViewModel.setProperty('/FormData/Schtx', '');
-              oViewModel.setProperty('/FormData/Majnm', '');
+              this.getApplyNumber();
+              this.totalCost();
             }
+
+            const aList = await this.getQuarterList(vSelected);
+            oViewModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
+
+            if (!!oEvent) {
+              oViewModel.setProperty('/FormData/Divcd', 'ALL');
+            }
+
+            const sDivcd = oViewModel.getProperty('/FormData/Divcd');
+            const sDivcdtx = _.chain(oViewModel.getProperty('/QuarterList'))
+              .find((e) => e.Zcode === sDivcd)
+              .get('Ztext')
+              .value();
+            oViewModel.setProperty('/FormData/Divcdtx', sDivcdtx);
+          } catch (oError) {
+            AppUtils.handleError(oError);
           }
-
-          const sZchar1 = _.chain(oViewModel.getProperty('/AcademicSort'))
-            .find((e) => vSelected === e.Zcode)
-            .get('Zchar1')
-            .value();
-          oViewModel.setProperty('/AmountRate', sZchar1);
-
-          const [oList] = await this.getSupAmount();
-          oViewModel.setProperty('/LimitAmount', oList);
-
-          if (!!oEvent) {
-            this.getApplyNumber();
-            this.totalCost();
-          }
-
-          const aList = await this.getQuarterList(vSelected);
-          oViewModel.setProperty('/QuarterList', new ComboEntry({ codeKey: 'Zcode', valueKey: 'Ztext', aEntries: aList }));
-
-          if (!!oEvent) {
-            oViewModel.setProperty('/FormData/Divcd', 'ALL');
-          }
-
-          const sDivcd = oViewModel.getProperty('/FormData/Divcd');
-          const sDivcdtx = _.chain(oViewModel.getProperty('/QuarterList'))
-            .find((e) => e.Zcode === sDivcd)
-            .get('Ztext')
-            .value();
-          oViewModel.setProperty('/FormData/Divcdtx', sDivcdtx);
-        } catch (oError) {
-          AppUtils.handleError(oError);
-        }
+        }, 500);
       },
 
       // 분기/학기

@@ -329,16 +329,25 @@ sap.ui.define(
                 }
               } else {
                 const aTabTypes = [
-                  'M000', // 발령
-                  'M003', // 학력
-                  'M005', // 자격
-                  'M006', // 어학
-                  'M009', // 경력
-                  'M010', // 가족
-                  'M012', // 평가
+                  'M000,HACT', // 발령
+                  'M002,0555', // 병역
+                  'M002,0557', // 보훈
+                  'M002,0555', // 병역
+                  'M002,DISA', // 장애
+                  'M003,0022', // 학력
+                  'M005,9006', // 자격
+                  'M006,9002', // 어학
+                  'M007,JOBC', // 직무경력
+                  'M007,JOBL', // 직무이력
+                  'M008,0183', // 포상
+                  'M008,0545', // 징계
+                  'M009,0023', // 사외경력
+                  'M009,INCR', // 사내경력
+                  'M010,0021', // 가족
+                  'M012,9001', // 평가
                 ];
                 const oTemplateText = new Text({ text: '{valueTxt}' });
-                if (!aTabTypes.includes(sMenuKey)) {
+                if (!aTabTypes.includes(`${sMenuKey},${sKey}`)) {
                   oTemplateText.addStyleClass('profile-detail-list-text'); // label 용도 text 회색 처리용 style class
                 }
                 const oList = new List({

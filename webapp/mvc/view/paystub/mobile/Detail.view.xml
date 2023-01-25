@@ -2,225 +2,170 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
-    <VBox class="contents">
+    <VBox class="contents paystub-detail">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <VBox>
-            <custom:Title text="{i18n>LABEL_00173}" />
-            <mobile:DetailCSSGrid gridTemplateColumns="2fr 1fr">
-              <Label text="{i18n>LABEL_13006}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/summary/list/0/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_00147}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{/summary/list/0/Ocrtx}"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13044}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-16-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_13045}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-16-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_13046}" class="font-black" />
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" class="font-16-px font-black" />
-              </HBox>
-              <Label text="{i18n>LABEL_13047}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication02" class="font-16-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_13048}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" class="font-16-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_13049}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" class="font-16-px" />
-              </HBox>
-              <Label text="{i18n>LABEL_13053}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <ObjectStatus text="{ path: '/summary/list/0/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" class="font-16-px" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_00173" infoIconVisible="false" />
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 1fr">
+            <Label text="{i18n>LABEL_13006}"/>
+            <Text text="{ path: '/summary/list/0/Paydt', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+            <Label text="{i18n>LABEL_00147}"/>
+            <Text text="{/summary/list/0/Ocrtx}"/>
+            <Label text="{i18n>LABEL_13044}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet01', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" />
+            <Label text="{i18n>LABEL_13045}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet02', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" />
+            <Label text="{i18n>LABEL_13046}" />
+            <ObjectStatus text="{ path: '/summary/list/0/Bet03', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication03" />
+            <Label text="{i18n>LABEL_13047}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet04', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication02" />
+            <Label text="{i18n>LABEL_13048}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet05', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
+            <Label text="{i18n>LABEL_13049}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet06', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
+            <Label text="{i18n>LABEL_13053}"/>
+            <ObjectStatus text="{ path: '/summary/list/0/Bet07', type: 'sap.ui.yesco.mvc.model.type.Currency' }" state="Indication05" />
+          </mobile:DetailCSSGrid>
 
-          <VBox class="pt-20-px">
-            <custom:Title text="{i18n>LABEL_13015}" />
-            <mobile:DetailCSSGrid items="{path: '/pay/list'}" gridTemplateColumns="1fr" visible="{= ${/pay/count} > 0 ? true : false}">
-              <HBox width="100%">
-                <Label text="{Pyitx}">
-                  <customData>
-                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                  </customData>
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                </Label>
-                <HBox alignContent="SpaceBetween" justifyContent="End">
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
-                    <customData>
-                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                    </customData>
-                  </Text>
-                </HBox>
-              </HBox>
-            </mobile:DetailCSSGrid>
-            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/pay/count} === 0 ? true : false}">
-              <HBox width="100%" justifyContent="Center">
-                <Text text="{i18n>MSG_00001}" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_13015" infoIconVisible="false" class="mt-43-px" />
+          <mobile:DetailCSSGrid items="{/pay/list}" gridTemplateColumns="1fr" visible="{= ${/pay/count} &gt; 0 }">
+            <HBox justifyContent="SpaceBetween">
+              <Label text="{Pyitx}">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="label-wrapper" />
+                </layoutData>
+              </Label>
+              <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="text-wrapper" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </mobile:DetailCSSGrid>
+          <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/pay/count} === 0 }">
+            <HBox width="100%" justifyContent="Center">
+              <Text text="{i18n>MSG_00001}" />
+            </HBox>
+          </mobile:DetailCSSGrid>
 
-          <VBox class="pt-20-px">
-            <custom:Title text="{i18n>LABEL_13016}" />
-            <mobile:DetailCSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} > 0 ? true : false}">
-              <HBox width="100%">
-                <Label text="{Pyitx}">
-                  <customData>
-                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                  </customData>
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                </Label>
-                <HBox alignContent="SpaceBetween" justifyContent="End">
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
-                    <customData>
-                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                    </customData>
-                  </Text>
-                </HBox>
-              </HBox>
-            </mobile:DetailCSSGrid>
-            <mobile:DetailCSSGrid items="{path: '/deduction/list'}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} === 0 ? true : false}">
-              <HBox width="100%">
-                <Text text="{i18n>MSG_00001}" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_13016" infoIconVisible="false" class="mt-43-px" />
+          <mobile:DetailCSSGrid items="{/deduction/list}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} &gt; 0 }">
+            <HBox justifyContent="SpaceBetween">
+              <Label text="{Pyitx}">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="label-wrapper" />
+                </layoutData>
+              </Label>
+              <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="text-wrapper" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </mobile:DetailCSSGrid>
+          <mobile:DetailCSSGrid items="{/deduction/list}" gridTemplateColumns="1fr" visible="{= ${/deduction/count} === 0 }">
+            <HBox width="100%">
+              <Text text="{i18n>MSG_00001}" />
+            </HBox>
+          </mobile:DetailCSSGrid>
 
-          <VBox class="pt-20-px">
-            <custom:Title text="{i18n>LABEL_13041}" />
-            <mobile:DetailCSSGrid items="{path: '/retroactive/list'}" gridTemplateColumns="1fr">
-              <HBox width="100%">
-                <Label text="{Pyitx}">
-                  <customData>
-                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                  </customData>
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                </Label>
-                <HBox alignContent="SpaceBetween" justifyContent="End">
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
-                    <customData>
-                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                    </customData>
-                  </Text>
-                </HBox>
-              </HBox>
-            </mobile:DetailCSSGrid>
-            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/retroactive/count} === 0 ? true : false}">
-              <HBox width="100%" justifyContent="Center">
-                <Text text="{i18n>MSG_00001}" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_13041" infoIconVisible="false" class="mt-43-px" />
+          <mobile:DetailCSSGrid items="{/retroactive/list}" gridTemplateColumns="1fr">
+            <HBox justifyContent="SpaceBetween">
+              <Label text="{Pyitx}">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="label-wrapper" />
+                </layoutData>
+              </Label>
+              <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="text-wrapper" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </mobile:DetailCSSGrid>
+          <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/retroactive/count} === 0 }">
+            <HBox width="100%" justifyContent="Center">
+              <Text text="{i18n>MSG_00001}" />
+            </HBox>
+          </mobile:DetailCSSGrid>
 
-          <VBox class="pt-20-px">
-            <custom:Title text="{i18n>LABEL_13042}" />
-            <mobile:DetailCSSGrid items="{path: '/tax/list'}" gridTemplateColumns="1fr" visible="{= ${/tax/count} > 0 ? true : false}">
-              <HBox width="100%">
-                <Label text="{Pyitx}">
-                  <customData>
-                    <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                  </customData>
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                </Label>
-                <HBox alignContent="SpaceBetween" justifyContent="End">
-                  <layoutData>
-                    <FlexItemData growFactor="1"/>
-                  </layoutData>
-                  <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
-                    <customData>
-                      <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B'}" writeToDom="true" />
-                    </customData>
-                  </Text>
-                </HBox>
-              </HBox>
-            </mobile:DetailCSSGrid>
-            <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/tax/count} === 0 ? true : false}">
-              <HBox width="100%" justifyContent="Center">
-                <Text text="{i18n>MSG_00001}" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_13042" infoIconVisible="false" class="mt-43-px" />
+          <mobile:DetailCSSGrid items="{/tax/list}" gridTemplateColumns="1fr" visible="{= ${/tax/count} &gt; 0 }">
+            <HBox justifyContent="SpaceBetween">
+              <Label text="{Pyitx}">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="label-wrapper" />
+                </layoutData>
+              </Label>
+              <Text text="{ path: 'Betrg', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
+                <customData>
+                  <core:CustomData key="sum" value="{= ${Sumrow} === true ? 'A' : 'B' }" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="text-wrapper" />
+                </layoutData>
+              </Text>
+            </HBox>
+          </mobile:DetailCSSGrid>
+          <mobile:DetailCSSGrid gridTemplateColumns="1fr" visible="{= ${/tax/count} === 0 }">
+            <HBox width="100%" justifyContent="Center">
+              <Text text="{i18n>MSG_00001}" />
+            </HBox>
+          </mobile:DetailCSSGrid>
 
-          <VBox class="pt-20-px">
-            <custom:Title text="{i18n>LABEL_13018}" />
-            <mobile:DetailCSSGrid gridTemplateColumns="2fr 2fr">
-              <Label text="{i18n>LABEL_13022}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim503', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13023}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim504', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13024}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim505', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13028}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim506', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13029}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim507', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13030}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim508', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13025}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim509', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13026}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim510', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-              <Label text="{i18n>LABEL_13027}"/>
-              <HBox alignContent="SpaceBetween" justifyContent="End">
-                <Text text="{ path: '/work/list/0/Tim511', type: 'sap.ui.model.type.Float' }"/>
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+          <mobile:HeaderTitleCountStatus titlePath="i18n>LABEL_13018" infoIconVisible="false" class="mt-43-px" />
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 1fr">
+            <Label text="{i18n>LABEL_13022}"/>
+            <Text text="{ path: '/work/list/0/Tim503', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13023}"/>
+            <Text text="{ path: '/work/list/0/Tim504', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13024}"/>
+            <Text text="{ path: '/work/list/0/Tim505', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13028}"/>
+            <Text text="{ path: '/work/list/0/Tim506', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13029}"/>
+            <Text text="{ path: '/work/list/0/Tim507', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13030}"/>
+            <Text text="{ path: '/work/list/0/Tim508', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13025}"/>
+            <Text text="{ path: '/work/list/0/Tim509', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13026}"/>
+            <Text text="{ path: '/work/list/0/Tim510', type: 'sap.ui.model.type.Float' }"/>
+            <Label text="{i18n>LABEL_13027}"/>
+            <Text text="{ path: '/work/list/0/Tim511', type: 'sap.ui.model.type.Float' }"/>
+          </mobile:DetailCSSGrid>
         </VBox>
       </mobile:ScrollContainer>
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" />
+        <HBox class="button-group button-1">
+          <Link href="{/PdfUrl}" subtle="true" target="_blank" text="{i18n>LABEL_00171}" textAlign="Center" width="100%" class="button-mimic-link" />
+        </HBox>
       </OverflowToolbar>
     </mobile:footer>
   </mobile:Page>

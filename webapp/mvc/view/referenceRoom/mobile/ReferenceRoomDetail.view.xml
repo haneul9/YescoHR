@@ -2,13 +2,12 @@
   xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
-    <VBox class="contents">
+    <VBox class="contents reference-room-detail">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <custom:Title text="{/FormData/title}" />
+          <mobile:HeaderTitleCountStatus titlePath="/FormData/title" infoIconVisible="false" class="mt-16-px" />
           <mobile:DetailCSSGrid gridTemplateColumns="1fr" class="mobile-reference">
             <VBox visible="{= !!${/FormData/HeadZcomment} }">
               <TextArea editable="false" rows="3" growing="true" width="100%" value="{/FormData/HeadZcomment}" />

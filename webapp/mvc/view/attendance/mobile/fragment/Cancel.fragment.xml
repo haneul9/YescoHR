@@ -10,10 +10,10 @@
       <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
     </HBox>
   </HBox>
-  <List items="{/form/dialog/list}" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }">
+  <List items="{/form/dialog/list}" class="list-wrap requested-list" rememberSelections="false" visible="{= !${/ZappStatAl} }">
     <CustomListItem type="Active" press=".openFormCancelDialog">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
@@ -29,7 +29,11 @@
       <custom:Title text="{i18n>LABEL_00129}" />
     </HBox>
     <HBox class="table-actions">
-      <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
+      <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }">
+        <layoutData>
+          <FlexItemData styleClass="minus-button" />
+        </layoutData>
+      </Button>
     </HBox>
   </HBox>
   <List id="DetailListC" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
@@ -39,14 +43,10 @@
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
-          <Text text="{Atext2}" class="font-16-px font-bold" />
-          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg})" />
-          <HBox />
-          <Text text="{Tmrsn}" wrapping="false">
-            <layoutData>
-              <FlexItemData maxWidth="90%" />
-            </layoutData>
-          </Text>
+          <Text text="{Atext2}" class="font-bold" />
+          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg})" />
+          <Text />
+          <Text text="{Tmrsn}" wrapping="false" />
         </grid:CSSGrid>
       </HBox>
     </CustomListItem>

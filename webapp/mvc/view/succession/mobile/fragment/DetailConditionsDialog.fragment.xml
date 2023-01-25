@@ -5,9 +5,7 @@
   <Dialog title="{i18n>LABEL_45005}" contentHeight="60%" horizontalScrolling="false" busy="{/busy}" busyIndicatorDelay="0" class="candidate-detail-conditions-dialog">
     <content>
       <VBox class="section" binding="{/searchConditions}">
-        <HBox class="title-bar">
-          <custom:Title text="{i18n>LABEL_45101}" />
-        </HBox>
+        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45101" class="title-bar mt-13-px" />
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_00222} 1" />
           <MultiComboBox width="100%" selectedKeys="{Stell1}" items="{ path: '/entries/A', templateShareable: false }" selectionChange=".onSelectionChangeStell">
@@ -127,9 +125,8 @@
             <Text text="%" />
           </HBox>
         </grid:CSSGrid>
-        <HBox class="title-bar">
-          <custom:Title text="{i18n>LABEL_45201}" />
-        </HBox>
+
+        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45201" class="title-bar" />
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_35009} 1" />
           <HBox justifyContent="SpaceBetween" alignItems="Center" class="two-fields">
@@ -177,10 +174,8 @@
             <core:Item key="{Zcode}" text="{Ztext}" />
           </MultiComboBox>
         </grid:CSSGrid>
-        <HBox class="title-bar">
-          <custom:Title text="{i18n>LABEL_45301}" />
-          <Text text="{i18n>MSG_45011}" class="desc-txt" />
-        </HBox>
+
+        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45301" infoMessagePath="i18n>MSG_45011" class="title-bar" />
         <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0 4px" class="complex-search">
           <Label text="{i18n>LABEL_00237}" />
           <MultiComboBox width="100%" selectedKeys="{Werks}" items="{ path: '/entries/Werks', templateShareable: false }">

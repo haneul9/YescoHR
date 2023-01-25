@@ -4,7 +4,7 @@
   xmlns:grid="sap.ui.layout.cssgrid">
   <Dialog id="FormCancelDialog" title="{i18n>LABEL_04028}" contentWidth="" horizontalScrolling="false" verticalScrolling="false">
     <content>
-      <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid pl-20-px pr-20-px">
+      <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 0" class="form-grid mt-10-px p-16-px">
         <Label text="{i18n>LABEL_04029}" />
         <VBox>
           <m:Input value="{/form/dialog/data/Tmrsn}" class="required" />
