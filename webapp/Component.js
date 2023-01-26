@@ -125,7 +125,11 @@ sap.ui.define(
       },
 
       toggleDeviceStyle() {
-        $('head').append(`<link rel="stylesheet" href="./asset/css/${this.bIsMobile ? 'mobile-' : ''}style.css?_=${new Date().getTime()}" />`);
+        const sNow = new Date().getTime();
+        // $('head').append(`<link rel="stylesheet" href="./asset/css/${this.bIsMobile ? 'mobile-' : ''}style.css?_=${sNow}" />`);
+        $('head')
+          .append(`<link rel="stylesheet" href="./asset/css/${this.bIsMobile ? 'mobile-' : ''}style.css?_=${sNow}" />`)
+          .append(`<link rel="stylesheet" href="./asset/css/GachiDeohagi-style.css?_=${sNow}" />`);
         return this;
       },
 

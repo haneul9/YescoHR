@@ -109,31 +109,6 @@ sap.ui.define(
         }
       },
 
-      callEventHandler(oEvent, [{ oListener, fFunction }]) {
-        fFunction.call(oListener, oEvent);
-      },
-
-      async firePressInfoMessage(oEvent) {
-        if (this.oInfoMessagePopover && this.oInfoMessagePopover.isOpen()) {
-          this.oInfoMessagePopover.close();
-        } else {
-          const oLink = oEvent.getSource();
-          const sInfoMessage = oLink.getProperty('text');
-
-          if (!this.oInfoMessagePopover) {
-            this.oInfoMessagePopover = await Fragment.load({
-              name: 'sap.ui.yesco.fragment.mobile.InfoMessagePopover',
-              controller: this,
-            });
-
-            this.oInfoMessagePopover.setModel(new JSONModel({ listInfo: { infoMessage: null } }));
-          }
-
-          this.oInfoMessagePopover.getModel().setProperty('/listInfo/infoMessage', sInfoMessage);
-          this.oInfoMessagePopover.openBy(oLink);
-        }
-      },
-
       // Header title
       getTitleControl() {
         const mSettings = {
@@ -211,6 +186,27 @@ sap.ui.define(
         return oControl;
       },
 
+      async firePressInfoMessage(oEvent) {
+        if (this.oInfoMessagePopover && this.oInfoMessagePopover.isOpen()) {
+          this.oInfoMessagePopover.close();
+        } else {
+          const oLink = oEvent.getSource();
+          const sInfoMessage = oLink.getProperty('text');
+
+          if (!this.oInfoMessagePopover) {
+            this.oInfoMessagePopover = await Fragment.load({
+              name: 'sap.ui.yesco.fragment.mobile.InfoMessagePopover',
+              controller: this,
+            });
+
+            this.oInfoMessagePopover.setModel(new JSONModel({ listInfo: { infoMessage: null } }));
+          }
+
+          this.oInfoMessagePopover.getModel().setProperty('/listInfo/infoMessage', sInfoMessage);
+          this.oInfoMessagePopover.openBy(oLink);
+        }
+      },
+
       getInfoIconControl() {
         const mSettings = {
           src: '/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg',
@@ -231,6 +227,10 @@ sap.ui.define(
         }
 
         return new Image(mSettings);
+      },
+
+      callEventHandler(oEvent, [{ oListener, fFunction }]) {
+        fFunction.call(oListener, oEvent);
       },
 
       toExpression(sVisible) {

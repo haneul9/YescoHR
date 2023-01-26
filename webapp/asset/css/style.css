@@ -57,7 +57,7 @@ html:not(.sap-phone-) ::-webkit-scrollbar {width:5px !important; height:5px !imp
 html:not(.sap-phone-) ::-webkit-scrollbar-thumb {border-radius:2.5px !important; background-color:#c1c3c8 !important}
 html:not(.sap-phone-) textarea::-webkit-scrollbar {height:5px !important}
 
-html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) {font-family:GachiDeohagi, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif, YescoHoldings}
+html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) {font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif}
 html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {outline-width:0px; outline-style:dashed; outline-offset:-1px}
 html, body {box-sizing:border-box; overflow:hidden}
 html.sap-desktop .sapMLnk:hover:not(.sapMLnkDsbl):not(.showLine) {text-decoration:none}
@@ -1070,7 +1070,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .label_wrap label {margin-left:20px}
 .label_wrap .sapMFlexItem:first-child label {margin-left:0px}
 .sapMLabelRequired:before {content:""}
-.sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:GachiDeohagi, Pretendard, "72fallback","72","72full",Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
+.sapMLabelRequired:after {content:"*"; color:#ff0000; font-family:Pretendard,'72fallback','72','72full',Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; position:relative; vertical-align:middle; line-height:0; margin-left:3px}
 /*input*/
 .sapUiSizeCompact .sapMInputBase:not(.sapMTextArea) {height:40px !important}
 .sapUiSizeCompact .sapMBtn.InputinnerButton {width:50px !important; height:40px !important}
@@ -1091,7 +1091,7 @@ span.sapMBtnInner.sapMBtnEmphasized {text-shadow:none}
 .sapMSFS:before {content:""; display:inline-block; width:100%; height:38px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_search01.png'); background-repeat:no-repeat; background-position:3px center; background-size:19px}
 
 /*textarea*/
-.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {font-family:GachiDeohagi, Pretendard; font-weight:500; color:#222}
+.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {font-family:Pretendard; font-weight:500; color:#222}
 .sapUiSizeCompact .sapMInputBase.sapMTextArea .sapMTextAreaInner, .sapUiSizeCompact .sapMInputBase.sapMTextArea .sapMTextAreaMirror {padding:10px 10px}
 
 /*combobox select*/
@@ -1635,19 +1635,23 @@ html.sap-desktop .sapMDialog>footer .sapContrast.sapMIBar.sapMFooter-CTX .sapMBt
 .employee-card-list .sapMLIBHoverable:hover {background:#f5fdff}
 .employee-card-list .sapMLIB.sapMLIBActive {background:#e2ebf4; color:#222}
 .employee-card-list .sapMLIBActive .sapMLabel {color:#222}
-.employee-card-list li {position:relative; height:106px; border-radius:8px; padding:14px; background-color:#fff; border:1px solid #dbdbdb; box-shadow:1px 1px 3px rgb(0 0 0 / 0%)}
+.employee-card-list li {position:relative; height:106px; border:1px solid #dbdbdb; border-radius:8px; padding:14px; background-color:#fff; box-shadow:1px 1px 3px rgb(0 0 0 / 0%)}
+.employee-card-list li .sapMLIBContent {box-sizing:border-box}
 .employee-card-list li + li {margin-top:10px}
 .employee-card-list li .sapMFlexBox {display:flex; justify-content:flex-start; width:100%}
 .employee-card-list li .sapMFlexBox > .sapMFlexItem {display:flex}
-.employee-card-list li .sapMImg {width:60px; height:auto}
-.employee-card-list-d {padding-left:20px}
-.employee-card-list-d .sapMFlexBox > .sapMFlexItem:first-child .sapMLabel {margin-right:12px; color:#222; font-weight:700}
-.employee-card-list .employee-card-list-d .name {display:flex; justify-content:space-between; font-size:14px; color:#343a40; font-weight:700}
-.employee-card-list .employee-card-list-d .organization {margin-top:8px}
-.employee-card-list-d .sapMHBox  {margin-bottom:2px}
+.employee-card-list li .employee-card-photo {width:60px; height:76px}
+.employee-card-list li .employee-card-photo .sapMImg {width:100%; height:100%; background-position:center top !important}
+.employee-card-list-d {max-height:76px; padding-left:20px}
+.employee-card-list-d .sapMFlexItem {height:16px; line-height:16px}
+.employee-card-list-d .sapMFlexBox > .sapMFlexItem:first-child .sapMLabel {margin-right:12px; font-weight:700; color:#222}
+.employee-card-list .employee-card-list-d .name {display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#343a40}
+.employee-card-list .employee-card-list-d .organization {margin-top:10px}
+.employee-card-list .employee-card-list-d .organization ~ .sapMFlexItem {margin-top:1px}
 .employee-card-list-d .sapMFlexItem .sapMLabel {font-size:12px; font-weight:400; padding:0px 0}
 .employee-card-list-d .sapMFlexItem .sapMLabel.label {font-weight:700; margin-right:10px}
 .employee-card-list-d .sapMFlexItem.name .sapMText {font-size:19px; font-weight:700; margin-bottom:10px}
+.employee-card-list-d .sapMImg {margin-right:-5px}
 div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-right:28px !important}
 
 .employee-tree .sapMTreeItemBaseExpander {font-size:1rem; color:#222}
@@ -1931,7 +1935,7 @@ div[data-sap-ui=container-ehr---employee--sideBody].sapUiSmallMarginEnd {margin-
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="2"] {border-right-color:#fd5f58}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type="3"] {border-right-color:#007bff}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type]>.sapMFlexItem {height:100px}
-.scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem.photo .sapMImg {width:76px; height:100px}
+.scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem.photo .sapMImg {width:76px; height:100px; background-position:center top !important}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem .name {font-size:14px; font-weight:700}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem + .sapMFlexItem.sapMVBox {position:relative; flex-grow:1; padding-left:10px}
 .scsn-candidates .sapFCard .sapMHBox[data-color-type] .sapMFlexItem.sapMVBox .company-icon {position:absolute; right:26px}

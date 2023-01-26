@@ -13,7 +13,7 @@
   <List items="{/form/dialog/list}" class="list-wrap requested-list" rememberSelections="false" visible="{= !${/ZappStatAl} }">
     <CustomListItem type="Active" press=".openFormChangeDialog">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
+        <grid:CSSGrid gridTemplateColumns="5fr 8fr" gridGap="6px 10px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
@@ -39,7 +39,7 @@
   <List id="DetailListB" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
     <CustomListItem type="Active">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
+        <grid:CSSGrid gridTemplateColumns="5fr 8fr" gridGap="6px 10px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>

@@ -45,7 +45,7 @@
             <Text text="{/FormData/BanknBef}"/>
 
             <Label text="{i18n>LABEL_26006}"/>
-            <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
+            <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" editable="{= !${/FormData/ZappStatAl} }" class="sapIcon_Date" />
           </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />

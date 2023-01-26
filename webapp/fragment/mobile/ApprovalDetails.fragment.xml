@@ -2,14 +2,14 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
-  <HBox class="table-toolbar" visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }">
+  <HBox class="table-toolbar" visible="{= !!${/ApprovalDetails/ZappStatAl} &amp;&amp; ${/ApprovalDetails/ZappStatAl} !== '10' }">
     <HBox class="title">
       <custom:Title text="{i18n>LABEL_00139}" />
     </HBox>
   </HBox>
-  <mobile:DetailCSSGrid visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }" gridTemplateColumns="2fr 3fr">
+  <mobile:DetailCSSGrid visible="{= !!${/ApprovalDetails/ZappStatAl} &amp;&amp; ${/ApprovalDetails/ZappStatAl} !== '10' }" gridTemplateColumns="2fr 3fr">
     <Label text="{i18n>LABEL_00138}" />
-    <Text text="{ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" />
+    <Text text="{ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' }" class="approval-request-number" />
     <Label text="{i18n>LABEL_00140}" />
     <Text text="{/ApprovalDetails/ZappStxtAl}" />
     <Label text="{i18n>LABEL_00141}" />

@@ -34,7 +34,7 @@
                   <layoutData>
                     <FlexItemData maxWidth="76px" />
                   </layoutData>
-                  <Image src="{PicUrl}" press=".onPressPhoto">
+                  <Image src="{PicUrl}" press=".onPressPhoto" mode="Background">
                     <layoutData>
                       <FlexItemData styleClass="photo" />
                     </layoutData>
@@ -84,7 +84,7 @@
                   <layoutData>
                     <FlexItemData maxWidth="76px" />
                   </layoutData>
-                  <Image src="{PicUrl}" press=".onPressPhoto">
+                  <Image src="{PicUrl}" press=".onPressPhoto" mode="Background">
                     <layoutData>
                       <FlexItemData styleClass="photo" />
                     </layoutData>

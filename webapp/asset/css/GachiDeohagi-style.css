@@ -1,38 +1,54 @@
-.certification-overview-item.mt-50-px { margin-top: 25px !important; }
+html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) {font-family:GachiDeohagi,Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif}
+.sapMLabelRequired:after {font-family:GachiDeohagi,Pretendard,'72fallback','72','72full',Arial,Helvetica,sans-serif}
+.sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {font-family:GachiDeohagi,Pretendard}
 
-.p11-right-contents .label-week.mt-13-px { margin-top: 0 !important; }
+/* PC */
+.certification-overview-item.mt-50-px {margin-top:25px !important}
+.p11-right-contents .label-week.mt-13-px {margin-top:0 !important}
+.hCardBox.overview-box.holidayWork-overview .title {margin-bottom:14px !important}
+.holidayWork-overview .holidayWork-overview-content-right .label-week.mt-10-px {margin-top:0 !important}
+.hCardBox.overview-box.my-work-time-overview .title {margin-bottom:14px !important}
+.workTime-summary-box .label-week.mt-10-px {margin-top:0 !important}
+.hCardBox.overview-box.commute-type-overview .title {margin-bottom:14px !important}
+.commute-type-overview .desc.pt-16-px {padding-top:8px !important}
+.commute-type-overview .desc .work-schedule-text.pt-30-px {padding-top:28px !important}
+.commute-type-overview .desc .schedule-period {white-space:nowrap}
+.commute-type-overview .desc .schedule-period.pt-30-px {padding-top:28px !important}
+.congratulation-overview .overview-info {margin-bottom:0 !important}
+.studentFunds-overview .studentFunds-overview-content.mt-50-px {margin-top:25px !important}
+.educationHistory-overview .educationHistory-overview-content.mt-50-px {margin-top:25px !important}
+.housingLoan-overview .housingLoan-overview-content.mt-50-px {margin-top:25px !important}
+.consolidAppBox-overview .consolidAppBox-overview-content.mt-50-px {margin-top:25px !important}
+.clubJoin-overview .clubJoin-overview-content.mt-50-px {margin-top:25px !important}
+.healthCare-overview .healthCare-overview-content.mt-50-px {margin-top:25px !important}
+.carMaintainCost-overview .carMaintainCost-overview-content.mt-50-px {margin-top:30px !important}
+.medical-overview .medical-overview-content.mt-50-px {margin-top:25px !important}
+.medical-overview .overview-info .available-amount-text {white-space:nowrap}
+.accountChange-overview .accountChange-overview-content.pt-75-px {padding-top:60px !important}
+.main-profile .succession-position .succession-card .name {margin-bottom:0 !important}
+.org-container .grid {gap:11px}
 
-.hCardBox.overview-box.holidayWork-overview .title { margin-bottom: 14px !important; }
-.holidayWork-overview .holidayWork-overview-content-right .label-week.mt-10-px { margin-top: 0 !important; }
-
-.hCardBox.overview-box.my-work-time-overview .title { margin-bottom: 14px !important; }
-.workTime-summary-box .label-week.mt-10-px { margin-top: 0 !important; }
-
-.hCardBox.overview-box.commute-type-overview .title { margin-bottom: 14px !important; }
-.commute-type-overview .desc.pt-16-px { padding-top: 8px !important; }
-.commute-type-overview .desc .work-schedule-text.pt-30-px { padding-top: 28px !important; }
-.commute-type-overview .desc .schedule-period { white-space: nowrap; }
-.commute-type-overview .desc .schedule-period.pt-30-px { padding-top: 28px !important; }
-
-.congratulation-overview .overview-info { margin-bottom: 0 !important; }
-
-.studentFunds-overview .studentFunds-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.educationHistory-overview .educationHistory-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.housingLoan-overview .housingLoan-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.consolidAppBox-overview .consolidAppBox-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.clubJoin-overview .clubJoin-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.healthCare-overview .healthCare-overview-content.mt-50-px { margin-top: 25px !important; }
-
-.carMaintainCost-overview .carMaintainCost-overview-content.mt-50-px { margin-top: 30px !important; }
-
-.medical-overview .medical-overview-content.mt-50-px { margin-top: 25px !important; }
-.medical-overview .overview-info .available-amount-text { white-space: nowrap; }
-
-.accountChange-overview .accountChange-overview-content.pt-75-px { padding-top: 60px !important; }
-
-.main-profile .succession-position .succession-card .name {margin-bottom: 0 !important; }
+/* Mobile */
+.portlet-header {align-items:center}
+.portlet-header > .sapMFlexItem {height:16px; line-height:16px}
+.sapUiSizeCompact .portlet-header .sapIcon_Date.sapMInputBaseHasEndIcons .sapMInputBaseInner {margin-bottom:2px}
+.portlet-p11.portlet-p14 .left-box .left-box-primary .sapMText,
+.portlet-p11.portlet-p14 .right-box .right-box-primary .sapMText {height:22px; line-height:22px; font-size:22px; letter-spacing:-1px}
+.portlet-p11.portlet-p14 .left-box .left-box-secondary,
+.portlet-p11.portlet-p14 .right-box .right-box-secondary {height:14px}
+.portlet-p03p04 .portlet-members .members-worktime-organization-box .members-worktime .sapMText {letter-spacing:-1px}
+.portlet-p02 .article-item-title-column {width:calc(100% - 70px); max-width:calc(100% - 70px)}
+.portlet-p02 .article-item-date-column {width:41px}
+.portlet-p09 .portlet-members .members-position-organization-box {width:calc(100% - 40px - 69px - 51px - (16px * 3))}
+.portlet-p09 .portlet-members .members-anniversary-date-box {width:51px}
+.sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn .sapMSegBBtnInner,
+.sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {padding:0; letter-spacing:-1px}
+.vCardBox .table-toolbar .title .header-count, .vCardBox .table-toolbar .title .header-description {height:20px; line-height:20px}
+[id*=ATTACHBOX] .sapUiTableDataCell > .sapUiTableCellInner,
+[id*=fileAttachmentBox] .sapUiTableDataCell > .sapUiTableCellInner {height:40px}
+[id*=ATTACHBOX] .sapUiTableCCnt .sapMLnk,
+[id*=fileAttachmentBox] .sapUiTableCCnt .sapMLnk {line-height:38px}
+[id*=fileAttachmentBox] .table-toolbar .table-actions .restorefile-button .sapMBtn .sapUiIcon::before {content:''}
+.approval-request-number {letter-spacing:-1px}
+.request-period {letter-spacing:-.5px}
+.sapMVBox.overviews .portlet-box .portlet-body .sapMFlexBoxScroll .sapMScrollContV {height:calc(100% + 3px) !important}

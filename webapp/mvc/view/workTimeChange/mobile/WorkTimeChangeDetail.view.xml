@@ -6,10 +6,7 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page title="{menuModel>/current/currentLocationText}" showFooter="{/Fixed}" navButtonPress=".onNavBack">
-    <mobile:customData>
-      <core:CustomData key="form-style" value="{= ${/Fixed} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </mobile:customData>
-    <VBox class="contents">
+    <VBox class="contents worktime-change-detail">
       <mobile:ScrollContainer class="form-grid">
         <VBox height="100%" class="wrap" busy="{/busy}" busyIndicatorDelay="0">
           <HBox class="table-toolbar" visible="{= ${/Fixed}}">
@@ -30,11 +27,15 @@
               <custom:DatePicker dateValue="{ path: '/dialog/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onWorkDatePicker" class="sapIcon_Date required" />
             </HBox>
             <Label text="{i18n>LABEL_27013}"/>
-            <HBox>
-              <TimePicker width="100px" value="{/dialog/BeguzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+            <HBox class="worktime">
+              <TimePicker width="95px" value="{/dialog/BeguzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
               <Text text="~" class="mx-2-px" />
-              <TimePicker width="100px" value="{/dialog/EnduzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
-              <Input value="{/dialog/AbrstB}" editable="false" class="ml-1-px" />
+              <TimePicker width="95px" value="{/dialog/EnduzB}" editable="false" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" class="sapIcon_Time" />
+              <Input value="{/dialog/AbrstB}" editable="false" class="ml-1-px">
+                <layoutData>
+                  <FlexItemData styleClass="time-duration" />
+                </layoutData>
+              </Input>
             </HBox>
             <Label text="{i18n>LABEL_25008}"/>
             <HBox>
@@ -44,9 +45,9 @@
             </HBox>
             <Label text="{i18n>LABEL_27014}"/>
             <HBox>
-              <TimePicker width="100px" value="{/dialog/Beguz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
+              <TimePicker width="95px" value="{/dialog/Beguz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
               <Text text="~" class="mx-2-px" />
-              <TimePicker width="100px" value="{/dialog/Enduz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
+              <TimePicker width="95px" value="{/dialog/Enduz}" editable="{/timeEdit}" change=".onTimePicker" placeholder="HH:mm" valueFormat="HHmm" displayFormat="HH:mm" minutesStep="5" class="sapIcon_Time required" />
               <Input value="{/dialog/Abrst}" editable="false" class="ml-1-px" />
             </HBox>
             <Label text="{i18n>LABEL_00154}"/>
