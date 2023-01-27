@@ -435,7 +435,7 @@ sap.ui.define(
           const aChildList = oTargetList.filter((e) => !_.isEmpty(oTargetList) && e.Kdsvh === mFormData.Kdsvh);
 
           if (_.isEmpty(aChildList)) {
-            return MessageBox.alert(this.getBundleText('MSG_03006'));
+            return MessageBox.alert(this.getBundleText('MSG_03006')); // 해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.
           }
 
           oViewModel.setProperty('/TargetList', aChildList);

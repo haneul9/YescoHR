@@ -86,6 +86,8 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet.portlet-h5.portlet-content-scrollable.no-scroll {height:auto}
 .portlet.portlet-content-scrollable {width:calc(100% + 10px)}
 .portlet.portlet-content-scrollable .portlet-header {padding-right:11px}
+.sap-ios .portlet.portlet-content-scrollable {width:100%}
+.sap-ios .portlet.portlet-content-scrollable .portlet-header {padding-right:0}
 .portlet.no-data .portlet-body {min-height:53px}
 .portlet.no-data .portlet-body .no-data {height:100% !important}
 .portlet.no-scroll .portlet-body .sapMFlexBoxScroll .sapMScrollContV {overflow:hidden !important}
@@ -102,7 +104,8 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .sapUiSizeCompact .portlet-header .sapMSegB .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {color:#14aaaa}
 .sapUiSizeCompact .portlet-p03p04 .portlet-header .icon-button {display:none}
 .portlet:hover .sapMBtn.icon-button.portlet-close-icon {visibility:hidden}
-.portlet-body .sapMFlexBoxScroll .sapMScrollContV {overflow:hidden scroll !important; margin:0 -5px; height:100% !important}
+.portlet-body .sapMFlexBoxScroll .sapMScrollContV {overflow:hidden scroll !important; margin:0 -10px 0 -5px; height:100% !important}
+.sap-ios .portlet-body .sapMFlexBoxScroll .sapMScrollContV {margin:0}
 
 .portlet-p02 .portlet-body {min-height:35px}
 .portlet-p02 .portlet-body.no-new .article-item-title-column {margin-left:0; width:calc(100% - 48px); max-width:calc(100% - 48px)}
@@ -156,7 +159,7 @@ html, body {max-width:884px} /* Samsung Galaxy Fold2 */
 .portlet-p06.portlet-m26 .portlet-header,
 .portlet-p06.portlet-p13 .portlet-header {margin-bottom:18px}
 .portlet-p06.portlet-m26 .portlet-header .portlet-header-title + .sapMFlexItem,
-.portlet-p06.portlet-p13 .portlet-header .portlet-header-title + .sapMFlexItem {height:16px}
+.portlet-p06.portlet-p13 .portlet-header .portlet-header-title + .sapMFlexItem {height:16px; padding-right:11px}
 .portlet-p06.portlet-m26 .portlet-header .sapIcon_Date,
 .portlet-p06.portlet-p13 .portlet-header .sapIcon_Date {display:flex; align-items:center; width:auto !important; height:16px !important}
 .portlet-p06.portlet-m26 .portlet-header .sapIcon_Date .sapMInputBaseContentWrapper,
@@ -376,11 +379,11 @@ html[lang="en"] .portlet-p10 .portlet-p10-list>.sapMVBox:nth-child(4) {width:80p
 .portlet-m25 .home-top-favorite-menu-box .home-top-favorite-menu-box-title {height:12px; line-height:12px}
 .portlet-m25 .home-top-favorite-menu-box .home-top-favorite-menu-box-title .sapMText {line-height:12px}
 .portlet-m25 .home-top-favorite-menu-box .home-top-favorite-menu-box-title + .sapMHBox {justify-content:space-between; margin-top:5px}
-.portlet-m25 .home-top-favorite-menu-box .sapMVBox {width:calc((100vw - 94px) / 3)}
-.portlet-m25 .home-top-favorite-menu-box .sapMVBox .home-top-favorite-menu-icon {width:100%; height:calc((100vw - 94px) / 3)}
-.portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMImg {width:100%; height:100%}
+.portlet-m25 .home-top-favorite-menu-box .sapMVBox {width:94px}
+.portlet-m25 .home-top-favorite-menu-box .sapMVBox .home-top-favorite-menu-icon {width:100%; height:94px}
+.portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMImg {width:94px; height:94px}
 .portlet-m25 .home-top-favorite-menu-box .sapMVBox .home-top-favorite-menu-button-wrap {margin-top:9px}
-.portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMBtn {width:100%}
+.portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMBtn {z-index:1; width:100%}
 .portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMBtn .sapMBtnInner {border-radius:20px; border:0; padding:0; background-color:var(--ThemeColor)}
 .portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMBtn .sapMBtnContent {height:40px; line-height:36px}
 .portlet-m25 .home-top-favorite-menu-box .sapMVBox .sapMBtn bdi {font-size:12px; font-weight:700; color:#fff}
@@ -709,7 +712,7 @@ html.sap-phone .sapMDialog>footer .sapMFooter-CTX {height:60px; padding:0}
 .sapMInputBaseIcon.sapUiIcon::before, .sapMBtn .sapUiIcon::before {color:#0d0d0d}
 .sapMInputBaseIcon.sapUiIcon:hover::before, .sapMBtn .sapUiIcon:hover::before {color:#0d0d0d}
 .sapMInputBaseIcon, .search-area .sapMInputBaseIcon {line-height:38px !important}
-.sapIcon_Date .sapUiIcon::before {background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_date2.svg')}
+.sapIcon_Date .sapUiIcon::before {position:absolute; top:0; right:0; height:38px; background-image:url('/sap/public/bc/ui2/zui5_yescohr/images/icon_date2.svg'); background-position:center}
 
 .sapUiSizeCompact .sapMSegB.type-c {height:32px; border:0; padding:0; background-color:#fff}
 .sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn .sapMSegBBtnInner {background-color:#fff; border:1px solid #ccc; border-radius:20px; line-height:30px; font-weight:500; font-size:14px; letter-spacing:-0.35px}
@@ -954,7 +957,9 @@ html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker>footer .sa
 .contents.mobile-mss-employee-card-list .mmecl-segmented-button .sapMSegB .sapMSegBBtn:last-child .sapMSegBBtnInner {margin-right:-1px; border-right-color:#cecece; border-top-right-radius:4px; border-bottom-right-radius:4px}
 .contents.mobile-mss-employee-card-list .mmecl-segmented-button .sapMSegB .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel .sapMSegBBtnInner {border-color:#9d9d9d; border-radius:4px; color:#222}
 .contents.mobile-mss-employee-card-list .contents-scroller {margin-top:12px; height:calc(100% - 142px); padding:0 0 0 11px}
+.sap-ios .contents.mobile-mss-employee-card-list .contents-scroller {padding:0 0 0 16px}
 .contents.mobile-mss-employee-card-list .contents-scroller .sapMScrollCont {padding:0 11px 0 0}
+.sap-ios .contents.mobile-mss-employee-card-list .contents-scroller .sapMScrollCont {padding:0 16px 0 0}
 .contents.mobile-mss-talent-list .talent-list ul,
 .contents.mobile-mss-candidate-list .talent-list ul {padding:2px 12px; margin-bottom:5px}
 .mobile-list-scroll-box.search-row-3 {height:calc(100% - 220px) !important}
