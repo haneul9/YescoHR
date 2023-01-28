@@ -18,8 +18,8 @@
         <ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
         <ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
         <ObjectStatus text="{i18n>LABEL_WERKS_4000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
-        <ObjectStatus text="{i18n>LABEL_35010}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-        <ObjectStatus text="{i18n>LABEL_35011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
+        <ObjectStatus text="{i18n>LABEL_35010}" icon="sap-icon://circle-task-2" state="Indication03" />
+        <ObjectStatus text="{i18n>LABEL_35011}" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{i18n>LABEL_35012}" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
     </HBox>
@@ -31,7 +31,7 @@
       <f:GridListItem highlight="{ColtyState}">
         <VBox height="100%">
           <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-            <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" />
+            <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" mode="Background" />
             <VBox>
               <FlexBox width="166px" alignContent="SpaceBetween" justifyContent="SpaceBetween" class="talent-list-emp-name">
                 <items>

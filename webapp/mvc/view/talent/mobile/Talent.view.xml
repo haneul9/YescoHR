@@ -34,7 +34,7 @@
           <f:GridListItem highlight="{ColtyState}">
             <VBox height="100%">
               <HBox height="100%" class="sapUiTinyMargin" alignItems="Center">
-                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" />
+                <Image src="{PicUrl}" width="3rem" class="sapUiSmallMarginEnd talent-list-PicUrl" press=".onPressPic" mode="Background" />
                 <VBox width="100%">
                   <FlexBox width="calc(100% - 27px)" alignContent="SpaceBetween" justifyContent="SpaceBetween" class="talent-list-emp-name">
                     <items>

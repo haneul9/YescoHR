@@ -9,7 +9,11 @@
         <ObjectStatus text="{i18n>LABEL_43014} {/committee/listInfo/progressCount}" icon="sap-icon://circle-task-2" state="Indication02" />
         <ObjectStatus text="{i18n>LABEL_43015} {/committee/listInfo/completeCount}" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
-      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressCommitteeExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}" />
+      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressCommitteeExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}">
+        <layoutData>
+          <FlexItemData styleClass="button-excel-attachment" />
+        </layoutData>
+      </Button>
     </HBox>
   </HBox>
 </core:FragmentDefinition>

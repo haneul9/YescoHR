@@ -29,7 +29,11 @@
           <m:ObjectStatus text="{i18n>LABEL_45007}" icon="sap-icon://color-fill" state="Indication04" />
           <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://color-fill" state="Indication05" />
         </m:HBox>
-        <m:ToggleButton pressed="{/candidate/listInfo/expand}" icon="{= !!${/candidate/listInfo/expand} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }" iconDensityAware="false" class="circle-button" />
+        <m:ToggleButton pressed="{/candidate/listInfo/expand}" icon="{= !!${/candidate/listInfo/expand} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }" iconDensityAware="false" class="circle-button">
+          <m:layoutData>
+            <m:FlexItemData styleClass="button-excel-attachment" />
+          </m:layoutData>
+        </m:ToggleButton>
       </m:HBox>
     </m:HBox>
     <Table id="candidateTable" rows="{/candidate/listInfo/list}" visibleRowCount="{/candidate/listInfo/rowCount}" visible="{/candidate/listInfo/expand}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="127" class="scsn-candidates">

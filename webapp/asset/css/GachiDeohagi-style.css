@@ -3,27 +3,36 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) 
 .sapMInputBase.sapMInputBaseHeightMargin.sapMTextArea .sapMInputBaseContentWrapper textarea {font-family:GachiDeohagi,Pretendard}
 
 /* PC */
+.sapMDialog>header.sapMDialogTitle .sapMTitle {line-height:26px}
+.sapUiSizeCompact .sapMBarLeft, .sapUiSizeCompact .sapMBarRight, .sapUiSizeCompact .sapMBarPH, .sapMDialog .sapMBarPH {height:30px; line-height:25px}
+.vCardBox h2.sapMTitle, .hCardBox h2.sapMTitle, .customBox h2.sapMTitle {line-height:25px}
+.vCardBox .table-toolbar h2.sapMTitle, .hCardBox .table-toolbar h2.sapMTitle, .customBox .table-toolbar h2.sapMTitle, .sapUiTableExt .table-toolbar h2.sapMTitle {line-height:26px}
+.sapMBreadcrumbs .sapMBreadcrumbsSeparator::after {top:1px}
+.vacation-overview .sapUiMediumMarginTop {margin-top:15px !important}
+.withdraw-middle-overview .mt-50-px {margin-top:36px !important}
 .certification-overview-item.mt-50-px {margin-top:25px !important}
 .p11-right-contents .label-week.mt-13-px {margin-top:0 !important}
 .hCardBox.overview-box.holidayWork-overview .title {margin-bottom:14px !important}
 .holidayWork-overview .holidayWork-overview-content-right .label-week.mt-10-px {margin-top:0 !important}
 .hCardBox.overview-box.my-work-time-overview .title {margin-bottom:14px !important}
+.hCardBox.overview-box.my-work-time-overview .workTime-summary-box > .sapMFlexItem {height:25px}
 .workTime-summary-box .label-week.mt-10-px {margin-top:0 !important}
 .hCardBox.overview-box.commute-type-overview .title {margin-bottom:14px !important}
 .commute-type-overview .desc.pt-16-px {padding-top:8px !important}
 .commute-type-overview .desc .work-schedule-text.pt-30-px {padding-top:28px !important}
 .commute-type-overview .desc .schedule-period {white-space:nowrap}
-.commute-type-overview .desc .schedule-period.pt-30-px {padding-top:28px !important}
+.commute-type-overview .desc .schedule-period.pt-30-px {letter-spacing:-.5px}
 .congratulation-overview .overview-info {margin-bottom:0 !important}
-.studentFunds-overview .studentFunds-overview-content.mt-50-px {margin-top:25px !important}
-.educationHistory-overview .educationHistory-overview-content.mt-50-px {margin-top:25px !important}
-.housingLoan-overview .housingLoan-overview-content.mt-50-px {margin-top:25px !important}
-.consolidAppBox-overview .consolidAppBox-overview-content.mt-50-px {margin-top:25px !important}
-.clubJoin-overview .clubJoin-overview-content.mt-50-px {margin-top:25px !important}
-.healthCare-overview .healthCare-overview-content.mt-50-px {margin-top:25px !important}
-.carMaintainCost-overview .carMaintainCost-overview-content.mt-50-px {margin-top:30px !important}
-.medical-overview .medical-overview-content.mt-50-px {margin-top:25px !important}
+.studentFunds-overview .studentFunds-overview-content.mt-50-px {margin-top:36px !important}
+.educationHistory-overview .educationHistory-overview-content.mt-50-px {margin-top:36px !important}
+.housingLoan-overview .housingLoan-overview-content.mt-50-px {margin-top:36px !important}
+.consolidAppBox-overview .consolidAppBox-overview-content.mt-50-px {margin-top:36px !important}
+.clubJoin-overview .clubJoin-overview-content.mt-50-px {margin-top:36px !important}
+.healthCare-overview .healthCare-overview-content.mt-50-px {margin-top:36px !important}
+.carMaintainCost-overview .carMaintainCost-overview-content.mt-50-px {margin-top:36px !important}
+.medical-overview .medical-overview-content.mt-50-px {margin-top:36px !important}
 .medical-overview .overview-info .available-amount-text {white-space:nowrap}
 .accountChange-overview .accountChange-overview-content.pt-75-px {padding-top:60px !important}
+.drive-record-overview.mt-100-px {margin-top:88px !important}
 .main-profile .succession-position .succession-card .name {margin-bottom:0 !important}
 .org-container .grid {gap:11px}

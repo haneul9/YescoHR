@@ -453,19 +453,18 @@ sap.ui.define(
 
       // Dialog 대상자 클릭
       TargetClick(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const { Zbirthday, Kdsvh, Zname } = oEvent.getSource().getBindingContext().getProperty();
         const oViewModel = this.getViewModel();
-        const oRowData = oViewModel.getProperty(vPath);
 
-        oViewModel.setProperty('/FormData/Zbirthday', oRowData.Zbirthday);
-        oViewModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
-        oViewModel.setProperty('/FormData/Zname', oRowData.Zname);
+        oViewModel.setProperty('/FormData/Zbirthday', Zbirthday);
+        oViewModel.setProperty('/FormData/Kdsvh', Kdsvh);
+        oViewModel.setProperty('/FormData/Zname', Zname);
 
         const sAddDate = oViewModel.getProperty('/benefitDate');
-
-        if (!!sAddDate) {
-          oViewModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
+        if (sAddDate) {
+          oViewModel.setProperty('/FormData/Conddate', moment(Zbirthday).add('year', sAddDate).toDate());
         }
+
         this.oDialog.close();
       },
 

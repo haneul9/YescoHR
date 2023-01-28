@@ -2,10 +2,10 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="vCardBox MultiBoxmobile">
-    <HBox justifyContent="SpaceBetween" class="title">
+  <VBox class="vCardBox MultiBoxmobile week-worktime">
+    <HBox justifyContent="SpaceBetween" class="header">
       <custom:Title text="{i18n>LABEL_18015}" />
-      <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" width="135px" class="pickonly-datepicker" change=".onWeekWorkTime" />
+      <custom:DatePicker dateValue="{ path: '/WeekWorkDate', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="pickonly-datepicker icon-dropdown" change=".onWeekWorkTime" width="115px" />
     </HBox>
     <VBox class="section week-Work-summary progressBox">
       <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="4px" class="weekTimeGrid">

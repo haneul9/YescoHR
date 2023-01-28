@@ -9,7 +9,7 @@
           <FlexItemData styleClass="portlet-header-title" />
         </custom:layoutData>
       </custom:Title>
-      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" />
+      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" width="75px" class="icon-dropdown" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

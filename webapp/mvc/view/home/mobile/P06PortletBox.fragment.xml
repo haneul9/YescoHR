@@ -9,7 +9,7 @@
           <FlexItemData styleClass="portlet-header-title" />
         </custom:layoutData>
       </custom:Title>
-      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" pickOnly="true" />
+      <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" pickOnly="true" class="icon-dropdown" />
     </HBox>
     <VBox class="portlet-body">
       <ScrollContainer>

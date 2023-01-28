@@ -12,6 +12,11 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) 
 .portlet-p02 .article-item-title-column {width:calc(100% - 70px); max-width:calc(100% - 70px)}
 .portlet-p02 .article-item-date-column {width:41px}
 .portlet-p03p04 .portlet-members .members-worktime-organization-box .members-worktime .sapMText {letter-spacing:-1px}
+.portlet-p06.portlet-m26 .portlet-header .sapIcon_Date.sapMInputBaseHasEndIcons .sapMInputBaseInner,
+.portlet-p06.portlet-p13 .portlet-header .sapIcon_Date.sapMInputBaseHasEndIcons .sapMInputBaseInner {width:105px}
+.portlet-p06.portlet-m26 .portlet-header .portlet-header-title + .sapMFlexItem,
+.portlet-p06.portlet-p13 .portlet-header .portlet-header-title + .sapMFlexItem {width:121px}
+.portlet-p09 .portlet-header .sapIcon_Date {width:80px !important}
 .portlet-p09 .portlet-members .members-position-organization-box {width:calc(100% - 40px - 69px - 51px - (16px * 3))}
 .portlet-p09 .portlet-members .members-anniversary-date-box {width:51px}
 .portlet-p11.portlet-p14 .left-box .left-box-primary .sapMText,
@@ -27,3 +32,4 @@ html *:not(.sapUiIcon):not(.sapMMsgStripCloseButton):not(i):not(.preview-box *) 
 .approval-request-number {letter-spacing:-1px}
 .request-period {letter-spacing:-.5px}
 .sap-android .sapMVBox.overviews .portlet-box .portlet-body .sapMFlexBoxScroll .sapMScrollContV {width:calc(100% + 15px) !important; height:calc(100% + 4px) !important}
+.vCardBox.MultiBoxmobile.week-worktime .sapIcon_Date.pickonly-datepicker {width:125px !important}

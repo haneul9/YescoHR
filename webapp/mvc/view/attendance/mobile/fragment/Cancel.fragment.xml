@@ -7,18 +7,18 @@
       <custom:Title text="{i18n>LABEL_04024}" />
     </HBox>
     <HBox class="table-actions">
-      <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
+      <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" width="250px" />
     </HBox>
   </HBox>
   <List items="{/form/dialog/list}" class="list-wrap requested-list" rememberSelections="false" visible="{= !${/ZappStatAl} }">
     <CustomListItem type="Active" press=".openFormCancelDialog">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="5fr 8fr" gridGap="6px 10px">
+        <grid:CSSGrid gridTemplateColumns="3fr 5fr" gridGap="6px 5px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
           <Text text="{Atext2}" class="font-bold" />
-          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" />
+          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" class="letter-spacing-xs" />
         </grid:CSSGrid>
       </HBox>
     </CustomListItem>
@@ -39,12 +39,12 @@
   <List id="DetailListC" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
     <CustomListItem type="Active">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="5fr 8fr" gridGap="6px 10px">
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
           <Text text="{Atext2}" class="font-bold" />
-          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg})" />
+          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg})" class="letter-spacing-xxs" />
           <Text />
           <Text text="{Tmrsn}" wrapping="false" />
         </grid:CSSGrid>

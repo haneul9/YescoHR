@@ -40,7 +40,11 @@
               <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} } {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" icon="sap-icon://circle-task-2" state="Indication04" />
               <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} } {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" icon="sap-icon://circle-task-2" state="Indication05" />
             </HBox>
-            <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}" />
+            <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}">
+              <layoutData>
+                <FlexItemData styleClass="button-excel-attachment" />
+              </layoutData>
+            </Button>
           </HBox>
         </HBox>
         <HBox class="vCardBox">

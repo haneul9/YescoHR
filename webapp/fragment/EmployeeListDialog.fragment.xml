@@ -10,14 +10,13 @@
       <m:VBox class="dialog-content-table" visible="{= !${busy} }">
         <Table id="overviewEmpDetailTable" width="100%" selectionMode="None" fixedColumnCount="8" columnHeaderHeight="35" rowHeight="34" rows="{list}" visibleRowCount="{rowCount}" noData="{i18n>MSG_00001}">
           <extension>
-            <m:HBox class="header-wrap" justifyContent="SpaceBetween">
-              <m:HBox class="header" alignItems="Center">
-                <m:Title level="H3" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
-                <m:Text text="total {totalCount}" />
-              </m:HBox>
-              <m:HBox>
-                <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" />
-              </m:HBox>
+            <m:HBox class="table-toolbar">
+              <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_28033" countPath="totalCount" class="title" />
+              <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload">
+                <m:layoutData>
+                  <m:FlexItemData styleClass="button-excel-attachment" />
+                </m:layoutData>
+              </m:Button>
             </m:HBox>
           </extension>
           <rowSettingsTemplate>

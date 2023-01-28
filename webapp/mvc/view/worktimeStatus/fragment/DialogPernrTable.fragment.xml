@@ -7,14 +7,16 @@
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <content>
-      <HBox justifyContent="SpaceBetween" class="header-wrap">
-        <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_16012" />
-        <HBox class="status-wrap">
-          <ObjectStatus text="{i18n>LABEL_32011}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-          <ObjectStatus text="{i18n>LABEL_32014}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
-        </HBox>
-      </HBox>
       <table:Table selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="44" rows="{/detail/dialog/pernr/list}" visibleRowCount="{= ${/detail/dialog/pernr/rowCount} > 10 ? 10 : ${/detail/dialog/pernr/rowCount} }" noData="{i18n>MSG_00001}">
+        <table:extension>
+          <HBox class="table-toolbar">
+            <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_16012" class="title" />
+            <HBox class="status-wrap">
+              <ObjectStatus text="{i18n>LABEL_32011}" icon="sap-icon://circle-task-2" state="Indication04" />
+              <ObjectStatus text="{i18n>LABEL_32014}" icon="sap-icon://circle-task-2" state="Indication05" />
+            </HBox>
+          </HBox>
+        </table:extension>
         <table:columns>
           <table:Column width="50px">
             <Label text="{i18n>LABEL_00144}" />

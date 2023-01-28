@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <HBox justifyContent="SpaceBetween" class="header-wrap">
-    <custom:HeaderTitleCountMessage titlePath="/listInfo/Title" countPath="/listInfo/totalCount" infoMessagePath="/listInfo/infoMessage" />
+  <HBox class="table-toolbar">
+    <custom:HeaderTitleCountMessage titlePath="/listInfo/Title" countPath="/listInfo/totalCount" infoMessagePath="/listInfo/infoMessage" class="title" />
     <HBox>
       <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
         <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} } {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" icon="sap-icon://circle-task-2" class="sapMObjStatusIndication06" />
@@ -11,7 +11,11 @@
         <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} } {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} } {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
-      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}" />
+      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy}">
+        <layoutData>
+          <FlexItemData styleClass="button-excel-attachment" />
+        </layoutData>
+      </Button>
     </HBox>
   </HBox>
 </core:FragmentDefinition>
