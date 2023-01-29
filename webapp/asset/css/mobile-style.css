@@ -719,10 +719,11 @@ html.sap-phone .sapMDialog>footer .sapMFooter-CTX {height:60px; padding:0}
 .sapUiSizeCompact .sapMSegB.type-c .sapMSegBBtn.sapMSegBBtnSel .sapMSegBBtnInner {background-color:var(--ThemeColor); color:#fff}
 
 .sapMDialogPhone.sapMResponsivePopover.sapMRPCalendar {display:flex; justify-content:center; align-items:center; height:342px !important; top:calc(50% - 225px) !important}
-.sapUiSizeCompact .sapMDialog.sapMRPCalendar>.sapMDialogSection {padding:20px 15px 20px 20px}
+/* .sapUiSizeCompact .sapMDialog.sapMRPCalendar>.sapMDialogSection {padding:20px 15px 20px 20px} */
 
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar {top:auto !important; right:10px !important; bottom:62px !important; left:10px !important}
-html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar .sapMDialogSection {overflow:hidden !important}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar .sapMBarRight {top:0}
+html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar .sapMDialogSection {overflow:hidden !important; height:calc(100% - 60px) !important; padding:8px}
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMRPCalendar .sapMDialogFooter {height:auto}
 
 html.sap-phone .sapMDialog.sapMDialogStretched.sapMComboBoxBasePicker {padding:48px 0 0}
