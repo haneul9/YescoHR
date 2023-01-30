@@ -2,6 +2,7 @@ sap.ui.define(
   [
     // prettier 방지용 주석
     'sap/m/CustomListItem',
+    'sap/m/FlexItemData',
     'sap/m/Input',
     'sap/m/Label',
     'sap/m/List',
@@ -20,6 +21,7 @@ sap.ui.define(
   (
     // prettier 방지용 주석
     CustomListItem,
+    FlexItemData,
     Input,
     Label,
     List,
@@ -45,12 +47,9 @@ sap.ui.define(
       LIST_GRID_TEMPLATE: {
         // HACT: '1fr 2fr', // 발령
         // '0006': '1fr 2fr', // 주소
-        // 9002: '1fr 2fr', // 어학
-        // JOBL: '1fr 2fr', // 직무이력
-        // '0545': '1fr 2fr', // 징계
-        // '0023': '1fr 2fr', // 사외경력
         // '0105': '1fr 2fr', // 연락처
-        // INCR: '1fr 2fr', // 사내경력
+        // 9002: '1fr 2fr', // 어학
+        // '0545': '1fr 2fr', // 징계
         9001: '1fr 3fr', // 평가
         PAYS: '1fr 1fr', // 급여
         '0022': '4fr 5fr', // 학력
@@ -58,8 +57,10 @@ sap.ui.define(
         '0183': '1fr 1fr 1fr', // 포상
         '0021': '1fr 1fr 1fr', // 가족
         EDU1: '1fr 1fr', // 교육
-        JOBC: '1fr 1fr', // 직무경력
-        JOBL: '1fr 1fr', // 직무이력
+        JOBC: '8fr 9fr', // 직무경력
+        JOBL: '8fr 9fr', // 직무이력
+        '0023': '8fr 9fr', // 사외경력
+        INCR: '8fr 9fr', // 사내경력
         S031: '3fr 5fr', // 승계 후보자 선정 결과 (본인)
         S032: '3fr 5fr', // 승계 후보자 선정 결과 (후임자)
       },
@@ -305,7 +306,7 @@ sap.ui.define(
             const mMenu = _.get(aSubMenuContents, sKey);
             const oSubVBox = new VBox().addStyleClass('profile-detail');
 
-            this.debug(`Sub ${mMenu.title}`, mMenu);
+            this.debug(`Sub ${mMenu.title}`, mMenu, sMenuKey, sKey);
 
             // Title
             oSubVBox.addItem(new Title({ level: 'H4', text: mMenu.title }));
@@ -326,19 +327,42 @@ sap.ui.define(
                   );
                 }
               } else {
+                const aTabTypes = [
+                  'M000,HACT', // 발령
+                  'M002,0555', // 병역
+                  'M002,0557', // 보훈
+                  'M002,0555', // 병역
+                  'M002,DISA', // 장애
+                  'M003,0022', // 학력
+                  'M005,9006', // 자격
+                  'M006,9002', // 어학
+                  'M007,JOBC', // 직무경력
+                  'M007,JOBL', // 직무이력
+                  'M008,0183', // 포상
+                  'M008,0545', // 징계
+                  'M009,0023', // 사외경력
+                  'M009,INCR', // 사내경력
+                  'M010,0021', // 가족
+                  'M012,9001', // 평가
+                ];
+                const oTemplateText = new Text({ text: '{valueTxt}' });
+                if (!aTabTypes.includes(`${sMenuKey},${sKey}`)) {
+                  oTemplateText.addStyleClass('profile-detail-list-text'); // label 용도 text 회색 처리용 style class
+                }
                 const oList = new List({
+                  layoutData: new FlexItemData({ styleClass: 'profile-detail-list' }),
                   noDataText: this.getBundleText('MSG_00001'),
                   items: {
                     path: 'data',
                     templateShareable: false,
                     template: new CustomListItem({
                       content: new CSSGrid({
-                        gridGap: '1px 8px',
+                        gridGap: '8px',
                         gridTemplateColumns: `{${sTableDataPath}/gridTemplate}`,
                         items: {
                           path: 'contents',
                           templateShareable: false,
-                          template: new Text({ text: '{valueTxt}' }),
+                          template: oTemplateText,
                         },
                       }),
                       type: sMenuKey === 'M020' ? 'Active' : 'Inactive',
@@ -361,7 +385,7 @@ sap.ui.define(
                 oSubVBox.addItem(oList);
               }
             } else if (mMenu.type === this.SUB_TYPE.GRID) {
-              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '1px 8px' });
+              const oCSSGrid = new CSSGrid({ gridTemplateColumns: '2fr 3fr', gridGap: '11px 8px' });
 
               mMenu.header.forEach((head, index) => {
                 oCSSGrid.addItem(new Label({ text: head.Header }));

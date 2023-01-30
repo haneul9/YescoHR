@@ -11,7 +11,7 @@
           <mobile:CustomListItem press=".onSelectRow">
             <mobile:ApprovalRequestListItemBox>
               <mobile:ListCSSGrid gridTemplateColumns="2fr 2fr">
-                <Text text="{Accttx}" class="font-16-px font-bold" />
+                <Text text="{Accttx}" class="emphasized" />
                 <Text text="{Banka}"/>
                 <Text text="{ path: 'Begym', formatter: '.formatYear' }"/>
                 <Text text="{Bankn}"/>

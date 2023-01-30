@@ -46,6 +46,10 @@ sap.ui.define(
         P04: 'P03',
       },
 
+      getPortletStyleClasses() {
+        return `portlet portlet-box portlet-h2 portlet-content-scrollable`;
+      },
+
       async addPortlet() {
         this.setInherency();
 
@@ -69,13 +73,12 @@ sap.ui.define(
           setTimeout(() => {
             const oSiblingPortletBox = oSiblingPortletHandler.getPortletBox();
             if (oSiblingPortletBox) {
-              oSiblingPortletBox
-                .$()
-                .parent()
-                .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
-
-              const iPortletHeight = oPortletModel.getProperty('/height');
-              oSiblingPortletBox.addStyleClass(`portlet-h${iPortletHeight}`);
+              if (!this.bMobile) {
+                oSiblingPortletBox
+                  .$()
+                  .parent()
+                  .css({ 'grid-column': `span ${iWidth}`, 'grid-row': `span ${iHeight}` });
+              }
 
               this.setPortletBox(oSiblingPortletBox);
             }
@@ -85,12 +88,11 @@ sap.ui.define(
           oPortletModel.setProperty(`/${this.ROOT_PATH}`, oPortletData);
 
           const oPortletBox = await Fragment.load({
-            name: 'sap.ui.yesco.mvc.view.home.fragment.P03P04PortletBox',
+            name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P03P04PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P03P04PortletBox',
             controller: this,
           });
 
-          const iPortletHeight = oPortletModel.getProperty('/height');
-          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
           this.getController().byId(this.sContainerId).addItem(oPortletBox);
           this.setPortletBox(oPortletBox);
@@ -105,7 +107,7 @@ sap.ui.define(
       async readContentData() {
         const oModel = this.getController().getModel(ServiceNames.COMMON);
 
-        return Client.getEntitySet(oModel, this.ODATA_ENTITY_TYPE);
+        return Client.getEntitySet(oModel, this.ODATA_ENTITY_TYPE, { Mobile: this.bMobile ? 'X' : '' });
       },
 
       transformContentData(aMembers) {
@@ -122,15 +124,35 @@ sap.ui.define(
         aMembers.forEach((mData) => {
           delete mData.__metadata;
 
+          const sTime = this.bMobile ? mData.Ztime : mData.Atext;
+          mData.Flextime = /\d{2}.\d{2}.\d{2}.\d{2}/.test(sTime) && !/09.00.18.00/.test(sTime) ? 'O' : '';
           mData.Photo = mData.Photo || sUnknownAvatarImageURL;
-          mData.Flextime = /\d{2}.\d{2}.\d{2}.\d{2}/.test(mData.Atext) && !/09.00.18.00/.test(mData.Atext) ? 'O' : '';
           mData.Navigable = this.bHasProfileViewAuth ? 'O' : '';
         });
 
+        const iListCount = aMembers.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 9); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           list: aMembers,
-          listCount: aMembers.length,
+          listCount: iListCount,
         };
+      },
+
+      onPressSegmentedButtonItem(oEvent) {
+        // 버튼을 누른 시점에는 아직 oPortletModel.getProperty('/selectedMembersButton') 값이 변경되기 전이기 때문에 getSelectedPortletHandler를 호출 할 수 없음
+        const oPortletModel = this.getPortletModel();
+        const sSelectedMembersButton = oEvent.getSource().getKey().toLowerCase();
+        const sPortletId = oPortletModel.getProperty(`/${sSelectedMembersButton}Members/id`);
+        const oPortletHandler = this.getController().getViewModel().getProperty(`/activeInstanceMap/${sPortletId}`);
+        const aList = oPortletModel.getProperty(`/${oPortletHandler.ROOT_PATH}/list`);
+        const iListCount = (aList || {}).length || 0;
+
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 9); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
       },
 
       getSelectedPortletHandler() {
@@ -165,8 +187,10 @@ sap.ui.define(
       onPressMyMemberRemove(oEvent) {
         const sPernr = oEvent.getSource().getBindingContext().getProperty('Pernr');
         const sMessage = AppUtils.getBundleText('MSG_01101'); // 내동료 목록에서 삭제하시겠습니까?
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;
@@ -195,8 +219,10 @@ sap.ui.define(
         const { oPortletModel, oPortletHandler } = this.getSelectedPortletHandler();
         const sTitle = oPortletModel.getProperty(`/${oPortletHandler.ROOT_PATH}/title`);
         const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;

@@ -1,55 +1,56 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <Page showHeader="false">
-        <VBox class="contents-header">
-            <HBox justifyContent="SpaceBetween" class="breadcrumbs">
-                <custom:Breadcrumbs />
-                <HBox class="button-group">
-                    <Button type="Emphasized" text="{i18n>LABEL_40030}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRConfirm" />
-                    <Button type="Emphasized" text="{i18n>LABEL_40031}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRCancel" />
-                    <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
-                    <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
-                </HBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <Page showHeader="false">
+    <VBox class="contents-header">
+      <HBox justifyContent="SpaceBetween" class="breadcrumbs">
+        <custom:Breadcrumbs />
+        <HBox class="button-group">
+          <Button type="Emphasized" text="{i18n>LABEL_40030}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRConfirm" />
+          <Button type="Emphasized" text="{i18n>LABEL_40031}" busyIndicatorDelay="0" busy="{/busy/Button}" visible="{/isHass}" press=".onHRCancel" />
+          <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" class="sapUiTinyMarginEnd" press=".onPagePrint" />
+          <Button icon="sap-icon://sys-help" text="{i18n>LABEL_00132}" press=".onPressHelp" visible="{= !!${menuModel>/current/showHelp} }" />
+        </HBox>
+      </HBox>
+    </VBox>
+    <VBox class="contents" justifyContent="SpaceBetween">
+      <HBox class="vCardBox" height="80px">
+        <HBox class="form-bar" alignItems="Center">
+          <Label text="{i18n>LABEL_00345}" />
+          <DatePicker width="250px" displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/searchConditions/Zyymm}" busyIndicatorDelay="0" busy="{/busy/Input}" />
+          <Label text="{i18n>LABEL_00237}" />
+          <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Input}">
+            <core:Item text="{Pbtxt}" key="{Werks}" />
+          </ComboBox>
+          <Label text="{i18n>LABEL_00224}" />
+          <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" busyIndicatorDelay="0" busy="{/busy/Input}">
+            <core:Item text="{Orgtx}" key="{Orgeh}" />
+          </ComboBox>
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" busyIndicatorDelay="0" busy="{/busy/Button}" />
+        </HBox>
+      </HBox>
+      <VBox class="vCardBox">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00168" infoMessagePath="i18n>MSG_40003" class="title" />
+          <HBox class="table-actions">
+            <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
+              <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} } {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" icon="sap-icon://circle-task-2" class="sapMObjStatusIndication06" />
+              <ObjectStatus text="{= !${/listInfo/ObjTxt2} ? ${i18n>LABEL_00121} : ${/listInfo/ObjTxt2} } {/listInfo/applyCount}" visible="{/listInfo/isShowApply}" icon="sap-icon://circle-task-2" state="Indication02" />
+              <ObjectStatus text="{= !${/listInfo/ObjTxt3} ? ${i18n>LABEL_00123} : ${/listInfo/ObjTxt3} } {/listInfo/approveCount}" visible="{/listInfo/isShowApprove}" icon="sap-icon://circle-task-2" state="Indication03" />
+              <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} } {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" icon="sap-icon://circle-task-2" state="Indication04" />
+              <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} } {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" icon="sap-icon://circle-task-2" state="Indication05" />
             </HBox>
-        </VBox>
-        <VBox class="contents" justifyContent="SpaceBetween">
-            <HBox class="vCardBox" height="80px">
-                <HBox class="form-bar" alignItems="Center">
-                    <Label text="{i18n>LABEL_00345}" />
-                    <DatePicker width="250px" displayFormat="yyyy.MM" valueFormat="yyyyMM" value="{/searchConditions/Zyymm}" busyIndicatorDelay="0" busy="{/busy/Input}" />
-                    <Label text="{i18n>LABEL_00237}" />
-                    <ComboBox items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" change=".onChangeWerks" busyIndicatorDelay="0" busy="{/busy/Input}">
-                        <core:Item text="{Pbtxt}" key="{Werks}" />
-                    </ComboBox>
-                    <Label text="{i18n>LABEL_00224}" />
-                    <ComboBox items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" busyIndicatorDelay="0" busy="{/busy/Input}">
-                        <core:Item text="{Orgtx}" key="{Orgeh}" />
-                    </ComboBox>
-                    <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" busyIndicatorDelay="0" busy="{/busy/Button}" />
-                </HBox>
-            </HBox>
-            <VBox class="vCardBox">
-                <HBox justifyContent="SpaceBetween" alignItems="Center" class="table-toolbar">
-                    <HBox class="title">
-                        <Title level="H2" text="{i18n>LABEL_00168}" />
-                        <Text text="{i18n>MSG_40003}" class="desc-txt" />
-                    </HBox>
-                    <HBox class="table-actions">
-                        <HBox class="status-wrap" visible="{= ${/listInfo/visibleStatus} !== 'X'}">
-                            <ObjectStatus text="{= !${/listInfo/ObjTxt1} ? ${i18n>LABEL_00130} : ${/listInfo/ObjTxt1} } {/listInfo/progressCount}" visible="{/listInfo/isShowProgress}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="None" />
-                            <ObjectStatus text="{= !${/listInfo/ObjTxt2} ? ${i18n>LABEL_00121} : ${/listInfo/ObjTxt2} } {/listInfo/applyCount}" visible="{/listInfo/isShowApply}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication02" />
-                            <ObjectStatus text="{= !${/listInfo/ObjTxt3} ? ${i18n>LABEL_00123} : ${/listInfo/ObjTxt3} } {/listInfo/approveCount}" visible="{/listInfo/isShowApprove}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication03" />
-                            <ObjectStatus text="{= !${/listInfo/ObjTxt4} ? ${i18n>LABEL_00124} : ${/listInfo/ObjTxt4} } {/listInfo/rejectCount}" visible="{/listInfo/isShowReject}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication04" />
-                            <ObjectStatus text="{= !${/listInfo/ObjTxt5} ? ${i18n>LABEL_00117} : ${/listInfo/ObjTxt5} } {/listInfo/completeCount}" visible="{/listInfo/isShowComplete}" class="sapUiSmallMarginEnd" icon="sap-icon://circle-task-2" state="Indication05" />
-                        </HBox>
-                        <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}" />
-                    </HBox>
-                </HBox>
-                <HBox class="vCardBox">
-                    <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.OverviewTable" type="XML" />
-                </HBox>
-            </VBox>
-        </VBox>
-    </Page>
+            <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/busy/Button}">
+              <layoutData>
+                <FlexItemData styleClass="button-excel-attachment" />
+              </layoutData>
+            </Button>
+          </HBox>
+        </HBox>
+        <HBox class="vCardBox">
+          <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.OverviewTable" type="XML" />
+        </HBox>
+      </VBox>
+    </VBox>
+  </Page>
 </core:FragmentDefinition>

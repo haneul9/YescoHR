@@ -26,7 +26,7 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <HBox class="button-group">
+        <HBox class="button-group button-2">
           <Button text="{i18n>LABEL_12008}" press=".onPressSwapBtn" />
           <Button text="{i18n>LABEL_12011}" press=".onPressCompactBtn" id="compactButton" />
         </HBox>

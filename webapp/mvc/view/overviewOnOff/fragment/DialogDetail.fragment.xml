@@ -13,14 +13,13 @@
             <RowSettings highlight="{ path: 'Stat1', formatter: '.formatDetailRowHighlight' }" />
           </rowSettingsTemplate>
           <extension>
-            <m:HBox class="header-wrap" justifyContent="SpaceBetween">
-              <m:HBox class="header" alignItems="Center">
-                <m:Title level="H3" text="{i18n>LABEL_28033}" class="sapUiSmallMarginEnd" />
-                <m:Text text="total {/dialog/totalCount}" />
-              </m:HBox>
-              <m:HBox>
-                <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressDetailExcelDownload" />
-              </m:HBox>
+            <m:HBox class="table-toolbar">
+              <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_28033" countPath="/dialog/totalCount" class="title" />
+              <m:Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressDetailExcelDownload">
+                <m:layoutData>
+                  <m:FlexItemData styleClass="button-excel-attachment" />
+                </m:layoutData>
+              </m:Button>
             </m:HBox>
           </extension>
           <columns>

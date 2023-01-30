@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:grid="sap.ui.layout.cssgrid">
   <!-- 조직근무현황 -->
-  <VBox class="portlet portlet-box portlet-p06" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>
@@ -12,7 +12,11 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" maxWidth="calc(100% - 156px)" />
+        </custom:layoutData>
+      </custom:Title>
       <custom:DatePicker dateValue="{ path: 'selectedDate', type: 'sap.ui.yesco.mvc.model.type.DateWeekday' }" change=".onChangeSelectedDate" pickOnly="true" />
       <Text text="">
         <layoutData>

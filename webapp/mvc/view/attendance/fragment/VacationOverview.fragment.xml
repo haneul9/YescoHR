@@ -2,11 +2,8 @@
   xmlns:core="sap.ui.core"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:custom="sap.ui.yesco.control">
-  <VBox class="hCardBox overview-box">
-    <HBox alignItems="End">
-      <Title level="H2" text="{i18n>LABEL_04005}" />
-      <Text text="{i18n>LABEL_04032}" class="sapUiSmallMarginBegin" />
-    </HBox>
+  <VBox class="hCardBox overview-box vacation-overview">
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_04005" infoMessagePath="i18n>LABEL_04032" infoMessageUnderline="false" class="title" />
     <grid:CSSGrid gridTemplateColumns="repeat(3, 1fr)" gridRowGap="19px" gridColumnGap="8px" class="sapUiMediumMarginTop">
       <VBox alignItems="Start">
         <Label text="{/quota/10/Kotxt}" />

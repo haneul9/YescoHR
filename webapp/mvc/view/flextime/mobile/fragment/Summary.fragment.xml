@@ -1,10 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox small MultiBoxmobile">
-    <HBox justifyContent="SpaceBetween" class="title">
-      <Title level="H2" text="{i18n>LABEL_00173}" />
-    </HBox>
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00173" class="title" />
     <VBox class="section week-Work-summary progressBox">
       <grid:CSSGrid gridTemplateColumns="2fr 3fr" gridGap="4px" class="weekTimeGrid">
         <Label text="{i18n>LABEL_40010}"/>
@@ -30,8 +29,7 @@
         <Label text="{i18n>LABEL_40015}" />
         <VBox>
           <!-- <Text text="{/summary/list/0/Gaptimtx}" width="100%" textAlign="Right" class="{= ${/summary/list/0/Gaptim} &lt; 0 ? 'color-08' : 'color-07' }" /> -->
-          <Text id="Gaptimtx" width="100%" textAlign="Right"
-                text="{ parts: [{path: '/summary/list/0/Gaptimtx'}, {path: '/summary/list/0/Gaptim'}],
+          <Text id="Gaptimtx" width="100%" textAlign="Right" text="{ parts: [{path: '/summary/list/0/Gaptimtx'}, {path: '/summary/list/0/Gaptim'}],
                         formatter: '.formatGaptimtx'
                       }"/>
         </VBox>
@@ -46,8 +44,7 @@
         <Label text="{i18n>LABEL_00144}" />
         <VBox>
           <!-- <Text text="{ path: '/summary/list/0/Statxt' }" width="100%" textAlign="Right" class="{= ${/summary/list/0/Stacol} === '2' ? 'color-08' : 'color-07' }" /> -->
-          <Text id="Statxt" width="100%" textAlign="Right"
-                text="{ parts: [{path: '/summary/list/0/Statxt'}, {path: '/summary/list/0/Stacol'}],
+          <Text id="Statxt" width="100%" textAlign="Right" text="{ parts: [{path: '/summary/list/0/Statxt'}, {path: '/summary/list/0/Stacol'}],
                         formatter: '.formatStatxt'
                       }"/>
         </VBox>
@@ -57,14 +54,7 @@
         </VBox>
         <Label text="{i18n>LABEL_40028}" />
         <VBox>
-          <core:Icon
-              color="#18b810"
-              size="14px"
-              src="sap-icon://accept"
-              useIconTooltip="false"
-              width="100%"
-              visible="{= ${/summary/list/0/Hrcfm} === 'X' ? true : false }"
-          >
+          <core:Icon color="#18b810" size="14px" src="sap-icon://accept" useIconTooltip="false" width="100%" visible="{= ${/summary/list/0/Hrcfm} === 'X' ? true : false }">
           </core:Icon>
         </VBox>
       </grid:CSSGrid>

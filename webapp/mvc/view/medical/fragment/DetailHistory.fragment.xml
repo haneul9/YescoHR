@@ -1,11 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox alignItems="Center" class="title">
-        <Title level="H2" text="{i18n>LABEL_09022}" />
-      </HBox>
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_09022" class="title" />
       <HBox class="table-actions">
         <Button icon="sap-icon://add" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00107}" press=".onAddDetails" />
         <Button icon="sap-icon://less" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" text="{i18n>LABEL_00110}" press=".onDelDetails" />

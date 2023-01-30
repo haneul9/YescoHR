@@ -317,9 +317,10 @@ sap.ui.define(
 
         const sMessage = this.getBundleText('MSG_00006', 'LABEL_00120'); // {재작성}하시겠습니까?
         const sActionYes = this.getBundleText('LABEL_00120'); // 재작성
+        const aActions = [sActionYes, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
-          actions: [sActionYes, MessageBox.Action.CANCEL],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false);
@@ -342,9 +343,10 @@ sap.ui.define(
 
         const sMessage = this.getBundleText('MSG_00006', 'LABEL_00103'); // {저장}하시겠습니까?
         const sActionYes = this.getBundleText('LABEL_00103'); // 저장
+        const aActions = [sActionYes, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
-          actions: [sActionYes, MessageBox.Action.CANCEL],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               this.setEnabled(true);
@@ -375,9 +377,10 @@ sap.ui.define(
 
         const sMessage = this.getBundleText('MSG_00006', 'LABEL_00121'); // {신청}하시겠습니까?
         const sActionYes = this.getBundleText('LABEL_00121'); // 신청
+        const aActions = [sActionYes, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
-          actions: [sActionYes, MessageBox.Action.CANCEL],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               this.setEnabled(true);
@@ -451,9 +454,10 @@ sap.ui.define(
 
         const sMessage = this.getBundleText('MSG_00006', 'LABEL_00110'); // {삭제}하시겠습니까?
         const sActionYes = this.getBundleText('LABEL_00110'); // 삭제
+        const aActions = [sActionYes, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
-          actions: [sActionYes, MessageBox.Action.CANCEL],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               this.setEnabled(true);

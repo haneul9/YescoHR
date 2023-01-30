@@ -11,7 +11,7 @@
         <mobile:List items="{/StudentList}">
           <mobile:CustomListItem press=".onSelectRow">
             <mobile:ApprovalRequestListItemBox>              <!-- statusFieldName="ZappStatAl" -->
-              <mobile:ListCSSGrid>
+              <mobile:ListCSSGrid gridTemplateColumns="2fr 1fr 1fr">
                 <Text text="{Zname}" class="emphasized" />
                 <Text text="{ path: 'Appda', type: 'sap.ui.yesco.mvc.model.type.Date' }" textAlign="Right">
                   <layoutData>

@@ -2,8 +2,8 @@
   xmlns:f="sap.f"
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
-  <!-- 휴가 사용율 -->
-  <VBox class="portlet portlet-box portlet-m24" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <!-- 임원용 : 휴가 사용율 -->
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>
@@ -11,8 +11,16 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <Text text="{/Ttltxt}{i18n>LABEL_01191}" class="desc-txt" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <Text text="{/Ttltxt}{i18n>LABEL_01191}" class="desc-txt">
+        <layoutData>
+          <FlexItemData styleClass="portlet-header-description" />
+        </layoutData>
+      </Text>
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

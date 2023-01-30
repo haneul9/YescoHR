@@ -512,6 +512,10 @@ sap.ui.define(
 
       onPressResetAll() {
         MessageBox.confirm(this.getBundleText('MSG_45007'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           // 검색조건 및 검색결과를 초기화 하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) {
@@ -631,6 +635,10 @@ sap.ui.define(
 
       onPressSaveSearchConditions() {
         MessageBox.confirm(this.getBundleText('MSG_45008'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           // 현재 포지션의 기본 검색조건으로 저장하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) {

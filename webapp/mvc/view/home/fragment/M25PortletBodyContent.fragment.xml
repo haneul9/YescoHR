@@ -1,0 +1,80 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <!-- 임원용 : 최상단 검색, 담당부서 및 기념일 인원수 -->
+  <VBox width="100%">
+    <SearchField value="{terms}" placeholder="{i18n>MSG_00068}" search=".onSearch" class="home-top-search-field">
+      <layoutData>
+        <FlexItemData styleClass="home-top-search-field-wrapper" />
+      </layoutData>
+    </SearchField>
+    <Text text="{i18n>LABEL_00354}{i18n>LABEL_00224} : {Orgtx}">
+      <layoutData>
+        <FlexItemData styleClass="home-top-organization" />
+      </layoutData>
+    </Text>
+    <HBox class="home-top-anniversary-box">
+      <Text text="{i18n>LABEL_01224}" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-birthday-black.svg" mode="Background">
+        <layoutData>
+          <FlexItemData styleClass="home-top-anniversary-icon" />
+        </layoutData>
+      </Image>
+      <Text text="{i18n>LABEL_01151} { path: 'Empcnt1', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-wedding-black.svg" mode="Background">
+        <layoutData>
+          <FlexItemData styleClass="home-top-anniversary-icon" />
+        </layoutData>
+      </Image>
+      <Text text="{i18n>LABEL_01225} { path: 'Empcnt2', type: 'sap.ui.yesco.mvc.model.type.Currency' }" />
+    </HBox>
+    <HBox class="home-top-pine-tree-layer">
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/pine-tree-top.svg" mode="Background" />
+      <Image src="/sap/public/bc/ui2/zui5_yescohr/images/pine-tree-top.svg" mode="Background" />
+    </HBox>
+    <VBox class="home-top-favorite-menu-box">
+      <Text text="{i18n>LABEL_01226}">
+        <layoutData>
+          <FlexItemData styleClass="home-top-favorite-menu-box-title" />
+        </layoutData>
+      </Text>
+      <HBox>
+        <VBox>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-home-profile.png" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-icon" />
+            </layoutData>
+          </Image>
+          <Button text="{ButtonText1}" press=".onPressButton1">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-button-wrap" />
+            </layoutData>
+          </Button>
+        </VBox>
+        <VBox>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-home-organization.png" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-icon" />
+            </layoutData>
+          </Image>
+          <Button text="{ButtonText2}" press=".onPressButton2">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-button-wrap" />
+            </layoutData>
+          </Button>
+        </VBox>
+        <VBox>
+          <Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon-home-search.png" mode="Background">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-icon" />
+            </layoutData>
+          </Image>
+          <Button text="{ButtonText3}" press=".onPressButton3">
+            <layoutData>
+              <FlexItemData styleClass="home-top-favorite-menu-button-wrap" />
+            </layoutData>
+          </Button>
+        </VBox>
+      </HBox>
+    </VBox>
+  </VBox>
+</core:FragmentDefinition>

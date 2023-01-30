@@ -15,18 +15,13 @@
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="header-wrap">
-          <HBox class="header">
-            <Title level="H3" text="{i18n>LABEL_00173}" class="sapUiSmallMarginEnd" />
-            <Text text="{i18n>MSG_40001}" class="sapUiMediumMarginEnd desc-txt" />
-          </HBox>
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00173" infoMessagePath="i18n>MSG_40001" />
         </HBox>
         <core:Fragment fragmentName="sap.ui.yesco.mvc.view.flextime.fragment.SummaryTable" type="XML" />
       </VBox>
       <VBox class="vCardBox">
         <HBox justifyContent="SpaceBetween" class="header-wrap top-sticky">
-          <HBox class="header">
-            <Title level="H3" text="{i18n>LABEL_00168}" class="sapUiSmallMarginEnd" />
-          </HBox>
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00168" />
           <HBox class="table-actions">
             <Button text="{i18n>LABEL_40008}" visible="{= !${/isMss} }" enabled="{= ${/details/list}.length &gt; 0 }" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onPressBatchButton" />
             <Button text="{i18n>LABEL_40032}" visible="{/isHass}" busyIndicatorDelay="0" busy="{/busy/Button}" press=".onHRConfirm" />

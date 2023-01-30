@@ -106,7 +106,15 @@ sap.ui.define(
         try {
           oViewModel.setProperty('/busy', true);
 
-          await Promise.all([this.getApplyList(), this.totalCount()]);
+          const [aList, [mTotal]] = await Promise.all([this.getApplyList(), this.totalCount()]);
+
+          oViewModel.setProperty('/List', aList);
+          oViewModel.setProperty('/listInfo/totalCount', _.size(aList));
+          oViewModel.setProperty('/Total', mTotal);
+
+          if (mTotal.Note) {
+            oViewModel.setProperty('/listInfo/infoMessage', mTotal.Note);
+          }
         } catch (oError) {
           AppUtils.handleError(oError);
         } finally {
@@ -132,22 +140,14 @@ sap.ui.define(
         };
 
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const aList = await Client.getEntitySet(oModel, 'MedExpenseAppl', mPayLoad);
 
-        oViewModel.setProperty('/List', aList);
-        oViewModel.setProperty('/listInfo/totalCount', _.size(aList));
+        return Client.getEntitySet(oModel, 'MedExpenseAppl', mPayLoad);
       },
 
       async totalCount() {
-        const oViewModel = this.getViewModel();
         const oModel = this.getModel(ServiceNames.BENEFIT);
-        const [mTotal] = await Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
 
-        oViewModel.setProperty('/Total', mTotal);
-
-        if (!!mTotal.Note) {
-          oViewModel.setProperty('/listInfo/infoMessage', mTotal.Note);
-        }
+        return Client.getEntitySet(oModel, 'MedExpenseMymed', { Pernr: this.getAppointeeProperty('Pernr') });
       },
 
       onSelectRow(oEvent) {

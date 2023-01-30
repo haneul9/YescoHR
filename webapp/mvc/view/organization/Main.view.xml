@@ -8,9 +8,9 @@
       <HBox justifyContent="SpaceBetween" class="breadcrumbs">
         <custom:Breadcrumbs />
         <HBox class="button-group">
-          <Select width="200px" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
+          <ComboBox width="200px" items="{/entry/Werks}" selectedKey="{/search/Werks}" change=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
-          </Select>
+          </ComboBox>
           <Button type="Emphasized" text="{i18n>LABEL_12003}" press=".onPressSwapBtn" width="175px" />
           <Button type="Emphasized" text="{i18n>LABEL_12005}" press=".onPressCompactBtn" width="175px" id="compactButton" />
           <Button icon="sap-icon://print" text="{i18n>LABEL_00131}" press=".onPagePrint" />

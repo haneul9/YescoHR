@@ -3,7 +3,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="portlet portlet-box" visible="{= !${/contents/A03/busy} }">
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28021}" />
+      <custom:Title text="{i18n>LABEL_28021}" />
       <Text class="desc-txt" text="{/contents/A03/data/Rte02}" />
       <Text text="">
         <layoutData>

@@ -1,12 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
-
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar">
-      <Title level="H2" text="{i18n>LABEL_46028}" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_46028" class="title" />
     </HBox>
-
     <table:Table id="ApprovalTable" class="row-link" rows="{/ApprovalData}" visibleRowCount="{/ApprovalInfo/rowCount}" width="100%" selectionMode="None" columnHeaderHeight="45" rowHeight="44" busyIndicatorDelay="0" busy="{/busy}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="50px" sortProperty="Idx" filterProperty="Idx">

@@ -19,10 +19,10 @@ sap.ui.define(
     P06PortletHandlerDialogHandler,
     EmployeeList1PopoverHandler
   ) => {
-    'use strict';
+    ('use strict');
 
     /**
-     * 조직근무현황 Portlet
+     * 조직근무현황, 나의 직원/팀원들은 무엇을 하고 있을까요? Portlet
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.P06PortletHandler', {
       sChartId: 'portlet-p06-chart',
@@ -30,28 +30,30 @@ sap.ui.define(
 
       async addPortlet() {
         const oController = this.getController();
+        const sFragmentName = this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P06PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox';
         const oPortletBox = await Fragment.load({
           id: oController.getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.P06PortletBox',
+          name: sFragmentName,
           controller: this,
         });
 
         const oPortletModel = this.getPortletModel();
         oPortletModel.setProperty('/selectedDate', new Date());
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
 
-        // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
-        const oChart = FusionCharts(this.sChartId);
-        if (oChart) {
-          oChart.dispose();
-        }
+        if (!this.bMobile) {
+          // 다른 화면에 갔다 되돌아오는 경우 id 중복 오류가 발생하므로 체크함
+          const oChart = FusionCharts(this.sChartId);
+          if (oChart) {
+            oChart.dispose();
+          }
 
-        this.buildChart();
+          this.buildChart();
+        }
 
         this.oEmployeeListPopupHandler = this.oEmployeeListPopupHandler || (this.bMobile ? new EmployeeList1PopoverHandler(oController) : new P06PortletHandlerDialogHandler(oController));
       },
@@ -100,12 +102,15 @@ sap.ui.define(
 
       transformContentData([mPortletContentData]) {
         const fValue = Number(mPortletContentData.Rte01);
-        if (this.oChartPromise) {
-          this.oChartPromise.then(() => {
-            this.setChartData(fValue);
-          });
-        } else {
-          this.setChartData(fValue); // 다른 메뉴를 갔다가 되돌아오는 경우
+
+        if (!this.bMobile) {
+          if (this.oChartPromise) {
+            this.oChartPromise.then(() => {
+              this.setChartData(fValue);
+            });
+          } else {
+            this.setChartData(fValue); // 다른 메뉴를 갔다가 되돌아오는 경우
+          }
         }
 
         return {

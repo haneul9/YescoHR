@@ -36,6 +36,7 @@ sap.ui.define(
           },
           listInfo: {
             Title: this.getBundleText('LABEL_13037'), // 급상여내역
+            infoIconVisible: false,
             view1wButton: false,
             rowCount: 2,
             totalCount: 0,

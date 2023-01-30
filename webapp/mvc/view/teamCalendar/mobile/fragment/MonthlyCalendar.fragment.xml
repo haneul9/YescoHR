@@ -1,28 +1,25 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="section p-10-px font-20-px">
-        <HBox class="title-bar">
-            <Title level="H3" text="{i18n>LABEL_18032}" />
-            <Text text="{i18n>MSG_37002}" class="desc-txt ml-0" />
-        </HBox>
-        <HBox justifyContent="SpaceBetween" class="month-plan-head">
-            <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevMonth" class="icon-button" />
-            <custom:VBox press=".onPressYearMonth">
-                <Label text="{/calendar/yearMonth}" class="font-16-px" />
-            </custom:VBox>
-            <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextMonth" class="icon-button" />
-        </HBox>
-        <grid:CSSGrid class="month-plan-grid mobile-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="repeat(7, 1fr)" items="{path: '/calendar/plans'}" busyIndicatorDelay="0" busy="{/busy/Calendar}">
-            <custom:VBox width="100%" press=".onClickDay" height="48px">
-                <custom:customData>
-                    <core:CustomData key="style" value="{classNames}" writeToDom="true" />
-                    <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
-                    <core:CustomData key="border" value="{borderNames}" writeToDom="true" />
-                </custom:customData>
-                <Label width="100%" textAlign="Center" text="{label}" />
-            </custom:VBox>
-        </grid:CSSGrid>
-    </VBox>
+  xmlns:core="sap.ui.core"
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="section p-11-px font-20-px">
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_18032" infoMessagePath="i18n>MSG_37002" class="title-bar" />
+    <HBox justifyContent="SpaceBetween" class="month-plan-head">
+      <Button icon="sap-icon://navigation-left-arrow" press=".onPressPrevMonth" class="icon-button" />
+      <custom:VBox press=".onPressYearMonth">
+        <Label text="{/calendar/yearMonth}" class="font-16-px" />
+      </custom:VBox>
+      <Button icon="sap-icon://navigation-right-arrow" press=".onPressNextMonth" class="icon-button" />
+    </HBox>
+    <grid:CSSGrid class="month-plan-grid mobile-plan-grid sapUiSmallMarginBottom" gridTemplateColumns="repeat(7, 1fr)" items="{path: '/calendar/plans'}" busyIndicatorDelay="0" busy="{/busy/Calendar}">
+      <custom:VBox width="100%" press=".onClickDay" height="48px">
+        <custom:customData>
+          <core:CustomData key="style" value="{classNames}" writeToDom="true" />
+          <core:CustomData key="holiday" value="{holiday}" writeToDom="true" />
+          <core:CustomData key="border" value="{borderNames}" writeToDom="true" />
+        </custom:customData>
+        <Label width="100%" textAlign="Center" text="{label}" />
+      </custom:VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

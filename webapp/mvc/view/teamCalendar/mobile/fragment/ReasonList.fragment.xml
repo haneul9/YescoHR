@@ -2,10 +2,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="section m-0-px px-10-px" busyIndicatorDelay="0" busy="{/busy/Detail}">
-    <HBox class="title-bar">
-      <Title level="H3" text="{i18n>LABEL_37004}" />
-      <Text text="{/detail/displayDate}" class="desc-txt ml-0" />
-    </HBox>
+    <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_37004" infoMessagePath="/detail/displayDate" class="title-bar" />
     <custom:MobileEmployeeList items="{/detail/list}" photo="PicUrl" name="Ename" rank="Zzjikgbtx" department="Orgtx" doubleLine="true" itemPress=".navToIndividualAttendance">
       <CustomListItem>
         <VBox>

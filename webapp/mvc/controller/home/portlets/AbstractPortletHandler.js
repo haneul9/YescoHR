@@ -59,15 +59,38 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const sPortletKey = oPortletModel.getProperty('/key');
         const oPortletBodyContent = await Fragment.load({
-          name: `sap.ui.yesco.mvc.view.home.fragment.${sPortletKey}PortletBodyContent`,
+          name: this.getPortletBodyContentFragmentName(sPortletKey),
           controller: this,
         });
 
-        const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/');
-        oPortletBox.getItems()[1].addItem(oPortletBodyContent);
+        const oPortletBox = new PortletBox({ portletHandler: this }).setModel(oPortletModel).bindElement('/').toggleStyleClass(this.getPortletStyleClasses(), true);
+        oPortletBox.getPortletBody().addItem(oPortletBodyContent);
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
+      },
+
+      getPortletBodyContentFragmentName(sPortletKey) {
+        return `sap.ui.yesco.mvc.view.home.fragment.${sPortletKey}PortletBodyContent`;
+      },
+
+      getPortletStyleClasses() {
+        const oPortletModel = this.getPortletModel();
+        const sId = oPortletModel.getProperty('/id');
+        if (!sId) {
+          return '';
+        }
+        const sBorderlessStyleClass = oPortletModel.getProperty('/borderless') ? '' : 'portlet-box ';
+        const sPortletId = sId.toLowerCase();
+        const sPortletKey = oPortletModel.getProperty('/key').toLowerCase();
+        const sPortletIdStyleClass = sPortletId !== sPortletKey ? `portlet-${sPortletId} ` : '';
+        const sPortletHeightStyleClass = this.getPortletHeightStyleClass(oPortletModel);
+        return `portlet ${sBorderlessStyleClass}${sPortletIdStyleClass}portlet-${sPortletKey} ${sPortletHeightStyleClass}`;
+      },
+
+      getPortletHeightStyleClass(oPortletModel) {
+        const iPortletHeight = oPortletModel.getProperty('/height') || 0;
+        return `portlet-h${iPortletHeight}`;
       },
 
       async showContentData() {
@@ -99,8 +122,10 @@ sap.ui.define(
       onPressClose(oEvent) {
         const sTitle = oEvent.getSource().getBindingContext().getProperty('title');
         const sMessage = AppUtils.getBundleText('MSG_01902', sTitle); // {sTitle} portlet을 홈화면에 더이상 표시하지 않습니다.\n다시 표시하려면 홈화면 우측 상단 톱니바퀴 아이콘을 클릭하여 설정할 수 있습니다.
+        const aActions = [MessageBox.Action.OK, MessageBox.Action.CANCEL];
 
         MessageBox.confirm(sMessage, {
+          actions: this.bMobile ? _.reverse(aActions) : aActions,
           onClose: async (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               return;
@@ -176,7 +201,30 @@ sap.ui.define(
       },
 
       getPortletBox() {
+        if (typeof this.oPortletBox.getPortletBody !== 'function') {
+          this.bindFunctions();
+        }
+
         return this.oPortletBox;
+      },
+
+      bindFunctions() {
+        this.oPortletBox.setPortletBody = function setPortletBody(oPortletBody) {
+          this.oPortletBody = oPortletBody;
+          return this;
+        };
+
+        this.oPortletBox.getPortletBody = function getPortletBody() {
+          return this.oPortletBody;
+        };
+
+        this.oPortletBox.togglePortletBodyStyleClass = function togglePortletBodyStyleClass(sStyleClass, bAdd) {
+          if (!this.oPortletBody) {
+            this.setPortletBody(sap.ui.getCore().byId(this.$().find('.portlet-body').attr('id')));
+          }
+          this.oPortletBody.toggleStyleClass(sStyleClass, bAdd);
+          return this;
+        };
       },
 
       getAppMenu() {

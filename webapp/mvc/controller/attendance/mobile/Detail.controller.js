@@ -440,7 +440,7 @@ sap.ui.define(
           });
 
           // {임시저장|신청}되었습니다.
-          MessageBox.success(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
+          MessageBox.alert(this.getBundleText('MSG_00007', this.ACTION_MESSAGE[sPrcty]), {
             onClose: () => {
               this.getRouter().navTo('mobile/attendance');
               AppUtils.setAppBusy(false);
@@ -603,6 +603,10 @@ sap.ui.define(
 
         // 선택된 행을 삭제하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00021'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.DELETE,
+          ],
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
 
@@ -793,8 +797,24 @@ sap.ui.define(
             '/form/list',
             _.concat(
               aList, //
-              { ...mSelectedData, Awart: mTempData.Awart1, Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart1 }).get('Atext').value(), Begda: mTempData.Begda1, Endda: mTempData.Begda1, Abrtg: mHalf1.Abrtg, Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn },
-              { ...mSelectedData, Awart: mTempData.Awart2, Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart2 }).get('Atext').value(), Begda: mTempData.Begda2, Endda: mTempData.Begda2, Abrtg: mHalf2.Abrtg, Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn }
+              {
+                ...mSelectedData,
+                Awart: mTempData.Awart1,
+                Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart1 }).get('Atext').value(),
+                Begda: mTempData.Begda1,
+                Endda: mTempData.Begda1,
+                Abrtg: mHalf1.Abrtg,
+                Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn,
+              },
+              {
+                ...mSelectedData,
+                Awart: mTempData.Awart2,
+                Atext: _.chain(aAwarts).find({ Awart: mTempData.Awart2 }).get('Atext').value(),
+                Begda: mTempData.Begda2,
+                Endda: mTempData.Begda2,
+                Abrtg: mHalf2.Abrtg,
+                Tmrsn: _.isEmpty(mTempData.Tmrsn) ? mSelectedData.Tmrsn : mTempData.Tmrsn,
+              }
             )
           );
 
@@ -819,7 +839,7 @@ sap.ui.define(
         const aListData = oViewModel.getProperty('/form/list');
 
         if (!mInputData.Begda || !mInputData.Endda || !mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
-          MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
+          MessageBox.alert(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
 
@@ -854,7 +874,7 @@ sap.ui.define(
         const aListData = oViewModel.getProperty('/form/list');
 
         if (!mInputData.Tmrsn || mInputData.Tmrsn.trim() === '') {
-          MessageBox.error(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
+          MessageBox.alert(this.getBundleText('MSG_04008')); // 모든 필수 입력 항목 값을 입력하여 주십시오.
           return;
         }
 
@@ -890,7 +910,7 @@ sap.ui.define(
         ];
 
         if (!bCalcCompleted) {
-          MessageBox.error(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
+          MessageBox.alert(this.getBundleText('MSG_04001')); // 계산이 수행되지 않아 저장이 불가합니다.
           return;
         }
 
@@ -910,7 +930,7 @@ sap.ui.define(
           };
 
           if (this.DateUtils.format(mRowData.Begda2) === this.DateUtils.format(mChangedData.Begda) && this.DateUtils.format(mRowData.Endda2) === this.DateUtils.format(mChangedData.Endda)) {
-            MessageBox.error(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
+            MessageBox.alert(this.getBundleText('MSG_04002')); // 변경된 데이터가 없습니다.
             return;
           }
 
@@ -940,7 +960,7 @@ sap.ui.define(
         if (oViewModel.getProperty('/form/list').length === 0) {
           const sMessage = oViewModel.getProperty('/type') === this.PAGE_TYPE.NEW ? this.getBundleText('MSG_04009') + '\n' + this.getBundleText('MSG_04010') : this.getBundleText('MSG_04009');
           // 신청내역이 존재하지 않습니다. (신규신청 등록 후 +버튼을 클릭하여 주시기 바랍니다.)
-          MessageBox.error(sMessage);
+          MessageBox.alert(sMessage);
           return;
         }
 
@@ -950,7 +970,10 @@ sap.ui.define(
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          actions: [this.getBundleText('LABEL_00121'), MessageBox.Action.CANCEL],
+          actions: [
+            MessageBox.Action.CANCEL, //
+            this.getBundleText('LABEL_00121'),
+          ],
           onClose: (sAction) => {
             if (!sAction || sAction === MessageBox.Action.CANCEL) {
               AppUtils.setAppBusy(false);

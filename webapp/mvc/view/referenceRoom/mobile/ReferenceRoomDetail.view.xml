@@ -5,10 +5,12 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
-    <VBox class="contents">
+    <VBox class="contents reference-room-detail">
       <mobile:ScrollContainer>
         <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <custom:Title text="{/FormData/title}" />
+          <HBox class="table-toolbar">
+            <custom:HeaderTitleCountMessage titlePath="/FormData/title" class="title" />
+          </HBox>
           <mobile:DetailCSSGrid gridTemplateColumns="1fr" class="mobile-reference">
             <VBox visible="{= !!${/FormData/HeadZcomment} }">
               <TextArea editable="false" rows="3" growing="true" width="100%" value="{/FormData/HeadZcomment}" />

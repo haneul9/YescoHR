@@ -1,28 +1,21 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
-  <HBox justifyContent="SpaceBetween" class="header-wrap" binding="{/search/approvalRequestListInfo}">
-    <HBox class="header">
-      <Title level="H3" text="{title}">
-        <layoutData>
-          <FlexItemData styleClass="header-title" />
-        </layoutData>
-      </Title>
-      <Text text="total { path: 'count/total', type: 'sap.ui.yesco.mvc.model.type.Currency' }">
-        <layoutData>
-          <FlexItemData styleClass="header-total-count" />
-        </layoutData>
-      </Text>
-      <Text text="{infoMessage}" visible="{= !!${infoMessage} }" class="desc-txt" />
-    </HBox>
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <HBox binding="{/search/approvalRequestListInfo}" class="table-toolbar">
+    <custom:HeaderTitleCountMessage titlePath="title" countPath="count/total" infoMessagePath="infoMessage" class="title" />
     <HBox>
       <HBox class="status-wrap" visible="{= !${statusVisible/hideAll} }">
-        <ObjectStatus text="{statusText/progress} { path: 'count/progress', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/progress}" icon="sap-icon://circle-task-2" state="None" />
+        <ObjectStatus text="{statusText/progress} { path: 'count/progress', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/progress}" icon="sap-icon://circle-task-2" class="sapMObjStatusIndication06" />
         <ObjectStatus text="{statusText/request} { path: 'count/request', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/request}" icon="sap-icon://circle-task-2" state="Indication02" />
         <ObjectStatus text="{statusText/approve} { path: 'count/approve', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/approve}" icon="sap-icon://circle-task-2" state="Indication03" />
         <ObjectStatus text="{statusText/reject} { path: 'count/reject', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/reject}" icon="sap-icon://circle-task-2" state="Indication04" />
         <ObjectStatus text="{statusText/complete} { path: 'count/complete', type: 'sap.ui.yesco.mvc.model.type.Currency' }" visible="{statusVisible/complete}" icon="sap-icon://circle-task-2" state="Indication05" />
       </HBox>
-      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/search/busy}" />
+      <Button icon="sap-icon://excel-attachment" text="Excel" press=".onPressExcelDownload" busyIndicatorDelay="0" busy="{/search/busy}">
+        <layoutData>
+          <FlexItemData styleClass="button-excel-attachment" />
+        </layoutData>
+      </Button>
     </HBox>
   </HBox>
 </core:FragmentDefinition>

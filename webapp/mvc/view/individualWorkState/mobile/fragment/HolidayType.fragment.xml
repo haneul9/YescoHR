@@ -1,18 +1,19 @@
 <core:FragmentDefinition xmlns="sap.m"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:core="sap.ui.core">
-	<VBox class="vCardBox small MultiBoxmobile">
-		<HBox class="title">
-			<Title level="H2" text="{i18n>LABEL_18006}" />
-			<Text text="{/FullYear}" class="desc-txt" />
-		</HBox>
-		<VBox class="section px-0">
-			<grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/VacaTypeList}">
-				<HBox class="mobileInnerBox">
-					<Label text="{Kotxt}" />
-					<Text text="{i18n>LABEL_18008} {Crecnt} / {i18n>LABEL_18009} {Usecnt} / {i18n>LABEL_18010} {Balcnt}" class="color-07" />
-				</HBox>
-			</grid:CSSGrid>
-		</VBox>
-	</VBox>
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox MultiBoxmobile">
+    <HBox class="title-bar">
+      <custom:Title text="{i18n>LABEL_18006}" />
+      <Text text="{/FullYear}" class="desc-txt" />
+    </HBox>
+    <VBox class="section px-0">
+      <grid:CSSGrid gridTemplateColumns="1fr" gridGap="0px" class="dl" items="{/VacaTypeList}">
+        <HBox class="mobileInnerBox">
+          <Label text="{Kotxt}" />
+          <Text text="{i18n>LABEL_18008} {Crecnt} / {i18n>LABEL_18009} {Usecnt} / {i18n>LABEL_18010} {Balcnt}" class="color-07" />
+        </HBox>
+      </grid:CSSGrid>
+    </VBox>
+  </VBox>
 </core:FragmentDefinition>

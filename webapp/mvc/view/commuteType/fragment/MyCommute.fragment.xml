@@ -1,10 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="hCardBox overview-box commute-type-overview" busyIndicatorDelay="0" busy="{/busy}">
     <VBox>
-      <HBox justifyContent="SpaceBetween" class="title">
-        <Title level="H2" text="{i18n>LABEL_30004}" />
-      </HBox>
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_30004" class="title" />
       <VBox class="desc pt-16-px">
         <Text text="{i18n>MSG_30001}" />
         <ObjectStatus text="{/MyCom/Rtext}" state="Indication05" class="work-schedule-text pl-0 pt-30-px font-26-px" />

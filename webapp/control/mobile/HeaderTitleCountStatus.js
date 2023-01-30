@@ -9,6 +9,7 @@ sap.ui.define(
     'sap/m/Link',
     'sap/m/Text',
     'sap/ui/core/Fragment',
+    'sap/ui/core/TitleLevel',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/control/Title',
   ],
@@ -22,6 +23,7 @@ sap.ui.define(
     Link,
     Text,
     Fragment,
+    TitleLevel,
     JSONModel,
     CustomTitle
   ) => {
@@ -42,7 +44,7 @@ sap.ui.define(
       </Text>
       <Link text="{/listInfo/infoMessage}" visible="{= !!${/listInfo/infoMessage} }" class="desc-txt" subtle="true" press=".onPressMobileInfoMessage">
         <layoutData>
-          <FlexItemData maxWidth="50%" />
+          <FlexItemData maxWidth="50%" styleClass="header-description" />
         </layoutData>
       </Link>
     </HBox>
@@ -56,11 +58,18 @@ sap.ui.define(
     return HBox.extend('sap.ui.yesco.control.mobile.HeaderTitleCountStatus', {
       metadata: {
         properties: {
-          titlePath: { type: 'string', group: 'Misc', defaultValue: 'i18n>LABEL_00129' },
+          title: { type: 'string', group: 'Misc', defaultValue: null }, // i18n 또는 hard coding
+          titlePath: { type: 'string', group: 'Misc', defaultValue: null }, // model path만 입력
+          titleLevel: { type: 'string', group: 'Misc', defaultValue: TitleLevel.H2 },
+          titleVisible: { type: 'string', group: 'Misc', defaultValue: null },
           countLabel: { type: 'string', group: 'Misc', defaultValue: 'total' },
           countPath: { type: 'string', group: 'Misc', defaultValue: null },
+          countVisible: { type: 'string', group: 'Misc', defaultValue: null },
+          infoMessage: { type: 'string', group: 'Misc', defaultValue: null },
           infoMessagePath: { type: 'string', group: 'Misc', defaultValue: null },
-          useInfoIcon: { type: 'boolean', group: 'Misc', defaultValue: true },
+          infoMessageUnderline: { type: 'boolean', group: 'Misc', defaultValue: true },
+          infoMessageVisible: { type: 'string', group: 'Misc', defaultValue: null },
+          infoIconVisible: { type: 'string', group: 'Misc', defaultValue: null },
         },
         events: {
           pressInfoIcon: {},
@@ -75,32 +84,18 @@ sap.ui.define(
         const oHeaderBox = new HBox().addStyleClass('header');
 
         // Header title
-        oHeaderBox.addItem(
-          new CustomTitle({
-            text: `{${this.getTitlePath()}}`,
-            headerTitle: true,
-          })
-        );
+        oHeaderBox.addItem(this.getTitleControl());
 
         // Header total count
-        oHeaderBox.addItem(
-          new Text({
-            text: `${this.getCountLabel()} { path: '${this.getCountPath()}', type: 'sap.ui.yesco.mvc.model.type.Currency' }`,
-            layoutData: new FlexItemData({ styleClass: 'header-count' }),
-          })
-        );
+        const oCountTextControl = this.getCountTextControl();
+        if (oCountTextControl) {
+          oHeaderBox.addItem(oCountTextControl);
+        }
 
         // Header info message
-        const sInfoMessagePath = this.getInfoMessagePath();
-        if (sInfoMessagePath) {
-          oHeaderBox.addItem(
-            new Link({
-              text: `{${sInfoMessagePath}}`,
-              subtle: true,
-              press: this.firePressInfoMessage.bind(this),
-              layoutData: new FlexItemData({ maxWidth: '50%' }),
-            }).addStyleClass('desc-txt')
-          );
+        const oInfoMessageLinkControl = this.getInfoMessageLinkControl();
+        if (oInfoMessageLinkControl) {
+          oHeaderBox.addItem(oInfoMessageLinkControl);
         }
 
         this.setJustifyContent(FlexJustifyContent.SpaceBetween) // prettier 방지용 주석
@@ -108,27 +103,87 @@ sap.ui.define(
           .addItem(oHeaderBox);
 
         // Header info icon
-        const bUseInfoIcon = this.getUseInfoIcon();
-        if (bUseInfoIcon) {
-          this.addItem(
-            new Image({
-              src: '/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg',
-              width: '16px',
-              height: '16px',
-              mode: ImageMode.Background,
-              backgroundPosition: 'center center',
-              backgroundSize: 'auto',
-              press: (oEvent) => {
-                this.callEventHandler(oEvent, oEvent.oSource.oParent.mEventRegistry.pressInfoIcon);
-              },
-              layoutData: new FlexItemData({ styleClass: 'header-info-icon' }),
-            })
-          );
+        const oInfoIconControl = this.getInfoIconControl();
+        if (oInfoIconControl) {
+          this.addItem(oInfoIconControl);
         }
       },
 
-      callEventHandler(oEvent, [{ oListener, fFunction }]) {
-        fFunction.call(oListener, oEvent);
+      // Header title
+      getTitleControl() {
+        const mSettings = {
+          level: this.getTitleLevel(),
+          headerTitle: true,
+        };
+
+        const sTitlePath = this.getTitlePath();
+        if (sTitlePath) {
+          mSettings.text = `{= \${${sTitlePath}} || \${i18n>LABEL_00129} }`; // 신청내역
+        } else {
+          mSettings.text = this.getTitle();
+        }
+
+        const sVisible = this.getTitleVisible();
+        if (sVisible) {
+          mSettings.visible = this.toBoolean(sVisible); // bindProperty function에는 {}없이 경로를 바로 입력
+        }
+
+        return new CustomTitle(mSettings);
+      },
+
+      // Header total count
+      getCountTextControl() {
+        const sCountPath = this.getCountPath();
+        if (!sCountPath) {
+          return null;
+        }
+
+        const mSettings = {
+          text: `${this.getCountLabel()} { path: '${sCountPath}', type: 'sap.ui.yesco.mvc.model.type.Currency' }`,
+          layoutData: new FlexItemData({ styleClass: 'header-count' }),
+        };
+
+        const sVisible = this.getCountVisible();
+        if (sVisible) {
+          mSettings.visible = this.toBoolean(sVisible);
+        }
+
+        return new Text(mSettings);
+      },
+
+      // Header info message
+      getInfoMessageLinkControl() {
+        let sText;
+        const sInfoMessagePath = this.getInfoMessagePath();
+        if (sInfoMessagePath) {
+          sText = `{${sInfoMessagePath}}`;
+        } else {
+          sText = this.getInfoMessage();
+        }
+        if (!sText) {
+          return null;
+        }
+
+        const mSettings = {
+          text: sText,
+          subtle: true,
+          press: this.firePressInfoMessage.bind(this),
+          layoutData: new FlexItemData({ styleClass: 'header-description' }),
+        };
+
+        const sVisible = this.getInfoMessageVisible();
+        if (sVisible) {
+          mSettings.visible = this.toBoolean(sVisible);
+        }
+
+        const oControl = new Link(mSettings);
+
+        const sInfoMessageUnderline = this.getInfoMessageUnderline();
+        if (sInfoMessageUnderline) {
+          oControl.addStyleClass('desc-txt ml-0');
+        }
+
+        return oControl;
       },
 
       async firePressInfoMessage(oEvent) {
@@ -150,6 +205,41 @@ sap.ui.define(
           this.oInfoMessagePopover.getModel().setProperty('/listInfo/infoMessage', sInfoMessage);
           this.oInfoMessagePopover.openBy(oLink);
         }
+      },
+
+      getInfoIconControl() {
+        const mSettings = {
+          src: '/sap/public/bc/ui2/zui5_yescohr/images/icon_tooltip.svg',
+          width: '16px',
+          height: '16px',
+          mode: ImageMode.Background,
+          backgroundPosition: 'center center',
+          backgroundSize: 'auto',
+          press: (oEvent) => {
+            this.callEventHandler(oEvent, oEvent.oSource.oParent.mEventRegistry.pressInfoIcon);
+          },
+          layoutData: new FlexItemData({ styleClass: 'header-info-icon' }),
+        };
+
+        const sVisible = this.getInfoIconVisible();
+        if (sVisible) {
+          mSettings.visible = this.toBoolean(sVisible);
+        }
+
+        return new Image(mSettings);
+      },
+
+      callEventHandler(oEvent, [{ oListener, fFunction }]) {
+        fFunction.call(oListener, oEvent);
+      },
+
+      toExpression(sVisible) {
+        return (sVisible || '').replace(/\[/g, '{').replace(/\]/g, '}');
+      },
+
+      toBoolean(sVisible) {
+        const sExpression = this.toExpression(sVisible);
+        return sExpression === 'true' ? true : sExpression === 'false' ? false : sExpression;
       },
 
       /**

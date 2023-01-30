@@ -1,35 +1,32 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core"
-    xmlns:custom="sap.ui.yesco.control">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <HBox class="title">
-                <Title level="H2" text="{i18n>LABEL_33006}" />
-                <Text text="{i18n>MSG_33002}" class="desc-txt" />
-            </HBox>
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_33007}" />
-            <VBox>
-                <Text text="{/data/Dat01}" />
-            </VBox>
-            <Label text="{i18n>LABEL_33008}" />
-            <HBox>
-                <Text text="{/data/Dat02}" />
-            </HBox>
-            <Label text="{i18n>LABEL_33013}" />
-            <HBox>
-                <ObjectStatus text="{/data/Dat07}" state="Indication05" />
-            </HBox>
-            <Label text="{i18n>LABEL_33011}" />
-            <VBox>
-                <Text text="{/data/Dat05}" />
-            </VBox>
-            <!-- <Label text="{i18n>LABEL_33012}" />
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_33006" infoMessagePath="i18n>MSG_33002" class="title" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_33007}" />
+      <VBox>
+        <Text text="{/data/Dat01}" />
+      </VBox>
+      <Label text="{i18n>LABEL_33008}" />
+      <HBox>
+        <Text text="{/data/Dat02}" />
+      </HBox>
+      <Label text="{i18n>LABEL_33013}" />
+      <HBox>
+        <ObjectStatus text="{/data/Dat07}" state="Indication05" />
+      </HBox>
+      <Label text="{i18n>LABEL_33011}" />
+      <VBox>
+        <Text text="{/data/Dat05}" />
+      </VBox>
+      <!-- <Label text="{i18n>LABEL_33012}" />
             <HBox>
                 <Text text="{/data/Dat06}" />
             </HBox> -->
-        </grid:CSSGrid>
-    </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

@@ -3,7 +3,7 @@
   xmlns:core="sap.ui.core"
   xmlns:custom="sap.ui.yesco.control">
   <!-- 기념일 -->
-  <VBox class="portlet portlet-box portlet-p09" tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
+  <VBox tooltip="{tooltip}" busy="{busy}" busyIndicatorDelay="0">
     <customData>
       <core:CustomData key="portlet-switchable" value="{switchable}" />
     </customData>
@@ -11,8 +11,12 @@
       <f:GridContainerItemLayoutData rows="{height}" columns="{width}" />
     </layoutData>
     <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
-      <Title level="H2" text="{title}" visible="{= !${hideTitle} }" />
-      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" />
+      <custom:Title text="{title}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <custom:DatePicker dateValue="{ path: 'selectedYearMonth', type: 'sap.ui.yesco.mvc.model.type.Month' }" change=".onChangeSelectedYearMonth" pickOnly="true" width="75px" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />
@@ -28,7 +32,7 @@
           <Image alt="{i18n>LABEL_01151}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_birthday.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
-          <ScrollContainer>
+          <ScrollContainer horizontal="false" vertical="true">
             <HBox width="100%" class="no-data" visible="{= ${birthday/listCount} === 0 }">
               <Text text="{i18n>MSG_00001}" />
             </HBox>
@@ -55,7 +59,7 @@
           <Image alt="{i18n>LABEL_01152}" src="/sap/public/bc/ui2/zui5_yescohr/images/icon_wedding.svg" width="20px" class="ml-5-px" />
         </HBox>
         <VBox height="calc(100% - 30px)" class="mt-10-px">
-          <ScrollContainer>
+          <ScrollContainer horizontal="false" vertical="true">
             <HBox width="100%" class="no-data" visible="{= ${wedding/listCount} === 0 }">
               <Text text="{i18n>MSG_00001}" />
             </HBox>

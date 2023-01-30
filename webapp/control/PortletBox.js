@@ -62,32 +62,41 @@ sap.ui.define(
         const oPortletHeader = new HBox({
           visible: '{= !${hideTitle} || ${switchable} }',
           items: [
-            new Title({ level: 'H2', text: '{title}', visible: '{= !${hideTitle} }' }), //
-            new Text({ text: '', layoutData: new FlexItemData({ growFactor: 1 }) }),
+            new Title({
+              level: 'H2',
+              text: '{title}',
+              visible: '{= !${hideTitle} }',
+              layoutData: new FlexItemData({ styleClass: 'portlet-header-title' }),
+            }),
+            new Text({
+              text: '',
+              layoutData: new FlexItemData({ growFactor: 1 }),
+            }),
             oCloseButton,
             oLinkButton,
           ],
         }).addStyleClass('portlet-header');
 
-        this.addItem(oPortletHeader).addItem(new HBox().addStyleClass('portlet-body'));
+        this.oPortletBody = new HBox().addStyleClass('portlet-body');
+
+        this.addItem(oPortletHeader).addItem(this.oPortletBody);
       },
 
-      /**
-       * @override
-       */
-      onBeforeRendering(...aArgs) {
-        VBox.prototype.onBeforeRendering.apply(this, aArgs);
+      setPortletBody(oPortletBody) {
+        this.oPortletBody = oPortletBody;
+        return this;
+      },
 
-        const oContext = this.getBindingContext();
-        const bBorderless = oContext.getProperty('borderless');
-        const sPortletKey = oContext.getProperty('key').toLowerCase();
-        const iPortletHeight = oContext.getProperty('height');
+      getPortletBody() {
+        return this.oPortletBody;
+      },
 
-        if (bBorderless) {
-          this.addStyleClass(`portlet portlet-${sPortletKey} portlet-h${iPortletHeight}`);
-        } else {
-          this.addStyleClass(`portlet portlet-box portlet-${sPortletKey} portlet-h${iPortletHeight}`);
+      togglePortletBodyStyleClass(sStyleClass, bAdd) {
+        if (!this.oPortletBody) {
+          this.setPortletBody(sap.ui.getCore().byId(this.$().find('.portlet-body').attr('id')));
         }
+        this.oPortletBody.toggleStyleClass(sStyleClass, bAdd);
+        return this;
       },
 
       onPressClose(oEvent) {

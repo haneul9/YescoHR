@@ -317,6 +317,10 @@ sap.ui.define(
         if (this.getViewModel().getProperty('/saved/selectedCondition') === 'ALL') return;
 
         MessageBox.confirm(this.getBundleText('MSG_35010'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           // 검색조건을 삭제하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;
@@ -355,6 +359,10 @@ sap.ui.define(
 
       onPressSaveConditions() {
         MessageBox.confirm(this.getBundleText('MSG_35008'), {
+          actions: [
+            MessageBox.Action.CANCEL, //
+            MessageBox.Action.OK,
+          ],
           // 검색조건을 저장하시겠습니까?
           onClose: (sAction) => {
             if (MessageBox.Action.CANCEL === sAction) return;

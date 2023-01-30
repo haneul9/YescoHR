@@ -1,12 +1,21 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:table="sap.ui.table"
   xmlns:core="sap.ui.core"
-  xmlns:u="sap.ui.unified">
+  xmlns:table="sap.ui.table"
+  xmlns:u="sap.ui.unified"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox id="ATTACHBOX" class="vCardBox" visible="{/Settings/Visible}">
     <HBox class="table-toolbar">
       <HBox class="title">
-        <Title level="H2" text="{/Settings/Title}" />
-        <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" class="desc-txt" />
+        <custom:Title text="{/Settings/Title}">
+          <custom:layoutData>
+            <FlexItemData styleClass="header-title" />
+          </custom:layoutData>
+        </custom:Title>
+        <Text text="{/Settings/Message}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/Message}}" class="desc-txt ml-0">
+          <layoutData>
+            <FlexItemData styleClass="header-description" />
+          </layoutData>
+        </Text>
         <Link text="{/Settings/LinkText}" visible="{= ${/Settings/Editable} &amp;&amp; !!${/Settings/LinkUrl}}" href="{/Settings/LinkUrl}"/>
       </HBox>
       <HBox class="table-actions">
@@ -19,7 +28,7 @@
         <Button icon="sap-icon://less" visible="{/Settings/Editable}" text="{i18n>LABEL_00110}" press=".AttachFileAction.onDeleteAttachFile" />
       </HBox>
     </HBox>
-    <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="45" rowHeight="44" visibleRowCount="1" rows="{/Data}" noData="{i18n>MSG_00001}">
+    <table:Table id="attachTable" width="100%" selectionMode="{/Settings/ListMode}" columnHeaderHeight="45" rowHeight="{/Settings/RowHeight}" visibleRowCount="1" rows="{/Data}" noData="{i18n>MSG_00001}">
       <table:columns>
         <table:Column width="4%">
           <Label text="No"/>

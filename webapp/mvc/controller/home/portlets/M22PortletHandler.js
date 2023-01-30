@@ -32,8 +32,7 @@ sap.ui.define(
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

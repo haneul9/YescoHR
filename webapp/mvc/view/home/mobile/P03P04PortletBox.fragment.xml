@@ -1,0 +1,151 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <!-- 임직원 현황 -->
+  <VBox class="portlet-p03p04 portlet-content-scrollable" busy="{busy}" busyIndicatorDelay="0">
+    <HBox class="portlet-header" visible="{= !${hideTitle} || ${switchable} }">
+      <custom:Title text="{=
+          ${selectedMembersButton} === 'ORG' ? ${orgMembers/title} : (
+          ${selectedMembersButton} === 'MY' ? ${myMembers/title} : ''
+        )}" visible="{= !${hideTitle} }">
+        <custom:layoutData>
+          <FlexItemData styleClass="portlet-header-title" />
+        </custom:layoutData>
+      </custom:Title>
+      <Text text="">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </Text>
+      <SegmentedButton selectedKey="{selectedMembersButton}" visible="{= !!${orgMembersActive} &amp;&amp; !!${myMembersActive} }">
+        <items>
+          <SegmentedButtonItem text="{i18n>LABEL_01111}" key="ORG" press=".onPressSegmentedButtonItem" />
+          <SegmentedButtonItem text="{i18n>LABEL_01112}" key="MY" press=".onPressSegmentedButtonItem" />
+        </items>
+      </SegmentedButton>
+      <!-- <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_write.png" iconDensityAware="false" type="Transparent" class="icon-button" visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" press=".onPressMyMemberAdd" />
+      <Button visible="{=
+        ${selectedMembersButton} === 'ORG' ? ${orgMembers/switchable} : (
+        ${selectedMembersButton} === 'MY' ? ${myMembers/switchable} : false
+      ) }" icon="sap-icon://decline" type="Transparent" class="icon-button portlet-close-icon" press=".onPressClose" tooltip="{i18n>LABEL_00200}" />
+      <Button visible="{=
+        ${selectedMembersButton} === 'ORG' ? ${orgMembers/hasLink} : (
+        ${selectedMembersButton} === 'MY' ? ${myMembers/hasLink} : false
+      ) }" icon="sap-icon://add" type="Transparent" class="icon-button portlet-link-icon" press=".onPressLink" tooltip="{i18n>LABEL_00342}" /> -->
+    </HBox>
+    <HBox class="portlet-body">
+      <VBox>
+        <layoutData>
+          <FlexItemData growFactor="1" maxWidth="100%" />
+        </layoutData>
+        <ScrollContainer visible="{= !!${orgMembersActive} &amp;&amp; ${selectedMembersButton} === 'ORG' }" horizontal="false" vertical="true">
+          <HBox width="100%" class="no-data" visible="{= ${orgMembers/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <VBox width="100%" items="{orgMembers/list}" visible="{= ${orgMembers/listCount} &gt; 0 }" class="portlet-members">
+            <custom:HBox press=".navToProfile" class="portlet-members-item">
+              <custom:customData>
+                <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
+              </custom:customData>
+              <Image src="{Photo}" mode="Background">
+                <layoutData>
+                  <FlexItemData styleClass="members-photo" />
+                </layoutData>
+              </Image>
+              <VBox class="members-name-position-box">
+                <Text text="{Ename}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-name" />
+                  </layoutData>
+                </Text>
+                <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-position" />
+                  </layoutData>
+                </Text>
+              </VBox>
+              <VBox class="members-worktime-organization-box">
+                <Text text="{Ztime}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-worktime" />
+                  </layoutData>
+                </Text>
+                <Text text="{Orgtx}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-organization" />
+                  </layoutData>
+                </Text>
+              </VBox>
+              <Text text="{Atext}">
+                <customData>
+                  <core:CustomData key="portlet-members-box" value="Z{Atext}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="members-status" />
+                </layoutData>
+              </Text>
+            </custom:HBox>
+          </VBox>
+        </ScrollContainer>
+        <ScrollContainer visible="{= !!${myMembersActive} &amp;&amp; ${selectedMembersButton} === 'MY' }" horizontal="false" vertical="true">
+          <HBox width="100%" class="no-data" visible="{= ${myMembers/listCount} === 0 }">
+            <Text text="{i18n>MSG_00001}" />
+          </HBox>
+          <VBox width="100%" items="{myMembers/list}" visible="{= ${myMembers/listCount} &gt; 0 }" class="portlet-members my-members">
+            <custom:HBox press=".navToProfile" class="portlet-members-item">
+              <custom:customData>
+                <core:CustomData key="navigable" value="{Navigable}" writeToDom="true" />
+              </custom:customData>
+              <Image src="{Photo}" mode="Background">
+                <layoutData>
+                  <FlexItemData styleClass="members-photo" />
+                </layoutData>
+              </Image>
+              <VBox class="members-name-position-box">
+                <Text text="{Ename}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-name" />
+                  </layoutData>
+                </Text>
+                <Text text="{ path: 'Zzjikgbt', type: 'sap.ui.yesco.mvc.model.type.ShortPosition' }" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-position" />
+                  </layoutData>
+                </Text>
+              </VBox>
+              <VBox class="members-worktime-organization-box">
+                <Text text="{Ztime}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-worktime" />
+                  </layoutData>
+                </Text>
+                <Text text="{Orgtx}" wrapping="false">
+                  <layoutData>
+                    <FlexItemData styleClass="members-organization" />
+                  </layoutData>
+                </Text>
+              </VBox>
+              <Text text="{Atext}">
+                <customData>
+                  <core:CustomData key="portlet-members-box" value="Z{Atext}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-status" value="{Icon}" writeToDom="true" />
+                  <core:CustomData key="portlet-members-flextime" value="{Flextime}" writeToDom="true" />
+                </customData>
+                <layoutData>
+                  <FlexItemData styleClass="members-status" />
+                </layoutData>
+              </Text>
+              <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_remove.png" iconDensityAware="false" type="Transparent" class="icon-button" press=".onPressMyMemberRemove">
+                <layoutData>
+                  <FlexItemData styleClass="members-remove" />
+                </layoutData>
+              </Button>
+            </custom:HBox>
+          </VBox>
+        </ScrollContainer>
+      </VBox>
+    </HBox>
+  </VBox>
+</core:FragmentDefinition>

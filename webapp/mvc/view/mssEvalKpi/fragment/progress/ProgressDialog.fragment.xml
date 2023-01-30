@@ -7,14 +7,38 @@
       <Button text="{i18n>LABEL_00115}" press=".onCloseClick" class="cancel" />
     </buttons>
     <content>
-      <HBox alignItems="Center" class="table-toolbar">
+      <HBox class="table-toolbar mb-3-px">
         <HBox class="title">
-          <Title level="H4" text="{/title/year}" />
-          <Title level="H4" text="{/title/name}" class="color-08 mx-5-px" />
-          <Title level="H4" text="-" />
-          <Title level="H4" text="{/title/part}" class="color-03 mx-5-px" />
-          <Title level="H4" text="{i18n>LABEL_15027}" />
-          <Text text="{i18n>MSG_15007}" class="desc-txt ml-15-px" />
+          <Title level="H4" text="{/title/year}">
+            <layoutData>
+              <FlexItemData styleClass="header-title" />
+            </layoutData>
+          </Title>
+          <Title level="H4" text="{/title/name}" class="color-08 mx-5-px">
+            <layoutData>
+              <FlexItemData styleClass="header-title" />
+            </layoutData>
+          </Title>
+          <Title level="H4" text="-">
+            <layoutData>
+              <FlexItemData styleClass="header-title" />
+            </layoutData>
+          </Title>
+          <Title level="H4" text="{/title/part}" class="color-03 mx-5-px">
+            <layoutData>
+              <FlexItemData styleClass="header-title" />
+            </layoutData>
+          </Title>
+          <Title level="H4" text="{i18n>LABEL_15027}">
+            <layoutData>
+              <FlexItemData styleClass="header-title" />
+            </layoutData>
+          </Title>
+          <Text text="{i18n>MSG_15007}" class="desc-txt">
+            <layoutData>
+              <FlexItemData styleClass="header-description mb-3-px" />
+            </layoutData>
+          </Text>
         </HBox>
       </HBox>
       <grid:CSSGrid gridTemplateColumns="100px repeat(12, 1fr)" gridGap="1px 0" class="form-grid" items="{/detail}">

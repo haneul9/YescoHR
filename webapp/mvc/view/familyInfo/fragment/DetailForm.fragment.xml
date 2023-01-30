@@ -4,7 +4,7 @@
   xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
     <HBox alignItems="Center" class="table-toolbar">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00129" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_00210}" />
@@ -16,14 +16,11 @@
       </HBox>
       <Label text="{i18n>LABEL_05006}" />
       <VBox>
-        <Input value="{
-                    path: '/FormData/Regno',
-                    formatter: '.setResident'
-                }" liveChange=".ResidentNumber" maxLength="{/FieldLimit/Regno}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required"/>
+        <Input value="{ path: '/FormData/Regno', formatter: '.setResident' }" liveChange=".ResidentNumber" maxLength="{/FieldLimit/Regno}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required" />
       </VBox>
       <Label text="{i18n>LABEL_05007}"/>
       <VBox>
-        <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" change=".onSchoolList" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
+        <ComboBox items="{/Relations}" selectedKey="{/FormData/Kdsvh}" editable="{= !${/FormData/ZappStatAl} || ${/Fixed} }" class="required">
           <core:Item text="{Atext}" key="{Auspr}" />
         </ComboBox>
       </VBox>

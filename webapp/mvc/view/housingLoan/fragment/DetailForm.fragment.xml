@@ -1,108 +1,109 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
-            <Label text="{i18n>LABEL_07002}" />
-            <VBox>
-                <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-                <Input value="{/FormData/Lntyptx}" maxLength="{/FieldLimit/Lntyptx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
-            </VBox>
-            <Label text="{i18n>LABEL_00261}" />
-            <VBox>
-                <Text text="{/FormData/Lnstatx}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_07019}"/>
-            <VBox>
-                <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-                <Input value="{/FormData/Asmtdtx}" maxLength="{/FieldLimit/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
-            </VBox>
-            <Label text="{= ${/HideBox} ? ${i18n>LABEL_07020} : '' }"/>
-            <VBox>
-                <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" visible="{/HideBox}" class="required">
-                    <core:Item text="{Ztext}" key="{Zcode}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_07021}" visible="{/HideBox}"/>
-            <HBox visible="{/HideBox}">
-                <Input value="{/FormData/Zsize}" maxLength="6" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
-                <Text text="{/baseArea/Text}"/>
-            </HBox>
-            <Label text="{i18n>LABEL_00152}" visible="{/HideBox}"/>
-            <VBox visible="{/HideBox}">
-                <Input value="{/FormData/Addre}" maxLength="{/FieldLimit/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_07022}"/>
-            <HBox>
-                <Input value="{
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00129" class="title" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0px" class="form-grid">
+      <Label text="{i18n>LABEL_07002}" />
+      <VBox>
+        <ComboBox items="{/LaonType}" selectedKey="{/FormData/Lntyp}" change=".onLaonType" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+        <Input value="{/FormData/Lntyptx}" maxLength="{/FieldLimit/Lntyptx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
+      </VBox>
+      <Label text="{i18n>LABEL_00261}" />
+      <VBox>
+        <Text text="{/FormData/Lnstatx}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_07019}"/>
+      <VBox>
+        <ComboBox items="{/AssuranceType}" selectedKey="{/FormData/Asmtd}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+        <Input value="{/FormData/Asmtdtx}" maxLength="{/FieldLimit/Asmtdtx}" editable="false" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" />
+      </VBox>
+      <Label text="{= ${/HideBox} ? ${i18n>LABEL_07020} : '' }"/>
+      <VBox>
+        <ComboBox items="{/HouseType}" selectedKey="{/FormData/Htype}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" visible="{/HideBox}" class="required">
+          <core:Item text="{Ztext}" key="{Zcode}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{i18n>LABEL_07021}" visible="{/HideBox}"/>
+      <HBox visible="{/HideBox}">
+        <Input value="{/FormData/Zsize}" maxLength="6" liveChange=".areaSize" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
+        <Text text="{/baseArea/Text}"/>
+      </HBox>
+      <Label text="{i18n>LABEL_00152}" visible="{/HideBox}"/>
+      <VBox visible="{/HideBox}">
+        <Input value="{/FormData/Addre}" maxLength="{/FieldLimit/Addre}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_07022}"/>
+      <HBox>
+        <Input value="{
                     path: '/FormData/Lnamt',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
                 }" liveChange=".loanCost" maxLength="16" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" class="sapUiTinyMarginEnd required"/>
-                <Text text="{/loanAmount/Text}"/>
-            </HBox>
-            <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
-            <HBox visible="{= !!${/FormData/Lnsta} }">
-                <Text text="{
+        <Text text="{/loanAmount/Text}"/>
+      </HBox>
+      <Label text="{i18n>LABEL_00266}" visible="{= !!${/FormData/Lnsta} }"/>
+      <HBox visible="{= !!${/FormData/Lnsta} }">
+        <Text text="{
                     path: '/FormData/Appda',
                     type: 'sap.ui.yesco.mvc.model.type.Date'
                 }"/>
-            </HBox>
-            <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
-            <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
-            <Label text="{i18n>LABEL_07023}"/>
-            <VBox>
-                <Text text="{/FormData/Hdprd}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_02012}" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
-            <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-                <Text text="{
+      </HBox>
+      <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
+      <HBox visible="{= !${/FormData/Lnsta} }"></HBox>
+      <Label text="{i18n>LABEL_07023}"/>
+      <VBox>
+        <Text text="{/FormData/Hdprd}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_02012}" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
+      <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+        <Text text="{
                     path: '/FormData/Begda',
                     type: 'sap.ui.yesco.mvc.model.type.Date'
                 }" />
-            </VBox>
-            <Label text="{i18n>LABEL_07024}"/>
-            <VBox>
-                <Text text="{
+      </VBox>
+      <Label text="{i18n>LABEL_07024}"/>
+      <VBox>
+        <Text text="{
                     path: '/FormData/RpamtMon',
                     type: 'sap.ui.yesco.mvc.model.type.Currency'
                 }"/>
-            </VBox>
-            <Label text="{i18n>LABEL_07004}" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
-            <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
-                <Text text="{
+      </VBox>
+      <Label text="{i18n>LABEL_07004}" visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }"/>
+      <VBox visible="{= ${/FormData/Lnsta} === '40' || ${/FormData/Lnsta} === '60' }">
+        <Text text="{
                     path: '/FormData/Endda',
                     type: 'sap.ui.yesco.mvc.model.type.Date'
                 }" />
-            </VBox>
-            <Label text="{i18n>LABEL_07025}"/>
-            <VBox>
-                <Text text="{/FormData/Lnprd}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_07026}"/>
-            <VBox>
-                <Text text="{/FormData/Lnrte}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_00163}"/>
-            <VBox>
-                <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-            <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }" />
-            <VBox visible="{= !!${/FormData/ZappResn} }">
-                <Text text="{/FormData/ZappResn}" />
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-        </grid:CSSGrid>
-    </VBox>
+      </VBox>
+      <Label text="{i18n>LABEL_07025}"/>
+      <VBox>
+        <Text text="{/FormData/Lnprd}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_07026}"/>
+      <VBox>
+        <Text text="{/FormData/Lnrte}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_00163}"/>
+      <VBox>
+        <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" editable="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+      <Label text="{i18n>LABEL_00142}" visible="{= !!${/FormData/ZappResn} }" />
+      <VBox visible="{= !!${/FormData/ZappResn} }">
+        <Text text="{/FormData/ZappResn}" />
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

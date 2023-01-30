@@ -6,46 +6,49 @@
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
       <mobile:ScrollContainer>
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <VBox>
-            <custom:Title text="{i18n>LABEL_33002}" />
-            <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
-              <Label text="{i18n>LABEL_33004}" />
-              <VBox>
-                <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" />
-              </VBox>
-              <Label text="{i18n>LABEL_33003}" />
-              <VBox>
-                <Text text="{ path:'/data/Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-              </VBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
-
-          <VBox class="pt-20-px">
-            <Title level="H2" text="{i18n>LABEL_33006}" />
-            <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
-              <Label text="{i18n>LABEL_33007}" />
-              <VBox>
-                <Text text="{/data/Dat01}" />
-              </VBox>
-              <Label text="{i18n>LABEL_33008}" />
-              <HBox>
-                <Text text="{/data/Dat02}" />
-              </HBox>
-              <Label text="{i18n>LABEL_33011}" />
-              <VBox>
-                <Text text="{/data/Dat05}" />
-              </VBox>
-              <!-- <Label text="{i18n>LABEL_33012}" />
+        <VBox class="wrap">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <custom:Title text="{i18n>LABEL_33002}" />
+            </HBox>
+          </HBox>
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
+            <Label text="{i18n>LABEL_33004}" />
+            <VBox>
+              <custom:DatePicker id="RetdaDatePicker" dateValue="{ path: '/data/Retda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="required" />
+            </VBox>
+            <Label text="{i18n>LABEL_33003}" />
+            <VBox>
+              <Text text="{ path:'/data/Entda', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
+            </VBox>
+          </mobile:DetailCSSGrid>
+          <HBox class="table-toolbar mt-20-px">
+            <HBox class="title">
+              <custom:Title text="{i18n>LABEL_33006}" />
+            </HBox>
+          </HBox>
+          <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
+            <Label text="{i18n>LABEL_33007}" />
+            <VBox>
+              <Text text="{/data/Dat01}" />
+            </VBox>
+            <Label text="{i18n>LABEL_33008}" />
+            <HBox>
+              <Text text="{/data/Dat02}" />
+            </HBox>
+            <Label text="{i18n>LABEL_33011}" />
+            <VBox>
+              <Text text="{/data/Dat05}" />
+            </VBox>
+            <!-- <Label text="{i18n>LABEL_33012}" />
 							<HBox>
 								<Text text="{/data/Dat06}" />
 							</HBox> -->
-              <Label text="{i18n>LABEL_33013}" />
-              <HBox>
-                <ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />
-              </HBox>
-            </mobile:DetailCSSGrid>
-          </VBox>
+            <Label text="{i18n>LABEL_33013}" />
+            <HBox>
+              <ObjectStatus text="{/data/Dat07}" state="Indication05" class="font-18-px font-bold" />
+            </HBox>
+          </mobile:DetailCSSGrid>
         </VBox>
       </mobile:ScrollContainer>
     </VBox>

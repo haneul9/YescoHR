@@ -1,13 +1,21 @@
 /* eslint-disable quote-props */
 sap.ui.define(
   [
-    'sap/ui/yesco/common/AppUtils', //
+    //
+    'sap/ui/yesco/common/AppUtils',
     'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/odata/ServiceManager',
     'sap/ui/yesco/common/odata/ServiceNames',
     'sap/ui/yesco/control/MessageBox',
   ],
-  (AppUtils, JSONModel, ServiceManager, ServiceNames, MessageBox) => {
+  (
+    //
+    AppUtils,
+    JSONModel,
+    ServiceManager,
+    ServiceNames,
+    MessageBox
+  ) => {
     'use strict';
 
     return {
@@ -36,6 +44,7 @@ sap.ui.define(
             LinkUrl: null,
             Visible: true,
             maximumFileSize: 10,
+            RowHeight: AppUtils.isMobile() ? 39 : 44,
           },
           opt
         );
@@ -441,6 +450,7 @@ sap.ui.define(
         const sPath = '/Data';
         const aFileDatas = oJSonModel.getProperty(sPath);
         const aContexts = oTable.getSelectedIndices();
+        const aActions = [MessageBox.Action.YES, MessageBox.Action.NO];
 
         if (!aContexts.length) {
           MessageBox.alert(this.getBundleText('MSG_00018')); // 삭제할 파일을 선택하세요.
@@ -448,7 +458,7 @@ sap.ui.define(
         }
 
         MessageBox.confirm(this.getBundleText('MSG_00019'), {
-          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          actions: AppUtils.isMobile() ? _.reverse(aActions) : aActions,
           onClose: (fVal) => {
             if (fVal === MessageBox.Action.YES) {
               const aSelectFiles = [];

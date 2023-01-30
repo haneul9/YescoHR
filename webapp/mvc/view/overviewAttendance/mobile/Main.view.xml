@@ -15,10 +15,10 @@
             <FlexItemData maxWidth="67%" />
           </layoutData>
           <custom:DatePicker width="100%" dateValue="{ path: '/searchConditions/Datum', type: 'sap.ui.yesco.mvc.model.type.Date' }" />
-          <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" items="{/entry/Werks}" selectedKey="{/searchConditions/Werks}" selectionChange=".onChangeWerks">
             <core:Item text="{Pbtxt}" key="{Werks}" />
           </custom:SingleComboBox>
-          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}" class="sapUiTinyMarginTop">
+          <custom:SingleComboBox width="100%" items="{/entry/Orgeh}" selectedKey="{/searchConditions/Orgeh}">
             <core:Item text="{Orgtx}" key="{Orgeh}" />
           </custom:SingleComboBox>
         </VBox>
@@ -27,11 +27,11 @@
             <FlexItemData growFactor="1" maxWidth="33%" />
           </layoutData>
           <Button press=".onPressSearchAreaToggle" width="100%" class="icon-button close expanded" />
-          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" class="sapUiTinyMarginTop" />
+          <Button text="{i18n>LABEL_00100}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_search03.png" iconDensityAware="false" press=".onPressSearch" width="100%" />
         </VBox>
       </HBox>
       <mobile:ScrollContainer>
-        <VBox class="overviews row-280-px mb-11-px">
+        <VBox class="overviews row-280-px mb-11-px px-11-px">
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A01" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A02" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.mvc.view.overviewAttendance.fragment.A03" type="XML" />

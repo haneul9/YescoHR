@@ -5,48 +5,47 @@
   xmlns:custom="sap.ui.yesco.control"
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page title="{menuModel>/current/currentLocationText}" showFooter="{= !${/FormData/ZappStatAl} || ${/FormData/ZappStatAl} === '20' }" navButtonPress=".onNavBack">
-    <mobile:customData>
-      <core:CustomData key="form-style" value="{= ${/FormData/ZappStatAl} === '10' || !${/FormData/ZappStatAl} ? 'request' : 'retrieval' }" writeToDom="true" />
-    </mobile:customData>
     <VBox class="contents">
       <mobile:ScrollContainer>
-        <VBox busyIndicatorDelay="0" busy="{/busy}" class="wrap">
-          <custom:Title text="{i18n>LABEL_00129}" />
+        <VBox class="wrap">
+          <HBox class="table-toolbar">
+            <HBox class="title">
+              <custom:Title text="{i18n>LABEL_00129}" />
+            </HBox>
+          </HBox>
           <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_26008}"/>
-            <VBox>
-              <custom:SingleComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" selectionChange=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
-                <core:Item text="{Ztext}" key="{Zcode}" />
-              </custom:SingleComboBox>
-            </VBox>
+            <custom:SingleComboBox items="{/AccType}" selectedKey="{/FormData/Acctty}" selectionChange=".onAccChange" editable="{= !${/FormData/ZappStatAl} }" class="required">
+              <core:Item text="{Ztext}" key="{Zcode}" />
+            </custom:SingleComboBox>
+
             <Label text="{= !${/FormData/ZappStatAl} ? ${i18n>LABEL_26009} : ${i18n>LABEL_25018} }"/>
             <HBox justifyContent="SpaceBetween">
               <CheckBox selected="{= ${/FormData/Chkyn} === 'X' }" editable="false" visible="{= !${/FormData/ZappStatAl} }" />
-              <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }" />
+              <Button text="{i18n>LABEL_26009}" press=".onAccNameCheck" visible="{= !${/FormData/ZappStatAl} }">
+                <layoutData>
+                  <FlexItemData styleClass="in-form-button" />
+                </layoutData>
+              </Button>
               <Text text="{/FormData/Ename}" visible="{= !!${/FormData/ZappStatAl} }" />
             </HBox>
+
             <Label text="{i18n>LABEL_26010}"/>
-            <VBox>
-              <custom:SingleComboBox id="accountBankl" items="{/BankList}" selectedKey="{/FormData/Bankl}" selectionChange=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
-                <core:Item text="{Banka}" key="{Bankl}" />
-              </custom:SingleComboBox>
-            </VBox>
+            <custom:SingleComboBox id="accountBankl" items="{/BankList}" selectedKey="{/FormData/Bankl}" selectionChange=".onBankList" editable="{= !${/FormData/ZappStatAl} }" class="required">
+              <core:Item text="{Banka}" key="{Bankl}" />
+            </custom:SingleComboBox>
+
             <Label text="{i18n>LABEL_26011}"/>
-            <VBox>
-              <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
-            </VBox>
+            <Input value="{/FormData/Bankn}" maxLength="{/FieldLimit/Bankn}" liveChange=".onAccChangeInput" editable="{= !${/FormData/ZappStatAl} }" />
+
             <Label text="{i18n>LABEL_26012}"/>
-            <VBox>
-              <Text text="{/FormData/BankaBef}"/>
-            </VBox>
+            <Text text="{/FormData/BankaBef}"/>
+
             <Label text="{i18n>LABEL_26013}"/>
-            <VBox>
-              <Text text="{/FormData/BanknBef}"/>
-            </VBox>
+            <Text text="{/FormData/BanknBef}"/>
+
             <Label text="{i18n>LABEL_26006}"/>
-            <VBox>
-              <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" width="230px" editable="{= !${/FormData/ZappStatAl} }" />
-            </VBox>
+            <DatePicker displayFormat="yyyy-MM" value="{/FormData/PayYearMon}" change=".onDatePick" editable="{= !${/FormData/ZappStatAl} }" class="sapIcon_Date" />
           </mobile:DetailCSSGrid>
           <core:Fragment fragmentName="sap.ui.yesco.fragment.CommonAttachFile" type="XML" />
           <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.ApplyInfo" type="XML" />

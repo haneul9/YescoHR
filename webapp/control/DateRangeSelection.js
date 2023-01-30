@@ -3,12 +3,14 @@ sap.ui.define(
     // prettier 방지용 주석
     'sap/m/DateRangeSelection',
     'sap/m/ButtonType',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
     // prettier 방지용 주석
     DateRangeSelection,
     ButtonType,
+    JSONModel,
     AppUtils
   ) => {
     'use strict';
@@ -23,16 +25,23 @@ sap.ui.define(
       constructor: function (...aArgs) {
         DateRangeSelection.apply(this, aArgs);
 
-        let Dtfmt;
+        let sPatternModelPath;
+
         const oBindingValueType = (this.getBindingInfo('value') || this.getBindingInfo('dateValue') || {}).type;
-        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom')) {
-          Dtfmt = oBindingValueType.oFormatOptions.pattern;
-        }
-        if (!Dtfmt) {
-          Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
+        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom') && (oBindingValueType.oFormatOptions || {}).pattern) {
+          const sModelName = `datePatternModel-${this.getId()}`;
+          AppUtils.getAppComponent().setModel(new JSONModel({ Dtfmt: oBindingValueType.oFormatOptions.pattern }), sModelName);
+
+          sPatternModelPath = `${sModelName}>/Dtfmt`;
+        } else {
+          sPatternModelPath = 'appointeeModel>/Dtfmt';
         }
 
-        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(`${Dtfmt} - ${Dtfmt}`).addStyleClass('sapIcon_Date');
+        this.setShowFooter(true)
+          .bindProperty('valueFormat', sPatternModelPath)
+          .bindProperty('displayFormat', sPatternModelPath)
+          // .bindProperty('placeholder', `${sPatternModelPath} - ${sPatternModelPath}`)
+          .addStyleClass('sapIcon_Date');
       },
 
       _createPopup() {

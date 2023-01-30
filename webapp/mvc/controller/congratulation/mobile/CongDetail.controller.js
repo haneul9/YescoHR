@@ -435,7 +435,7 @@ sap.ui.define(
           const aChildList = oTargetList.filter((e) => !_.isEmpty(oTargetList) && e.Kdsvh === mFormData.Kdsvh);
 
           if (_.isEmpty(aChildList)) {
-            return MessageBox.alert(this.getBundleText('MSG_03006'));
+            return MessageBox.alert(this.getBundleText('MSG_03006')); // 해당하는 대상자 정보가 없습니다. \n 가족정보를 추가하시거나, 성명을 직접 입력하시기 바랍니다.
           }
 
           oViewModel.setProperty('/TargetList', aChildList);
@@ -453,19 +453,18 @@ sap.ui.define(
 
       // Dialog 대상자 클릭
       TargetClick(oEvent) {
-        const vPath = oEvent.getParameters().rowBindingContext.getPath();
+        const { Zbirthday, Kdsvh, Zname } = oEvent.getSource().getBindingContext().getProperty();
         const oViewModel = this.getViewModel();
-        const oRowData = oViewModel.getProperty(vPath);
 
-        oViewModel.setProperty('/FormData/Zbirthday', oRowData.Zbirthday);
-        oViewModel.setProperty('/FormData/Kdsvh', oRowData.Kdsvh);
-        oViewModel.setProperty('/FormData/Zname', oRowData.Zname);
+        oViewModel.setProperty('/FormData/Zbirthday', Zbirthday);
+        oViewModel.setProperty('/FormData/Kdsvh', Kdsvh);
+        oViewModel.setProperty('/FormData/Zname', Zname);
 
         const sAddDate = oViewModel.getProperty('/benefitDate');
-
-        if (!!sAddDate) {
-          oViewModel.setProperty('/FormData/Conddate', moment(oRowData.Zbirthday).add('year', sAddDate).toDate());
+        if (sAddDate) {
+          oViewModel.setProperty('/FormData/Conddate', moment(Zbirthday).add('year', sAddDate).toDate());
         }
+
         this.oDialog.close();
       },
 
@@ -539,8 +538,8 @@ sap.ui.define(
         // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
           actions: [
-            this.getBundleText('LABEL_00103'), // 저장
             this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00103'), // 저장
           ],
           onClose: async (vPress) => {
             // 저장
@@ -592,8 +591,8 @@ sap.ui.define(
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
           actions: [
-            this.getBundleText('LABEL_00121'), // 신청
             this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00121'), // 신청
           ],
           onClose: async (vPress) => {
             // 신청
@@ -646,8 +645,10 @@ sap.ui.define(
       onCancelBtn() {
         // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          // 확인, 취소
-          actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00114'), // 확인
+          ],
           onClose: async (vPress) => {
             // 취소
             if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
@@ -687,8 +688,10 @@ sap.ui.define(
       onDeleteBtn() {
         // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00110'), // 삭제
+          ],
           onClose: async (vPress) => {
             // 삭제
             if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {

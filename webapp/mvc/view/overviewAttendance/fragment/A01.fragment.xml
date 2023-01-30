@@ -4,7 +4,7 @@
   xmlns:grid="sap.ui.layout.cssgrid">
   <VBox class="portlet portlet-box portlet-p06" visible="{= !${/contents/A01/busy} }">
     <HBox class="portlet-header">
-      <Title level="H2" text="{i18n>LABEL_28022}" />
+      <custom:Title text="{i18n>LABEL_28022}" />
       <Text text="">
         <layoutData>
           <FlexItemData growFactor="1" />

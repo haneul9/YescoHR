@@ -24,20 +24,20 @@ sap.ui.define(
       sChartId: 'portlet-p10-chart',
       oChartPromise: null,
 
+      getPortletHeightStyleClass(oPortletModel) {
+        const iPortletHeight = oPortletModel.getProperty('/height') || 0;
+        return this.bMobile ? 'portlet-h2' : `portlet-h${iPortletHeight}`;
+      },
+
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
-        const sFragmentName = this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P10PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox';
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: sFragmentName,
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P10PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P10PortletBox',
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox
-          .setModel(oPortletModel)
-          .bindElement('/')
-          .addStyleClass(this.bMobile ? 'portlet-h2' : `portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -124,10 +124,15 @@ sap.ui.define(
           }
         }, 300);
 
+        const iListCount = aList.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 9); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           description: `${aPortletContentData.ZzapstsNm}/${aPortletContentData.ZzapstsSubnm}`,
           list: aList,
-          listCount: aList.length,
+          listCount: iListCount,
           aChartData,
         };
       },

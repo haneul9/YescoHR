@@ -1,9 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-    <HBox alignItems="Center" class="table-toolbar" justifyContent="SpaceBetween">
-      <Title level="H2" text="{i18n>LABEL_00129}" />
+    <HBox class="table-toolbar">
+      <custom:Title text="{i18n>LABEL_00129}" />
       <HBox class="button-group">
         <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" visible="{/Fixed}" press=".onAddDetail" />
         <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" visible="{/Fixed}" press=".onDelDetail" />

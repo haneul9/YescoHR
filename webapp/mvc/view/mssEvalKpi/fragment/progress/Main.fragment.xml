@@ -31,9 +31,7 @@
           <table:Table id="progressTable" rows="{/List}" visibleRowCount="{/listInfo/rowCount}" width="100%" busyIndicatorDelay="0" busy="{/busy}" selectionMode="None" columnHeaderHeight="45" rowHeight="44" noData="{i18n>MSG_00001}">
             <table:extension>
               <HBox class="table-toolbar">
-                <HBox class="title">
-                  <Title level="H4" text="{i18n>LABEL_15024}" />
-                </HBox>
+                <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_15024" class="title" />
               </HBox>
             </table:extension>
             <table:columns>

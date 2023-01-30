@@ -19,9 +19,7 @@
       <core:Fragment fragmentName="sap.ui.yesco.fragment.AppointeeBar" type="XML" />
       <VBox class="vCardBox">
         <HBox class="table-toolbar" justifyContent="SpaceBetween">
-          <HBox alignItems="Center" class="title">
-            <Title level="H2" text="{i18n>LABEL_00129}" />
-          </HBox>
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00129" class="title" />
           <HBox class="table-actions">
             <Button icon="sap-icon://add" text="{i18n>LABEL_00107}" press=".onPressAddBtn" visible="{= !${/ZappStatAl} }" />
             <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" enabled="{= ${/form/hasRow}}" />

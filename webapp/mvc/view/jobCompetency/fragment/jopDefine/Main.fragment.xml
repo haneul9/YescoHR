@@ -44,7 +44,7 @@
       <!-- <ScrollContainer height="69vh" width="100%" vertical="true"> -->
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22015}" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_22015" class="title" />
         </HBox>
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H4" text="{i18n>LABEL_22016}" />
@@ -65,7 +65,7 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22019}" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_22019" class="title" />
         </HBox>
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H4" text="{i18n>LABEL_22020}" />
@@ -86,7 +86,7 @@
       </VBox>
       <VBox class="vCardBox sapUiMediumMarginBottom">
         <HBox alignItems="Center" class="table-toolbar">
-          <Title level="H2" text="{i18n>LABEL_22023}" />
+          <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_22023" class="title" />
         </HBox>
         <HBox alignItems="Center" class="table-toolbar">
           <Title level="H4" text="{i18n>LABEL_22024}" />

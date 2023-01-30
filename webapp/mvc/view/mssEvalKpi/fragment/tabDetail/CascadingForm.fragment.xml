@@ -2,9 +2,10 @@
   xmlns:core="sap.ui.core"
   xmlns:dnd="sap.ui.core.dnd"
   xmlns:dnd-grid="sap.f.dnd"
-  xmlns:table="sap.ui.table">
+  xmlns:table="sap.ui.table"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox class="vCardBox">
-    <HBox class="form-bar" justifyContent="Start" alignItems="Center">
+    <HBox class="form-bar" alignItems="Center">
       <Label text="{i18n>LABEL_00237}" />
       <ComboBox items="{/CompanyCode}" selectedKey="{/search/Werks}" change=".onCompSelect">
         <core:Item text="{Pbtxt}" key="{Werks}" />
@@ -25,16 +26,22 @@
       <table:extension>
         <HBox class="table-toolbar">
           <HBox class="title">
-            <Title level="H4" text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} } {i18n>LABEL_15008}" />
-            <HBox>
-              <Text text="{i18n>MSG_15003}" class="desc-txt"/>
-            </HBox>
+            <custom:Title text="{= ${/tab/selectedKey} === 'A' ? ${i18n>LABEL_15006} : ${i18n>LABEL_15007} } {i18n>LABEL_15008}">
+              <custom:layoutData>
+                <FlexItemData styleClass="header-title" />
+              </custom:layoutData>
+            </custom:Title>
+            <Text text="{i18n>MSG_15003}" class="desc-txt">
+              <layoutData>
+                <FlexItemData styleClass="header-description" />
+              </layoutData>
+            </Text>
           </HBox>
         </HBox>
       </table:extension>
       <table:dragDropConfig>
         <dnd:DragInfo groupName="moveToTable2" sourceAggregation="rows" dragStart=".onDragStart" />
-        <dnd-grid:GridDropInfo dropPosition="Between" dropLayout="Default" drop=".onDropTable" />
+        <dnd-grid:GridDropInfo dropPosition="Between" drop=".onDropTable" />
       </table:dragDropConfig>
       <table:columns>
         <table:Column width="150px">
@@ -55,7 +62,7 @@
         <table:Column width="auto">
           <Label text="{i18n>LABEL_15011}"/>
           <table:template>
-            <Text text="{Ztext}" textAlign="Begin" width="100%" wrapping="false" />
+            <Text text="{Ztext}" width="100%" wrapping="false" />
           </table:template>
         </table:Column>
         <table:Column width="100px">

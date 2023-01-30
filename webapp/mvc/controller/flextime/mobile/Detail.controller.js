@@ -2,7 +2,6 @@
 sap.ui.define(
   [
     // prettier 방지용 주석
-    'sap/ui/core/Fragment',
     'sap/ui/yesco/control/MessageBox',
     'sap/ui/yesco/common/AppUtils',
     'sap/ui/yesco/common/exceptions/UI5Error',
@@ -12,7 +11,6 @@ sap.ui.define(
   ],
   (
     // prettier 방지용 주석
-    Fragment,
     MessageBox,
     AppUtils,
     UI5Error,
@@ -75,7 +73,7 @@ sap.ui.define(
         try {
           this.setContentsBusy(true);
 
-          const { pernr: sPernr, zyymm: sZyymm } = oParameter;
+          const { zyymm: sZyymm } = oParameter;
 
           oViewModel.setProperty('/Datum', sZyymm);
 
@@ -172,7 +170,7 @@ sap.ui.define(
       },
 
       async initializeInputDialog() {
-        const oView = this.getView();
+        // const oView = this.getView();
 
         // if (this._oTimeInputDialog) return;
 
@@ -372,6 +370,10 @@ sap.ui.define(
           this.validationBreak();
 
           MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
+            actions: [
+              MessageBox.Action.CANCEL, //
+              MessageBox.Action.OK,
+            ],
             // {저장}하시겠습니까?
             onClose: async (sAction) => {
               if (MessageBox.Action.CANCEL === sAction) {
@@ -433,7 +435,7 @@ sap.ui.define(
 
       validationBreak() {
         const oViewModel = this.getViewModel();
-        const aExtraTimes = _.dropRight(oViewModel.getProperty('/dialog/extra/list'));
+        // const aExtraTimes = _.dropRight(oViewModel.getProperty('/dialog/extra/list'));
 
         // if (_.some(aExtraTimes, (o) => !_.isEmpty(o.Beguz) && !_.isEmpty(o.Enduz) && _.isEmpty(o.Resn))) {
         //   throw new UI5Error({ code: 'A', message: this.getBundleText('MSG_00003', 'LABEL_00154') }); // {사유}를 입력하세요.

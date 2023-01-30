@@ -25,7 +25,10 @@ sap.ui.define(
       constructor: function (...aArgs) {
         Title.apply(this, aArgs);
 
-        this.setLevel(TitleLevel.H2);
+        if (this.getLevel() === TitleLevel.Auto) {
+          this.setLevel(TitleLevel.H2);
+        }
+
         if (this.getHeaderTitle()) {
           this.setLayoutData(new FlexItemData({ styleClass: 'header-title' }));
         }

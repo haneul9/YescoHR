@@ -15,6 +15,7 @@ sap.ui.define(
     'sap/ui/yesco/mvc/controller/home/portlets/M22PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/M23PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/M24PortletHandler',
+    'sap/ui/yesco/mvc/controller/home/portlets/M25PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P01PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P02PortletHandler',
     'sap/ui/yesco/mvc/controller/home/portlets/P03PortletHandler',
@@ -44,6 +45,7 @@ sap.ui.define(
     M22PortletHandler,
     M23PortletHandler,
     M24PortletHandler,
+    M25PortletHandler,
     P01PortletHandler,
     P02PortletHandler,
     P03PortletHandler,
@@ -76,6 +78,9 @@ sap.ui.define(
         M22: 'M22',
         M23: 'M23',
         M24: 'M24',
+        M25: 'M25',
+        M26: 'P06',
+        M27: 'P12',
         // 직원용
         P01: 'P01',
         P02: 'P02',
@@ -89,6 +94,9 @@ sap.ui.define(
         P10: 'P10',
         P11: 'P11',
         P12: 'P12',
+        P13: 'P06',
+        P14: 'P11',
+        P15: 'P12',
       },
       mPortletHandlers: {
         // 임원용
@@ -106,6 +114,9 @@ sap.ui.define(
         M22: M22PortletHandler,
         M23: M23PortletHandler,
         M24: M24PortletHandler,
+        M25: M25PortletHandler,
+        M26: P06PortletHandler,
+        M27: P12PortletHandler,
         // 직원용
         P01: P01PortletHandler,
         P02: P02PortletHandler,
@@ -119,6 +130,9 @@ sap.ui.define(
         P10: P10PortletHandler,
         P11: P11PortletHandler,
         P12: P12PortletHandler,
+        P13: P06PortletHandler,
+        P14: P11PortletHandler,
+        P15: P12PortletHandler,
       },
 
       onInit() {
@@ -269,6 +283,32 @@ sap.ui.define(
           return mPortletData;
         });
 
+        // 임시 임원용
+        // aActivePortlets.unshift({
+        //   busy: true,
+        //   id: 'M25',
+        //   key: 'M25',
+        //   carousel: false,
+        //   position: {
+        //     column: 1,
+        //     sequence: 0,
+        //   },
+        //   width: 1,
+        //   height: 0,
+        //   borderless: true,
+        //   icon: '',
+        //   title: '',
+        //   tooltip: '',
+        //   url: '',
+        //   mid: '',
+        //   active: true,
+        //   popup: false,
+        //   switchable: false,
+        //   hideTitle: true,
+        //   hasLink: false,
+        //   original: {},
+        // });
+
         return new JSONModel({
           available: aAllPortlets.length > 0,
           allMap: mAllPortlets,
@@ -291,8 +331,8 @@ sap.ui.define(
             sequence: mPortletData.Zhide !== 'X' ? Number(mPortletData.Seqno) || 99 : 0,
           },
           width: Number(mPortletData.Hwidth) || 1,
-          height: Number(mPortletData.Htall) || 1,
-          borderless: sPortletKey === 'P01',
+          height: Number(mPortletData.Htall) || 0,
+          borderless: sPortletKey === 'P01' || sPortletKey === 'M25',
           icon: mPortletData.Iconid,
           title: mPortletData.Potnm,
           tooltip: mPortletData.TooltipTx,

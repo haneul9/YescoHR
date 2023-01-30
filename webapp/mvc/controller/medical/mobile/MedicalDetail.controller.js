@@ -80,16 +80,19 @@ sap.ui.define(
 
         try {
           oViewModel.setData(this.initializeModel());
-          oViewModel.setProperty('/ViewKey', oDataKey);
+
+          const aAppList = await this.getTargetList();
+          _.chain(aAppList)
+            .forEach((m) => _.set(m, 'TargetKey', [m.Famsa, m.Objps, m.Kdsvh, m.Famgb].join(',')))
+            .commit();
+
+          oViewModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'TargetKey', valueKey: 'Znametx', aEntries: aAppList }));
 
           // Input Field Imited
           oViewModel.setProperty('/FieldLimit', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseAppl')));
           oViewModel.setProperty('/FieldLimitPop', _.assignIn(this.getEntityLimit(ServiceNames.BENEFIT, 'MedExpenseItem')));
           oViewModel.setProperty('/previousName', _.chain(sRouteName).split('-', 1).head().value());
-
-          const aAppList = await this.getTargetList();
-
-          oViewModel.setProperty('/TargetList', new ComboEntry({ codeKey: 'Kdsvh', valueKey: 'Znametx', aEntries: aAppList }));
+          oViewModel.setProperty('/ViewKey', oDataKey);
 
           this.setFormData();
         } catch (oError) {
@@ -132,6 +135,7 @@ sap.ui.define(
             RjbetRjcntHtml: sRjbetRjcntHtml,
             Pyyea: Zyear,
             Znametx: oViewModel.getProperty('/TargetList/0/Znametx'),
+            TargetKey: 'ALL',
           });
 
           const mSessionData = this.getSessionData();
@@ -155,6 +159,7 @@ sap.ui.define(
           const sRjbetRjcntHtml = this.getRjbetRjcntHtml(oTargetData.Rjbet, oTargetData.Rjcnt);
 
           oViewModel.setProperty('/FormData', oTargetData);
+          oViewModel.setProperty('/FormData/TargetKey', [oTargetData.Famsa, oTargetData.Objps, oTargetData.Kdsvh, oTargetData.Famgb].join(','));
           oViewModel.setProperty('/FormData/ApcntTxt', this.getBracketCount(Number(oTargetData.Apcnt)));
           oViewModel.setProperty('/FormData/PvcntTxt', this.getBracketCount(Number(oTargetData.Pvcnt)));
           oViewModel.setProperty('/FormData/RjbetRjcntHtml', sRjbetRjcntHtml);
@@ -373,7 +378,10 @@ ${sCommMsg}`;
           MessageBox.confirm(this.getBundleText('MSG_09063'), {
             // 대상자 변경 시 기입력한 데이터가 삭제됩니다. 임시저장하시겠습니까?
             title: this.getBundleText('LABEL_09010'), // 저장
-            actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
+            actions: [
+              this.getBundleText('LABEL_00118'), // 취소
+              this.getBundleText('LABEL_00103'), // 저장
+            ],
             onClose: async (fVal) => {
               // 저장 시 기입력내용 임시저장 + 신청대상 변경 및 신청내역, 진료내역 초기화
               if (fVal && fVal === this.getBundleText('LABEL_00103')) {
@@ -587,7 +595,10 @@ ${sCommMsg}`;
         // {저장}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00103'), {
           title: this.getBundleText('LABEL_09010'), // 의료비신청
-          actions: [this.getBundleText('LABEL_00103'), this.getBundleText('LABEL_00118')], // 저장, 취소
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00103'), // 저장
+          ],
           onClose: async (vPress) => {
             // 저장
             if (!vPress || vPress !== this.getBundleText('LABEL_00103')) {
@@ -657,8 +668,10 @@ ${sCommMsg}`;
 
         // {신청}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00121'), {
-          // 신청, 취소
-          actions: [this.getBundleText('LABEL_00121'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00121'), // 신청
+          ],
           onClose: async (vPress) => {
             // 신청
             if (!vPress || vPress !== this.getBundleText('LABEL_00121')) {
@@ -718,8 +731,10 @@ ${sCommMsg}`;
       onCancelBtn() {
         // {취소}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00118'), {
-          // 확인, 취소
-          actions: [this.getBundleText('LABEL_00114'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00114'), // 확인
+          ],
           onClose: async (vPress) => {
             // 취소
             if (!vPress || vPress !== this.getBundleText('LABEL_00114')) {
@@ -764,8 +779,10 @@ ${sCommMsg}`;
       onDeleteBtn() {
         // {삭제}하시겠습니까?
         MessageBox.confirm(this.getBundleText('MSG_00006', 'LABEL_00110'), {
-          // 삭제, 취소
-          actions: [this.getBundleText('LABEL_00110'), this.getBundleText('LABEL_00118')],
+          actions: [
+            this.getBundleText('LABEL_00118'), // 취소
+            this.getBundleText('LABEL_00110'), // 삭제
+          ],
           onClose: async (vPress) => {
             // 삭제
             if (!vPress || vPress !== this.getBundleText('LABEL_00110')) {

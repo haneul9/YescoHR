@@ -24,14 +24,13 @@ sap.ui.define(
       async addPortlet() {
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
-          name: 'sap.ui.yesco.mvc.view.home.fragment.P08PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P08PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P08PortletBox',
           controller: this,
         });
 
         oPortletModel.setProperty('/selectedTabKey', 'Today');
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -54,6 +53,11 @@ sap.ui.define(
           .map((o) => ({ ...o, ...oMenuModel.getProperties(o.MenidPc) }))
           .value();
 
+        const iListCount = aTodayList.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           today: {
             list: aTodayList,
@@ -64,6 +68,14 @@ sap.ui.define(
             listCount: aFutureList.length,
           },
         };
+      },
+
+      onPressSegmentedButtonItem(oEvent) {
+        const iListCount = this.getPortletModel().getProperty(`/${oEvent.getSource().getKey().toLowerCase()}/listCount`);
+
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
       },
     });
   }

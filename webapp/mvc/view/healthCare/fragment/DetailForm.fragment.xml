@@ -1,53 +1,53 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:grid="sap.ui.layout.cssgrid"
-    xmlns:custom="sap.ui.yesco.control"
-    xmlns:core="sap.ui.core">
-    <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
-        <HBox alignItems="Center" class="table-toolbar">
-            <Title level="H2" text="{i18n>LABEL_00168}" />
-        </HBox>
-        <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
-            <Label text="{i18n>LABEL_21007}" />
-            <VBox>
-                <Text text="{/FormData/Gjahr}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21003}" />
-            <VBox>
-                <custom:DatePicker minDate="{/minDate}" maxDate="{/maxDate}" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21004}"/>
-            <VBox>
-                <Text text="{/FormData/PtypeTxt}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21014}"/>
-            <VBox>
-                <Text text="{/FormData/IcompTxt}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21015}"/>
-            <VBox>
-                <Text text="{/FormData/Pname}"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21016}"/>
-            <VBox>
-                <Input value="{/FormData/Pyear}" maxLength="{/FieldLimit/Pyear}" liveChange=".onNumberTxt" width="250px" editable="{/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21017}"/>
-            <VBox>
-                <ComboBox items="{/CareItype}" selectedKey="{/FormData/Itype}" editable="{/Fixed}" class="required">
-                    <core:Item text="{ItypeTxt}" key="{Itype}" />
-                </ComboBox>
-            </VBox>
-            <Label text="{i18n>LABEL_21018}"/>
-            <VBox>
-                <Input value="{/FormData/Ihopt}" maxLength="{/FieldLimit/Ihopt}" editable="{/Fixed}" class="required"/>
-            </VBox>
-            <Label text="{i18n>LABEL_21013}"/>
-            <VBox>
-                <Input value="{/FormData/Instx}" maxLength="{/FieldLimit/Instx}" editable="{/Fixed}" class="required"/>
-                <layoutData>
-                    <grid:GridItemLayoutData gridColumn="2 / 5"/>
-                </layoutData>
-            </VBox>
-        </grid:CSSGrid>
-    </VBox>
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control"
+  xmlns:core="sap.ui.core">
+  <VBox class="vCardBox" busyIndicatorDelay="0" busy="{/busy}">
+    <HBox alignItems="Center" class="table-toolbar">
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00168" class="title" />
+    </HBox>
+    <grid:CSSGrid gridTemplateColumns="1fr 3fr 1fr 3fr" gridGap="1px 0" class="form-grid">
+      <Label text="{i18n>LABEL_21007}" />
+      <VBox>
+        <Text text="{/FormData/Gjahr}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21003}" />
+      <VBox>
+        <custom:DatePicker minDate="{/minDate}" maxDate="{/maxDate}" dateValue="{ path: '/FormData/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" editable="{/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21004}"/>
+      <VBox>
+        <Text text="{/FormData/PtypeTxt}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21014}"/>
+      <VBox>
+        <Text text="{/FormData/IcompTxt}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21015}"/>
+      <VBox>
+        <Text text="{/FormData/Pname}"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21016}"/>
+      <VBox>
+        <Input value="{/FormData/Pyear}" maxLength="{/FieldLimit/Pyear}" liveChange=".onNumberTxt" width="250px" editable="{/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21017}"/>
+      <VBox>
+        <ComboBox items="{/CareItype}" selectedKey="{/FormData/Itype}" editable="{/Fixed}" class="required">
+          <core:Item text="{ItypeTxt}" key="{Itype}" />
+        </ComboBox>
+      </VBox>
+      <Label text="{i18n>LABEL_21018}"/>
+      <VBox>
+        <Input value="{/FormData/Ihopt}" maxLength="{/FieldLimit/Ihopt}" editable="{/Fixed}" class="required"/>
+      </VBox>
+      <Label text="{i18n>LABEL_21013}"/>
+      <VBox>
+        <Input value="{/FormData/Instx}" maxLength="{/FieldLimit/Instx}" editable="{/Fixed}" class="required"/>
+        <layoutData>
+          <grid:GridItemLayoutData gridColumn="2 / 5"/>
+        </layoutData>
+      </VBox>
+    </grid:CSSGrid>
+  </VBox>
 </core:FragmentDefinition>

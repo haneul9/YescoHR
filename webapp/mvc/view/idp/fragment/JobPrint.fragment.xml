@@ -1,14 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <Dialog id="rejectDialog" showHeader="false" contentWidth="auto">
     <buttons>
       <Button type="Emphasized" text="{i18n>LABEL_00131}" press=".onPagePrint"/>
       <Button text="{i18n>LABEL_00115}" press=".onDialogClose" class="cancel" />
     </buttons>
     <HBox class="header mb-10-px" height="30px">
-      <HBox class="title">
-        <Title level="H3" text="{/printTitle/year}" />
-      </HBox>
+      <custom:HeaderTitleCountMessage titlePath="/printTitle/year" class="title" />
       <HBox class="apointee">
         <Text text="{/printTitle/emp}" />
       </HBox>

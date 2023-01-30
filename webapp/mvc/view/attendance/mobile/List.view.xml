@@ -24,7 +24,7 @@
     </VBox>
     <mobile:footer>
       <OverflowToolbar>
-        <HBox class="button-group buton-3">
+        <HBox class="button-group button-3">
           <Button text="{i18n>LABEL_04004}" press=".onPressCancApprovalBtn" />
           <Button text="{i18n>LABEL_04003}" press=".onPressModApprovalBtn" />
           <Button text="{i18n>LABEL_04002}" press=".onPressNewApprovalBtn" />

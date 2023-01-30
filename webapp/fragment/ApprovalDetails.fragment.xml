@@ -1,11 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:core="sap.ui.core"
-  xmlns:grid="sap.ui.layout.cssgrid">
-  <VBox class="vCardBox" visible="{= !!${ path: '/ApprovalDetails/Docno', type: 'sap.ui.yesco.mvc.model.type.Docno' } }">
+  xmlns:grid="sap.ui.layout.cssgrid"
+  xmlns:custom="sap.ui.yesco.control">
+  <VBox class="vCardBox" visible="{= !!${/ApprovalDetails/ZappStatAl} &amp;&amp; ${/ApprovalDetails/ZappStatAl} !== '10' }">
     <HBox class="table-toolbar">
-      <HBox class="title">
-        <Title text="{i18n>LABEL_00139}" level="H2" />
-      </HBox>
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_00139" class="title" />
     </HBox>
     <grid:CSSGrid gridTemplateColumns="repeat(2, 1fr 3fr)" gridGap="1px 0" class="form-grid">
       <Label text="{i18n>LABEL_00138}" />
@@ -21,7 +20,7 @@
       <VBox>
         <Text text="{/ApprovalDetails/Sgndt}" />
       </VBox>
-      <Label text="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} ? ${i18n>LABEL_00142} : ''}" />
+      <Label text="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} ? ${i18n>LABEL_00142} : '' }" />
       <VBox>
         <Text text="{= ${/ApprovalDetails/ZappStatAl} === '45' || ${/ApprovalDetails/ZappStatAl} === '65' || !!${/ApprovalDetails/ZappResn} ? ${/ApprovalDetails/ZappResn} : '' }" />
       </VBox>

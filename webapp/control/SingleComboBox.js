@@ -12,7 +12,7 @@ sap.ui.define(
     return MultiComboBox.extend('sap.ui.yesco.control.SingleComboBox', {
       metadata: {
         properties: {
-          selectedKey: { type: 'String', group: 'Data', defaultValue: '' },
+          selectedKey: { type: 'string', group: 'Data', defaultValue: '' },
         },
       },
 
@@ -25,13 +25,13 @@ sap.ui.define(
       renderer: {},
 
       setSelectedKey: function (value) {
-        this.setProperty('selectedKeys', _.concat(value), true);
+        this.setSelectedKeys(Array.isArray(value) ? value : [value]);
       },
 
       setSelectedKeys: function (aKeys) {
         MultiComboBox.prototype.setSelectedKeys.apply(this, arguments);
 
-        this.setProperty('selectedKey', _.get(aKeys, 0), true);
+        this.setProperty('selectedKey', _.get(aKeys, 0));
       },
 
       _handleSelectionLiveChange: function (oEvent) {

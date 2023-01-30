@@ -23,17 +23,20 @@ sap.ui.define(
      * 휴가 사용율 Portlet (임원용)
      */
     return AbstractPortletHandler.extend('sap.ui.yesco.mvc.controller.home.portlets.M24PortletHandler', {
+      getPortletHeightStyleClass(oPortletModel) {
+        return this.bMobile ? 'portlet-h0' : `portlet-h${oPortletModel.getProperty('/height') || 0}`;
+      },
+
       async addPortlet() {
         const oController = this.getController();
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: oController.getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.M24PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.M24PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.M24PortletBox',
           controller: this,
         });
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         oController.byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);

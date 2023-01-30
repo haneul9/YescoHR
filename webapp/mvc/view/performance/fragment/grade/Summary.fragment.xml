@@ -1,15 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
   xmlns:grid="sap.ui.layout.cssgrid"
   xmlns:table="sap.ui.table"
-  xmlns:core="sap.ui.core">
+  xmlns:core="sap.ui.core"
+  xmlns:custom="sap.ui.yesco.control">
   <VBox width="100%" class="vCardBox">
     <HBox justifyContent="SpaceBetween" class="table-toolbar">
-      <HBox class="title">
-        <Title level="H4" text="{i18n>LABEL_10072}" />
-      </HBox>
-      <HBox>
-        <Text text="{i18n>MSG_10009}" class="desc-txt"/>
-      </HBox>
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_10072" infoMessagePath="i18n>MSG_10009" class="title" />
     </HBox>
     <HBox>
       <VBox width="30%">

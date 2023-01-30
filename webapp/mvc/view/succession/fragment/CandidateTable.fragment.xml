@@ -14,23 +14,26 @@
       <m:customData>
         <core:CustomData key="padding-bottom" value="{= !!${/candidate/listInfo/expand} ? 'O' : 'X' }" writeToDom="true" />
       </m:customData>
-      <m:HBox class="title">
-        <m:Title text="{i18n>LABEL_45401}" level="H4" />
-        <m:Text text="{i18n>MSG_45001}" class="desc-txt" />
-      </m:HBox>
-      <m:HBox class="status-wrap">
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_1000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_2000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_3000}" class="sapUiSmallMarginEnd"/>
-        <m:Image src="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
-        <m:Text text="{i18n>LABEL_WERKS_4000}" class="sapUiSmallMarginEnd"/>
-        <m:ObjectStatus text="{i18n>LABEL_45006}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication03" />
-        <m:ObjectStatus text="{i18n>LABEL_45007}" class="sapUiSmallMarginEnd" icon="sap-icon://color-fill" state="Indication04" />
-        <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://color-fill" state="Indication05" />
-        <m:ToggleButton pressed="{/candidate/listInfo/expand}" icon="{= !!${/candidate/listInfo/expand} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }" iconDensityAware="false" class="circle-button" />
+      <custom:HeaderTitleCountMessage titlePath="i18n>LABEL_45401" infoMessagePath="i18n>MSG_45001" class="title" />
+      <m:HBox>
+        <m:HBox class="status-wrap">
+          <!-- <m:ObjectStatus text="PSNC홀딩스" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+          <m:ObjectStatus text="PSNC전자" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+          <m:ObjectStatus text="PSNC건설" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+          <m:ObjectStatus text="PSNC컨설팅" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" /> -->
+          <m:ObjectStatus text="{i18n>LABEL_WERKS_1000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YH.svg" />
+          <m:ObjectStatus text="{i18n>LABEL_WERKS_2000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YS.svg" />
+          <m:ObjectStatus text="{i18n>LABEL_WERKS_3000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_HS.svg" />
+          <m:ObjectStatus text="{i18n>LABEL_WERKS_4000}" icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_YI.svg" />
+          <m:ObjectStatus text="{i18n>LABEL_45006}" icon="sap-icon://color-fill" state="Indication03" />
+          <m:ObjectStatus text="{i18n>LABEL_45007}" icon="sap-icon://color-fill" state="Indication04" />
+          <m:ObjectStatus text="{i18n>LABEL_45008}" icon="sap-icon://color-fill" state="Indication05" />
+        </m:HBox>
+        <m:ToggleButton pressed="{/candidate/listInfo/expand}" icon="{= !!${/candidate/listInfo/expand} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }" iconDensityAware="false" class="circle-button">
+          <m:layoutData>
+            <m:FlexItemData styleClass="button-excel-attachment" />
+          </m:layoutData>
+        </m:ToggleButton>
       </m:HBox>
     </m:HBox>
     <Table id="candidateTable" rows="{/candidate/listInfo/list}" visibleRowCount="{/candidate/listInfo/rowCount}" visible="{/candidate/listInfo/expand}" selectionMode="None" width="100%" columnHeaderHeight="45" rowHeight="127" class="scsn-candidates">

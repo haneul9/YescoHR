@@ -8,7 +8,7 @@
             <Toolbar width="100%" height="auto">
                 <HBox id="stageHeader" width="100%" items="{/stage/headers}" class="per-status">
                     <VBox>                        <!-- completed 일때 on -->
-                        <Title level="H4" text="{ApStatusName}" />
+                        <Title text="{ApStatusName}" />
                         <core:Icon src="{icon}" size="2rem" width="18%" />
                     </VBox>
                 </HBox>

@@ -23,14 +23,14 @@ sap.ui.define(
         const oPortletModel = this.getPortletModel();
         const oPortletBox = await Fragment.load({
           id: this.getController().getView().getId(),
-          name: 'sap.ui.yesco.mvc.view.home.fragment.P09PortletBox',
+          name: this.bMobile ? 'sap.ui.yesco.mvc.view.home.mobile.P09PortletBox' : 'sap.ui.yesco.mvc.view.home.fragment.P09PortletBox',
           controller: this,
         });
 
         oPortletModel.setProperty('/selectedYearMonth', new Date());
+        oPortletModel.setProperty('/selectedTabKey', 'birthday');
 
-        const iPortletHeight = oPortletModel.getProperty('/height');
-        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+        oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
         this.getController().byId(this.sContainerId).addItem(oPortletBox);
         this.setPortletBox(oPortletBox);
@@ -64,6 +64,11 @@ sap.ui.define(
           }
         });
 
+        const iListCount = aBirthdayList.length;
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
+
         return {
           birthday: {
             list: aBirthdayList,
@@ -78,6 +83,14 @@ sap.ui.define(
 
       onChangeSelectedYearMonth() {
         this.showContentData();
+      },
+
+      onPressSegmentedButtonItem(oEvent) {
+        const iListCount = this.getPortletModel().getProperty(`/${oEvent.getSource().getKey()}/listCount`);
+
+        this.getPortletBox()
+          .toggleStyleClass('no-data', !iListCount)
+          .toggleStyleClass('no-scroll', iListCount && iListCount <= 4); // TODO : Portlet 높이에 행 높이를 나눠서 비교 숫자를 넣어야함
       },
     });
   }

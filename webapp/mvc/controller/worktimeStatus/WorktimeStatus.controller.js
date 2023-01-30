@@ -328,6 +328,8 @@ sap.ui.define(
       },
 
       async onOrgClick(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
+
         if (!this._pOrgDialog) {
           const oView = this.getView();
 
@@ -348,7 +350,6 @@ sap.ui.define(
         }
 
         const oListModel = this.getViewModel();
-        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime3Nav/results'))
           .filter((e) => {
             return e.Orgtx === oRowData.Orgtx;
@@ -370,6 +371,8 @@ sap.ui.define(
       },
 
       async onPernrClick(oEvent) {
+        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
+
         if (!this._pPernrDialog) {
           const oView = this.getView();
 
@@ -383,7 +386,6 @@ sap.ui.define(
         }
 
         const oListModel = this.getViewModel();
-        const oRowData = oEvent.getSource().getParent().getBindingContext().getProperty();
         const aDialogList = _.chain(oListModel.getProperty('/Data/WorkingTime4Nav/results'))
           .filter((e) => {
             return e.Pernr === oRowData.Pernr;

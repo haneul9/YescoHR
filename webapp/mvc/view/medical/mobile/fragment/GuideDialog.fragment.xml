@@ -9,7 +9,7 @@
       </FlexBox>
     </content>
     <buttons>
-      <Button text="{i18n>LABEL_00115}" press=".onPressCloseGuideDialog" type="Back" />
+      <Button text="{i18n>LABEL_00115}" press=".onPressCloseGuideDialog" class="button-tertiary" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>

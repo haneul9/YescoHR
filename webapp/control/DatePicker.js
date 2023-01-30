@@ -4,6 +4,7 @@ sap.ui.define(
     'sap/m/Button',
     'sap/m/ButtonType',
     'sap/m/DatePicker',
+    'sap/ui/model/json/JSONModel',
     'sap/ui/yesco/common/AppUtils',
   ],
   (
@@ -11,6 +12,7 @@ sap.ui.define(
     Button,
     ButtonType,
     DatePicker,
+    JSONModel,
     AppUtils
   ) => {
     'use strict';
@@ -31,16 +33,23 @@ sap.ui.define(
       constructor: function (...aArgs) {
         DatePicker.apply(this, aArgs);
 
-        let Dtfmt;
+        let sPatternModelPath;
+
         const oBindingValueType = (this.getBindingInfo('value') || this.getBindingInfo('dateValue') || {}).type;
-        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom')) {
-          Dtfmt = oBindingValueType.oFormatOptions.pattern;
-        }
-        if (!Dtfmt) {
-          Dtfmt = AppUtils.getAppComponent().getAppointeeModel().getProperty('/Dtfmt');
+        if (oBindingValueType && (oBindingValueType.getName() || '').startsWith('Custom') && (oBindingValueType.oFormatOptions || {}).pattern) {
+          const sModelName = `datePatternModel-${this.getId()}`;
+          AppUtils.getAppComponent().setModel(new JSONModel({ Dtfmt: oBindingValueType.oFormatOptions.pattern }), sModelName);
+
+          sPatternModelPath = `${sModelName}>/Dtfmt`;
+        } else {
+          sPatternModelPath = 'appointeeModel>/Dtfmt';
         }
 
-        this.setShowFooter(true).setValueFormat(Dtfmt).setDisplayFormat(Dtfmt).setPlaceholder(Dtfmt).addStyleClass('sapIcon_Date');
+        this.setShowFooter(true)
+          .bindProperty('valueFormat', sPatternModelPath)
+          .bindProperty('displayFormat', sPatternModelPath)
+          // .bindProperty('placeholder', sPatternModelPath)
+          .addStyleClass('sapIcon_Date');
 
         if (this.getPickOnly()) {
           this.addStyleClass('pickonly-datepicker');

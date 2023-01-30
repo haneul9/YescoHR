@@ -14,7 +14,7 @@
         </Image>
         <!-- <Button icon="/sap/public/bc/ui2/zui5_yescohr/images/icon_me02.png" text="{i18n>LABEL_00281}" class="icon-button" /> -->
       </VBox>
-      <grid:CSSGrid items="{path: '/employee/header/baseInfo'}" gridTemplateColumns="3fr 1fr 3fr 1fr 3fr" gridGap="0px">
+      <grid:CSSGrid items="{/employee/header/baseInfo}" gridTemplateColumns="9fr 3fr 9fr 4fr 9fr" gridGap="0px">
         <Label text="{data}">
           <customData>
             <core:CustomData key="type" value="{labelOrText}" writeToDom="true" />
@@ -25,17 +25,17 @@
     <Panel expandable="true" expanded="true" width="auto" class="timeline-wrap" visible="{= !!${/employee/header/timeline} }">
       <content>
         <VBox class="timeline">
-          <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}">
+          <HBox justifyContent="SpaceBetween" items="{/employee/header/timeline}">
             <VBox width="20%" alignItems="Center">
               <Text text="{Dattx}" />
             </VBox>
           </HBox>
-          <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}" class="lineItem-wrap">
+          <HBox justifyContent="SpaceBetween" items="{/employee/header/timeline}" class="lineItem-wrap">
             <VBox width="20%" alignItems="Center">
               <core:Icon src="sap-icon://employee" class="lineItem" />
             </VBox>
           </HBox>
-          <HBox justifyContent="SpaceBetween" items="{path: '/employee/header/timeline'}">
+          <HBox justifyContent="SpaceBetween" items="{/employee/header/timeline}">
             <VBox width="20%" alignItems="Center">
               <Text text="{Datum}" />
             </VBox>

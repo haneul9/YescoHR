@@ -29,12 +29,11 @@ sap.ui.define(
           const oPortletModel = this.getPortletModel();
           const oPortletBox = await Fragment.load({
             id: this.getController().getView().getId(),
-            name: 'sap.ui.yesco.mvc.view.home.mobile.P11PortletBox',
+            name: 'sap.ui.yesco.mvc.view.home.mobile.P14PortletBox',
             controller: this,
           });
 
-          const iPortletHeight = oPortletModel.getProperty('/height');
-          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(`portlet-h${iPortletHeight}`);
+          oPortletBox.setModel(oPortletModel).bindElement('/').addStyleClass(this.getPortletStyleClasses());
 
           this.getController().byId(this.sContainerId).addItem(oPortletBox);
           this.setPortletBox(oPortletBox);
@@ -94,6 +93,9 @@ sap.ui.define(
           } else {
             this.setChartData(mPortletData); // 다른 메뉴를 갔다가 되돌아오는 경우
           }
+        } else {
+          mPortletData.hideTitle = true;
+          mPortletData.switchable = false;
         }
 
         mPortletData.ButtonText1 = this.getMenuName('attendance');

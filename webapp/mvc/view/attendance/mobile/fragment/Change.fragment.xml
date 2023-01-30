@@ -7,18 +7,18 @@
       <custom:Title text="{i18n>LABEL_04024}" />
     </HBox>
     <HBox class="table-actions">
-      <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" />
+      <custom:DateRangeSelection dateValue="{ path: '/form/dialog/search/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" secondDateValue="{ path: '/form/dialog/search/Endda', type: 'sap.ui.yesco.mvc.model.type.Date' }" class="sapIcon_Date" change=".retrieveChange" width="250px" />
     </HBox>
   </HBox>
-  <List items="{/form/dialog/list}" class="list-wrap" rememberSelections="false" visible="{= !${/ZappStatAl} }">
+  <List items="{/form/dialog/list}" class="list-wrap requested-list" rememberSelections="false" visible="{= !${/ZappStatAl} }">
     <CustomListItem type="Active" press=".openFormChangeDialog">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
+        <grid:CSSGrid gridTemplateColumns="3fr 5fr" gridGap="6px 5px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
           <Text text="{Atext2}" class="font-bold" />
-          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" />
+          <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" class="letter-spacing-xs" />
         </grid:CSSGrid>
       </HBox>
     </CustomListItem>
@@ -29,29 +29,29 @@
       <custom:Title text="{i18n>LABEL_00129}" />
     </HBox>
     <HBox class="table-actions">
-      <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }" />
+      <Button icon="sap-icon://less" text="{i18n>LABEL_00110}" press=".onPressDelBtn" visible="{= !${/ZappStatAl} }">
+        <layoutData>
+          <FlexItemData styleClass="minus-button" />
+        </layoutData>
+      </Button>
     </HBox>
   </HBox>
-  <List id="DetailListB" items="{ path: '/form/list' }" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
+  <List id="DetailListB" items="{/form/list}" class="list-wrap request" mode="{/form/listMode}" rememberSelections="false">
     <CustomListItem type="Active">
       <HBox wrap="Wrap" justifyContent="SpaceBetween" alignItems="Baseline" alignContent="SpaceBetween" class="list-item-box">
-        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 10px">
+        <grid:CSSGrid gridTemplateColumns="1fr 2fr" gridGap="6px 5px">
           <grid:layoutData>
             <FlexItemData growFactor="1" />
           </grid:layoutData>
-          <Text text="{Atext}" class="font-16-px font-bold" />
+          <Text text="{Atext}" class="font-bold" />
           <HBox>
             <Text text="{i18n>LABEL_04026}: " />
-            <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg})" />
+            <Text text="{ path: 'Begda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda2', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg})" class="letter-spacing-xxs" />
           </HBox>
-          <Text text="{Tmrsn}" wrapping="false">
-            <layoutData>
-              <FlexItemData maxWidth="90%" />
-            </layoutData>
-          </Text>
+          <Text text="{Tmrsn}" wrapping="false" />
           <HBox>
             <Text text="{i18n>LABEL_04027}: " />
-            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' }({Abrtg2})" />
+            <Text text="{ path: 'Begda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ~ { path: 'Endda', type: 'sap.ui.yesco.mvc.model.type.ShortYearDate' } ({Abrtg2})" class="letter-spacing-xxs" />
           </HBox>
         </grid:CSSGrid>
       </HBox>

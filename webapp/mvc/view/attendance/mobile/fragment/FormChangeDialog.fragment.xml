@@ -5,7 +5,7 @@
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <Dialog id="FormChangeDialog" title="{i18n>LABEL_04025}" contentWidth="" horizontalScrolling="false" verticalScrolling="false">
     <content>
-      <mobile:DetailCSSGrid gridTemplateColumns="1fr 2fr">
+      <mobile:DetailCSSGrid gridTemplateColumns="1fr 2fr" class="mt-10-px p-16-px">
         <Label text="{i18n>LABEL_00148}"/>
         <custom:DatePicker class="required" dateValue="{ path: '/form/dialog/data/Begda', type: 'sap.ui.yesco.mvc.model.type.Date' }" change=".onChangeRowBegda" />
         <Label text="{i18n>LABEL_00149}" />

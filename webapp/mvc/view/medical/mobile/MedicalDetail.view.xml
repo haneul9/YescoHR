@@ -20,8 +20,8 @@
           <mobile:DetailCSSGrid gridTemplateColumns="2fr 3fr">
             <Label text="{i18n>LABEL_03012}" />
             <Text text="{/FormData/Znametx}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" />
-            <custom:SingleComboBox items="{/TargetList}" selectedKey="{/FormData/Famsa},{/FormData/Objps},{/FormData/Kdsvh},{/FormData/Famgb}" selectionChange=".onTargetList" visible="{= !${/FormData/Lnsta} }" class="required">
-              <core:Item text="{Znametx}" key="{Famsa},{Objps},{Kdsvh},{Famgb}" />
+            <custom:SingleComboBox items="{/TargetList}" selectedKey="{/FormData/TargetKey}" selectionChange=".onTargetList" visible="{= !${/FormData/Lnsta} || ${/FormData/Lnsta} === '10' }" class="required">
+              <core:Item text="{Znametx}" key="{TargetKey}" />
             </custom:SingleComboBox>
 
             <Label text="{i18n>LABEL_09005} {i18n>LABEL_09102}" />
@@ -44,8 +44,8 @@
             <Text text="{/FormData/ZappResn}" visible="{= !!${/FormData/ZappResn} }" class="multi-line" />
 
             <Label text="{i18n>LABEL_00163}" class="align-top" />
-            <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" visible="{= ${/FormData/Lnsta} === '10' || !${/FormData/Lnsta} }" />
-            <Text text="{/FormData/Zbigo}" visible="{= ${/FormData/Lnsta} !== '10' &amp;&amp; !!${/FormData/Lnsta} }" class="multi-line" />
+            <Text text="{/FormData/Zbigo}" visible="{= !!${/FormData/Lnsta} &amp;&amp; ${/FormData/Lnsta} !== '10' }" class="multi-line" />
+            <Input value="{/FormData/Zbigo}" maxLength="{/FieldLimit/Zbigo}" visible="{= !${/FormData/Lnsta} || ${/FormData/Lnsta} === '10' }" />
           </mobile:DetailCSSGrid>
           <HBox class="table-toolbar">
             <HBox class="title">

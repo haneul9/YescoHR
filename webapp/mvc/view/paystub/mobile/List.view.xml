@@ -5,7 +5,7 @@
   xmlns:mobile="sap.ui.yesco.control.mobile">
   <mobile:Page navButtonPress=".onNavBack">
     <VBox class="contents">
-      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" class="sapUiSmallMarginBottom"/>
+      <core:Fragment fragmentName="sap.ui.yesco.fragment.mobile.OverviewListHeader" type="XML" />
       <mobile:ScrollContainer>
         <mobile:List items="{path: '/list'}">
           <mobile:CustomListItem press=".onSelectRow">
